@@ -1,0 +1,47 @@
+ASCIIMathML Formulae
+====================
+
+http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML] is
+a clever JavaScript written by Peter Jipsen that transforms
+mathematical formulae written in plain text to standard mathematical
+notation on an HTML page. See 'Appendix I' in the AsciiDoc User Guide
+for more details.
+
+The AsciiDoc `xhtml11` backend supports ASCIIMathML -- it links the
+ASCIIMathML script and escapes ASCIIMathML delimiters and special
+characters to yield valid XHTML. To use ASCIIMathML:
+
+1. Include the `-a asciimath` command-line option when you run
+   `asciidoc(1)`.
+2. Enclose ASCIIMathML formulas inside double-dollar passthroughs.
+
+Here's the link:asciimath.txt[AsciiDoc source] that generated this
+page.
+
+.NOTE
+- If the formulas don't appear to be correct you probably need to
+  install the correct math fonts (see the
+  http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
+  website for details).
+- See the link:latexmath.html[LaTeXMathML page] if you prefer to use
+  LaTeX math formulas.
+
+A list of formulas with a mixture of formatting:
+
+- $$`[[a,b],[c,d]]((n),(k))`$$
+- $$`x/x={(1,if x!=0),(text{undefined},if x=0):}`$$
+- $$`d/dxf(x)=lim_(h->0)(f(x+h)-f(x))/h`$$
+- Red [red]$$`sum_(i=1)\^n i=(n(n+1))/2`$$ and [blue]*bold
+  $$`int_0\^(pi/2) sinx\ dx=1`$$*
+- [,,1.5]## 1.5 times normal size $$`(a,b]={x in RR : a < x <= b}`$$##
+- A [,,2]##big## [blue]##blue## formula [blue,,2]$$`x^2+y_1+z_12^34`$$.
+- [green,yellow,4]$$`x^2+y_1+z_12^34`$$
+
+*********************************************************************
+The first three terms factor to give
+[red]$$$(x+b/(2a))^2=(b^2)/(4a^2)-c/a$$$.  Now we take square roots on
+both sides and get [red]$$$x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)$$$.
+Finally we move the [red]$$$b/(2a)$$$ to the right and simplify to get
+the two solutions: [red]*$$`x_(1,2)=(-b+-sqrt(b^2-4ac))/(2a)`$$*.
+*********************************************************************
+

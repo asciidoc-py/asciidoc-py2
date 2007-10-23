@@ -1,0 +1,21 @@
+/* Man page text is indented from headings. */
+p,ul,ol,dl,h4,h5 {
+    padding: 0 10%;
+}
+
+h2 { text-decoration: none;}
+
+/* Man page emphasis is always bold. */
+em, dt {
+    font-style: normal;
+    font-weight: bold;
+}
+
+div#synopsis p { }
+
+div.literalparagraph { margin: 0 10%; }
+div.literalblock { margin: 0 10%; }
+
+div.listingblock   {
+    margin: 0 10%;
+}

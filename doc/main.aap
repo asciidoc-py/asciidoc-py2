@@ -1,0 +1,250 @@
+#####################################################################
+#
+# A-A-P file for making AsciiDoc distribution documents.
+# (you can obtain A-A-P from http://www.a-a-p.org)
+#
+# Stuart Rackham <srackham@methods.co.nz>
+#####################################################################
+
+VERS = 8.2.3
+DATE = 12 September 2007
+
+#####################################################################
+# Programs used by this script.
+#####################################################################
+
+# If python is not in your executable search path you may have to
+# tweak these locations. Note also that this script is in the distribution
+# ./doc directory and a number of paths are relative.
+
+## Older or alternative rules and actions have been commented out but not
+#  deleted.
+
+@if OSTYPE == 'mswin':
+    ASCIIDOC = python ..\asciidoc.py -a revision=$(VERS)@ -a date="$(DATE)@" 
+    HHC = "C:\Program Files\HTML Help Workshop\hhc.exe"
+    FOP = fop.bat
+@else:
+    ASCIIDOC = python ../asciidoc.py -a revision=$(VERS)@ -a date="$(DATE)@" 
+    @if os.uname()[0][:6] == 'CYGWIN':
+        HHC = "c:/Program\ Files/HTML\ Help\ Workshop/hhc.exe"
+        :syseval which fop.bat | :assign FOP
+    @else:
+        HHC =
+        :syseval which fop.sh | :assign FOP
+
+:syseval which jw | :assign JW              # Converts DocBook SGML to PDF.
+:syseval which lynx | :assign LYNX          # Converts HTML to text.
+:syseval which xmllint | :assign XMLLINT    # Validates XML.
+
+## xsltproc(1) is used instead of xmlto(1).
+#XMLTO = xmlto
+ASPELL = aspell
+XSLTPROC = xsltproc
+
+ROOT = asciidoc asciidoc.1
+INFILES = $*(ROOT).txt
+CHUNK_DIR = ./asciidoc.chunked
+HTMLHELP_DIR = ./asciidoc.htmlhelp
+HTMLHELP_FILE = asciidoc
+OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
+        asciidoc.pdf asciidoc.1.man a2x.1.man \
+        article.html book.html book-multi.html asciidoc.xml asciidoc.1.xml \
+        ../BUGS ../CHANGELOG ../README ../INSTALL \
+        latex-backend.html \
+        ${HTMLHELP_FILE}.chm \
+        $CHUNK_DIR/index.html \
+        article.pdf \
+        source-highlight-filter.pdf \
+        music-filter.pdf
+
+
+#####################################################################
+# Filetype build rules.
+#####################################################################
+
+:rule %.text : %.txt
+    # Convert AsciiDoc to HTML then use lynx(1) to convert HTML to text.
+    @if _no.OSTYPE != 'posix':
+        :print WARNING: non-POSIX environment: skipping $target file generation
+    @elif not _no.LYNX:
+        :print WARNING: lynx(1) unavailable: skipping $target file generation
+    @else:
+        opt = -f ../text.conf
+        @if source_list[0] == 'asciidoc.1.txt':
+            opt += -d manpage
+        @else:
+            opt += -n
+        :sys $ASCIIDOC $opt -b html4 -o - $source | \
+            lynx -dump -stdin > $target
+
+## The preceding rule makes a better job of producing plain text.
+#:rule %.text : %.xml 
+#   :sys $XMLTO txt $source
+
+:rule %.css.html : %.txt
+    opt =
+    @if source_list[0] == 'asciidoc.1.txt':
+        opt += -d manpage
+    @else:
+        opt += -n
+        opt += -a toc -a toclevels=2 -a scriptsdir=../javascripts
+    :sys $ASCIIDOC $opt -b xhtml11 -a linkcss -a icons -a stylesdir=../stylesheets -o $target $(source[0])
+    @if _no.XMLLINT:
+        :sys $XMLLINT --nonet --noout --valid $target
+    @else:
+        :print WARNING: xmllint(1) unavailable: skipping validation
+
+:rule %.css-embedded.html : %.txt
+    opt =
+    @if source_list[0] == 'asciidoc.1.txt':
+        opt += -d manpage
+    @else:
+        opt += -n
+        opt += -a toc -a toclevels=2
+    :sys $ASCIIDOC -b xhtml11 $opt -o $target $(source[0])
+    @if _no.XMLLINT:
+        :sys $XMLLINT --nonet --noout --valid $target
+    @else:
+        :print WARNING: xmllint(1) unavailable: skipping validation
+
+:rule %.xml : %.txt
+    opt =
+    @if source_list[0] in ('asciidoc.1.txt','a2x.1.txt'):
+        opt += -d manpage
+    @else:
+        opt += -n
+    :sys $ASCIIDOC $opt -b docbook $(source[0])
+    @if _no.XMLLINT:
+        :sys $XMLLINT --nonet --noout --valid $target
+    @else:
+        :print WARNING: xmllint(1) unavailable: skipping validation
+
+:rule %.sgml : %.txt
+    opt =
+    @if source_list[0] in ('asciidoc.1.txt','a2x.1.txt'):
+        opt += -d manpage
+    :sys $ASCIIDOC $opt -b docbook-sgml $(source[0])
+
+:rule %.html: %.xml
+#   :sys $XMLTO xhtml-nochunks $source
+    :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 --stringparam html.stylesheet ./docbook-xsl.css ../docbook-xsl/xhtml.xsl $source >$target
+
+## Generate plain HTML from DocBook XML using the preceeding rule.
+#:rule %.html : %.txt
+#   opt =
+#   @if source_list[0] == 'asciidoc.1.txt':
+#       opt += -d manpage
+#   @else:
+#       opt += -n
+#   :sys $ASCIIDOC $opt -b xhtml $(source[0])
+
+:rule %.man : %.xml
+    :sys $XSLTPROC --nonet ../docbook-xsl/manpage.xsl $source
+    :sys touch $target  # Dummy target.
+
+## Generate manpage from XML using preceeding rule.
+#:rule %.man : %.sgml
+#   :sys $JW -b man $(match).sgml
+#   :sys touch $target  # Dummy target.
+
+:rule %.fo: %.xml
+    :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 ../docbook-xsl/fo.xsl $source >$target
+
+# Try PDF generators in order of preference.
+@if _no.FOP:
+    :rule %.pdf: %.fo
+        :sys $FOP $source $target
+@elif _no.JW:
+    :rule %.pdf: %.sgml
+        :sys $JW -b pdf $source
+@else:
+    :rule %.pdf:
+        :print WARNING: PDF processor  unavailable: skipping $target file generation
+
+## jw(1) renders better PDF than xmlto(1) (see preceeding rule).
+#:rule %.pdf : %.xml 
+#   :sys $XMLTO pdf $source
+
+
+#####################################################################
+# Explicit file generation (cases that don't fit the rules).
+#####################################################################
+
+asciidoc.1.html: asciidoc.1.txt
+    :sys $ASCIIDOC -d manpage -b html4 $source
+    @if _no.XMLLINT:
+        :sys $XMLLINT --nonet --noout --valid --html $target
+    @else:
+        :print WARNING: xmllint(1) unavailable: skipping validation
+
+# User Guide 'chunked' into linked HTML pages.
+$CHUNK_DIR/index.html: asciidoc.xml
+    :mkdir {f} $CHUNK_DIR
+    :del {f} {q} $CHUNK_DIR/*.html
+    :sys $XSLTPROC --nonet --stringparam base.dir $CHUNK_DIR/ --stringparam html.stylesheet ../docbook-xsl.css ../docbook-xsl/chunked.xsl $source
+
+# HTML Help formatted User Guide.
+$HTMLHELP_DIR/index.html: asciidoc.xml
+    :mkdir {f} $HTMLHELP_DIR
+    :del {f} {q} $HTMLHELP_DIR/*.html
+    :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 --stringparam base.dir $HTMLHELP_DIR/ --stringparam html.stylesheet ../docbook-xsl.css --stringparam htmlhelp.hhp ${HTMLHELP_FILE}.hhp --stringparam htmlhelp.chm ${HTMLHELP_FILE}.chm ../docbook-xsl/htmlhelp.xsl $source
+
+${HTMLHELP_FILE}.chm: $HTMLHELP_DIR/index.html
+    @if _no.HHC:
+        :sys {f} "$HHC" ${HTMLHELP_FILE}.hhp
+    @else:
+        :print WARNING: HTMLHelp compiler unavailable: skipping asciidoc.chm file generation
+
+# Book template.
+book.html: book.txt
+    :sys $ASCIIDOC -d book -b docbook $source
+#    :sys $XMLTO xhtml-nochunks book.xml
+    :sys $XSLTPROC --nonet --stringparam html.stylesheet ./docbook-xsl.css ../docbook-xsl/xhtml.xsl book.xml >$target
+
+# Multi-part book template.
+book-multi.html: book-multi.txt
+    :sys $ASCIIDOC -d book -b docbook $source
+#    :sys $XMLTO xhtml-nochunks book-multi.xml
+    :sys $XSLTPROC --nonet --stringparam html.stylesheet ./docbook-xsl.css ../docbook-xsl/xhtml.xsl book-multi.xml >$target
+
+../BUGS: ../BUGS.text
+    # Make BUGS.text and copy to BUGS.
+    :copy ../BUGS.text ../BUGS
+
+../CHANGELOG: ../CHANGELOG.text
+    # Make CHANGELOG.text and copy to CHANGELOG.
+    :copy ../CHANGELOG.text ../CHANGELOG
+
+../README: ../README.text
+    # Make README.text and copy to README.
+    :copy ../README.text ../README
+
+../INSTALL: ../INSTALL.text
+    # Make INSTALL.text and copy to INSTALL.
+    :copy ../INSTALL.text ../INSTALL
+
+asciimath.html: asciimath.txt
+    :sys $ASCIIDOC -a asciimath $source
+    # No xmllint(1) checking -- fails on embedded JavaScript.
+
+latexmath.html: latexmath.txt
+    :sys $ASCIIDOC -a latexmath $source
+    # No xmllint(1) checking -- fails on embedded JavaScript.
+
+
+#####################################################################
+# Build commands.
+#####################################################################
+
+all: $OUTFILES
+
+clean:
+    :del {f} $OUTFILES
+    :del {f} *.bak          # Remove aspell backups.
+
+spell: $INFILES ../CHANGELOG.txt ../README.txt ../BUGS.txt ../INSTALL.txt \
+        a2x.1.txt
+    # Interactively spell check all files.
+    @for s in source_list:
+        :sys {i} $ASPELL check -p asciidoc.dict $s

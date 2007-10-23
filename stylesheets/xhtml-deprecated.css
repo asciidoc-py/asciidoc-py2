@@ -1,0 +1,247 @@
+body {
+    background: #dedede;
+    margin: 0;
+    min-height: 480px;
+}
+
+h1,h2,h3,h4,h5 {
+    padding: 0.5em 0 0 5%;
+    text-align: left;
+    background: transparent;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-weight: bold;
+    margin-top: 1.5em;
+}
+
+h1 { font-size: 200%; }
+h2 { font-size: 125%; }
+h3 { font-size: 110%; font-family: sans-serif;}
+h4 { font-size: 100%; font-style: italic; font-family: sans-serif;}
+
+h1 {
+    padding: 0.5em 0 0.5em 5%;
+    color: white;
+    background: #1f764c;    /* Olive green */
+    margin: 0;
+    border-bottom: solid 1px black;
+}
+
+h2 { text-decoration: underline;}
+
+/* This is only used by level 0 sections in book document types. */
+h2.sect0 { font-size: 175%; text-decoration: underline;}
+
+span#author {
+    font-family: sans-serif;
+    font-size: larger;
+    font-weight: bold;
+}
+
+div#informalpreface p { }
+
+div.literalparagraph { margin: 0 5%; }
+div.literalblock { margin: 0 5%; }
+div.listingblock { padding: 0 5%; }
+pre.verseblock { padding: 0 5%; }
+
+p.verseblock {
+  white-space: pre;
+}
+
+a {
+    font-weight: bold;
+    background: #ffd;       /* Light yellow */
+    color: #093;            /* Green */
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+p { padding: 0 5%; }
+
+ul,ol {
+    padding: 0 5%;
+    margin-left: 1.75em;
+    list-style-position: outside;
+}
+ol ol, ol ul, ul ol, ul ul, dd ol, dd ul {
+    margin-left: 0;
+}
+/* Keep lists close to preceeding titles. Broken in IE6. */
+p.listtitle + ul, p.listtitle + ol, p.listtitle + dl {
+    margin-top: 0;
+}
+
+dl { padding: 0 5%; }
+dt { font-style: italic; }
+dd, li { padding-bottom: 0.5em; }
+dd p, li p { margin: 0 0 0.4em; padding: 0; }
+li div.literalparagraph { margin-left: 0; }
+div.literalparagraph pre, li div.literalparagraph pre { margin-left: 2%; }
+div.listingblock, li div.listingblock { margin-left: 0; }
+li div.literalblock { margin-left: 0; }
+dd div.literalblock { margin-left: 0; }
+div.literalblock pre, li div.literalblock pre { margin-left: 2%; }
+dd div.literalparagraph { margin-left: 0; }
+dd div.literalparagraph pre { margin-left: 2%; }
+
+.listingblock, .literalparagraph, .literalblock, tt {
+    color: #461b7e;
+}
+
+div.listingblock pre {
+    background: #f0f0f0;
+    border: 1px dashed gray;
+    padding: 0.5em 1em;
+}
+
+table {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+thead,tfoot,tbody {
+    /* No effect in IE6. */
+    border-top: 2px solid green;
+    border-bottom: 2px solid green;
+}
+thead,tfoot {
+    font-weight: bold;
+}
+
+table.hlist td:first-child { font-style: italic; }
+
+p.listtitle {
+  margin-top: 1.5em;
+  margin-bottom: 0.2em;
+}
+p.tabletitle {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+p.blocktitle {
+  margin-top: 1.5em;
+  margin-bottom: 0.2em;
+}
+p.imagetitle {
+  margin-top: 0.2em;
+  margin-bottom: 1.5em;
+}
+div.image img {
+    border: 1px solid #ece9d8;
+}
+a.imagelink > img:hover { border: 1px solid #093; } /* IE6 broken */
+a.imagelink > img { border: 1px solid transparent; }
+a.imagelink {
+  /* Don't use text link colors. */
+  background: transparent;
+  color: white;
+}
+
+div#content {
+    margin: 50px 3em 3em 140px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    background: white;
+}
+
+div#footer { 
+    background: #f0f0f0;
+    font: 8pt sans-serif;
+    margin-top: 2em;
+    margin-bottom: 0;
+    padding: 0.8em 0 0.8em 0;
+    position: relative;
+    bottom: 0;
+    border-top: 1px solid silver;
+}
+
+div#footer table {
+    margin-left: 2%;
+}
+
+div#footer p {
+    margin: .5em 0 0 0;
+    padding: 0 5%;
+}
+
+div#footer a {
+    color: black;
+    background: transparent;
+    text-decoration: underline;
+}
+
+div#badges {
+    padding: 0 15px;
+}
+
+div#badges td {
+    vertical-align: middle;
+}
+
+div#badges img {
+    border-style: none;
+}
+
+/*
+ * Style sheet rules that are applied using element class attributes.
+ */
+
+div.image {
+  width: 100%;
+  border-style: none;
+  margin-bottom: 1.5em;
+  margin-left: 1em; /* for IE5,6 misbehavior */
+  padding: 0;
+  text-align: left;
+}
+div.admonition {
+  margin: 1.0em 20% 1.0em 5%;
+}
+div.admonition div.text * { padding: 0; }
+div.admonition div.icon {
+  float: left;
+  width: 56px;
+}
+div.admonition div.text {
+  margin-left: 56px;
+  padding-top: 1px;
+}
+div.admonition div.text * { padding: 0; }
+div.clear {
+  clear: both;
+}
+
+/* Print nicely. */
+@media print {
+  @page             { margin: 10% } /* This _is_ valid CSS2. */
+  h1,h2,h3,h4       { page-break-after: avoid; page-break-inside: avoid }
+  blockquote,pre    { page-break-inside: avoid }
+  ul,ol,dl          { page-break-before: avoid }
+  /* Override existing property settings. */
+  h1,a              { color: black; background: white; }
+  div#content       { margin: 0; border: 0; }
+  div#footer        { display: none; }
+  /* IE5,6 only has the problem displaying, so restore margin for printing */
+  div.image         { margin-left: 0; }
+  p.imagetitle      { page-break-before: avoid; }
+  p.blocktitle, tabletitle { page-break-after: avoid; }
+}
+
+div.sidebarblock, exampleblock {
+  margin: 0.5em 20% 0.5em 5%;
+  padding: 0.5em 1em;
+  border: 1px solid silver;
+}
+div.sidebarblock *, exampleblock * { padding: 0; }
+div.sidebarblock div, exampleblock div { margin: 0; }
+div.sidebarblock {
+  background: #ffffee;
+}
+p.sidebartitle {
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.5em;
+  margin-bottom: 0.2em;
+}
+

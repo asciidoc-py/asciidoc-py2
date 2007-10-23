@@ -1,0 +1,172 @@
+AsciiDoc Frequently Asked Questions
+===================================
+
+An embryonic AsciiDoc FAQ.
+
+
+== How can I include non-breaking space characters?
+
+The predefined `\{nbsp}` attribute reference will be replaced by a
+non-breaking space character.
+
+
+== How do I include spaces in URL addresses?
+
+URL inline macro targets (addresses) cannot contain white space
+characters. If you need spaces encode them as `%20`. For example:
+
+  image:large%20image.png[]
+  http://www.foo.bar.com/an%20example%20document.html[]
+
+
+== Why does AsciiDoc give me a ``malformed author'' error?
+
+This is normally because there are more than three names (up to three
+are expected: first name, middle name and last name). For example,
+this author line would result in an error:
+
+  Vincent Willem van Gogh
+
+You can enter multi-word first, middle and last names in the author
+line using the underscore as a word separator. For example:
+
+  Vincent Willem van_Gogh
+
+You could also resolve the problem by replacing the author line with
+explicit attribute entries:
+
+  :First name:  Vincent
+  :Middle name: Willem
+  :Last name:   Van Gogh
+
+== How can I escape AsciiDoc markup?
+
+Most AsciiDoc inline elements can be suppressed by preceding them with
+a backslash character. These elements include:
+
+- Attribute references.
+- Text formatting.
+- Quoting,
+- 'URLs', 'image' and 'link' macros.
+- Replacements.
+- Special words.
+
+In some cases you may need to escape both left and right quotes (see
+the 'AsciiDoc User Guide').
+
+
+== How can I escape a labeled list entry?
+
+Two colons or semicolons in a paragraph may be confused with a labeled
+list entry. Use the predefined `\{two_colons}` and `\{two_semicolons}`
+to suppress this behavior, for example:
+
+  Qui in magna commodo{two_colons} est labitur dolorum an. Est ne
+  magna primis adolescens.
+
+Will be rendered as:
+
+Qui in magna commodo{two_colons} est labitur dolorum an. Est ne
+magna primis adolescens.
+
+
+== How can I disable a quoted text substitution?
+
+Omitting the tag will disable quoting. For example, if you don't want
+superscripts or subscripts then put the following in a custom
+configuration file or edit the global `asciidoc.conf` configuration
+file:
+
+---------------------------------------------------------------------
+[quotes]
+^=
+~=
+---------------------------------------------------------------------
+
+
+== I have a paragraph containing some funky URLs, is the a way to suppress AsciiDoc substitutions in the URL address?
+
+You can selectively choose which substitutions to perform by setting
+the 'subs' attribute at the start of a block. For example:
+
+---------------------------------------------------------------------
+[subs="macros"]
+~subscripts~ and ^superscripts^ quotes won't be substituted.
+Nor will the non-alphanumeric characters in the following URL:
+http://host/~user/file#_anchor_tag_str_[]
+---------------------------------------------------------------------
+
+
+== How can I customize the \{localdate} format?
+
+The default format for the `\{localdate}` attribute is the ISO 8601
+`yyyy-mm-dd` format. You can change this format by explicitly setting
+the `\{localdate}` attribute. For example by setting it using the
+asciidoc(1) `-a` command-line option:
+
+  $ asciidoc -a localdate=`date +%d-%d-%Y` mydoc.txt
+
+You could also set it by adding an Attribute Entry to your souce
+document, for example:
+
+  :localdate: {sys: date +%Y-%m-%d}
+
+Since it's set using an executable attribute you'll also need to
+include the `--unsafe` option when you run asciidoc).
+
+
+== Why doesn't AsciiDoc support strike through text?
+
+The reason it's not in the distribution is that DocBook does not have
+provision for strike through text and one of the AsciiDoc design goals
+is that AsciiDoc markup should be applicable to all output formats.
+
+Strike through is normally used to mark deleted text -- a more
+comprehensive way to manage document revisions is to use a version
+control system such as Subversion. You can also use the AsciiDoc
+'CommentLines' and 'CommentBlocks' to retain revised text in the
+source document.
+
+If you really need strike through text for (X)HTML outputs then adding
+the following to a configuration file will allow you to quote strike
+through text with hyphen characters:
+
+---------------------------------------------------------------------
+ ifdef::basebackend-html[]
+
+ [quotes]
+ -=strikethrough
+
+ [tags]
+ strikethrough=<span style="text-decoration: line-through;">|</span>
+
+ endif::basebackend-html[]
+---------------------------------------------------------------------
+
+
+== Where can I find examples of commands used to build output documents?
+
+The User Guide has some. You could also look at `./doc/main.aap` in
+the AsciiDoc distribution, it has all the commands used to build the
+AsciiDoc documentation (even if you don't use A-A-P you'll still find
+it useful).
+
+
+== How can I place a backslash character in front of an attribute reference without escaping the reference?
+
+Use the predefined `\{backslash}` attribute reference instead of an
+actual backslash, for example if the `\{projectname}` attribute has
+the value `foobar` then:
+
+  d:\data{backslash}{projectname}
+
+would be rendered as:
+
+  d:\data\foobar
+
+
+== Why have you used the DocBook <simpara> element instead of <para>?
+
+`<simpara>` is really the same as `<para>` except it can't contain
+block elements which more closely matches the AsciiDoc paragraph
+semantics.

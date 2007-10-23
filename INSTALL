@@ -1,0 +1,83 @@
+
+                             AsciiDoc Installation
+
+   version 8.2.3, 12 September 2007
+
+   Note: The current version of AsciiDoc requires Python 2.3 or newer to
+   run. If you don't already have an up-to-date version of Python
+   installed it can be downloaded from the official Python website
+   [1]http://www.python.org/.
+
+   The latest AsciiDoc downloads can be found on the AsciiDoc website
+   [2]http://www.methods.co.nz/asciidoc/downloads.html and at the
+   SourceForge [3]http://sourceforge.net/projects/asciidoc/):
+     _________________________________________________________________
+
+1. Prepackaged AsciiDoc installation
+
+   The AsciiDoc [4]downloads page lists AsciiDoc packages for various
+   Linux distributions.
+     _________________________________________________________________
+
+2. Distribution tarball installation
+
+   If your flavor or UNIX or Linux is not supported or you prefer to
+   install from source use the install.sh shell script in the tarball
+   root directory (thanks to [5]Jacob Mandelson for the initial
+   implementation of this script).
+
+   install.sh installs AsciiDoc executables, configuration files and man
+   pages in the usual locations. Here's how:
+
+     $ tar -xzf asciidoc-8.2.3.tar.gz
+     $ cd asciidoc-8.2.3
+     $ sudo ./install.sh
+
+   Note: This script was tested on Ubuntu Linux. You may need to edit
+   install.sh if your file locations differ from those wired into the
+   script.
+
+   The uninstall.sh script (actually just a symlink to install.sh) will
+   uninstall AsciiDoc.
+
+   If Vim is installed on your system install.sh will install the Vim
+   syntax highlighter and filetype detection scripts in the global
+   /etc/vim directory (asciidoc.vim in /etc/vim/syntax/ and
+   asciidoc_filetype.vim in /etc/vim/ftdetect/).
+
+   To install locally put asciidoc.vim in ~/.vim/syntax/ and
+   asciidoc_filetype.vim in ~/.vim/ftdetect/.
+     _________________________________________________________________
+
+3. Microsoft Windows installation
+
+   To install the zip formatted distribution just unzip the contents to a
+   new folder:
+
+     $ mkdir asciidoc
+     $ cd asciidoc
+     $ unzip ../asciidoc-8.2.3.zip
+     _________________________________________________________________
+
+4. Testing your installation
+
+   Test out asciidoc by changing to the AsciiDoc application directory
+   and convert the User Guide document (./doc/asciidoc.txt) to XHTML
+   (./doc/asciidoc.html):
+
+     $ asciidoc doc/asciidoc.txt
+
+   Note: Windows users will need to execute the asciidoc.py script
+   directly or create a suitable asciidoc.bat file.
+     _________________________________________________________________
+
+   Version 8.2.3
+   Last updated 2007-09-11 12:56:21 NZDT
+
+References
+
+   1. http://www.python.org/
+   2. http://www.methods.co.nz/asciidoc/downloads.html
+   3. http://sourceforge.net/projects/asciidoc/
+   4. http://www.methods.co.nz/asciidoc/downloads.html
+   5. mailto:jlm@ofb.net

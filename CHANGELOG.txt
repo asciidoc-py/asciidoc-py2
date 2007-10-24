@@ -1,6 +1,22 @@
 AsciiDoc ChangeLog
 ==================
 
+Version 8.2.4 (2007-10-??)
+--------------------------
+.Additions and changes
+- You and now use the `lang` attribute to set the DocBook language.
+- Attribute values can now contain attribute references.
+- If the 'lang' attribute is defined then configuration files named
+  like `lang-<lang>.conf` will be loaded automatically.
+- Admonition captions have been factored into predfined attributes
+  (these only apply to XHTML as DocBook stylesheets provide language
+  captions).
+
+.Bug fixes
+- The spurious warning 'with will become a reserved keyword
+  in Python 2.6' has been suppressed.
+
+
 Version 8.2.3 (2007-09-12)
 --------------------------
 .Additions and changes

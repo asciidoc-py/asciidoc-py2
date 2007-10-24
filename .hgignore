@@ -1,4 +1,5 @@
 syntax: glob
+Session.vim
 *.swp
 *.pdf
 *.html

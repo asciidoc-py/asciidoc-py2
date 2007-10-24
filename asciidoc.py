@@ -6,10 +6,11 @@ Copyright (C) 2002-2007 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
 '''
 
+from __future__ import with_statement
 import sys, os, re, string, time, traceback, tempfile, popen2, codecs, locale
 from types import *
 
-VERSION = '8.2.3'   # See CHANGLOG file for version history.
+VERSION = '8.2.4'   # See CHANGLOG file for version history.
 
 #---------------------------------------------------------------------------
 # Program onstants.
@@ -744,12 +745,8 @@ def subs_attrs(lines,dict={}):
 
     - Attribute references are substituted in the following order: simple,
       conditional, system.
-    - If a 'dict' value includes an attribute reference it won't be substituted
-      unless it's substitution order follows that of the source attribute
-      reference.
-
-    The moral is that any attribute references in 'dict' attribute values
-    should be substituted beforehand.'''
+    - Attribute references inside 'dict' entry values are substituted.
+    '''
 
     def end_brace(text,start):
         '''Return index following end brace that matches brace at start in
@@ -765,6 +762,18 @@ def subs_attrs(lines,dict={}):
             result = result + 1
             if n == 0: break
         return result
+
+    # Substitute attribute references inside dict values.
+    dict = dict.copy()
+    for k,v in dict.items():
+        if v is None:
+            del dict[k]
+        else:
+            v = subs_attrs(str(v))
+            if v is None:
+                del dict[k]
+            else:
+                dict[k] = v
 
     if isinstance(lines,StringType):
         string_result = True
@@ -3637,6 +3646,10 @@ class Config:
         self.load(conf,dir)
         conf = document.backend + '-' + document.doctype + '.conf'
         self.load(conf,dir)
+        lang = document.attributes.get('lang')
+        if lang:
+            conf = 'lang-' + lang + '.conf'
+            self.load(conf,dir)
         # Load ./filters/*.conf files if they exist.
         filters = os.path.join(dir,'filters')
         if os.path.isdir(filters):

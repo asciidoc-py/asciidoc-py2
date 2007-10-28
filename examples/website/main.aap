@@ -1,8 +1,9 @@
 # A-A-P file for making AsciiDoc Web pages.
 
+:cat ../../VERS | :assign VERS
+:cat ../../DATE | :assign DATE
+
 WEB_NAME = asciidoc
-VERS = 8.2.4
-DATE = ?? November 2007
 
 LAYOUT ?= layout1
 

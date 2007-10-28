@@ -6,7 +6,8 @@
 # Stuart Rackham <srackham@methods.co.nz>
 #####################################################################
 
-VERS = 8.2.4
+:cat VERS | :assign VERS
+:cat DATE | :assign DATE
 
 all: docs distribution
 

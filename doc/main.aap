@@ -6,8 +6,8 @@
 # Stuart Rackham <srackham@methods.co.nz>
 #####################################################################
 
-VERS = 8.2.4
-DATE = ?? November 2007
+:cat ../VERS | :assign VERS
+:cat ../DATE | :assign DATE
 
 #####################################################################
 # Programs used by this script.

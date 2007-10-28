@@ -1,0 +1,43 @@
+#####################################################################
+#
+# A-A-P file for making AsciiDoc.
+# (you can obtain A-A-P from http://www.a-a-p.org)
+#
+# Stuart Rackham <srackham@methods.co.nz>
+#####################################################################
+
+VERS = 8.2.4
+
+all: docs distribution
+
+docs:
+    :execute ./doc/main.aap
+
+distribution: docs
+    # Make tarball of all files in MANIFEST.
+    :syseval pwd | :assign WD
+    :sys cd .. && ln -s $(WD) asciidoc-$(VERS)
+    :sys cd .. && tar -czf $(WD)/asciidoc-$(VERS).tar.gz \
+        ``sed s:^:asciidoc-$(VERS)/: $(WD)/MANIFEST``
+    :sys cd .. && rm -f asciidoc-$VERS
+    # Make zip file.
+    ZIP = `program_path("zip")`
+    @if ZIP:
+        :sys rm -f asciidoc-$(VERS).zip
+        :sys ls ``cat MANIFEST`` | $ZIP asciidoc-$(VERS).zip -@
+        # Zip files don't know about symlinks so just duplicate the
+        # files.
+        :sys $ZIP asciidoc-$(VERS).zip \
+                doc/images/tiger.png \
+                doc/images/smallnew.png \
+                doc/images/icons/README \
+                doc/images/icons/*.png \
+                doc/images/icons/callouts/*.png \
+                examples/website/images/tiger.png \
+                examples/website/images/highlighter.png \
+                examples/website/images/smallnew.png \
+                examples/website/images/icons/README \
+                examples/website/images/icons/*.png \
+                examples/website/images/icons/callouts/*.png
+    @else:
+        :print WARNING: zip(1) unavailable, skipping zip file creation

@@ -1,0 +1,139 @@
+# A-A-P file for making AsciiDoc Web pages.
+
+WEB_NAME = asciidoc
+VERS = 8.2.4
+DATE = ?? November 2007
+
+LAYOUT ?= layout1
+
+# Various document locations.
+PROJ_DIR = ../..
+DOCS_DIR = $PROJ_DIR/doc
+LOCAL_WEB = ~/tmp/asciidoc-web # Local web marshalling location.
+
+# List of web pages.
+WEB_ROOT =
+    a2x.1
+    asciidoc-docbook-xsl
+    asciimath
+    CHANGELOG
+    downloads
+    faq
+    index
+    INSTALL
+    latex-backend
+    latexmath
+    manpage
+    music-filter
+    README
+    README-website
+    source-highlight-filter
+    support
+    userguide
+WEB_PAGES = $*(WEB_ROOT).html
+WEB_SOURCE = $*(WEB_ROOT).txt
+
+# Web site specific pages to spell check.
+SPELL_CHECK =
+    index.txt
+    downloads.txt
+    README-website.txt
+    support.txt
+    source-highlight-filter.txt
+    music-filter.txt
+
+# Accompanying documents in DOCS_DIR.
+DOCS_ROOT =
+    asciidoc
+    asciidoc.1
+DOCS =
+    $*(DOCS_ROOT).txt
+    $*(DOCS_ROOT).html
+    $*(DOCS_ROOT).css-embedded.html
+    $*(DOCS_ROOT).xml
+    asciidoc.pdf
+    asciidoc.1
+    article.txt article.html
+    book.txt book.html
+    book-multi.txt book-multi.html
+    docbook-xsl.css
+    asciidoc.chm
+    article.pdf
+
+# Client applications.
+@if OSTYPE == 'posix':
+    ASCIIDOC = `program_path("asciidoc")`
+    @if not ASCIIDOC:
+        :print ERROR: asciidoc(1) not found
+        :exit
+    TAR = `program_path("tar")`
+    ASPELL = `program_path("aspell")`
+@else:
+    :print ERROR: Unsupported operating system $OSTYPE
+    :exit
+
+:syseval which xmllint | :assign XMLLINT    # Validates XML.
+
+# AsciiDoc options to generate documentation HTML.
+ASCIIDOC_HTML =
+    asciidoc --unsafe -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revision=$(VERS)@ -a date="$(DATE)@"
+@if LAYOUT == 'layout2':
+    ASCIIDOC_HTML += -a quirks!
+
+:rule %.html : %.txt $(LAYOUT).conf
+    @if target in ('userguide.html','faq.html'):
+        # User guide has author, revision, date in header.
+        opts = -a toc -a numbered
+    @elif target == 'index.html':
+        # Index has description and keywords meta tags.
+        opts = -a index-only
+    @elif target in ('manpage.html','a2x.1.html'):
+        opts = -d manpage
+    @elif target == 'asciimath.html':
+        opts = -a asciimath
+    @elif target == 'latexmath.html':
+        opts = -a latexmath
+    @else:
+        opts =
+    @if target in ('index.html','INSTALL.html','downloads.html','manpage.html','a2x.1.html'):
+        opts += -a toc -a toclevels=1
+    :sys $ASCIIDOC_HTML $opts $(source[0])
+    @if _no.XMLLINT:
+        :sys $XMLLINT --nonet --noout --valid $target
+    @else:
+        :print WARNING: xmllint(1) unavailable: skipping validation
+
+all: $(WEB_PAGES)
+
+copy: all
+    # Copy to local web page.
+    :sys mkdir -p $LOCAL_WEB/images/icons/callouts
+    :sys cp $WEB_PAGES $LOCAL_WEB
+    :sys cp $WEB_SOURCE $LOCAL_WEB
+    :sys cp *.css $LOCAL_WEB
+    :sys cp *.js $LOCAL_WEB
+    :execute $PROJ_DIR/main.aap distribution    # Make docs and tarball.
+    :sys cp $DOCS_DIR/$*DOCS $LOCAL_WEB
+    :sys cp $PROJ_DIR/asciidoc-$(VERS).tar.gz $LOCAL_WEB
+    :sys cp $PROJ_DIR/asciidoc-$(VERS).zip $LOCAL_WEB
+    # Copy images.
+    :sys cp $DOCS_DIR/images/*.png $LOCAL_WEB/images/
+    :sys cp $DOCS_DIR/images/icons/*.png $LOCAL_WEB/images/icons/
+    :sys cp $DOCS_DIR/images/icons/callouts/*.png $LOCAL_WEB/images/icons/callouts/
+    # Copy chunked User Guide.
+    :sys rm -rf $LOCAL_WEB/chunked/
+    :sys mkdir -p $LOCAL_WEB/chunked/
+    :sys cp $DOCS_DIR/asciidoc.chunked/*.html $LOCAL_WEB/chunked/
+    :sys cp music?.* $LOCAL_WEB
+
+clean:
+    :del {f} $WEB_PAGES
+    :del {f} *.bak          # Remove aspell backups.
+
+spell: $(SPELL_CHECK)
+    # Interactively spell check all files.
+    @if _no.ASPELL:
+        @for s in source_list:
+            :sys {i} $ASPELL check -p $(WEB_NAME)-website.dict $s
+    @else:
+        :print WARNING: aspell(1) unavailable, skipping spell checking

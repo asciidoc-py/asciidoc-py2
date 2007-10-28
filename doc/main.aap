@@ -6,8 +6,8 @@
 # Stuart Rackham <srackham@methods.co.nz>
 #####################################################################
 
-VERS = 8.2.3
-DATE = 12 September 2007
+VERS = 8.2.4
+DATE = ?? November 2007
 
 #####################################################################
 # Programs used by this script.

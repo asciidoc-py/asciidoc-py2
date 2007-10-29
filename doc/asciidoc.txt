@@ -1066,8 +1066,8 @@ Renders:
 2. Item 2
 ....................
 
-The literal block has a 'verse' <<X23,style>> (useful for lyrics and
-poems). For example:
+A 'verse' <<X23,style>> can be applied to LiteralBlocks (useful for
+lyrics and poems). For example:
 
 ---------------------------------------------------------------------
 [verse]
@@ -2962,10 +2962,12 @@ locations are loaded in the following order:
 1. `asciidoc.conf`
 2. `<backend>.conf`
 3. `<backend>-<doctype>.conf`
+4. `lang-<lang>.conf`
 
 Where `<backend>` and `<doctype>` are values specified by the
 asciidoc(1) `-b` (`--backend`) and `-d` (`--doctype`) command-line
-options.
+options. `<lang>` is the value of the AsciiDoc `lang` attribute
+(defaults to `en` (English)).
 
 Finally, configuration files named like the source file will be
 automatically loaded if they are found in the source file directory.
@@ -3795,6 +3797,10 @@ route:
 - DocBook toolchains can also (optionally) generate separate (chunked)
   linked HTML pages for each document section.
 - Toolchain processing performs link and document validity checks.
+- If the DocBook 'lang' attribute is set then things like table of
+  contents, revision history, figure and table captions, admonition
+  captions will be output in the specified language (setting the
+  AsciiDoc 'lang' attribute sets the DocBook 'lang' attribute).
 
 On the other hand, HTML output directly from AsciiDoc is much faster,
 can be used in situations where there is no suitable DocBook toolchain
@@ -4642,16 +4648,25 @@ Appendix H: Using AsciiDoc with non-English Languages
 AsciiDoc can process UTF-8 character sets but there are some things
 you need to be aware of:
 
-- <<X28,Admonition>> captions, <<X48,example block>> title prefixes,
-  table title prefixes and <<X49,image block>> title prefixes default
-  to English.  You can customize these captions and prefixes with the
-  `caption` attribute.  Alternatively you could override the related
-  AsciiDoc configuration file entries with a custom configuration
-  file.
-+
-NOTE: The `caption` attribute only applies if you are using the
-`xhtml11` or `html4` backends -- if you are going the DocBook route
-you will need to configure the XSL Stylesheets for your language.
+- If you are generating output documents using a DocBook toolchain
+  then you should set the AsciiDoc `lang` attribute to the appropriate
+  language (it defaults to `en` (English)). This will ensure things
+  like table of contents, revision history, figure and table captions
+  and admonition captions are output in the specified language.
+  For example:
+
+  $ a2x -a lang=es doc/article.txt
+
+- asciidoc(1) automatically loads configuration files named like
+  `lang-<lang>.conf` where `<lang>` is a two letter language code that
+  matches the current AsciiDoc `lang` attribute. See also
+  <<X27,Configuration File Names and Locations>>.
+
+- If you are outputting html or xhtml directly from asciidoc(1) you'll
+  need to set the various `*_caption` attributes to match your target
+  language. The easiest way is to create a language `.conf` file (see
+  the example `lang-es.conf` file that comes with the AsciiDoc
+  distribution).
 
 - Some character sets display double-width characters (for example
   Japanese). As far as <<X17,title underlines>> are concerned they

@@ -19,6 +19,19 @@ characters. If you need spaces encode them as `%20`. For example:
   http://www.foo.bar.com/an%20example%20document.html[]
 
 
+== How can I get AsciiDoc to assign the correct DocBook language attribute?
+
+Set the AsciiDoc 'lang' attribute to the appropriate language code.
+For example:
+
+  $ a2x -a lang=es doc/article.txt
+
+This will ensure that downstream DocBook processing will generate the
+correct language specific document headings (things like table of
+contents, revision history, figure and table captions, admonition
+captions).
+
+
 == Why does AsciiDoc give me a ``malformed author'' error?
 
 This is normally because there are more than three names (up to three
@@ -38,6 +51,34 @@ explicit attribute entries:
   :First name:  Vincent
   :Middle name: Willem
   :Last name:   Van Gogh
+
+
+== How can I assign multiple author names?
+
+A quick way to do this is put both authors in a single first name, for 
+example:
+
+  My Document
+  ===========
+  :Author: Bill_and_Ben_the_Flowerpot_Men
+  :Author Initials: BB & BC
+
+asciidoc(1) replaces the underscores with spaces.
+
+The longer, but semantically correct way, is to override the
+`[header]` configuration file section in a document specific `.conf`
+file. For example if your document is `mydoc.txt` then a file called
+`mydoc.conf` in the document directory would be picked up
+automatically by asciidoc(1).  Copy and paste the default
+`docbook.conf` file `[header]` to `mydoc.conf` and modify the author
+related markup:
+
+  [header]
+    :
+  <authorgroup>...
+    :
+
+
 
 == How can I escape AsciiDoc markup?
 

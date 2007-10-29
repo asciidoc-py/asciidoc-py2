@@ -108,10 +108,10 @@ VariableList entries, the AsciiDoc source entry terms are terminated
 by the ":-" characters.
 
 A glossary term:-
-	The corresponding (indented) definition.
+  The corresponding (indented) definition.
 
 A second glossary term:-
-	The corresponding (indented) definition.
+  The corresponding (indented) definition.
 
 
 ifdef::backend-docbook[]

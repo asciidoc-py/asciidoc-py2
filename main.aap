@@ -9,12 +9,15 @@
 :cat VERS | :assign VERS
 :cat DATE | :assign DATE
 
-all: docs distribution
+all: docs website distribution
 
 docs:
     :execute ./doc/main.aap
 
-distribution: docs
+website:
+    :execute ./examples/website/main.aap
+
+distribution: docs website
     # Make tarball of all files in MANIFEST.
     :syseval pwd | :assign WD
     :sys cd .. && ln -s $(WD) asciidoc-$(VERS)

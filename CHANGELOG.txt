@@ -13,6 +13,8 @@ Version 8.2.4 (2007-11-??)
   predefined set of `caption_*` attributes.  They only apply to
   directly generated (X)HTML outputs (DocBook stylesheets generate
   their own language specific captions based on the `lang` attribute).
+- Dropped platform dependent `doc/asciidoc.chm` file from
+  distribution documentation formats.
 
 .Bug fixes
 - The spurious warning 'with will become a reserved keyword

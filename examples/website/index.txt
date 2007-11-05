@@ -63,9 +63,6 @@ Example Articles
   asciidoc(1) DocBook output using `xsltproc(1)`, DocBook XSL
   Stylesheets and FOP.
 
-- Here's a Windows link:asciidoc.chm[HTML Help version] of the User
-  Guide.
-
 Example Books
 ~~~~~~~~~~~~~
 AsciiDoc markup supports all the standard DocBook frontmatter and

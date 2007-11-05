@@ -11,7 +11,6 @@ DATE
 doc/a2x.1
 doc/article.pdf
 doc/asciidoc.1
-doc/asciidoc.chm
 doc/asciidoc.conf
 doc/asciidoc-revhistory.xml
 docbook-xsl/*.patch

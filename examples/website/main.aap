@@ -58,7 +58,6 @@ DOCS =
     book.txt book.html
     book-multi.txt book-multi.html
     docbook-xsl.css
-    asciidoc.chm
     article.pdf
 
 # Client applications.

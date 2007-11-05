@@ -2,12 +2,12 @@ a2x
 asciidoc.py
 BUGS
 BUGS.txt
+common.aap
 CHANGELOG
 CHANGELOG.txt
 *.conf
 COPYING
 COPYRIGHT
-DATE
 doc/a2x.1
 doc/article.pdf
 doc/asciidoc.1
@@ -61,6 +61,5 @@ javascripts/toc.js
 README
 README.txt
 stylesheets/*.css
-VERS
 vim/syntax/asciidoc.vim
 vim/ftdetect/asciidoc_filetype.vim

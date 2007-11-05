@@ -6,8 +6,10 @@
 # Stuart Rackham <srackham@methods.co.nz>
 #####################################################################
 
-:cat VERS | :assign VERS
-:cat DATE | :assign DATE
+:execute ./common.aap
+
+vers:
+    :print Version: $VERS (released $DATE)
 
 all: docs website distribution
 

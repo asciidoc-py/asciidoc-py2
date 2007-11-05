@@ -1,5 +1,7 @@
 # A-A-P file for making AsciiDoc Web pages.
 
+:execute ../../common.aap
+
 :cat ../../VERS | :assign VERS
 :cat ../../DATE | :assign DATE
 

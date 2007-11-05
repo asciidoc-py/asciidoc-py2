@@ -3,6 +3,11 @@ Bugs and Known Problems
 
 AsciiDoc
 --------
+- The `toc` attribute will be ignored if it's set in a custom user or
+  document configuration file. This is because the default
+  configuration file containing the document `[header]` is sourced
+  before custom configuration files and the `toc` attribute is
+  processed using conditional inclusion macros.
 - The `\include1::[]` block macro does not work inside ListingBlocks or
   FilterBlocks. Use `\include::[]` instead.
 - Reported line numbers in diagnostic messages are sometimes wrong.

@@ -1,14 +1,14 @@
 AsciiDoc Announcement
 =====================
 
-Text for posting to AsciiDoc related mailing lists.
+Text for posting to AsciiDoc related mailing lists:
 
 .....................................................................
-Subject: ANN: AsciiDoc 8.2.1 released
+To: python-announce@python.org
+Subject: ANN: AsciiDoc 8.2.4 released
 
-This release includes a Vim syntax highlighter (inspired by Felix
-Obenhuber's asciidoc.vim script) plus quite a few minor additions and
-changes.
+This release adds support for language specific configuration files
+along with a couple of other minor additions.
 
 Full details at http://www.methods.co.nz/asciidoc/
 

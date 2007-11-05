@@ -4,15 +4,15 @@ AsciiDoc ChangeLog
 Version 8.2.4 (2007-11-??)
 --------------------------
 .Additions and changes
-- You and now use the `lang` attribute to set the DocBook language
+- You can now use the `lang` attribute to set the DocBook language
   attribute.
 - Attribute values can now contain attribute references.
 - If the 'lang' attribute is defined then configuration files named
   like `lang-<lang>.conf` will be loaded automatically.
-- Admonition captions have been factored into predefined `caption_*`
-  attributes.  They do not apply to DocBook outputs (DocBook
-  stylesheets provide language specific captions based on the `lang`
-  attribute).
+- Admonition, figure and table captions have been factored into a
+  predefined set of `caption_*` attributes.  They only apply to
+  directly generated (X)HTML outputs (DocBook stylesheets generate
+  their own language specific captions based on the `lang` attribute).
 
 .Bug fixes
 - The spurious warning 'with will become a reserved keyword

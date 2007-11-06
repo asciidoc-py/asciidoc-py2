@@ -2,9 +2,6 @@
 
 :execute ../../common.aap
 
-:cat ../../VERS | :assign VERS
-:cat ../../DATE | :assign DATE
-
 WEB_NAME = asciidoc
 
 LAYOUT ?= layout1
@@ -33,6 +30,7 @@ WEB_ROOT =
     source-highlight-filter
     support
     userguide
+    version9
 WEB_PAGES = $*(WEB_ROOT).html
 WEB_SOURCE = $*(WEB_ROOT).txt
 
@@ -109,6 +107,7 @@ all: $(WEB_PAGES)
 
 copy: all
     # Copy to local web page.
+    :sys rm -rf $LOCAL_WEB/*
     :sys mkdir -p $LOCAL_WEB/images/icons/callouts
     :sys cp $WEB_PAGES $LOCAL_WEB
     :sys cp $WEB_SOURCE $LOCAL_WEB
@@ -128,8 +127,7 @@ copy: all
     :sys cp $DOCS_DIR/asciidoc.chunked/*.html $LOCAL_WEB/chunked/
     :sys cp music?.* $LOCAL_WEB
     # Copy Mercurial repo.
-    :sys rm -rf $LOCAL_WEB/.hg/
-    :sys cp -r .hg/ $LOCAL_WEB
+    :sys cp -r ../../.hg/ $LOCAL_WEB
 
 clean:
     :del {f} $WEB_PAGES

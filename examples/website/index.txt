@@ -9,8 +9,8 @@ along with a couple of other fairly minor additions.
 A read-only copy of the AsciiDoc Mercurial repository is now
 link:downloads.html#X3[available online].
 
-However the big news is the upcoming link:version9[AsciiDoc version 9]
-release which has been undertaken by Yannick Gringras. See
+However the big news is the upcoming link:version9.html[AsciiDoc
+version 9] release which has been undertaken by Yannick Gringras. See
 link:version9.html[here] for details.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full description of

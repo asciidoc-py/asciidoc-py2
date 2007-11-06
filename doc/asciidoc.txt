@@ -4027,20 +4027,24 @@ Examples:
 
 Customizing Help
 ~~~~~~~~~~~~~~~~
-To change, delete or add your own help topics edit a `help.conf` file.
-The <<X27,file location>> will depend on whether you want the topics
-to apply to all users, to a single user or to a single project.
+To change, delete or add your own help topics edit a help
+configuration file.  The help file name `help-<lang>.conf` is based on
+the setting of the `lang` attribute, defaults to `help.conf`
+(English).  The <<X27,help file location>> will depend on whether you
+want the topics to apply to all users or just the current user.
 
-Help topics are stored `help.conf` text files. The help topic files
-have the same named section format as other <<X7,configuration
-files>>. The `help.conf` files are stored in the same locations and
-loaded in the same order as other configuration files.
+The help topic files have the same named section format as other
+<<X7,configuration files>>. The `help.conf` files are stored in the
+same locations and loaded in the same order as other configuration
+files.
 
-When the a `\--help` command-line option is specified AsciiDoc loads
-the `help.conf` files and then prints the contents of the section
+When the `\--help` command-line option is specified AsciiDoc loads the
+appropriate help files and then prints the contents of the section
 whose name matches the help topic name.  If a topic name is not
-specified `default` is used.  If a matching help file section is not
-found a list of available topics is printed.
+specified `default` is used. You don't need to specifiy the whole help
+topic name on the command-line, just enough letters to ensure it's not
+ambiguous. If a matching help file section is not found a list of
+available topics is printed.
 
 
 Tips and Tricks

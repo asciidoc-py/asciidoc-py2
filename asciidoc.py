@@ -3988,7 +3988,7 @@ class Config:
 APP_DIR = None              # This file's directory.
 USER_DIR = None             # ~/.asciidoc
 CONF_DIR = "/etc/asciidoc"  # Global configuration files directory.
-HELP_FILE = 'help.conf'
+HELP_FILE = 'help.conf'     # Default (English) help file.
 
 # Globals
 # -------
@@ -4101,12 +4101,23 @@ def usage(msg=''):
 
 def show_help(topic, stream=sys.stdout):
     '''Print help topic to stdout.'''
-    # Print [topic] section from help.conf files.
+    # Select help file.
+    lang = config.cmd_attrs.get('lang')
+    if lang and lang != 'en':
+        help_file = 'help-' + lang + '.conf'
+    else:
+        help_file = HELP_FILE
+    # Print [topic] section from help file.
     topics = OrderedDict()
-    load_sections(topics, HELP_FILE, CONF_DIR)
-    load_sections(topics, HELP_FILE, APP_DIR)
+    load_sections(topics, help_file, CONF_DIR)
+    load_sections(topics, help_file, APP_DIR)
     if USER_DIR is not None:
-        load_sections(topics, HELP_FILE, USER_DIR)
+        load_sections(topics, help_file, USER_DIR)
+    if len(topics) == 0:
+        # Default to English if specified language help files not found.
+        help_file = HELP_FILE
+        load_sections(topics, help_file, CONF_DIR)
+        load_sections(topics, help_file, APP_DIR)
     if len(topics) == 0:
         print_stderr('no help topics found')
         sys.exit(1)
@@ -4116,7 +4127,7 @@ def show_help(topic, stream=sys.stdout):
             n += 1
             lines = topics[k]
     if n == 0:
-        print_stderr('help topic not found: %s' % topic)
+        print_stderr('help topic not found: [%s] in %s' % (topic, help_file))
         print_stderr('available help topics: %s' % ', '.join(topics.keys()))
         sys.exit(1)
     elif n > 1:
@@ -4142,19 +4153,13 @@ def main():
     try:
         #DEPRECATED: --safe option.
         opts,args = getopt.getopt(sys.argv[1:],
-            'a:b:cd:ef:h:no:svw:',
+            'a:b:cd:ef:hno:svw:',
             ['attribute=','backend=','conf-file=','doctype=','dump-conf',
-            'help=','no-conf','no-header-footer','out-file=','profile',
+            'help','no-conf','no-header-footer','out-file=','profile',
             'section-numbers','verbose','version','safe','unsafe'])
-    except getopt.GetoptError,e:
-        msg = str(e)
-        if re.search(r'^option (-h|--help) requires argument$', msg):
-            # It's OK not to supply help option argument.
-            show_help('default')
-            sys.exit(0)
-        else:
-            usage(msg)
-            sys.exit(1)
+    except getopt.GetoptError:
+        usage(msg)
+        sys.exit(1)
     if len(args) > 1:
         usage()
         sys.exit(1)
@@ -4164,13 +4169,10 @@ def main():
     outfile = None
     options = []
     prof = False
+    help = False
     for o,v in opts:
         if o in ('--help','-h'):
-            if v:
-                show_help(v)
-            else:
-                show_help('default')
-            sys.exit(0)
+            help = True
         if o == '--profile':
             prof = True
         if o == '--unsafe':
@@ -4211,6 +4213,12 @@ def main():
             options.append('-s')
         if o in ('-v','--verbose'):
             options.append('-v')
+    if help:
+        if len(args) == 0:
+            show_help('default')
+        else:
+            show_help(args[-1])
+        sys.exit(0)
     if len(args) == 0 and len(opts) == 0:
         usage()
         sys.exit(1)

@@ -8,10 +8,13 @@
 
 :execute ./common.aap
 
+all: docs website distribution
+
 vers:
     :print Version: $VERS (released $DATE)
 
-all: docs website distribution
+tags:
+    :sys ctags asciidoc.py
 
 docs:
     :execute ./doc/main.aap

@@ -1,8 +1,9 @@
 AsciiDoc Version 9
 ==================
+
 Installing and configuring the latest version of AsciiDoc across
 various distributions and platforms has never been easy and lots of
-contributors have put in link:downloads.html[lots of effort] to do
+contributors have put in link:downloads.html#X1[lots of effort] to do
 just this -- this never ending task is the bane of the Open Source
 developer and user alike because invevitably distribution specific
 packages are either missing or are soon out of date.

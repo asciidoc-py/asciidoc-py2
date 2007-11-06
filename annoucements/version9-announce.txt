@@ -1,0 +1,42 @@
+AsciiDoc Version 9 Announcement
+===============================
+
+Text for posting to AsciiDoc asciidoc-discuss@lists.metaperl.com
+mailing list:
+
+.....................................................................
+To: asciidoc-discuss@lists.metaperl.com
+Subject: AsciiDoc version 9
+
+Hi All
+
+I just wanted to share with you the plans for AsciiDoc version 9
+(http://www.methods.co.nz/asciidoc/version9.html) and explain how we
+got to this point.
+
+Yannick Gringras emailed me late September enquiring of any plans for
+a Python based installer for AsciiDoc -- he was already some of the
+way there and volunteered to do the work. I was enthusiastic but it
+was soon apparent that Yannick's efforts were outpacing mine so rather
+than hold things back and in the light of the quite considerable
+changes in the file layout we decided to start a new major release,
+version 9, which would be managed by Yannick.
+
+In the meantime I would release version 8.2.4 and continue continue to
+be responsible for version 8.
+
+The plan is that v8 will coexist with v9, the only ongoing v8
+enhancements will be relatively minor and will not include any
+architectural changes, v8 patches and modifications will be passed up
+to v9. The AsciiDoc source and configuration file syntax will be the
+same for both v8 and v9.
+
+A welcome side benefit of this collaboration is that the AsciiDoc 8
+distribution is now published as a Mercurial repostitory which also
+resulted in a tidy up of the AAP build files.
+
+
+Cheers, Stuart
+--
+Stuart Rackham
+.....................................................................

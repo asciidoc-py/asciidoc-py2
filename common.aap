@@ -3,7 +3,7 @@
 #
 
 _parent.VERS = 8.2.4
-_parent.DATE = 7 November 2007
+_parent.DATE = 10 November 2007
 
 all:
     :pass

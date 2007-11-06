@@ -22,6 +22,15 @@ link:asciidoc-{revision}.zip[]::
   symbolic links to eliminate file duplication).
 
 
+[[X3]]
+Mercurial Repository
+--------------------
+A read-only Mercurial repository of the current version can be cloned
+or pulled from the DocIndexer website. To get a clone of the repo:
+
+  $ hg clone static-http://www.methods.co.nz/asciidoc
+
+
 [[X1]]
 Prepackaged Versions
 --------------------

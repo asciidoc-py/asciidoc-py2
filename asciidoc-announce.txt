@@ -8,7 +8,7 @@ To: python-announce@python.org
 Subject: ANN: AsciiDoc 8.2.4 released
 
 This release adds support for language specific configuration files
-along with a couple of other minor additions.
+along with a couple of other fairly minor additions.
 
 Full details at http://www.methods.co.nz/asciidoc/
 

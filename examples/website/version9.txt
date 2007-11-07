@@ -26,3 +26,20 @@ Later in the 9.x branch:
 - distutils commands to produce AsciiDoc rendered documentation of
   Python packages (minimal support now in buildutils)
 
+http://ygingras.net[Yannick Gingras] is the maintainer of the 9.x branch; 
+he can be contacted by mailto:ygingras@ygingras.net[email] or, preferably, 
+on the link:support.html[mailing list].
+
+There is no release of the 9.x branch yet but adventurous users can
+still get the source with Mercurial:
+
+  hg clone static-http://ygingras.net/files/asciidoc.hg asciidoc-9x
+
+Using sources from the Mercurial repository will require
+http://peak.telecommunity.com/DevCenter/setuptools[Setuptools] and the
+http://pypi.python.org/pypi/hg.setuptools/[Mercurial plugin] for
+Setuptools.
+
+NOTE: The 9.x branch is still experimental.  You should install it
+inside a http://pypi.python.org/pypi/virtualenv/[virtualenv] to
+prevent damages to your global Python environment.

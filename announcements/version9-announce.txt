@@ -33,7 +33,7 @@ the same for both v8 and v9.
 
 The feature plan for 9.0 is:
 - AsciiDoc easy_installable (done, not fully tested)
-- AsciiDoc as python module with a decent API (now a module, no API yet)
+- AsciiDoc as a Python module with a decent API (now a module, no API yet)
 - AsciiDoc 100% Python: no shell or unportable scripting (not done)
 
 Later in the 9.x branch:
@@ -43,7 +43,8 @@ Later in the 9.x branch:
   Python packages (minimal support now in buildutils)
 
 There is no definitive time frame yet but we can probably expect a
-beta of 9.0 before the end of the year.
+beta of 9.0 before the end of the year.  All ideas and suggestions on
+what the API should offer are welcome.
 
 A welcome side benefit of this collaboration is that AsciiDoc is now
 published as a Mercurial repostitory which also resulted in a tidy up

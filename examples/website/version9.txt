@@ -13,7 +13,16 @@ But it doesn't have to be like this -- AsciiDoc is a pure Python
 application and could be distributed from the
 http://pypi.python.org/[Cheese Shop] as a stand-alone platform
 independent http://peak.telecommunity.com/DevCenter/PythonEggs[Python
-Egg].
+Egg].  The 9.x branch aims to attack this problem.
 
+The feature plan for 9.0 is:
+- AsciiDoc easy_installable (done, not fully tested)
+- AsciiDoc as a Python module with a decent API (now a module, no API yet)
+- AsciiDoc 100% Python: no shell or unportable scripting (not done)
 
-TODO: Release plan, planned features/changes.
+Later in the 9.x branch:
+- plugin system for frontend and backends
+- plugin system for style-sheets
+- distutils commands to produces AsciiDoc rendered documentation of
+  Python packages (minimal support now in buildutils)
+

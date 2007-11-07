@@ -1,8 +1,7 @@
 AsciiDoc Support
 ================
 
-- mailto:asciidoc-discuss-owner@metaperl.com[Terrence Brannon] has set
+- Terrence Brannon has set
   up the
-  http://metaperl.com/cgi-bin/mailman/listinfo/asciidoc-discuss[asciidoc-discuss]
+  http://lists.metaperl.com/cgi-bin/mailman/listinfo/asciidoc-discuss[asciidoc-discuss]
   mailing list.
-- The author can be emailed at mailto:srackham@methods.co.nz[].

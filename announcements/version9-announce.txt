@@ -22,8 +22,8 @@ than hold things back and in the light of the quite considerable
 changes in the file layout we decided to start a new major release,
 version 9, which is to be managed by Yannick.
 
-In the meantime I will release version 8.2.4 and continue continue to
-be responsible for the 8.x branch.
+In the meantime I will release version 8.2.4 and continue to be
+responsible for the 8.x branch.
 
 The plan is that the 8.x branch will coexist with the 9.x one; the only
 ongoing v8 enhancements will be relatively minor and will not include

@@ -39,7 +39,7 @@ The feature plan for 9.0 is:
 Later in the 9.x branch:
 - plugin system for frontend and backends
 - plugin system for style-sheets
-- distutils commands to produces AsciiDoc rendered documentation of
+- distutils commands to produce AsciiDoc rendered documentation of
   Python packages (minimal support now in buildutils)
 
 There is no definitive time frame yet but we can probably expect a

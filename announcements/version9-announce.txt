@@ -31,9 +31,9 @@ architectural changes, v8 patches and modifications will be passed up
 to v9. The AsciiDoc source and configuration file syntax will be the
 same for both v8 and v9.
 
-A welcome side benefit of this collaboration is that the AsciiDoc 8
-distribution is now published as a Mercurial repostitory which also
-resulted in a tidy up of the AAP build files.
+A welcome side benefit of this collaboration is that AsciiDoc is now
+published as a Mercurial repostitory which also resulted in a tidy up
+of the AAP build files.
 
 
 Cheers, Stuart

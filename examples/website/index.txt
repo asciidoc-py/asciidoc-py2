@@ -9,8 +9,8 @@ along with a couple of other fairly minor additions.
 A read-only copy of the AsciiDoc Mercurial repository is now
 link:downloads.html#X3[available online].
 
-However the big news is the upcoming link:version9.html[AsciiDoc
-version 9] release which has been undertaken by Yannick Gringras. See
+The big news is the upcoming link:version9.html[AsciiDoc version 9]
+release which has been undertaken by Yannick Gingras. See
 link:version9.html[here] for details.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full description of
@@ -198,3 +198,9 @@ and I'll add them to the list.
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] uses
   AsciiDoc for documentation and has released an Emacs syntax
   highlighter (see <<X2,Resources>> above).
+
+
+AsciiDoc version 9
+-----------------
+The next version of AsciiDoc is underway -- details
+link:version9.html[here].

@@ -3,13 +3,16 @@ Bugs and Known Problems
 
 AsciiDoc
 --------
+- A benign warning 'with will become a reserved keyword
+  in Python 2.6' sometimes occurs when using Python 2.5-- it's
+  harmless and will dishappear with Python 3.
 - The `toc` attribute will be ignored if it's set in a custom user or
   document configuration file. This is because the default
   configuration file containing the document `[header]` is sourced
   before custom configuration files and the `toc` attribute is
   processed using conditional inclusion macros.
-- The `\include1::[]` block macro does not work inside ListingBlocks or
-  FilterBlocks. Use `\include::[]` instead.
+- The `\include1::[]` block macro does not work inside ListingBlocks
+  or FilterBlocks. Use `\include::[]` instead.
 - Reported line numbers in diagnostic messages are sometimes wrong.
 - Block filters only work in a POSIX environment.
 - Embedding open brace characters { in argument values can cause

@@ -6,7 +6,6 @@ Copyright (C) 2002-2007 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
 '''
 
-from __future__ import with_statement
 import sys, os, re, string, time, traceback, tempfile, popen2, codecs, locale
 from types import *
 

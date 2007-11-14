@@ -4157,7 +4157,7 @@ def main():
             'help','no-conf','no-header-footer','out-file=','profile',
             'section-numbers','verbose','version','safe','unsafe'])
     except getopt.GetoptError:
-        usage(msg)
+        usage()
         sys.exit(1)
     if len(args) > 1:
         usage()

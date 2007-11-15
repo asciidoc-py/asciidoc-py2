@@ -6,6 +6,7 @@ Version 8.2.5 (2007-??-??)
 .Additions and changes
 
 .Bug fixes
+- Fixed exception thrown by illegal command-line arguments.
 - Rolled back the 'with' warning bug fix introduced in 8.2.4 -- it was
   incompatible with Python <2.5.
 

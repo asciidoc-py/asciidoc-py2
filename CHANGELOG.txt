@@ -1,7 +1,7 @@
 AsciiDoc ChangeLog
 ==================
 
-Version 8.2.5 (2007-??-??)
+Version 8.2.5 (2007-11-18)
 --------------------------
 .Additions and changes
 

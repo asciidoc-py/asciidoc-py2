@@ -3,6 +3,14 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
+This release fixes couple of bugs in 8.2.4, in particular a nasty
+regression bug (`future feature with_statement is not defined`). *No
+new features have been added*.
+
+************************************************************************
+
+.10 November 2007: AsciiDoc 8.2.4 Released
+************************************************************************
 This release adds support for language specific configuration files
 along with a couple of other fairly minor additions.
 

@@ -25,11 +25,6 @@ link:asciidoc-{revision}.zip[]::
 [[X3]]
 Mercurial Repository
 --------------------
-A read-only Mercurial repository of the current version can be cloned
-or pulled from the AsciiDoc website. To get a clone of the repo:
-
-  $ hg clone static-http://www.methods.co.nz/asciidoc
-
 The AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository
 is hosted by http://sharesource.org[ShareSource].  ShareSource is a
 Mercurial friendly website for hosting Open Source projects.

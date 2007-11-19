@@ -30,6 +30,21 @@ or pulled from the AsciiDoc website. To get a clone of the repo:
 
   $ hg clone static-http://www.methods.co.nz/asciidoc
 
+The AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository
+is hosted by http://sharesource.org[ShareSource].  ShareSource is a
+Mercurial friendly website for hosting Open Source projects.
+
+To browse the repo go to http://hg.sharesource.org/asciidoc/[].
+
+To create your own local AsciiDoc repository:
+
+  $ hg clone http://hg.sharesource.org/asciidoc
+
+To pull the latest changes into your local repository:
+
+  $ cd asciidoc
+  $ hg pull http://hg.sharesource.org/asciidoc
+
 
 [[X1]]
 Prepackaged Versions

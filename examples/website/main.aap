@@ -126,8 +126,6 @@ copy: all
     :sys mkdir -p $LOCAL_WEB/chunked/
     :sys cp $DOCS_DIR/asciidoc.chunked/*.html $LOCAL_WEB/chunked/
     :sys cp music?.* $LOCAL_WEB
-    # Copy Mercurial repo.
-    :sys cp -r ../../.hg/ $LOCAL_WEB
 
 clean:
     :del {f} $WEB_PAGES

@@ -14,8 +14,8 @@ new features have been added*.
 This release adds support for language specific configuration files
 along with a couple of other fairly minor additions.
 
-A read-only copy of the AsciiDoc Mercurial repository is now
-link:downloads.html#X3[available online].
+An AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository is
+now link:downloads.html#X3[available online].
 
 The big news is the upcoming link:version9.html[AsciiDoc version 9]
 release which has been undertaken by Yannick Gingras. See

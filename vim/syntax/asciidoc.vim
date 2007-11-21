@@ -45,7 +45,7 @@ syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\(\w\|-\)\+/ end=/\]\{3}/
 syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]/
 syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/(\{2,3}/ end=/)\{2,3}/
- syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/
+syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).

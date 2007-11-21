@@ -735,7 +735,7 @@ def system(name, args, is_macro=False):
         assert False
     return result
 
-def subs_attrs(lines,dict={}):
+def subs_attrs(lines,dict=None):
     '''Substitute 'lines' of text with attributes from the global
     document.attributes dictionary and from the 'dict' dictionary ('dict'
     entries take precedence). Return a tuple of the substituted lines.  'lines'
@@ -762,26 +762,33 @@ def subs_attrs(lines,dict={}):
             if n == 0: break
         return result
 
-    # Substitute attribute references inside dict values.
-    dict = dict.copy()
-    for k,v in dict.items():
-        if v is None:
-            del dict[k]
-        else:
-            v = subs_attrs(str(v))
-            if v is None:
-                del dict[k]
-            else:
-                dict[k] = v
-
     if isinstance(lines,StringType):
         string_result = True
         lines = [lines]
     else:
         string_result = False
         lines = list(lines)
-    attrs = document.attributes.copy()
-    attrs.update(dict)
+    if dict is None:
+        attrs = document.attributes
+    else:
+        # Remove numbered document attributes so they don't clash with
+        # attribute list positional attributes.
+        attrs = {}
+        for k,v in document.attributes.items():
+            if not re.match(r'^\d+$', k):
+                attrs[k] = v
+        # Substitute attribute references inside dict values.
+        dict = dict.copy()
+        for k,v in dict.items():
+            if v is None:
+                del dict[k]
+            else:
+                v = subs_attrs(str(v))
+                if v is None:
+                    del dict[k]
+                else:
+                    dict[k] = v
+        attrs.update(dict)
     # Substitute all attributes in all lines.
     for i in range(len(lines)-1,-1,-1): # Reverse iterate lines.
         text = lines[i]

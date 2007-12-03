@@ -2,7 +2,6 @@
 " Language:     AsciiDoc
 " Author:       Stuart Rackham <srackham@methods.co.nz> (inspired by Felix
 "               Obenhuber's original asciidoc.vim script).
-" Last Change:  AsciiDoc 8.2.0
 " URL:          http://www.methods.co.nz/asciidoc/
 " Licence:      GPL (http://www.gnu.org)
 " Remarks:      Vim 6 or greater
@@ -38,8 +37,6 @@ syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocSubscript start=/\~\S/ end=/\(\~\|^$\)/
 syn region asciidocSuperscript start=/\^\S/ end=/\(\^\|^$\)/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
-syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline
-syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline
 syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<\w\(\w\|-\)*,\?/ end=/>>/
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\(\w\|-\)\+/ end=/\]\{3}/
@@ -60,6 +57,8 @@ syn region asciidocUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
 syn region asciidocQuoted start=/\(^\|[ \t(\[.,]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)\],.?!;:]\|$\)\@=\|^$\)/
 syn region asciidocDoubleDollarPassthrough start=/\(^\|\W\)\@<=\$\{2,3}\S/ end=/\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
+syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline
+syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline
 syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/
 syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/

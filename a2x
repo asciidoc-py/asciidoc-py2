@@ -45,26 +45,26 @@ XSLTPROC_OPTS=
 # Write $1 to stderr with backslash-escaped characters and no trailing newline.
 function write_console()
 {
-	echo -ne "$1" >&2
+        echo -ne "$1" >&2
 }
 
 # Write newline to stderr.
 function newline()
 {
-	echo >&2
+        echo >&2
 }
 
 # Write $1 message to stderr.
 function console_msg()
 {
-	echo "$BASENAME: $1" >&2
+        echo "$BASENAME: $1" >&2
 }
 
 # Write $1 to stderr if verbose or dry-run options set.
 function verbose_msg()
 {
     if isyes "$VERBOSE" || isyes "$DRY_RUN"; then
-	    console_msg "$1"
+            console_msg "$1"
     fi
 }
 
@@ -91,7 +91,7 @@ function quit()
         console_msg "$1"
     fi
     cleanup
-	exit $err
+        exit $err
 }
 
 # Execute the $1 command in the current shell subject to VERBOSE, DRY_RUN shell
@@ -237,7 +237,7 @@ function parse_options()
             -a|--attribute)
                 ASCIIDOC_OPTS="$ASCIIDOC_OPTS -a \"$2\""
                 shift 2 ;;
-            --asciidoc-opts) 
+            --asciidoc-opts)
                 ASCIIDOC_OPTS="$ASCIIDOC_OPTS $2"
                 shift 2 ;;
             --copy)
@@ -271,14 +271,14 @@ function parse_options()
                 shift 2 ;;
             --version)
                 echo "$BASENAME $VERSION" ; exit 0 ;;
-            -v|--verbose) 
+            -v|--verbose)
                 if isyes "$VERBOSE"; then
                     VERBOSE_2=yes
                 else
                     VERBOSE=yes
                 fi
                 shift ;;
-            --xsltproc-opts) 
+            --xsltproc-opts)
                 XSLTPROC_OPTS="$XSLTPROC_OPTS $2"
                 shift 2 ;;
             --)

@@ -1110,7 +1110,7 @@ class Lex:
                 para = Lex.subs_1(para,(o,))
         if 'passthroughs' in options:
             para = Lex.restore_passthroughs(para,passthroughs)
-        return para.split("\n")
+        return para.splitlines()
     subs = staticmethod(subs)
 
     def set_margin(lines, margin=0):

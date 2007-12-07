@@ -435,15 +435,12 @@ def parse_entry(entry, dict=None, unquote=False, unique_values=False,
     'name' and 'value'.
     If unique_values' is True then dictionary entries with the same value are
     removed before the parsed entry is added.'''
-    mo = re.search(r'(?:[^\\](=))|(?:[\\][\\](=))',entry)
+    mo = re.search(r'(?:[^\\](=))',entry)
     if mo:  # name=value entry.
         if mo.group(1):
             name = entry[:mo.start(1)]
+            name = name.replace(r'\=','=')  # Unescape \= in name.
             value = entry[mo.end(1):]
-        else:
-            # An escaped (double) backslash preceeded the '='
-            name = entry[:mo.start(2)-1]    # Strip the second backslash.
-            value = entry[mo.end(2):]
     elif allow_name_only and entry:         # name or name! entry.
         name = entry
         if name[-1] == '!':

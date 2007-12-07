@@ -2713,8 +2713,7 @@ entries share the following syntax:
 
 .Section entry behavior
 - All equals characters inside the `name` must be escaped with a
-  backslash character. If you want the `name` to end in a backslash
-  then you need to place two backslashes at the end of the name.
+  backslash character.
 - `name` and `value` are stripped of leading and trailing white space.
 - Attribute names, tag entry names and markup template section names
   consist of one or more alphanumeric, underscore or dash characters.

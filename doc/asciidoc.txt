@@ -3439,7 +3439,7 @@ subs, presubs, postsubs::
 
   * 'normal' and 'verbatim' substitutions can be redefined by with
     `subsnormal` and `subsverbatim` entries in a configuration file
-    `[misc]` section.
+    `[miscellaneous]` section.
 
   * The substitutions are processed in the order in which they are
     listed and can appear more than once.

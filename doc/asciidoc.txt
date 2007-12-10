@@ -1921,6 +1921,10 @@ callto:joe.bloggs[]
 TIP: If the `<target>` necessitates space characters they should be
 replaced by `%20`. For example `large%20image.png`.
 
+TIP: Define an attribute entry if you refer to the same URL more than
+once, this will make your document <<X62,easier to maintain and easier
+to read>>.
+
 Internal Cross References
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Two AsciiDoc inline macros are provided for creating hypertext links
@@ -2113,6 +2117,7 @@ hardwired into the asciidoc(1) program.
   however customize the syntax by adding entries to a configuration
   file `[macros]` section.
 
+[[X63]]
 Include Macros
 ^^^^^^^^^^^^^^
 The `include` and `include1`  system macros to include the contents of
@@ -3118,6 +3123,31 @@ outputs. If a file named like `\{docname}-revhistory.xml` exists in
 the document's directory then it will be added verbatim to the DocBook
 header (see the `./doc/asciidoc-revhistory.xml` example that comes
 with the AsciiDoc distribution).].
+
+[[X62]]
+.Attribute entries promote clarity and eliminate repetition
+*********************************************************************
+URLs and file names in AsciiDoc macros are often quite long -- they
+break paragraph flow and readability suffers.  The problem is
+compounded by redundancy if the same name is used repeatedly.
+Attribute entries can be used to make your documents easier to read
+and write, here are some examples:
+
+  :1:        http://freshmeat.net/projects/asciidoc/
+  :homepage: http://hg.sharesource.org/asciidoc/[AsciiDoc home page]
+  :new:      image:./images/smallnew.png[]
+
+  Using previously defined attributes: See the {1}[Freshmeat summary]
+  or the {homepage} for something new {new}. 
+
+.Note
+- The attribute entry definition must precede it's usage.
+- You are not limited to URLs or file names, entire macro calls or
+  arbitrary lines of text can be abbreviated.
+- Shared attributes entries could be grouped into a separate file and
+  <<X63,included>> in multiple documents.
+
+*********************************************************************
 
 
 [[X21]]

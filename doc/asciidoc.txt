@@ -1921,6 +1921,38 @@ callto:joe.bloggs[]
 TIP: If the `<target>` necessitates space characters they should be
 replaced by `%20`. For example `large%20image.png`.
 
+Named URLs
+^^^^^^^^^^
+
+Long URLs inside a block of prose make the source harder to read.
+AsciiDoc support named URLs since 8.2.5.  You can name a URL and refer
+to its name when defining links inside of paragraphs.  Both alphabetic
+names and numbers are supported; the only restrictions is that the
+definition of a name must appear before its usage.
+
+Here is an example:
+
+  :fm: http://freshmeat.net/projects/asciidoc/
+  :ml: http://lists.metaperl.com/cgi-bin/mailman/listinfo/asciidoc-discuss
+  
+  A paragraph is easy to read when it flows, that is, when most lines
+  have roughly the same length.  It will not suffer form the
+  occasional inclusion of a http://example.com[short URL] but it's
+  best to avoid long ones, like the {ml}[mailing list]'s one or
+  {fm}[Freshmeat summary] one.
+
+Which will render like this:
+
+:fm: http://freshmeat.net/projects/asciidoc/
+:ml: http://lists.metaperl.com/cgi-bin/mailman/listinfo/asciidoc-discuss
+  
+A paragraph is easy to read when it flows, that is, when most lines
+have roughly the same length.  It will not suffer form the occasional
+inclusion of a http://example.com[short URL] but it's best to avoid
+long ones, like the {ml}[mailing list]'s one or {fm}[Freshmeat
+summary] one.
+
+
 Internal Cross References
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 Two AsciiDoc inline macros are provided for creating hypertext links

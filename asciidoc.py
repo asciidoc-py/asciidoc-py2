@@ -2061,16 +2061,13 @@ class AbstractBlocks:
     def validate(self):
         '''Validate the block definitions.'''
         # Validate delimiters and build combined lists delimiter pattern.
+        delimiters = []
         for b in self.blocks:
             assert b.__class__ is self.BLOCK_TYPE
             b.validate()
-        if b.is_conf_entry('delimiter'):
-            delimiters = []
-            for b in self.blocks:
-                b.validate()
-                if b.delimiter:
-                    delimiters.append(b.delimiter)
-            self.delimiter = join_regexp(delimiters)
+            if b.delimiter:
+                delimiters.append(b.delimiter)
+        self.delimiter = join_regexp(delimiters)
 
 class Paragraph(AbstractBlock):
     def __init__(self):

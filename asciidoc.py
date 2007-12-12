@@ -93,19 +93,21 @@ def warning(msg,linenos=True):
 def deprecated(old, new, linenos=True):
     console("%s: %s" % (old,new), 'DEPRECATED: ', linenos)
 
-def error(msg):
+def error(msg, cursor=None):
     '''Report fatal error but don't exit application, continue in the hope of
     reporting all fatal errors finishing with a non-zero exit code.'''
-    console(msg,'ERROR: ')
+    console(msg,'ERROR: ', cursor=cursor)
     document.has_errors = True
 
-def console(msg, prefix='', linenos=True):
+def console(msg, prefix='', linenos=True, cursor=None):
     '''Print message to stderr. 'offset' is added to reported line number for
     warnings emitted when reading ahead.'''
     s = prefix
     if linenos and reader.cursor:
+        if not cursor:
+            cursor = reader.cursor
         s = s + "%s: line %d: " \
-            % (os.path.basename(reader.cursor[0]),reader.cursor[1])
+            % (os.path.basename(cursor[0]),cursor[1])
     s = s + msg
     print_stderr(s)
 
@@ -2368,6 +2370,7 @@ class DelimitedBlock(AbstractBlock):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('delimiter','template','filter')
         self.OPTIONS = ('skip','sectionbody','list')
+        self.start = None   # File reader cursor at start delimiter.
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2381,6 +2384,7 @@ class DelimitedBlock(AbstractBlock):
         if 'list' in self.options:
             lists.listblock = self
         reader.read()   # Discard delimiter.
+        self.start = reader.cursor[:]
         attrs = {}
         # Leave list block attributes for the list element.
         if lists.listblock is not self:
@@ -2415,7 +2419,8 @@ class DelimitedBlock(AbstractBlock):
         if 'list' in options:
             lists.listblock = None
         if reader.eof():
-            error('closing [%s] delimiter expected' % self.name)
+            error('missing %s block closing delimiter' % self.name.split('-')[-1],
+                  cursor=self.start)
         else:
             delimiter = reader.read()   # Discard delimiter line.
             assert re.match(self.delimiter,delimiter)

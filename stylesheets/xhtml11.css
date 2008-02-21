@@ -19,6 +19,7 @@ a:visited {
 
 em {
   font-style: italic;
+  color: navy;
 }
 
 strong {
@@ -116,6 +117,7 @@ div.content { /* Block element content. */
 
 /* Block element titles. */
 div.title, caption.title {
+  color: #527bbd;
   font-family: sans-serif;
   font-weight: bold;
   text-align: left;

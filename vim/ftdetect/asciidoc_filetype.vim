@@ -10,8 +10,8 @@
 " The first sets asciidoc syntax highlighting on all .txt files, the second
 " only existing files *.txt that appear to be AsciiDoc files.
 
-au BufNewFile,BufRead *.txt  setfiletype asciidoc
-"au BufRead *.txt call s:FTasciidoc()
+au BufNewFile,BufRead *.txt,README,TODO,CHANGELOG,NOTES  setfiletype asciidoc
+"au BufRead *.txt,README,TODO,CHANGELOG,NOTES call s:FTasciidoc()
 
 " This function checks for a valid AsciiDoc document title after first
 " skipping any leading comments.

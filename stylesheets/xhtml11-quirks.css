@@ -6,6 +6,7 @@ div.sidebar-content {
   padding: 0.5em;
 }
 div.sidebar-title, div.image-title {
+  color: #527bbd;
   font-family: sans-serif;
   font-weight: bold;
   margin-top: 0.0em;

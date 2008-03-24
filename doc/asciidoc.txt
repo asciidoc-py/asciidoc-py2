@@ -4693,9 +4693,10 @@ you need to be aware of:
 
 - If you are outputting html or xhtml directly from asciidoc(1) you'll
   need to set the various `*_caption` attributes to match your target
-  language. The easiest way is to create a language `.conf` file (see
-  the example `lang-es.conf` file that comes with the AsciiDoc
-  distribution).
+  language (see the list of captions and titles in the `[attributes]`
+  section of the default `asciidoc.conf` file). The easiest way is to
+  create a language `.conf` file (see the example `lang-es.conf` file
+  that comes with the AsciiDoc distribution).
 
 - asciidoc(1) automatically loads configuration files named like
   `lang-<lang>.conf` where `<lang>` is a two letter language code that

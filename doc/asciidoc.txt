@@ -914,6 +914,10 @@ Renders:
   consetetur, eu pro everti postulant
   homero verear ea mea, qui.
 
+NOTE: Because <<X64,lists>> can be indented it's possible for your
+Literal paragraph to be misinterpreted as a list -- in situations like
+this use a <<X65,LiteralBlock>> in place of a 'LiteralParagraph'.
+
 [[X28]]
 Admonition Paragraphs
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1044,6 +1048,7 @@ int main() {
 }
 --------------------------------------
 
+[[X65]]
 Literal Blocks
 ~~~~~~~~~~~~~~
 LiteralBlocks behave just like LiteralParagraphs except you don't have
@@ -1298,6 +1303,7 @@ adolescens.
 See also <<X47,Admonition Icons and Captions>>.
 
 
+[[X64]]
 Lists
 -----
 .List types

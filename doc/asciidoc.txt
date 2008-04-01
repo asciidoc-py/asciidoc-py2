@@ -2603,7 +2603,7 @@ To print a high quality man page to a postscript printer:
 **********************************************************************
 
 To find out more about man pages view the `man(7)` manpage
-(`man 7 man` command).
+(`man 7 man` and `man man-pages` commands).
 
 
 Document Header
@@ -2627,6 +2627,20 @@ white space character on either side. For example:
 The SYNOPSIS Section
 ~~~~~~~~~~~~~~~~~~~~
 The second manpage section is mandatory and must be titled 'SYNOPSIS'.
+
+refmiscinfo attributes
+~~~~~~~~~~~~~~~~~~~~~~
+In addition to the automatically created man page <<X60,intrinsic
+attibutes>> you can assign DocBook
+http://www.docbook.org/tdg5/en/html/refmiscinfo.html[refmiscinfo]
+element 'source', 'version' and 'manual' values using AsciiDoc
+`\{mansource}`, `\{manversion}` and `\{manmanual}` attributes
+respectively. This example is from the AsciiDoc header of a man page
+source file:
+
+  :man source:   AsciiDoc
+  :man version:  {revision}
+  :man manual:   AsciiDoc Manual
 
 
 [[X7]]

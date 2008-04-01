@@ -41,6 +41,7 @@ from UserDict import UserDict
 
 class OrderedDict(UserDict):
     """
+    Dictionary ordered by insertion order.
     Python Cookbook: Ordered Dictionary, Submitter: David Benjamin.
     http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
     """
@@ -124,7 +125,7 @@ def file_in(fname, directory):
     else:
         assert os.path.isdir(directory)
         directory = os.path.abspath(directory)
-    fname = realpath(fname)
+    fname = os.path.realpath(fname)
     return os.path.commonprefix((directory, fname)) == directory
 
 def safe():
@@ -158,21 +159,6 @@ def safe_filename(fname, parentdir):
 
 def unsafe_error(msg):
     error('unsafe: '+msg)
-
-def realpath(fname):
-    """Return the absolute pathname of the file fname. Follow symbolic links.
-    os.realpath() not available in Python prior to 2.2 and not portable."""
-    # Follow symlinks to the actual executable.
-    wd = os.getcwd()
-    try:
-        while os.path.islink(fname):
-            linkdir = os.path.dirname(fname)
-            fname = os.readlink(fname)
-            if linkdir: os.chdir(linkdir)   # Symlinks can be relative.
-        fname = os.path.abspath(fname)
-    finally:
-        os.chdir(wd)
-    return os.path.normpath(fname)
 
 def syseval(cmd):
     # Run shell command and return stdout.
@@ -3554,7 +3540,7 @@ class Config:
             return
         # Don't load conf files twice (local and application conf files are the
         # same if the source file is in the application directory).
-        if realpath(fname) in self.loaded:
+        if os.path.realpath(fname) in self.loaded:
             return
         rdr = Reader()  # Reader processes system macros.
         rdr.open(fname)
@@ -3632,7 +3618,7 @@ class Config:
         blocks.load(sections)
         tables.load(sections)
         macros.load(sections.get('macros',()))
-        self.loaded.append(realpath(fname))
+        self.loaded.append(os.path.realpath(fname))
 
     def load_all(self,dir):
         """Load the standard configuration files from directory 'dir'."""
@@ -4137,7 +4123,7 @@ def main():
         sys.exit(1)
     # Locate the executable and configuration files directory.
     global APP_DIR,USER_DIR
-    APP_DIR = os.path.dirname(realpath(sys.argv[0]))
+    APP_DIR = os.path.dirname(os.path.realpath(sys.argv[0]))
     USER_DIR = os.environ.get('HOME')
     if USER_DIR is not None:
         USER_DIR = os.path.join(USER_DIR,'.asciidoc')

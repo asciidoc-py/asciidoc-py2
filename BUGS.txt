@@ -14,8 +14,7 @@ AsciiDoc
 - The `\include1::[]` block macro does not work inside ListingBlocks
   or FilterBlocks. Use `\include::[]` instead.
 - Reported line numbers in diagnostic messages are sometimes wrong.
-- Block filters only work in a POSIX environment.
-- Embedding open brace characters { in argument values can cause
+- Embedding open brace characters `{` in argument values can cause
   incorrect argument substitution.
 - Attribute references in macro attribute lists can't be unescaped
   (with the exception of attribute list entry `\{0}`).

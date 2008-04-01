@@ -89,6 +89,7 @@ def verbose(msg,linenos=True):
 
 def warning(msg,linenos=True):
     console(msg,'WARNING: ',linenos)
+    document.has_warnings = True
 
 def deprecated(old, new, linenos=True):
     console("%s: %s" % (old,new), 'DEPRECATED: ', linenos)
@@ -552,9 +553,6 @@ def filter_lines(filter,lines,dict={}):
     # BUG: Has problems finding filters with spaces in command name.
     if not filter:
         return lines
-    #if os.name != 'posix':
-    #    warning('filters do not work in a non-posix environment')
-    #    return lines
     # Perform attributes substitution on the filter command.
     s = subs_attrs(filter,dict)
     if not s:
@@ -1140,6 +1138,7 @@ class Document:
         self.attributes = {}
         self.level = 0          # 0 => front matter. 1,2,3 => sect1,2,3.
         self.has_errors = False # Set true if processing errors were flagged.
+        self.has_warnings = False # Set true if warnings were flagged.
         self.safe = True        # Default safe mode.
     def init_attrs(self):
         # Set implicit attributes.

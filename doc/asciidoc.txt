@@ -2600,6 +2600,17 @@ To print a high quality man page to a postscript printer:
 
   $ groff -mandoc -Tps asciidoc.1 | lpr
 
+Or alternatively using the `man(1)` command like this:
+
+  $ man -l -Tps asciidoc.1 | lpr
+
+You could also create a PDF version of the man page by converting
+PostScript to PDF using `ps2pdf(1)`:
+
+  $ man -l -Tps asciidoc.1 | ps2pdf - asciidoc.1.pdf
+
+The `ps2pdf(1)` command is included in the Ghostscript distribution.
+
 **********************************************************************
 
 To find out more about man pages view the `man(7)` manpage

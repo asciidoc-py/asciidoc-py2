@@ -46,15 +46,15 @@ syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
-syn region asciidocMonospaced start=/\(^\|[ \t(\[.,]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)\],.?!;:]\|$\)\@=\|^$\)/
-syn region asciidocMonospaced2 start=/\(^\|[ \t(\[.,]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)\],.?!;:]\|$\)\@=\|^$\)/
+syn region asciidocMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocMonospaced2 start=/\(^\|[ \t(\[.,=]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocUnconstrainedMonospaced start=/++\S/ end=/\(++\|^$\)/
-syn region asciidocEmphasized start=/\(^\|[ \t(\[.,]\)\@<=_\([ )]\)\@!/ end=/\(_\([ \t)\],.?!;:]\|$\)\@=\|^$\)/
-syn region asciidocEmphasized2 start=/\(^\|[ \t(\[.,]\)\@<='\([ )]\)\@!/ end=/\('\([ \t)\],.?!;:]\|$\)\@=\|^$\)/
+syn region asciidocEmphasized start=/\(^\|[ \t(\[.,=]\)\@<=_\([ )]\)\@!/ end=/\(_\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocEmphasized2 start=/\(^\|[ \t(\[.,=]\)\@<='\([ )]\)\@!/ end=/\('\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocUnconstrainedEmphasized start=/__\S/ end=/\(__\|^$\)/
-syn region asciidocBold start=/\(^\|[ \t(\[.,]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)\],.?!;:]\|$\)\@=\|^$\)/
+syn region asciidocBold start=/\(^\|[ \t(\[.,=]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
-syn region asciidocQuoted start=/\(^\|[ \t(\[.,]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)\],.?!;:]\|$\)\@=\|^$\)/
+syn region asciidocQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocDoubleDollarPassthrough start=/\(^\|\W\)\@<=\$\{2,3}\S/ end=/\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
 syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline

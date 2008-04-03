@@ -46,22 +46,22 @@ syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
-syn region asciidocMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocMonospaced2 start=/\(^\|[ \t(\[.,=]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocUnconstrainedMonospaced start=/++\S/ end=/\(++\|^$\)/
-syn region asciidocEmphasized start=/\(^\|[ \t(\[.,=]\)\@<=_\([ )]\)\@!/ end=/\(_\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocEmphasized2 start=/\(^\|[ \t(\[.,=]\)\@<='\([ )]\)\@!/ end=/\('\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocUnconstrainedEmphasized start=/__\S/ end=/\(__\|^$\)/
-syn region asciidocBold start=/\(^\|[ \t(\[.,=]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
-syn region asciidocQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedMonospaced2 start=/\(^\|[ \t(\[.,=]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedUnconstrainedMonospaced start=/++\S/ end=/\(++\|^$\)/
+syn region asciidocQuotedEmphasized start=/\(^\|[ \t(\[.,=]\)\@<=_\([ )]\)\@!/ end=/\(_\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedEmphasized2 start=/\(^\|[ \t(\[.,=]\)\@<='\([ )]\)\@!/ end=/\('\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedUnconstrainedEmphasized start=/__\S/ end=/\(__\|^$\)/
+syn region asciidocQuotedBold start=/\(^\|[ \t(\[.,=]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
+syn region asciidocQuotedQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocDoubleDollarPassthrough start=/\(^\|\W\)\@<=\$\{2,3}\S/ end=/\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
-syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline
-syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline
+syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.*
+syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*
 syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
-syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/
-syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/
+syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/ contains=asciidocQuoted.*
+syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/ contains=asciidocQuoted.*
 syn match asciidocAttributeList /^\[[^[ \t].*\]$/
 syn match asciidocQuoteBlockDelimiter /^_\{4,}$/
 syn match asciidocExampleBlockDelimiter /^=\{4,}$/
@@ -104,15 +104,15 @@ highlight link asciidocListingBlock Identifier
 highlight link asciidocPassthroughBlock Identifier
 highlight link asciidocCommentBlock Comment
 highlight link asciidocFilterBlock Type
-highlight link asciidocBold Special
-highlight link asciidocUnconstrainedBold Special
-highlight link asciidocEmphasized Type
-highlight link asciidocEmphasized2 Type
-highlight link asciidocUnconstrainedEmphasized Type
-highlight link asciidocMonospaced Identifier
-highlight link asciidocMonospaced2 Identifier
-highlight link asciidocUnconstrainedMonospaced Identifier
-highlight link asciidocQuoted Label
+highlight link asciidocQuotedBold Special
+highlight link asciidocQuotedUnconstrainedBold Special
+highlight link asciidocQuotedEmphasized Type
+highlight link asciidocQuotedEmphasized2 Type
+highlight link asciidocQuotedUnconstrainedEmphasized Type
+highlight link asciidocQuotedMonospaced Identifier
+highlight link asciidocQuotedMonospaced2 Identifier
+highlight link asciidocQuotedUnconstrainedMonospaced Identifier
+highlight link asciidocQuotedQuoted Label
 highlight link asciidocToDo Todo
 highlight link asciidocCommentLine Comment
 highlight link asciidocAdmonition Special

@@ -37,10 +37,10 @@ syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocSubscript start=/\~\S/ end=/\(\~\|^$\)/
 syn region asciidocSuperscript start=/\^\S/ end=/\(\^\|^$\)/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
-syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<\w\(\w\|-\)*,\?/ end=/>>/ contains=asciidocQuoted.*
+syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<\w\(\w\|-\)*,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.*
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\(\w\|-\)\+/ end=/\]\{3}/
-syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]/ contains=asciidocQuoted.*
+syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]\|^$/ contains=asciidocQuoted.*
 syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/(\{2,3}/ end=/)\{2,3}/ contains=asciidocQuoted.*
 syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo

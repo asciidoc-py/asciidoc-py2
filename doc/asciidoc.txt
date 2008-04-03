@@ -4139,9 +4139,9 @@ Execute `:help gq` command to read about the vim gq command.
 =====================================================================
 - Assign the `gq}` command to the Q key with the `nnoremap Q gq}`
   command or put it in your `\~/.vimrc` file to so it's always
-  available (see the <<X61, Example \~/.vimrc file>>).
+  available (see the <<X61, Example `\~/.vimrc` file>>).
 - Put `set` commands in your `\~/.vimrc` file so you don't have to
-  enter them manually <<X61, Example \~/.vimrc file>>).
+  enter them manually <<X61, Example `\~/.vimrc` file>>).
 - The Vim website (http://www.vim.org[]) has a wealth of resources,
   including scripts for automated spell checking and ASCII Art
   drawing.
@@ -4152,7 +4152,7 @@ Format Lists
 ^^^^^^^^^^^^
 The `gq` command can also be used to format bulleted and numbered
 lists. First you need to set the `comments` and `formatoptions` (see
-the <<X61, Example \~/.vimrc file>>).
+the <<X61, Example `\~/.vimrc` file>>).
 
 Now you can format simple lists that use dash, asterisk, period and
 plus bullets along with numbered ordered lists:
@@ -4166,8 +4166,8 @@ Indent whole paragraphs by indenting the fist line with the desired
 indent and then executing the `gq}` command.
 
 [[X61]]
-Example \~/.vimrc File
-^^^^^^^^^^^^^^^^^^^^^
+Example `\~/.vimrc` File
+^^^^^^^^^^^^^^^^^^^^^^^^
 ---------------------------------------------------------------------
 " Show tabs and trailing characters.
 set listchars=tab:»·,trail:·
@@ -4815,18 +4815,15 @@ around the problems:
 
 - Nested text formatting is highlighted according to the outer format.
 
-- Text formatting is not highlighted inside titles or attribute lists.
-
 - Most escaped inline elements will be highlighted.
 
 - Unterminated quotes are highlighted, for example `'tis` would be
-  seen as the start of emphasized text. In this case work-around would
-  be to comment out `asciidocEmphasized2` and use the
-  (`asciidocEmphasized`) underscored for emphasis. As a damage control
-  measure quoted patterns always terminate at a blank line. This
-  problem is usually ameliorated by the fact that characters such as
-  `\~`, `+`, `^` and `_` will normally occur inside monospaced quotes
-  (unless they are used for quoting), for example `~/projects`.
+  seen as the start of emphasized text. As a damage control measure
+  quoted text and macro attribute list containing quoted text  always
+  terminate at a blank line. This problem is usually ameliorated by
+  the fact that characters such as `\~`, `+`, `^` and `_` will
+  normally occur inside monospaced quotes (unless they are used for
+  quoting), for example `~/projects`.
 
 - If a closing block delimiter is not preceded by a blank line it is
   sometimes mistaken for a title underline. A workaround is to insert

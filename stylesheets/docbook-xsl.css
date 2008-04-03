@@ -172,7 +172,7 @@ dt {
 }
 
 dt span.term {
-  font-style: italic;
+  font-style: normal;
 }
 
 div.variablelist dd p {

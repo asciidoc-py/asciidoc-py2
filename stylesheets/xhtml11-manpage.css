@@ -11,3 +11,8 @@ h2 {
 div.sectionbody {
   margin-left: 5%;
 }
+
+@media print {
+  div#toc { display: none; }
+}
+

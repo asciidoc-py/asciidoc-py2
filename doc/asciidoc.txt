@@ -2590,17 +2590,11 @@ formatted `asciidoc(1)` man page.
 
 .Viewing and printing manpage files
 **********************************************************************
-Use the `man(1)` command to view the manpage file (you must include a
-file path even if it's only `./` otherwise `man(1)` will look for the
-file in the system manpage locations):
+Use the `man(1)` command to view the manpage file:
 
-  $ man ./asciidoc.1
+  $ man -l asciidoc.1
 
 To print a high quality man page to a postscript printer:
-
-  $ groff -mandoc -Tps asciidoc.1 | lpr
-
-Or alternatively using the `man(1)` command like this:
 
   $ man -l -Tps asciidoc.1 | lpr
 

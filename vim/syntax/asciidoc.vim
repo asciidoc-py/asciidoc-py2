@@ -46,15 +46,15 @@ syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
-syn region asciidocQuotedMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocQuotedMonospaced2 start=/\(^\|[ \t(\[.,=]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedMonospaced2 start=/\(^\|[ \t(\[.,=]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocQuotedUnconstrainedMonospaced start=/++\S/ end=/\(++\|^$\)/
-syn region asciidocQuotedEmphasized start=/\(^\|[ \t(\[.,=]\)\@<=_\([ )]\)\@!/ end=/\(_\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocQuotedEmphasized2 start=/\(^\|[ \t(\[.,=]\)\@<='\([ )]\)\@!/ end=/\('\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedEmphasized start=/\(^\|[ \t(\[.,=]\)\@<=_\([ )]\)\@!/ end=/\(_\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedEmphasized2 start=/\(^\|[ \t(\[.,=]\)\@<='\([ )]\)\@!/ end=/\('\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocQuotedUnconstrainedEmphasized start=/__\S/ end=/\(__\|^$\)/
-syn region asciidocQuotedBold start=/\(^\|[ \t(\[.,=]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedBold start=/\(^\|[ \t(\[.,=]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocQuotedUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
-syn region asciidocQuotedQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)\],.?!;:=]\|$\)\@=\|^$\)/
+syn region asciidocQuotedQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocDoubleDollarPassthrough start=/\(^\|\W\)\@<=\$\{2,3}\S/ end=/\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
 syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.*

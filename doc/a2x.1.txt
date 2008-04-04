@@ -37,10 +37,10 @@ OPTIONS
   than once.
 
 *--copy*::
-  Copy distributed docbook-xsl CSS stylesheet and the copying of
-  distributed admonition and navigation icons to their respective
-  destinations. Applies to xhtml, chunked, htmlhelp formats. The
-  default behavior is to suppress copying.
+  Copy distributed docbook-xsl CSS stylesheet admonition and
+  navigation icons to their respective destinations. Applies to
+  'xhtml', 'chunked', 'htmlhelp' formats. The default behavior is to
+  suppress copying.
 
 *-D, --destination-dir*='PATH'::
   Output directory. Defaults to source 'FILE' directory.

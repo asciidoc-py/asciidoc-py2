@@ -37,13 +37,8 @@ syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocSubscript start=/\~\S/ end=/\(\~\|^$\)/
 syn region asciidocSuperscript start=/\^\S/ end=/\(\^\|^$\)/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
-syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<\w\(\w\|-\)*,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.*
-syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/
-syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\(\w\|-\)\+/ end=/\]\{3}/
-syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]\|^$/ contains=asciidocQuoted.*
-syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/(\{2,3}/ end=/)\{2,3}/ contains=asciidocQuoted.*
-syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
+
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
 syn region asciidocQuotedMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
@@ -59,6 +54,7 @@ syn region asciidocDoubleDollarPassthrough start=/\(^\|\W\)\@<=\$\{2,3}\S/ end=/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
 syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.*
 syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*
+
 syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/ contains=asciidocQuoted.*
 syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/ contains=asciidocQuoted.*
@@ -72,6 +68,13 @@ syn region asciidocListingBlock start=/^-\{4,}$/ end=/^-\{4,}$/ contains=asciido
 syn region asciidocCommentBlock start="^/\{4,}$" end="^/\{4,}$"
 syn region asciidocPassthroughBlock start="^+\{4,}$" end="^+\{4,}$"
 syn region asciidocFilterBlock start=/^\w\+\~\{4,}$/ end=/^\w\+\~\{4,}$/
+
+syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<\w\(\w\|-\)*,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.*
+syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/
+syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\(\w\|-\)\+/ end=/\]\{3}/
+syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]\|^$/ contains=asciidocQuoted.*
+syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/(\{2,3}/ end=/)\{2,3}/ contains=asciidocQuoted.*
+syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/
 
 highlight link asciidocMacroAttributes Label
 highlight link asciidocIdMarker Special

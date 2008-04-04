@@ -46,6 +46,7 @@ INFILES = $*(ROOT).txt
 CHUNK_DIR = ./asciidoc.chunked
 HTMLHELP_DIR = ./asciidoc.htmlhelp
 HTMLHELP_FILE = asciidoc
+
 OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         asciidoc.pdf asciidoc.1.man a2x.1.man \
         article.html book.html book-multi.html asciidoc.xml asciidoc.1.xml \
@@ -56,6 +57,10 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         article.pdf \
         source-highlight-filter.pdf \
         music-filter.pdf
+
+TEST_FILES = $*(ROOT).css-embedded.html 
+        article.css-embedded.html book.css-embedded.html \
+        article.xml book.xml book-multi.xml asciidoc.xml asciidoc.1.xml \
 
 
 #####################################################################
@@ -196,16 +201,20 @@ ${HTMLHELP_FILE}.chm: $HTMLHELP_DIR/index.html
         :print WARNING: HTMLHelp compiler unavailable: skipping asciidoc.chm file generation
 
 # Book template.
-book.html: book.txt
+book.xml: book.txt
     :sys $ASCIIDOC -d book -b docbook $source
-#    :sys $XMLTO xhtml-nochunks book.xml
-    :sys $XSLTPROC --nonet --stringparam html.stylesheet ./docbook-xsl.css ../docbook-xsl/xhtml.xsl book.xml >$target
+    @if _no.XMLLINT:
+        :sys $XMLLINT --nonet --noout --valid $target
+    @else:
+        :print WARNING: xmllint(1) unavailable: skipping validation
 
 # Multi-part book template.
-book-multi.html: book-multi.txt
+book-multi.xml: book-multi.txt
     :sys $ASCIIDOC -d book -b docbook $source
-#    :sys $XMLTO xhtml-nochunks book-multi.xml
-    :sys $XSLTPROC --nonet --stringparam html.stylesheet ./docbook-xsl.css ../docbook-xsl/xhtml.xsl book-multi.xml >$target
+    @if _no.XMLLINT:
+        :sys $XMLLINT --nonet --noout --valid $target
+    @else:
+        :print WARNING: xmllint(1) unavailable: skipping validation
 
 ../BUGS: ../BUGS.text
     # Make BUGS.text and copy to BUGS.
@@ -239,7 +248,7 @@ latexmath.html: latexmath.txt
 all: $OUTFILES
 
 clean:
-    :del {f} $OUTFILES
+    :del {f} $OUTFILES $TEST_FILES
     :del {f} *.bak          # Remove aspell backups.
 
 spell: $INFILES ../CHANGELOG.txt ../README.txt ../BUGS.txt ../INSTALL.txt \
@@ -247,3 +256,9 @@ spell: $INFILES ../CHANGELOG.txt ../README.txt ../BUGS.txt ../INSTALL.txt \
     # Interactively spell check all files.
     @for s in source_list:
         :sys {i} $ASPELL check -p asciidoc.dict $s
+
+clean_testfiles:
+    :del {f} $TEST_FILES
+
+test: clean_testfiles $TEST_FILES
+    # Force generation and validation of .html and Docbook (.xml) files.

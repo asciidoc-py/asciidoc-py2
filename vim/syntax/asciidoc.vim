@@ -69,7 +69,7 @@ syn region asciidocCommentBlock start="^/\{4,}$" end="^/\{4,}$"
 syn region asciidocPassthroughBlock start="^+\{4,}$" end="^+\{4,}$"
 syn region asciidocFilterBlock start=/^\w\+\~\{4,}$/ end=/^\w\+\~\{4,}$/
 
-syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<\w\(\w\|-\)*,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.*
+syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<"\{-}\w\(\w\|-\)*"\?,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.*
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\(\w\|-\)\+/ end=/\]\{3}/
 syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]\|^$/ contains=asciidocQuoted.*

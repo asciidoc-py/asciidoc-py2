@@ -32,7 +32,6 @@ syn match asciidocListBullet /^\s*[-*+]\s/
 syn match asciidocListNumber /^\s*\(\d*\.\{1,2}\|\l\?)\)\s\+/
 syn match asciidocEmail /\S\+@\S\+\(.\S+\)*/
 syn match asciidocAttributeRef /{\(\w\|-\)\+}/
-syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/
 syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocSubscript start=/\~\S/ end=/\(\~\|^$\)/
 syn region asciidocSuperscript start=/\^\S/ end=/\(\^\|^$\)/
@@ -56,6 +55,7 @@ syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline conta
 syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*
 
 syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
+syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*
 syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/ contains=asciidocQuoted.*
 syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/ contains=asciidocQuoted.*
 syn match asciidocAttributeList /^\[[^[ \t].*\]$/

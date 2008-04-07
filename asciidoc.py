@@ -4150,10 +4150,10 @@ def main():
     outfile = None
     options = []
     prof = False
-    show_help = False
+    help_option = False
     for o,v in opts:
         if o in ('--help','-h'):
-            show_help = True
+            help_option = True
         if o == '--profile':
             prof = True
         if o == '--unsafe':
@@ -4194,7 +4194,7 @@ def main():
             options.append('-s')
         if o in ('-v','--verbose'):
             options.append('-v')
-    if show_help:
+    if help_option:
         if len(args) == 0:
             show_help('default')
         else:

@@ -61,6 +61,7 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
 TEST_FILES = $*(ROOT).css-embedded.html 
         article.css-embedded.html book.css-embedded.html \
         article.xml book.xml book-multi.xml asciidoc.xml asciidoc.1.xml \
+        asciidoc.1.html a2x.1.xml
 
 
 #####################################################################

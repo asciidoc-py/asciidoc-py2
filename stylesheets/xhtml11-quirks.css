@@ -30,3 +30,11 @@ div.exampleblock-content {
 
 /* IE6 sets dynamically generated links as visited. */
 div#toc a:visited { color: blue; }
+
+/* Because IE6 child selector is broken. */
+div.olist2 ol {
+  list-style-type: lower-alpha;
+}
+div.olist2 div.olist ol {
+  list-style-type: decimal;
+}

@@ -211,7 +211,10 @@ dd > *:first-child {
 ul, ol {
     list-style-position: outside;
 }
-div.olist2 ol {
+div.olist > ol {
+  list-style-type: decimal;
+}
+div.olist2 > ol {
   list-style-type: lower-alpha;
 }
 

@@ -51,8 +51,8 @@ syn region asciidocQuotedUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
 syn region asciidocQuotedQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocDoubleDollarPassthrough start=/\(^\|\W\)\@<=\$\{2,3}\S/ end=/\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
-syn region asciidocVLabel start=/^\s*/ end=/\S\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.*
-syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*
+syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.*
+syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*
 
 syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*

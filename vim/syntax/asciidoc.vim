@@ -29,7 +29,7 @@ syn match asciidocRuler /^'\{4,}$/
 " for workarounds).
 syn region asciidocLiteralParagraph start=/^\n[ \t]\+\(\([^-*. \t] \)\|\(\S\S\)\)/ end=/\(^+\?\s*$\)\@=/
 syn match asciidocListBullet /^\s*[-*+]\s/
-syn match asciidocListNumber /^\s*\(\d*\.\{1,2}\|\l\?)\)\s\+/
+syn match asciidocListNumber /^\s*\(\(\d\+\.\)\|\.\{1,2}\|\(\l\.\)\)\s\+/
 syn match asciidocEmail /\S\+@\S\+\(.\S+\)*/
 syn match asciidocAttributeRef /{\(\w\|-\)\+}/
 syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
@@ -58,7 +58,7 @@ syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*,asciidocAttributeRef
 syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/ contains=asciidocQuoted.*,asciidocAttributeRef
 
-syn match asciidocTitleUnderline /\n[-=~^+]\{2,}$/ transparent contained contains=NONE
+syn match asciidocTitleUnderline /[-=~^+]\{2,}$/ transparent contained contains=NONE
 syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/ contains=asciidocQuoted.*,asciidocAttributeRef,asciidocTitleUnderline
 
 syn match asciidocAttributeList /^\[[^[ \t].*\]$/

@@ -33,13 +33,13 @@ syn match asciidocListNumber /^\s*\(\d*\.\{1,2}\|\l\?)\)\s\+/
 syn match asciidocEmail /\S\+@\S\+\(.\S+\)*/
 syn match asciidocAttributeRef /{\(\w\|-\)\+}/
 syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
-syn region asciidocSubscript start=/\~\S/ end=/\(\~\|^$\)/
-syn region asciidocSuperscript start=/\^\S/ end=/\(\^\|^$\)/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
+syn region asciidocQuotedSubscript start=/\~\S/ end=/\(\~\|^$\)/
+syn region asciidocQuotedSuperscript start=/\^\S/ end=/\(\^\|^$\)/
 syn region asciidocQuotedMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocQuotedMonospaced2 start=/\(^\|[ \t(\[.,=]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocQuotedUnconstrainedMonospaced start=/++\S/ end=/\(++\|^$\)/
@@ -83,8 +83,8 @@ highlight link asciidocMacroAttributes Label
 highlight link asciidocIdMarker Special
 highlight link asciidocDoubleDollarPassthrough Special
 highlight link asciidocTriplePlusPassthrough Special
-highlight link asciidocSubscript Type
-highlight link asciidocSuperscript Type
+highlight link asciidocQuotedSubscript Type
+highlight link asciidocQuotedSuperscript Type
 highlight link asciidocOneLineTitle Title
 highlight link asciidocTwoLineTitle Title
 highlight link asciidocBlockTitle Title

@@ -57,7 +57,10 @@ syn region asciidocHLabel start=/^\s*/ end=/\S\(::\|;;\)\(\s\+\|\\$\)/ oneline c
 syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*
 syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/ contains=asciidocQuoted.*
-syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/ contains=asciidocQuoted.*
+
+syn match asciidocTitleUnderline /\n[-=~^+]\{2,}$/ transparent contained contains=NONE
+syn match asciidocTwoLineTitle /^[^. +/].*[^.:]\n[-=~^+]\{2,}$/ contains=asciidocQuoted.*,asciidocTitleUnderline
+
 syn match asciidocAttributeList /^\[[^[ \t].*\]$/
 syn match asciidocQuoteBlockDelimiter /^_\{4,}$/
 syn match asciidocExampleBlockDelimiter /^=\{4,}$/

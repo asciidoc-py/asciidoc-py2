@@ -125,7 +125,7 @@ file:
 ---------------------------------------------------------------------
 
 
-== I have a paragraph containing some funky URLs, is the a way to suppress AsciiDoc substitutions in the URL address?
+== I have a paragraph containing some funky URLs, is there a way to suppress AsciiDoc substitutions in the URL address?
 
 You can selectively choose which substitutions to perform by setting
 the 'subs' attribute at the start of a block. For example:

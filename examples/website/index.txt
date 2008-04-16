@@ -152,8 +152,12 @@ Resources
 ---------
 - Check the link:downloads.html[Downloads page] for packaged versions
   of AsciiDoc.
+- Alex Efros has written an HTML formatted
+  http://powerman.name/doc/asciidoc[AsciiDoc Cheatsheet] using
+  Asciidoc.
 - Thomas Berker has written an
-  http://liksom.info/blog/?q=node/114[AsciiDoc Cheatsheet].
+  http://liksom.info/blog/?q=node/114[AsciiDoc Cheatsheet] in Open
+  Document and PDF formats..
 - The http://www.wikimatrix.org/[WikiMatrix] website has an excellent
   http://www.wikimatrix.org/syntax.php[web page] that compares the
   various Wiki markup syntaxes. An interesting attempt at Wiki markup
@@ -163,6 +167,7 @@ Resources
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] has
   released an http://xpt.sourceforge.net/tools/doc-mode/[AsciiDoc
   syntax highlighter for Emacs].
+
 - Franck Pommereau has written
   http://www.univ-paris12.fr/lacl/pommereau/soft/asciidoctest.html[Asciidoctest],
   a program that doctests snippets of Python code within your Asciidoc

@@ -2517,16 +2517,16 @@ cols::
 colalign::
   Column alignment assumes one of three values ('left', 'right' or
   'center'). The value is determined by the corresponding ruler column
-  stop character (only valid inside 'colspec', `headdata`, `bodydata`
-  and `footdata` tags).
+  stop character (only valid inside 'colspec', 'headdata', 'bodydata'
+  and 'footdata' tags).
 
 colwidth::
   The output column widths are calculated integers (only valid inside
-  'colspec', `headdata`, `bodydata` and `footdata` tags).
+  'colspec', 'headdata', 'bodydata' and 'footdata' tags).
 
 colnumber::
   The table column number starting at 1 (only valid inside 'colspec',
-  `headdata`, `bodydata` and `footdata` tags).
+  'headdata`, `bodydata` and `footdata` tags).
 
 format::
   The table definition 'format' value (can be overridden with
@@ -4840,5 +4840,7 @@ period should probably be quoted monospace which would also get around
 the problem).
 
 TIP: Sometimes incorrect highlighting is caused by preceding lines
-that appear blank but contain white space characters.
+that appear blank but contain white space characters -- setting your
+editor options so that white space characters are visible is a good
+idea.
 

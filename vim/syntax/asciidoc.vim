@@ -51,8 +51,8 @@ syn region asciidocQuotedUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
 syn region asciidocQuotedQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocDoubleDollarPassthrough start=/\(^\|\W\)\@<=\$\{2,3}\S/ end=/\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
-syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.*
-syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*
+syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.* keepend
+syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.* keepend
 
 syn region asciidocTable start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*,asciidocAttributeRef
@@ -66,8 +66,8 @@ syn match asciidocQuoteBlockDelimiter /^_\{4,}$/
 syn match asciidocExampleBlockDelimiter /^=\{4,}$/
 syn match asciidocSidebarDelimiter /^*\{4,}$/
 syn match asciidocListContinuation /^+$/
-syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=asciidocCallout
-syn region asciidocListingBlock start=/^-\{4,}$/ end=/^-\{4,}$/ contains=asciidocCallout
+syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=asciidocCallout keepend
+syn region asciidocListingBlock start=/^-\{4,}$/ end=/^-\{4,}$/ contains=asciidocCallout keepend
 syn region asciidocCommentBlock start="^/\{4,}$" end="^/\{4,}$"
 syn region asciidocPassthroughBlock start="^+\{4,}$" end="^+\{4,}$"
 syn region asciidocFilterBlock start=/^\w\+\~\{4,}$/ end=/^\w\+\~\{4,}$/

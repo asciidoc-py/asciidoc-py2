@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 """
-asciidoc -  converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
+asciidoc - converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 
-Copyright (C) 2002-2007 Stuart Rackham. Free use of this software is granted
+Copyright (C) 2002-2008 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
 """
 
 import sys, os, re, time, traceback, tempfile, popen2, codecs, locale
 from types import *
 
-VERSION = '8.2.5'   # See CHANGLOG file for version history.
+VERSION = '8.2.6'   # See CHANGLOG file for version history.
 
 #---------------------------------------------------------------------------
 # Program onstants.

@@ -212,6 +212,9 @@ toclevels::
 
   $ asciidoc -a toc -a toclevels=3 doc/asciidoc.txt
 
+toc_title::
+  Sets the table of contents title (defaults to 'Table of Contents').
+
 linkcss::
   Link CSS stylesheets and JavaScripts (see the 'stylesdir' and
   'scriptsdir' attributes below). By default 'linkcss' is undefined in
@@ -269,6 +272,10 @@ encoding::
 quirks::
   Use the `xhtml11-quirks.css` stylesheet to work around IE6 browser
   incompatibilities (this is the default behavior).
+
+data-uri::
+  Embed images referenced by 'image' macros using the <<X66,data: uri
+  scheme>>.
 
 [[X35]]
 Stylesheets
@@ -745,12 +752,14 @@ The following replacements are defined in the default AsciiDoc
 configuration:
 
   (C) copyright, (TM) trademark, (R) registered trademark,
-  -- em dash, ... ellipsis.
+  -- em dash, ... ellipsis, -> right arrow, <- left arrow, => right
+  double arrow, <= left double arrow.
 
 Which are rendered as:
 
 (C) copyright, (TM) trademark, (R) registered trademark,
--- em dash, ... ellipsis.
+-- em dash, ... ellipsis, -> right arrow, <- left arrow, => right
+double arrow, <= left double arrow.
 
 The <<X7,Configuration Files>> section explains how to configure your
 own replacements.
@@ -2096,6 +2105,25 @@ For example:
   .Main circuit board
   [caption="Figure 2:"]
   image::images/layout.png[J14P main circuit board]
+
+[[X66]]
+.Embedding images in XHTML documents
+*********************************************************************
+If you define the `data-uri` attribute then images referenced by
+'image' macros will be embedded in XHTML outputs using the
+http://en.wikipedia.org/wiki/Data:_URI_scheme[data: URI scheme].  You
+can use the `data-uri` attribute to produce single-file XHTML
+documents with embedded images and CSS, for example:
+
+  $ asciidoc --unsafe -a data-uri mydocument.txt
+
+You will need to specify the `--unsafe` option because the AsciiDoc
+`data-uri` is implemented using the `\{sys}` attribute.
+
+NOTE: Internet Explorer up to version 7 does not support 'data: URIs',
+but it is supported by Internet Explorer 8 Beta 1.  URI scheme'.
+
+*********************************************************************
 
 [[X25]]
 Comment Lines

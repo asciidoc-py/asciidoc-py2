@@ -64,4 +64,6 @@ function generateToc(toclevels) {
     div.className = "toclevel" + entry.toclevel;
     toc.appendChild(div);
   }
+  if (entries.length == 0)
+    document.getElementById("header").removeChild(toc);
 }

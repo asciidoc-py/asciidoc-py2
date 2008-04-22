@@ -14,7 +14,7 @@ repository] for a full list of changes.
   by 'image' macros will be embedded in XHTML using the
   http://en.wikipedia.org/wiki/Data:_URI_scheme[data: URI scheme].
   *NOTE*: Microsoft browser support for the 'data: URI scheme' is
-  limited to MSIE 8 beta 1.
+  currently limited to MSIE 8 beta 1.
 - Added `toc-title` attribute to allow custom table of contents titles.
 - Added references to Alex Efros's AsciiDoc Cheatsheet to AsciiDoc
   website.
@@ -29,6 +29,14 @@ repository] for a full list of changes.
   VMiklos.
 - AttributeEntry names can now be numeric (``named macro targets'').
 - Various XHTML CSS tweaks.
+- Code cleanup:
+  * Replaced `realpath()` with Python 2.2 `os.path.realpath()` library
+    function.
+  * Replaced old string library functions with string methods.
+  * Use file generators instead of `readlines()`.
+  * Renamed entities that shadowed builtins.
+  * Standardized string quoting.
+  * Dropped `readlines()` function.
 
 .Bug fixes
 - Fixed broken CSS for decimal ordered lists nested in alpha ordered
@@ -182,7 +190,7 @@ Version 8.2.0 (2007-04-04)
   levels reported in the table of contents.  Defaults to 2 and must be
   used with the 'toc' attribute. Example usage:
 
-  $ asciidoc -a toc -a toclevels=3 doc/asciidoc.txt 
+  $ asciidoc -a toc -a toclevels=3 doc/asciidoc.txt
 
 - Added a `listindex` attribute which is the current list item index
   (1..). If this attribute appears outside a list its value is the
@@ -1268,7 +1276,7 @@ Version 3.1 (2003-05-18)
   longer used in glossary configuration file entries (although it is
   still used when undefining an entry using the `-g` command-line
   option).
-  
+
 
 Version 3.0 (2003-05-13)
 ------------------------
@@ -1498,7 +1506,7 @@ Version 1.2 (2002-12-28)
 
 Version 1.1 (2002-12-03)
 ------------------------
-- Added css (cascading style sheets) backend 
+- Added css (cascading style sheets) backend
 - Implemented IndentedBlock document element.
 - Tabsize command-line option has been deprecated in
   favor of configuration file.

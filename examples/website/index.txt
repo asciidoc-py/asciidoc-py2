@@ -3,23 +3,8 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-This release fixes couple of bugs in 8.2.4, in particular a nasty
-regression bug (`future feature with_statement is not defined`). *No
-new features have been added*.
-
-************************************************************************
-
-.10 November 2007: AsciiDoc 8.2.4 Released
-************************************************************************
-This release adds support for language specific configuration files
-along with a couple of other fairly minor additions.
-
-An AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository is
-now link:downloads.html#X3[available online].
-
-The big news is the upcoming link:version9.html[AsciiDoc version 9]
-release which has been undertaken by Yannick Gingras. See
-link:version9.html[here] for details.
+Bug fixes since the last release plus a few minor additions and
+changes.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full description of
 additions and changes.

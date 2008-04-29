@@ -3,8 +3,8 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-Bug fixes since the last release plus a few minor additions and
-changes.
+Bug fixes since the last release plus a code cleanup and a few minor
+additions and changes.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full description of
 additions and changes.

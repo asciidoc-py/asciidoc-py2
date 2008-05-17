@@ -2121,7 +2121,7 @@ You will need to specify the `--unsafe` option because the AsciiDoc
 `data-uri` is implemented using the `\{sys}` attribute.
 
 NOTE: Internet Explorer up to version 7 does not support 'data: URIs',
-but it is supported by Internet Explorer 8 Beta 1.  URI scheme'.
+but it is supported by Internet Explorer 8 Beta 1.
 
 *********************************************************************
 

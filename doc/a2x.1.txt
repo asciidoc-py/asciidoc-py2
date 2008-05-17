@@ -89,6 +89,9 @@ OPTIONS
   Additional xsltproc(1) options.  This option may be specified more
   than once.
 
+*--fop-opts*='FOP_OPTS'::
+  Additional fop options.  This option may be specified more than once.
+
 
 OUTPUT FILES
 ------------

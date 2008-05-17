@@ -37,6 +37,7 @@ STYLESHEET=./docbook-xsl.css
 VERBOSE_2=no
 VERBOSE=no
 XSLTPROC_OPTS=
+FOP_OPTS=
 
 #--------------------------------------------------------------------
 # General purpose functions
@@ -195,6 +196,7 @@ options:
   --version                      print program version to stdout
   -v, --verbose                  print operational details to stderr
   --xsltproc-opts=XSLTPROC_OPTS  xsltproc(1) options
+  --fop-opts=FOP_OPTS            fop options
 EOF
 }
 
@@ -280,6 +282,9 @@ function parse_options()
                 shift ;;
             --xsltproc-opts)
                 XSLTPROC_OPTS="$XSLTPROC_OPTS $2"
+                shift 2 ;;
+            --fop-opts)
+                FOP_OPTS="$FOP_OPTS $2"
                 shift 2 ;;
             --)
                 shift; break ;;
@@ -514,7 +519,7 @@ function to_pdf()
     to_docbook
     execute_command_2 "xsltproc $XSLTPROC_OPTS --nonet \
         \"$xsl\" \"$xml\" >\"$fo\""
-    execute_command_2 "fop.sh \"$fo\" \"$pdf\""
+    execute_command_2 "fop.sh $FOP_OPTS -fo \"$fo\" -pdf \"$pdf\""
 }
 
 function to_odt()

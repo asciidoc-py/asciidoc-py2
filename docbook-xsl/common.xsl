@@ -18,7 +18,7 @@
 <xsl:param name="shade.verbatim" select="0"/>
 <xsl:attribute-set name="shade.verbatim.style">
   <xsl:attribute name="border">0</xsl:attribute>
-  <xsl:attribute name="bgcolor">#E0E0E0</xsl:attribute>
+  <xsl:attribute name="background-color">#E0E0E0</xsl:attribute>
 </xsl:attribute-set>
 
 <xsl:param name="admon.graphics" select="1"/>

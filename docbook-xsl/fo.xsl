@@ -14,7 +14,7 @@
 <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/fo/docbook.xsl"/>
 <xsl:import href="common.xsl"/>
 
-<xsl:param name="fop.extensions" select="1" />
+<xsl:param name="fop1.extensions" select="1" />
 <xsl:param name="variablelist.as.blocks" select="1" />
 
 <xsl:param name="paper.type" select="'A4'"/>

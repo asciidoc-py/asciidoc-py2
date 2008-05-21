@@ -35,6 +35,7 @@
 :syseval which jw | :assign JW              # Converts DocBook SGML to PDF.
 :syseval which lynx | :assign LYNX          # Converts HTML to text.
 :syseval which xmllint | :assign XMLLINT    # Validates XML.
+:syseval which dblatex | :assign DBLATEX    # Converts DocBook XML to PDF.
 
 ## xsltproc(1) is used instead of xmlto(1).
 #XMLTO = xmlto
@@ -157,7 +158,10 @@ TEST_FILES = $*(ROOT).css-embedded.html
     :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 ../docbook-xsl/fo.xsl $source >$target
 
 # Try PDF generators in order of preference.
-@if _no.FOP:
+@if _no.DBLATEX:
+    :rule %.pdf: %.xml
+        :sys $DBLATEX -o $target $source
+@elif _no.FOP:
     :rule %.pdf: %.fo
         :sys $FOP $source $target
 @elif _no.JW:

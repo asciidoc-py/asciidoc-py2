@@ -38,6 +38,7 @@ VERBOSE_2=no
 VERBOSE=no
 XSLTPROC_OPTS=
 FOP_OPTS=
+DBLATEX=no
 
 #--------------------------------------------------------------------
 # General purpose functions
@@ -190,6 +191,7 @@ options:
   -h, --help                     print command syntax summary
   --icons                        use admonition, callout and navigation icons
   --icons-dir=PATH               admonition and navigation icon directory
+  --dblatex                      use dblatex(1) instead of xsltproc and fop
   -n, --dry-run                  don't do anything just print the commands
   -s, --skip-asciidoc            skip asciidoc(1) execution
   --stylesheet=PATH              target HTML CSS stylesheet file name.
@@ -228,7 +230,7 @@ function parse_options()
         quit "enhanced getopt(1) required"
     fi
     short_opts="a:d:D:f:hnsv"
-    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:"
+    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,fop-opts:,dblatex"
     args=$(getopt -o $short_opts -l $long_opts -n $BASENAME -- "$@" 2>/dev/null)
     if [ $? -ne 0 ]; then
         quit "invalid command options, run: a2x --help"
@@ -262,6 +264,9 @@ function parse_options()
             --icons-dir)
                 ICONS_DIR=$2
                 shift 2 ;;
+            --dblatex)
+                DBLATEX=yes;
+                shift ;;
             -n|--dry-run)
                 DRY_RUN=yes;
                 shift ;;
@@ -506,20 +511,26 @@ function to_manpage()
 
 function to_pdf()
 {
-    require "xsltproc"
-    require "fop.sh"
     local xsl xml fo pdf
-    xsl=$(conf_file docbook-xsl/fo.xsl)
-    if [ ! -r "$xsl" ]; then
-        quit "file not found: $xsl"
-    fi
     xml="$SRC_DIR/$SRC_NAME.xml"
-    fo="$SRC_DIR/$SRC_NAME.fo"
     pdf="$DESTINATION_DIR/$SRC_NAME.pdf"
-    to_docbook
-    execute_command_2 "xsltproc $XSLTPROC_OPTS --nonet \
-        \"$xsl\" \"$xml\" >\"$fo\""
-    execute_command_2 "fop.sh $FOP_OPTS -fo \"$fo\" -pdf \"$pdf\""
+    if isyes $DBLATEX; then
+        require "dblatex"
+        to_docbook
+        execute_command_2 "dblatex -o \"$pdf\" \"$xml\""
+    else
+        require "xsltproc"
+        require "fop.sh"
+        xsl=$(conf_file docbook-xsl/fo.xsl)
+        if [ ! -r "$xsl" ]; then
+            quit "file not found: $xsl"
+        fi
+        fo="$SRC_DIR/$SRC_NAME.fo"
+        to_docbook
+        execute_command_2 "xsltproc $XSLTPROC_OPTS --nonet \
+            \"$xsl\" \"$xml\" >\"$fo\""
+        execute_command_2 "fop.sh $FOP_OPTS -fo \"$fo\" -pdf \"$pdf\""
+    fi
 }
 
 function to_odt()

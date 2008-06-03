@@ -11,5 +11,6 @@ See dblatex(1) -p option.
   <xsl:param name="term.breakline">1</xsl:param>
   <xsl:param name="doc.collab.show">0</xsl:param>
   <xsl:param name="doc.section.depth">3</xsl:param>
+  <xsl:param name="table.in.float">0</xsl:param>
 </xsl:stylesheet>
 

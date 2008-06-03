@@ -122,7 +122,10 @@ TEST_FILES = $*(ROOT).css-embedded.html
         opt += -n
     :sys $ASCIIDOC $opt -b docbook $(source[0])
     @if _no.XMLLINT:
-        :sys $XMLLINT --nonet --noout --valid $target
+        # Don't validate against DTD (using --valid option) because of
+        # non-standard dblatex <programlisting> 'linenumbering' attribute.
+        #:sys $XMLLINT --nonet --noout --valid $target
+        :sys $XMLLINT --nonet --noout $target
     @else:
         :print WARNING: xmllint(1) unavailable: skipping validation
 

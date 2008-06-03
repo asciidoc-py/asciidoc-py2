@@ -10,10 +10,8 @@ common programming languages.
 
 Examples
 --------
-
-[caption="Example 1: "]
-.Python code snippet
-=====================================================================
+Unnumbered source code listing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This source-highlight filtered block:
 
 ---------------------------------------------------------------------
@@ -45,12 +43,9 @@ def sub_word(mo):
     else:
         return word
 source~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-=====================================================================
 
-
-[caption="Example 2: "]
-.Ruby code snippet with line numbering
-=====================================================================
+Numbered source code listing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This source-highlight filtered block:
 
 ---------------------------------------------------------------------
@@ -94,7 +89,7 @@ Renders this highlighted source code:
 [ruby,numbered]
 source~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #
-# Useful Ruby base class tension's.
+# Useful Ruby base class extensions.
 #
 
 class Array
@@ -124,7 +119,6 @@ if $0 == __FILE__
   end
 end
 source~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-=====================================================================
 
 
 Installation

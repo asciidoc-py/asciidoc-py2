@@ -163,7 +163,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
 # Try PDF generators in order of preference.
 @if _no.DBLATEX:
     :rule %.pdf: %.xml
-        :sys $DBLATEX -p ../docbook-xsl/dblatex.xsl -o $target $source
+        :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source
 @elif _no.FOP:
     :rule %.pdf: %.fo
         :sys $FOP $source $target

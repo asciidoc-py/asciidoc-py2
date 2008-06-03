@@ -1,0 +1,18 @@
+%%
+%% This style is derivated from the docbook one.
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mystyle}[2007/04/04 My DocBook Style]
+%% Just use the original package and pass the options.
+\RequirePackageWithOptions{docbook}
+
+% Sidebar is a boxed minipage that can contain verbatim.
+% Changed shadow box to double box.
+\renewenvironment{sidebar}[1][0.95\textwidth]{
+  \hspace{0mm}\newline%
+  \noindent\begin{Sbox}\begin{minipage}{#1}%
+  \setlength\parskip{\medskipamount}%
+}{
+  \end{minipage}\end{Sbox}\doublebox{\TheSbox}%
+}
+

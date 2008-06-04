@@ -35,7 +35,8 @@
 :syseval which jw | :assign JW              # Converts DocBook SGML to PDF.
 :syseval which lynx | :assign LYNX          # Converts HTML to text.
 :syseval which xmllint | :assign XMLLINT    # Validates XML.
-:syseval which dblatex | :assign DBLATEX    # Converts DocBook XML to PDF.
+#:syseval which dblatex | :assign DBLATEX    # Converts DocBook XML to PDF.
+DBLATEX =
 
 ## xsltproc(1) is used instead of xmlto(1).
 #XMLTO = xmlto

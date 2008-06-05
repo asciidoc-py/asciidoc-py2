@@ -182,8 +182,8 @@ synopsis:
   $BASENAME [OPTIONS] FILE
 
 options:
-  -a, --attribute=ATTRIBUTE      set asciidoc(1) attribute value
-  --asciidoc-opts=ASCIIDOC_OPTS  asciidoc(1) options
+  -a, --attribute=ATTRIBUTE      set asciidoc attribute value
+  --asciidoc-opts=ASCIIDOC_OPTS  asciidoc options
   --copy                         copy icons or HTML stylesheet
   -D, --destination-dir=PATH     output directory (defaults to FILE directory)
   -d, --doctype=DOCTYPE          article, manpage, book
@@ -191,13 +191,13 @@ options:
   -h, --help                     print command syntax summary
   --icons                        use admonition, callout and navigation icons
   --icons-dir=PATH               admonition and navigation icon directory
-  --dblatex                      use dblatex(1) instead of xsltproc and fop
+  --dblatex                      use dblatex instead of fop
   -n, --dry-run                  don't do anything just print the commands
-  -s, --skip-asciidoc            skip asciidoc(1) execution
-  --stylesheet=PATH              target HTML CSS stylesheet file name.
+  -s, --skip-asciidoc            skip asciidoc execution
+  --stylesheet=PATH              target HTML CSS stylesheet file name
   --version                      print program version to stdout
   -v, --verbose                  print operational details to stderr
-  --xsltproc-opts=XSLTPROC_OPTS  xsltproc(1) options
+  --xsltproc-opts=XSLTPROC_OPTS  xsltproc options
   --fop-opts=FOP_OPTS            fop options
 EOF
 }

@@ -39,18 +39,25 @@
 <xsl:param name="draft.watermark.image" select="''"/>
 
 <!-- Sets title to body text indent -->
-<xsl:param name="title.margin.left">
+<xsl:param name="body.start.indent">
   <xsl:choose>
+    <xsl:when test="$fop.extensions != 0">0pt</xsl:when>
     <xsl:when test="$passivetex.extensions != 0">0pt</xsl:when>
-    <xsl:otherwise>-12pt</xsl:otherwise>
+    <xsl:otherwise>1pc</xsl:otherwise>
   </xsl:choose>
 </xsl:param>
-
+<xsl:param name="title.margin.left">
+  <xsl:choose>
+    <xsl:when test="$fop.extensions != 0">-1pc</xsl:when>
+    <xsl:when test="$passivetex.extensions != 0">0pt</xsl:when>
+    <xsl:otherwise>0pt</xsl:otherwise>
+  </xsl:choose>
+</xsl:param>
 <xsl:param name="page.margin.bottom" select="'0.25in'"/>
 <xsl:param name="page.margin.inner">
   <xsl:choose>
     <xsl:when test="$double.sided != 0">0.75in</xsl:when>
-    <xsl:otherwise>0.5in</xsl:otherwise>
+    <xsl:otherwise>0.75in</xsl:otherwise>
   </xsl:choose>
 </xsl:param>
 <xsl:param name="page.margin.outer">
@@ -77,8 +84,6 @@
   <xsl:attribute name="font-size">10pt</xsl:attribute>
 </xsl:attribute-set>
 
-<xsl:param name="admon.graphics" select="1"/>
-<xsl:param name="admon.textlabel" select="1"/>
 <xsl:attribute-set name="admonition.title.properties">
   <xsl:attribute name="font-size">14pt</xsl:attribute>
   <xsl:attribute name="font-weight">bold</xsl:attribute>

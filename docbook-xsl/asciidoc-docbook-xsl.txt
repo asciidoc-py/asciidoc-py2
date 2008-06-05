@@ -1,20 +1,15 @@
 AsciiDoc DocBook XSL Stylesheets Notes
 ======================================
 
-*********************************************************************
-All current AsciiDoc PDF and manpage documentation has been generated
-using *DocBook XSL Stylesheets version 1.72.0*, these notes and
-patches relate to this version. The version of FOP used is 0.20.5 (I
-did try FOP 0.93 under Ubuntu 6.10, but got a Java exception which I
-didn't pursue).
+PDF generation from AsciiDoc generated DocBook using FOP plus DocBook XSL
+Stylesheets.
 
-*********************************************************************
+- FOP 0.95beta.
+- DocBook XSL Stylesheets version 1.72.0.
 
-My tools of choice for converting AsciiDoc generated DocBook files to
-PDF and manpage files are xsltproc(1), FOP and DocBook XSL
-Stylesheets. Output file customisation is achieved by tweaking the
-DocBook XSL stylesheets. I've tried to keep customization to a minimum
-and confine it to the separate XSL driver files in the distribution
+Output file customisation is achieved by tweaking the DocBook XSL
+stylesheets.  I've tried to keep customization to a minimum and
+confine it to the separate XSL driver files in the distribution
 `./docbook-xsl/` directory (see the User Guide for details).
 
 To polish some rough edges I've written some patches for the DocBook

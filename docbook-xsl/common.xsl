@@ -9,6 +9,8 @@
 <xsl:param name="htmlhelp.chm" select="'htmlhelp.chm'"/>
 <xsl:param name="htmlhelp.hhc.section.depth" select="5"/>
 
+<xsl:param name="section.autolabel" select="1"/>
+
 <xsl:param name="suppress.navigation" select="0"/>
 <xsl:param name="navig.graphics.extension" select="'.png'"/>
 <xsl:param name="navig.graphics" select="0"/>
@@ -57,5 +59,7 @@
 <xsl:param name="table.frame.border.style" select="'solid'"/>
 <xsl:param name="table.frame.border.thickness" select="'2px'"/>
 <xsl:param name="tablecolumns.extension" select="'1'"/>
+
+<xsl:param name="highlight.source" select="1"/>
 
 </xsl:stylesheet>

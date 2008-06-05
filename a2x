@@ -511,13 +511,15 @@ function to_manpage()
 
 function to_pdf()
 {
-    local xsl xml fo pdf
+    local xsl xml fo pdf sty
     xml="$SRC_DIR/$SRC_NAME.xml"
     pdf="$DESTINATION_DIR/$SRC_NAME.pdf"
     if isyes $DBLATEX; then
         require "dblatex"
         to_docbook
-        execute_command_2 "dblatex -o \"$pdf\" \"$xml\""
+        xsl=$(conf_file dblatex/asciidoc-dblatex.xsl)
+        sty=$(conf_file dblatex/asciidoc-dblatex.sty)
+        execute_command_2 "dblatex -p \"$xsl\" -s \"$sty\" -o \"$pdf\" \"$xml\""
     else
         require "xsltproc"
         require "fop.sh"

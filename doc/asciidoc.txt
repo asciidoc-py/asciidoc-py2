@@ -18,7 +18,7 @@ This is an overly large document, it probably needs to be refactored
 into a Tutorial, FAQ, Quick Reference and Formal Reference.
 
 If you're new to AsciiDoc read this section and the <<X6,Getting
-Started>> section and take a look at the example AsciiDoc `*.txt`
+Started>> section and take a look at the example AsciiDoc `.txt`
 source files in the distribution `doc` directory.
 **********************************************************************
 
@@ -92,7 +92,7 @@ AsciiDoc web site and/or distributed examples:
 - Take a look at the linked examples on the AsciiDoc web site home
   page http://www.methods.co.nz/asciidoc/[].  Press the 'Page Source'
   sidebar menu item to view corresponding AsciiDoc source.
-- Read the `*.txt` source files in the distribution `./doc` directory
+- Read the `.txt` source files in the distribution `./doc` directory
   in conjunction with the corresponding HTML and DocBook XML files.
 
 
@@ -2664,7 +2664,7 @@ The second manpage section is mandatory and must be titled 'SYNOPSIS'.
 refmiscinfo attributes
 ~~~~~~~~~~~~~~~~~~~~~~
 In addition to the automatically created man page <<X60,intrinsic
-attibutes>> you can assign DocBook
+attributes>> you can assign DocBook
 http://www.docbook.org/tdg5/en/html/refmiscinfo.html[refmiscinfo]
 element 'source', 'version' and 'manual' values using AsciiDoc
 `\{mansource}`, `\{manversion}` and `\{manmanual}` attributes
@@ -3864,13 +3864,38 @@ A wide range of user output format requirements coupled with a choice
 of available tools and stylesheets results in many valid tool chain
 combinations.
 
-The DocBook toolchain currently used for processing AsciiDoc
-documentation is <<X40,xsltproc(1)>>, <<X14,FOP>> and <<X13,DocBook
-XSL Stylesheets>>.  These tools are freely available for Linux and
-Windows systems.
+The DocBook toolchain used for processing AsciiDoc documentation is
+<<X40,xsltproc(1)>> driven by <<X13,DocBook XSL Stylesheets>>. This
+combination produces HTML documents directly and PDF and HTML Help
+file indirectly.
 
-.Why Generate HTML via DocBook?
-**********************************************************************
+[[X43]]
+a2x Toolchain Wrapper
+~~~~~~~~~~~~~~~~~~~~~
+One of the biggest hurdles for new users is installing, configuring
+and using a DocBook XML toolchain. `a2x(1)` can help -- it's a
+toolchain wrapper command that will generate XHTML (chunked and
+unchunked), PDF, man page, HTML Help and text file outputs from an
+AsciiDoc text file.  a2x(1) does all the grunt work associated with
+generating and sequencing the toolchain commands and managing
+intermediate and output files.  a2x(1) also optionally deploys
+admonition and navigation icons and a CSS stylesheet. See the `a2x(1)`
+man page for more details. All you need is <<X40,xsltproc(1)>>,
+<<X13,DocBook XSL Stylesheets>> and optionally <<X31,dblatex>> or
+<<X14,FOP>> (if you want PDF) or `lynx(1)` (if you want text).
+
+The following example generates `doc/quickstart.pdf` from the AsciiDoc
+`doc/quickstart.txt` source file:
+
+  $ a2x -f pdf --icons doc/quickstart.txt
+
+See the `a2x(1)` man page for details.
+
+TIP: Use the `--verbose` command-line option to view executed
+toolchain commands.
+
+HTML generation
+~~~~~~~~~~~~~~~
 AsciiDoc produces nicely styled HTML directly without requiring a
 DocBook toolchain but there are also advantages in going the DocBook
 route:
@@ -3890,31 +3915,69 @@ is easily customized and can be used in situations where there is no
 suitable DocBook toolchain (see the
 http://www.methods.co.nz/asciidoc/[AsciiDoc website] for example).
 
+PDF generation
+~~~~~~~~~~~~~~
+There are two commonly used tools to generate PDFs from DocBook,
+<<X31,dblatex>> and <<X14,FOP>>.
+
+.dblatex or FOP?
+- 'dblatex' is easier to install, there's zero configuration
+  required and no Java VM to install-- it just works out of the box.
+- 'dblatex' source code highlighting and numbering is superb.
+- 'dblatex' is easier to use as it converts DocBook directly to PDF
+  whereas before using 'FOP' you have to convert DocBook to XML-FO
+  using <<X13,DocBook XSL Stylesheets>>.
+- 'FOP' is more feature complete (for example, callouts are processed
+  inside literal layouts) and arguably produces nicer looking output.
+
+HTML Help generation
+~~~~~~~~~~~~~~~~~~~~
+. Convert DocBook XML documents to HTML Help compiler source files
+  using <<X13,DocBook XSL Stylesheets>> and <<X40,xsltproc(1)>>.
+. Convert the HTML Help source (`.hhp` and `.html`) files to HTML Help
+  (`.chm`) files using the <<X67,Microsoft HTML Help Compiler>>.
+
+Toolchain components summary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+AsciiDoc::
+    Converts AsciiDoc (`.txt`) files to DocBook XML (`.xml`) files.
+
+[[X13]]
+http://docbook.sourceforge.net/projects/xsl/[DocBook XSL Stylesheets]::
+  These are a set of XSL stylesheets containing rules for converting
+  DocBook XML documents to HTML, XSL-FO, manpage and HTML Help files.
+  The stylesheets are used in conjunction with an XML parser such as
+  <<X40,xsltproc(1)>>.
+
+[[X40]]
+http://www.xmlsoft.org[xsltproc]::
+  An XML parser for applying XSLT stylesheets (in our case the
+  <<X13,DocBook XSL Stylesheets>>) to XML documents.
+
+[[X31]]
+http://dblatex.sourceforge.net/[dblatex]::
+  Generates PDFs directly from DocBook source via the intermediate
+  LaTeX typesetting language -- uses <<X13,DocBook XSL Stylesheets>>,
+  <<X40,xsltproc(1)>> and `latex(1)`.
+
+[[X14]]
+http://xml.apache.org/fop/[FOP]::
+  The Apache Formatting Objects Processor converts XSL-FO (`.fo`)
+  files to PDF files.  The XSL-FO files are generated from DocBook
+  source files using <<X13,DocBook XSL Stylesheets>> and
+  <<X40,xsltproc(1)>>.
+
+[[X67]]
+Microsoft Help Compiler::
+  The Microsoft HTML Help Compiler (`hhc.exe`) is a command-line tool
+  that converts HTML Help source files to a single HTML Help (`.chm`)
+  file. It runs on MS Windows platforms and can be downloaded from
+  http://www.microsoft.com[].
+
+.Windows DocBook conversion
 **********************************************************************
-
-If you require output formats other than HTML you would feed
-AsciiDoc's DocBook output to a DocBook toolchain. The distributed PDF
-documents have been generated in this way.
-
-The toolchain processing steps are:
-
-. Convert AsciiDoc (`\*.txt`) documents to DocBook XML (`*.xml`)
-  using AsciiDoc.
-. Convert DocBook XML documents to HTML, XSL-FO or HTML Help files
-  using <<X13,DocBook XSL Stylesheets>> and the `xsltproc(1)` XML
-  parser.
-. Convert the XSL-FO (`\*.fo`) files to PDF using FOP and HTML Help
-  source (`\*.hhp`) files to HTML Help (`*.chm`) files using the
-  Microsoft HTML Help Compiler.
-
-TIP: These steps can be automated by using the AsciiDoc <<X43,a2x(1)>>
-toolchain wrapper command.
-
-.Lazy DocBook Conversion
-**********************************************************************
-Depending on your Linux distribution toolchain installation can be a
-mission for users used to a GUI environment, even more so under
-Microsoft Windows. So you may like to try the
+Toolchain installation can be a mission for Microsoft Windows users
+used to a GUI environment -- you may like to try the
 http://www.xmlmind.com/foconverter/[XMLmind FO Converter], it contains
 a GUI 'XSL Utility' which makes a creditable job of converting
 AsciiDoc generated DocBook files to RTF, HTML and Open Document
@@ -3924,68 +3987,22 @@ version. Thanks to Matthew Marshall for this tip.
 
 **********************************************************************
 
-[[X43]]
-a2x Toolchain Wrapper
-~~~~~~~~~~~~~~~~~~~~~
-One of the biggest hurdles for new users seems to be using a DocBook
-XML toolchain. a2x(1) can help -- it's a toolchain wrapper command that
-will generate XHTML (chunked and unchunked), PDF, man page, HTML Help
-and text file outputs from an AsciiDoc text file.  a2x(1) does all the
-grunt work associated with generating and sequencing the toolchain
-commands and managing intermediate and output files.  a2x(1) also
-optionally deploys admonition and navigation icons and a CSS
-stylesheet. See the `a2x(1)` man page for more details. All you need
-is <<X40,xsltproc(1)>>, <<X13,DocBook XSL Stylesheets>> and optionally
-<<X14,FOP>> (if you want PDF) or lynx(1) (if you want text).
+AsciiDoc dblatex configuration files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The AsciiDoc distribution `./dblatex` directory contains
+`asciidoc-dblatex.xsl` (customized XSL parameter settings) and
+`asciidoc-dblatex.sty` (customized LaTeX settings). These are examples
+of optional <<X31,dblatex>> PDF output customization and are used by
+<<X43,a2x(1)>>.
 
-The following example generates `doc/quickstart.pdf` from the AsciiDoc
-`doc/quickstart.txt` source file:
-
-  $ a2x -f pdf --icons doc/quickstart.txt
-
-See the a2x(1) man page for details.
-
-TIP: Use the `--verbose` command-line option to view executed
-toolchain commands.
-
-
-Toolchain Components
-~~~~~~~~~~~~~~~~~~~~
-AsciiDoc::
-    Converts AsciiDoc (`\*.txt`) files to DocBook XML (`*.xml`) files.
-
-[[X13]]
-http://docbook.sourceforge.net/projects/xsl/[DocBook XSL Stylesheets]::
-    These are a set of XSL stylesheets containing rules for converting
-    DocBook XML documents to HTML, XSL-FO, manpage and HTML Help
-    files. The stylesheets are used in conjunction with an XML parser
-    such as `xsltproc(1)`.
-
-[[X40]]
-http://www.xmlsoft.org[xsltproc]::
-    `xsltproc`  is  a command line XML parser for applying XSLT
-    stylesheets (in our case the DocBook XSL Stylesheets) to XML
-    documents.
-
-FOP::
-    The Apache Formatting Objects Processor converts XSL-FO (`*.fo`)
-    files to PDF files (see the <<X14,FOP section>>).
-
-Microsoft Help Compiler::
-    The Microsoft HTML Help Compiler (`hhc.exe`) is a command-line
-    tool that converts HTML Help source files to a single HTML Help
-    (`*.chm`) file. It runs on MS Windows platforms and can be
-    downloaded from http://www.microsoft.com[].
-
-[[X31]]
-AsciiDoc DocBook XSL Drivers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+AsciiDoc DocBook XSL Stylesheets drivers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You will have noticed that the distributed PDF, HTML and HTML Help
 documentation files (for example `./doc/asciidoc.html`) are not the
-plain outputs produced using the default DocBook XSL Stylesheets
+plain outputs produced using the default 'DocBook XSL Stylesheets'
 configuration.  This is because they have been processed using
-customized DocBook XSL Stylesheet drivers along with (in the case of
-HTML outputs) the custom `./stylesheets/docbook.css` CSS stylesheet.
+customized DocBook XSL Stylesheets along with (in the case of HTML
+outputs) the custom `./stylesheets/docbook.css` CSS stylesheet.
 
 You'll find the customized DocBook XSL drivers along with additional
 documentation in the distribution `./docbook-xsl` directory. The
@@ -4004,7 +4021,7 @@ examples that follow are executed from the distribution documentation
     $ xsltproc --nonet ../docbook-xsl/chunked.xsl asciidoc.xml
 
 `fo.xsl`::
-    Generate XSL Formatting Object (`*.fo`) files for subsequent PDF
+    Generate XSL Formatting Object (`.fo`) files for subsequent PDF
     file generation using FOP. For example:
 
     $ python ../asciidoc.py -b docbook article.txt
@@ -4036,22 +4053,6 @@ examples that follow are executed from the distribution documentation
 
 If you want to see how the complete documentation set is processed
 take a look at the A-A-P script `./doc/main.aap`.
-
-
-[[X14]]
-FOP
-~~~
-XSL Stylesheets can be used to generate FO (Formatting Object) files,
-which in turn can be used to produce PDF files using the Apache
-Formatting Object Processor program (FOP). The FOP home page is at
-http://xml.apache.org/fop/[].
-
-As of version 0.20.5 installation and configuration of FOP is a manual
-process. You also need a working Java Runtime to run FOP. You'll find
-FOP and Java installation information in the appendices.
-
-TIP: Once you've got FOP installed use the AsciiDoc <<X43,a2x(1)>> toolchain
-wrapper to generate PDF files from AsciiDoc source.
 
 
 Generating Plain Text Files
@@ -4632,105 +4633,7 @@ configuration files. Be especially careful when:
 =====================================================================
 
 
-Appendix D: Installing FOP on Windows
--------------------------------------
-. Download latest FOP distribution from http://xml.apache.org/fop/[].
-. Unzip to `C:\bin`.
-. Edit the distribution `fop.bat` file and put it in the search
-  `PATH`:
-
-  set LOCAL_FOP_HOME=C:\bin\fop-0.20.5\
-
-. Download the JIMI image processing library from
-  http://java.sun.com/products/jimi/[].
-. Extract the `JimiProClasses.jar` library from the JIMI distribution
-  and copy to the FOP `./lib` directory.
-. Edit the distribution `fop.bat` file again and add the JIMI library
-  to `LOCALCLASSPATH`:
-
-  set LOCALCLASSPATH=%LOCALCLASSPATH%;%LIBDIR%\JimiProClasses.jar
-
-. You should now be able to run FOP from a DOS prompt -- execute
-  it without arguments to get a list of command options:
-
-  > fop.bat
-
-
-Appendix E: Installing FOP on Linux
------------------------------------
-Here's how I installed FOP on Fedora Core 1:
-
-. Download latest FOP distribution from http://xml.apache.org/fop/[].
-. Install the FOP distribution:
-
-  $ su
-  # cd /usr/local/lib
-  # unzip ~srackham/tmp/fop-0.20.5-bin.zip
-  # cp /usr/local/lib/fop-0.20.5/fop.sh /usr/local/bin
-  # chmod +x /usr/local/bin/fop.sh
-
-. Edit the FOP start script `fop.sh` adding this line to the start of
-  the script:
-
-  FOP_HOME=/usr/local/lib/fop-0.20.5
-
-. Download the JIMI image processing library from
-  http://java.sun.com/products/jimi/[].
-. Extract the `JimiProClasses.jar` library from the JIMI distribution
-  and copy to the FOP `lib` directory.
-
-  # cp ~srackham/tmp/JimiProClasses.jar /usr/local/lib/fop-0.20.5/lib/
-
-. You should now be able to run FOP from a DOS prompt -- execute
-  it without arguments to get a list of command options:
-
-  $ fop.sh
-
-
-Appendix F: Installing Java on Windows
---------------------------------------
-First check that Java is not already installed:
-
-. Open a DOS 'Command Prompt' window.
-. Enter this command:
-
-  java -version
-
-You should see something like this:
-
----------------------------------------------------------------------
-java version "1.4.2_01"
-Java(TM) 2 Runtime Environment, Standard Edition (build 1.4.2_01-b06)
-Java HotSpot(TM) Client VM (build 1.4.2_01-b06, mixed mode)
----------------------------------------------------------------------
-
-If you don't Java is not installed and you need to:
-
-. Download the Java Runtime (JRE) for Windows from
-  http://java.sun.com[].
-. Install using the instructions on the download page.
-
-
-Appendix G: Installing Java on Linux
-------------------------------------
-Check Java is not already installed by entering the following command:
-
-  $ java -version
-
-You should see something like this:
-
-  java version "1.4.2_01"
-  Java(TM) 2 Runtime Environment, Standard Edition (build 1.4.2_01-b06)
-  Java HotSpot(TM) Client VM (build 1.4.2_01-b06, mixed mode)
-
-If it's not already set you will need to set the `JAVA_HOME`
-environment variable. For example on Kubuntu Breezy put the following
-line into `/etc/profile`:
-
-  export JAVA_HOME=/usr/lib/jvm/java-1.4.2-gcj-4.0-1.4.2.0/
-
-
-Appendix H: Using AsciiDoc with non-English Languages
+Appendix D: Using AsciiDoc with non-English Languages
 -----------------------------------------------------
 AsciiDoc can process UTF-8 character sets but there are some things
 you need to be aware of:
@@ -4763,7 +4666,7 @@ you need to be aware of:
   format.
 
 
-Appendix I: ASCIIMathML Support
+Appendix E: ASCIIMathML Support
 -------------------------------
 http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML] is
 a clever JavaScript written by Peter Jipsen that transforms
@@ -4799,7 +4702,7 @@ can be found in the AsciiDoc distribution `./doc` directory.
 =====================================================================
 
 
-Appendix J: Vim Syntax Highlighter
+Appendix F: Vim Syntax Highlighter
 ----------------------------------
 The AsciiDoc `./vim/` distribution directory contains Vim syntax
 highlighter and filetype detection scripts for AsciiDoc.  Syntax

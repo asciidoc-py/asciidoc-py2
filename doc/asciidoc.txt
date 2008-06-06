@@ -2041,17 +2041,30 @@ referring document.
 
   image:images/logo.png[Company Logo]
 
-- The optional `width` and `height` named attributes scale the image
-  size and can be used in any combination. The following example
-  scales the previous example to a height of 32 pixels:
+- The optional `width` and `height` attributes scale the image size
+  and can be used in any combination. The units are pixels.  The
+  following example scales the previous example to a height of 32
+  pixels:
 
   image:images/logo.png["Company Logo",height=32]
 
-- The optional `link` named attribute is used to link the image to
-  an external document. The following example links a screenshot
+- The optional `link` attribute is used to link the image to an
+  external document. The following example links a screenshot
   thumbnail to a full size version:
 
   image:screen-thumbnail.png[height=32,link="screen.png"]
+
+- The optional `scalewidth` attribute is only used in DocBook block
+  images (specifically for PDF documents). The following example
+  scales the images to 75% of the available print width:
+
+  image::images/logo.png["Company Logo",scalewidth="75%"]
+
+- The optional `align` attribute is used for horizontal image
+  alignment in DocBook block images (specifically for PDF documents).
+  Allowed values are `center`, `left` and `right`. For example:
+
+  image::images/tiger.png["Tiger image",align="left"]
 
 Block Macros
 ~~~~~~~~~~~~

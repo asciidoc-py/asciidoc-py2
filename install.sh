@@ -28,6 +28,7 @@ else
     install doc/*.1 $MANDIR/man1
     install -d $CONFDIR/filters \
                $CONFDIR/docbook-xsl \
+               $CONFDIR/dblatex \
                $CONFDIR/stylesheets \
                $CONFDIR/javascripts \
                $CONFDIR/images/icons/callouts
@@ -35,6 +36,8 @@ else
     install filters/*.py $CONFDIR/filters
     install -m 644 filters/*.conf $CONFDIR/filters
     install -m 644 docbook-xsl/*.xsl $CONFDIR/docbook-xsl
+    install -m 644 dblatex/*.xsl $CONFDIR/dblatex
+    install -m 644 dblatex/*.sty $CONFDIR/dblatex
     install -m 644 stylesheets/*.css $CONFDIR/stylesheets
     install -m 644 javascripts/*.js $CONFDIR/javascripts
     install -m 644 images/icons/callouts/* $CONFDIR/images/icons/callouts

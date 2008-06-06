@@ -4603,6 +4603,7 @@ Here's a summary of the installation procedure:
 - Move the `./*.conf` files to `/etc/asciidoc/`.
 - Move `./filters/{\*.conf,*.py}` to `/etc/asciidoc/filters/`.
 - Move `./docbook-xsl/*.xsl` to `/etc/asciidoc/docbook-xsl/`.
+- Move `./dblatex/*.{xsl,sty}` to `/etc/asciidoc/dblatex/`.
 - Copy `./stylesheets/*.css` to `/etc/asciidoc/stylesheets/`.
 - Copy `./javascripts/*.js` to `/etc/asciidoc/javascripts/`.
 - Copy `./images/icons/*` to `/etc/asciidoc/images/icons/`

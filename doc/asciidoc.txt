@@ -2054,11 +2054,11 @@ referring document.
 
   image:screen-thumbnail.png[height=32,link="screen.png"]
 
-- The optional `scalewidth` attribute is only used in DocBook block
+- The optional `scaledwidth` attribute is only used in DocBook block
   images (specifically for PDF documents). The following example
   scales the images to 75% of the available print width:
 
-  image::images/logo.png["Company Logo",scalewidth="75%"]
+  image::images/logo.png["Company Logo",scaledwidth="75%"]
 
 - The optional `align` attribute is used for horizontal image
   alignment in DocBook block images (specifically for PDF documents).

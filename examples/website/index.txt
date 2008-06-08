@@ -168,6 +168,15 @@ Resources
   discussion of the ikiwiki integration
   http://ikiwiki.info/users/KarlMW/discussion/[here].
 
+
+Blogpost weblog client
+----------------------
+http://srackham.wordpress.com/blogpost-readme/[blogpost] is a
+command-line weblog client for publishing AsciiDoc documents to
+http://wordpress.org/[WordPress] blog hosts. It creates and updates
+weblog posts and pages directly from AsciiDoc source documents.
+
+
 [[X1]]
 LaTeX Backend
 -------------

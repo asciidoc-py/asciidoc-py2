@@ -4,6 +4,19 @@ AsciiDoc Frequently Asked Questions
 An embryonic AsciiDoc FAQ.
 
 
+== How can I preserve paragraph line boundaries?
+
+Apply the The 'verse' paragraph style, the rendered text preserves
+line boundaries and is useful for lyrics and poems.  For example:
+
+---------------------------------------------------------------------
+[verse]
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+---------------------------------------------------------------------
+
+
 == How can I include non-breaking space characters?
 
 The predefined `\{nbsp}` attribute reference will be replaced by a

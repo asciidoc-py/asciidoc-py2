@@ -1080,8 +1080,9 @@ Renders:
 2. Item 2
 ....................
 
-A 'verse' <<X23,style>> can be applied to LiteralBlocks (useful for
-lyrics and poems). For example:
+A 'verse' <<X23,style>> can be applied to LiteralBlocks -- useful for
+lyrics and poems or any situation where you want to preserve line
+boundaries. For example:
 
 ---------------------------------------------------------------------
 [verse]

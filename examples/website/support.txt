@@ -1,7 +1,5 @@
 AsciiDoc Support
 ================
 
-- Terrence Brannon has set
-  up the
-  http://lists.metaperl.com/cgi-bin/mailman/listinfo/asciidoc-discuss[asciidoc-discuss]
-  mailing list.
+- Terrence Brannon has set up the
+  http://groups.google.com/group/asciidoc[AsciiDoc discussion list].

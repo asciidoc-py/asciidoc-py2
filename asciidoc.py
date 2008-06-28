@@ -1943,7 +1943,7 @@ class AbstractBlock:
     def update_params(self,src,dst):
         """Copy block processing parameters from src to dst dictionaries."""
         for k,v in src.items():
-            if k == 'template':
+            if k in ('template','filter'):
                 dst[k] = v
             elif k == 'options':
                 dst[k] = parse_options(v,self.OPTIONS,
@@ -1955,18 +1955,12 @@ class AbstractBlock:
                     dst['presubs'] = subs
                 else:
                     dst[k] = subs
-            elif k == 'filter':
-                dst[k] = v
     def merge_attributes(self,attrs):
         """Merge block attributes 'attrs' dictionary with the block
         configuration parameters setting self.attributes (template substitution
         attributes) and self.parameters (block processing parameters)."""
         self.attributes = {}
         self.attributes.update(attrs)
-        # Configure positional attributes.
-        for i,v in enumerate(self.posattrs):
-            if self.attributes.has_key(str(i+1)):
-                self.attributes[v] = self.attributes[str(i+1)]
         # Calculate dynamic block parameters.
         # Start with configuration file defaults.
         self.parameters['template'] = self.template
@@ -1975,18 +1969,28 @@ class AbstractBlock:
         self.parameters['postsubs'] = self.postsubs
         self.parameters['filter'] = self.filter
         # Load the selected style attributes.
-        style = self.attributes.get('style',self.style)
+        posattrs = self.posattrs
+        if posattrs and posattrs[0] == 'style':
+            style = self.attributes.get('1')
+        else:
+            style = self.attributes.get('style',self.style)
         if style is not None:
             if not self.styles.has_key(style):
                 warning('missing [%s] %s-style entry' % (self.name,style))
             else:
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():
-                    if k in self.PARAM_NAMES:
+                    if k == 'posattrs':
+                        posattrs = v
+                    elif k in self.PARAM_NAMES:
                         self.parameters[k] = v
                     elif not self.attributes.has_key(k):
                         # Style attributes don't take precedence over explicit.
                         self.attributes[k] = v
+        # Set style positional attributes.
+        for i,v in enumerate(posattrs):
+            if self.attributes.has_key(str(i+1)):
+                self.attributes[v] = self.attributes[str(i+1)]
         # Override config and style attributes with document attributes.
         self.update_params(self.attributes,self.parameters)
         assert isinstance(self.parameters['options'],tuple)

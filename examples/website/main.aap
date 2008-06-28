@@ -135,6 +135,6 @@ spell: $(SPELL_CHECK)
     # Interactively spell check all files.
     @if _no.ASPELL:
         @for s in source_list:
-            :sys {i} $ASPELL check -p $(WEB_NAME)-website.dict $s
+            :sys {i} $ASPELL check -p ./$(WEB_NAME)-website.dict $s
     @else:
         :print WARNING: aspell(1) unavailable, skipping spell checking

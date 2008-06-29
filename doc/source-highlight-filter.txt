@@ -8,7 +8,7 @@ highlight HTML outputs; DocBook outputs are highlighted by toolchains
 with `programlisting` element highlight support, for example
 'dblatex'.
 
-TIP: If the 'language' attribute has been set (using an
+TIP: If the source 'language' attribute has been set (using an
 'AttributeEntry' or from the command-line) you don't have to specify
 it in each source code block.
 
@@ -31,6 +31,7 @@ if n < 0: print 'Hello World!'
 
 [source,ruby,numbered]
 [true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
+    puts "#{a.inspect} => #{b.inspect}"
 ---------------------------------------------------------------------
 
 Renders this highlighted source code:
@@ -45,6 +46,7 @@ if n < 0: print 'Hello World!'
 
 [source,ruby,numbered]
 [true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
+    puts "#{a.inspect} => #{b.inspect}"
 
 
 Unnumbered source code listing

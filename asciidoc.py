@@ -1898,11 +1898,8 @@ class AbstractBlock:
         if self.styles:
             for style,d in self.styles.items():
                 s = ''
-                for k,v in d.items():
-                    if isinstance(v,tuple):
-                        v = ','.join(v)
-                    s += k+'="'+v+'",'
-                write(style+'-style='+s[:-1])
+                for k,v in d.items(): s += '%s=%r,' % (k,v)
+                write('%s-style=%s' % (style,s[:-1]))
     def validate(self):
         """Validate block after the complete configuration has been loaded."""
         if self.is_conf_entry('delimiter') and not self.delimiter:
@@ -1987,7 +1984,7 @@ class AbstractBlock:
                     elif not self.attributes.has_key(k):
                         # Style attributes don't take precedence over explicit.
                         self.attributes[k] = v
-        # Set style positional attributes.
+        # Set named positional attributes.
         for i,v in enumerate(posattrs):
             if self.attributes.has_key(str(i+1)):
                 self.attributes[v] = self.attributes[str(i+1)]

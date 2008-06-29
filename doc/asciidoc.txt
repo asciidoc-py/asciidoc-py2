@@ -3577,7 +3577,7 @@ attribute. The following example defines a style named 'verbatim':
 - All style parameter names must be suffixed with `-style` and the
   style parameter value is in the form of a list of <<X21,named
   attributes>>.
-- Multi-item style attributes (`subs`,`presubs`,`postsubs`,`posattrs`)
+- Multi-item style attributes ('subs','presubs','postsubs','posattrs')
   must be specified using Python tuple syntax rather than a simple
   list of values as they in separate entries e.g.
   `postsubs=("callouts",)` not `postsubs="callouts"`.

@@ -417,9 +417,9 @@ def parse_entry(entry, dict=None, unquote=False, unique_values=False,
         allow_name_only=False):
     """Parse name=value entry to dictionary 'dict'. Return tuple (name,value)
     or None if illegal entry.
-    If the syntax is name= then value is set to ''.
-    If the syntax is name and allow_name_only=True then value is set to ''.
-    If the syntax is name! and allow_name_only=True then value is set to None.
+    If name= then value is set to ''.
+    If name and allow_name_only=True then value is set to ''.
+    If name! and allow_name_only=True then value is set to None.
     Leading and trailing white space is striped from 'name' and 'value'.
     'name' can contain any printable characters. If 'name includes the equals
     '=' character it must be escaped with a backslash.
@@ -500,6 +500,7 @@ def dump_section(name,dict,f=sys.stdout):
     f.write('[%s]%s' % (name,writer.newline))
     for k,v in dict.items():
         k = str(k)
+        k = k.replace('=',r'\=')    # Escape = in name.
         # Quote if necessary.
         if len(k) != len(k.strip()):
             k = '"'+k+'"'
@@ -3840,7 +3841,7 @@ class Config:
                 if replacements.has_key(pat):
                     del replacements[pat]
             else:
-                replacements[pat] =strip_quotes(rep)
+                replacements[pat] = strip_quotes(rep)
 
     def subs_replacements(self,s,sect='replacements'):
         """Substitute patterns from self.replacements in 's'."""

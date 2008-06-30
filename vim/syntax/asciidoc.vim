@@ -30,7 +30,13 @@ syn match asciidocRuler /^'\{4,}$/
 syn region asciidocLiteralParagraph start=/^\n[ \t]\+\(\([^-*. \t] \)\|\(\S\S\)\)/ end=/\(^+\?\s*$\)\@=/
 syn match asciidocListBullet /^\s*[-*+]\s/
 syn match asciidocListNumber /^\s*\(\(\d\+\.\)\|\.\{1,2}\|\(\l\.\)\)\s\+/
-syn match asciidocEmail /\S\+@\S\+\(.\S+\)*/
+syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\):\/\/\S*\(\w\|\/\)/
+"syn match asciidocURL /\S\@<!\(http\|https\|ftp\|file\):\/\/\S\+/
+syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_.]\@!/
+"syn match asciidocEmail /\<<\?\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_.]\@!/
+"syn match asciidocEmail /\<<\?\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?\.\@!/
+"syn match asciidocEmail /\(^\|[\s(]\)\@<=<\?\w\(\w\|[.-]\)*@\w\(\w\|[.-]\)*>\?/
+"syn match asciidocEmail /\S\@<!<\?\w\(\w\|[.-]\)*@\w\(\w\|[.-]\)*>\?/
 syn match asciidocAttributeRef /{\(\w\|-\)\+}/
 syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
@@ -129,6 +135,7 @@ highlight link asciidocBackslash Special
 highlight link asciidocCallout Label
 highlight link asciidocLineBreak Special
 highlight link asciidocRuler Type
+highlight link asciidocURL Macro
 
 let b:current_syntax = "asciidoc"
 

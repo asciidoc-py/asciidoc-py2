@@ -3058,10 +3058,10 @@ class Macro:
         e = parse_entry(entry)
         if not e:
             raise EAsciiDoc,'malformed macro entry: %s' % entry
+        if not is_regexp(e[0]):
+            raise EAsciiDoc,'illegal %s macro regular expression: %s' \
+                % (e[1],e[0])
         self.pattern, self.name = e
-        if not is_regexp(self.pattern):
-            raise EAsciiDoc,'illegal regular expression in macro entry: %s' \
-                % entry
         self.reo = re.compile(self.pattern)
         if self.name:
             if self.name[0] in ('+','#'):

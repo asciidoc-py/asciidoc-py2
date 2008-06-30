@@ -90,7 +90,7 @@ The best way to quickly get a feel for AsciiDoc is to view the
 AsciiDoc web site and/or distributed examples:
 
 - Take a look at the linked examples on the AsciiDoc web site home
-  page http://www.methods.co.nz/asciidoc/[].  Press the 'Page Source'
+  page http://www.methods.co.nz/asciidoc/.  Press the 'Page Source'
   sidebar menu item to view corresponding AsciiDoc source.
 - Read the `.txt` source files in the distribution `./doc` directory
   in conjunction with the corresponding HTML and DocBook XML files.
@@ -341,7 +341,7 @@ latex
 An experimental LaTeX backend has been written for AsciiDoc by
 Benjamin Klum.  A tutorial `./doc/latex-backend.html` is included in
 the AsciiDoc distribution which can also be viewed at
-http://www.methods.co.nz/asciidoc/latex-backend.html[].
+http://www.methods.co.nz/asciidoc/latex-backend.html.
 
 
 Document Structure
@@ -1890,7 +1890,7 @@ macros).  Here are some examples:
 - The optional `<target>` cannot contain white space characters.
 - `<attributelist>` is a <<X21,list of attributes>> enclosed in square
   brackets.
-- The attribute list is mandatory even if it contains no attributes.
+- The attribute list is mandatory except for URLs and email addresses.
 - Expansion of non-system macro references can be escaped by
   prefixing a backslash character.
 - Block macro attribute reference substitution is performed prior to
@@ -1909,37 +1909,39 @@ macros include 'URLs', 'image' and 'link' macros.
 
 URLs
 ^^^^
-Standard http, https, ftp, file, mailto and callto URLs are rendered
-using predefined inline macros.
+'http', 'https', 'ftp', 'file', 'mailto' and 'callto' URLs are
+rendered using predefined inline macros.
 
-The default AsciiDoc inline macro syntax is very similar to a URL: all
-you need to do is append an attribute list containing an optional
-caption immediately following the URL. If no caption text is provided
-the URL itself is displayed.
+- If you don't need a customized the link caption you can enter the
+  'http', 'https', 'ftp', 'file' URLs and email addresses without any
+  special macro syntax.
+- If no caption text is specified the URL is displayed.
 
 Here are some examples:
 
   http://www.methods.co.nz/asciidoc/[The AsciiDoc home page]
+  http://www.methods.co.nz/asciidoc/
   mailto:joe.bloggs@foobar.com[email Joe Bloggs]
-  mailto:joe.bloggs@foobar.com[]
+  joe.bloggs@foobar.com
   callto:joe.bloggs[]
 
 Which are rendered:
 
 http://www.methods.co.nz/asciidoc/[The AsciiDoc home page]
 
+http://www.methods.co.nz/asciidoc/
+
 mailto:joe.bloggs@foobar.com[email Joe Bloggs]
 
-mailto:joe.bloggs@foobar.com[]
+joe.bloggs@foobar.com
 
 callto:joe.bloggs[]
 
-TIP: If the `<target>` necessitates space characters they should be
-replaced by `%20`. For example `large%20image.png`.
-
-TIP: Define an attribute entry if you refer to the same URL more than
-once, this will make your document <<X62,easier to maintain and easier
-to read>>.
+- If the `<target>` necessitates space characters they should be
+  replaced by `%20`. For example `large%20image.png`.
+- Define an attribute entry if you refer to the same URL more than
+  once, this will make your document <<X62,easier to maintain and
+  easier to read>>.
 
 Internal Cross References
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3991,7 +3993,7 @@ Microsoft Help Compiler::
   The Microsoft HTML Help Compiler (`hhc.exe`) is a command-line tool
   that converts HTML Help source files to a single HTML Help (`.chm`)
   file. It runs on MS Windows platforms and can be downloaded from
-  http://www.microsoft.com[].
+  http://www.microsoft.com.
 
 .Windows DocBook conversion
 **********************************************************************
@@ -4184,7 +4186,7 @@ Execute `:help gq` command to read about the vim gq command.
   available (see the <<X61, Example `\~/.vimrc` file>>).
 - Put `set` commands in your `\~/.vimrc` file so you don't have to
   enter them manually <<X61, Example `\~/.vimrc` file>>).
-- The Vim website (http://www.vim.org[]) has a wealth of resources,
+- The Vim website (http://www.vim.org) has a wealth of resources,
   including scripts for automated spell checking and ASCII Art
   drawing.
 
@@ -4422,7 +4424,7 @@ liking you can:
 
    $ asciidoc -b docbook -o - mydoc.txt | tidy -indent -xml >mydoc.xml
 
-'HTML Tidy' can be downloaded from http://tidy.sourceforge.net/[]
+'HTML Tidy' can be downloaded from http://tidy.sourceforge.net/
 
 Supporting Minor DocBook DTD Variations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4707,7 +4709,7 @@ ASCIIMathML characters clash with AsciiDoc formatting characters). The
 double-dollar passthrough has the bonus of also escaping special
 characters so the output document is valid XHTML. You can see an
 ASCIIMathML example at
-http://www.methods.co.nz/asciidoc/asciimath.html[], the same example
+http://www.methods.co.nz/asciidoc/asciimath.html, the same example
 can be found in the AsciiDoc distribution `./doc` directory.
 
 [NOTE]
@@ -4739,7 +4741,7 @@ to the end of you AsciiDoc source files:
 
 NOTE: Dag Wieers has implemented an alternative Vim syntax file for
 AsciiDoc which can be found here
-http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/[].
+http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/.
 
 NOTE: Emacs users: The http://xpt.sourceforge.net/[*Nix Power Tools
 project] has released an

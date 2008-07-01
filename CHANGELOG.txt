@@ -35,6 +35,7 @@ repository] for a full list of changes.
   horizontal image justification.
 - Added a2x(1) `--fop-opts=FOP_OPTS` option (patch submitted by Miklos
   Vajna).
+- Added a2x(1) `--dblatex-opts=DBLATEX_OPTS` option.
 - Added Mikhail Yakshin's FOP 0.95 patch which fixes a long-standing
   `fo.xsl` problem and allows PDF's to be generated with FOP 0.95
   (previously had to use FOP 0.20.5).
@@ -47,6 +48,7 @@ repository] for a full list of changes.
 - The xhtml source-highlight filter was inadvertently commented out at
   trunk revision 99.
 - Configuration file `*-style` attributes are now dumped correctly.
+- Fixed 'FAILED: malformed section entry' LaTeX backend error.
 
 See the also the https://sharesource.org/hg/asciidoc/[AsciiDoc
 repository changelog].

@@ -39,6 +39,7 @@ VERBOSE=no
 XSLTPROC_OPTS=
 FOP_OPTS=
 DBLATEX=no
+DBLATEX_OPTS=
 
 #--------------------------------------------------------------------
 # General purpose functions
@@ -199,6 +200,7 @@ options:
   -v, --verbose                  print operational details to stderr
   --xsltproc-opts=XSLTPROC_OPTS  xsltproc options
   --fop-opts=FOP_OPTS            fop options
+  --dblatex-opts=DBLATEX_OPTS    dblatex options
 EOF
 }
 
@@ -230,7 +232,7 @@ function parse_options()
         quit "enhanced getopt(1) required"
     fi
     short_opts="a:d:D:f:hnsv"
-    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,fop-opts:,dblatex"
+    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,fop-opts:,dblatex,dblatex-opts:"
     args=$(getopt -o $short_opts -l $long_opts -n $BASENAME -- "$@" 2>/dev/null)
     if [ $? -ne 0 ]; then
         quit "invalid command options, run: a2x --help"
@@ -290,6 +292,9 @@ function parse_options()
                 shift 2 ;;
             --fop-opts)
                 FOP_OPTS="$FOP_OPTS $2"
+                shift 2 ;;
+            --dblatex-opts)
+                DBLATEX_OPTS="$DBLATEX_OPTS $2"
                 shift 2 ;;
             --)
                 shift; break ;;
@@ -519,7 +524,7 @@ function to_pdf()
         to_docbook
         xsl=$(conf_file dblatex/asciidoc-dblatex.xsl)
         sty=$(conf_file dblatex/asciidoc-dblatex.sty)
-        execute_command_2 "dblatex -p \"$xsl\" -s \"$sty\" -o \"$pdf\" \"$xml\""
+        execute_command_2 "dblatex $DBLATEX_OPTS -p \"$xsl\" -s \"$sty\" -o \"$pdf\" \"$xml\""
     else
         require "xsltproc"
         require "fop.sh"

@@ -690,6 +690,12 @@ The following example emboldens the letter F:
 
   **F**ile Open...
 
+TIP: Because they have corresponding single character constrained
+quotes, the `__`, `**`, `++` and `##` quotes have to be double escaped
+-- here's how to escape the previous example:
+
+  \*\*F**ile Open...
+
 [[X50]]
 Inline Passthroughs
 ~~~~~~~~~~~~~~~~~~~

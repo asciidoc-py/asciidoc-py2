@@ -188,7 +188,7 @@ options:
   --copy                         copy icons or HTML stylesheet
   -D, --destination-dir=PATH     output directory (defaults to FILE directory)
   -d, --doctype=DOCTYPE          article, manpage, book
-  -f, --format=FORMAT            chunked,htmlhelp,manpage,pdf,text,xhtml
+  -f, --format=FORMAT            chunked,htmlhelp,manpage,pdf,text,xhtml,dvi,ps,tex
   -h, --help                     print command syntax summary
   --icons                        use admonition, callout and navigation icons
   --icons-dir=PATH               admonition and navigation icon directory
@@ -329,7 +329,7 @@ function parse_options()
 function validate_options()
 {
     case "$FORMAT" in
-        chunked|htmlhelp|manpage|odt|pdf|text|xhtml) ;;
+        chunked|dvi|htmlhelp|manpage|odt|pdf|ps|tex|text|xhtml) ;;
         *) quit "illegal format: $FORMAT" ;;
     esac
 
@@ -514,17 +514,24 @@ function to_manpage()
     execute_command_2 "cd - >/dev/null"
 }
 
+function exec_dblatex()
+{
+    require "dblatex"
+    local xsl xml sty
+    to_docbook
+    xml="$SRC_DIR/$SRC_NAME.xml"
+    xsl=$(conf_file dblatex/asciidoc-dblatex.xsl)
+    sty=$(conf_file dblatex/asciidoc-dblatex.sty)
+    execute_command_2 "dblatex $DBLATEX_OPTS -t $FORMAT -p \"$xsl\" -s \"$sty\" \"$xml\""
+}
+
 function to_pdf()
 {
     local xsl xml fo pdf sty
     xml="$SRC_DIR/$SRC_NAME.xml"
     pdf="$DESTINATION_DIR/$SRC_NAME.pdf"
     if isyes $DBLATEX; then
-        require "dblatex"
-        to_docbook
-        xsl=$(conf_file dblatex/asciidoc-dblatex.xsl)
-        sty=$(conf_file dblatex/asciidoc-dblatex.sty)
-        execute_command_2 "dblatex $DBLATEX_OPTS -p \"$xsl\" -s \"$sty\" -o \"$pdf\" \"$xml\""
+        exec_dblatex
     else
         require "xsltproc"
         require "fop.sh"
@@ -606,6 +613,9 @@ case "$FORMAT" in
     pdf)                to_pdf;;
     text)               to_text;;
     xhtml)              to_xhtml;;
+    dvi)                exec_dblatex;;
+    ps)                 exec_dblatex;;
+    tex)                exec_dblatex;;
 esac
 cleanup
 

@@ -414,24 +414,29 @@ def subs_tag(tag,dict={}):
         raise EAsciiDoc,'malformed tag: %s' % tag
 
 def parse_entry(entry, dict=None, unquote=False, unique_values=False,
-        allow_name_only=False):
+        allow_name_only=False, escape_delimiter=True):
     """Parse name=value entry to dictionary 'dict'. Return tuple (name,value)
     or None if illegal entry.
     If name= then value is set to ''.
     If name and allow_name_only=True then value is set to ''.
     If name! and allow_name_only=True then value is set to None.
     Leading and trailing white space is striped from 'name' and 'value'.
-    'name' can contain any printable characters. If 'name includes the equals
-    '=' character it must be escaped with a backslash.
+    'name' can contain any printable characters.
+    If the '=' delimiter character is allowed in  the 'name' then 
+    it must be escaped with a backslash and escape_delimiter must be True.
     If 'unquote' is True leading and trailing double-quotes are stripped from
     'name' and 'value'.
     If unique_values' is True then dictionary entries with the same value are
     removed before the parsed entry is added."""
-    mo = re.search(r'(?:[^\\](=))',entry)
+    if escape_delimiter:
+        mo = re.search(r'(?:[^\\](=))',entry)
+    else:
+        mo = re.search(r'(=)',entry)
     if mo:  # name=value entry.
         if mo.group(1):
             name = entry[:mo.start(1)]
-            name = name.replace(r'\=','=')  # Unescape \= in name.
+            if escape_delimiter:
+                name = name.replace(r'\=','=')  # Unescape \= in name.
             value = entry[mo.end(1):]
     elif allow_name_only and entry:         # name or name! entry.
         name = entry
@@ -460,12 +465,12 @@ def parse_entry(entry, dict=None, unquote=False, unique_values=False,
     return name,value
 
 def parse_entries(entries, dict, unquote=False, unique_values=False,
-        allow_name_only=False):
+        allow_name_only=False,escape_delimiter=True):
     """Parse name=value entries from  from lines of text in 'entries' into
     dictionary 'dict'. Blank lines are skipped."""
     for entry in entries:
         if entry and not parse_entry(entry, dict, unquote, unique_values,
-                allow_name_only):
+                allow_name_only, escape_delimiter):
             raise EAsciiDoc,'malformed section entry: %s' % entry
 
 def load_sections(sections, fname, dir=None, namepat=NAME_RE):
@@ -3609,7 +3614,7 @@ class Config:
         d = {}
         parse_entries(sections.get('titles',()),d)
         Title.load(d)
-        parse_entries(sections.get('specialcharacters',()),self.specialchars)
+        parse_entries(sections.get('specialcharacters',()),self.specialchars,escape_delimiter=False)
         parse_entries(sections.get('quotes',()),self.quotes)
         self.parse_specialwords()
         self.parse_replacements()

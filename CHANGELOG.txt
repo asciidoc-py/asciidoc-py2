@@ -22,6 +22,8 @@ repository] for a full list of changes.
   generate PDFs.
 - Added custom `dblatex(1)` configuration files (in distribution
   `./dblatex` directory) which are used by a2x(1).
+- `dblatex(1)` is now used to generate the distibuted PDF version of
+  the AsciiDoc User Guide.
 - It is no up to the DocBook processor to highlight source code syntax
   in `<programlisting>` elements rather than GNU Highlighter -- this
   is the correct way to handle it, plus `dblatex(1)` makes a much

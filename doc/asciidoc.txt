@@ -690,11 +690,15 @@ The following example emboldens the letter F:
 
   **F**ile Open...
 
-TIP: The `__`, `**`, `++` and `##` unconstrained quotes have to be
+[TIP]
+=====================================================================
+The `__`, `**`, `++` and `##` unconstrained quotes have to be
 double-escaped (because of their similarity to the single character
 constrained quotes) -- here's how to escape the previous example:
 
   \*\*F**ile Open...
+
+=====================================================================
 
 [[X50]]
 Inline Passthroughs

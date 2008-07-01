@@ -64,7 +64,7 @@ formats.
 
 .My AsciiDoc Itch
 **********************************************************************
-DocBook has emerged as the defacto standard Open Source documentation
+DocBook has emerged as the de facto standard Open Source documentation
 format. But DocBook is a complex language, the marked up text is
 difficult to read and even more difficult to write directly -- I found
 I was spending more time typing markup tags, consulting reference
@@ -288,7 +288,7 @@ distribution `./stylesheets/` directory.
 All browsers have CSS quirks, but Microsoft's IE6 has so many
 omissions and errors that the `xhtml11-quirks.css` stylesheet and
 `xhtml11-quirks.conf` configuration files are included during XHTML
-backend processing to to implement work-arounds for IE6. If you don't
+backend processing to to implement workarounds for IE6. If you don't
 use IE6 then the quirks stylesheet and configuration files can be
 omitted using the `--attribute quirks!` command-line option.
 =====================================================================
@@ -415,7 +415,7 @@ names cannot contain angle <> bracket characters.
 The optional document header revision line should immediately follow
 the author line. The revision line can be one of two formats:
 
-. A an alphanumeric document revision number followed by a date:
+. An alphanumeric document revision number followed by a date:
   * The revision number and date must be separated by a comma.
   * The revision number is optional but must contain at least one
     numeric character.
@@ -505,7 +505,7 @@ matches an AsciiDoc document section title then the backend output is
 marked up using the `<name>` markup template (instead of the default
 `sect<level>` section template). The \{title} attribute value is set
 to the value of the matched regular expression group named 'title', if
-there is no 'title' group \{title} defaults to the the whole of the
+there is no 'title' group \{title} defaults to the whole of the
 AsciiDoc section title.
 
 AsciiDoc comes preconfigured with the following special section
@@ -2001,7 +2001,7 @@ This can be seen in <<tiger_image>>.
 
 Linking to Local Documents
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-Hypertext links to files on the local filesystem are specified using
+Hypertext links to files on the local file system are specified using
 the 'link' inline macro.
 
   link:<target>[<caption>]
@@ -2193,15 +2193,15 @@ Example:
   to avoid false end-of-block underline termination.
 - File inclusion is limited to a depth of 5 to catch recursive loops.
 - Attribute references are expanded inside the include `target`; if an
-  an attribute is undefined then the included file is silently
+  attribute is undefined then the included file is silently
   skipped.
-- The 'tabsize' macro attribute sets the the number of space
+- The 'tabsize' macro attribute sets the number of space
   characters to be used for tab expansion in the included file.
 
 Conditional Inclusion Macros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lines of text in the source document can be selectively included or
-excluded from processing based on the the existence (or not) of a
+excluded from processing based on the existence (or not) of a
 document attribute.  There are two forms of conditional inclusion
 macro usage, the first includes document text between the `ifdef` and
 `endif` macros if a document attribute is defined:
@@ -3207,7 +3207,7 @@ and write, here are some examples:
   :new:      image:./images/smallnew.png[]
 
   Using previously defined attributes: See the {1}[Freshmeat summary]
-  or the {homepage} for something new {new}. 
+  or the {homepage} for something new {new}.
 
 .Note
 - The attribute entry definition must precede it's usage.
@@ -3740,7 +3740,7 @@ configuration file entries:
 
 textwidth::
   The page width (in characters) of the source text. This setting is
-  compared to the the table ruler width when calculating the relative
+  compared to the table ruler width when calculating the relative
   size of character ruler tables on the output page.
 
 pagewidth::

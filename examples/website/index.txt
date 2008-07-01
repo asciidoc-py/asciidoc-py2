@@ -121,7 +121,7 @@ notation.
 Vim Syntax Highlighter
 ----------------------
 An AsciiDoc syntax highlighter for the Vim text editor is included in
-the AsciiDoc distribution (see 'Appendix J' of the 'AsciiDoc User
+the AsciiDoc distribution (see 'Appendix F' of the 'AsciiDoc User
 Guide' for details).
 
 .Syntax highlighter screenshot

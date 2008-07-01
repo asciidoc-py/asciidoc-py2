@@ -1,6 +1,23 @@
 AsciiDoc ChangeLog
 ==================
 
+Version 8.2.7 (2008-07-??)
+--------------------------
+See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial
+repository] for a full list of changes.
+
+.Additions and changes
+- URLs are processed without requiring the macro syntax. Most editors
+  allow you to open URLs directly, without the macro syntax this now
+  works from AsciiDoc source.  opening Web pages form The Vim syntax
+  highlighter has been updated to reflect these changes.
+- Highlighted source code paragraphs have bee implemented -- it's a
+  much more convenient way to enter short code examples (see
+  http://www.methods.co.nz/asciidoc/source-highlight-filter.html).
+
+.Bug fixes
+
+
 Version 8.2.6 (2008-04-29)
 --------------------------
 See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial

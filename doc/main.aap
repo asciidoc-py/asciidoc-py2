@@ -174,6 +174,12 @@ TEST_FILES = $*(ROOT).css-embedded.html
     asciidoc.pdf: asciidoc.xml
         :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source
 
+# Force the Source Highlighter PDF to be generated using dblatex
+# because dblatex has builtin source code highlighting.
+@if _no.DBLATEX:
+    source-highlight-filter.pdf: source-highlight-filter.xml
+        :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source
+
 # Try PDF generators in order of preference.
 @if _no.DBLATEX and _no.get('PDF_PROCESSOR') and _no.PDF_PROCESSOR == 'dblatex':
     :rule %.pdf: %.xml

@@ -7,15 +7,47 @@ See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial
 repository] for a full list of changes.
 
 .Additions and changes
-- URLs are processed without requiring the macro syntax. Most editors
-  allow you to open URLs directly, without the macro syntax this now
-  works from AsciiDoc source.  opening Web pages form The Vim syntax
-  highlighter has been updated to reflect these changes.
-- Highlighted source code paragraphs have bee implemented -- it's a
+- If you don't need a customized the link caption you can enter the
+  'http', 'https', 'ftp', 'file' URLs and email addresses without any
+  special macro syntax -- you get the links by just cutting and
+  pasting URLs and emails addresses. This also makes it easier to open
+  links directly form AsciiDoc source ( most editors allow you to open
+  URLs directly).  The Vim syntax highlighter has been updated to
+  reflect these changes.
+- Highlighted source code paragraphs have been implemented -- it's a
   much more convenient way to enter short code examples (see
-  http://www.methods.co.nz/asciidoc/source-highlight-filter.html).
+  http://www.methods.co.nz/asciidoc/source-highlight-filter.html[the
+  online docs]).
+- Added `--dblatex` option to a2x(1) so `dblatex(1)` can be used to
+  generate PDFs.
+- Added custom `dblatex(1)` configuration files (in distribution
+  `./dblatex` directory) which are used by a2x(1).
+- It is no up to the DocBook processor to highlight source code syntax
+  in `<programlisting>` elements rather than GNU Highlighter -- this
+  is the correct way to handle it, plus `dblatex(1)` makes a much
+  better job.
+- 'scaledwith' and 'align' attributes have been added to the 'image'
+  macro. They apply to DocBook outputs (specifically for PDF
+  documents). 'scaledwidth' sets the image size as a percent of the
+  available page width; 'align' applies 'left', 'center' or 'right'
+  horizontal image justification.
+- Added a2x(1) `--fop-opts=FOP_OPTS` option (patch submitted by Miklos
+  Vajna).
+- Added Mikhail Yakshin's FOP 0.95 patch which fixes a long-standing
+  `fo.xsl` problem and allows PDF's to be generated with FOP 0.95
+  (previously had to use FOP 0.20.5).
+- The User Guide has been updated and outdated FOP configuration and
+  installation sections removed.
 
 .Bug fixes
+- Fixed `stylesheets/xhtml11-manpage.css` not being included when
+  'linkcss' attribute was used.
+- The xhtml source-highlight filter was inadvertently commented out at
+  trunk revision 99.
+- Configuration file `*-style` attributes are now dumped correctly.
+
+See the also the https://sharesource.org/hg/asciidoc/[AsciiDoc
+repository changelog].
 
 
 Version 8.2.6 (2008-04-29)

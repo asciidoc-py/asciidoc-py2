@@ -690,9 +690,9 @@ The following example emboldens the letter F:
 
   **F**ile Open...
 
-TIP: Because they have corresponding single character constrained
-quotes, the `__`, `**`, `++` and `##` quotes have to be double escaped
--- here's how to escape the previous example:
+TIP: The `__`, `**`, `++` and `##` unconstrained quotes have to be
+double-escaped (because of their similarity to the single character
+constrained quotes) -- here's how to escape the previous example:
 
   \*\*F**ile Open...
 
@@ -3908,13 +3908,13 @@ generating and sequencing the toolchain commands and managing
 intermediate and output files.  a2x(1) also optionally deploys
 admonition and navigation icons and a CSS stylesheet. See the `a2x(1)`
 man page for more details. All you need is <<X40,xsltproc(1)>>,
-<<X13,DocBook XSL Stylesheets>> and optionally <<X31,dblatex>> or
-<<X14,FOP>> (if you want PDF) or `lynx(1)` (if you want text).
+<<X13,DocBook XSL Stylesheets>> and, optionally <<X31,dblatex>> or
+<<X14,FOP>> (if you want PDF), or `lynx(1)` (if you want text).
 
 The following example generates `doc/quickstart.pdf` from the AsciiDoc
-`doc/quickstart.txt` source file:
+`doc/quickstart.txt` source file using `dblatex(1)`:
 
-  $ a2x -f pdf --icons doc/quickstart.txt
+  $ a2x -f pdf --dblatex doc/source-highlight-filter.txt
 
 See the `a2x(1)` man page for details.
 
@@ -3949,7 +3949,7 @@ There are two commonly used tools to generate PDFs from DocBook,
 
 .dblatex or FOP?
 - 'dblatex' is easier to install, there's zero configuration
-  required and no Java VM to install-- it just works out of the box.
+  required and no Java VM to install -- it just works out of the box.
 - 'dblatex' source code highlighting and numbering is superb.
 - 'dblatex' is easier to use as it converts DocBook directly to PDF
   whereas before using 'FOP' you have to convert DocBook to XML-FO

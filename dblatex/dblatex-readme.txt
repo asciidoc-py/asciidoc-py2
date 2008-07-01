@@ -18,5 +18,5 @@ Use these files with dblatex(1) `-p` and `-s` options, for example:
 
 Limitations
 -----------
-- Callouts are limited to images and program listings and therefore
-  aren't useful in AsciiDoc documents.
+- As of 'dblatex' version 0.2.8 callouts are limited to images and
+  program listings and therefore aren't useful in AsciiDoc documents.

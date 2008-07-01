@@ -1,7 +1,7 @@
-personal_ws-1.1 en 664 
+personal_ws-1.1 en 670 
 Sturmer
-Kléber
 Kleber
+Kléber
 quis
 auctor
 linkcss
@@ -12,8 +12,8 @@ BOLID
 callouts
 bulleted
 starttags
-ListingBlock
 listingblock
+ListingBlock
 eval
 asc
 https
@@ -31,10 +31,12 @@ Bon
 wnone
 iconsdir
 undefining
+programlisting
 xhtml
 des
 specialwords
 muellner
+Miklos
 euismod
 dev
 mkdir
@@ -43,8 +45,8 @@ PassthroughBlock
 aliquam
 munere
 startup
-listcontinuation
 ListContinuation
+listcontinuation
 consectetuer
 Magnocavallo
 defacto
@@ -77,6 +79,7 @@ asciimath
 amet
 tabstop
 csv
+Yakshin's
 stylesheets
 pageunits
 LaTeX
@@ -84,8 +87,8 @@ citetitle
 emphasizedwords
 BlockTitle
 blocktitle
-CVS
 DTD
+CVS
 valign
 Ashworth
 Bowlin
@@ -108,8 +111,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-middlename
 MiddleName
+middlename
 subdirectories
 manname
 ipsum
@@ -126,8 +129,8 @@ CustomBlocks
 Ghostscript
 verear
 Buenos
-LinuxDoc
 linuxdoc
+LinuxDoc
 PostScript
 hhp
 Pretium
@@ -139,8 +142,8 @@ fermentum
 ListingBlocks
 GPL
 hsides
-Bólido
 Bolido
+Bólido
 footrow
 misspelt
 WINNT
@@ -152,8 +155,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-verbatimblock
 VerbatimBlock
+verbatimblock
 shiftwidth
 misevaluations
 asciidocEmphasized
@@ -176,6 +179,7 @@ docname
 BLAUS
 Daly
 arcu
+PDF's
 PDFs
 jim
 MSIE
@@ -403,6 +407,7 @@ WINA
 fringilla
 retab
 BackendBlocks
+changelog
 ChangeLog
 tis
 Ubuntu
@@ -421,8 +426,8 @@ Vasilev
 crlf
 vel
 localtime
-BlockMacro
 blockmacro
+BlockMacro
 Xandros
 groff
 POSIX
@@ -463,8 +468,8 @@ srackham
 txt
 BlockId
 passthrough
-Berguvsvägen
 Berguvsvagen
+Berguvsvägen
 noincsearch
 TableRow
 inlinemediaobject
@@ -527,8 +532,8 @@ scaledwidth
 cp
 xsl
 fb
-DocBook
 docbook
+DocBook
 stylesheet
 pagefile
 superscripted
@@ -545,8 +550,8 @@ JB
 fprintf
 tabsize
 smallnew
-BlockTitles
 blocktitles
+BlockTitles
 localdate
 bodyrow
 hs
@@ -594,8 +599,8 @@ permalink
 td
 py
 AROUT
-literalblock
 LiteralBlock
+literalblock
 sgml
 biggy
 softtabstop
@@ -610,8 +615,8 @@ tt
 blandit
 inline
 Martín
-SectionBody
 sectionbody
+SectionBody
 VM
 conformant
 listchars
@@ -645,12 +650,13 @@ AttributeLists
 Tascii
 ifdef
 sprintf
+Vajna
 nbsp
 qanda
 noout
 massa
-AsciiDoc
 asciidoc
+AsciiDoc
 manmanual
 TableBody
 realpath

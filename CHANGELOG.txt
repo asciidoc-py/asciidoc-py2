@@ -22,13 +22,13 @@ repository] for a full list of changes.
   generate PDFs.
 - Added custom `dblatex(1)` configuration files (in distribution
   `./dblatex` directory) which are used by a2x(1).
-- `dblatex(1)` is now used to generate the distibuted PDF version of
+- `dblatex(1)` is now used to generate the distributed PDF version of
   the AsciiDoc User Guide.
 - It is no up to the DocBook processor to highlight source code syntax
   in `<programlisting>` elements rather than GNU Highlighter -- this
   is the correct way to handle it, plus `dblatex(1)` makes a much
   better job.
-- 'scaledwith' and 'align' attributes have been added to the 'image'
+- 'scaledwidth' and 'align' attributes have been added to the 'image'
   macro. They apply to DocBook outputs (specifically for PDF
   documents). 'scaledwidth' sets the image size as a percent of the
   available page width; 'align' applies 'left', 'center' or 'right'

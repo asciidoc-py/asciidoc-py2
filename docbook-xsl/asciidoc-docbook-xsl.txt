@@ -27,7 +27,7 @@ To upgrade to the latest docbook-xsl stylesheets without having to
 wait for the Debian `docbook-xsl` package:
 
 - Download the latest docbook-xsl tarball from
-  http://sourceforge.net/projects/docbook/[].
+  http://sourceforge.net/projects/docbook/.
 
 - Unzip the tarball to `/usr/share/xml/docbook/stylesheet/`:
 

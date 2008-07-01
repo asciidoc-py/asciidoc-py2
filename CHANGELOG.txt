@@ -443,7 +443,7 @@ Version 7.1.2 (2006-03-07)
   http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
   has been added. See 'Appendix I: ASCIIMathML Support' in the User
   Guide and the examples at
-  http://www.methods.co.nz/asciidoc/asciimath.html[].
+  http://www.methods.co.nz/asciidoc/asciimath.html.
 - You can now prefix quoted text with inline attributes lists.  You
   can use this to set font size and color (XHTML and HTML outputs).
 - Added `\##...\##` quoting -- it does nothing -- it's purpose is to
@@ -827,7 +827,7 @@ NOTE: This version requires Python 2.3 or better to run.
   Any corresponding CSS class names have also been changed which could
   result in backward incompatibility in customized stylesheets.
 - Swapped plain DocBook admonition icons for Jimmac's DocBook icons
-  (http://jimmac.musichall.cz/ikony.php3[]). The original plain icons
+  (http://jimmac.musichall.cz/ikony.php3). The original plain icons
   have been moved to `./images/plain`.
 - Renamed `html` backend to `xhtml` to better reflect it's function
   (former `html-4` backend renamed to `html`).
@@ -1577,7 +1577,7 @@ Version 1.1 (2002-12-03)
 Version 1.0 (2002-11-25)
 ------------------------
 First AsciiDoc public release along with AsciiDoc web site
-(http://www.methods.co.nz/asciidoc/[]) and SourceForge.net project registration
+(http://www.methods.co.nz/asciidoc/) and SourceForge.net project registration
 (https://sourceforge.net/projects/asciidoc/[]).
 
 // vim: set syntax=asciidoc:

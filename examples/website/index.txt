@@ -134,7 +134,7 @@ image::images/highlighter.png[height=250,caption="",link="images/highlighter.png
 
 Dag Wieers has implemented an alternative Vim syntax file for AsciiDoc
 which can be found here
-http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/[].
+http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/.
 
 
 [[X2]]
@@ -201,14 +201,14 @@ and I'll add them to the list.
   http://www.kernel.org/pub/software/scm/git/docs/git.html[git source
   code management system].
 - Some documentation about git by Nico Schottelius (in German)
-  http://nico.schotteli.us/papers/linux/git-firmen/[].
+  http://nico.schotteli.us/papers/linux/git-firmen/.
 - The http://www.netpromi.com/kirbybase_ruby.html[KirbyBase for Ruby]
   database management system manual.
 - The http://www.selenic.com/mercurial/[Mercurial distributed SCM]
   uses asciidoc for its man pages.
 - Pascal Rapaz has written a Python script to automate AsciiDoc
   website generation. You can find it at
-  http://www.rapazp.ch/opensource/tools/asciidoc.html[].
+  http://www.rapazp.ch/opensource/tools/asciidoc.html.
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] uses
   AsciiDoc for documentation and has released an Emacs syntax
   highlighter (see <<X2,Resources>> above).

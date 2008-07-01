@@ -29,7 +29,7 @@ URL inline macro targets (addresses) cannot contain white space
 characters. If you need spaces encode them as `%20`. For example:
 
   image:large%20image.png[]
-  http://www.foo.bar.com/an%20example%20document.html[]
+  http://www.foo.bar.com/an%20example%20document.html
 
 
 == How can I get AsciiDoc to assign the correct DocBook language attribute?
@@ -147,7 +147,7 @@ the 'subs' attribute at the start of a block. For example:
 [subs="macros"]
 ~subscripts~ and ^superscripts^ quotes won't be substituted.
 Nor will the non-alphanumeric characters in the following URL:
-http://host/~user/file#_anchor_tag_str_[]
+http://host/~user/file#_anchor_tag_str_
 ---------------------------------------------------------------------
 
 

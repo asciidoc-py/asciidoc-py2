@@ -6,14 +6,14 @@ Prerequisites
 AsciiDoc is written in Python so you need a Python interpreter
 (version 2.3 or later) to execute asciidoc(1). Python is installed by
 default in most Linux distributions.  You can download Python from the
-official Python website http://www.python.org[].
+official Python website http://www.python.org.
 
 
 Obtaining AsciiDoc
 ------------------
 The latest AsciiDoc version and online documentation can be found at
-http://www.methods.co.nz/asciidoc/[] and at the SourceForge
-http://sourceforge.net/projects/asciidoc/[].
+http://www.methods.co.nz/asciidoc/ and at the SourceForge
+http://sourceforge.net/projects/asciidoc/.
 
 
 Tools

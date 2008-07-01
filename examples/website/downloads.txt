@@ -10,7 +10,7 @@ Distribution Archives
 ---------------------
 These distribution archives are also available, along with previous
 AsciiDoc versions, at the SourceForge
-http://sourceforge.net/projects/asciidoc/[]):
+http://sourceforge.net/projects/asciidoc/.
 
 link:asciidoc-{revision}.tar.gz[]::
   A tarball distribution of the latest version of AsciiDoc for *NIX
@@ -29,7 +29,7 @@ The AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository
 is hosted by http://sharesource.org[ShareSource].  ShareSource is a
 Mercurial friendly website for hosting Open Source projects.
 
-To browse the repo go to http://hg.sharesource.org/asciidoc/[].
+To browse the repo go to http://hg.sharesource.org/asciidoc/.
 
 To create your own local AsciiDoc repository:
 
@@ -67,18 +67,18 @@ The following platform specific packages are available:
 
 *Slackware Linux*::
   John Calixto has created a Slackware package for AsciiDoc which can
-  be downloaded from http://linuxpackages.net/[].
+  be downloaded from http://linuxpackages.net/.
 
 *Ark Linux*::
   mailto:bero@arklinux.org[Bernhard Rosenkraenzer] added AsciiDoc to
   Ark Linux -- the package is available from the Ark Linux repository
-  at http://arklinux.osuosl.org/dockyard-devel/[], so Ark Linux users
+  at http://arklinux.osuosl.org/dockyard-devel/, so Ark Linux users
   should just run `apt-get install asciidoc`.
 
 *T2 Linux*::
   mailto:cw@ixplanet.de[Christian Wiese] added AsciiDoc to the
   http://www.t2-project.org/[T2 Linux] repository at
-  http://svn.exactcode.de/t2/trunk/package/textproc/asciidoc/[]. To
+  http://svn.exactcode.de/t2/trunk/package/textproc/asciidoc/. To
   build and install the package on a T2 system, run
   `./scripts/Emerge-Pkg asciidoc` from within your T2 source directory
   (default: `/usr/src/t2-src`).
@@ -86,7 +86,7 @@ The following platform specific packages are available:
 *Red Hat Enterprise Linux, Fedora and CentOS packages*::
   Dag Wieers has built AsciiDoc RPMs for a number of Red Hat based
   distributions, they can be downloaded from
-  http://dag.wieers.com/rpm/packages/asciidoc/[].
+  http://dag.wieers.com/rpm/packages/asciidoc/.
 
 
 See also link:userguide.html#X38[Packager Notes] in the 'AsciiDoc User

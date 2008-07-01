@@ -39,7 +39,7 @@ SEE ALSO
     lilypond(1), abc2ly(1), convert(1)
 
 AUTHOR
-    Written by Stuart Rackham, <srackham@methods.co.nz>
+    Written by Stuart Rackham, <srackham@gmail.com>
 
 COPYING
     Copyright (C) 2006 Stuart Rackham. Free use of this software is

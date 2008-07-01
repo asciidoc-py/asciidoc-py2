@@ -1,6 +1,6 @@
 AsciiDoc User Guide
 ===================
-Stuart Rackham <srackham@methods.co.nz>
+Stuart Rackham <srackham@gmail.com>
 :Author Initials: SJR
 
 AsciiDoc is a text document format for writing short documents,
@@ -430,7 +430,7 @@ Here's an example AsciiDoc document header:
 
   Writing Documentation using AsciiDoc
   ====================================
-  Stuart Rackham <srackham@methods.co.nz>
+  Stuart Rackham <srackham@gmail.com>
   v2.0, February 2003
 
 You can override or set header parameters by passing 'revision',
@@ -1892,7 +1892,7 @@ macros).  Here are some examples:
 
   http://www.methods.co.nz/asciidoc/index.html[Asciidoc home page]
   include::chapt1.txt[tabsize=2]
-  mailto:srackham@methods.co.nz[]
+  mailto:srackham@gmail.com[]
 
 .Macro behavior
 - `<name>` is the macro name. It can only contain letters, digits or
@@ -3181,7 +3181,7 @@ Here's another example:
 AsciiDoc User Manual
 ====================
 :Author:    Stuart Rackham
-:Email:     srackham@methods.co.nz
+:Email:     srackham@gmail.com
 :Date:      April 23, 2004
 :Revision:  5.1.1
 :Key words: linux, ralink, debian, wireless

@@ -1,6 +1,6 @@
 " Vim filetype detection file
 " Language:     AsciiDoc
-" Author:       Stuart Rackham <srackham@methods.co.nz>
+" Author:       Stuart Rackham <srackham@gmail.com>
 " Last Change:  AsciiDoc 8.2.0
 " URL:          http://www.methods.co.nz/asciidoc/
 " Licence:      GPL (http://www.gnu.org)

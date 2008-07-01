@@ -328,7 +328,7 @@ below and 'Appendix A: Migration Notes' in the AsciiDoc User Guide).
 
 Please report any problems you encounter.
 
-mailto:srackham@methods.co.nz['Stuart Rackham']
+mailto:srackham@gmail.com['Stuart Rackham']
 *********************************************************************
 
 .Additions and changes
@@ -640,7 +640,7 @@ This is a major release with many code and
 documentation changes.
 Please report any problems you encounter.
 
-mailto:srackham@methods.co.nz['Stuart Rackham']
+mailto:srackham@gmail.com['Stuart Rackham']
 ***************************************************
 
 .Additions and changes
@@ -769,7 +769,7 @@ This release has had some fairly major code and
 documentation changes. Please report any problems
 you encounter.
 
-mailto:srackham@methods.co.nz['Stuart Rackham']
+mailto:srackham@gmail.com['Stuart Rackham']
 ***************************************************
 
 A lot of new stuff. A new major version number -- some regression
@@ -1081,7 +1081,7 @@ This release has had some fairly major code and
 documentation changes. Please report any problems
 you encounter.
 
-mailto:srackham@methods.co.nz['Stuart Rackham']
+mailto:srackham@gmail.com['Stuart Rackham']
 ***************************************************
 
 - AsciiDoc can now produce a full-blown multi-part DocBook book

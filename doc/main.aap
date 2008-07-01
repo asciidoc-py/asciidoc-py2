@@ -3,7 +3,7 @@
 # A-A-P file for making AsciiDoc distribution documents.
 # (you can obtain A-A-P from http://www.a-a-p.org)
 #
-# Stuart Rackham <srackham@methods.co.nz>
+# Stuart Rackham <srackham@gmail.com>
 #####################################################################
 
 :execute ../common.aap

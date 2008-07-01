@@ -1,6 +1,6 @@
 " Vim syntax file
 " Language:     AsciiDoc
-" Author:       Stuart Rackham <srackham@methods.co.nz> (inspired by Felix
+" Author:       Stuart Rackham <srackham@gmail.com> (inspired by Felix
 "               Obenhuber's original asciidoc.vim script).
 " URL:          http://www.methods.co.nz/asciidoc/
 " Licence:      GPL (http://www.gnu.org)

@@ -14,7 +14,7 @@ Usful addtions include:
 Read the link:CHANGELOG.html[CHANGELOG] for a full description of all
 the other additions and changes.
 
-mailto:srackham@methods.co.nz['Stuart Rackham']
+mailto:srackham@gmail.com['Stuart Rackham']
 ************************************************************************
 
 Introduction

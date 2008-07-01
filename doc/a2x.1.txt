@@ -1,6 +1,6 @@
 A2X(1)
 ======
-Stuart Rackham <srackham@methods.co.nz>
+Stuart Rackham <srackham@gmail.com>
 
 
 NAME
@@ -178,14 +178,14 @@ BUGS
 
 AUTHOR
 ------
-Written by Stuart Rackham, <mailto:srackham@methods.co.nz[]>
+Written by Stuart Rackham, <srackham@gmail.com>
 
 
 RESOURCES
 ---------
-SourceForge: http://sourceforge.net/projects/asciidoc/[]
+SourceForge: http://sourceforge.net/projects/asciidoc/
 
-Main web site: http://www.methods.co.nz/asciidoc/[]
+Main web site: http://www.methods.co.nz/asciidoc/
 
 
 COPYING

@@ -5,7 +5,7 @@ NAME
 
 SYNOPSIS
     code-filter -b backend -l language [ -t tabsize ]
-                [ --help | -h ] [ --version | -v ] 
+                [ --help | -h ] [ --version | -v ]
 
 DESCRIPTION
     This filter reads source code from the standard input, highlights language
@@ -28,7 +28,7 @@ OPTIONS
 
     -t tabsize
         Expand source tabs to tabsize spaces.
-    
+
     --version, -v
         Print program version number.
 
@@ -39,7 +39,7 @@ BUGS
       just pass it through without markup.
 
 AUTHOR
-    Written by Stuart Rackham, <srackham@methods.co.nz>
+    Written by Stuart Rackham, <srackham@gmail.com>
 
 URLS
     http://sourceforge.net/projects/asciidoc/
@@ -236,4 +236,4 @@ if __name__ == "__main__":
         print_stderr("%s: unexpected exit status: %s" %
             (os.path.basename(sys.argv[0]), sys.exc_info()[1]))
     # Exit with previous sys.exit() status or zero if no sys.exit().
-    sys.exit(sys.exc_info()[1]) 
+    sys.exit(sys.exc_info()[1])

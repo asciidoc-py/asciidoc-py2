@@ -3,11 +3,16 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-Bug fixes since the last release plus a code cleanup and a few minor
-additions and changes.
+Usful addtions include:
 
-Read the link:CHANGELOG.html[CHANGELOG] for a full description of
-additions and changes.
+- URLs and email addresses are recognized without having to use the
+  macro syntax.
+- Source code paragraphs make small code examples easier to enter.
+- http://dblatex.sourceforge.net/[dblatex] is now fully supported by
+  a2x(1).
+
+Read the link:CHANGELOG.html[CHANGELOG] for a full description of all
+the other additions and changes.
 
 mailto:srackham@methods.co.nz['Stuart Rackham']
 ************************************************************************

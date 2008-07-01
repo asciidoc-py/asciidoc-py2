@@ -2908,7 +2908,7 @@ class Macros:
                 # Check for duplicates.
                 for m2 in self.macros:
                     if m.equals(m2):
-                        verbose('duplicate macro: '+entry)
+                        verbose('macro redefinition: %s%s' % (m.prefix,m.name))
                         break
                 else:
                     self.macros.append(m)

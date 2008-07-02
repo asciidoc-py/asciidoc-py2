@@ -8,6 +8,7 @@ CHANGELOG.txt
 *.conf
 COPYING
 COPYRIGHT
+dblatex/*
 doc/a2x.1
 doc/article.pdf
 doc/asciidoc.1
@@ -24,6 +25,7 @@ doc/main.aap
 doc/music-filter.pdf
 doc/source-highlight-filter.pdf
 doc/*.txt
+doc/asciidoc.dict
 examples/website/ASCIIMathML.js
 examples/website/LaTeXMathML.js
 examples/website/build-website.sh

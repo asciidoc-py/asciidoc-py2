@@ -1,7 +1,7 @@
 AsciiDoc ChangeLog
 ==================
 
-Version 8.2.7 (2008-07-??)
+Version 8.2.7 (2008-07-04)
 --------------------------
 See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial
 repository] for a full list of changes.

@@ -3869,10 +3869,7 @@ Source Code Highlighter Filter
 A
 http://www.methods.co.nz/asciidoc/source-highlight-filter.html[source
 code highlighter filter] can be found in the AsciiDoc distribution
-`./filters` directory. It uses
-http://www.gnu.org/software/src-highlite/[GNU source-highlight] to
-generate nicely formatted source code for most common programming
-languages.
+`./filters` directory.
 
 [[X58]]
 Music Filter

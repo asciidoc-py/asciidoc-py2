@@ -34,7 +34,7 @@ if n < 0: print 'Hello World!'
     puts "#{a.inspect} => #{b.inspect}"
 ---------------------------------------------------------------------
 
-Renders this highlighted source code:
+Render this highlighted source code:
 
 [source,python]
 if n < 0: print 'Hello World!'

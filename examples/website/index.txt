@@ -7,7 +7,8 @@ Useful additions include:
 
 - URLs and email addresses are recognized without having to use the
   macro syntax.
-- Source code paragraphs make small code examples easier to enter.
+- link:source-highlight-filter.html[Source code paragraphs] make small
+  code examples easier to enter.
 - http://dblatex.sourceforge.net/[dblatex] is now fully supported by
   a2x(1) and is the default a2x(1) PDF generator (use
   `--fop-options=""` to force FOP for PDF generation).

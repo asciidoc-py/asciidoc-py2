@@ -3906,19 +3906,23 @@ a2x Toolchain Wrapper
 One of the biggest hurdles for new users is installing, configuring
 and using a DocBook XML toolchain. `a2x(1)` can help -- it's a
 toolchain wrapper command that will generate XHTML (chunked and
-unchunked), PDF, man page, HTML Help and text file outputs from an
-AsciiDoc text file.  a2x(1) does all the grunt work associated with
-generating and sequencing the toolchain commands and managing
-intermediate and output files.  a2x(1) also optionally deploys
-admonition and navigation icons and a CSS stylesheet. See the `a2x(1)`
-man page for more details. All you need is <<X40,xsltproc(1)>>,
-<<X13,DocBook XSL Stylesheets>> and, optionally <<X31,dblatex>> or
-<<X14,FOP>> (if you want PDF), or `lynx(1)` (if you want text).
+unchunked), PDF, DVI, PS, TeX, man page, HTML Help and text file
+outputs from an AsciiDoc text file.  a2x(1) does all the grunt work
+associated with generating and sequencing the toolchain commands and
+managing intermediate and output files.  a2x(1) also optionally
+deploys admonition and navigation icons and a CSS stylesheet. See the
+`a2x(1)` man page for more details. All you need is
+<<X40,xsltproc(1)>>, <<X13,DocBook XSL Stylesheets>> and, optionally
+<<X31,dblatex>> or <<X14,FOP>> (if you want PDF), or `lynx(1)` (if you
+want text).
 
-The following example generates `doc/quickstart.pdf` from the AsciiDoc
-`doc/quickstart.txt` source file using `dblatex(1)`:
+The following examples generate `doc/source-highlight-filter.pdf` from
+the AsciiDoc `doc/source-highlight-filter.txt` source file. The first
+example uses `dblatex(1)` (the default PDF generator) the second
+example forces FOP to be used:
 
-  $ a2x -f pdf --dblatex doc/source-highlight-filter.txt
+  $ a2x -f pdf doc/source-highlight-filter.txt
+  $ a2x -f pdf --fop-options="" doc/source-highlight-filter.txt
 
 See the `a2x(1)` man page for details.
 

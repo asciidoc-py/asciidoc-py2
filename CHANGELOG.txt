@@ -18,6 +18,7 @@ repository] for a full list of changes.
   much more convenient way to enter short code examples (see
   http://www.methods.co.nz/asciidoc/source-highlight-filter.html[the
   online docs]).
+- Added `dvi`, `ps` and `tex` output format options to a2x(1).
 - Added `--dblatex` option to a2x(1) so `dblatex(1)` can be used to
   generate PDFs.
 - Added custom `dblatex(1)` configuration files (in distribution

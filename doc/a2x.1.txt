@@ -17,13 +17,13 @@ SYNOPSIS
 DESCRIPTION
 -----------
 A DocBook toolchain wrapper script that translates an AsciiDoc text
-file 'FILE' to PDF, XHTML (single page or chunked), man page, HTML
-Help or plain text formats. PDF, XHTML, man page and HTML Help formats
-are are generated using the asciidoc(1)/xsltproc(1)/DocBook XSL
-Stylesheets toolchain.  Plain text is produced by passing asciidoc(1)
-generated HTML through lynx(1). The htmlhelp format option
-generates .hhp, .hhc and .html files suitable for compilation to an
-HTML Help .chm file.
+file 'FILE' to PDF, DVI, PS, TeX, XHTML (single page or chunked), man
+page, HTML Help or plain text formats. PDF, XHTML, man page and HTML
+Help formats are are generated using the asciidoc(1), xsltproc(1),
+DocBook XSL Stylesheets, dblatex (or FOP) toolchain.  Plain text is
+produced by passing asciidoc(1) generated HTML through lynx(1). The
+htmlhelp format option generates .hhp, .hhc and .html files suitable
+for compilation to an HTML Help .chm file.
 
 
 OPTIONS
@@ -90,7 +90,11 @@ OPTIONS
   than once.
 
 *--fop-opts*='FOP_OPTS'::
-  Additional fop options.  This option may be specified more than once.
+  Additional fop options.  This option may be specified more than
+  once. If this option is specifed fop is used to generate PDFs.
+
+*--dblatex-opts*='DBLATEX_OPTS'::
+  Additional dblatex options.  This option may be specified more than once.
 
 
 OUTPUT FILES
@@ -129,8 +133,8 @@ same name as the source 'FILE' name plus a .chunked extension.
 
 EXAMPLES
 --------
-`a2x -f pdf --icons doc/quickstart.txt`::
-  Generates doc/quickstart.pdf with admonition icons.
+`a2x -f pdf doc/source-highlight-filter.txt`::
+  Generates doc/source-highlight-filter.pdf file.
 
 `a2x -f chunked -D ../webpages guide.txt`::
   Creates chunked directory `../webpages/guide.chunked` containing

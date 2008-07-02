@@ -9,7 +9,10 @@ Usful addtions include:
   macro syntax.
 - Source code paragraphs make small code examples easier to enter.
 - http://dblatex.sourceforge.net/[dblatex] is now fully supported by
-  a2x(1).
+  a2x(1) and is the default a2x(1) PDF generator (use
+  `--fop-options=""` to force FOP for PDF generation).
+- Added `dvi`, `ps` and `tex` output format options to a2x(1)
+  (courtesy of `dblatex(1)`).
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full description of all
 the other additions and changes.

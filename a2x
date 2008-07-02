@@ -15,6 +15,7 @@ if [ ! -e "$REALNAME" ]; then
 fi
 REALNAME="$(readlink -f "$REALNAME")"
 CONF_DIR=/etc/asciidoc
+FOP_COMMAND="fop.sh"    # FOP executable.
 
 #--------------------------------------------------------------------
 # Constants.
@@ -37,9 +38,9 @@ STYLESHEET=./docbook-xsl.css
 VERBOSE_2=no
 VERBOSE=no
 XSLTPROC_OPTS=
-FOP_OPTS=
-DBLATEX=no
 DBLATEX_OPTS=
+FOP_OPTS=
+FOP=no
 
 #--------------------------------------------------------------------
 # General purpose functions
@@ -128,10 +129,20 @@ function execute_command_2()
     fi
 }
 
+# Return 0 if $1 command can be executed.
+function is_executable()
+{
+    if which "$1" >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # Return 127 if $1 is not in search path else return 0.
 function require()
 {
-    if ! which "$1" >/dev/null 2>&1; then
+    if ! is_executable "$1"; then
         quit "cannot find required program: $1" 127
     fi
 }
@@ -192,15 +203,14 @@ options:
   -h, --help                     print command syntax summary
   --icons                        use admonition, callout and navigation icons
   --icons-dir=PATH               admonition and navigation icon directory
-  --dblatex                      use dblatex instead of fop
   -n, --dry-run                  don't do anything just print the commands
   -s, --skip-asciidoc            skip asciidoc execution
   --stylesheet=PATH              target HTML CSS stylesheet file name
   --version                      print program version to stdout
   -v, --verbose                  print operational details to stderr
-  --xsltproc-opts=XSLTPROC_OPTS  xsltproc options
-  --fop-opts=FOP_OPTS            fop options
   --dblatex-opts=DBLATEX_OPTS    dblatex options
+  --fop-opts=FOP_OPTS            options for FOP pdf generation
+  --xsltproc-opts=XSLTPROC_OPTS  xsltproc options
 EOF
 }
 
@@ -232,7 +242,7 @@ function parse_options()
         quit "enhanced getopt(1) required"
     fi
     short_opts="a:d:D:f:hnsv"
-    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,fop-opts:,dblatex,dblatex-opts:"
+    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,dblatex-opts:,fop-opts:"
     args=$(getopt -o $short_opts -l $long_opts -n $BASENAME -- "$@" 2>/dev/null)
     if [ $? -ne 0 ]; then
         quit "invalid command options, run: a2x --help"
@@ -261,14 +271,11 @@ function parse_options()
             -h|--help)
                 help; exit 0 ;;
             --icons)
-                ICONS=yes;
+                ICONS=yes
                 shift ;;
             --icons-dir)
                 ICONS_DIR=$2
                 shift 2 ;;
-            --dblatex)
-                DBLATEX=yes;
-                shift ;;
             -n|--dry-run)
                 DRY_RUN=yes;
                 shift ;;
@@ -292,6 +299,7 @@ function parse_options()
                 shift 2 ;;
             --fop-opts)
                 FOP_OPTS="$FOP_OPTS $2"
+                FOP=yes
                 shift 2 ;;
             --dblatex-opts)
                 DBLATEX_OPTS="$DBLATEX_OPTS $2"
@@ -321,6 +329,10 @@ function parse_options()
     SRC_NAME=$1
     SRC_NAME=${SRC_NAME##*/}    # Strip path.
     SRC_NAME=${SRC_NAME%.*}     # Strip extension.
+    # Use FOP if there is no dblatex.
+    if ! is_executable dblatex && is_executable "$FOP_COMMAND"; then
+        FOP=yes
+    fi
 }
 
 #--------------------------------------------------------------------
@@ -514,7 +526,7 @@ function to_manpage()
     execute_command_2 "cd - >/dev/null"
 }
 
-function exec_dblatex()
+function run_dblatex()
 {
     require "dblatex"
     local xsl xml sty
@@ -525,25 +537,30 @@ function exec_dblatex()
     execute_command_2 "dblatex $DBLATEX_OPTS -t $FORMAT -p \"$xsl\" -s \"$sty\" \"$xml\""
 }
 
-function to_pdf()
+function run_fop()
 {
-    local xsl xml fo pdf sty
+    local xsl xml fo pdf
     xml="$SRC_DIR/$SRC_NAME.xml"
     pdf="$DESTINATION_DIR/$SRC_NAME.pdf"
-    if isyes $DBLATEX; then
-        exec_dblatex
+    require "xsltproc"
+    require "$FOP_COMMAND"
+    xsl=$(conf_file docbook-xsl/fo.xsl)
+    if [ ! -r "$xsl" ]; then
+        quit "file not found: $xsl"
+    fi
+    fo="$SRC_DIR/$SRC_NAME.fo"
+    to_docbook
+    execute_command_2 "xsltproc $XSLTPROC_OPTS --nonet \
+        \"$xsl\" \"$xml\" >\"$fo\""
+    execute_command_2 "\"$FOP_COMMAND\" $FOP_OPTS -fo \"$fo\" -pdf \"$pdf\""
+}
+
+function to_pdf()
+{
+    if isyes $FOP; then
+        run_fop
     else
-        require "xsltproc"
-        require "fop.sh"
-        xsl=$(conf_file docbook-xsl/fo.xsl)
-        if [ ! -r "$xsl" ]; then
-            quit "file not found: $xsl"
-        fi
-        fo="$SRC_DIR/$SRC_NAME.fo"
-        to_docbook
-        execute_command_2 "xsltproc $XSLTPROC_OPTS --nonet \
-            \"$xsl\" \"$xml\" >\"$fo\""
-        execute_command_2 "fop.sh $FOP_OPTS -fo \"$fo\" -pdf \"$pdf\""
+        run_dblatex
     fi
 }
 
@@ -613,9 +630,9 @@ case "$FORMAT" in
     pdf)                to_pdf;;
     text)               to_text;;
     xhtml)              to_xhtml;;
-    dvi)                exec_dblatex;;
-    ps)                 exec_dblatex;;
-    tex)                exec_dblatex;;
+    dvi)                run_dblatex;;
+    ps)                 run_dblatex;;
+    tex)                run_dblatex;;
 esac
 cleanup
 

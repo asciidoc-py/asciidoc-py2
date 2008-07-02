@@ -34,8 +34,8 @@ AsciiDoc is a plain text human readable/writable document format that
 can be translated to DocBook or HTML using the asciidoc(1) command.
 You can then either use asciidoc(1) generated HTML directly or run
 asciidoc(1) DocBook output through your favorite DocBook toolchain or
-use the AsciiDoc a2x(1) toolchain wrapper to produce PDF, man page,
-HTML and other presentation formats.
+use the AsciiDoc a2x(1) toolchain wrapper to produce PDF, DVI, TeX,
+PostScript, man page, HTML and text formats.
 
 The AsciiDoc format is a useful presentation format in its own right:
 AsciiDoc files are unencumbered by markup and are easily viewed,
@@ -164,8 +164,8 @@ and refentry (corresponding to the AsciiDoc 'article', 'book' and
 DocBook documents are not designed to be viewed directly.  Most Linux
 distributions come with conversion tools (collectively called a
 toolchain) for <<X12,converting DocBook files>> to presentation
-formats such as Postscript, HTML, PDF, DVI, roff (the native man page
-format), HTMLHelp, JavaHelp and text.
+formats such as Postscript, HTML, PDF, DVI, PostScript, TeX, roff (the
+native man page format), HTMLHelp, JavaHelp and text.
 
 - The `--backend=docbook` command-line option produces DocBook XML.
   You can produce the older DocBook SGML format using the
@@ -3889,16 +3889,11 @@ DocBook files are validated, parsed and translated by a combination of
 applications collectively called a DocBook 'tool chain'. The function
 of a tool chain is to read the DocBook markup (produced by AsciiDoc)
 and transform it to a presentation format (for example HTML, PDF, HTML
-Help).
+Help, DVI, PostScript, TeX).
 
 A wide range of user output format requirements coupled with a choice
 of available tools and stylesheets results in many valid tool chain
 combinations.
-
-The DocBook toolchain used for processing AsciiDoc documentation is
-<<X40,xsltproc(1)>> driven by <<X13,DocBook XSL Stylesheets>>. This
-combination produces HTML documents directly and PDF and HTML Help
-file indirectly.
 
 [[X43]]
 a2x Toolchain Wrapper
@@ -3991,9 +3986,9 @@ http://www.xmlsoft.org[xsltproc]::
 
 [[X31]]
 http://dblatex.sourceforge.net/[dblatex]::
-  Generates PDFs directly from DocBook source via the intermediate
-  LaTeX typesetting language -- uses <<X13,DocBook XSL Stylesheets>>,
-  <<X40,xsltproc(1)>> and `latex(1)`.
+  Generates PDF, DVI, PostScript and TeX formats directly from DocBook
+  source via the intermediate LaTeX typesetting language -- uses
+  <<X13,DocBook XSL Stylesheets>>, <<X40,xsltproc(1)>> and `latex(1)`.
 
 [[X14]]
 http://xml.apache.org/fop/[FOP]::
@@ -4027,12 +4022,12 @@ AsciiDoc dblatex configuration files
 The AsciiDoc distribution `./dblatex` directory contains
 `asciidoc-dblatex.xsl` (customized XSL parameter settings) and
 `asciidoc-dblatex.sty` (customized LaTeX settings). These are examples
-of optional <<X31,dblatex>> PDF output customization and are used by
+of optional <<X31,dblatex>> output customization and are used by
 <<X43,a2x(1)>>.
 
 AsciiDoc DocBook XSL Stylesheets drivers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-You will have noticed that the distributed PDF, HTML and HTML Help
+You will have noticed that the distributed HTML and HTML Help
 documentation files (for example `./doc/asciidoc.html`) are not the
 plain outputs produced using the default 'DocBook XSL Stylesheets'
 configuration.  This is because they have been processed using

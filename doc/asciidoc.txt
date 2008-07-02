@@ -3816,7 +3816,8 @@ There are two ways to implement filters:
 - As a new Paragrph or DelimitedBlock definition.
 - By styling an existing Paragraph or DelimitedBlock using a 'style'
   configuration entry -- the 'source highlight' and 'music' filters
-  use this technique to customize the ListingBlock.
+  use this technique to customize the ListingBlock. By convention the
+  style is given the same name as the filter.
 
 asciidoc(1) auto-loads all `.conf` files found in the filter search
 paths (see previous section).

@@ -18,6 +18,11 @@ repository] for a full list of changes.
   much more convenient way to enter short code examples (see
   http://www.methods.co.nz/asciidoc/source-highlight-filter.html[the
   online docs]).
+- The source highlighter and music filter syntax has changed -- they
+  now used the ListingBlock syntax customized with 'source' and
+  'music' style attribute values. This follows the Paragraph styling
+  convention introduced by the source paragraph (previous item) and is
+  easier to read. The old syntax still works but has been deprecated.
 - Added `dvi`, `ps` and `tex` output format options to a2x(1).
 - Added `--dblatex` option to a2x(1) so `dblatex(1)` can be used to
   generate PDFs.

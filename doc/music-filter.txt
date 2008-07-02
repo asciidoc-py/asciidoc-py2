@@ -26,26 +26,27 @@ output document.
 This Music Block:
 
 ---------------------------------------------------------------------
-[music1.png]
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-T:The Butterfly
-R:slip jig
-C:Tommy Potts
-H:Fiddle player Tommy Potts made this tune from two older slip jigs,
-H:one of which is called "Skin the Peelers" in Roche's collection.
-D:Bothy Band: 1975.
-M:9/8
-K:Em
-vB2(E G2)(E F3)|B2(E G2)(E F)ED|vB2(E G2)(E F3)|(B2d) d2(uB A)FD:|
-|:(vB2c) (e2f) g3|(uB2d) (g2e) (dBA)|(B2c) (e2f) g2(ua|b2a) (g2e) (dBA):|
-|:~B3 (B2A) G2A|~B3 BA(uB d)BA|~B3 (B2A) G2(A|B2d) (g2e) (dBA):|
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ [music,music1.png]
+ ---------------------------------------------------------------------
+ T:The Butterfly
+ R:slip jig
+ C:Tommy Potts
+ H:Fiddle player Tommy Potts made this tune from two older slip jigs,
+ H:one of which is called "Skin the Peelers" in Roche's collection.
+ H:This version by Peter Cooper.
+ D:Bothy Band: 1975.
+ M:9/8
+ K:Em
+ vB2(E G2)(E F3)|B2(E G2)(E F)ED|vB2(E G2)(E F3)|(B2d) d2(uB A)FD:|
+ |:(vB2c) (e2f) g3|(uB2d) (g2e) (dBA)|(B2c) (e2f) g2(ua|b2a) (g2e) (dBA):|
+ |:~B3 (B2A) G2A|~B3 BA(uB d)BA|~B3 (B2A) G2(A|B2d) (g2e) (dBA):|
+ ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
 Renders:
 
-["music1.png",scaledwidth="100%"]
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[music,music1.png]
+---------------------------------------------------------------------
 T:The Butterfly
 R:slip jig
 C:Tommy Potts
@@ -58,7 +59,7 @@ K:Em
 vB2(E G2)(E F3)|B2(E G2)(E F)ED|vB2(E G2)(E F3)|(B2d) d2(uB A)FD:|
 |:(vB2c) (e2f) g3|(uB2d) (g2e) (dBA)|(B2c) (e2f) g2(ua|b2a) (g2e) (dBA):|
 |:~B3 (B2A) G2A|~B3 BA(uB d)BA|~B3 (B2A) G2(A|B2d) (g2e) (dBA):|
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------------------------
 =====================================================================
 
 
@@ -72,24 +73,24 @@ notation. The `music2.ly` source file is automatically created and
 retained by the `music2png.py` filter when the `-m` option is used.
 
 ---------------------------------------------------------------------
-["music2.png", "ly", link="music2.ly"]
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-\version "2.10.0"
-\paper {
-  ragged-right = ##t
-}
-{
-  \time 3/4
-  \clef bass
-  c2 e4 g2. f4 e d c2 r4
-}
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ["music", "music2.png", "ly", link="music2.ly"]
+ ---------------------------------------------------------------------
+ \version "2.10.0"
+ \paper {
+   ragged-right = ##t
+ }
+ {
+   \time 3/4
+   \clef bass
+   c2 e4 g2. f4 e d c2 r4
+ }
+ ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
 Renders:
 
-["music2.png", "ly", link="music2.ly"]
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+["music", "music2.png", "ly", link="music2.ly"]
+---------------------------------------------------------------------
 \version "2.10.0"
 \paper {
   ragged-right = ##t
@@ -99,7 +100,7 @@ music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   \clef bass
   c2 e4 g2. f4 e d c2 r4
 }
-music~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------------------------
 =====================================================================
 
 NOTE: If you get an error processing the above example it may be that

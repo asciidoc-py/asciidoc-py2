@@ -17,13 +17,13 @@ SYNOPSIS
 DESCRIPTION
 -----------
 A DocBook toolchain wrapper script that translates an AsciiDoc text
-file 'FILE' to PDF, DVI, PS, TeX, XHTML (single page or chunked), man
-page, HTML Help or plain text formats. PDF, XHTML, man page and HTML
-Help formats are are generated using the asciidoc(1), xsltproc(1),
-DocBook XSL Stylesheets, dblatex (or FOP) toolchain.  Plain text is
-produced by passing asciidoc(1) generated HTML through lynx(1). The
-htmlhelp format option generates .hhp, .hhc and .html files suitable
-for compilation to an HTML Help .chm file.
+file 'FILE' to PDF, DVI, PS, LaTeX, XHTML (single page or chunked),
+man page, HTML Help or plain text formats. PDF, XHTML, man page and
+HTML Help formats are are generated using the asciidoc(1),
+xsltproc(1), DocBook XSL Stylesheets, dblatex (or FOP) toolchain.
+Plain text is produced by passing asciidoc(1) generated HTML through
+lynx(1). The htmlhelp format option generates .hhp, .hhc and .html
+files suitable for compilation to an HTML Help .chm file.
 
 
 OPTIONS
@@ -158,20 +158,16 @@ xsltproc::
 DocBook XSL Stylesheets::
   http://docbook.sourceforge.net/projects/xsl/
 
-FOP (for PDF file generation)::
+dblatex (for PDF, DVI, PostScript and LaTeX file generation)::
+  http://dblatex.sourceforge.net/
+
+FOP (alternative PDF file generation)::
   http://xmlgraphics.apache.org/fop/
 
 Lynx (for text file generation)::
   http://lynx.isc.org/
 
-This version of a2x(1) has been tested on Ubuntu Linux 5.0.4 with the
-following toolchain components:
-
-- bash 3.00.16.
-- DocBook XSL Stylesheets 1.72.0 (with AsciiDoc drivers and patches).
-- xsltproc (libxml 20627, libxslt 10120 and libexslt 813).
-- FOP 0.20.5.
-- lynx 2.8.5rel.1.
+See also the latest README file.
 
 
 BUGS

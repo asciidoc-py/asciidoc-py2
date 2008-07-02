@@ -5,14 +5,14 @@ AsciiDoc Home Page
 ************************************************************************
 Useful additions include:
 
-- URLs and email addresses are recognized without having to use the
-  macro syntax.
-- link:source-highlight-filter.html[Source code paragraphs] make small
-  code examples easier to enter.
 - http://dblatex.sourceforge.net/[dblatex] is now fully supported by
   a2x(1) and is the default a2x(1) PDF generator.
 - Added `dvi`, `ps` and `tex` output format options to a2x(1)
   (courtesy of `dblatex(1)`).
+- URLs and email addresses are recognized without having to use the
+  macro syntax.
+- link:source-highlight-filter.html[Source code paragraphs] make small
+  code examples easier to enter.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full description of all
 the other additions and changes.
@@ -45,7 +45,7 @@ the asciidoc(1) command.
 
 The asciidoc(1) command translates AsciiDoc files to HTML, XHTML and
 DocBook markups.  DocBook can be post-processed to presentation
-formats such as HTML, PDF, DVI, TeX, roff, and Postscript using
+formats such as HTML, PDF, DVI, LaTeX, roff, and Postscript using
 readily available Open Source tools.
 
 Example Articles

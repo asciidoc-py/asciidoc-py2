@@ -46,8 +46,6 @@ repository] for a full list of changes.
 .Bug fixes
 - Fixed `stylesheets/xhtml11-manpage.css` not being included when
   'linkcss' attribute was used.
-- The xhtml source-highlight filter was inadvertently commented out at
-  trunk revision 99.
 - Configuration file `*-style` attributes are now dumped correctly.
 - Fixed 'FAILED: malformed section entry' LaTeX backend error.
 

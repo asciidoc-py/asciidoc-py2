@@ -94,5 +94,5 @@ Guide'.
 
 Copying
 -------
-Copyright (C) 2002-2007 Stuart Rackham. Free use of AsciiDoc is
+Copyright (C) 2002-2008 Stuart Rackham. Free use of AsciiDoc is
 granted under the terms of the GNU General Public License (GPL).

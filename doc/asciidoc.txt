@@ -34,7 +34,7 @@ AsciiDoc is a plain text human readable/writable document format that
 can be translated to DocBook or HTML using the asciidoc(1) command.
 You can then either use asciidoc(1) generated HTML directly or run
 asciidoc(1) DocBook output through your favorite DocBook toolchain or
-use the AsciiDoc a2x(1) toolchain wrapper to produce PDF, DVI, TeX,
+use the AsciiDoc a2x(1) toolchain wrapper to produce PDF, DVI, LaTeX,
 PostScript, man page, HTML and text formats.
 
 The AsciiDoc format is a useful presentation format in its own right:
@@ -164,8 +164,8 @@ and refentry (corresponding to the AsciiDoc 'article', 'book' and
 DocBook documents are not designed to be viewed directly.  Most Linux
 distributions come with conversion tools (collectively called a
 toolchain) for <<X12,converting DocBook files>> to presentation
-formats such as Postscript, HTML, PDF, DVI, PostScript, TeX, roff (the
-native man page format), HTMLHelp, JavaHelp and text.
+formats such as Postscript, HTML, PDF, DVI, PostScript, LaTeX, roff
+(the native man page format), HTMLHelp, JavaHelp and text.
 
 - The `--backend=docbook` command-line option produces DocBook XML.
   You can produce the older DocBook SGML format using the
@@ -3889,7 +3889,7 @@ DocBook files are validated, parsed and translated by a combination of
 applications collectively called a DocBook 'tool chain'. The function
 of a tool chain is to read the DocBook markup (produced by AsciiDoc)
 and transform it to a presentation format (for example HTML, PDF, HTML
-Help, DVI, PostScript, TeX).
+Help, DVI, PostScript, LaTeX).
 
 A wide range of user output format requirements coupled with a choice
 of available tools and stylesheets results in many valid tool chain
@@ -3901,7 +3901,7 @@ a2x Toolchain Wrapper
 One of the biggest hurdles for new users is installing, configuring
 and using a DocBook XML toolchain. `a2x(1)` can help -- it's a
 toolchain wrapper command that will generate XHTML (chunked and
-unchunked), PDF, DVI, PS, TeX, man page, HTML Help and text file
+unchunked), PDF, DVI, PS, LaTeX, man page, HTML Help and text file
 outputs from an AsciiDoc text file.  a2x(1) does all the grunt work
 associated with generating and sequencing the toolchain commands and
 managing intermediate and output files.  a2x(1) also optionally
@@ -3986,9 +3986,10 @@ http://www.xmlsoft.org[xsltproc]::
 
 [[X31]]
 http://dblatex.sourceforge.net/[dblatex]::
-  Generates PDF, DVI, PostScript and TeX formats directly from DocBook
-  source via the intermediate LaTeX typesetting language -- uses
-  <<X13,DocBook XSL Stylesheets>>, <<X40,xsltproc(1)>> and `latex(1)`.
+  Generates PDF, DVI, PostScript and LaTeX formats directly from
+  DocBook source via the intermediate LaTeX typesetting language --
+  uses <<X13,DocBook XSL Stylesheets>>, <<X40,xsltproc(1)>> and
+  `latex(1)`.
 
 [[X14]]
 http://xml.apache.org/fop/[FOP]::

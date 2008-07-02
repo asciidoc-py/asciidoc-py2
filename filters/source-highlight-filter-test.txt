@@ -4,8 +4,8 @@ Source Hightlight Filter Test
 Details of the filter can be found in
 `./doc/source-highlight-filter.txt`.
 
-[python]
-source~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[source,python]
+---------------------------------------------------------------------
 ''' A multi-line
     comment.'''
 def sub_word(mo):
@@ -15,5 +15,5 @@ def sub_word(mo):
         return quote + word + quote
     else:
         return word
-source~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------------------------
 

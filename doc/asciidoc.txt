@@ -1864,10 +1864,10 @@ the `test.py` source file (containing a single callout) using the
 
 .AsciiDoc source
 ---------------------------------------------------------------------
- [python]
- source~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ [source,python]
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  include::test.py[]
- source~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  \<1> Print statement.
 ---------------------------------------------------------------------
@@ -3807,14 +3807,16 @@ asciidoc(1) searches for the command:
 
 Filter Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-Filters are normally accompanied by a configuration file
-containing a filter  Paragraph or filter DelimitedBlock
-definition and corresponding markup templates.
+Filters are normally accompanied by a configuration file containing a
+Paragraph or DelimitedBlock definition along with corresponding markup
+templates.
 
-By convention delimiters belonging to DelimitedBlock filters
-distributed with AsciiDoc consist of a word (normally a noun
-identifying the block content) followed by four or more tilde
-characters.
+There are two ways to implement filters:
+
+- As a new Paragrph or DelimitedBlock definition.
+- By styling an existing Paragraph or DelimitedBlock using a 'style'
+  configuration entry -- the 'source highlight' and 'music' filters
+  use this technique to customize the ListingBlock.
 
 asciidoc(1) auto-loads all `.conf` files found in the filter search
 paths (see previous section).
@@ -3832,8 +3834,8 @@ If you want a full featured multi-language highlighter use the
 <<X57,Source Code Highlighter Filter>>.
 
   .Code filter example
-  [python]
-  code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  [code,python]
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ''' A multi-line
       comment.'''
   def sub_word(mo):
@@ -3843,23 +3845,23 @@ If you want a full featured multi-language highlighter use the
           return quote + word + quote
       else:
           return word
-  code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Outputs:
 
 .Code filter example
-[python]
-code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[code,python]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ''' A multi-line
     comment.'''
 def sub_word(mo):
     ''' Single line comment.'''
-    word = mo.group('word')     # Inline comment
+    word = mo.group('word')   # Inline comment
     if word in keywords[language]:
         return quote + word + quote
     else:
         return word
-code~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [[X57]]
 Source Code Highlighter Filter

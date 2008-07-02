@@ -71,7 +71,9 @@ syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=ascii
 syn region asciidocListingBlock start=/^-\{4,}$/ end=/^-\{4,}$/ contains=asciidocCallout keepend
 syn region asciidocCommentBlock start="^/\{4,}$" end="^/\{4,}$"
 syn region asciidocPassthroughBlock start="^+\{4,}$" end="^+\{4,}$"
-syn region asciidocFilterBlock start=/^\w\+\~\{4,}$/ end=/^\w\+\~\{4,}$/
+" Allowing leading \w characters in the filter delimiter is to accomodate
+" the pre version 8.2.7 syntax and may be removed in future releases.
+syn region asciidocFilterBlock start=/^\w*\~\{4,}$/ end=/^\w*\~\{4,}$/
 
 syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<"\{-}\w\(\w\|-\)*"\?,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.* keepend
 syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/ keepend

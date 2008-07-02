@@ -222,5 +222,25 @@ would be rendered as:
 == Why have you used the DocBook <simpara> element instead of <para>?
 
 `<simpara>` is really the same as `<para>` except it can't contain
-block elements which more closely matches the AsciiDoc paragraph
+block elements -- this matched, more closely, the AsciiDoc paragraph
 semantics.
+
+
+== How can I format text inside a listting block?
+
+By default only 'specialcharacters' and 'callouts' are substituted in
+listing blocks; you can add quotes substitutions by explicitly setting
+the block 'subs' attribute, for example:
+
+  [subs="specialcharacters,callouts,quotes"]
+  ------------------------------------------
+  $ ls *-al*
+  ------------------------------------------
+
+The `-al` will rendered bold. Note that:
+
+- You would need to explicitly escape text you didn't want quoted.
+- Don't do this in source code listing blocks because it modifies the
+  source code which confuses the syntax highlighter.
+- This only works if your DocBook processor recognizes DocBook
+  `<emphasis>` elements inside `<screen>` elements.

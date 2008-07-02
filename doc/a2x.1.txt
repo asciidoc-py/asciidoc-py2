@@ -91,7 +91,7 @@ OPTIONS
 
 *--fop-opts*='FOP_OPTS'::
   Additional fop options.  This option may be specified more than
-  once. If this option is specifed fop is used to generate PDFs.
+  once. If this option is specified fop is used to generate PDFs.
 
 *--dblatex-opts*='DBLATEX_OPTS'::
   Additional dblatex options.  This option may be specified more than once.

@@ -2203,10 +2203,13 @@ Example:
   to avoid false end-of-block underline termination.
 - File inclusion is limited to a depth of 5 to catch recursive loops.
 - Attribute references are expanded inside the include `target`; if an
-  attribute is undefined then the included file is silently
-  skipped.
-- The 'tabsize' macro attribute sets the number of space
-  characters to be used for tab expansion in the included file.
+  attribute is undefined then the included file is silently skipped.
+- The 'tabsize' macro attribute sets the number of space characters to
+  be used for tab expansion in the included file.
+- Internally the `include1` macro is translated to the `include1`
+  system attribute which means it must be evaluated in a region where
+  attribute substitution is enabled -- use the `include` macro
+  instead.
 
 Conditional Inclusion Macros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

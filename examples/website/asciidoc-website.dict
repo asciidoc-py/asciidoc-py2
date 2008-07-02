@@ -1,4 +1,4 @@
-personal_ws-1.1 en 123 
+personal_ws-1.1 en 130 
 AsciiDoc's
 Rosten
 docbook
@@ -8,8 +8,10 @@ SCM
 README
 asc
 passthroughs
+AttributeEntry
 xsl
 cd
+toolchains
 LilyPond
 CHANGLOG
 Terje
@@ -24,6 +26,7 @@ dx
 doctests
 hg
 xzf
+tex
 inline
 lim
 CHANGELOG
@@ -54,12 +57,15 @@ online
 ImageMagick
 Pommereau
 ly
+programlisting
 Xubuntu
 syntaxes
+dblatex
 stdout
 asciidoc
 AsciiDoc
 ASCIIMathML
+ps
 odf
 filetype
 Rosenkraenzer
@@ -69,6 +75,7 @@ Gentoo
 Blogpost
 uB
 mkdir
+dvi
 sinx
 vB
 Sakellariou

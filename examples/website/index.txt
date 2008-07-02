@@ -3,7 +3,7 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-Usful addtions include:
+Useful additions include:
 
 - URLs and email addresses are recognized without having to use the
   macro syntax.

@@ -244,3 +244,19 @@ The `-al` will rendered bold. Note that:
   source code which confuses the syntax highlighter.
 - This only works if your DocBook processor recognizes DocBook
   `<emphasis>` elements inside `<screen>` elements.
+
+
+== Why doesn't the \include1::[] macro work?
+
+Internally the `include1` macro is translated to the `include1` system
+attribute which means it must be evaluated in a region where attribute
+substitution is enabled. For example, if you want to evaluate it
+inside a listing block you will need to enable attribute substitution
+inside the block, for example:
+
+  [subs="attributes"]
+  -----------------------------------------
+  include1::blogpost_media_processing.txt[]
+  -----------------------------------------
+
+Or, preferably, use the `include` block macro instead.

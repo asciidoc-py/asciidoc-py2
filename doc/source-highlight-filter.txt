@@ -5,7 +5,7 @@ The AsciiDoc distribution includes a source code syntax highlight
 filter (`source-highlight-filter.conf`). It uses
 http://www.gnu.org/software/src-highlite/[GNU source-highlight] to
 highlight HTML outputs; DocBook outputs are highlighted by toolchains
-with `programlisting` element highlight support, for example
+that have `programlisting` element highlight support, for example
 'dblatex'.
 
 TIP: If the source 'language' attribute has been set (using an

@@ -1017,9 +1017,7 @@ Predefined delimited block underlines:
   SidebarBlock:     **************************
   QuoteBlock:       __________________________
   ExampleBlock:     ==========================
-  Filter blocks:    code~~~~~~~~~~~~~~~~~~~~~~
-                    source~~~~~~~~~~~~~~~~~~~~
-                    music~~~~~~~~~~~~~~~~~~~~~
+  Filter blocks:    ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.

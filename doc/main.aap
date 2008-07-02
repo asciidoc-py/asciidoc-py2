@@ -66,7 +66,7 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
 TEST_FILES = $*(ROOT).css-embedded.html 
         article.css-embedded.html book.css-embedded.html \
         article.xml book.xml book-multi.xml asciidoc.xml asciidoc.1.xml \
-        asciidoc.1.html a2x.1.xml
+        asciidoc.1.html a2x.1.xml music-filter.xml
 
 
 #####################################################################
@@ -287,6 +287,7 @@ spell: $INFILES ../CHANGELOG.txt ../README.txt ../BUGS.txt ../INSTALL.txt \
 
 clean_testfiles:
     :del {f} $TEST_FILES
+    :del {f} music*.png     # Force Lilypond to run.
 
 test: clean_testfiles $TEST_FILES
     # Force generation and validation of .html and Docbook (.xml) files.

@@ -158,13 +158,25 @@ div.listingblock > div.content {
   padding: 0.5em;
 }
 
-div.quoteblock > div.content {
+div.quoteblock {
   padding-left: 2.0em;
 }
-
-div.attribution {
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
   text-align: right;
 }
+
+div.verseblock {
+  padding-left: 2.0em;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
 div.verseblock + div.attribution {
   text-align: left;
 }
@@ -185,10 +197,6 @@ div.admonitionblock td.content {
 div.exampleblock > div.content {
   border-left: 2px solid silver;
   padding: 0.5em;
-}
-
-div.verseblock div.content {
-  white-space: pre;
 }
 
 div.imageblock div.content { padding-left: 0; }

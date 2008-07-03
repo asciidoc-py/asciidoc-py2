@@ -1976,6 +1976,8 @@ class AbstractBlock:
         if posattrs and posattrs[0] == 'style':
             style = self.attributes.get('1')
         else:
+            style = None
+        if not style:
             style = self.attributes.get('style',self.style)
         if style is not None:
             if not self.styles.has_key(style):

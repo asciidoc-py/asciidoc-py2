@@ -1088,36 +1088,6 @@ Renders:
 2. Item 2
 ....................
 
-A 'verse' <<X23,style>> can be applied to LiteralBlocks -- useful for
-lyrics and poems or any situation where you want to preserve line
-boundaries. For example:
-
----------------------------------------------------------------------
-[verse]
-......................................
-Consul *necessitatibus* per id,
-consetetur, eu pro everti postulant
-homero verear ea mea, qui.
-
-Qui in magna commodo, est labitur
-dolorum an. Est ne *magna primis
-adolescens*.
-......................................
----------------------------------------------------------------------
-
-Renders:
-
-[verse]
-......................................
-Consul *necessitatibus* per id,
-consetetur, eu pro everti postulant
-homero verear ea mea, qui.
-
-Qui in magna commodo, est labitur
-dolorum an. Est ne *magna primis
-adolescens*.
-......................................
-
 SidebarBlocks
 ~~~~~~~~~~~~~
 A sidebar is a short piece of text presented outside the narrative
@@ -1177,14 +1147,16 @@ will generally be backend specific. Here's an example:
 
 Quote Blocks
 ~~~~~~~~~~~~
-QuoteBlocks are used for quoted passages of text. 'attribution' and
-'citetitle' named attributes specify the author and source of the
-quote (they are equivalent to positional attribute list entries 1 and
-2 respectively).  Both attributes are optional and the block body is
-treated like a SectionBody. For example:
+QuoteBlocks are used for quoted passages of text. There are two
+styles: 'quote' and 'verse' (the first positional attribute).  The
+'attribution' and 'citetitle' attributes (positional attributes 2 and
+3) specify the content author and source. If no attributes are
+specified the 'quote' style is used.
+
+The 'quote' style treats the content like a SectionBody, for example:
 
 ---------------------------------------------------------------------
-[Bertrand Russell, The World of Mathematics (1956)]
+[quote, Bertrand Russell, The World of Mathematics (1956)]
 ____________________________________________________________________
 A good notation has subtlety and suggestiveness which at times makes
 it almost seem like a live teacher.
@@ -1193,48 +1165,33 @@ ____________________________________________________________________
 
 Which is rendered as:
 
-[Bertrand Russell, The World of Mathematics (1956)]
+[quote, Bertrand Russell, The World of Mathematics (1956)]
 ____________________________________________________________________
 A good notation has subtlety and suggestiveness which at times makes
 it almost seem like a live teacher.
 ____________________________________________________________________
 
-In this example unquoted positional attributes have been used, the
-following quoted positional and named attributes are equivalent (if
-the attribute list contained commas then quoting would have been
-mandatory):
-
-  ["Bertrand Russell","The World of Mathematics (1956)"]
-  [attribution="Bertrand Russell",citetitle="The World of Mathematics (1956)"]
-
-You can render poems and lyrics with a combination of Quote and
-Literal blocks. For example:
+The 'verse' style retains the content's line breaks, for example:
 
 ---------------------------------------------------------------------
-[William Blake,from Auguries of Innocence]
-_____________________________________________________________________
-[verse]
-.....................................................................
+[verse, William Blake, from Auguries of Innocence]
+__________________________________________________
 To see a world in a grain of sand,
 And a heaven in a wild flower,
 Hold infinity in the palm of your hand,
 And eternity in an hour.
-.....................................................................
-_____________________________________________________________________
+__________________________________________________
 ---------------------------------------------------------------------
 
 Which is rendered as:
 
-[William Blake,from Auguries of Innocence]
-_____________________________________________________________________
-[verse]
-.....................................................................
+[verse, William Blake, from Auguries of Innocence]
+__________________________________________________
 To see a world in a grain of sand,
 And a heaven in a wild flower,
 Hold infinity in the palm of your hand,
 And eternity in an hour.
-.....................................................................
-_____________________________________________________________________
+__________________________________________________
 
 [[X48]]
 Example Blocks
@@ -3241,20 +3198,18 @@ The list consists of zero or more positional attribute values followed
 by zero or more named attribute values. Here are three examples:
 
   [Hello]
-  [Bertrand Russell, The World of Mathematics (1956)]
+  [quote, Bertrand Russell, The World of Mathematics (1956)]
   ["22 times", backcolor="#0e0e0e", options="noborders,wide"]
 
-Attribute lists are evaluated as a list of Python function arguments.
-If this fails or any of the items do not evaluate to a string a number
-or None then all list items are treated as string literals.
-
 .Attribute list properties
+- If one or more attribute values contains a comma the all values must
+  be quoted (enclosed in quotation characters).
+- If the list contains any named attributes the all string attribute
+  values must be quoted.
 - List attributes take precedence over existing attributes.
 - List attributes can only be referenced in configuration file markup
   templates and tags, they are not available inside the document.
 - Attribute references are allowed inside attribute lists.
-- If the list contains any named attributes the all string attribute
-  values must be quoted.
 - Setting a named attribute to `None` undefines the attribute.
 - Positional attributes are referred to as `\{1}`,`\{2}`,`\{3}`,...
 - Attribute `\{0}` refers to the entire list (excluding the enclosing
@@ -3263,6 +3218,10 @@ or None then all list items are treated as string literals.
   comma separated list of attributes with zero length string values.
   For example `[options="opt1,opt2,opt3"]` is equivalent to
   `[opt1="",opt2="",opt2=""]`.
+- Attribute lists are evaluated as a list of Python function
+  arguments.  If this fails or any of the items do not evaluate to a
+  string, a number or None then all list items are treated as string
+  literals.
 
 Macro Attribute lists
 ~~~~~~~~~~~~~~~~~~~~~

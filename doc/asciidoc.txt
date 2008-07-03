@@ -1171,7 +1171,8 @@ A good notation has subtlety and suggestiveness which at times makes
 it almost seem like a live teacher.
 ____________________________________________________________________
 
-The 'verse' style retains the content's line breaks, for example:
+The 'verse' style
+retains the content's line breaks, for example:
 
 ---------------------------------------------------------------------
 [verse, William Blake, from Auguries of Innocence]
@@ -3772,7 +3773,7 @@ templates.
 
 There are two ways to implement filters:
 
-- As a new Paragrph or DelimitedBlock definition.
+- As a new Paragraph or DelimitedBlock definition.
 - By styling an existing Paragraph or DelimitedBlock using a 'style'
   configuration entry -- the 'source highlight' and 'music' filters
   use this technique to customize the ListingBlock. By convention the

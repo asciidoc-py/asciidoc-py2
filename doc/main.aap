@@ -169,7 +169,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
     :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 ../docbook-xsl/fo.xsl $source >$target
 
 # This kludge forces the User Guide PDF to be generated using dblatex
-# for no other reason than including a dblatex example in the distribution.
+# so we include a dblatex example in the distribution.
 @if _no.DBLATEX:
     asciidoc.pdf: asciidoc.xml
         :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source

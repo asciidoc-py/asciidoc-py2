@@ -7,6 +7,13 @@ See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial
 repository] for a full list of changes.
 
 .Additions and changes
+- Added `dvi`, `ps` and `tex` output format options to a2x(1).
+- Added `--dblatex` option to a2x(1) so `dblatex(1)` can be used to
+  generate PDFs.
+- Added custom `dblatex(1)` configuration files (in distribution
+  `./dblatex` directory) which are used by a2x(1).
+- `dblatex(1)` is now used to generate the distributed PDF version of
+  the AsciiDoc User Guide.
 - If you don't need a customized the link caption you can enter the
   'http', 'https', 'ftp', 'file' URLs and email addresses without any
   special macro syntax -- you get the links by just cutting and
@@ -23,13 +30,12 @@ repository] for a full list of changes.
   'music' style attribute values. This follows the Paragraph styling
   convention introduced by the source paragraph (previous item) and is
   easier to read. The old syntax still works but has been deprecated.
-- Added `dvi`, `ps` and `tex` output format options to a2x(1).
-- Added `--dblatex` option to a2x(1) so `dblatex(1)` can be used to
-  generate PDFs.
-- Added custom `dblatex(1)` configuration files (in distribution
-  `./dblatex` directory) which are used by a2x(1).
-- `dblatex(1)` is now used to generate the distributed PDF version of
-  the AsciiDoc User Guide.
+- QuoteBlocks now have a 'verse' style -- you no longer have to nest a
+  'verse' LiteralBlock inside a QuoteBlock for verses.  The 'verse'
+  style on the LiteralBlock has been deprecated (still works though)
+  and the 'style' attribute is positional attribute 1, pushing
+  'attribution' and 'citetitle' attributes to the right (you'll need
+  to insert a 'quote' attribute into your existing QuoteBlocks).
 - It is no up to the DocBook processor to highlight source code syntax
   in `<programlisting>` elements rather than GNU Highlighter -- this
   is the correct way to handle it, plus `dblatex(1)` makes a much

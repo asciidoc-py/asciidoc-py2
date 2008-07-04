@@ -51,8 +51,8 @@ OPTIONS
   case it defaults to 'manpage').
 
 *-f, --format*='FORMAT'::
-  Output format: 'chunked', 'htmlhelp', 'manpage', 'pdf', 'text' or
-  'xhtml'.
+  Output format: 'chunked', 'dvi', 'htmlhelp', 'manpage', 'pdf', 'ps',
+  'tex', 'text' or 'xhtml'.
 
 *-h, --help*::
   Print command-line syntax and program options to stdout.
@@ -71,7 +71,7 @@ OPTIONS
 
 *-s, --skip-asciidoc*::
   Skip asciidoc execution. This is useful for converting DocBook XML
-  files not derived from AsciiDoc sources. Ignored if --format*='text.
+  files not derived from AsciiDoc sources. Ignored if --format*='text'.
 
 *--stylesheet*='PATH'::
   A path (relative to destination HTML files) specifying the

@@ -3966,19 +3966,6 @@ Microsoft Help Compiler::
   file. It runs on MS Windows platforms and can be downloaded from
   http://www.microsoft.com.
 
-.Windows DocBook conversion
-**********************************************************************
-Toolchain installation can be a mission for Microsoft Windows users
-used to a GUI environment -- you may like to try the
-http://www.xmlmind.com/foconverter/[XMLmind FO Converter], it contains
-a GUI 'XSL Utility' which makes a creditable job of converting
-AsciiDoc generated DocBook files to RTF, HTML and Open Document
-formats. The 'FO Converter Personal Edition' can be used free of
-charge and a Windows installer is available and there is also a UNIX
-version. Thanks to Matthew Marshall for this tip.
-
-**********************************************************************
-
 AsciiDoc dblatex configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The AsciiDoc distribution `./dblatex` directory contains

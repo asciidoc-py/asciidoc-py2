@@ -18,5 +18,13 @@ Use these files with dblatex(1) `-p` and `-s` options, for example:
 
 Limitations
 -----------
-- As of 'dblatex' version 0.2.8 callouts are limited to images and
-  program listings and therefore aren't useful in AsciiDoc documents.
+- dblatex (as of version 0.2.8) doesn't seem to process the DocBook
+  <literallayout> element correctly: it is rendered in a monospaced
+  font and no nested elements are processed. By default the normal
+  font should be used and almost all DocBook inline elements should be
+  processed (http://www.docbook.org/tdg/en/html/literallayout.html).
+  I almost fixed this by overriding the default dblatex literallayout
+  template (in `./dblatex/asciidoc-dblatex.xsl`) but there is a
+  remaining problem: blank lines are replaced by a single space.
+
+- Callouts do not work inside <literallayout> elements.

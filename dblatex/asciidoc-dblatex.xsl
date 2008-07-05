@@ -20,12 +20,7 @@ See dblatex(1) -p option.
           replaced by a single space.
 
     Override dblatex address and literallayout processing.
-    dblatex (as of version 0.2.8) doesn't seem to process the
-    DocBook <literallayout> element correctly: it is rendered in
-    a monospaced font and no nested elements are processed. By
-    default the normal font should be used and almost all
-    DocBook inline elements should be processed.
-    See http://www.docbook.org/tdg/en/html/literallayout.html
+    See `./dblatex/asciidoc-dblatex.xsl`.
   -->
   <xsl:template match="address|literallayout[@class!='monospaced']">
     <xsl:text>\begin{alltt}</xsl:text>

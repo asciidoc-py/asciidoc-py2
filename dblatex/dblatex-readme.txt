@@ -27,4 +27,7 @@ Limitations
   template (in `./dblatex/asciidoc-dblatex.xsl`) but there is a
   remaining problem: blank lines are replaced by a single space.
 
-- Callouts do not work inside <literallayout> elements.
+- Callouts do not work inside <literallayout> elements which means
+  callouts are not displayed inside AsciiDoc literal blocks.
+  A workaround is to change the AsciiDoc literal block to a listing
+  block.

@@ -16,19 +16,13 @@ See dblatex(1) -p option.
   <xsl:param name="monoseq.hyphenation">0</xsl:param>
 
   <!--
-    TODO: Does not work on  multiple verses (blank lines are
-          replaced by a single space.
-
-    Override dblatex address and literallayout processing.
-    See `./dblatex/asciidoc-dblatex.xsl`.
+    Override default literallayout template.
+    See `./dblatex/dblatex-readme.txt`.
   -->
   <xsl:template match="address|literallayout[@class!='monospaced']">
     <xsl:text>\begin{alltt}</xsl:text>
     <xsl:text>&#10;\normalfont{}&#10;</xsl:text>
     <xsl:apply-templates/>
-  <!--
-    <xsl:apply-templates mode="latex.verbatim"/>
-  -->
     <xsl:text>&#10;\end{alltt}</xsl:text>
   </xsl:template>
 

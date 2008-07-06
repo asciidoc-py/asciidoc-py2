@@ -3119,7 +3119,7 @@ class CalloutMap:
                 result += ' ' + self.calloutid(self.listnumber,coindex)
             return result.strip()
         else:
-            error('no callouts refer to list item '+str(listindex))
+            warning('no callouts refer to list item '+str(listindex))
             return ''
     def validate(self,maxlistindex):
         # Check that all list indexes referenced by callouts exist.

@@ -83,8 +83,8 @@ def sub_word(mo):
         return word
 ---------------------------------------------------------------------
 
-Numbered source code listing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Numbered source code listing with callouts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 This source-highlight filtered block:
 
 ---------------------------------------------------------------------
@@ -108,19 +108,23 @@ This source-highlight filtered block:
 
  end
 
- if $0 == __FILE__
+ if $0 == __FILE__                                 \<1>
    # Array#cycle test
    # true => 0
    # false => 1
    # true => 2
    # false => 3
    # true => 4
-   puts 'Array#cycle test'
+   puts 'Array#cycle test'                         \<2>
    [true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
      puts "#{a.inspect} => #{b.inspect}"
    end
  end
  ---------------------------------------------------------------------
+
+ \<1> First callout.
+ \<2> Second call out.
+
 ---------------------------------------------------------------------
 
 Renders this highlighted source code:
@@ -145,19 +149,22 @@ class Array
 
 end
 
-if $0 == __FILE__
+if $0 == __FILE__                                 <1>
   # Array#cycle test
   # true => 0
   # false => 1
   # true => 2
   # false => 3
   # true => 4
-  puts 'Array#cycle test'
+  puts 'Array#cycle test'                         <2>
   [true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
     puts "#{a.inspect} => #{b.inspect}"
   end
 end
 ---------------------------------------------------------------------
+
+<1> First callout.
+<2> Second call out.
 
 
 Installation

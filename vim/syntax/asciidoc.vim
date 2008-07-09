@@ -35,7 +35,6 @@ syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-
 syn match asciidocAttributeRef /{\(\w\|-\)\+}/
 syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
-syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
@@ -81,6 +80,8 @@ syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\
 syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]\|^$/ contains=asciidocQuoted.* keepend
 syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/(\{2,3}/ end=/)\{2,3}/ contains=asciidocQuoted.* keepend
 syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/ keepend
+
+syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 
 highlight link asciidocMacroAttributes Label
 highlight link asciidocIdMarker Special

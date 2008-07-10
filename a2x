@@ -581,13 +581,24 @@ function to_odt()
 function to_text()
 {
     require "asciidoc"
-    require "lynx"
-    local html text conf
+    local html text conf xsl
     html="$SRC_DIR/$SRC_NAME.html"
     text="$DESTINATION_DIR/$SRC_NAME.text"
     conf=$(conf_file text.conf)
-    execute_command_2 "asciidoc $ASCIIDOC_OPTS -f "$conf" -b html4 \
-        -o - \"$SRC_FILE\" | lynx -dump -stdin >\"$text\""
+    # Use lynx if there is no w3m.
+    if ! is_executable w3m && is_executable lynx; then
+        execute_command_2 "asciidoc $ASCIIDOC_OPTS -f "$conf" -b html4 \
+            -o - \"$SRC_FILE\" | lynx -dump -stdin >\"$text\""
+    else
+        require "w3m"
+        require "xsltproc"
+        xsl=$(conf_file docbook-xsl/text.xsl)
+        execute_command_2 "asciidoc $ASCIIDOC_OPTS -f \"$conf\" -b docbook \
+            -o - \"$SRC_FILE\" \
+            | xsltproc --nonet --xinclude \"$xsl\" - \
+            | w3m -cols 70 -dump -T text/html -no-graph >\"$text\""
+
+    fi
 }
 
 #--------------------------------------------------------------------

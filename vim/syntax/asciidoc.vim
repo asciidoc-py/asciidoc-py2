@@ -32,25 +32,27 @@ syn match asciidocListBullet /^\s*[-*+]\s/
 syn match asciidocListNumber /^\s*\(\(\d\+\.\)\|\.\{1,2}\|\(\l\.\)\)\s\+/
 syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\):\/\/\S*\(\w\|\/\)/
 syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_.]\@!/
-syn match asciidocAttributeRef /{\(\w\|-\)\+}/
+syn match asciidocAttributeRef /\\\@<!{\(\w\|-\)\+}/
 syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
 
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
-syn region asciidocQuotedSubscript start=/\~\S/ end=/\(\~\|^$\)/
-syn region asciidocQuotedSuperscript start=/\^\S/ end=/\(\^\|^$\)/
-syn region asciidocQuotedMonospaced start=/\(^\|[ \t(\[.,=]\)\@<=+\([ )]\)\@!/ end=/\(+\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocQuotedMonospaced2 start=/\(^\|[ \t(\[.,=]\)\@<=`\([ )]\)\@!/ end=/\(`\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocQuotedUnconstrainedMonospaced start=/++\S/ end=/\(++\|^$\)/
-syn region asciidocQuotedEmphasized start=/\(^\|[ \t(\[.,=]\)\@<=_\([ )]\)\@!/ end=/\(_\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocQuotedEmphasized2 start=/\(^\|[ \t(\[.,=]\)\@<='\([ )]\)\@!/ end=/\('\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocQuotedUnconstrainedEmphasized start=/__\S/ end=/\(__\|^$\)/
-syn region asciidocQuotedBold start=/\(^\|[ \t(\[.,=]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn region asciidocQuotedUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
-syn region asciidocQuotedQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn match asciidocDoubleDollarPassthrough /\(^\|\W\)\@<=\$\{2,3}\S.\{-}\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
-syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
+syn match asciidocQuotedSubscript /\\\@<!\~\S.\{-}\(\~\|^$\)/
+syn match asciidocQuotedSuperscript /\\\@<!\^\S.\{-}\(\^\|^$\)/
+syn match asciidocQuotedMonospaced /\(^\|[ \t([.,=]\)\@<=+\([ )]\)\@!.\{-}\S\(+\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn match asciidocQuotedMonospaced2 /\(^\|[ \t([.,=]\)\@<=`\([ )]\)\@!.\{-}\S\(`\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn match asciidocQuotedUnconstrainedMonospaced /\\\@<!++\S.\{-}\(++\|^$\)/
+syn match asciidocQuotedEmphasized /\(^\|[ \t([.,=]\)\@<=_\([ )]\)\@!.\{-}\S\(_\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn match asciidocQuotedEmphasized2 /\(^\|[ \t([.,=]\)\@<='\([ )]\)\@!.\{-}\S\('\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn match asciidocQuotedUnconstrainedEmphasized /\\\@<!__\S.\{-}\(__\|^$\)/
+syn match asciidocQuotedBold /\(^\|[ \t([.,=]\)\@<=\*\([ )]\)\@!.\{-}\S\(\*\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn match asciidocQuotedUnconstrainedBold /\\\@<!\*\*\S.\{-}\(\*\*\|^$\)/
+syn match asciidocQuotedQuoted /\(^\|[ \t([.,=]\)\@<=``\([ )]\)\@!.\{-}\S\(''\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+
+syn match asciidocDoubleDollarPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=\$\$..\{-}\(\$\$\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
+syn match asciidocTriplePlusPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=+++..\{-}\(+++\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
+
 syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.* keepend
 syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.* keepend
 
@@ -74,11 +76,11 @@ syn region asciidocPassthroughBlock start="^+\{4,}$" end="^+\{4,}$"
 " the pre version 8.2.7 syntax and may be removed in future releases.
 syn region asciidocFilterBlock start=/^\w*\~\{4,}$/ end=/^\w*\~\{4,}$/
 
-syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/<<"\{-}\w\(\w\|-\)*"\?,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.* keepend
-syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/ keepend
-syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\[\{3}\(\w\|-\)\+/ end=/\]\{3}/ keepend
-syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]\|^$/ contains=asciidocQuoted.* keepend
-syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/(\{2,3}/ end=/)\{2,3}/ contains=asciidocQuoted.* keepend
+syn region asciidocMacroAttributes matchgroup=asciidocRefMacro start=/\\\@<!<<"\{-}\w\(\w\|-\)*"\?,\?/ end=/\(>>\)\|^$/ contains=asciidocQuoted.* keepend
+syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\\\@<!\[\{2}\(\w\|-\)\+,\?/ end=/\]\{2}/ keepend
+syn region asciidocMacroAttributes matchgroup=asciidocAnchorMacro start=/\\\@<!\[\{3}\(\w\|-\)\+/ end=/\]\{3}/ keepend
+syn region asciidocMacroAttributes matchgroup=asciidocMacro start=/[\\0-9a-zA-Z]\@<!\w\(\w\|-\)*:\S\{-}\[/ skip=/\\\]/ end=/\]\|^$/ contains=asciidocQuoted.* keepend
+syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/\\\@<!(\{2,3}/ end=/)\{2,3}/ contains=asciidocQuoted.* keepend
 syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/ keepend
 
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo

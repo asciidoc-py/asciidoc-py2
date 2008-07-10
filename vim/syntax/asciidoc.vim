@@ -49,7 +49,7 @@ syn region asciidocQuotedUnconstrainedEmphasized start=/__\S/ end=/\(__\|^$\)/
 syn region asciidocQuotedBold start=/\(^\|[ \t(\[.,=]\)\@<=\*\([ )]\)\@!/ end=/\(\*\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
 syn region asciidocQuotedUnconstrainedBold start=/\*\*\S/ end=/\(\*\*\|^$\)/
 syn region asciidocQuotedQuoted start=/\(^\|[ \t(\[.,=]\)\@<=``\([ )]\)\@!/ end=/\(''\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn match asciidocDoubleDollarPassthrough /\(^\|\W\)\@<=\$\{2,3}\S.*\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
+syn match asciidocDoubleDollarPassthrough /\(^\|\W\)\@<=\$\{2,3}\S.\{-}\(\$\{2,3}\(\W\|$\)\@=\|^$\)/
 syn region asciidocTriplePlusPassthrough start=/\(^\|\W\)\@<=+++\S/ end=/\(+++\(\W\|$\)\@=\|^$\)/
 syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.* keepend
 syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.* keepend
@@ -68,7 +68,7 @@ syn match asciidocSidebarDelimiter /^*\{4,}$/
 syn match asciidocListContinuation /^+$/
 syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=asciidocCallout keepend
 syn region asciidocListingBlock start=/^-\{4,}$/ end=/^-\{4,}$/ contains=asciidocCallout keepend
-syn region asciidocCommentBlock start="^/\{4,}$" end="^/\{4,}$"
+syn region asciidocCommentBlock start="^/\{4,}$" end="^/\{4,}$" contains=asciidocToDo
 syn region asciidocPassthroughBlock start="^+\{4,}$" end="^+\{4,}$"
 " Allowing leading \w characters in the filter delimiter is to accomodate
 " the pre version 8.2.7 syntax and may be removed in future releases.

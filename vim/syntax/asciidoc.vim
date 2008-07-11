@@ -38,17 +38,17 @@ syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
 
 " As a damage control measure quoted patterns always terminate at a  blank
 " line (see 'Limitations' above).
-syn match asciidocQuotedSubscript /\\\@<!\~\S.\{-}\(\~\|^$\)/
-syn match asciidocQuotedSuperscript /\\\@<!\^\S.\{-}\(\^\|^$\)/
-syn match asciidocQuotedMonospaced /\(^\|[ \t([.,=]\)\@<=+\([ )]\)\@!.\{-}\S\(+\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn match asciidocQuotedMonospaced2 /\(^\|[ \t([.,=]\)\@<=`\([ )]\)\@!.\{-}\S\(`\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn match asciidocQuotedUnconstrainedMonospaced /\\\@<!++\S.\{-}\(++\|^$\)/
-syn match asciidocQuotedEmphasized /\(^\|[ \t([.,=]\)\@<=_\([ )]\)\@!.\{-}\S\(_\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn match asciidocQuotedEmphasized2 /\(^\|[ \t([.,=]\)\@<='\([ )]\)\@!.\{-}\S\('\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn match asciidocQuotedUnconstrainedEmphasized /\\\@<!__\S.\{-}\(__\|^$\)/
-syn match asciidocQuotedBold /\(^\|[ \t([.,=]\)\@<=\*\([ )]\)\@!.\{-}\S\(\*\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
-syn match asciidocQuotedUnconstrainedBold /\\\@<!\*\*\S.\{-}\(\*\*\|^$\)/
-syn match asciidocQuotedQuoted /\(^\|[ \t([.,=]\)\@<=``\([ )]\)\@!.\{-}\S\(''\([ \t)[\],.?!;:=]\|$\)\@=\|^$\)/
+syn match asciidocQuotedSubscript /\\\@<!\~\S\_.\{-}\(\~\|\n\s*\n\)/
+syn match asciidocQuotedSuperscript /\\\@<!\^\S\_.\{-}\(\^\|\n\s*\n\)/
+syn match asciidocQuotedMonospaced /\(^\|[ \t([.,=]\)\@<=+\([ )\n]\)\@!\_.\{-}\S\(+\([ \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedMonospaced2 /\(^\|[ \t([.,=]\)\@<=`\([ )\n]\)\@!\_.\{-}\S\(`\([ \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedUnconstrainedMonospaced /\\\@<!++\S\_.\{-}\(++\|\n\s*\n\)/
+syn match asciidocQuotedEmphasized /\(^\|[ \t([.,=]\)\@<=_\([ )\n]\)\@!\_.\{-}\S\(_\([ \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedEmphasized2 /\(^\|[ \t([.,=]\)\@<='\([ )\n]\)\@!\_.\{-}\S\('\([ \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedUnconstrainedEmphasized /\\\@<!__\S\_.\{-}\(__\|\n\s*\n\)/
+syn match asciidocQuotedBold /\(^\|[ \t([.,=]\)\@<=\*\([ )\n]\)\@!\_.\{-}\S\(\*\([ \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedUnconstrainedBold /\\\@<!\*\*\S\_.\{-}\(\*\*\|\n\s*\n\)/
+syn match asciidocQuotedQuoted /\(^\|[ \t([.,=]\)\@<=``\([ )\n]\)\@!\_.\{-}\S\(''\([ \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 
 syn match asciidocDoubleDollarPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=\$\$..\{-}\(\$\$\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
 syn match asciidocTriplePlusPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=+++..\{-}\(+++\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/

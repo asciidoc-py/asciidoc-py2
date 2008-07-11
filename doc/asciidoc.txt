@@ -3868,9 +3868,9 @@ associated with generating and sequencing the toolchain commands and
 managing intermediate and output files.  a2x(1) also optionally
 deploys admonition and navigation icons and a CSS stylesheet. See the
 `a2x(1)` man page for more details. All you need is
-<<X40,xsltproc(1)>>, <<X13,DocBook XSL Stylesheets>> and, optionally
-<<X31,dblatex>> or <<X14,FOP>> (if you want PDF), or `lynx(1)` (if you
-want text).
+<<X40,xsltproc(1)>>, <<X13,DocBook XSL Stylesheets>> and optionally:
+<<X31,dblatex>> or <<X14,FOP>> (if you want PDF); `w3m(1)` or
+`lynx(1)` (if you want text).
 
 The following examples generate `doc/source-highlight-filter.pdf` from
 the AsciiDoc `doc/source-highlight-filter.txt` source file. The first

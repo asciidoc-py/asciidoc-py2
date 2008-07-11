@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!--
   docbook-xsl/text.xsl
-  Used by AsciiDoc a2x(1) for text generation.
+  Used by AsciiDoc a2x(1) for w3m(1) based text generation.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">

@@ -938,6 +938,15 @@ class Lex:
         if Lex.prev_element and Lex.prev_cursor == reader.cursor:
             return Lex.prev_element
         result = None
+        # Check for AttributeEntry.
+        if not result and AttributeEntry.isnext():
+            result = AttributeEntry
+        # Check for AttributeList.
+        if not result and AttributeList.isnext():
+            result = AttributeList
+        # Check for BlockTitle.
+        if not result and BlockTitle.isnext():
+            result = BlockTitle
         # Check for Title.
         if not result and Title.isnext():
             result = Title
@@ -958,15 +967,6 @@ class Lex:
         # Check for Table.
         if not result and tables.isnext():
             result = tables.current
-        # Check for AttributeEntry.
-        if not result and AttributeEntry.isnext():
-            result = AttributeEntry
-        # Check for AttributeList.
-        if not result and AttributeList.isnext():
-            result = AttributeList
-        # Check for BlockTitle.
-        if not result and BlockTitle.isnext():
-            result = BlockTitle
         # If it's none of the above then it must be an Paragraph.
         if not result:
             if not paragraphs.isnext():

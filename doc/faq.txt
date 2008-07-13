@@ -269,5 +269,5 @@ customize PDF output. You can set them globally in the AsciiDoc
 pass them on the a2x(1) command-line, for example:
 
   a2x -f pdf --dblatex-opts "-P latex.output.revhistory=0" doc/article.txt
-+
+
 See also the http://dblatex.sourceforge.net/[dblatex] documentation.

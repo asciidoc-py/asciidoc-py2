@@ -4152,9 +4152,9 @@ Execute `:help gq` command to read about the vim gq command.
 
 Format Lists
 ^^^^^^^^^^^^
-The `gq` command can also be used to format bulleted and numbered
-lists. First you need to set the `comments` and `formatoptions` (see
-the <<X61, Example `\~/.vimrc` file>>).
+The `gq` command can also be used to format bulleted, numbered and
+callout lists. First you need to set the `comments`, `formatoptions`
+and `formatlistpat` (see the <<X61, Example `\~/.vimrc` file>>).
 
 Now you can format simple lists that use dash, asterisk, period and
 plus bullets along with numbered ordered lists:
@@ -4191,6 +4191,7 @@ nnoremap W :%s/[\r \t]\+$//<CR>:set et<CR>:retab!<CR>
 autocmd BufRead,BufNewFile *.txt,README,TODO,CHANGELOG,NOTES
         \ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2
         \ textwidth=70 wrap formatoptions=tcqn
+        \ formatlistpat=^\\s*<\\?\\d\\+[\\]:.)}\\t\ >]\\s*
         \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
 ---------------------------------------------------------------------
 

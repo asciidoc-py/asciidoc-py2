@@ -21,6 +21,9 @@
 </xsl:template>
 
 <!-- Don't automatically generate the REFERENCES section -->
+<xsl:template name="endnotes.list">
+</xsl:template>
+<!-- Next entry for backward compatibility with old docbook-xsl versions -->
 <xsl:template name="format.links.list">
 </xsl:template>
 

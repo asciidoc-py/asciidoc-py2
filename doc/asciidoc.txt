@@ -1677,14 +1677,26 @@ This paragraph belongs to item 1.
 Footnotes
 ---------
 The shipped AsciiDoc configuration includes the `\footnote:[<text>]`
-inline macro for generating footnotes. The footnote text can span
-multiple lines. Example footnote:
+and `\footnoteref:[<id>,<text>]` inline macros for generating
+footnotes:
 
-  A footnote footnote:[An example footnote.]
+- The `footnote` macro generates a footnote.
+- The `footnoteref` macro has two forms: if the text is supplied a
+  foot note with an ID is generated; if the text is omitted a
+  reference to the footnote with the specified ID is generated.
+- The footnote text can span multiple lines.
+
+Example footnote:
+
+  A footnote footnote:[An example footnote.];
+  a second footnote with a reference ID footnoteref:[2,Second footnote.];
+  finally a reference to the second footnote footnoteref:[2].
 
 Which renders:
 
-A footnote footnote:[An example footnote.]
+A footnote footnote:[An example footnote.];
+a second footnote with a reference ID footnoteref:[2,Second footnote];
+finally a reference to the second footnote footnoteref:[2].
 
 Footnotes are primarily useful when generating DocBook output --
 DocBook conversion programs render footnote outside the primary text

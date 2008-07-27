@@ -3171,12 +3171,13 @@ compounded by redundancy if the same name is used repeatedly.
 Attribute entries can be used to make your documents easier to read
 and write, here are some examples:
 
-  :1:        http://freshmeat.net/projects/asciidoc/
-  :homepage: http://hg.sharesource.org/asciidoc/[AsciiDoc home page]
-  :new:      image:./images/smallnew.png[]
+  :1:         http://freshmeat.net/projects/asciidoc/
+  :homepage:  http://hg.sharesource.org/asciidoc/[AsciiDoc home page]
+  :new:       image:./images/smallnew.png[]
+  :footnote1: footnote:[A meaningless latin term]
 
   Using previously defined attributes: See the {1}[Freshmeat summary]
-  or the {homepage} for something new {new}.
+  or the {homepage} for something new {new}. Lorem ispum {footnote1}.
 
 .Note
 - The attribute entry definition must precede it's usage.
@@ -4141,9 +4142,9 @@ Execute `:help gq` command to read about the vim gq command.
 =====================================================================
 - Assign the `gq}` command to the Q key with the `nnoremap Q gq}`
   command or put it in your `\~/.vimrc` file to so it's always
-  available (see the <<X61, Example `\~/.vimrc` file>>).
-- Put `set` commands in your `\~/.vimrc` file so you don't have to
-  enter them manually <<X61, Example `\~/.vimrc` file>>).
+  available (see the <<X61, Example `~/.vimrc` file>>).
+- Put `set` commands in your `~/.vimrc` file so you don't have to
+  enter them manually.
 - The Vim website (http://www.vim.org) has a wealth of resources,
   including scripts for automated spell checking and ASCII Art
   drawing.
@@ -4154,7 +4155,7 @@ Format Lists
 ^^^^^^^^^^^^
 The `gq` command can also be used to format bulleted, numbered and
 callout lists. First you need to set the `comments`, `formatoptions`
-and `formatlistpat` (see the <<X61, Example `\~/.vimrc` file>>).
+and `formatlistpat` (see the <<X61, Example `~/.vimrc` file>>).
 
 Now you can format simple lists that use dash, asterisk, period and
 plus bullets along with numbered ordered lists:
@@ -4168,8 +4169,8 @@ Indent whole paragraphs by indenting the fist line with the desired
 indent and then executing the `gq}` command.
 
 [[X61]]
-Example `\~/.vimrc` File
-^^^^^^^^^^^^^^^^^^^^^^^^
+Example `~/.vimrc` File
+^^^^^^^^^^^^^^^^^^^^^^^
 ---------------------------------------------------------------------
 " Show tabs and trailing characters.
 set listchars=tab:»·,trail:·

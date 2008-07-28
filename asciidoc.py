@@ -1912,7 +1912,9 @@ class AbstractBlock:
             raise EAsciiDoc,'[%s] missing delimiter' % self.name
         if self.style:
             if not self.styles.has_key(self.style):
-                warning(' missing [%s] %s-style entry' % (self.name,self.style))
+                if not isinstance(self,List):   # Lists don't have templates.
+                    warning(' missing [%s] %s-style entry' % (
+                            self.name,self.style))
         # Check all styles for missing templates.
         all_styles_have_template = True
         for k,v in self.styles.items():
@@ -1981,7 +1983,8 @@ class AbstractBlock:
             style = self.attributes.get('style',self.style)
         if style is not None:
             if not self.styles.has_key(style):
-                warning('missing [%s] %s-style entry' % (self.name,style))
+                if not isinstance(self,List):   # Lists don't have templates.
+                    warning('missing [%s] %s-style entry' % (self.name,style))
             else:
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():

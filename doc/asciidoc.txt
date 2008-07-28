@@ -1373,6 +1373,15 @@ Which render as:
   3. Donec eget arcu bibendum nunc consequat lobortis.
   4. Nam fermentum mattis ante.
 
+The first positional list attribute is a 'style' value which can be
+'compact' or 'normal', this is translates to the DocBook 'spacing'
+attribute which may or may not be processed by the DocBook toolchain.
+Example:
+
+  [compact]
+  - Compact list item.
+  - Another compact list item.
+
 Vertical Labeled Lists
 ~~~~~~~~~~~~~~~~~~~~~~
 Labeled list items consist of one or more text labels followed the

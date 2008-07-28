@@ -124,7 +124,7 @@ def file_in(fname, directory):
         directory = os.getcwd()
     else:
         assert os.path.isdir(directory)
-        directory = os.path.abspath(directory)
+        directory = os.path.realpath(directory)
     fname = os.path.realpath(fname)
     return os.path.commonprefix((directory, fname)) == directory
 

@@ -15,6 +15,7 @@ See dblatex(1) -p option.
   <xsl:param name="table.in.float">0</xsl:param>
   <xsl:param name="monoseq.hyphenation">0</xsl:param>
   <xsl:param name="latex.output.revhistory">1</xsl:param>
+  <xsl:param name="doc.toc.show">1</xsl:param>
 
   <!--
     Override default literallayout template.

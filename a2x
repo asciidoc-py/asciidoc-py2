@@ -534,7 +534,7 @@ function run_dblatex()
     xml="$SRC_DIR/$SRC_NAME.xml"
     xsl=$(conf_file dblatex/asciidoc-dblatex.xsl)
     sty=$(conf_file dblatex/asciidoc-dblatex.sty)
-    execute_command_2 "dblatex $DBLATEX_OPTS -t $FORMAT -p \"$xsl\" -s \"$sty\" \"$xml\""
+    execute_command_2 "dblatex -t $FORMAT -p \"$xsl\" -s \"$sty\" $DBLATEX_OPTS \"$xml\""
 }
 
 function run_fop()

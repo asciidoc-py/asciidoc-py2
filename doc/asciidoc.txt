@@ -1303,6 +1303,8 @@ Lists
   index (1..). If this attribute is not inside a list then it's value
   is the number of items in the most recently closed list. Useful for
   displaying the number of items in a list.
+- You need to use <<X15,list item continuation>> if a nested list is
+  accompanied by an <<X21,attribute list>>.
 
 Bulleted and Numbered Lists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1562,7 +1564,10 @@ implicitly included nested lists and Literal paragraphs) place a
 separator line containing a single plus character between the list
 item and the ensuing list continuation element.  Multiple block
 elements (excluding section Titles and BlockTitles) may be included in
-a list item using this technique.  For example:
+a list item using this technique.
+
+You also need to use list item continuation if a nested list is
+accompanied by an <<Xi21,attribute list>>.
 
 Here's an example of list item continuation:
 

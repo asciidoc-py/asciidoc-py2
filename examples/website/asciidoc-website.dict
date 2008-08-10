@@ -1,4 +1,4 @@
-personal_ws-1.1 en 130 
+personal_ws-1.1 en 134 
 AsciiDoc's
 Rosten
 docbook
@@ -20,6 +20,7 @@ Potapov
 backmatter
 SourceForge
 ikiwiki
+callout
 firefox
 SGML
 dx
@@ -39,7 +40,9 @@ src
 Calixto
 JavaScript
 toclevels
+symlink
 xhtml
+ln
 Philips
 LaTexMathML
 LaTeXMathML
@@ -76,6 +79,7 @@ Blogpost
 uB
 mkdir
 dvi
+callouts
 sinx
 vB
 Sakellariou

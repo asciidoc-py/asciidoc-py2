@@ -23,6 +23,7 @@ The predefined `\{nbsp}` attribute reference will be replaced by a
 non-breaking space character.
 
 
+[[X1]]
 == How do I include spaces in URL addresses?
 
 URL inline macro targets (addresses) cannot contain white space
@@ -271,3 +272,20 @@ pass them on the a2x(1) command-line, for example:
   a2x -f pdf --dblatex-opts "-P latex.output.revhistory=0" doc/article.txt
 
 See also the http://dblatex.sourceforge.net/[dblatex] documentation.
+
+
+== How can I make the mailto macro work with multiple email addresses?
+
+For the AsciiDoc 'mailto' macro to work with multiple email addresses
+(as per RFC2368) you need to URL encode the '@' characters (replace
+them with '%40'), if you don't the individual addresses will be
+rendered as separate links. You also need to <<X1,replace spaces with
+'%20'>>.
+
+For example, the following call won't work:
+
+  mailto:jb@foobar.com,jd@acme.co.nz?subject=New foofoo release[New foofoo release]
+
+Use this instead:
+
+  mailto:jb%40foobar.com,jd%40acme.co.nz?subject=New%20foofoo%20release[New foofoo release]

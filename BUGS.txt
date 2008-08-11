@@ -11,8 +11,6 @@ AsciiDoc
   configuration file containing the document `[header]` is sourced
   before custom configuration files and the `toc` attribute is
   processed using conditional inclusion macros.
-- The `\include1::[]` block macro does not work inside ListingBlocks
-  or FilterBlocks. Use `\include::[]` instead.
 - Reported line numbers in diagnostic messages are sometimes wrong.
 - Embedding open brace characters `{` in argument values can cause
   incorrect argument substitution.

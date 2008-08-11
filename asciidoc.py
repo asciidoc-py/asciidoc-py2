@@ -3234,6 +3234,8 @@ class Reader1:
                     self.tabsize = int(validate(attrs['tabsize'],
                         'int($)>=0',
                         'illegal include macro tabsize argument'))
+                else:
+                    self.tabsize = config.tabsize
                 if attrs.has_key('depth'):
                     attrs['depth'] = int(validate(attrs['depth'],
                         'int($)>=1',

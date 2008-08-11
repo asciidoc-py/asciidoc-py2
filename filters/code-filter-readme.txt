@@ -12,11 +12,11 @@ want a full featured highlighter use the 'source highlighter filter.
 Files
 -----
 code-filter.py::
-	The filter Python script.
+        The filter Python script.
 code-filter.conf::
-	The AsciiDoc filter configuration file.
+        The AsciiDoc filter configuration file.
 code-filter-test.txt::
-	Short AsciiDoc document to test the filter.
+        Short AsciiDoc document to test the filter.
 
 
 Installation

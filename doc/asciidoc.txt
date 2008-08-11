@@ -2183,15 +2183,21 @@ Example:
 - Include macros can appear inside configuration files.
 - Files included from within `DelimitedBlocks` are read to completion
   to avoid false end-of-block underline termination.
-- File inclusion is limited to a depth of 5 to catch recursive loops.
 - Attribute references are expanded inside the include `target`; if an
   attribute is undefined then the included file is silently skipped.
-- The 'tabsize' macro attribute sets the number of space characters to
-  be used for tab expansion in the included file.
+- The `tabsize` macro attribute sets the number of space characters to
+  be used for tab expansion in the included file (not applicable to
+  `include1` macro).
+- The `depth` macro attribute sets the maximum permitted number of
+  subsequent nested includes (not applicable to `include1` macro which
+  does not process nested includes). Setting `depth` to one disables
+  nesting inside the included file. By default, nesting is limited to
+  a depth of five.
 - Internally the `include1` macro is translated to the `include1`
   system attribute which means it must be evaluated in a region where
-  attribute substitution is enabled -- use the `include` macro
-  instead.
+  attribute substitution is enabled. To inhibit nested substitution in
+  included files it is preferable to use the `include` macro and set
+  the attribute `depth=1`.
 
 Conditional Inclusion Macros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

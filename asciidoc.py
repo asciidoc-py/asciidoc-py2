@@ -3150,8 +3150,8 @@ class Reader1:
         self.tabsize = 8        # Tab expansion number of spaces.
         self.parent = None      # Included reader's parent reader.
         self._lineno = 0        # The last line read from file object f.
-        self.include_depth = 0  # Current include depth.
-        self.include_max = 5    # Maxiumum allowed include depth.
+        self.current_depth = 0  # Current include depth.
+        self.max_depth = 5      # Initial maxiumum allowed include depth.
     def open(self,fname):
         self.fname = fname
         verbose('reading: '+fname)
@@ -3199,12 +3199,13 @@ class Reader1:
             # Check for include macro.
             mo = macros.match('+',r'include[1]?',result)
             if mo and not skip:
-                # Perform attribute substitution on inlcude macro file name.
+                # Don't process include macro once the maximum depth is reached.
+                if self.current_depth >= self.max_depth:
+                    return result
+                # Perform attribute substitution on include macro file name.
                 fname = subs_attrs(mo.group('target'))
                 if not fname:
                     return Reader1.read(self)   # Return next input line.
-                if self.include_depth >= self.include_max:
-                    raise EAsciiDoc,'maxiumum inlcude depth exceeded'
                 if self.fname != '<stdin>':
                     fname = os.path.expandvars(os.path.expanduser(fname))
                     fname = safe_filename(fname, os.path.dirname(self.fname))
@@ -3214,8 +3215,8 @@ class Reader1:
                         if not config.dumping:
                             # Store the include file in memory for later
                             # retrieval by the {include1:} system attribute.
-                            config.include1[fname] = \
-                                [s.rstrip() for s in open(fname)]
+                            config.include1[fname] = [
+                                s.rstrip() for s in open(fname)]
                             return '{include1:%s}' % fname
                         else:
                             # This is a configuration dump, just pass the macro
@@ -3228,11 +3229,19 @@ class Reader1:
                 parent = Reader1()
                 assign(parent,self)
                 self.parent = parent
+                # Set attributes in child.
                 if attrs.has_key('tabsize'):
-                    self.tabsize = int(validate(attrs['tabsize'],'int($)>=0', \
+                    self.tabsize = int(validate(attrs['tabsize'],
+                        'int($)>=0',
                         'illegal include macro tabsize argument'))
+                if attrs.has_key('depth'):
+                    attrs['depth'] = int(validate(attrs['depth'],
+                        'int($)>=1',
+                        'illegal include macro depth argument'))
+                    self.max_depth = self.current_depth + attrs['depth']
+                # Process included file.
                 self.open(fname)
-                self.include_depth = self.include_depth + 1
+                self.current_depth = self.current_depth + 1
                 result = Reader1.read(self)
         else:
             if not Reader1.eof(self):

@@ -96,8 +96,8 @@ def warning(msg,linenos=True):
     console(msg,'WARNING: ',linenos)
     document.has_warnings = True
 
-def deprecated(old, new, linenos=True):
-    console('%s: %s' % (old,new), 'DEPRECATED: ', linenos)
+def deprecated(msg, linenos=True):
+    console(msg, 'DEPRECATED: ', linenos)
 
 def error(msg, cursor=None):
     """Report fatal error but don't exit application, continue in the hope of
@@ -962,8 +962,8 @@ class Lex:
             else:
                 result = blocks.current
         # Check for Table.
-        if not result and tables.isnext():
-            result = tables.current
+        if not result and tables_OLD.isnext():
+            result = tables_OLD.current
         # Check for BlockTitle.
         if not result and BlockTitle.isnext():
             result = BlockTitle
@@ -2083,7 +2083,7 @@ class Paragraph(AbstractBlock):
         AttributeList.consume(attrs)
         self.merge_attributes(attrs)
         reader.read()   # Discard (already parsed item first line).
-        body = reader.read_until(r'^\+$|^$|'+blocks.delimiter+r'|'+tables.delimiter)
+        body = reader.read_until(r'^\+$|^$|'+blocks.delimiter+r'|'+tables_OLD.delimiter)
         body = [self.text] + list(body)
         presubs,postsubs = self.get_subs()
         # Don't join verbatim paragraphs.
@@ -2218,7 +2218,7 @@ class List(AbstractBlock):
         else:
             # Write ItemText.
             text = reader.read_until(lists.delimiter + r'|^\+$|^$|' +
-                                    blocks.delimiter + r'|' + tables.delimiter)
+                                    blocks.delimiter + r'|' + tables_OLD.delimiter)
             if self.text is not None:
                 text = [self.text] + list(text)
             text = join_lines(text)
@@ -2252,7 +2252,7 @@ class List(AbstractBlock):
         if self.text or reader.read_next():
             # Write ItemText.
             text = reader.read_until(lists.delimiter + r'|^$|' +
-                                    blocks.delimiter + r'|' + tables.delimiter)
+                                    blocks.delimiter + r'|' + tables_OLD.delimiter)
             if self.text is not None:
                 text = [self.text] + list(text)
             text = join_lines(text)
@@ -2424,14 +2424,14 @@ class DelimitedBlocks(AbstractBlocks):
     def validate(self):
         AbstractBlocks.validate(self)
 
-class Column:
+class Column_OLD:
     """Table column."""
     def __init__(self):
         self.colalign = None    # 'left','right','center'
         self.rulerwidth = None
         self.colwidth = None    # Output width in page units.
 
-class Table(AbstractBlock):
+class Table_OLD(AbstractBlock):
     COL_STOP = r"(`|'|\.)"  # RE.
     ALIGNMENTS = {'`':'left', "'":'right', '.':'center'}
     FORMATS = ('fixed','csv','dsv')
@@ -2467,7 +2467,7 @@ class Table(AbstractBlock):
                 else:
                     raise EAsciiDoc,'malformed table fillchar: %s' % v
             elif k == 'format':
-                if v in Table.FORMATS:
+                if v in Table_OLD.FORMATS:
                     self.format = v
                 else:
                     raise EAsciiDoc,'illegal table format: %s' % v
@@ -2557,7 +2557,7 @@ class Table(AbstractBlock):
         splits = re.split(self.COL_STOP,ruler)[1:]
         # Build self.columns.
         for i in range(0,len(splits),2):
-            c = Column()
+            c = Column_OLD()
             c.colalign = self.ALIGNMENTS[splits[i]]
             s = splits[i+1]
             if self.isnumeric:
@@ -2746,6 +2746,7 @@ class Table(AbstractBlock):
             result.append(data)
         return result
     def translate(self):
+        deprecated('old tables syntax')
         AbstractBlock.translate(self)
         # Reset instance specific properties.
         self.underline = None
@@ -2828,15 +2829,22 @@ class Table(AbstractBlock):
         table = table.replace('\tbodyrows\t', bodyrows, 1)
         writer.write(table)
 
-class Tables(AbstractBlocks):
+class Tables_OLD(AbstractBlocks):
     """List of tables."""
-    BLOCK_TYPE = Table
+    BLOCK_TYPE = Table_OLD
     PREFIX = 'tabledef-'
     def __init__(self):
         AbstractBlocks.__init__(self)
+    def load_OLD(self):
+        """Hardwirded old table definitions."""
+        sections = {
+            'tabledef-default': ['fillchar=-','format=fixed'],
+            'tabledef-csv': ['fillchar=~','format=csv'],
+            'tabledef-dsv': ['fillchar=_','format=dsv'],
+        }
+        AbstractBlocks.load(self,sections)
     def load(self,sections):
         AbstractBlocks.load(self,sections)
-        """Update tables defined in 'sections' dictionary."""
     def validate(self):
         # Does not call AbstractBlocks.validate().
         # Check we have a default table definition,
@@ -2870,7 +2878,7 @@ class Tables(AbstractBlocks):
         for b in self.blocks:
             # Ruler is:
             #   (ColStop,(ColWidth,FillChar+)?)+, FillChar+, TableWidth?
-            b.delimiter = r'^(' + Table.COL_STOP \
+            b.delimiter = r'^(' + Table_OLD.COL_STOP \
                 + r'(\d*|' + re.escape(b.fillchar) + r'*)' \
                 + r')+' \
                 + re.escape(b.fillchar) + r'+' \
@@ -3639,7 +3647,7 @@ class Config:
         paragraphs.load(sections)
         lists.load(sections)
         blocks.load(sections)
-        tables.load(sections)
+        tables_OLD.load(sections)
         macros.load(sections.get('macros',()))
         self.loaded.append(os.path.realpath(fname))
 
@@ -3721,7 +3729,7 @@ class Config:
         paragraphs.validate()
         lists.validate()
         blocks.validate()
-        tables.validate()
+        tables_OLD.validate()
         macros.validate()
 
     def is_special_section(self,section_name):
@@ -3768,7 +3776,7 @@ class Config:
         paragraphs.dump()
         lists.dump()
         blocks.dump()
-        tables.dump()
+        tables_OLD.dump()
         macros.dump()
         # Dump remaining sections.
         for k in self.sections.keys():
@@ -4003,7 +4011,7 @@ writer = Writer()           # Output stream line writer.
 paragraphs = Paragraphs()   # Paragraph definitions.
 lists = Lists()             # List definitions.
 blocks = DelimitedBlocks()  # DelimitedBlock definitions.
-tables = Tables()           # Table definitions.
+tables_OLD = Tables_OLD()           # Table_OLD definitions.
 macros = Macros()           # Macro definitions.
 calloutmap = CalloutMap()   # Coordinates callouts and callout list.
 
@@ -4033,6 +4041,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         if infile != '<stdin>' and not os.path.isfile(infile):
             raise EAsciiDoc,'input file %s missing' % infile
         if '-e' not in options:
+            tables_OLD.load_OLD()
             # Load global configuration from system configuration directory.
             config.load_all(CONF_DIR)
             # Load global configuration files from asciidoc directory.

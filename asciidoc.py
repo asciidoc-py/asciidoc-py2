@@ -2900,6 +2900,480 @@ class Tables_OLD(AbstractBlocks):
                 if b.check_msg:
                     warning('[%s] table definition: %s' % (b.name,b.check_msg))
 
+#
+# START: NEWTABLES
+#
+class Column:
+    """Table column."""
+    def __init__(self):
+        self.colalign = None    # 'left','right','center'
+        self.rulerwidth = None
+        self.colwidth = None    # Output width in page units.
+
+class Table(AbstractBlock):
+    COL_STOP = r"(`|'|\.)"  # RE.
+    ALIGNMENTS = {'`':'left', "'":'right', '.':'center'}
+    FORMATS = ('fixed','csv','dsv')
+    def __init__(self):
+        AbstractBlock.__init__(self)
+        self.CONF_ENTRIES += ('template','fillchar','format','colspec',
+                              'headrow','footrow','bodyrow','headdata',
+                              'footdata', 'bodydata')
+        # Configuration parameters.
+        self.fillchar=None
+        self.format=None    # 'fixed','csv','dsv'
+        self.colspec=None
+        self.headrow=None
+        self.footrow=None
+        self.bodyrow=None
+        self.headdata=None
+        self.footdata=None
+        self.bodydata=None
+        # Calculated parameters.
+        self.underline=None     # RE matching current table underline.
+        self.isnumeric=False    # True if numeric ruler.
+        self.tablewidth=None    # Optional table width scale factor.
+        self.columns=[]         # List of Columns.
+        # Other.
+        self.check_msg=''       # Message set by previous self.validate() call.
+    def load(self,name,entries):
+        AbstractBlock.load(self,name,entries)
+        """Update table definition from section entries in 'entries'."""
+        for k,v in entries.items():
+            if k == 'fillchar':
+                if v and len(v) == 1:
+                    self.fillchar = v
+                else:
+                    raise EAsciiDoc,'malformed table fillchar: %s' % v
+            elif k == 'format':
+                if v in Table.FORMATS:
+                    self.format = v
+                else:
+                    raise EAsciiDoc,'illegal table format: %s' % v
+            elif k == 'colspec':
+                self.colspec = v
+            elif k == 'headrow':
+                self.headrow = v
+            elif k == 'footrow':
+                self.footrow = v
+            elif k == 'bodyrow':
+                self.bodyrow = v
+            elif k == 'headdata':
+                self.headdata = v
+            elif k == 'footdata':
+                self.footdata = v
+            elif k == 'bodydata':
+                self.bodydata = v
+    def dump(self):
+        AbstractBlock.dump(self)
+        write = lambda s: sys.stdout.write('%s%s' % (s,writer.newline))
+        write('fillchar='+self.fillchar)
+        write('format='+self.format)
+        if self.colspec:
+            write('colspec='+self.colspec)
+        if self.headrow:
+            write('headrow='+self.headrow)
+        if self.footrow:
+            write('footrow='+self.footrow)
+        write('bodyrow='+self.bodyrow)
+        if self.headdata:
+            write('headdata='+self.headdata)
+        if self.footdata:
+            write('footdata='+self.footdata)
+        write('bodydata='+self.bodydata)
+        write('')
+    def validate(self):
+        AbstractBlock.validate(self)
+        """Check table definition and set self.check_msg if invalid else set
+        self.check_msg to blank string."""
+        # Check global table parameters.
+        if config.textwidth is None:
+            self.check_msg = 'missing [miscellaneous] textwidth entry'
+        elif config.pagewidth is None:
+            self.check_msg = 'missing [miscellaneous] pagewidth entry'
+        elif config.pageunits is None:
+            self.check_msg = 'missing [miscellaneous] pageunits entry'
+        elif self.headrow is None:
+            self.check_msg = 'missing headrow entry'
+        elif self.footrow is None:
+            self.check_msg = 'missing footrow entry'
+        elif self.bodyrow is None:
+            self.check_msg = 'missing bodyrow entry'
+        elif self.headdata is None:
+            self.check_msg = 'missing headdata entry'
+        elif self.footdata is None:
+            self.check_msg = 'missing footdata entry'
+        elif self.bodydata is None:
+            self.check_msg = 'missing bodydata entry'
+        else:
+            # No errors.
+            self.check_msg = ''
+    def isnext(self):
+        return AbstractBlock.isnext(self)
+    def parse_ruler(self,ruler):
+        """Parse ruler calculating underline and ruler column widths."""
+        fc = re.escape(self.fillchar)
+        # Strip and save optional tablewidth from end of ruler.
+        mo = re.match(r'^(.*'+fc+r'+)([\d\.]+)$',ruler)
+        if mo:
+            ruler = mo.group(1)
+            self.tablewidth = float(mo.group(2))
+            self.attributes['tablewidth'] = str(float(self.tablewidth))
+        else:
+            self.tablewidth = None
+            self.attributes['tablewidth'] = '100.0'
+        # Guess whether column widths are specified numerically or not.
+        if ruler[1] != self.fillchar:
+            # If the first column does not start with a fillchar then numeric.
+            self.isnumeric = True
+        elif ruler[1:] == self.fillchar*len(ruler[1:]):
+            # The case of one column followed by fillchars is numeric.
+            self.isnumeric = True
+        else:
+            self.isnumeric = False
+        # Underlines must be 3 or more fillchars.
+        self.underline = r'^' + fc + r'{3,}$'
+        splits = re.split(self.COL_STOP,ruler)[1:]
+        # Build self.columns.
+        for i in range(0,len(splits),2):
+            c = Column()
+            c.colalign = self.ALIGNMENTS[splits[i]]
+            s = splits[i+1]
+            if self.isnumeric:
+                # Strip trailing fillchars.
+                s = re.sub(fc+r'+$','',s)
+                if s == '':
+                    c.rulerwidth = None
+                else:
+                    c.rulerwidth = int(validate(s,'int($)>0',
+                        'malformed ruler: bad width'))
+            else:   # Calculate column width from inter-fillchar intervals.
+                if not re.match(r'^'+fc+r'+$',s):
+                    raise EAsciiDoc,'malformed ruler: illegal fillchars'
+                c.rulerwidth = len(s)+1
+            self.columns.append(c)
+        # Fill in unspecified ruler widths.
+        if self.isnumeric:
+            if self.columns[0].rulerwidth is None:
+                prevwidth = 1
+            for c in self.columns:
+                if c.rulerwidth is None:
+                    c.rulerwidth = prevwidth
+                prevwidth = c.rulerwidth
+    def build_colspecs(self):
+        """Generate colwidths and colspecs. This can only be done after the
+        table arguments have been parsed since we use the table format."""
+        self.attributes['cols'] = len(self.columns)
+        # Calculate total ruler width.
+        totalwidth = 0
+        for c in self.columns:
+            totalwidth = totalwidth + c.rulerwidth
+        if totalwidth <= 0:
+            raise EAsciiDoc,'zero width table'
+        # Calculate marked up colwidths from rulerwidths.
+        for c in self.columns:
+            # Convert ruler width to output page width.
+            width = float(c.rulerwidth)
+            if self.format == 'fixed':
+                if self.tablewidth is None:
+                    # Size proportional to ruler width.
+                    colfraction = width/config.textwidth
+                else:
+                    # Size proportional to page width.
+                    colfraction = width/totalwidth
+            else:
+                    # Size proportional to page width.
+                colfraction = width/totalwidth
+            c.colwidth = colfraction * config.pagewidth # To page units.
+            if self.tablewidth is not None:
+                c.colwidth = c.colwidth * self.tablewidth   # Scale factor.
+                if self.tablewidth > 1:
+                    c.colwidth = c.colwidth/100 # tablewidth is in percent.
+        # Build colspecs.
+        if self.colspec:
+            cols = []
+            i = 0
+            for c in self.columns:
+                i += 1
+                self.attributes['colalign'] = c.colalign
+                self.attributes['colwidth'] = str(int(c.colwidth))
+                self.attributes['colnumber'] = str(i + 1)
+                s = subs_attrs(self.colspec,self.attributes)
+                if not s:
+                    warning('colspec dropped: contains undefined attribute')
+                else:
+                    cols.append(s)
+            self.attributes['colspecs'] = writer.newline.join(cols)
+    def split_rows(self,rows):
+        """Return a two item tuple containing a list of lines up to but not
+        including the next underline (continued lines are joined ) and the
+        tuple of all lines after the underline."""
+        reo = re.compile(self.underline)
+        i = 0
+        while not reo.match(rows[i]):
+            i = i+1
+        if i == 0:
+            raise EAsciiDoc,'missing table rows'
+        if i >= len(rows):
+            raise EAsciiDoc,'closing [%s] underline expected' % self.name
+        return (join_lines(rows[:i]), rows[i+1:])
+    def parse_rows(self, rows, rtag, dtag):
+        """Parse rows list using the row and data tags. Returns a substituted
+        list of output lines."""
+        result = []
+        # Source rows are parsed as single block, rather than line by line, to
+        # allow the CSV reader to handle multi-line rows.
+        if self.format == 'fixed':
+            rows = self.parse_fixed(rows)
+        elif self.format == 'csv':
+            rows = self.parse_csv(rows)
+        elif self.format == 'dsv':
+            rows = self.parse_dsv(rows)
+        else:
+            assert True,'illegal table format'
+        # Substitute and indent all data in all rows.
+        stag,etag = subs_tag(rtag,self.attributes)
+        for row in rows:
+            result.append('  '+stag)
+            for data in self.subs_row(row,dtag):
+                result.append('    '+data)
+            result.append('  '+etag)
+        return result
+    def subs_row(self, data, dtag):
+        """Substitute the list of source row data elements using the data tag.
+        Returns a substituted list of output table data items."""
+        result = []
+        if len(data) < len(self.columns):
+            warning('fewer row data items then table columns')
+        if len(data) > len(self.columns):
+            warning('more row data items than table columns')
+        for i in range(len(self.columns)):
+            if i > len(data) - 1:
+                d = ''  # Fill missing column data with blanks.
+            else:
+                d = data[i]
+            c = self.columns[i]
+            self.attributes['colalign'] = c.colalign
+            self.attributes['colwidth'] = str(int(c.colwidth))
+            self.attributes['colnumber'] = str(i + 1)
+            stag,etag = subs_tag(dtag,self.attributes)
+            # Insert AsciiDoc line break (' +') where row data has newlines
+            # ('\n').  This is really only useful when the table format is csv
+            # and the output markup is HTML. It's also a bit dubious in that it
+            # assumes the user has not modified the shipped line break pattern.
+            subs = self.get_subs()[0]
+            if 'replacements' in subs:
+                # Insert line breaks in cell data.
+                d = re.sub(r'(?m)\n',r' +\n',d)
+                d = d.split('\n')    # So writer.newline is written.
+            else:
+                d = [d]
+            result = result + [stag] + Lex.subs(d,subs) + [etag]
+        return result
+    def parse_fixed(self,rows):
+        """Parse the list of source table rows. Each row item in the returned
+        list contains a list of cell data elements."""
+        result = []
+        for row in rows:
+            data = []
+            start = 0
+            # build an encoded representation
+            row = char_decode(row)
+            for c in self.columns:
+                end = start + c.rulerwidth
+                if c is self.columns[-1]:
+                    # Text in last column can continue forever.
+                    # Use the encoded string to slice, but convert back
+                    # to plain string before further processing
+                    data.append(char_encode(row[start:]).strip())
+                else:
+                    data.append(char_encode(row[start:end]).strip())
+                start = end
+            result.append(data)
+        return result
+    def parse_csv(self,rows):
+        """Parse the list of source table rows. Each row item in the returned
+        list contains a list of cell data elements."""
+        import StringIO
+        import csv
+        result = []
+        rdr = csv.reader(StringIO.StringIO('\r\n'.join(rows)),
+            skipinitialspace=True)
+        try:
+            for row in rdr:
+                result.append(row)
+        except:
+            raise EAsciiDoc,'csv parse error: %s' % row
+        return result
+    def parse_dsv(self,rows):
+        """Parse the list of source table rows. Each row item in the returned
+        list contains a list of cell data elements."""
+        separator = self.attributes.get('separator',':')
+        separator = eval('"'+separator+'"')
+        if len(separator) != 1:
+            raise EAsciiDoc,'malformed dsv separator: %s' % separator
+        # TODO If separator is preceeded by an odd number of backslashes then
+        # it is escaped and should not delimit.
+        result = []
+        for row in rows:
+            # Skip blank lines
+            if row == '': continue
+            # Unescape escaped characters.
+            row = eval('"'+row.replace('"','\\"')+'"')
+            data = row.split(separator)
+            data = [s.strip() for s in data]
+            result.append(data)
+        return result
+    def translate(self):
+        AbstractBlock.translate(self)
+        # Reset instance specific properties.
+        self.underline = None
+        self.columns = []
+        attrs = {}
+        BlockTitle.consume(attrs)
+        # Add relevant globals to table substitutions.
+        attrs['pagewidth'] = str(config.pagewidth)
+        attrs['pageunits'] = config.pageunits
+        # Mix in document attribute list.
+        AttributeList.consume(attrs)
+        # Validate overridable attributes.
+        for k,v in attrs.items():
+            if k == 'format':
+                if v not in self.FORMATS:
+                    raise EAsciiDoc, 'illegal [%s] %s: %s' % (self.name,k,v)
+                self.format = v
+            elif k == 'tablewidth':
+                try:
+                    self.tablewidth = float(attrs['tablewidth'])
+                except:
+                    raise EAsciiDoc, 'illegal [%s] %s: %s' % (self.name,k,v)
+        self.merge_attributes(attrs)
+        # Parse table ruler.
+        ruler = reader.read()
+        assert re.match(self.delimiter,ruler)
+        self.parse_ruler(ruler)
+        # Read the entire table.
+        table = []
+        while True:
+            line = reader.read_next()
+            # Table terminated by underline followed by a blank line or EOF.
+            if len(table) > 0 and re.match(self.underline,table[-1]):
+                if line in ('',None):
+                    break;
+            if line is None:
+                raise EAsciiDoc,'closing [%s] underline expected' % self.name
+            table.append(reader.read())
+        # EXPERIMENTAL: The number of lines in the table, requested by Benjamin Klum.
+        self.attributes['rows'] = str(len(table))
+        #TODO: Inherited validate() doesn't set check_msg, needs checking.
+        if self.check_msg:  # Skip if table definition was marked invalid.
+            warning('skipping %s table: %s' % (self.name,self.check_msg))
+            return
+        # Generate colwidths and colspecs.
+        self.build_colspecs()
+        # Generate headrows, footrows, bodyrows.
+        # Headrow, footrow and bodyrow data replaces same named attributes in
+        # the table markup template. In order to ensure this data does not get
+        # a second attribute substitution (which would interfere with any
+        # already substituted inline passthroughs) unique placeholders are used
+        # (the tab character does not appear elsewhere since it is expanded on
+        # input) which are replaced after template attribute substitution.
+        headrows = footrows = []
+        bodyrows,table = self.split_rows(table)
+        if table:
+            headrows = bodyrows
+            bodyrows,table = self.split_rows(table)
+            if table:
+                footrows,table = self.split_rows(table)
+        if headrows:
+            headrows = self.parse_rows(headrows, self.headrow, self.headdata)
+            headrows = writer.newline.join(headrows)
+            self.attributes['headrows'] = '\theadrows\t'
+        if footrows:
+            footrows = self.parse_rows(footrows, self.footrow, self.footdata)
+            footrows = writer.newline.join(footrows)
+            self.attributes['footrows'] = '\tfootrows\t'
+        bodyrows = self.parse_rows(bodyrows, self.bodyrow, self.bodydata)
+        bodyrows = writer.newline.join(bodyrows)
+        self.attributes['bodyrows'] = '\tbodyrows\t'
+        table = subs_attrs(config.sections[self.template],self.attributes)
+        table = writer.newline.join(table)
+        # Before we finish replace the table head, foot and body place holders
+        # with the real data.
+        if headrows:
+            table = table.replace('\theadrows\t', headrows, 1)
+        if footrows:
+            table = table.replace('\tfootrows\t', footrows, 1)
+        table = table.replace('\tbodyrows\t', bodyrows, 1)
+        writer.write(table)
+
+class Tables(AbstractBlocks):
+    """List of tables."""
+    BLOCK_TYPE = Table
+    PREFIX = 'tabledef-'
+    def __init__(self):
+        AbstractBlocks.__init__(self)
+    def load(self,sections):
+        AbstractBlocks.load(self,sections)
+    def validate(self):
+        # Does not call AbstractBlocks.validate().
+        # Check we have a default table definition,
+        for i in range(len(self.blocks)):
+            if self.blocks[i].name == 'tabledef-default':
+                default = self.blocks[i]
+                break
+        else:
+            raise EAsciiDoc,'missing [table-default] section'
+        # Set default table defaults.
+        if default.format is None: default.subs = 'fixed'
+        # Propagate defaults to unspecified table parameters.
+        for b in self.blocks:
+            if b is not default:
+                if b.fillchar is None: b.fillchar = default.fillchar
+                if b.format is None: b.format = default.format
+                if b.template is None: b.template = default.template
+                if b.colspec is None: b.colspec = default.colspec
+                if b.headrow is None: b.headrow = default.headrow
+                if b.footrow is None: b.footrow = default.footrow
+                if b.bodyrow is None: b.bodyrow = default.bodyrow
+                if b.headdata is None: b.headdata = default.headdata
+                if b.footdata is None: b.footdata = default.footdata
+                if b.bodydata is None: b.bodydata = default.bodydata
+        # Check all tables have valid fill character.
+        for b in self.blocks:
+            if not b.fillchar or len(b.fillchar) != 1:
+                raise EAsciiDoc,'[%s] missing or illegal fillchar' % b.name
+        # Build combined tables delimiter patterns and assign defaults.
+        delimiters = []
+        for b in self.blocks:
+            # Ruler is:
+            #   (ColStop,(ColWidth,FillChar+)?)+, FillChar+, TableWidth?
+            b.delimiter = r'^(' + Table.COL_STOP \
+                + r'(\d*|' + re.escape(b.fillchar) + r'*)' \
+                + r')+' \
+                + re.escape(b.fillchar) + r'+' \
+                + '([\d\.]*)$'
+            delimiters.append(b.delimiter)
+            if not b.headrow:
+                b.headrow = b.bodyrow
+            if not b.footrow:
+                b.footrow = b.bodyrow
+            if not b.headdata:
+                b.headdata = b.bodydata
+            if not b.footdata:
+                b.footdata = b.bodydata
+        self.delimiter = join_regexp(delimiters)
+        # Check table definitions are valid.
+        for b in self.blocks:
+            b.validate()
+            if config.verbose:
+                if b.check_msg:
+                    warning('[%s] table definition: %s' % (b.name,b.check_msg))
+
+#
+# END: NEWTABLES
+#
+
 class Macros:
     # Default system macro syntax.
     SYS_DEFAULT = r'(?u)^(?P<name>\w(\w|-)*?)::(?P<target>\S*?)' + \

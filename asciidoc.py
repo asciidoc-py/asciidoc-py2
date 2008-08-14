@@ -2566,7 +2566,8 @@ class Table(AbstractBlock):
                 else:
                     self.abswidth = float(v[:-1])/100 * config.pagewidth
             elif k == 'separator':
-                self.separator = str(v)
+                # Evaluate escape characters.
+                self.separator = eval('"'+v+'"')
         if not self.format:
             self.format = 'psv'
         if not self.abswidth:
@@ -2599,13 +2600,15 @@ class Table(AbstractBlock):
                 else: props += int(col.width)
                 n += 1
         if percents > 0 and props > 0:
-            self.error('mixed percent and proportional widths: %s' % cols,self.start)
+            self.error('mixed percent and proportional widths: %s'
+                    % cols,self.start)
         if percents > 100:
             self.error('widths exceed 100%%: %s' % cols,self.start)
         # Fill in missing widths.
         if n < len(self.columns):
             if percents:
-                default = str(int(float(100 - percents)/float(len(self.columns) - n)))+'%'
+                default = str(int(float(100 - percents)
+                                 /float(len(self.columns) - n)))+'%'
             else:
                 default = '1'
             for col in self.columns:
@@ -2718,7 +2721,6 @@ class Table(AbstractBlock):
         is a list of raw cell text.
         """
         # dsv separator may have escaped chars.
-        self.separator = eval('"'+self.separator+'"')
         for row in text:
             # Skip blank lines
             if row == '': continue

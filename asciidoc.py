@@ -2468,7 +2468,7 @@ class Table(AbstractBlock):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('delimiter','template','format','colspec',
                               'headrow','footrow','bodyrow','headdata',
-                              'footdata', 'bodydata')
+                              'footdata', 'bodydata','paragraph')
         self.OPTIONS = ('header','footer')
         # Configuration parameters.
         self.format=None    # 'psv','csv','dsv'
@@ -2625,7 +2625,6 @@ class Table(AbstractBlock):
                     else:
                         col.width = str(width)
                         props += width
-        print 'percents: %f, props: %d' % (percents,props)
         # Calculate column alignment and absolute and percent width values.
         percents = 0
         for col in self.columns:
@@ -2635,11 +2634,12 @@ class Table(AbstractBlock):
             else:
                 col.pcwidth = (float(col.width)/props)*100
             col.abswidth = int(self.abswidth * (col.pcwidth/100))
-            col.pcwidth = int(col.pcwidth)
             percents += col.pcwidth
-        if percents > 100:
+            col.pcwidth = int(col.pcwidth)
+        print 'percents: %f, props: %d' % (percents,props)
+        if round(percents) > 100:
             self.error('total width exceeds 100%%: %s' % cols,self.start)
-        elif percents < 100:
+        elif round(percents) < 100:
             self.error('total width less than 100%%: %s' % cols,self.start)
     def build_colspecs(self):
         """

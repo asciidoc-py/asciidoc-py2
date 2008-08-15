@@ -37,28 +37,27 @@ class EAsciiDoc(Exception):
     pass
 
 
-from UserDict import UserDict
-
-class OrderedDict(UserDict):
+class OrderedDict(dict):
     """
     Dictionary ordered by insertion order.
     Python Cookbook: Ordered Dictionary, Submitter: David Benjamin.
     http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/107747
     """
-    def __init__(self, d=None):
+    def __init__(self, d=None, **kwargs):
         self._keys = []
-        UserDict.__init__(self, d)
+        if d is None: d = kwargs
+        dict.__init__(self, d)
     def __delitem__(self, key):
-        UserDict.__delitem__(self, key)
+        dict.__delitem__(self, key)
         self._keys.remove(key)
     def __setitem__(self, key, item):
-        UserDict.__setitem__(self, key, item)
+        dict.__setitem__(self, key, item)
         if key not in self._keys: self._keys.append(key)
     def clear(self):
-        UserDict.clear(self)
+        dict.clear(self)
         self._keys = []
     def copy(self):
-        d = UserDict.copy(self)
+        d = dict.copy(self)
         d._keys = self._keys[:]
         return d
     def items(self):
@@ -74,16 +73,37 @@ class OrderedDict(UserDict):
         del self[key]
         return (key, val)
     def setdefault(self, key, failobj = None):
-        UserDict.setdefault(self, key, failobj)
+        dict.setdefault(self, key, failobj)
         if key not in self._keys: self._keys.append(key)
     def update(self, d=None, **kwargs):
         if d is None:
             d = kwargs
-        UserDict.update(self, d)
+        dict.update(self, d)
         for key in d.keys():
             if key not in self._keys: self._keys.append(key)
     def values(self):
         return map(self.get, self._keys)
+
+class AttrDict(dict):
+    """
+    Like a dictionary except values can be accessed as attributes i.e. obj.foo
+    can be used in addition to obj['foo'].
+    If an item is not present None is returned.
+    """
+    def __getattr__(self, key):
+        try: return self[key]
+        except KeyError, k: return None
+    def __setattr__(self, key, value):
+        self[key] = value
+    def __delattr__(self, key):
+        try: del self[key]
+        except KeyError, k: raise AttributeError, k
+    def __repr__(self):
+        return '<AttrDict ' + dict.__repr__(self) + '>'
+    def __getstate__(self):
+        return dict(self)
+    def __setstate__(self,value):
+        for k,v in value.items(): self[k]=v
 
 def print_stderr(line):
     sys.stderr.write(line+os.linesep)
@@ -422,7 +442,7 @@ def parse_entry(entry, dict=None, unquote=False, unique_values=False,
     If name! and allow_name_only=True then value is set to None.
     Leading and trailing white space is striped from 'name' and 'value'.
     'name' can contain any printable characters.
-    If the '=' delimiter character is allowed in  the 'name' then 
+    If the '=' delimiter character is allowed in  the 'name' then
     it must be escaped with a backslash and escape_delimiter must be True.
     If 'unquote' is True leading and trailing double-quotes are stripped from
     'name' and 'value'.
@@ -1801,11 +1821,11 @@ class AbstractBlock:
     def __init__(self):
         self.OPTIONS = ()   # The set of allowed options values
         # Configuration parameter names common to all blocks.
-        self.CONF_ENTRIES = ('options','subs','presubs','postsubs',
-                             'posattrs','style','.*-style')
+        self.CONF_ENTRIES = ('delimiter','options','subs','presubs','postsubs',
+                             'posattrs','style','.*-style','template','filter')
         self.start = None   # File reader cursor at start delimiter.
-        # Configuration parameters.
         self.name=None      # Configuration file section name.
+        # Configuration parameters.
         self.delimiter=None # Regular expression matching block delimiter.
         self.template=None  # template section entry.
         self.options=()     # options entry list.
@@ -1823,7 +1843,7 @@ class AbstractBlock:
         self.attributes={}
         # The names of block parameters.
         self.PARAM_NAMES=('template','options','presubs','postsubs','filter')
-        self.parameters={}
+        self.parameters=None
         # Leading delimiter match object.
         self.mo=None
     def error(self, msg, cursor=None):
@@ -1889,6 +1909,8 @@ class AbstractBlock:
                     if not parse_named_attributes(v,d):
                         raise EAsciiDoc,'malformed [%s] style: %s' % (name,v)
                     self.styles[style] = d
+                else:
+                    setattr(self,k,v) # Derived class specific entries.
     def dump(self):
         """Write block definition to stdout."""
         write = lambda s: sys.stdout.write('%s%s' % (s,writer.newline))
@@ -1973,18 +1995,39 @@ class AbstractBlock:
                 else:
                     dst[k] = subs
     def merge_attributes(self,attrs):
-        """Merge block attributes 'attrs' dictionary with the block
-        configuration parameters setting self.attributes (template substitution
-        attributes) and self.parameters (block processing parameters)."""
+        """
+        Use the current blocks attribute list (attrs dictionary) to build a
+        dictionary of block processing parameters (self.parameters) and tag
+        substitution attributes (self.attributes).
+
+        1. Copy the default parameters (self.*) to self.parameters.
+        self.parameters are used internally to render the current block.
+
+        2. Copy attrs to self.attributes. self.attributes are used for template
+        and tag substitution in the current block.
+
+        3. If a style attribute was specified update self.parameters with the
+        corresponding style parameters; if there are any style parameters
+        remaining add them to self.attributes (existing attribute list entries
+        take precedence).
+
+        4. Set named positional attributes in self.attributes if self.posattrs
+        was specified.
+
+        5. Finally self.parameters is updated with any corresponding parameters
+        specified in attrs.
+
+        """
         self.attributes = {}
         self.attributes.update(attrs)
         # Calculate dynamic block parameters.
         # Start with configuration file defaults.
-        self.parameters['template'] = self.template
-        self.parameters['options'] = self.options
-        self.parameters['presubs'] = self.presubs
-        self.parameters['postsubs'] = self.postsubs
-        self.parameters['filter'] = self.filter
+        self.parameters = AttrDict()
+        self.parameters.template = self.template
+        self.parameters.options = self.options
+        self.parameters.presubs = self.presubs
+        self.parameters.postsubs = self.postsubs
+        self.parameters.filter = self.filter
         # Load the selected style attributes.
         posattrs = self.posattrs
         if posattrs and posattrs[0] == 'style':
@@ -2011,20 +2054,11 @@ class AbstractBlock:
         for i,v in enumerate(posattrs):
             if self.attributes.has_key(str(i+1)):
                 self.attributes[v] = self.attributes[str(i+1)]
-        # Override config and style attributes with document attributes.
-        self.update_params(self.attributes,self.parameters)
-        assert isinstance(self.parameters['options'],tuple)
-        assert isinstance(self.parameters['presubs'],tuple)
-        assert isinstance(self.parameters['postsubs'],tuple)
-    # Use these methods to access block parameters.
-    def get_options(self):
-        return self.parameters['options']
-    def get_subs(self):
-        return (self.parameters['presubs'], self.parameters['postsubs'])
-    def get_template(self):
-        return self.parameters['template']
-    def get_filter(self):
-        return self.parameters['filter']
+        # Override config and style attributes with attribute list attributes.
+        self.update_params(attrs, self.parameters)
+        assert isinstance(self.parameters.options, tuple)
+        assert isinstance(self.parameters.presubs, tuple)
+        assert isinstance(self.parameters.postsubs, tuple)
 
 class AbstractBlocks:
     """List of block definitions."""
@@ -2074,7 +2108,6 @@ class AbstractBlocks:
 class Paragraph(AbstractBlock):
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.CONF_ENTRIES += ('delimiter','template','filter')
         self.OPTIONS = ('listelement',)
         self.text=None      # Text in first line of paragraph.
     def load(self,name,entries):
@@ -2101,16 +2134,17 @@ class Paragraph(AbstractBlock):
 #                + r'|' + tables_OLD.delimiter
         )
         body = [self.text] + list(body)
-        presubs,postsubs = self.get_subs()
+        presubs = self.parameters.presubs
+        postsubs = self.parameters.postsubs
         # Don't join verbatim paragraphs.
         if 'verbatim' not in (presubs + postsubs):
             body = join_lines(body)
         body = Lex.set_margin(body) # Move body to left margin.
         body = Lex.subs(body,presubs)
-        if self.get_filter():
-            body = filter_lines(self.get_filter(),body,self.attributes)
+        if self.parameters.filter:
+            body = filter_lines(self.parameters.filter,body,self.attributes)
         body = Lex.subs(body,postsubs)
-        template = self.get_template()
+        template = self.parameters.template
         stag,etag = config.section2tags(template, self.attributes)
         # Write start tag, content, end tag.
         writer.write(dovetail_tags(stag,body,etag))
@@ -2140,7 +2174,7 @@ class List(AbstractBlock):
     TYPES = ('bulleted','numbered','labeled','callout')
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.CONF_ENTRIES += ('delimiter','type') + self.TAGS
+        self.CONF_ENTRIES += ('type',) + self.TAGS
         self.listtag=None
         self.itemtag=None
         self.texttag=None   # Tag for list item text.
@@ -2377,7 +2411,6 @@ class Lists(AbstractBlocks):
 class DelimitedBlock(AbstractBlock):
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.CONF_ENTRIES += ('delimiter','template','filter')
         self.OPTIONS = ('skip','sectionbody','list')
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
@@ -2398,7 +2431,7 @@ class DelimitedBlock(AbstractBlock):
             BlockTitle.consume(attrs)
             AttributeList.consume(attrs)
         self.merge_attributes(attrs)
-        options = self.get_options()
+        options = self.parameters.options
         if safe() and self.name == 'blockdef-backend':
             unsafe_error('Backend Block')
             # Discard block body.
@@ -2407,7 +2440,7 @@ class DelimitedBlock(AbstractBlock):
             # Discard block body.
             reader.read_until(self.delimiter,same_file=True)
         else:
-            template = self.get_template()
+            template = self.parameters.template
             stag,etag = config.section2tags(template,self.attributes)
             if 'sectionbody' in options or 'list' in options:
                 # The body is treated like a SimpleSection.
@@ -2416,10 +2449,11 @@ class DelimitedBlock(AbstractBlock):
                 writer.write(etag)
             else:
                 body = reader.read_until(self.delimiter,same_file=True)
-                presubs,postsubs = self.get_subs()
+                presubs = self.parameters.presubs
+                postsubs = self.parameters.postsubs
                 body = Lex.subs(body,presubs)
-                if self.get_filter():
-                    body = filter_lines(self.get_filter(),body,self.attributes)
+                if self.parameters.filter:
+                    body = filter_lines(self.parameters.filter,body,self.attributes)
                 body = Lex.subs(body,postsubs)
                 # Write start tag, content, end tag.
                 writer.write(dovetail_tags(stag,body,etag))
@@ -2466,20 +2500,13 @@ class Table(AbstractBlock):
     SEPARATORS = dict(psv='|', csv=',', dsv=':')
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.CONF_ENTRIES += ('delimiter','template','format','colspec',
-                              'headrow','footrow','bodyrow','headdata',
-                              'footdata', 'bodydata','paragraph')
+        self.CONF_ENTRIES += ('format','tags','separator')
         self.OPTIONS = ('header','footer')
-        # Configuration parameters.
-        self.format=None    # 'psv','csv','dsv'
+#        self.PARAM_NAMES += ('format','tags','separator')
+        # tabledef conf file parameters.
+        self.format=None
         self.separator=None
-        self.colspec=None
-        self.headrow=None
-        self.footrow=None
-        self.bodyrow=None
-        self.headdata=None
-        self.footdata=None
-        self.bodydata=None
+        self.tags=None          # Name of tabletags-<tags> conf section.
         # Calculated parameters.
         self.abswidth=None      # 1..   (page units).
         self.pcwidth = None     # 1..99 (percentage).
@@ -2489,48 +2516,26 @@ class Table(AbstractBlock):
         self.check_msg=''       # Message set by previous self.validate() call.
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
-        """Update table definition from section entries in 'entries'."""
-        for k,v in entries.items():
-            if k == 'format':
-                if v in Table.FORMATS:
-                    self.format = v
-                else:
-                    raise EAsciiDoc,'illegal table format: %s' % v
-            elif k == 'colspec':
-                self.colspec = v
-            elif k == 'headrow':
-                self.headrow = v
-            elif k == 'footrow':
-                self.footrow = v
-            elif k == 'bodyrow':
-                self.bodyrow = v
-            elif k == 'headdata':
-                self.headdata = v
-            elif k == 'footdata':
-                self.footdata = v
-            elif k == 'bodydata':
-                self.bodydata = v
     def dump(self):
         AbstractBlock.dump(self)
         write = lambda s: sys.stdout.write('%s%s' % (s,writer.newline))
         write('format='+self.format)
-        if self.colspec:
-            write('colspec='+self.colspec)
-        if self.headrow:
-            write('headrow='+self.headrow)
-        if self.footrow:
-            write('footrow='+self.footrow)
-        write('bodyrow='+self.bodyrow)
-        if self.headdata:
-            write('headdata='+self.headdata)
-        if self.footdata:
-            write('footdata='+self.footdata)
-        write('bodydata='+self.bodydata)
         write('')
     def validate(self):
         AbstractBlock.validate(self)
-        """Check table definition and set self.check_msg if invalid else set
-        self.check_msg to blank string."""
+        """
+        Check table definition and set self.check_msg if invalid else set
+        self.check_msg to blank string.
+        """
+        if self.format not in Table.FORMATS:
+            self.check_msg = 'illegal format entry: %s' % self.format
+        self.tags = self.tags or 'default'
+        if self.tags not in tables.tags:
+            self.check_msg = 'missing table tags section: tabletags-%s' % self.tags
+        if self.separator:
+            # Evaluate escape characters.
+            self.separator = eval('"'+self.separator+'"')
+        #TODO: Move to class Tables
         # Check global table parameters.
         if config.textwidth is None:
             self.check_msg = 'missing [miscellaneous] textwidth entry'
@@ -2538,50 +2543,48 @@ class Table(AbstractBlock):
             self.check_msg = 'missing [miscellaneous] pagewidth entry'
         elif config.pageunits is None:
             self.check_msg = 'missing [miscellaneous] pageunits entry'
-        elif self.headrow is None:
-            self.check_msg = 'missing headrow entry'
-        elif self.footrow is None:
-            self.check_msg = 'missing footrow entry'
-        elif self.bodyrow is None:
-            self.check_msg = 'missing bodyrow entry'
-        elif self.headdata is None:
-            self.check_msg = 'missing headdata entry'
-        elif self.footdata is None:
-            self.check_msg = 'missing footdata entry'
-        elif self.bodydata is None:
-            self.check_msg = 'missing bodydata entry'
         else:
             # No errors.
             self.check_msg = ''
-    def validate_attributes(self,attrs):
+    def validate_attributes(self):
         """Validate and parse table attributes."""
-        self.format = self.separator = self.abswidth = self.pcwidth = None
-        for k,v in attrs.items():
+        # Set defaults.
+        format = self.format
+        tags = tables.tags[self.tags]
+        separator = self.separator
+        abswidth = float(config.pagewidth)
+        pcwidth = 100.0
+        for k,v in self.attributes.items():
             if k == 'format':
                 if v not in self.FORMATS:
                     self.error('illegal [%s] %s: %s' % (self.name,k,v))
                 else:
-                    self.format = v
+                    format = v
+            elif k == 'tags':
+                if v not in tables.tags:
+                    self.error('missing [%s] %s: %s' % (self.name,k,v))
+                else:
+                    tags = tables.tags[v]
             elif k == 'separator':
                 # Evaluate escape characters.
-                self.separator = eval('"'+v+'"')
+                separator = eval('"'+v+'"')
             elif k == 'tablewidth':
                 if not re.match(r'^\d{1,2}%$',v):
                     self.error('illegal [%s] %s: %s' % (self.name,k,v))
                 else:
-                    self.abswidth = float(v[:-1])/100 * config.pagewidth
-                    self.pcwidth = float(v[:-1])
-        # Set defaults.
-        if not self.format:
-            self.format = 'psv'
-        if not self.separator:
-            self.separator = Table.SEPARATORS[self.format]
-        if not self.abswidth:
-            self.abswidth = float(config.pagewidth)
-            self.pcwidth = 100.0
-        if self.format == 'csv' and len(self.separator) != 1:
-            self.error('illegal csv separator %s' % self.separator)
-            self.separator = ','
+                    abswidth = float(v[:-1])/100 * config.pagewidth
+                    pcwidth = float(v[:-1])
+        # Calculate separator if it has not been specified.
+        if not separator:
+            separator = Table.SEPARATORS[format]
+        if format == 'csv' and len(separator) != 1:
+            self.error('illegal csv separator %s' % separator)
+            separator = ','
+        self.parameters.format = format
+        self.parameters.tags = tags
+        self.parameters.separator = separator
+        self.abswidth = abswidth
+        self.pcwidth = pcwidth
     def parse_cols(self,cols):
         """
         Build list of column objects from table 'cols' attribute.
@@ -2645,7 +2648,8 @@ class Table(AbstractBlock):
         """
         Generate column related substitution attributes.
         """
-        if self.colspec:
+        colspec = self.parameters.tags.colspec
+        if colspec:
             cols = []
             i = 0
             for col in self.columns:
@@ -2655,7 +2659,7 @@ class Table(AbstractBlock):
                 self.attributes['colabswidth'] = col.abswidth
                 self.attributes['colpcwidth'] = col.pcwidth
                 self.attributes['colnumber'] = str(i+1)
-                s = subs_attrs(self.colspec,self.attributes)
+                s = subs_attrs(colspec, self.attributes)
                 if not s:
                     warning('colspec dropped: contains undefined attribute')
                 else:
@@ -2666,11 +2670,11 @@ class Table(AbstractBlock):
         Parse the table source text into self.rows (a list of rows, each row
         is a list of raw cell text.
         """
-        if self.format == 'psv':
+        if self.parameters.format == 'psv':
             self.parse_psv(text)
-        elif self.format == 'csv':
+        elif self.parameters.format == 'csv':
             self.parse_csv(text)
-        elif self.format == 'dsv':
+        elif self.parameters.format == 'dsv':
             self.parse_dsv(text)
         else:
             assert True,'illegal table format'
@@ -2687,13 +2691,15 @@ class Table(AbstractBlock):
             result.append(etag)
         return writer.newline.join(result)
     def subs_row(self, row, dtag):
-        """Substitute the list of row cell data using the cell data tag.
-        Returns a list of marked up table cell elements."""
-        result = []
+        """
+        Substitute the list of cells using the cell data tag.
+        Returns a list of marked up table cell elements.
+        """
         if len(row) < len(self.columns):
             warning('fewer row data items then table columns')
         if len(row) > len(self.columns):
             warning('more row data items than table columns')
+        result = []
         for i in range(len(self.columns)):
             if i > len(row) - 1:
                 data = ''  # Fill missing column data with blanks.
@@ -2705,13 +2711,22 @@ class Table(AbstractBlock):
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
             self.attributes['colnumber'] = str(i+1)
-            stag,etag = subs_tag(dtag,self.attributes)
-            presubs,postsubs = self.get_subs()
             data = [data]
-            data = Lex.subs(data,presubs)
-            if self.get_filter():
-                data = filter_lines(self.get_filter(),data,self.attributes)
-            data = Lex.subs(data,postsubs)
+            data = Lex.subs(data, self.parameters.presubs)
+            if self.parameters.filter:
+                data = filter_lines(self.parameters.filter,data,self.attributes)
+            data = Lex.subs(data, self.parameters.postsubs)
+            ptag = self.parameters.tags.paragraph
+#            print data
+#            print ptag
+            if ptag:
+                stag,etag = subs_tag(ptag,self.attributes)
+                text = '\n'.join(data).strip()
+                data = []
+                for para in re.split(r'\n{2,}',text):
+                    data += [stag] + para.split('\n') + [etag]
+            print data
+            stag,etag = subs_tag(dtag,self.attributes)
             result = result + [stag] + data + [etag]
         return result
     def parse_csv(self,text):
@@ -2723,7 +2738,7 @@ class Table(AbstractBlock):
         import csv
         self.rows = []
         rdr = csv.reader(StringIO.StringIO('\r\n'.join(text)),
-                         delimiter=self.separator, skipinitialspace=True)
+                     delimiter=self.parameters.separator, skipinitialspace=True)
         try:
             for row in rdr:
                 self.rows.append(row)
@@ -2740,7 +2755,7 @@ class Table(AbstractBlock):
             if row == '': continue
             # Unescape escaped characters.
             row = eval('"'+row.replace('"','\\"')+'"')
-            cells = row.split(self.separator)
+            cells = row.split(self.parameters.separator)
             cells = [s.strip() for s in cells]
             self.rows.append(cells[:])
     def parse_psv(self,text):
@@ -2749,11 +2764,12 @@ class Table(AbstractBlock):
         is a list of raw cell text.
         """
         text = '\n'.join(text)
-        if text[0] != self.separator:
-            self.error('missing leading separator: %s',self.separator)
+        separator = self.parameters.separator
+        if text[0] != separator:
+            self.error('missing leading separator: %s',separator)
         else:
             text = text[1:]
-        cells = text.split(self.separator)
+        cells = text.split(separator)
         colcount = len(self.columns)
         n = len(cells) % colcount
         if n != 0:
@@ -2774,7 +2790,7 @@ class Table(AbstractBlock):
         # Mix in document attribute list.
         AttributeList.consume(attrs)
         self.merge_attributes(attrs)
-        self.validate_attributes(attrs)
+        self.validate_attributes()
         # Add global and calculated configuration parameters.
         self.attributes['pagewidth'] = config.pagewidth
         self.attributes['pageunits'] = config.pageunits
@@ -2791,7 +2807,7 @@ class Table(AbstractBlock):
             warning('[%s] table is empty' % self.name)
             return
         # Calculate the columns.
-        cols = attrs.get('cols', text[0].count(self.separator))
+        cols = attrs.get('cols', text[0].count(self.parameters.separator))
         self.parse_cols(cols)
 #ZZZ
         print 'table: abswidth: %d, pcwidth: %d' % (self.abswidth,self.pcwidth)
@@ -2818,19 +2834,23 @@ class Table(AbstractBlock):
         # already substituted inline passthroughs) unique placeholders are used
         # (the tab character does not appear elsewhere since it is expanded on
         # input) which are replaced after template attribute substitution.
+        tags = self.parameters.tags
         headrows = footrows = bodyrows = None
-        if self.rows and 'header' in self.get_options():
-            headrows = self.subs_rows(self.rows[0:1],self.headrow,self.headdata)
+        if self.rows and 'header' in self.parameters.options:
+            headrows = self.subs_rows(self.rows[0:1],
+                    tags.headrow, tags.headdata)
             self.attributes['headrows'] = '\theadrows\t'
             self.rows = self.rows[1:]
-        if self.rows and 'footer' in self.get_options():
-            footrows = self.subs_rows(self.rows[-1:],self.footrow,self.footdata)
+        if self.rows and 'footer' in self.parameters.options:
+            footrows = self.subs_rows( self.rows[-1:],
+                    tags.footrow,tags.footdata)
             self.attributes['footrows'] = '\tfootrows\t'
             self.rows = self.rows[:-1]
         if self.rows:
-            bodyrows = self.subs_rows(self.rows,self.bodyrow,self.bodydata)
+            bodyrows = self.subs_rows(self.rows, tags.bodyrow, tags.bodydata)
             self.attributes['bodyrows'] = '\tbodyrows\t'
-        table = subs_attrs(config.sections[self.get_template()],self.attributes)
+        table = subs_attrs(config.sections[self.parameters.template],
+                           self.attributes)
         table = writer.newline.join(table)
         # Before we finish replace the table head, foot and body place holders
         # with the real data.
@@ -2848,8 +2868,28 @@ class Tables(AbstractBlocks):
     PREFIX = 'tabledef-'
     def __init__(self):
         AbstractBlocks.__init__(self)
+        self.TAGS = ('colspec', 'headrow','footrow','bodyrow',
+                     'headdata','footdata', 'bodydata','paragraph')
+        # Table tags dictionary. Each entry is a tags dictionary.
+        self.tags={}
     def load(self,sections):
         AbstractBlocks.load(self,sections)
+        self.load_tags(sections)
+    def load_tags(self,sections):
+        """
+        Load tabletags-* conf file sections to self.tags.
+        """
+        for section in sections.keys():
+            mo = re.match(r'^tabletags-(?P<name>\w+)$',section)
+            if mo:
+                name = mo.group('name')
+                d = AttrDict()
+                parse_entries(sections.get(section,()),d)
+                for k in d.keys():
+                    if k not in self.TAGS:
+                        warning('[%s] contains unknown table tag: %s' %
+                                (section,k))
+                self.tags[name] = d
     def validate(self):
         AbstractBlocks.validate(self)
         # Check we have a default table definition,
@@ -2858,7 +2898,7 @@ class Tables(AbstractBlocks):
                 default = self.blocks[i]
                 break
         else:
-            raise EAsciiDoc,'missing [table-default] section'
+            raise EAsciiDoc,'missing [tabledef-default] section'
         # Set default table defaults.
         default.format = default.format or 'psv'
         # Propagate defaults to unspecified table parameters.
@@ -2866,29 +2906,37 @@ class Tables(AbstractBlocks):
             if b is not default:
                 if b.format is None: b.format = default.format
                 if b.template is None: b.template = default.template
-                if b.colspec is None: b.colspec = default.colspec
-                if b.headrow is None: b.headrow = default.headrow
-                if b.footrow is None: b.footrow = default.footrow
-                if b.bodyrow is None: b.bodyrow = default.bodyrow
-                if b.headdata is None: b.headdata = default.headdata
-                if b.footdata is None: b.footdata = default.footdata
-                if b.bodydata is None: b.bodydata = default.bodydata
-        # Fill in default table tags.
-        for b in self.blocks:
-            if not b.headrow:
-                b.headrow = b.bodyrow
-            if not b.footrow:
-                b.footrow = b.bodyrow
-            if not b.headdata:
-                b.headdata = b.bodydata
-            if not b.footdata:
-                b.footdata = b.bodydata
+        # Check tags and propagate default tags.
+        if not 'default' in self.tags:
+            raise EAsciiDoc,'missing [tabletags-default] section'
+        default = self.tags['default']
+        for tag in ('bodyrow','bodydata'): # Mandatory default tags.
+            if tag not in default:
+                raise EAsciiDoc,'missing [tabletags-default] entry: %s' % tag
+        for t in self.tags.values():
+            if t is not default:
+                if t.colspec is None: t.colspec = default.colspec
+                if t.headrow is None: t.headrow = default.headrow
+                if t.footrow is None: t.footrow = default.footrow
+                if t.bodyrow is None: t.bodyrow = default.bodyrow
+                if t.headdata is None: t.headdata = default.headdata
+                if t.footdata is None: t.footdata = default.footdata
+                if t.bodydata is None: t.bodydata = default.bodydata
+        # Use body tags if header and footer tags are not specified.
+        for t in self.tags.values():
+            if not t.headrow: t.headrow = t.bodyrow
+            if not t.footrow: t.footrow = t.bodyrow
+            if not t.headdata: t.headdata = t.bodydata
+            if not t.footdata: t.footdata = t.bodydata
         # Check table definitions are valid.
         for b in self.blocks:
             b.validate()
-            if config.verbose:
-                if b.check_msg:
-                    warning('[%s] table definition: %s' % (b.name,b.check_msg))
+            if config.verbose and b.check_msg:
+                warning('[%s] table definition: %s' % (b.name,b.check_msg))
+    def dump(self):
+        AbstractBlocks.dump(self)
+        for k,v in self.tags:
+            dump_section('tabletags-'+k, v)
 #
 # END: NEWTABLES
 #

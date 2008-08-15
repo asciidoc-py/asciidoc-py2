@@ -2453,12 +2453,12 @@ class DelimitedBlocks(AbstractBlocks):
 class Column:
     """Table column."""
     def __init__(self, width, align):
-        self.align = align or '.'
-        self.width = width
+        self.align=align or '.'
+        self.width=width
         # Calculated attribute values.
-        self.colalign = None    # 'left','center','right'.
-        self.abswidth = None    # '1'..     (page units).
-        self.pcwidth = None     # '1'..'99' (percentage).
+        self.colalign=None    # 'left','center','right'.
+        self.abswidth=None    # 1..   (page units).
+        self.pcwidth=None     # 1..99 (percentage).
 
 class Table(AbstractBlock):
     ALIGNMENTS = {'<':'left', '>':'right', '.':'center'}
@@ -2481,7 +2481,8 @@ class Table(AbstractBlock):
         self.footdata=None
         self.bodydata=None
         # Calculated parameters.
-        self.abswidth=None      # Table width in page units 0..
+        self.abswidth=None      # 1..   (page units).
+        self.pcwidth = None     # 1..99 (percentage).
         self.rows=[]            # Parsed rows, each row is a list of cell data.
         self.columns=[]         # List of Columns.
         # Other.
@@ -2554,26 +2555,33 @@ class Table(AbstractBlock):
             self.check_msg = ''
     def validate_attributes(self,attrs):
         """Validate and parse table attributes."""
+        self.format = self.separator = self.abswidth = self.pcwidth = None
         for k,v in attrs.items():
             if k == 'format':
                 if v not in self.FORMATS:
                     self.error('illegal [%s] %s: %s' % (self.name,k,v))
                 else:
                     self.format = v
+            elif k == 'separator':
+                # Evaluate escape characters.
+                self.separator = eval('"'+v+'"')
             elif k == 'tablewidth':
                 if not re.match(r'^\d{1,2}%$',v):
                     self.error('illegal [%s] %s: %s' % (self.name,k,v))
                 else:
                     self.abswidth = float(v[:-1])/100 * config.pagewidth
-            elif k == 'separator':
-                # Evaluate escape characters.
-                self.separator = eval('"'+v+'"')
+                    self.pcwidth = float(v[:-1])
+        # Set defaults.
         if not self.format:
             self.format = 'psv'
-        if not self.abswidth:
-            self.abswidth = float(config.pagewidth)
         if not self.separator:
             self.separator = Table.SEPARATORS[self.format]
+        if not self.abswidth:
+            self.abswidth = float(config.pagewidth)
+            self.pcwidth = 100.0
+        if self.format == 'csv' and len(self.separator) != 1:
+            self.error('illegal csv separator %s' % self.separator)
+            self.separator = ','
     def parse_cols(self,cols):
         """
         Build list of column objects from table 'cols' attribute.
@@ -2602,28 +2610,37 @@ class Table(AbstractBlock):
         if percents > 0 and props > 0:
             self.error('mixed percent and proportional widths: %s'
                     % cols,self.start)
-        if percents > 100:
-            self.error('widths exceed 100%%: %s' % cols,self.start)
+        pcunits = percents > 0
         # Fill in missing widths.
-        if n < len(self.columns):
-            if percents:
-                default = str(int(float(100 - percents)
-                                 /float(len(self.columns) - n)))+'%'
+        if n < len(self.columns) and percents < 100:
+            if pcunits:
+                width = float(100 - percents)/float(len(self.columns) - n)
             else:
-                default = '1'
+                width = 1
             for col in self.columns:
                 if not col.width:
-                    col.width = default
-                    if not percents: props += 1
-        # Calculate column attribute values.
+                    if pcunits:
+                        col.width = str(int(width))+'%'
+                        percents += width
+                    else:
+                        col.width = str(width)
+                        props += width
+        print 'percents: %f, props: %d' % (percents,props)
+        # Calculate column alignment and absolute and percent width values.
+        percents = 0
         for col in self.columns:
             col.colalign = Table.ALIGNMENTS[col.align]
-            if percents:
+            if pcunits:
                 col.pcwidth = float(col.width[:-1])
             else:
                 col.pcwidth = (float(col.width)/props)*100
-            col.abswidth = str(int(self.abswidth * (col.pcwidth/100)))
-            col.pcwidth = str(int(col.pcwidth))
+            col.abswidth = int(self.abswidth * (col.pcwidth/100))
+            col.pcwidth = int(col.pcwidth)
+            percents += col.pcwidth
+        if percents > 100:
+            self.error('total width exceeds 100%%: %s' % cols,self.start)
+        elif percents < 100:
+            self.error('total width less than 100%%: %s' % cols,self.start)
     def build_colspecs(self):
         """
         Generate column related substitution attributes.
@@ -2687,7 +2704,7 @@ class Table(AbstractBlock):
             self.attributes['colwidth'] = col.abswidth  # DEPRECATED
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
-            self.attributes['colnumber'] = str(i + 1)
+            self.attributes['colnumber'] = str(i+1)
             stag,etag = subs_tag(dtag,self.attributes)
             presubs,postsubs = self.get_subs()
             data = [data]
@@ -2704,9 +2721,6 @@ class Table(AbstractBlock):
         """
         import StringIO
         import csv
-        if len(self.separator) != 1:
-            self.error('illegal csv separator %s' % self.separator)
-            self.separator = ','
         self.rows = []
         rdr = csv.reader(StringIO.StringIO('\r\n'.join(text)),
                          delimiter=self.separator, skipinitialspace=True)
@@ -2755,16 +2769,17 @@ class Table(AbstractBlock):
         # Reset instance specific properties.
         self.columns = []
         self.rows = []
-        self.format = self.separator = self.abswidth = None
         attrs = {}
         BlockTitle.consume(attrs)
         # Mix in document attribute list.
         AttributeList.consume(attrs)
         self.merge_attributes(attrs)
         self.validate_attributes(attrs)
-        # Add output specific global configuration parameters.
-        self.attributes['pagewidth'] = str(config.pagewidth)
+        # Add global and calculated configuration parameters.
+        self.attributes['pagewidth'] = config.pagewidth
         self.attributes['pageunits'] = config.pageunits
+        self.attributes['tableabswidth'] = int(self.abswidth)
+        self.attributes['tablepcwidth'] = int(self.pcwidth)
         # Read the entire table.
         text = reader.read_until(self.delimiter)
         if reader.eof():
@@ -2778,6 +2793,10 @@ class Table(AbstractBlock):
         # Calculate the columns.
         cols = attrs.get('cols', text[0].count(self.separator))
         self.parse_cols(cols)
+#ZZZ
+        print 'table: abswidth: %d, pcwidth: %d' % (self.abswidth,self.pcwidth)
+        for col in self.columns:
+            print 'columns: width: %s, abswidth: %d, pcwidth: %d' % (col.width,col.abswidth,col.pcwidth)
 #ZZZ: Is this still necessary?
         #TODO: Inherited validate() doesn't set check_msg, needs checking.
         if self.check_msg:  # Skip if table definition was marked invalid.
@@ -2788,10 +2807,6 @@ class Table(AbstractBlock):
         self.attributes['colcount'] = len(self.columns)
         self.attributes['cols'] = len(self.columns) # DEPRECATED
         self.build_colspecs()
-#ZZZ
-        print self.attributes
-        print text
-
         self.parse_rows(text)
         # The 'rowcount' attribute is used by the experimental LaTeX backend.
         self.attributes['rowcount'] = str(len(self.rows))

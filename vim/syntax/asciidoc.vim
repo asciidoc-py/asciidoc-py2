@@ -68,14 +68,12 @@ syn match asciidocQuoteBlockDelimiter /^_\{4,}$/
 syn match asciidocExampleBlockDelimiter /^=\{4,}$/
 syn match asciidocSidebarDelimiter /^*\{4,}$/
 
-"syn match asciidocTablePrefix /|/
-"syn match asciidocTableDelimiter /^#\{4,}$/
-"syn match asciidocTableDelimiter /^|=\{3,}$/
-"syn region asciidocTableBlock matchgroup=asciidocTable start=/^|=\{3,}$/ end=/^|=\{3,}$/ contains=asciidocQuoted.*,asciidocAttributeRef,asciidocTablePrefix,asciidocAttributeRef,asciidocEmail,asciidocURL keepend
-syn match asciidocTablePrefix /|/ contained
-syn region asciidocTableBlock matchgroup=asciidocTable start=/^|=\{3,}$/ end=/^|=\{3,}$/ keepend contains=ALL
-syn region asciidocTableBlock matchgroup=asciidocTable start=/^#\{4,}$/ end=/^#\{4,}$/ keepend contains=ALL
-syn region asciidocTableBlock matchgroup=asciidocTable start=/^:\{4,}$/ end=/^:\{4,}$/ keepend contains=ALL
+"See http://vimdoc.sourceforge.net/htmldoc/usr_44.html for excluding region
+"contents from highlighting.
+syn match asciidocTablePrefix /|/ containedin=asciidocTableBlock contained
+syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^|=\{3,}$/ end=/^|=\{3,}$/ keepend contains=ALL
+syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^#\{4,}$/ end=/^#\{4,}$/ keepend contains=ALL
+syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^:\{4,}$/ end=/^:\{4,}$/ keepend contains=ALL
 
 syn match asciidocListContinuation /^+$/
 syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=asciidocCallout keepend
@@ -114,13 +112,10 @@ highlight link asciidocListBullet Label
 highlight link asciidocListNumber Label
 highlight link asciidocVLabel Label
 highlight link asciidocHLabel Label
-
 highlight link asciidocTable_OLD Type
-"highlight link asciidocTableDelimiter Label
-highlight link asciidocTable Label
+highlight link asciidocTableDelimiter Label
 highlight link asciidocTableBlock NONE
 highlight link asciidocTablePrefix Label
-
 highlight link asciidocListBlockDelimiter Label
 highlight link asciidocListContinuation Label
 highlight link asciidocLiteralParagraph Identifier

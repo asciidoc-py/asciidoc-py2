@@ -236,6 +236,9 @@ thead {
 tfoot {
   font-weight: bold;
 }
+td > div.verse {
+  white-space: pre;
+}
 
 div.hlist {
   margin-top: 0.8em;

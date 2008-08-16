@@ -253,12 +253,44 @@ def join_lines(lines):
         result.append(s)
     return result
 
+def lstrip_list(s):
+    """
+    Return list with empty items from start of list removed.
+    """
+    for i in range(len(s)):
+        if s[i]: break
+    else:
+        return []
+    return s[i:]
+
+def rstrip_list(s):
+    """
+    Return list with empty items from end of list removed.
+    """
+    for i in range(len(s)-1,-1,-1):
+        if s[i]: break
+    else:
+        return []
+    return s[:i+1]
+
+def strip_list(s):
+    """
+    Return list with empty items from start and end of list removed.
+    """
+    s = lstrip_list(s)
+    s = rstrip_list(s)
+    return s
+
 def dovetail(lines1, lines2):
-    """Append list or tuple of strings 'lines2' to list 'lines1'.  Join the
-    last string in 'lines1' with the first string in 'lines2' into a single
-    string."""
+    """
+    Append list or tuple of strings 'lines2' to list 'lines1'.  Join the last
+    non-blank item in 'lines1' with the first non-blank item in 'lines2' into a
+    single string.
+    """
     assert isinstance(lines1,list) or isinstance(lines1,tuple)
     assert isinstance(lines2,list) or isinstance(lines2,tuple)
+    lines1 = strip_list(lines1)
+    lines2 = strip_list(lines2)
     if not lines1 or not lines2:
         return list(lines1) + list(lines2)
     result = list(lines1[:-1])
@@ -2718,16 +2750,18 @@ class Table(AbstractBlock):
             data = Lex.subs(data, self.parameters.postsubs)
             ptag = self.parameters.tags.paragraph
 #            print data
-#            print ptag
+            print ptag
             if ptag:
                 stag,etag = subs_tag(ptag,self.attributes)
                 text = '\n'.join(data).strip()
                 data = []
                 for para in re.split(r'\n{2,}',text):
-                    data += [stag] + para.split('\n') + [etag]
+#                    data += [stag] + para.split('\n') + [etag]
+                    data += dovetail_tags([stag],para.split('\n'),[etag])
             print data
             stag,etag = subs_tag(dtag,self.attributes)
-            result = result + [stag] + data + [etag]
+#            result = result + [stag] + data + [etag]
+            result = result + dovetail_tags([stag],data,[etag])
         return result
     def parse_csv(self,text):
         """
@@ -2835,6 +2869,7 @@ class Table(AbstractBlock):
         # (the tab character does not appear elsewhere since it is expanded on
         # input) which are replaced after template attribute substitution.
         tags = self.parameters.tags
+        print tags
         headrows = footrows = bodyrows = None
         if self.rows and 'header' in self.parameters.options:
             headrows = self.subs_rows(self.rows[0:1],

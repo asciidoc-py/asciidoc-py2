@@ -2518,9 +2518,10 @@ class DelimitedBlocks(AbstractBlocks):
 #
 class Column:
     """Table column."""
-    def __init__(self, width, align):
+    def __init__(self, width, align, tags):
         self.align=align or '.'
         self.width=width
+        self.tags=tags        # tags dictionary.
         # Calculated attribute values.
         self.colalign=None    # 'left','center','right'.
         self.abswidth=None    # 1..   (page units).
@@ -2582,7 +2583,7 @@ class Table(AbstractBlock):
         """Validate and parse table attributes."""
         # Set defaults.
         format = self.format
-        tags = tables.tags[self.tags]
+        tags = self.tags
         separator = self.separator
         abswidth = float(config.pagewidth)
         pcwidth = 100.0
@@ -2596,7 +2597,7 @@ class Table(AbstractBlock):
                 if v not in tables.tags:
                     self.error('missing [%s] %s: %s' % (self.name,k,v))
                 else:
-                    tags = tables.tags[v]
+                    tags = v
             elif k == 'separator':
                 # Evaluate escape characters.
                 separator = eval('"'+v+'"')
@@ -2617,21 +2618,37 @@ class Table(AbstractBlock):
         self.parameters.separator = separator
         self.abswidth = abswidth
         self.pcwidth = pcwidth
+    def get_tags(self,prefix=None):
+        """
+        Return the current tags dictionary.
+        If prefix is passed return the first tag set that starts with prefix.
+        """
+        if prefix is None:
+            return tables.tags[self.parameters.tags]
+        names = tables.tags.keys()
+        names.sort()
+        for name in names:
+            if name.startswith(prefix):
+                return tables.tags[name]
+        else:
+            self.error('missing tabletags-%s* section' % prefix)
+            return tables.tags['default']
     def parse_cols(self,cols):
         """
         Build list of column objects from table 'cols' attribute.
         """
-        COLS_RE = r'^((?P<count>\d+)\*)?(?P<align>[<.>]?)(?P<width>\d+%?)?$'
+        COLS_RE = r'^((?P<count>\d+)\*)?(?P<align>[<.>])?(?P<width>\d+%?)?(?P<tags>[a-zA-Z]\w*)?$'
         reo = re.compile(COLS_RE)
         cols = str(cols)
         if re.match(r'^\d+$',cols):
-            self.columns += [Column('1', '.')] * int(cols)
+            self.columns += [Column('1', '.', self.get_tags())] * int(cols)
         else:
             for col in re.split(r'\s*,\s*',cols):
                 mo = reo.match(col)
                 if mo:
                     self.columns += [
-                            Column(mo.group('width'), mo.group('align'))
+                            Column(mo.group('width'), mo.group('align'),
+                                   self.get_tags(mo.group('tags')))
                         ] * int(mo.groupdict().get('count') or 1)
                 else:
                     self.error('malformed column spec: %s' % col,self.start)
@@ -2680,14 +2697,13 @@ class Table(AbstractBlock):
         """
         Generate column related substitution attributes.
         """
-        colspec = self.parameters.tags.colspec
-        if colspec:
-            cols = []
-            i = 0
-            for col in self.columns:
-                i += 1
+        cols = []
+        i = 0
+        for col in self.columns:
+            i += 1
+            colspec = col.tags.colspec
+            if colspec:
                 self.attributes['colalign'] = col.colalign
-                self.attributes['colwidth'] = col.abswidth  # DEPRECATED
                 self.attributes['colabswidth'] = col.abswidth
                 self.attributes['colpcwidth'] = col.pcwidth
                 self.attributes['colnumber'] = str(i+1)
@@ -2696,6 +2712,7 @@ class Table(AbstractBlock):
                     warning('colspec dropped: contains undefined attribute')
                 else:
                     cols.append(s)
+        if cols:
             self.attributes['colspecs'] = writer.newline.join(cols)
     def parse_rows(self, text):
         """
@@ -2710,19 +2727,26 @@ class Table(AbstractBlock):
             self.parse_dsv(text)
         else:
             assert True,'illegal table format'
-    def subs_rows(self, rows, rtag, dtag):
+    def subs_rows(self, rows, rowtype='body'):
         """
         Return a string of output markup from a list of rows, each row
         is a list of raw cell text.
         """
+        tags = self.get_tags()
+        if rowtype == 'header':
+            rtag = tags.headrow
+        elif rowtype == 'footer':
+            rtag = tags.footrow
+        else:
+            rtag = tags.bodyrow
         result = []
         stag,etag = subs_tag(rtag,self.attributes)
         for row in rows:
             result.append(stag)
-            result += self.subs_row(row,dtag)
+            result += self.subs_row(row,rowtype)
             result.append(etag)
         return writer.newline.join(result)
-    def subs_row(self, row, dtag):
+    def subs_row(self, row, rowtype):
         """
         Substitute the list of cells using the cell data tag.
         Returns a list of marked up table cell elements.
@@ -2733,34 +2757,37 @@ class Table(AbstractBlock):
             warning('more row data items than table columns')
         result = []
         for i in range(len(self.columns)):
-            if i > len(row) - 1:
-                data = ''  # Fill missing column data with blanks.
-            else:
-                data = row[i]
             col = self.columns[i]
             self.attributes['colalign'] = col.colalign
-            self.attributes['colwidth'] = col.abswidth  # DEPRECATED
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
             self.attributes['colnumber'] = str(i+1)
+
+            if rowtype == 'header':
+                dtag = col.tags.headdata
+            elif rowtype == 'footer':
+                dtag = col.tags.footdata
+            else:
+                dtag = col.tags.bodydata
+            # Fill missing column data with blanks.
+            if i > len(row) - 1:
+                data = ''
+            else:
+                data = row[i]
             data = [data]
             data = Lex.subs(data, self.parameters.presubs)
             if self.parameters.filter:
                 data = filter_lines(self.parameters.filter,data,self.attributes)
             data = Lex.subs(data, self.parameters.postsubs)
-            ptag = self.parameters.tags.paragraph
-#            print data
-            print ptag
-            if ptag:
-                stag,etag = subs_tag(ptag,self.attributes)
-                text = '\n'.join(data).strip()
-                data = []
-                for para in re.split(r'\n{2,}',text):
-#                    data += [stag] + para.split('\n') + [etag]
-                    data += dovetail_tags([stag],para.split('\n'),[etag])
-            print data
+            if rowtype != 'header':
+                ptag = col.tags.paragraph
+                if ptag:
+                    stag,etag = subs_tag(ptag,self.attributes)
+                    text = '\n'.join(data).strip()
+                    data = []
+                    for para in re.split(r'\n{2,}',text):
+                        data += dovetail_tags([stag],para.split('\n'),[etag])
             stag,etag = subs_tag(dtag,self.attributes)
-#            result = result + [stag] + data + [etag]
             result = result + dovetail_tags([stag],data,[etag])
         return result
     def parse_csv(self,text):
@@ -2855,12 +2882,10 @@ class Table(AbstractBlock):
 
         # Set calculated attributes.
         self.attributes['colcount'] = len(self.columns)
-        self.attributes['cols'] = len(self.columns) # DEPRECATED
         self.build_colspecs()
         self.parse_rows(text)
         # The 'rowcount' attribute is used by the experimental LaTeX backend.
         self.attributes['rowcount'] = str(len(self.rows))
-        self.attributes['rows'] = str(len(self.rows)) # DEPRECATED
         # Generate headrows, footrows, bodyrows.
         # Headrow, footrow and bodyrow data replaces same named attributes in
         # the table markup template. In order to ensure this data does not get
@@ -2868,21 +2893,18 @@ class Table(AbstractBlock):
         # already substituted inline passthroughs) unique placeholders are used
         # (the tab character does not appear elsewhere since it is expanded on
         # input) which are replaced after template attribute substitution.
-        tags = self.parameters.tags
-        print tags
+        print 'attributes:',self.attributes
         headrows = footrows = bodyrows = None
         if self.rows and 'header' in self.parameters.options:
-            headrows = self.subs_rows(self.rows[0:1],
-                    tags.headrow, tags.headdata)
+            headrows = self.subs_rows(self.rows[0:1],'header')
             self.attributes['headrows'] = '\theadrows\t'
             self.rows = self.rows[1:]
         if self.rows and 'footer' in self.parameters.options:
-            footrows = self.subs_rows( self.rows[-1:],
-                    tags.footrow,tags.footdata)
+            footrows = self.subs_rows( self.rows[-1:], 'footer')
             self.attributes['footrows'] = '\tfootrows\t'
             self.rows = self.rows[:-1]
         if self.rows:
-            bodyrows = self.subs_rows(self.rows, tags.bodyrow, tags.bodydata)
+            bodyrows = self.subs_rows(self.rows)
             self.attributes['bodyrows'] = '\tbodyrows\t'
         table = subs_attrs(config.sections[self.parameters.template],
                            self.attributes)

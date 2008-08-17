@@ -1002,7 +1002,9 @@ class Lex:
         # Check for Block Macro.
         if not result and macros.isnext():
             result = macros.current
-#ZZZ: Lists were here.
+        # Check for List.
+        if not result and lists.isnext():
+            result = lists.current
         # Check for DelimitedBlock.
         if not result and blocks.isnext():
             # Skip comment blocks.
@@ -1016,9 +1018,6 @@ class Lex:
 #            result = tables_OLD.current
         if not result and tables.isnext():
             result = tables.current
-        # Check for List.
-        if not result and lists.isnext():
-            result = lists.current
         # Check for BlockTitle.
         if not result and BlockTitle.isnext():
             result = BlockTitle
@@ -2646,10 +2645,12 @@ class Table(AbstractBlock):
             for col in re.split(r'\s*,\s*',cols):
                 mo = reo.match(col)
                 if mo:
-                    self.columns += [
+                    count = int(mo.groupdict().get('count') or 1)
+                    for i in range(count):
+                        self.columns.append(
                             Column(mo.group('width'), mo.group('align'),
                                    self.get_tags(mo.group('tags')))
-                        ] * int(mo.groupdict().get('count') or 1)
+                        )
                 else:
                     self.error('malformed column spec: %s' % col,self.start)
         # Validate widths and calculate missing widths.

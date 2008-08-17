@@ -2689,7 +2689,8 @@ class Table(AbstractBlock):
             col.abswidth = int(self.abswidth * (col.pcwidth/100))
             percents += col.pcwidth
             col.pcwidth = int(col.pcwidth)
-        print 'percents: %f, props: %d' % (percents,props)
+#ZZZ
+#        print 'percents: %f, props: %d' % (percents,props)
         if round(percents) > 100:
             self.error('total width exceeds 100%%: %s' % cols,self.start)
         elif round(percents) < 100:
@@ -2871,9 +2872,9 @@ class Table(AbstractBlock):
         cols = attrs.get('cols', text[0].count(self.parameters.separator))
         self.parse_cols(cols)
 #ZZZ
-        print 'table: abswidth: %d, pcwidth: %d' % (self.abswidth,self.pcwidth)
-        for col in self.columns:
-            print 'columns: width: %s, abswidth: %d, pcwidth: %d' % (col.width,col.abswidth,col.pcwidth)
+#        print 'table: abswidth: %d, pcwidth: %d' % (self.abswidth,self.pcwidth)
+#        for col in self.columns:
+#            print 'columns: width: %s, abswidth: %d, pcwidth: %d' % (col.width,col.abswidth,col.pcwidth)
 #ZZZ: Is this still necessary?
         #TODO: Inherited validate() doesn't set check_msg, needs checking.
         if self.check_msg:  # Skip if table definition was marked invalid.
@@ -2893,7 +2894,8 @@ class Table(AbstractBlock):
         # already substituted inline passthroughs) unique placeholders are used
         # (the tab character does not appear elsewhere since it is expanded on
         # input) which are replaced after template attribute substitution.
-        print 'attributes:',self.attributes
+#ZZZ
+#        print 'attributes:',self.attributes
         headrows = footrows = bodyrows = None
         if self.rows and 'header' in self.parameters.options:
             headrows = self.subs_rows(self.rows[0:1],'header')
@@ -2992,7 +2994,7 @@ class Tables(AbstractBlocks):
                 warning('[%s] table definition: %s' % (b.name,b.check_msg))
     def dump(self):
         AbstractBlocks.dump(self)
-        for k,v in self.tags:
+        for k,v in self.tags.items():
             dump_section('tabletags-'+k, v)
 #
 # END: NEWTABLES
@@ -3033,7 +3035,8 @@ class Macros:
         write('[macros]')
         # Dump all macros except the first (built-in system) macro.
         for m in self.macros[1:]:
-            write('%s=%s%s' % (m.pattern,m.prefix,m.name))
+            # Escape = in pattern.
+            write('%s=%s%s' % (m.pattern.replace('=',r'\='),m.prefix,m.name))
         write('')
     def validate(self):
         # Check all named sections exist.
@@ -3693,6 +3696,7 @@ class Config:
                             # Merge special sections.
                             sections[section] = sections[section] + contents
                         else:
+#ZZZ: looks suspiciously like a temp debug statement.
                             print 'blank section'
                             del sections[section]
                     else:

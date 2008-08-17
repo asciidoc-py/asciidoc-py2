@@ -2386,7 +2386,7 @@ Table with title, header and footer:
 Output:
 
 .An example table
-[tablewidth="40%",cols="<,",grid="all",options="header,footer"]
+[tablewidth="40%",cols="<,",frame="topbot",options="header,footer"]
 |======================
 |Column 1 |Column 2
 |1        |Item 1
@@ -2398,11 +2398,11 @@ Output:
 A table with a numeric ruler and externally sourced CSV data:
 
 ---------------------------------------------------------------------
-[format="csv",cols="1,4*<2",options="header"]
-|===================================================
-ID,Customer Name,Contact Name,Customer Address,Phone
-include::customers.csv[]
-|===================================================
+ [format="csv",cols="1,4*<2",options="header"]
+ |===================================================
+ ID,Customer Name,Contact Name,Customer Address,Phone
+ include::customers.csv[]
+ |===================================================
 ---------------------------------------------------------------------
 
 Renders:
@@ -4540,16 +4540,15 @@ deprecated backends and command-line syntax:
   changed from `-a ^name` to `-a name!`.
 
 .Equivalent command-line syntax
-[grid="all"]
-```~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Version 6 (old),Version 7 (new),Version 7 (backward compatible)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--b html,-b html4,-b html4
--b css,-b xhtml11 -a linkcss -a icons,-b xhtml-deprecated -a css -a linkcss -a icons
--b css-embedded,-b xhtml11 -a icons,-b xhtml-deprecated -a css -a icons
--b xhtml,-b xhtml11,-b xhtml-deprecated
--b docbook-sgml,-b docbook -a sgml,-b docbook -a sgml
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[cols="<5,<8,<10",options="header"]
+|====================================================================
+|Version 6 (old)|Version 7 (new)|Version 7 (backward compatible)
+|-b html|-b html4|-b html4
+|-b css|-b xhtml11 -a linkcss -a icons|-b xhtml-deprecated -a css -a linkcss -a icons
+|-b css-embedded|-b xhtml11 -a icons|-b xhtml-deprecated -a css -a icons
+|-b xhtml|-b xhtml11|-b xhtml-deprecated
+|-b docbook-sgml|-b docbook -a sgml|-b docbook -a sgml
+|====================================================================
 
 If you've customized version 6 distribution stylesheets then you'll
 need to either bring them in line with the new

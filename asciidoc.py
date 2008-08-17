@@ -2762,7 +2762,6 @@ class Table(AbstractBlock):
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
             self.attributes['colnumber'] = str(i+1)
-
             if rowtype == 'header':
                 dtag = col.tags.headdata
             elif rowtype == 'footer':

@@ -2352,90 +2352,66 @@ characters:
 Simple table:
 
 ---------------------------------------------------------------------
- `---`---
- 1   2
- 3   4
- 5   6
- --------
+[tablewidth="15%"]
+|====
+|1 |2
+|3 |4
+|5 |6
+|====
 ---------------------------------------------------------------------
 
 Output:
 
-`---`---
-1   2
-3   4
-5   6
---------
+[tablewidth="15%"]
+|====
+|1 |2
+|3 |4
+|5 |6
+|====
 
 Table with title, header and footer:
 
 ---------------------------------------------------------------------
- .An example table
- [grid="all"]
- '---------.--------------
- Column 1   Column 2
- -------------------------
- 1          Item 1
- 2          Item 2
- 3          Item 3
- -------------------------
- 6          Three items
- -------------------------
+.An example table
+[tablewidth="40%",cols="<,",frame="topbot",options="header,footer"]
+|======================
+|Column 1 |Column 2
+|1        |Item 1
+|2        |Item 2
+|3        |Item 3
+|6        |Three items
+|======================
 ---------------------------------------------------------------------
 
 Output:
 
 .An example table
-[grid="all"]
-`-----------.--------------
-Column 1     Column 2
----------------------------
-1            Item 1
-2            Item 2
-3            Item 3
----------------------------
-6            Three items
----------------------------
-
-Four columns totaling 15% of the 'pagewidth', CSV data:
-
----------------------------------------------------------------------
-[frame="all"]
-````~15
-1,2,3,4
-a,b,c,d
-A,B,C,D
-~~~~~~~~
----------------------------------------------------------------------
-
-Output:
-
-[frame="all"]
-````~15
-1,2,3,4
-a,b,c,d
-A,B,C,D
-~~~~~~~~
+[tablewidth="40%",cols="<,",grid="all",options="header,footer"]
+|======================
+|Column 1 |Column 2
+|1        |Item 1
+|2        |Item 2
+|3        |Item 3
+|6        |Three items
+|======================
 
 A table with a numeric ruler and externally sourced CSV data:
 
 ---------------------------------------------------------------------
- [frame="all", grid="all"]
- .15`20`25`20`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- ID,Customer Name,Contact Name,Customer Address,Phone
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- include::customers.csv[]
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[format="csv",cols="1,4*<2",options="header"]
+|===================================================
+ID,Customer Name,Contact Name,Customer Address,Phone
+include::customers.csv[]
+|===================================================
 ---------------------------------------------------------------------
 
 Renders:
 
-[frame="all", grid="all"]
-.15`20`25`20`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[format="csv",cols="1,4*<2",options="header"]
+|===================================================
 ID,Customer Name,Contact Name,Customer Address,Phone
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 include::customers.csv[]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+|===================================================
 
 AsciiDoc Table Block Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2537,13 +2513,13 @@ separator::
 frame::
   Defines the table border and can take the following values: 'topbot'
   (top and bottom), 'all' (all sides), 'none' and 'sides' (left and
-  right sides). The default value is 'topbot'.
+  right sides). The default value is 'all'.
 
 grid::
   Defines which ruler lines are drawn between table rows and columns.
   The 'grid' attribute value can be any of the following values:
-  'none', 'cols', 'rows' and 'all'. The default value is 'none'. For
-  example `[frame="all", grid="none"]`.
+  'none', 'cols', 'rows' and 'all'. The default value is 'all'. For
+  example `[frame="topbot", grid="none"]`.
 
 format, tablewidth::
   See <<X37,Markup Attributes>> below.

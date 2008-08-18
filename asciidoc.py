@@ -119,22 +119,32 @@ def warning(msg,linenos=True):
 def deprecated(msg, linenos=True):
     console(msg, 'DEPRECATED: ', linenos)
 
-def error(msg, cursor=None):
-    """Report fatal error but don't exit application, continue in the hope of
-    reporting all fatal errors finishing with a non-zero exit code."""
-    console(msg,'ERROR: ', cursor=cursor)
-    document.has_errors = True
-
-def console(msg, prefix='', linenos=True, cursor=None):
-    """Print message to stderr. 'offset' is added to reported line number for
-    warnings emitted when reading ahead."""
-    s = prefix
+def message(msg, prefix='', linenos=True, cursor=None):
+    """
+    Return formatted message string. 'offset' is added to reported line number
+    for warnings emitted when reading ahead.
+    """
     if linenos and reader.cursor:
         if not cursor:
             cursor = reader.cursor
-        s = s + '%s: line %d: ' % (os.path.basename(cursor[0]),cursor[1])
-    s = s + msg
-    print_stderr(s)
+        prefix += '%s: line %d: ' % (os.path.basename(cursor[0]),cursor[1])
+    return prefix + msg
+
+def error(msg, cursor=None, halt=False):
+    """
+    Report fatal error.
+    If halt=True raise EAsciiDoc exception.
+    If halt=False don't exit application, continue in the hope of reporting all
+    fatal errors finishing with a non-zero exit code.
+    """
+    if halt:
+        raise EAsciiDoc, message(msg,cursor=cursor)
+    else:
+        console(msg,'ERROR: ',cursor=cursor)
+        document.has_errors = True
+
+def console(msg, prefix='', linenos=True, cursor=None):
+    print_stderr(message(msg,prefix,linenos,cursor))
 
 def file_in(fname, directory):
     """Return True if file fname resides inside directory."""
@@ -281,14 +291,20 @@ def strip_list(s):
     s = rstrip_list(s)
     return s
 
+def is_array(obj):
+    """
+    Return True if object is list or tuple type.
+    """
+    return isinstance(obj,list) or isinstance(obj,tuple)
+
 def dovetail(lines1, lines2):
     """
     Append list or tuple of strings 'lines2' to list 'lines1'.  Join the last
     non-blank item in 'lines1' with the first non-blank item in 'lines2' into a
     single string.
     """
-    assert isinstance(lines1,list) or isinstance(lines1,tuple)
-    assert isinstance(lines2,list) or isinstance(lines2,tuple)
+    assert is_array(lines1)
+    assert is_array(lines2)
     lines1 = strip_list(lines1)
     lines2 = strip_list(lines2)
     if not lines1 or not lines2:
@@ -1269,12 +1285,12 @@ class Document:
                     error('SYNOPSIS section expected')
                 else:
                     Title.translate()
-                    if Title.dict['title'].upper() <> 'SYNOPSIS':
+                    if Title.attributes['title'].upper() <> 'SYNOPSIS':
                         error('second section must be named SYNOPSIS')
                     if Title.level != 1:
                         error('SYNOPSIS section title must be at level 1')
                     d = {}
-                    d.update(Title.dict)
+                    d.update(Title.attributes)
                     AttributeList.consume(d)
                     stag,etag = config.section2tags('sect-synopsis',d)
                     writer.write(stag)
@@ -1378,7 +1394,7 @@ class Header:
         assert Lex.next() is Title and Title.level == 0
         Title.translate()
         attrs = document.attributes # Alias for readability.
-        attrs['doctitle'] = Title.dict['title']
+        attrs['doctitle'] = Title.attributes['title']
         if document.doctype == 'manpage':
             # manpage title formatted like mantitle(manvolnum).
             mo = re.match(r'^(?P<mantitle>.*)\((?P<manvolnum>.*)\)$',
@@ -1426,7 +1442,7 @@ class Header:
                 error('NAME section expected')
             else:
                 Title.translate()
-                if Title.dict['title'].upper() <> 'NAME':
+                if Title.attributes['title'].upper() <> 'NAME':
                     error('first section must be named NAME')
                 if Title.level != 1:
                     error('NAME section title must be at level 1')
@@ -1591,7 +1607,7 @@ class Title:
     subs = ()
     pattern = None
     level = 0
-    dict = {}
+    attributes = {}
     sectname = None
     section_numbers = [0]*len(underlines)
     dump_dict = {}
@@ -1599,7 +1615,7 @@ class Title:
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     def translate():
-        """Parse the Title.dict and Title.level from the reader. The
+        """Parse the Title.attributes and Title.level from the reader. The
         real work has already been done by parse()."""
         assert Lex.next() is Title
         # Discard title from reader.
@@ -1609,11 +1625,11 @@ class Title:
         # Perform title substitutions.
         if not Title.subs:
             Title.subs = config.subsnormal
-        s = Lex.subs((Title.dict['title'],), Title.subs)
+        s = Lex.subs((Title.attributes['title'],), Title.subs)
         s = writer.newline.join(s)
         if not s:
             warning('blank section title')
-        Title.dict['title'] = s
+        Title.attributes['title'] = s
     translate = staticmethod(translate)
     def isnext():
         lines = reader.read_ahead(2)
@@ -1630,7 +1646,7 @@ class Title:
             if Title.dump_dict.has_key(k):
                 mo = re.match(Title.dump_dict[k], lines[0])
                 if mo:
-                    Title.dict = mo.groupdict()
+                    Title.attributes = mo.groupdict()
                     Title.level = level
                     Title.linecount = 1
                     result = True
@@ -1655,25 +1671,25 @@ class Title:
             if not re.search(r'(?u)\w',title): return False
             mo = re.match(Title.pattern, title)
             if mo:
-                Title.dict = mo.groupdict()
+                Title.attributes = mo.groupdict()
                 Title.level = list(Title.underlines).index(ul[:2])
                 Title.linecount = 2
                 result = True
         # Check for expected pattern match groups.
         if result:
-            if not Title.dict.has_key('title'):
+            if not Title.attributes.has_key('title'):
                 warning('[titles] entry has no <title> group')
-                Title.dict['title'] = lines[0]
-            for k,v in Title.dict.items():
-                if v is None: del Title.dict[k]
+                Title.attributes['title'] = lines[0]
+            for k,v in Title.attributes.items():
+                if v is None: del Title.attributes[k]
         return result
     parse = staticmethod(parse)
-    def load(dict):
-        """Load and validate [titles] section entries from dict."""
-        if dict.has_key('underlines'):
+    def load(entries):
+        """Load and validate [titles] section entries dictionary."""
+        if entries.has_key('underlines'):
             errmsg = 'malformed [titles] underlines entry'
             try:
-                underlines = parse_list(dict['underlines'])
+                underlines = parse_list(entries['underlines'])
             except:
                 raise EAsciiDoc,errmsg
             if len(underlines) != len(Title.underlines):
@@ -1682,27 +1698,27 @@ class Title:
                 if len(s) !=2:
                     raise EAsciiDoc,errmsg
             Title.underlines = tuple(underlines)
-            Title.dump_dict['underlines'] = dict['underlines']
-        if dict.has_key('subs'):
-            Title.subs = parse_options(dict['subs'], SUBS_OPTIONS,
+            Title.dump_dict['underlines'] = entries['underlines']
+        if entries.has_key('subs'):
+            Title.subs = parse_options(entries['subs'], SUBS_OPTIONS,
                 'illegal [titles] subs entry')
-            Title.dump_dict['subs'] = dict['subs']
-        if dict.has_key('sectiontitle'):
-            pat = dict['sectiontitle']
+            Title.dump_dict['subs'] = entries['subs']
+        if entries.has_key('sectiontitle'):
+            pat = entries['sectiontitle']
             if not pat or not is_regexp(pat):
                 raise EAsciiDoc,'malformed [titles] sectiontitle entry'
             Title.pattern = pat
             Title.dump_dict['sectiontitle'] = pat
-        if dict.has_key('blocktitle'):
-            pat = dict['blocktitle']
+        if entries.has_key('blocktitle'):
+            pat = entries['blocktitle']
             if not pat or not is_regexp(pat):
                 raise EAsciiDoc,'malformed [titles] blocktitle entry'
             BlockTitle.pattern = pat
             Title.dump_dict['blocktitle'] = pat
         # Load single-line title patterns.
         for k in ('sect0','sect1','sect2','sect3','sect4'):
-            if dict.has_key(k):
-                pat = dict[k]
+            if entries.has_key(k):
+                pat = entries[k]
                 if not pat or not is_regexp(pat):
                     raise EAsciiDoc,'malformed [titles] %s entry' % k
                 Title.dump_dict[k] = pat
@@ -1717,13 +1733,13 @@ class Title:
         """Set Title section name. First search for section title in
         [specialsections], if not found use default 'sect<level>' name."""
         for pat,sect in config.specialsections.items():
-            mo = re.match(pat,Title.dict['title'])
+            mo = re.match(pat,Title.attributes['title'])
             if mo:
                 title = mo.groupdict().get('title')
                 if title is not None:
-                    Title.dict['title'] = title.strip()
+                    Title.attributes['title'] = title.strip()
                 else:
-                    Title.dict['title'] = mo.group().strip()
+                    Title.attributes['title'] = mo.group().strip()
                 Title.sectname = sect
                 break
         else:
@@ -1817,11 +1833,11 @@ class Section:
         if not document.attributes.get('sectids') is None \
                 and 'id' not in AttributeList.attrs:
             # Generate ids for sections.
-            AttributeList.attrs['id'] = Section.gen_id(Title.dict['title'])
+            AttributeList.attrs['id'] = Section.gen_id(Title.attributes['title'])
         Section.setlevel(Title.level)
-        Title.dict['sectnum'] = Title.getnumber(document.level)
-        AttributeList.consume(Title.dict)
-        stag,etag = config.section2tags(Title.sectname,Title.dict)
+        Title.attributes['sectnum'] = Title.getnumber(document.level)
+        AttributeList.consume(Title.attributes)
+        stag,etag = config.section2tags(Title.sectname,Title.attributes)
         Section.savetag(Title.level,etag)
         writer.write(stag)
         Section.translate_body()
@@ -1865,7 +1881,7 @@ class AbstractBlock:
         self.filter=None    # filter entry.
         self.posattrs=()    # posattrs entry list.
         self.style=None     # Default style.
-        self.styles=OrderedDict()   # Styles dictionary.
+        self.styles=OrderedDict() # Each entry is a styles dictionary.
         # Before a block is processed it's attributes (from it's
         # attributes list) are merged with the block configuration parameters
         # (by self.merge_attributes()) resulting in the template substitution
@@ -1877,13 +1893,8 @@ class AbstractBlock:
         self.parameters=None
         # Leading delimiter match object.
         self.mo=None
-    def error(self, msg, cursor=None):
-        s = re.split('def-',self.name)
-        if len(s) == 1:
-            name = s[0]
-        else:
-            name = s[1]+' '+s[1]
-        error('%s: %s' % (name,msg), cursor)
+    def error(self, msg, cursor=None, halt=False):
+        error('[%s] %s' % (self.name,msg), cursor, halt)
     def is_conf_entry(self,param):
         """Return True if param matches an allowed configuration file entry
         name."""
@@ -1893,55 +1904,86 @@ class AbstractBlock:
         return False
     def load(self,name,entries):
         """Update block definition from section 'entries' dictionary."""
-        for k in entries.keys():
-            if not self.is_conf_entry(k):
-                raise EAsciiDoc,'illegal [%s] entry name: %s' % (name,k)
         self.name = name
-        for k,v in entries.items():
-            if not is_name(k):
-                raise EAsciiDoc, \
-                    'malformed [%s] entry name: %s' % (name,k)
-            if k == 'delimiter':
-                if v and is_regexp(v):
-                    self.delimiter = v
-                else:
-                    raise EAsciiDoc,'malformed [%s] regexp: %s' % (name,v)
-            elif k == 'template':
+        self.update_parameters(entries, self)
+    def update_parameters(self,src,dst=None):
+        """
+        Parse processing parameters from src dictionary to dst object.
+        dst defaults to self.parameters.
+        """
+        dst = dst or self.parameters
+        msg = '[%s] malformed entry %%s: %%s' % self.name
+        def copy(obj,k,v):
+            if isinstance(obj,dict):
+                obj[k] = v
+            else:
+                setattr(obj,k,v)
+        for k,v in src.items():
+            if not re.match(r'\d+',k) and not is_name(k):
+                raise EAsciiDoc, msg % (k,v)
+            if k == 'template':
                 if not is_name(v):
-                    raise EAsciiDoc, \
-                        'malformed [%s] template name: %s' % (name,v)
-                self.template = v
-            elif k == 'style':
-                if not is_name(v):
-                    raise EAsciiDoc, \
-                        'malformed [%s] style name: %s' % (name,v)
-                self.style = v
-            elif k == 'posattrs':
-                self.posattrs = parse_options(v, (),
-                    'illegal [%s] %s: %s' % (name,k,v))
-            elif k == 'options':
-                self.options = parse_options(v,self.OPTIONS,
-                    'illegal [%s] %s: %s' % (name,k,v))
-            elif k == 'presubs' or k == 'subs':
-                self.presubs = parse_options(v,SUBS_OPTIONS,
-                    'illegal [%s] %s: %s' % (name,k,v))
-            elif k == 'postsubs':
-                self.postsubs = parse_options(v,SUBS_OPTIONS,
-                    'illegal [%s] %s: %s' % (name,k,v))
+                    raise EAsciiDoc, msg % (k,v)
+                copy(dst,k,v)
             elif k == 'filter':
-                self.filter = v
+                copy(dst,k,v)
+            elif k == 'options':
+                if isinstance(v,str):
+                    v = parse_options(v,self.OPTIONS, msg % (k,v))
+                copy(dst,k,v)
+            elif k in ('subs','presubs','postsubs'):
+                # Subs is an alias for presubs.
+                if k == 'subs': k = 'presubs'
+                if isinstance(v,str):
+                    v = parse_options(v, SUBS_OPTIONS, msg % (k,v))
+                copy(dst,k,v)
+            elif k == 'delimiter':
+                if v and is_regexp(v):
+                    copy(dst,k,v)
+                else:
+                    raise EAsciiDoc, msg % (k,v)
+            elif k == 'style':
+                if is_name(v):
+                    copy(dst,k,v)
+                else:
+                    raise EAsciiDoc, msg % (k,v)
+            elif k == 'posattrs':
+                v = parse_options(v, (), msg % (k,v))
+                copy(dst,k,v)
             else:
                 mo = re.match(r'^(?P<style>.*)-style$',k)
                 if mo:
                     if not v:
-                        raise EAsciiDoc, 'empty [%s] style: %s' % (name,k)
+                        raise EAsciiDoc, msg % (k,v)
                     style = mo.group('style')
                     d = {}
                     if not parse_named_attributes(v,d):
-                        raise EAsciiDoc,'malformed [%s] style: %s' % (name,v)
+                        raise EAsciiDoc, msg % (k,v)
+                    if 'subs' in d:
+                        # Subs is an alias for presubs.
+                        d['presubs'] = d['subs']
+                        del d['subs']
                     self.styles[style] = d
                 else:
-                    setattr(self,k,v) # Derived class specific entries.
+                    copy(dst,k,v) # Derived class specific entries.
+    def get_param(self,name,params=None):
+        """
+        Return named processing parameter from params dictionary.
+        If the parameter is not in style look in self.parameters.
+        """
+        if params and name in params:
+            return params[name]
+        elif name in self.parameters:
+            return self.parameters[name]
+        else:
+            return None
+    def get_subs(self,params=None):
+        """
+        Return (presubs,postsubs) tuple.
+        """
+        presubs = self.get_param('presubs',params)
+        postsubs = self.get_param('postsubs',params)
+        return (presubs,postsubs)
     def dump(self):
         """Write block definition to stdout."""
         write = lambda s: sys.stdout.write('%s%s' % (s,writer.newline))
@@ -2010,21 +2052,6 @@ class AbstractBlock:
         if not self.presubs:
             self.presubs = config.subsnormal
         self.start = reader.cursor[:]
-    def update_params(self,src,dst):
-        """Copy block processing parameters from src to dst dictionaries."""
-        for k,v in src.items():
-            if k in ('template','filter'):
-                dst[k] = v
-            elif k == 'options':
-                dst[k] = parse_options(v,self.OPTIONS,
-                    'illegal [%s] %s: %s' % (self.name,k,v))
-            elif k in  ('subs','presubs','postsubs'):
-                subs = parse_options(v,SUBS_OPTIONS,
-                    'illegal [%s] %s: %s' % (self.name,k,v))
-                if k == 'subs':
-                    dst['presubs'] = subs
-                else:
-                    dst[k] = subs
     def merge_attributes(self,attrs):
         """
         Use the current blocks attribute list (attrs dictionary) to build a
@@ -2070,7 +2097,7 @@ class AbstractBlock:
         if style is not None:
             if not self.styles.has_key(style):
                 if not isinstance(self,List):   # Lists don't have templates.
-                    warning('missing [%s] %s-style entry' % (self.name,style))
+                    warning('[%s] missing %s-style entry' % (self.name,style))
             else:
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():
@@ -2086,10 +2113,10 @@ class AbstractBlock:
             if self.attributes.has_key(str(i+1)):
                 self.attributes[v] = self.attributes[str(i+1)]
         # Override config and style attributes with attribute list attributes.
-        self.update_params(attrs, self.parameters)
-        assert isinstance(self.parameters.options, tuple)
-        assert isinstance(self.parameters.presubs, tuple)
-        assert isinstance(self.parameters.postsubs, tuple)
+        self.update_parameters(attrs)
+        assert is_array(self.parameters.options)
+        assert is_array(self.parameters.presubs)
+        assert is_array(self.parameters.postsubs)
 
 class AbstractBlocks:
     """List of block definitions."""
@@ -2517,10 +2544,10 @@ class DelimitedBlocks(AbstractBlocks):
 #
 class Column:
     """Table column."""
-    def __init__(self, width, align, tags):
+    def __init__(self, width, align, style=None):
         self.align=align or '.'
         self.width=width
-        self.tags=tags        # tags dictionary.
+        self.style=style      # Style name or None.
         # Calculated attribute values.
         self.colalign=None    # 'left','center','right'.
         self.abswidth=None    # 1..   (page units).
@@ -2536,7 +2563,7 @@ class Table(AbstractBlock):
         self.OPTIONS = ('header','footer')
 #        self.PARAM_NAMES += ('format','tags','separator')
         # tabledef conf file parameters.
-        self.format=None
+        self.format='psv'
         self.separator=None
         self.tags=None          # Name of tabletags-<tags> conf section.
         # Calculated parameters.
@@ -2544,8 +2571,9 @@ class Table(AbstractBlock):
         self.pcwidth = None     # 1..99 (percentage).
         self.rows=[]            # Parsed rows, each row is a list of cell data.
         self.columns=[]         # List of Columns.
+#ZZZ: Unused
         # Other.
-        self.check_msg=''       # Message set by previous self.validate() call.
+#        self.check_msg=''       # Message set by previous self.validate() call.
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2555,29 +2583,26 @@ class Table(AbstractBlock):
         write('')
     def validate(self):
         AbstractBlock.validate(self)
-        """
-        Check table definition and set self.check_msg if invalid else set
-        self.check_msg to blank string.
-        """
         if self.format not in Table.FORMATS:
-            self.check_msg = 'illegal format entry: %s' % self.format
+            self.error('illegal format=%s' % self.format,halt=True)
         self.tags = self.tags or 'default'
-        if self.tags not in tables.tags:
-            self.check_msg = 'missing table tags section: tabletags-%s' % self.tags
+        tags = [self.tags]
+        tags += [s['tags'] for s in self.styles.values() if 'tags' in s]
+        for t in tags:
+            if t not in tables.tags:
+                self.error('missing section: [tabletags-%s]' % t,halt=True)
         if self.separator:
             # Evaluate escape characters.
             self.separator = eval('"'+self.separator+'"')
         #TODO: Move to class Tables
         # Check global table parameters.
-        if config.textwidth is None:
-            self.check_msg = 'missing [miscellaneous] textwidth entry'
         elif config.pagewidth is None:
-            self.check_msg = 'missing [miscellaneous] pagewidth entry'
+            self.error('missing [miscellaneous] entry: pagewidth')
         elif config.pageunits is None:
-            self.check_msg = 'missing [miscellaneous] pageunits entry'
-        else:
-            # No errors.
-            self.check_msg = ''
+            self.error('missing [miscellaneous] entry: pageunits')
+#        else:
+#            # No errors.
+#            self.check_msg = ''
     def validate_attributes(self):
         """Validate and parse table attributes."""
         # Set defaults.
@@ -2589,12 +2614,12 @@ class Table(AbstractBlock):
         for k,v in self.attributes.items():
             if k == 'format':
                 if v not in self.FORMATS:
-                    self.error('illegal [%s] %s: %s' % (self.name,k,v))
+                    self.error('illegal %s=%s' % (k,v))
                 else:
                     format = v
             elif k == 'tags':
                 if v not in tables.tags:
-                    self.error('missing [%s] %s: %s' % (self.name,k,v))
+                    self.error('illegal %s=%s' % (k,v))
                 else:
                     tags = v
             elif k == 'separator':
@@ -2602,7 +2627,7 @@ class Table(AbstractBlock):
                 separator = eval('"'+v+'"')
             elif k == 'tablewidth':
                 if not re.match(r'^\d{1,2}%$',v):
-                    self.error('illegal [%s] %s: %s' % (self.name,k,v))
+                    self.error('illegal %s=%s' % (k,v))
                 else:
                     abswidth = float(v[:-1])/100 * config.pagewidth
                     pcwidth = float(v[:-1])
@@ -2610,37 +2635,41 @@ class Table(AbstractBlock):
         if not separator:
             separator = Table.SEPARATORS[format]
         if format == 'csv' and len(separator) != 1:
-            self.error('illegal csv separator %s' % separator)
+            self.error('illegal csv separator=%s' % separator)
             separator = ','
         self.parameters.format = format
         self.parameters.tags = tags
         self.parameters.separator = separator
         self.abswidth = abswidth
         self.pcwidth = pcwidth
-    def get_tags(self,prefix=None):
+    def get_tags(self,params):
+        tags = self.get_param('tags',params)
+        assert(tags and tags in tables.tags)
+        return tables.tags[tags]
+    def get_style(self,prefix):
         """
-        Return the current tags dictionary.
-        If prefix is passed return the first tag set that starts with prefix.
+        Return the style dictionary whose name starts with 'prefix'.
         """
         if prefix is None:
-            return tables.tags[self.parameters.tags]
-        names = tables.tags.keys()
+            return None
+        names = self.styles.keys()
         names.sort()
         for name in names:
             if name.startswith(prefix):
-                return tables.tags[name]
+                return self.styles[name]
         else:
-            self.error('missing tabletags-%s* section' % prefix)
-            return tables.tags['default']
+            self.error('missing style: %s*' % prefix)
+            return None
     def parse_cols(self,cols):
         """
         Build list of column objects from table 'cols' attribute.
         """
-        COLS_RE = r'^((?P<count>\d+)\*)?(?P<align>[<.>])?(?P<width>\d+%?)?(?P<tags>[a-zA-Z]\w*)?$'
+        COLS_RE = r'^((?P<count>\d+)\*)?(?P<align>[<.>])?(?P<width>\d+%?)?(?P<style>[a-zA-Z]\w*)?$'
         reo = re.compile(COLS_RE)
         cols = str(cols)
         if re.match(r'^\d+$',cols):
-            self.columns += [Column('1', '.', self.get_tags())] * int(cols)
+            for i in range(int(cols)):
+                self.columns.append(Column('1', '.'))
         else:
             for col in re.split(r'\s*,\s*',cols):
                 mo = reo.match(col)
@@ -2649,10 +2678,10 @@ class Table(AbstractBlock):
                     for i in range(count):
                         self.columns.append(
                             Column(mo.group('width'), mo.group('align'),
-                                   self.get_tags(mo.group('tags')))
+                                   self.get_style(mo.group('style')))
                         )
                 else:
-                    self.error('malformed column spec: %s' % col,self.start)
+                    self.error('illegal column spec: %s' % col,self.start)
         # Validate widths and calculate missing widths.
         n = 0; percents = 0; props = 0
         for col in self.columns:
@@ -2703,7 +2732,8 @@ class Table(AbstractBlock):
         i = 0
         for col in self.columns:
             i += 1
-            colspec = col.tags.colspec
+#            print col.style
+            colspec = self.get_tags(col.style).colspec
             if colspec:
                 self.attributes['colalign'] = col.colalign
                 self.attributes['colabswidth'] = col.abswidth
@@ -2734,7 +2764,7 @@ class Table(AbstractBlock):
         Return a string of output markup from a list of rows, each row
         is a list of raw cell text.
         """
-        tags = self.get_tags()
+        tags = tables.tags[self.parameters.tags]
         if rowtype == 'header':
             rtag = tags.headrow
         elif rowtype == 'footer':
@@ -2760,28 +2790,33 @@ class Table(AbstractBlock):
         result = []
         for i in range(len(self.columns)):
             col = self.columns[i]
+            tags = self.get_tags(col.style)
             self.attributes['colalign'] = col.colalign
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
             self.attributes['colnumber'] = str(i+1)
             if rowtype == 'header':
-                dtag = col.tags.headdata
+                dtag = tags.headdata
             elif rowtype == 'footer':
-                dtag = col.tags.footdata
+                dtag = tags.footdata
             else:
-                dtag = col.tags.bodydata
+                dtag = tags.bodydata
             # Fill missing column data with blanks.
             if i > len(row) - 1:
                 data = ''
             else:
                 data = row[i]
+            presubs,postsubs = self.get_subs(col.style)
+#            print 'col.style: ', col.style
+#            print 'presubs: ', presubs
+#            print 'postsubs: ', postsubs
             data = [data]
-            data = Lex.subs(data, self.parameters.presubs)
-            if self.parameters.filter:
-                data = filter_lines(self.parameters.filter,data,self.attributes)
-            data = Lex.subs(data, self.parameters.postsubs)
+            data = Lex.subs(data, presubs)
+            data = filter_lines(self.get_param('filter',col.style),
+                                data, self.attributes)
+            data = Lex.subs(data, postsubs)
             if rowtype != 'header':
-                ptag = col.tags.paragraph
+                ptag = tags.paragraph
                 if ptag:
                     stag,etag = subs_tag(ptag,self.attributes)
                     text = '\n'.join(data).strip()
@@ -2828,7 +2863,7 @@ class Table(AbstractBlock):
         text = '\n'.join(text)
         separator = self.parameters.separator
         if text[0] != separator:
-            self.error('missing leading separator: %s',separator)
+            self.error('missing leading separator: %s',separator,self.start)
         else:
             text = text[1:]
         cells = text.split(separator)
@@ -2877,9 +2912,9 @@ class Table(AbstractBlock):
 #            print 'columns: width: %s, abswidth: %d, pcwidth: %d' % (col.width,col.abswidth,col.pcwidth)
 #ZZZ: Is this still necessary?
         #TODO: Inherited validate() doesn't set check_msg, needs checking.
-        if self.check_msg:  # Skip if table definition was marked invalid.
-            warning('skipping %s table: %s' % (self.name,self.check_msg))
-            return
+#        if self.check_msg:  # Skip if table definition was marked invalid.
+#            warning('skipping %s table: %s' % (self.name,self.check_msg))
+#            return
 
         # Set calculated attributes.
         self.attributes['colcount'] = len(self.columns)
@@ -2958,8 +2993,6 @@ class Tables(AbstractBlocks):
                 break
         else:
             raise EAsciiDoc,'missing [tabledef-default] section'
-        # Set default table defaults.
-        default.format = default.format or 'psv'
         # Propagate defaults to unspecified table parameters.
         for b in self.blocks:
             if b is not default:
@@ -2990,8 +3023,6 @@ class Tables(AbstractBlocks):
         # Check table definitions are valid.
         for b in self.blocks:
             b.validate()
-            if config.verbose and b.check_msg:
-                warning('[%s] table definition: %s' % (b.name,b.check_msg))
     def dump(self):
         AbstractBlocks.dump(self)
         for k,v in self.tags.items():
@@ -3576,7 +3607,7 @@ class Writer:
             self.lines_out = self.lines_out + 1
         else:
             for arg in args:
-                if isinstance(arg,list) or isinstance(arg,tuple):
+                if is_array(arg):
                     for s in arg:
                         self.write_line(s)
                 elif arg is not None:
@@ -3637,7 +3668,7 @@ class Config:
         self.header_footer = True       # -s, --no-header-footer option.
         # [miscellaneous] section.
         self.tabsize = 8
-        self.textwidth = 70
+        self.textwidth = 70             # DEPRECATED: Old tables only.
         self.newline = '\r\n'
         self.pagewidth = None
         self.pageunits = None
@@ -3782,7 +3813,7 @@ class Config:
                 else:
                     setattr(self, name, validate(d[name],rule,errmsg))
         set_misc('tabsize','int($)>0',intval=True)
-        set_misc('textwidth','int($)>0',intval=True)
+        set_misc('textwidth','int($)>0',intval=True) # DEPRECATED: Old tables only.
         set_misc('pagewidth','int($)>0',intval=True)
         set_misc('pageunits')
         set_misc('outfilesuffix')

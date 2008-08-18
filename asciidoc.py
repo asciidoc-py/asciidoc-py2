@@ -1215,6 +1215,7 @@ class Document:
         self.attributes['backend-'+document.backend] = ''
         self.attributes['doctype-'+document.doctype] = ''
         self.attributes[document.backend+'-'+document.doctype] = ''
+        self.attributes['asciidoc-file'] = APP_FILE
         self.attributes['asciidoc-dir'] = APP_DIR
         self.attributes['user-dir'] = USER_DIR
         if self.infile != '<stdin>':
@@ -2051,7 +2052,8 @@ class AbstractBlock:
         """Translate block from document reader."""
         if not self.presubs:
             self.presubs = config.subsnormal
-        self.start = reader.cursor[:]
+        if reader.cursor:
+            self.start = reader.cursor[:]
     def merge_attributes(self,attrs):
         """
         Use the current blocks attribute list (attrs dictionary) to build a
@@ -4291,8 +4293,9 @@ def main():
         print_stderr('FAILED: Python 2.3 or better required.')
         sys.exit(1)
     # Locate the executable and configuration files directory.
-    global APP_DIR,USER_DIR
-    APP_DIR = os.path.dirname(os.path.realpath(sys.argv[0]))
+    global APP_FILE,APP_DIR,USER_DIR
+    APP_FILE = os.path.realpath(sys.argv[0])
+    APP_DIR = os.path.dirname(APP_FILE)
     USER_DIR = os.environ.get('HOME')
     if USER_DIR is not None:
         USER_DIR = os.path.join(USER_DIR,'.asciidoc')

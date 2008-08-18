@@ -2927,7 +2927,8 @@ class Macros:
         write('[macros]')
         # Dump all macros except the first (built-in system) macro.
         for m in self.macros[1:]:
-            write('%s=%s%s' % (m.pattern,m.prefix,m.name))
+            # Escape = in pattern.
+            write('%s=%s%s' % (m.pattern.replace('=',r'\='),m.prefix,m.name))
         write('')
     def validate(self):
         # Check all named sections exist.

@@ -1957,6 +1957,8 @@ class AbstractBlock:
                     if not v:
                         raise EAsciiDoc, msg % (k,v)
                     style = mo.group('style')
+                    if not is_name(style):
+                        raise EAsciiDoc, msg % (k,v)
                     d = {}
                     if not parse_named_attributes(v,d):
                         raise EAsciiDoc, msg % (k,v)
@@ -2558,7 +2560,7 @@ class Column:
 class Table(AbstractBlock):
     ALIGNMENTS = {'<':'left', '>':'right', '.':'center'}
     FORMATS = ('psv','csv','dsv')
-    SEPARATORS = dict(psv='|', csv=',', dsv=':')
+    SEPARATORS = dict(psv='|', csv=',', dsv=r':|\n')
     def __init__(self):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('format','tags','separator')
@@ -2625,8 +2627,7 @@ class Table(AbstractBlock):
                 else:
                     tags = v
             elif k == 'separator':
-                # Evaluate escape characters.
-                separator = eval('"'+v+'"')
+                separator = v
             elif k == 'tablewidth':
                 if not re.match(r'^\d{1,2}%$',v):
                     self.error('illegal %s=%s' % (k,v))
@@ -2636,9 +2637,15 @@ class Table(AbstractBlock):
         # Calculate separator if it has not been specified.
         if not separator:
             separator = Table.SEPARATORS[format]
-        if format == 'csv' and len(separator) != 1:
-            self.error('illegal csv separator=%s' % separator)
-            separator = ','
+        if len(separator) > 1:
+            if format == 'csv':
+                self.error('illegal csv separator=%s' % separator)
+                separator = ','
+            else:
+                if not is_regexp(separator):
+                    self.error('illegal multi-character separator=%s' %
+                            separator)
+                separator = '(?ms)'+separator
         self.parameters.format = format
         self.parameters.tags = tags
         self.parameters.separator = separator
@@ -2753,12 +2760,10 @@ class Table(AbstractBlock):
         Parse the table source text into self.rows (a list of rows, each row
         is a list of raw cell text.
         """
-        if self.parameters.format == 'psv':
-            self.parse_psv(text)
+        if self.parameters.format in ('psv','dsv'):
+            self.parse_psv_dsv(text)
         elif self.parameters.format == 'csv':
             self.parse_csv(text)
-        elif self.parameters.format == 'dsv':
-            self.parse_dsv(text)
         else:
             assert True,'illegal table format'
     def subs_rows(self, rows, rowtype='body'):
@@ -2786,7 +2791,7 @@ class Table(AbstractBlock):
         Returns a list of marked up table cell elements.
         """
         if len(row) < len(self.columns):
-            warning('fewer row data items then table columns')
+            warning('fewer row data items than table columns')
         if len(row) > len(self.columns):
             warning('more row data items than table columns')
         result = []
@@ -2850,32 +2855,45 @@ class Table(AbstractBlock):
         """
         # dsv separator may have escaped chars.
         for row in text:
-            # Skip blank lines
-            if row == '': continue
-            # Unescape escaped characters.
-            row = eval('"'+row.replace('"','\\"')+'"')
+#ZZZ: If you want this do it in a filter.
+#            # Skip blank lines
+#            if row == '': continue
+#ZZZ: If you want this do it in a filter.
+#            # Unescape escaped characters.
+#            row = row.replace('"','\\"')
+#            row = row.replace("'","\\'")
+#            row = eval('"""'+row+'"""')
             cells = row.split(self.parameters.separator)
             cells = [s.strip() for s in cells]
             self.rows.append(cells[:])
-    def parse_psv(self,text):
+#    def parse_psv(self,text):
+    def parse_psv_dsv(self,text):
         """
         Parse the table source text and return a list of rows, each row
         is a list of raw cell text.
         """
         text = '\n'.join(text)
         separator = self.parameters.separator
-        if text[0] != separator:
-            self.error('missing leading separator: %s',separator,self.start)
+        format = self.parameters.format
+        if len(separator) == 1:
+            cells = text.split(separator)
         else:
-            text = text[1:]
-        cells = text.split(separator)
+            cells = re.split(separator,text)
+        if format == 'psv':
+            # We expect a blank item preceeding first cell.
+            if cells[0] != '':
+                self.error('missing leading separator: %s' % separator,
+                        self.start)
+            else:
+                cells.pop(0)
         colcount = len(self.columns)
-        n = len(cells) % colcount
-        if n != 0:
-            #TODO: Better message (line numbers).
-            warning('cells missing from last row')
-            cells += [''] * (colcount - n)
-        assert(len(cells) % colcount == 0)
+#ZZZ: This is caught in parse_row()
+#        n = len(cells) % colcount
+#        if n != 0:
+#            #TODO: Better message (line numbers).
+#            warning('cells missing from last row')
+#            cells += [''] * (colcount - n)
+#        assert(len(cells) % colcount == 0)
         for i in range(0, len(cells), colcount):
             self.rows.append(cells[i:i+colcount])
     def translate(self):
@@ -2905,8 +2923,12 @@ class Table(AbstractBlock):
         if len(text) == 0:
             warning('[%s] table is empty' % self.name)
             return
-        # Calculate the columns.
-        cols = attrs.get('cols', text[0].count(self.parameters.separator))
+        cols = attrs.get('cols')
+        if not cols:
+            # Calculate column count from number of delimiters in first line.
+            cols = text[0].count(self.parameters.separator)
+            if self.parameters.format == 'dsv':
+                cols += 1
         self.parse_cols(cols)
 #ZZZ
 #        print 'table: abswidth: %d, pcwidth: %d' % (self.abswidth,self.pcwidth)

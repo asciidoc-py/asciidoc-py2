@@ -2761,7 +2761,10 @@ class Table(AbstractBlock):
         is a list of raw cell text.
         """
         if self.parameters.format in ('psv','dsv'):
-            self.parse_psv_dsv(text)
+            cells = self.parse_psv_dsv(text)
+            colcount = len(self.columns)
+            for i in range(0, len(cells), colcount):
+                self.rows.append(cells[i:i+colcount])
         elif self.parameters.format == 'csv':
             self.parse_csv(text)
         else:
@@ -2853,6 +2856,7 @@ class Table(AbstractBlock):
                 self.rows.append(row)
         except:
             self.error('csv parse error: %s' % row)
+#ZZZ: Unused
     def parse_dsv(self,text):
         """
         Parse the table source text and return a list of rows, each row
@@ -2871,11 +2875,10 @@ class Table(AbstractBlock):
             cells = row.split(self.parameters.separator)
             cells = [s.strip() for s in cells]
             self.rows.append(cells[:])
-#    def parse_psv(self,text):
     def parse_psv_dsv(self,text):
         """
-        Parse the table source text and return a list of rows, each row
-        is a list of raw cell text.
+        Parse list of PSV or DSV table source text lines and return a list of
+        cells.
         """
         text = '\n'.join(text)
         separator = self.parameters.separator
@@ -2891,7 +2894,7 @@ class Table(AbstractBlock):
                         self.start)
             else:
                 cells.pop(0)
-        colcount = len(self.columns)
+        return cells
 #ZZZ: This is caught in parse_row()
 #        n = len(cells) % colcount
 #        if n != 0:
@@ -2899,8 +2902,6 @@ class Table(AbstractBlock):
 #            warning('cells missing from last row')
 #            cells += [''] * (colcount - n)
 #        assert(len(cells) % colcount == 0)
-        for i in range(0, len(cells), colcount):
-            self.rows.append(cells[i:i+colcount])
     def translate(self):
         AbstractBlock.translate(self)
         reader.read()   # Discard delimiter.
@@ -2930,10 +2931,11 @@ class Table(AbstractBlock):
             return
         cols = attrs.get('cols')
         if not cols:
-            # Calculate column count from number of delimiters in first line.
-            cols = text[0].count(self.parameters.separator)
-            if self.parameters.format == 'dsv':
-                cols += 1
+            # Calculate column count from number of items in first line.
+            if self.parameters.format == 'csv':
+                cols = text[0].count(self.parameters.separator)
+            else:
+                cols = len(self.parse_psv_dsv(text[:1]))
         self.parse_cols(cols)
 #ZZZ
 #        print 'table: abswidth: %d, pcwidth: %d' % (self.abswidth,self.pcwidth)

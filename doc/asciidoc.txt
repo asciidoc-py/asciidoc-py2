@@ -3557,7 +3557,7 @@ Styles
 A style is a set of block attributes bundled as a single named
 attribute. The following example defines a style named 'verbatim':
 
-  verbatim-style=template="literalblock",subs="verbatim",font="monospaced"
+  verbatim-style=template="literalblock",subs="verbatim"
 
 - All style parameter names must be suffixed with `-style` and the
   style parameter value is in the form of a list of <<X21,named

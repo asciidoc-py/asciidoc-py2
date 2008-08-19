@@ -2813,13 +2813,18 @@ class Table(AbstractBlock):
                 data = ''
             else:
                 data = row[i]
-            presubs,postsubs = self.get_subs(col.style)
-#            print 'col.style: ', col.style
+            # Format header cells with the table style not column style.
+            if rowtype == 'header':
+                colstyle = None
+            else:
+                colstyle = col.style
+            presubs,postsubs = self.get_subs(colstyle)
+#            print 'colstyle: ', colstyle
 #            print 'presubs: ', presubs
 #            print 'postsubs: ', postsubs
             data = [data]
             data = Lex.subs(data, presubs)
-            data = filter_lines(self.get_param('filter',col.style),
+            data = filter_lines(self.get_param('filter',colstyle),
                                 data, self.attributes)
             data = Lex.subs(data, postsubs)
             if rowtype != 'header':

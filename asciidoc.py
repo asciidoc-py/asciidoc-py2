@@ -2548,9 +2548,9 @@ class DelimitedBlocks(AbstractBlocks):
 #
 class Column:
     """Table column."""
-    def __init__(self, width, align, style=None):
-        self.align=align or '.'
-        self.width=width
+    def __init__(self, width=None, align=None, style=None):
+        self.width=width or '1'
+        self.align=align or '<'
         self.style=style      # Style name or None.
         # Calculated attribute values.
         self.colalign=None    # 'left','center','right'.
@@ -2678,7 +2678,7 @@ class Table(AbstractBlock):
         cols = str(cols)
         if re.match(r'^\d+$',cols):
             for i in range(int(cols)):
-                self.columns.append(Column('1', '.'))
+                self.columns.append(Column())
         else:
             for col in re.split(r'\s*,\s*',cols):
                 mo = reo.match(col)

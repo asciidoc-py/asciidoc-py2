@@ -172,9 +172,11 @@ def is_safe_file(fname, directory=None):
         directory = '.'
     return not safe() or file_in(fname, directory)
 
-# Return file name which must reside in the parent file directory.
-# Return None if file is not found or not safe.
 def safe_filename(fname, parentdir):
+    """
+    Return file name which must reside in the parent file directory.
+    Return None if file is not found or not safe.
+    """
     if not os.path.isabs(fname):
         # Include files are relative to parent document
         # directory.
@@ -2575,9 +2577,6 @@ class Table(AbstractBlock):
         self.pcwidth = None     # 1..99 (percentage).
         self.rows=[]            # Parsed rows, each row is a list of cell data.
         self.columns=[]         # List of Columns.
-#ZZZ: Unused
-        # Other.
-#        self.check_msg=''       # Message set by previous self.validate() call.
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2604,9 +2603,6 @@ class Table(AbstractBlock):
             self.error('missing [miscellaneous] entry: pagewidth')
         elif config.pageunits is None:
             self.error('missing [miscellaneous] entry: pageunits')
-#        else:
-#            # No errors.
-#            self.check_msg = ''
     def validate_attributes(self):
         """Validate and parse table attributes."""
         # Set defaults.
@@ -2727,8 +2723,6 @@ class Table(AbstractBlock):
             col.abswidth = int(self.abswidth * (col.pcwidth/100))
             percents += col.pcwidth
             col.pcwidth = int(col.pcwidth)
-#ZZZ
-#        print 'percents: %f, props: %d' % (percents,props)
         if round(percents) > 100:
             self.error('total width exceeds 100%%: %s' % cols,self.start)
         elif round(percents) < 100:
@@ -2741,7 +2735,6 @@ class Table(AbstractBlock):
         i = 0
         for col in self.columns:
             i += 1
-#            print col.style
             colspec = self.get_tags(col.style).colspec
             if colspec:
                 self.attributes['colalign'] = col.colalign
@@ -2822,9 +2815,6 @@ class Table(AbstractBlock):
             else:
                 colstyle = col.style
             presubs,postsubs = self.get_subs(colstyle)
-#            print 'colstyle: ', colstyle
-#            print 'presubs: ', presubs
-#            print 'postsubs: ', postsubs
             data = [data]
             data = Lex.subs(data, presubs)
             data = filter_lines(self.get_param('filter',colstyle),
@@ -2856,25 +2846,6 @@ class Table(AbstractBlock):
                 self.rows.append(row)
         except:
             self.error('csv parse error: %s' % row)
-#ZZZ: Unused
-    def parse_dsv(self,text):
-        """
-        Parse the table source text and return a list of rows, each row
-        is a list of raw cell text.
-        """
-        # dsv separator may have escaped chars.
-        for row in text:
-#ZZZ: If you want this do it in a filter.
-#            # Skip blank lines
-#            if row == '': continue
-#ZZZ: If you want this do it in a filter.
-#            # Unescape escaped characters.
-#            row = row.replace('"','\\"')
-#            row = row.replace("'","\\'")
-#            row = eval('"""'+row+'"""')
-            cells = row.split(self.parameters.separator)
-            cells = [s.strip() for s in cells]
-            self.rows.append(cells[:])
     def parse_psv_dsv(self,text):
         """
         Parse list of PSV or DSV table source text lines and return a list of
@@ -2895,13 +2866,6 @@ class Table(AbstractBlock):
             else:
                 cells.pop(0)
         return cells
-#ZZZ: This is caught in parse_row()
-#        n = len(cells) % colcount
-#        if n != 0:
-#            #TODO: Better message (line numbers).
-#            warning('cells missing from last row')
-#            cells += [''] * (colcount - n)
-#        assert(len(cells) % colcount == 0)
     def translate(self):
         AbstractBlock.translate(self)
         reader.read()   # Discard delimiter.
@@ -2937,16 +2901,6 @@ class Table(AbstractBlock):
             else:
                 cols = len(self.parse_psv_dsv(text[:1]))
         self.parse_cols(cols)
-#ZZZ
-#        print 'table: abswidth: %d, pcwidth: %d' % (self.abswidth,self.pcwidth)
-#        for col in self.columns:
-#            print 'columns: width: %s, abswidth: %d, pcwidth: %d' % (col.width,col.abswidth,col.pcwidth)
-#ZZZ: Is this still necessary?
-        #TODO: Inherited validate() doesn't set check_msg, needs checking.
-#        if self.check_msg:  # Skip if table definition was marked invalid.
-#            warning('skipping %s table: %s' % (self.name,self.check_msg))
-#            return
-
         # Set calculated attributes.
         self.attributes['colcount'] = len(self.columns)
         self.build_colspecs()
@@ -2960,8 +2914,6 @@ class Table(AbstractBlock):
         # already substituted inline passthroughs) unique placeholders are used
         # (the tab character does not appear elsewhere since it is expanded on
         # input) which are replaced after template attribute substitution.
-#ZZZ
-#        print 'attributes:',self.attributes
         headrows = footrows = bodyrows = None
         if self.rows and 'header' in self.parameters.options:
             headrows = self.subs_rows(self.rows[0:1],'header')
@@ -3758,8 +3710,6 @@ class Config:
                             # Merge special sections.
                             sections[section] = sections[section] + contents
                         else:
-#ZZZ: looks suspiciously like a temp debug statement.
-                            print 'blank section'
                             del sections[section]
                     else:
                         sections[section] = contents

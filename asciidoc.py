@@ -2572,7 +2572,11 @@ class Column:
 class Table(AbstractBlock):
     ALIGNMENTS = {'<':'left', '>':'right', '.':'center'}
     FORMATS = ('psv','csv','dsv')
-    SEPARATORS = dict(psv='|', csv=',', dsv=r':|\n')
+    SEPARATORS = dict(
+                    csv=',',
+                    dsv=r':|\n',
+                    psv=r'((?P<cellcount>\d+)\*)?\|',
+                )
     def __init__(self):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('format','tags','separator')
@@ -2642,15 +2646,15 @@ class Table(AbstractBlock):
         # Calculate separator if it has not been specified.
         if not separator:
             separator = Table.SEPARATORS[format]
-        if len(separator) > 1:
-            if format == 'csv':
+        if format == 'csv':
+            if len(separator) > 1:
                 self.error('illegal csv separator=%s' % separator)
                 separator = ','
-            else:
-                if not is_regexp(separator):
-                    self.error('illegal multi-character separator=%s' %
-                            separator)
-                separator = '(?msu)'+separator
+        else:
+            if not is_regexp(separator):
+                self.error('illegal multi-character separator=%s' %
+                        separator)
+            separator = '(?msu)'+separator
         self.parameters.format = format
         self.parameters.tags = tags
         self.parameters.separator = separator
@@ -2863,10 +2867,19 @@ class Table(AbstractBlock):
         text = '\n'.join(text)
         separator = self.parameters.separator
         format = self.parameters.format
-        if len(separator) == 1:
-            cells = text.split(separator)
-        else:
-            cells = re.split(separator,text)
+        start = 0
+        cellcount = 1
+        cells = []
+        for mo in re.finditer(separator,text):
+            cell = text[start:mo.start()]
+            for i in range(cellcount):
+                cells.append(cell)
+            start = mo.end()
+            cellcount = int(mo.groupdict().get('cellcount') or '1')
+        # Last cell follows final separator.
+        cell = text[start:]
+        for i in range(cellcount):
+            cells.append(cell)
         if format == 'psv':
             # We expect a blank item preceeding first cell.
             if cells[0] != '':

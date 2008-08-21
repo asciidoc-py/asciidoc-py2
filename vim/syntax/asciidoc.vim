@@ -70,7 +70,7 @@ syn match asciidocSidebarDelimiter /^*\{4,}$/
 
 "See http://vimdoc.sourceforge.net/htmldoc/usr_44.html for excluding region
 "contents from highlighting.
-syn match asciidocTablePrefix /|/ containedin=asciidocTableBlock contained
+syn match asciidocTablePrefix /\(\d\+\*\)\?|/ containedin=asciidocTableBlock contained
 syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^|=\{3,}$/ end=/^|=\{3,}$/ keepend contains=ALL
 syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^#\{4,}$/ end=/^#\{4,}$/ keepend contains=ALL
 syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^:\{4,}$/ end=/^:\{4,}$/ keepend contains=ALL

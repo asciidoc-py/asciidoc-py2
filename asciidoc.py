@@ -2652,7 +2652,7 @@ class Table(AbstractBlock):
                 separator = ','
         else:
             if not is_regexp(separator):
-                self.error('illegal multi-character separator=%s' %
+                self.error('illegal regular expression: separator=%s' %
                         separator)
             separator = '(?msu)'+separator
         self.parameters.format = format
@@ -2870,18 +2870,23 @@ class Table(AbstractBlock):
         start = 0
         cellcount = 1
         cells = []
+        cell = ''
         for mo in re.finditer(separator,text):
-            cell = text[start:mo.start()]
-            for i in range(cellcount):
-                cells.append(cell)
+            cell += text[start:mo.start()]
+            if cell.endswith('\\'):
+                cell = cell[:-1]+mo.group()
+            else:
+                for i in range(cellcount):
+                    cells.append(cell)
+                cellcount = int(mo.groupdict().get('cellcount') or '1')
+                cell = ''
             start = mo.end()
-            cellcount = int(mo.groupdict().get('cellcount') or '1')
         # Last cell follows final separator.
-        cell = text[start:]
+        cell += text[start:]
         for i in range(cellcount):
             cells.append(cell)
+        # We expect a dummy blank item preceeding first PSV cell.
         if format == 'psv':
-            # We expect a blank item preceeding first cell.
             if cells[0] != '':
                 self.error('missing leading separator: %s' % separator,
                         self.start)

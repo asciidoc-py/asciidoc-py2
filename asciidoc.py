@@ -2418,6 +2418,16 @@ class List(AbstractBlock):
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
         self.merge_attributes(attrs)
+        if 'width' in self.attributes:
+            # Set horizontal list 'labelwidth' and 'itemwidth' attributes.
+            v = str(self.attributes['width'])
+            mo = re.match(r'^(\d{1,2})%?$',v)
+            if mo:
+                labelwidth = int(mo.group(1))
+                self.attributes['labelwidth'] = str(labelwidth)
+                self.attributes['itemwidth'] = str(100-labelwidth)
+            else:
+                self.error('illegal attribute value: label="%s"' % v)
         stag,etag = config.tag(self.listtag, self.attributes)
         if stag:
             writer.write(stag)
@@ -2567,7 +2577,6 @@ class Table(AbstractBlock):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('format','tags','separator')
         self.OPTIONS = ('header','footer')
-#        self.PARAM_NAMES += ('format','tags','separator')
         # tabledef conf file parameters.
         self.format='psv'
         self.separator=None
@@ -2641,7 +2650,7 @@ class Table(AbstractBlock):
                 if not is_regexp(separator):
                     self.error('illegal multi-character separator=%s' %
                             separator)
-                separator = '(?ms)'+separator
+                separator = '(?msu)'+separator
         self.parameters.format = format
         self.parameters.tags = tags
         self.parameters.separator = separator

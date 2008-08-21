@@ -1481,7 +1481,7 @@ labitur dolorum an. Est ne magna primis adolescens.
   - Vivamus fringilla mi eu lacus.
   - Donec eget arcu bibendum nunc consequat lobortis.
 
-[WARNING]
+[NOTE]
 =====================================================================
 - Use vertical labeled lists in preference to horizontal labeled lists
   -- current PDF toolchains do not make a good job of determining
@@ -1490,6 +1490,8 @@ labitur dolorum an. Est ne magna primis adolescens.
   should not be nested because the 'DocBook XML V4.2' DTD does not
   permit nested informal tables (although <<X13,DocBook XSL
   Stylesheets>> process them correctly).
+- The label width can be set as a percentage of the total width by
+  setting the 'width' attribute e.g. `width="10%"`
 =====================================================================
 
 Question and Answer Lists
@@ -1568,7 +1570,7 @@ elements (excluding section Titles and BlockTitles) may be included in
 a list item using this technique.
 
 You also need to use list item continuation if a nested list is
-accompanied by an <<Xi21,attribute list>>.
+accompanied by an <<X21,attribute list>>.
 
 Here's an example of list item continuation:
 

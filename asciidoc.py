@@ -33,9 +33,7 @@ NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attrbibute name.
 # Utility functions and classes.
 #---------------------------------------------------------------------------
 
-class EAsciiDoc(Exception):
-    pass
-
+class EAsciiDoc(Exception): pass
 
 class OrderedDict(dict):
     """
@@ -2654,7 +2652,6 @@ class Table(AbstractBlock):
             if not is_regexp(separator):
                 self.error('illegal regular expression: separator=%s' %
                         separator)
-            separator = '(?msu)'+separator
         self.parameters.format = format
         self.parameters.tags = tags
         self.parameters.separator = separator
@@ -2865,7 +2862,7 @@ class Table(AbstractBlock):
         cells.
         """
         text = '\n'.join(text)
-        separator = self.parameters.separator
+        separator = '(?msu)'+self.parameters.separator
         format = self.parameters.format
         start = 0
         cellcount = 1

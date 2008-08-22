@@ -32,7 +32,7 @@ syn match asciidocListBullet /^\s*[-*+]\s/
 syn match asciidocListNumber /^\s*\(\(\d\+\.\)\|\.\{1,2}\|\(\l\.\)\)\s\+/
 syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\):\/\/[^| \t]*\(\w\|\/\)/
 syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_.]\@!/
-syn match asciidocAttributeRef /\\\@<!{\(\w\|-\)\+}/
+syn match asciidocAttributeRef /\\\@<!{\w\(\w\|-\)*\([=!@#$%?:].*\)\?}/
 syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
 

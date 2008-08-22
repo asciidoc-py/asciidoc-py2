@@ -4,7 +4,7 @@ AsciiDoc Frequently Asked Questions
 An embryonic AsciiDoc FAQ.
 
 
-== How can supress cell separators in included cell data
+== How can supress cell separators in included data files?
 
 Use the `\{include:}` system attribute instead of the `include::[]`
 macro (the former is not expanded until after the cell data has been
@@ -100,7 +100,6 @@ related markup:
     :
 
 
-
 == How can I escape AsciiDoc markup?
 
 Most AsciiDoc inline elements can be suppressed by preceding them with
@@ -112,6 +111,7 @@ a backslash character. These elements include:
 - 'URLs', 'image' and 'link' macros.
 - Replacements.
 - Special words.
+- Table cell separators.
 
 In some cases you may need to escape both left and right quotes (see
 the 'AsciiDoc User Guide').

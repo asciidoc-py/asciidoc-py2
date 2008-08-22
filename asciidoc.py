@@ -2871,7 +2871,7 @@ class Table(AbstractBlock):
         for mo in re.finditer(separator,text):
             cell += text[start:mo.start()]
             if cell.endswith('\\'):
-                cell = cell[:-1]+mo.group()
+                cell = cell[:-1]+mo.group() # Reinstate escaped separators.
             else:
                 for i in range(cellcount):
                     cells.append(cell)

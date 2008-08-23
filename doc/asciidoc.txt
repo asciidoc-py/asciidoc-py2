@@ -2419,8 +2419,8 @@ homero verear ea mea, qui.
 
 AsciiDoc source:
 
-[cols="1,2,3"]
 ---------------------------------------------------------------------
+[cols="1,2,3"]
 |==================================
 3*|Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
@@ -3440,7 +3440,9 @@ command-line arguments, execution parameters along with attributes
 defined in the default configuration files.  Here's the list of
 predefined intrinsic attributes:
 
+  {amp}                 ampersand (&) character
   {asciidoc-dir}        the asciidoc(1) application directory
+  {asciidoc-file}       the full path name of the asciidoc(1) script
   {asciidoc-version}    the version of asciidoc(1)
   {author}              author's full name
   {authored}            empty string '' if {author} or {email} defined,
@@ -3448,6 +3450,7 @@ predefined intrinsic attributes:
   {backend-<backend>}   empty string ''
   {<backend>-<doctype>} empty string ''
   {backend}             document backend specified by `-b` option
+  {backslash}           backslash character
   {basebackend-<base>}  empty string ''
   {basebackend}         html or docbook
   {brvbar}              broken vertical bar (|) character
@@ -3458,6 +3461,7 @@ predefined intrinsic attributes:
   {doctype}             document type specified by `-d` option
   {email}               author's email address (from document header)
   {empty}               empty string ''
+  {encoding}            specifies input and output encoding
   {filetype-<fileext>}  empty string ''
   {filetype}            output file name file extension
   {firstname}           author first name (from document header)
@@ -3475,11 +3479,14 @@ predefined intrinsic attributes:
   {mantitle}            document title minus the manpage volume number
   {manvolnum}           manpage volume number (1..8) (from document header)
   {middlename}          author middle name (from document header)
+  {nbsp}                Non-breaking space entity
   {outdir}              document output directory name (note 1)
   {outfile}             output file name (note 1)
   {revision}            document revision number (from document header)
   {sectnum}             section number (in section titles)
   {title}               section title (in titled elements)
+  {two_colons}          Two colon characters.
+  {two_semicolons}      Two semicolon characters.
   {user-dir}            the ~/.asciidoc directory (if it exists)
   {verbose}             defined as '' if --verbose command option specified
 

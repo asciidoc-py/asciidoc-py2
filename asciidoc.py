@@ -3009,7 +3009,7 @@ class Tables(AbstractBlocks):
         if not 'default' in self.tags:
             raise EAsciiDoc,'missing [tabletags-default] section'
         default = self.tags['default']
-        for tag in ('bodyrow','bodydata'): # Mandatory default tags.
+        for tag in ('bodyrow','bodydata','paragraph'): # Mandatory default tags.
             if tag not in default:
                 raise EAsciiDoc,'missing [tabletags-default] entry: %s' % tag
         for t in self.tags.values():

@@ -239,6 +239,10 @@ tfoot {
 td > div.verse {
   white-space: pre;
 }
+p.table {
+  margin-top: 0;
+}
+
 
 div.hlist {
   margin-top: 0.8em;

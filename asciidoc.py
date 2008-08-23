@@ -3005,7 +3005,7 @@ class Tables(AbstractBlocks):
             if b is not default:
                 if b.format is None: b.format = default.format
                 if b.template is None: b.template = default.template
-        # Check tags and propagate default tags.
+        # Check tags and propagate default tags (except for 'paragraph').
         if not 'default' in self.tags:
             raise EAsciiDoc,'missing [tabletags-default] section'
         default = self.tags['default']

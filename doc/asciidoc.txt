@@ -2328,270 +2328,317 @@ regular expression match group named 'name'.
 
 Tables
 ------
-Tables are the most complex AsciiDoc elements and this section is
-quite long. footnote:[The current table syntax is overly complicated
-and unwieldy to edit, hopefully a more usable syntax will appear in
-future versions of AsciiDoc.]
+The AsciiDoc table syntax looks and behaves like other delimited block
+types and supports standard <<X73,block configuration entries>>.
+Formatting is easy to read and, just as importantly, easy to enter.
+There are a wide variety of built-in customizable styles.
 
-NOTE: AsciiDoc generates nice HTML tables, but the current crop of
-DocBook toolchains render tables with varying degrees of success. Use
-tables only when really necessary.
+- All table meta-data is contained specified in the table's attribute
+  list, not in the the table data.
+- Nested tables are not permitted.
+- There is no provision for cells to span multiple columns.
 
-Example Tables
+.Use tables sparingly
+*********************************************************************
+When technical users first start creating documents, tables (complete
+with column spanning and table nesting) are considered an awfully
+important must-have feature. The reality is that tables are seldom
+used, even in technical documentation.
+
+Try this exercise: thumb through your library of technical books,
+you'll be surprised just how seldom tables are actually used, even
+less seldom are tables containing block elements such as paragraphs or
+lists. This is no accident, like figures, tables are outside the
+normal document flow -- tables are for consulting not for reading.
+
+Tables are designed for, and should normally only be used for,
+displaying column oriented tablular data.
+
+*********************************************************************
+
+Example tables
 ~~~~~~~~~~~~~~
-The following annotated examples are all you'll need to start creating
-your own tables.
+Simple table
+^^^^^^^^^^^^
 
-The only non-obvious thing you'll need to remember are the column stop
-characters:
+[tablewidth="15%"]
+|=======
+|1 |2 |A
+|3 |4 |B
+|5 |6 |C
+|=======
 
-- Backtick (`) -- align left.
-- Single quote (') -- align right.
-- Period (.) -- align center.
-
-Simple table:
+AsciiDoc source:
 
 ---------------------------------------------------------------------
 [tablewidth="15%"]
-|====
-|1 |2
-|3 |4
-|5 |6
-|====
+|=======
+|1 |2 |A
+|3 |4 |B
+|5 |6 |C
+|=======
 ---------------------------------------------------------------------
 
-Output:
+Columns formatted with strong, monospaced and emphasis styles
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[tablewidth="15%"]
-|====
-|1 |2
-|3 |4
-|5 |6
-|====
+.An example table
+[tablewidth="50%",cols=">s,.m,e",frame="none",options="header,footer"]
+|==========================
+|        |Column 2|Column 3
+|1       |Item 1  |Item 1
+|2       |Item 2  |Item 2
+|3       |Item 3  |Item 3
+|4       |Item 4  |Item 4
+|footer 1|footer 2|footer 3
+|==========================
 
-Table with title, header and footer:
+AsciiDoc source:
 
 ---------------------------------------------------------------------
 .An example table
-[tablewidth="40%",cols="<,",frame="topbot",options="header,footer"]
-|======================
-|Column 1 |Column 2
-|1        |Item 1
-|2        |Item 2
-|3        |Item 3
-|6        |Three items
-|======================
+[tablewidth="50%",cols=">s,.m,e",frame="none",options="header,footer"]
+|==========================
+|        |Column 2|Column 3
+|1       |Item 1  |Item 1
+|2       |Item 2  |Item 2
+|3       |Item 3  |Item 3
+|4       |Item 4  |Item 4
+|footer 1|footer 2|footer 3
+|==========================
 ---------------------------------------------------------------------
 
-Output:
+Multi-paragraph cells
+^^^^^^^^^^^^^^^^^^^^^
 
-.An example table
-[tablewidth="40%",cols="<,",frame="topbot",options="header,footer"]
-|======================
-|Column 1 |Column 2
-|1        |Item 1
-|2        |Item 2
-|3        |Item 3
-|6        |Three items
-|======================
+[cols="1,2,3"]
+|==================================
+3*|Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
 
-A table with a numeric ruler and externally sourced CSV data:
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+|==================================
+
+AsciiDoc source:
+
+[cols="1,2,3"]
+---------------------------------------------------------------------
+|==================================
+3*|Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+|==================================
+---------------------------------------------------------------------
+
+A table with externally sourced CSV data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[format="csv",cols=".1,4*2",options="header"]
+|===================================================
+ID,Customer Name,Contact Name,Customer Address,Phone
+include::customers.csv[]
+|===================================================
+
+AsciiDoc source:
 
 ---------------------------------------------------------------------
- [format="csv",cols="1,4*<2",options="header"]
+ [format="csv",cols=".1,4*2",options="header"]
  |===================================================
  ID,Customer Name,Contact Name,Customer Address,Phone
  include::customers.csv[]
  |===================================================
 ---------------------------------------------------------------------
 
-Renders:
 
-[format="csv",cols="1,4*<2",options="header"]
-|===================================================
-ID,Customer Name,Contact Name,Customer Address,Phone
-include::customers.csv[]
-|===================================================
+[[X68]]
+Table input data formats
+~~~~~~~~~~~~~~~~~~~~~~~~
+AsciiDoc table data can be 'psv', 'dsv' or 'csv' formatted.  The
+default AsciiDoc table format is 'psv'.
 
-AsciiDoc Table Block Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This sub-section details the AsciiDoc table format.
+'csv'  is the quasi-standard row oriented 'Comma Separated Values
+(CSV)' format commonly used to import and export spreadsheet and
+database data.
 
-  Table  ::= (Ruler,Header?,Body,Footer?)
-  Header ::= (Row+,Underline)
-  Footer ::= (Row+,Underline)
-  Body   ::= (Row+,Underline)
-  Row    ::= (Data+)
+AsciiDoc 'psv' ('Prefix Separated Values') and 'dsv' ('Delimiter
+Separated Values') formats are cell oriented -- the table is treated
+as a sequence of cells -- there are no mandatory row separators.
 
-A table is terminated when the table underline is followed by a blank
-line or an end of file. Table underlines which separate table headers,
-bodies and footers should not be followed by a blank line.
+- 'psv' prefixes each cell with a separator whereas 'dsv' delimits
+  cells with a separator, that really the only difference (apart from
+  different default separators).
+- 'psv' and 'dsv' separators are Python regular expressions.
+- The default 'psv' separator is `((?P<cellcount>\d+)\*)?\|` (a pipe
+  character with optional cell multiplier prefix); the default 'dsv'
+  separator is `:|\n` (a colon or a line break).
+- 'psv' and 'dsv' cell separators can be escaped by preceeding them
+  with a backslash character.
+- The 'psv' format allows cells to be stacked vertically, this makes
+  it easy to enter large amounts of text per cell while still
+  retaining readability.
 
-Ruler
-^^^^^
-The first line of the table is called the 'Ruler'. The Ruler specifies
-which configuration file table definition to use, column widths,
-column alignments and the overall table width.
+Here are four 'psv' cells (the second item is multiplied by two; the
+last contains an escaped separator):
 
-There are two ruler formats:
+  |One 2*|Two and three |A \| separator character
 
-Character ruler::
-        The column widths are determined by the number of table fill
-        characters between column stop characters.
-Numeric ruler::
-        The column widths are specified numerically. If a column width
-        is omitted the previous width is used. In the degenerate case
-        of no widths being specified columns are allocated equal
-        widths.
-
-The ruler format can be summarized as:
-
-  ruler ::= ((colstop,colwidth?,fillchar*)+, fillchar+, tablewidth?
-
-- The 'ruler' starts with a column stop character (designating the
-  start of the first column).
-- Column stop characters specify the start and alignment of each
-  column:
-  * Backtick (`) -- align left.
-  * Single quote (') -- align right.
-  * Period (.) -- align center.
-- In the case of 'fixed' format tables the ruler column widths specify
-  source row data column boundaries.
-- The optional 'tablewidth' is a number representing the size of the
-  output table relative to the 'pagewidth'. If 'tablewidth' is less
-  than one then it is interpreted as a fraction of the page width; if
-  it is greater than one then it is interpreted as a percentage of
-  the page width. If 'tablewidth' is not specified then the table
-  occupies the full 'pagewidth' (numeric rulers) or the relative width
-  of the ruler compared to the 'textwidth' (character rulers).
-
-Row and Data Elements
-^^^^^^^^^^^^^^^^^^^^^
-Each table row consists of a line of text containing the same number
-of 'Data' items as there are columns in the table,
-
-Lines ending in a backslash character are continued on the next line.
-
-Each 'Data' item is an AsciiDoc substitutable string. The substitutions
-performed are specified by the 'subs' table definition entry. Data
-cannot contain AsciiDoc block elements.
-
-The format of the row is determined by the table definition 'format'
-value:
-
-fixed::
-  Row data items are assigned by chopping the row up at ruler column
-  width boundaries.
-
-csv::
-  Data items are assigned the parsed CSV (Comma Separated Values)
-  data.
-
-dsv::
-  The DSV (Delimiter Separated Values) format is a common UNIX tabular
-  text file format.
-  - The separator character is a colon (although this can be set to
-    any letter using the 'separator' table attribute).
-  - Common C-style backslash escapes are supported.
-  - Blank lines are skipped.
-
-Underline
-^^^^^^^^^
-A table 'Underline' consists of a line of three or more 'fillchar'
-characters which are end delimiters for table header, footer and body
-sections.
-
-Attribute List
-^^^^^^^^^^^^^^
-The following optional table attributes can be specified in an
-<<X21,AttributeList>> preceding the table:
-
-separator::
-  The default DSV format colon separator can be changed using the
-  'separator' attribute. For example: `[separator="|"]`.
-
-frame::
-  Defines the table border and can take the following values: 'topbot'
-  (top and bottom), 'all' (all sides), 'none' and 'sides' (left and
-  right sides). The default value is 'all'.
-
-grid::
-  Defines which ruler lines are drawn between table rows and columns.
-  The 'grid' attribute value can be any of the following values:
-  'none', 'cols', 'rows' and 'all'. The default value is 'all'. For
-  example `[frame="topbot", grid="none"]`.
-
-format, tablewidth::
-  See <<X37,Markup Attributes>> below.
-
-You can also use an AttributeList to override the following table
-definition and ruler parameters: 'format', 'subs', 'tablewidth'.
-
-[[X37]]
-Markup Attributes
-^^^^^^^^^^^^^^^^^
-The following attributes are automatically available inside table tag
-and markup templates.
-
-cols::
-  The number of columns in the table.
-
-colalign::
-  Column alignment assumes one of three values ('left', 'right' or
-  'center'). The value is determined by the corresponding ruler column
-  stop character (only valid inside 'colspec', 'headdata', 'bodydata'
-  and 'footdata' tags).
-
-colwidth::
-  The output column widths are calculated integers (only valid inside
-  'colspec', 'headdata', 'bodydata' and 'footdata' tags).
-
-colnumber::
-  The table column number starting at 1 (only valid inside 'colspec',
-  'headdata`, `bodydata` and `footdata` tags).
+[[X69]]
+Table attributes
+~~~~~~~~~~~~~~~~
+Individual tables are customized by an optional <<X21,AttributeList>>
+preceding the table. Specify attributes when you want to change the
+defualt table format:
 
 format::
-  The table definition 'format' value (can be overridden with
-  attribute list entry).
+'psv' (default), 'dsv' or 'csv' (See <<X68, Table Data Formats>>).
+
+separator::
+The cell separator. A Python regular expression ('psv' and 'dsv'
+formats) or a single character ('csv' format).
+
+frame::
+Defines the table border and can take the following values: 'topbot'
+(top and bottom), 'all' (all sides), 'none' and 'sides' (left and
+right sides). The default value is 'all'.
+
+grid::
+Defines which ruler lines are drawn between table rows and columns.
+The 'grid' attribute value can be any of the following values: 'none',
+'cols', 'rows' and 'all'. The default value is 'all'.
+
+valign::
+Use the 'valign' attribute to vertically align all cells in a table.
+The following values are valid: 'top', 'bottom', and 'middle'
+(defaults to 'top').
+
+options::
+The 'options' attribute can contain the following comma separated
+values: 'header', 'footer'. By default header and footer rows are
+omitted.
+
+cols::
+The 'cols' attribute is a comma separated list of <<X70,column
+specifiers>>. For example `cols="2<p,2*,4p,>"`.
++
+- If 'cols' is present it must specify all columns.
+- If the 'cols' attribute is not specified the number of columns is
+  calculated as the number of data items in the *first line* of the
+  table.
+- The degenerate form for the 'cols' attribute is an integer
+  specifying the number of columns e.g. `cols=4`.
 
 tablewidth::
-  The ruler 'tablewidth' value (can be overridden with attribute list
-  entry).
+The 'tablewidth' attribute is expressed as a percentage value
+('"1%"'...'"99%"') of the 'pagewidth' value. The 'pagewidth' attribute
+value is specified in the `[miscellaneous]` section of the backend
+configuration file (defaults to 380 points for DocBook and 800 pixels
+for HTML.
 
-pagewidth::
-  The 'pagewidth' miscellaneous configuration option.
+filter::
+The 'filter' attribute defines an external shell command that is
+invoked for each cell. The built-in 'asciidoc' table style is
+implemented using a filter.
+
+[[X70]]
+Column Specifiers
+~~~~~~~~~~~~~~~~~
+Column specifiers define how columns are presented and are used in the
+table <<X69,cols attribute>>.  A column specifier consists of an
+optional column multiplier followed by optional alignment, width and
+style values and is formatted like:
+
+  [<multiplier>*][<align>][<width>][<style>]
+
+- Column '<width>' can be either an integer proportional value (1...)
+  or a percentage (1%...100%). The default value is 1. To ensure
+  portability across different backends, there is no provision for
+  absolute column widths (not to be confused with output column width
+  <<X72,markup attributes>> which are available in both percentage and
+  absolute units).
+- The column '<align>' character can be '<' (left), '.' (center) or
+  '>' (right). Cells are left aligned by default.
+- A '<multiplier>' can be used to specify repeated columns e.g.
+  `cols="4*<"` specifies four left-justified columns. Default value 1.
+- The '<style>' name specifies a <<X71,table style>> to used to markup
+  column cells (you can use the full style names if you wish but the
+  first letter is normally sufficent).
+- Column specific styles are not applied to 'header' row formatting.
+
+[[X71]]
+Table styles
+~~~~~~~~~~~~
+Table styles behave like other <<X23,block styles>>.  Tables come with
+the following predefined styles:
+
+default::
+The default style: AsciiDoc inline text formatting; blank lines are
+treated as paragraph breaks.
+
+emphasis::
+Like default but all text is emphasised.
+
+monospaced::
+Like default but all text is in a monospaced font.
+
+strong::
+Like default but all text is bold.
+
+asciidoc::
+With this style table cells can contain any of the AsciiDoc elements
+that are allowed inside document sections (apart from tables).  This
+style runs asciidoc(1) as a filter to process cell contents.
+
+literal::
+No text formatting; monospaced font; all line breaks are retained
+(like AsciiDoc 'LiteralBlock').
+
+verse::
+Text formatting; all line breaks are retained (c.f. AsciiDoc delimited
+block 'verse' style).
+
+[[X72]]
+Markup attributes
+~~~~~~~~~~~~~~~~~
+AsciiDoc makes a number of attributes available to table markup
+templates and tags. Both absolute and percentage width values are
+available. Column specific attributes are available when substituting
+the 'colspec' cell data tags.
 
 pageunits::
-  The 'pageunits' miscellaneous configuration option.
+  From `asciidoc.conf`, 'pt' for DocBook, blank for HTML.
 
-The 'colwidth' value is calculated as (`N` is the ruler column width
-number and `M` is the sum of the ruler column widths):
+pagewidth::
+From `asciidoc.conf`. The nominal output page width in 'pageunit'
+units. '380' for DocBook, '800 for HTML.
 
-  ( N / M ) * pagewidth
+tableabswidth::
+Integer value calculated from 'tablewidth' and 'pagewidth' attributes.
+In 'pageunit' units.
 
-If the ruler 'tablewidth' was specified the column width is multiplied
-again by this value.
+tablepcwidth::
+Table width expressed as a percentage of the available width. Integer
+value (0..100).
 
-There is one exception: character rulers that have no 'pagewidth'
-specified. In this case the 'colwidth' value is calculated as (where
-`N` is the column character width measured on the table ruler):
+colalign::
+'left', 'right' or 'center'.
 
-  ( N / textwidth ) * pagewidth
+colabswidth::
+Integer value calculated from 'cols' column width, 'tablewidth' and
+'pagewidth' attributes.  In 'pageunit' units.
 
-The following attributes are available to the table markup template:
+colpcwidth::
+Column width expressed as a percentage of the table width. Integer
+value (0..100).
 
-comspecs::
-  Expands to N substituted 'comspec' tags where N is the number of
-  columns.
-
-headrows, footrows, bodyrows::
-  These references expand to sets of substituted header, footer and
-  body rows as defined by the corresponding row and data configuration
-  parameters.
-
-rows::
-  Experimental attribute (number of source lines in table) available
-  in table markup templates (used by experimental LaTeX backend).
+colnumber::
+Integer value: '1' for column 1, '2' for column 2 ...
 
 
 [[X1]]
@@ -3459,6 +3506,7 @@ predefined intrinsic attributes:
    contents are written.]
 
 
+[[X73]]
 Block Element Definitions
 -------------------------
 The syntax and behavior of Paragraph, DelimitedBlock, List and Table
@@ -3501,9 +3549,9 @@ subs, presubs, postsubs::
 
   * 'subs' is an alias for 'presubs'.
 
-  * If a 'filter' is allowed (Paragraphs and DelimitedBlocks) and has
-    been specified then 'presubs' and 'postsubs' substitutions are
-    performed before and after the filter is run respectively.
+  * If a 'filter' is allowed (Paragraphs, DelimitedBlocks and Tables)
+    and has been specified then 'presubs' and 'postsubs' substitutions
+    are performed before and after the filter is run respectively.
 
   * Allowed values: 'specialcharacters', 'quotes', 'specialwords',
     'replacements', 'macros', 'attributes', 'callouts'.
@@ -3528,8 +3576,8 @@ subs, presubs, postsubs::
 
 filter::
   This optional entry specifies an executable shell command for
-  processing block content (Paragraphs and DelimitedBlocks). The
-  filter command can contain attribute references.
+  processing block content (Paragraphs, DelimitedBlocks and Tables).
+  The filter command can contain attribute references.
 
 posattrs::
   Optional comma separated list of positional attribute names. This
@@ -3694,13 +3742,6 @@ list types by editing configuration files.
 
 Table specific block definition notes:
 
-fillchar::
-  A single character that fills table ruler and underline
-  lines.
-
-subs::
-  Substitutions performed on table data items.
-
 format::
   The source row data format ('fixed', 'csv' or 'dsv').
 
@@ -3717,18 +3758,18 @@ headdata, footdata, bodydata::
   'footdata' table definition entries default to 'bodydata' if they
   are undefined.
 
+paragraph::
+  If the 'paragraph' tag is specified then blank lines in the cell
+  data are treated as paragraph delimiters and marked up using this
+  tag.
+
 [[X4]]
 Table behavior is also influenced by the following `[miscellaneous]`
 configuration file entries:
 
-textwidth::
-  The page width (in characters) of the source text. This setting is
-  compared to the table ruler width when calculating the relative
-  size of character ruler tables on the output page.
-
 pagewidth::
-  This integer value is the printable width of the output media.  Used
-  to calculate 'colwidth' and 'tablewidth' substitution values.
+  This integer value is the printable width of the output media. See
+  <<X,table attributes>>.
 
 pageunits::
   The units of width in output markup width attribute values.
@@ -3739,9 +3780,10 @@ pageunits::
   most XML table schema.
 - Table definitions can be ``mixed in'' from multiple cascading
   configuration files.
-- New table definitions inherit the default table definition
-  ('[tabledef-default]') so you only need to override those conf file
-  entries that require modification when defining a new table type.
+- New table definitions inherit the default table and table tags
+  definitions ('[tabledef-default]' and '[tabletags-default]') so you
+  only need to override those conf file entries that require
+  modification.
 
 
 [[X59]]

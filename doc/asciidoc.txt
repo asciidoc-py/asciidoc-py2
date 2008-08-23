@@ -377,11 +377,6 @@ definition] as follows:
   CalloutList   ::= (ListItem)+
   LabeledList   ::= (ItemLabel+,ListItem)+
   ListItem      ::= (ItemText,(List|ListParagraph|ListContinuation)*)
-  Table         ::= (Ruler,TableHeader?,TableBody,TableFooter?)
-  TableHeader   ::= (TableRow+,TableUnderline)
-  TableFooter   ::= (TableRow+,TableUnderline)
-  TableBody     ::= (TableRow+,TableUnderline)
-  TableRow      ::= (TableData+)
 
 Where:
 
@@ -2799,6 +2794,8 @@ listdef*::
         List element definitions.
 tabledef*::
         Table element definitions.
+tabletags*::
+        Table element tag definitions.
 
 Each line of text in a special section is a 'section entry'. Section
 entries share the following syntax:
@@ -2844,7 +2841,7 @@ tabsize::
         expansion (useful when piping included files through block
         filters). Included files can override this option using the
         'tabsize' attribute.
-textwidth, pagewidth, pageunits::
+pagewidth, pageunits::
         These global table related options are documented in the
         <<X4,Table Configuration File Definitions>> sub-section.
 
@@ -3736,14 +3733,11 @@ the AsciiDoc distribution `.conf` configuration files for examples.
 
 Tables
 ~~~~~~
-Table behavior and syntax is determined by `[tabledef*]` configuration
-file sections. The user can change existing list behavior and add new
-list types by editing configuration files.
-
-Table specific block definition notes:
-
-format::
-  The source row data format ('fixed', 'csv' or 'dsv').
+Table behavior and syntax is determined by `[tabledef*]` and
+`[tabletags*]` configuration file sections. The user can change
+existing table behavior and add new table types by editing
+configuration files.  The following `[tabledef*]` section entries
+generate table output markup elements:
 
 comspec::
   The table 'comspec' tag definition.
@@ -3781,7 +3775,7 @@ pageunits::
 - Table definitions can be ``mixed in'' from multiple cascading
   configuration files.
 - New table definitions inherit the default table and table tags
-  definitions ('[tabledef-default]' and '[tabletags-default]') so you
+  definitions (`[tabledef-default]` and `[tabletags-default]`) so you
   only need to override those conf file entries that require
   modification.
 
@@ -4300,12 +4294,6 @@ Ambiguous ordered list items::
 The 'list item out of sequence' warning makes it unlikely that this
 problem will go unnoticed.
 
-Escaping inside DSV table data::
-    Delimiter separated text uses C style backslash escape sequences.
-    If you want to enter a backslash (for example, to escape AsciiDoc
-    text formatting or an inline macro) you need to escape it by
-    entering two backslashes.
-
 Special characters in attribute values::
     Special character substitution precedes attribute substitution so
     if attribute values contain special characters you may, depending
@@ -4772,7 +4760,8 @@ around the problems:
   preceding blank lines, or putting a list continuation character
   (`+`) in the preceding blank line.
 
-- Nested text formatting is highlighted according to the outer format.
+- Nested quoted text formatting is highlighted according to the outer
+  format.
 
 - If a closing block delimiter is not preceded by a blank line it is
   sometimes mistaken for a title underline. A workaround is to insert
@@ -4780,9 +4769,6 @@ around the problems:
 
 - If a list block delimiter is mistaken for a title underline precede
   it with a blank line.
-
-- Tables are terminated by a blank line -- use a space character on
-  blank lines within your table.
 
 - Lines within a paragraph beginning with a period will be highlighted
   as block titles. For example:

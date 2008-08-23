@@ -2800,11 +2800,11 @@ tabletags*::
 Each line of text in a special section is a 'section entry'. Section
 entries share the following syntax:
 
-'name=value'::
-        The entry value is set to 'value'.
-'name='::
+name=value::
+        The entry value is set to value.
+name=::
         The entry value is set to a zero length string.
-'name'::
+name::
         The entry is undefined (deleted from the configuration).
 
 .Section entry behavior
@@ -3668,19 +3668,16 @@ options::
 
 Delimited Blocks
 ~~~~~~~~~~~~~~~~
-DelimitedBlock specific block definition notes:
+Allowed DelimitedBlock 'options' values are:
 
-options::
-  Allowed values are:
+sectionbody::
+    The block contents are processed as a SectionBody.
 
-  'sectionbody';;
-      The block contents are processed as a SectionBody.
+skip::
+    The block is treated as a comment (see CommentBlocks).
 
-  'skip';;
-      The block is treated as a comment (see 'CommentBlocks').
-
-  'list';;
-      The block is a <<X29,list block>>.
+list::
+    The block is a <<X29,list block>>.
 
 'presubs', 'postsubs' and 'filter' entries are meaningless when
 'sectionbody', 'skip' or 'list' options are set.

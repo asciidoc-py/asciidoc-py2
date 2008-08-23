@@ -1223,9 +1223,8 @@ Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens.
 =====================================================================
 
-The title prefix that is automatically inserted by asciidoc(1) can be
-customized with the `caption` attribute (`xhtml11` and `html4`
-backends). For example
+A title prefix that can be inserted with the `caption` attribute
+(`xhtml11` and `html4` backends). For example:
 
 ---------------------------------------------------------------------
 [caption="Example 1: "]
@@ -2109,9 +2108,8 @@ For example:
   .Main circuit board
   image::images/layout.png[J14P main circuit board]
 
-`xhtml11` and `html4` backends precede the title with a `Figure :`
-prefix. You can customize this prefix with the `caption` attribute.
-For example:
+A title prefix that can be inserted with the `caption` attribute
+(`xhtml11` and `html4` backends). For example:
 
   .Main circuit board
   [caption="Figure 2:"]

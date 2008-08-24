@@ -26,7 +26,7 @@ output document.
 This Music Block:
 
 ---------------------------------------------------------------------
- [music,music1.png]
+ ["music","music1.png",scaledwidth="100%"]
  ---------------------------------------------------------------------
  T:The Butterfly
  R:slip jig
@@ -45,7 +45,7 @@ This Music Block:
 
 Renders:
 
-[music,music1.png]
+["music","music1.png",scaledwidth="100%"]
 ---------------------------------------------------------------------
 T:The Butterfly
 R:slip jig

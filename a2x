@@ -41,6 +41,7 @@ XSLTPROC_OPTS=
 DBLATEX_OPTS=
 FOP_OPTS=
 FOP=no
+XMLLINT=yes
 
 #--------------------------------------------------------------------
 # General purpose functions
@@ -203,6 +204,7 @@ options:
   -h, --help                     print command syntax summary
   --icons                        use admonition, callout and navigation icons
   --icons-dir=PATH               admonition and navigation icon directory
+  -L, --no-xmllint               don't check asciidoc output with xmllint(1)
   -n, --dry-run                  don't do anything just print the commands
   -s, --skip-asciidoc            skip asciidoc execution
   --stylesheet=PATH              target HTML CSS stylesheet file name
@@ -241,8 +243,8 @@ function parse_options()
     if [ $? -ne 4 ]; then
         quit "enhanced getopt(1) required"
     fi
-    short_opts="a:d:D:f:hnsv"
-    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,dblatex-opts:,fop-opts:"
+    short_opts="a:d:D:f:hLnsv"
+    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,dblatex-opts:,fop-opts:,no-xmllint"
     args=$(getopt -o $short_opts -l $long_opts -n $BASENAME -- "$@" 2>/dev/null)
     if [ $? -ne 0 ]; then
         quit "invalid command options, run: a2x --help"
@@ -293,6 +295,9 @@ function parse_options()
                 else
                     VERBOSE=yes
                 fi
+                shift ;;
+            -L|--no-xmllint)
+                XMLLINT=no;
                 shift ;;
             --xsltproc-opts)
                 XSLTPROC_OPTS="$XSLTPROC_OPTS $2"
@@ -435,6 +440,17 @@ function copy_icons()
     execute_command_2 "cp -rfu  \"$src/\"* \"$dst\""
 }
 
+function run_xmllint()
+{
+    if isyes "$XMLLINT"; then
+        if ! is_executable "xmllint"; then
+            console_msg "xmllint not found: skipping validity checking"
+        else
+            execute_command_2 "xmllint --nonet --noout --valid \"$1\""
+        fi
+    fi
+}
+
 #--------------------------------------------------------------------
 # Format conversion functions.
 #--------------------------------------------------------------------
@@ -453,6 +469,7 @@ function to_docbook()
     fi
     require "asciidoc"
     execute_command_2 "asciidoc $ASCIIDOC_OPTS $1 -b docbook \"$SRC_FILE\""
+    run_xmllint "$xml"
 }
 
 function to_xhtml()

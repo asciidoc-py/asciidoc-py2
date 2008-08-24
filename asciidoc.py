@@ -3191,7 +3191,7 @@ class Macro:
         if config.sections.has_key(name+suffix):
             return name+suffix
         else:
-            warning('missing macro section: [%s]' % name+suffix)
+            warning('missing macro section: [%s]' % (name+suffix))
             return None
     def equals(self,m):
         if self.pattern != m.pattern:

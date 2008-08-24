@@ -72,8 +72,6 @@ syn match asciidocSidebarDelimiter /^*\{4,}$/
 "contents from highlighting.
 syn match asciidocTablePrefix /\(\d\+\*\)\?|/ containedin=asciidocTableBlock contained
 syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^|=\{3,}$/ end=/^|=\{3,}$/ keepend contains=ALL
-syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^#\{4,}$/ end=/^#\{4,}$/ keepend contains=ALL
-syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^:\{4,}$/ end=/^:\{4,}$/ keepend contains=ALL
 
 syn match asciidocListContinuation /^+$/
 syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=asciidocCallout keepend

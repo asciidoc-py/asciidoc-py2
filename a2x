@@ -440,7 +440,8 @@ function copy_icons()
     execute_command_2 "cp -rfu  \"$src/\"* \"$dst\""
 }
 
-function run_xmllint()
+# Run xmllint(1) checking of $1 file if xmllint checking is enabled.
+function execute_xmllint()
 {
     if isyes "$XMLLINT"; then
         if ! is_executable "xmllint"; then
@@ -469,7 +470,7 @@ function to_docbook()
     fi
     require "asciidoc"
     execute_command_2 "asciidoc $ASCIIDOC_OPTS $1 -b docbook \"$SRC_FILE\""
-    run_xmllint "$xml"
+    execute_xmllint "$xml"
 }
 
 function to_xhtml()

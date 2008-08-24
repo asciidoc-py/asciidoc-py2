@@ -1,6 +1,15 @@
 AsciiDoc Home Page
 ==================
 
+.New tables
+************************************************************************
+AsciiDoc 'new tables' is a complete redesign of the tables syntax and
+generation. It's a huge improvement over the old tables and has been
+committed to the trunk. It will appear in the next release once it's
+stabilized. link:newtables.html[Here are some new tables examples]
+
+************************************************************************
+
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
 Useful additions include:

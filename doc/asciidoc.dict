@@ -1,7 +1,7 @@
-personal_ws-1.1 en 676 
+personal_ws-1.1 en 686 
 Sturmer
-Kleber
 Kléber
+Kleber
 quis
 auctor
 linkcss
@@ -12,8 +12,8 @@ BOLID
 callouts
 bulleted
 starttags
-listingblock
 ListingBlock
+listingblock
 eval
 asc
 https
@@ -33,6 +33,7 @@ iconsdir
 undefining
 programlisting
 xhtml
+Windtrainer
 des
 specialwords
 muellner
@@ -41,12 +42,13 @@ euismod
 dev
 mkdir
 revhistory
+tableabswidth
 PassthroughBlock
 aliquam
 munere
 startup
-ListContinuation
 listcontinuation
+ListContinuation
 consectetuer
 Magnocavallo
 defacto
@@ -87,8 +89,8 @@ citetitle
 emphasizedwords
 BlockTitle
 blocktitle
-DTD
 CVS
+DTD
 valign
 Ashworth
 Bowlin
@@ -112,8 +114,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-MiddleName
 middlename
+MiddleName
 subdirectories
 footnoteref
 manname
@@ -131,8 +133,8 @@ CustomBlocks
 Ghostscript
 verear
 Buenos
-linuxdoc
 LinuxDoc
+linuxdoc
 PostScript
 hhp
 Pretium
@@ -144,8 +146,8 @@ fermentum
 ListingBlocks
 GPL
 hsides
-Bolido
 Bólido
+Bolido
 footrow
 misspelt
 WINNT
@@ -157,8 +159,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-VerbatimBlock
 verbatimblock
+VerbatimBlock
 shiftwidth
 misevaluations
 asciidocEmphasized
@@ -181,8 +183,8 @@ docname
 BLAUS
 Daly
 arcu
-PDF's
 PDFs
+PDF's
 jim
 MSIE
 eval's
@@ -194,6 +196,7 @@ java
 mediaobject
 SimpleList
 apos
+MSHR
 unescaped
 toclevel
 runtime
@@ -280,6 +283,7 @@ informaltable
 rewriteURI
 formatlistpat
 Konqueror
+pageunit
 Blauer
 backmatter
 stdin
@@ -308,6 +312,7 @@ userguide
 FilterBlocks
 posattrs
 listdef
+tabletags
 TableHeader
 QuoteBlocks
 manpage
@@ -364,10 +369,12 @@ CONFIG
 sem
 gzip
 specialcharacters
+tablepcwidth
 codec
 DelimitedBlocks
 LiteralBlocks
 preparadas
+psv
 pts
 mydocument
 magna
@@ -413,8 +420,8 @@ WINA
 fringilla
 retab
 BackendBlocks
-changelog
 ChangeLog
+changelog
 tis
 Ubuntu
 sectids
@@ -432,8 +439,8 @@ Vasilev
 crlf
 vel
 localtime
-blockmacro
 BlockMacro
+blockmacro
 Xandros
 groff
 POSIX
@@ -457,6 +464,7 @@ BLONP
 sys
 configfile
 Donec
+colpcwidth
 uri
 monospaced
 llevar
@@ -474,8 +482,8 @@ srackham
 txt
 BlockId
 passthrough
-Berguvsvagen
 Berguvsvägen
+Berguvsvagen
 noincsearch
 TableRow
 inlinemediaobject
@@ -538,8 +546,8 @@ scaledwidth
 cp
 xsl
 fb
-docbook
 DocBook
+docbook
 stylesheet
 pagefile
 superscripted
@@ -554,10 +562,11 @@ eu
 gq
 JB
 fprintf
+colabswidth
 tabsize
 smallnew
-blocktitles
 BlockTitles
+blocktitles
 localdate
 bodyrow
 hs
@@ -600,13 +609,14 @@ formatoptions
 colwidth
 walsh
 ps
+cellcount
 mdash
 permalink
 td
 py
 AROUT
-LiteralBlock
 literalblock
+LiteralBlock
 sgml
 biggy
 softtabstop
@@ -621,8 +631,8 @@ tt
 blandit
 inline
 Martín
-sectionbody
 SectionBody
+sectionbody
 VM
 conformant
 listchars
@@ -661,8 +671,8 @@ nbsp
 qanda
 noout
 massa
-asciidoc
 AsciiDoc
+asciidoc
 manmanual
 TableBody
 realpath

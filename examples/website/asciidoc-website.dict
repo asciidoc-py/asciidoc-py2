@@ -1,4 +1,4 @@
-personal_ws-1.1 en 134 
+personal_ws-1.1 en 136 
 AsciiDoc's
 Rosten
 docbook
@@ -19,6 +19,7 @@ DelimitedBlocks
 Potapov
 backmatter
 SourceForge
+newtables
 ikiwiki
 callout
 firefox
@@ -124,6 +125,7 @@ conf
 backend
 Klum
 Wieers
+tablewidth
 png
 formulae
 Mandelson

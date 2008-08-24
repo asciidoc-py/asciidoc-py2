@@ -2347,7 +2347,7 @@ lists. This is no accident, like figures, tables are outside the
 normal document flow -- tables are for consulting not for reading.
 
 Tables are designed for, and should normally only be used for,
-displaying column oriented tablular data.
+displaying column oriented tabular data.
 
 *********************************************************************
 
@@ -2519,7 +2519,7 @@ as a sequence of cells -- there are no mandatory row separators.
 - The default 'psv' separator is `((?P<cellcount>\d+)\*)?\|` (a pipe
   character with optional cell multiplier prefix); the default 'dsv'
   separator is `:|\n` (a colon or a line break).
-- 'psv' and 'dsv' cell separators can be escaped by preceeding them
+- 'psv' and 'dsv' cell separators can be escaped by preceding them
   with a backslash character.
 - The 'psv' format allows cells to be stacked vertically, this makes
   it easy to enter large amounts of text per cell while still
@@ -2535,7 +2535,7 @@ Table attributes
 ~~~~~~~~~~~~~~~~
 Individual tables are customized by an optional <<X21,AttributeList>>
 preceding the table. Specify attributes when you want to change the
-defualt table format:
+default table format:
 
 format::
 'psv' (default), 'dsv' or 'csv' (See <<X68, Table Data Formats>>).
@@ -2609,7 +2609,7 @@ style values and is formatted like:
   `cols="4*<"` specifies four left-justified columns. Default value 1.
 - The '<style>' name specifies a <<X71,table style>> to used to markup
   column cells (you can use the full style names if you wish but the
-  first letter is normally sufficent).
+  first letter is normally sufficient).
 - Column specific styles are not applied to 'header' row formatting.
 
 [[X71]]

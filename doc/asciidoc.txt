@@ -2403,6 +2403,52 @@ AsciiDoc source:
 |==========================
 ---------------------------------------------------------------------
 
+Horizontal and vertical source data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Short cells can be entered horizontally, longer cells vertically.  The
+default behavior is to strip leading and trailing blank lines within a
+cell. These characteristics aid readability and data entry.
+
+.Windtrainer workouts
+[tablewidth="80%",cols="3,2,2,10",options="header"]
+|=========================================================
+|Date |Duration |Avg HR |Notes
+
+|22-Aug-08 |10:24 | 157 |
+Worked out MSHR (max sustainable heart rate) by going hard
+for this interval.
+
+|22-Aug-08 |23:03 | 152 |
+Back-to-back with previous interval.
+
+|24-Aug-08 |40:00 | 145 |
+Moderately hard interspersed with 3x 3min intervals (2min
+hard + 1min really hard taking the HR up to 160).
+
+|=========================================================
+
+AsciiDoc source:
+
+---------------------------------------------------------------------
+.Windtrainer workouts
+[tablewidth="80%",cols="3,2,2,10",options="header"]
+|=========================================================
+|Date |Duration |Avg HR |Notes
+
+|22-Aug-08 |10:24 | 157 |
+Worked out MSHR (max sustainable heart rate) by going hard
+for this interval.
+
+|22-Aug-08 |23:03 | 152 |
+Back-to-back with previous interval.
+
+|24-Aug-08 |40:00 | 145 |
+Moderately hard interspersed with 3x 3min intervals (2min
+hard + 1min really hard taking the HR up to 160).
+
+|=========================================================
+---------------------------------------------------------------------
+
 Multi-paragraph cells
 ^^^^^^^^^^^^^^^^^^^^^
 

@@ -1019,17 +1019,17 @@ The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.
 
 .Default DelimitedBlock substitutions
-`-------------.------------.---------.---------.---------.---------
-              Passthrough  Listing   Literal   Sidebar   Quote
--------------------------------------------------------------------
-Callouts        No          Yes       Yes       No        No
-Attributes      Yes         No        No        Yes       Yes
-Inline Macros   Yes         No        No        Yes       Yes
-Quotes          No          No        No        Yes       Yes
-Replacements    No          No        No        Yes       Yes
-Special chars   No          Yes       Yes       Yes       Yes
-Special words   No          No        No        Yes       Yes
--------------------------------------------------------------------
+[cols="2,5*.",tablewidth="80%",options="header"]
+|==================================================================
+|              |Passthrough |Listing  |Literal  |Sidebar  |Quote
+|Callouts      |  No        | Yes     | Yes     | No      | No
+|Attributes    |  Yes       | No      | No      | Yes     | Yes
+|Inline Macros |  Yes       | No      | No      | Yes     | Yes
+|Quotes        |  No        | No      | No      | Yes     | Yes
+|Replacements  |  No        | No      | No      | Yes     | Yes
+|Special chars |  No        | Yes     | Yes     | Yes     | Yes
+|Special words |  No        | No      | No      | Yes     | Yes
+|==================================================================
 
 Listing Blocks
 ~~~~~~~~~~~~~~

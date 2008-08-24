@@ -6,7 +6,7 @@ An embryonic AsciiDoc FAQ.
 
 == How can supress cell separators in included data files?
 
-Use the `\{include:}` system attribute instead of the `include::[]`
+Use the `\{include:}` system attribute instead of the `\include::[]`
 macro (the former is not expanded until after the cell data has been
 parsed, the latter is included before the table is processed.
 

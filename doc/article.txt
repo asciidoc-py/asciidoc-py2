@@ -42,12 +42,12 @@ image::images/tiger.png[Tiger image]
 Followed by an example table:
 
 .An example table
-`-----------------`--------------------------
-Option            Description
----------------------------------------------
--a 'USER GROUP'   Add 'USER' to 'GROUP'.
--R 'GROUP'        Disables access to 'GROUP'.
----------------------------------------------
+[tablewidth="60%",options="header"]
+|==============================================
+| Option          | Description
+| -a 'USER GROUP' | Add 'USER' to 'GROUP'.
+| -R 'GROUP'      | Disables access to 'GROUP'.
+|==============================================
 
 [[X1]]
 Sub-section with Anchor

@@ -139,24 +139,22 @@ The following software is necessary for using the LaTeX backend:
 
 LaTeX backend makes use of some LaTeX specialities which don't belong to a minimal TeX/LaTeX distribution. However, I took special care not to employ exotic packages. Hence the following packages should be available in most package repositories. The table is not complete yet because I don't know the package names for all TeX distributions.
 
-[separator='|',frame="all",grid="all"]
-`````___________________________________________________________1
-Speciality | MiKTeX package name | teTeX package name | TeX Live package name | Description
-______________________________________________________________
-KOMA-Script | koma-script | | | LaTeX backend uses the document classes 'scrartcl' and 'scrbook' as well as some other specialities defined in the 'KOMA-Script' package, e.g. the commands `\\addmargin{}` and `\minisec{}`.
-xcolor.sty | xcolor | | | Used to produce colored boxes and tables.
-colortbl.sty | colortbl | | | Used to produce colored tables.
-type1ec.sty | cm-super | | | Enables high quality fonts for PDF output.
-hyperref.sty | hyperref | | | Extensive support for hypertext in PDF documents.
-enumerate.sty | tools | | | When 'latex-use-custom-list-items' is defined this package is used for determining the enumeration character.
-graphicx.sty | graphics | | | Used for including images.
-longtable.sty | tools | | | Enables page spanning tables.
-ucs.sty | unicode | | | Enables support for unicode characters.
-textcomp | ltxbase | | | Used for printing various symbols like arrows. Should be already installed.
-alltt | ltxbase | | | Used in literal-like blocks for retaining line and whitespace formatting. Should be already installed.
-listings.sty | listings | | | Used for listing blocks.
-
-_______________________________________________________________
+[cols="4*,4",options="header"]
+|====================================================================
+|Speciality | MiKTeX package name | teTeX package name | TeX Live package name | Description
+|KOMA-Script | koma-script | | | LaTeX backend uses the document classes 'scrartcl' and 'scrbook' as well as some other specialities defined in the 'KOMA-Script' package, e.g. the commands `\\addmargin{}` and `\minisec{}`.
+|xcolor.sty | xcolor | | | Used to produce colored boxes and tables.
+|colortbl.sty | colortbl | | | Used to produce colored tables.
+|type1ec.sty | cm-super | | | Enables high quality fonts for PDF output.
+|hyperref.sty | hyperref | | | Extensive support for hypertext in PDF documents.
+|enumerate.sty | tools | | | When 'latex-use-custom-list-items' is defined this package is used for determining the enumeration character.
+|graphicx.sty | graphics | | | Used for including images.
+|longtable.sty | tools | | | Enables page spanning tables.
+|ucs.sty | unicode | | | Enables support for unicode characters.
+|textcomp | ltxbase | | | Used for printing various symbols like arrows. Should be already installed.
+|alltt | ltxbase | | | Used in literal-like blocks for retaining line and whitespace formatting. Should be already installed.
+|listings.sty | listings | | | Used for listing blocks.
+|====================================================================
 
 [[configurationFile]]
 == About the LaTeX backend configuration file

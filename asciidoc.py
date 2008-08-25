@@ -452,7 +452,7 @@ def subs_quotes(text):
             mo = reo.search(text,pos)
             if not mo: break
             if text[mo.start()] == '\\':
-                pos = mo.end()
+                pos += 1 # Skip over backslash.
             else:
                 attrs = {}
                 parse_attributes(mo.group('attrs'), attrs)

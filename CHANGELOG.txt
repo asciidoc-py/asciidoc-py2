@@ -1023,10 +1023,10 @@ Version 5.0.6 (2004-03-07)
 - A replacement has been added to `asciidoc.conf` to replace inline
   double dashes with the `&mdash;` entity.
 - Changed the `.UNDER-CONSTRUCTION.` macro syntax to
-  `\#UNDER-CONSTRUCTION#` so it is not mistaken for a BlockTitle.
+  `#UNDER-CONSTRUCTION#` so it is not mistaken for a BlockTitle.
   Similarly changed the `.NEW.` replacement with
-  `{amp}\#35;NEW{amp}#35;`.
-- `{amp}\#35;NEW{amp}#35;` and `\#UNDER-CONSTRUCTION#` macros are now
+  `&#35;NEW&#35;`.
+- `&#35;NEW&#35;` and `#UNDER-CONSTRUCTION#` macros are now
   included in the DocBook backend.
 - Replaced shipped `smallnew.gif` with `smallnew.png`.
 - Documentation tidy ups.

@@ -24,3 +24,7 @@ AsciiDoc
 - Multiple comma separated command names in the manpage NAME section
   translate to a single DocBook `refname` instead of multiple
   `refname` elements.
+
+dblatex
+-------
+See `./dblatex/dblatex-readme.txt`.

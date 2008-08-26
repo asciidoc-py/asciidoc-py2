@@ -2568,6 +2568,8 @@ style values and is formatted like:
 
   [<multiplier>*][<align>][<width>][<style>]
 
+- All components are optional. The multiplier must be first and the
+  style last. The order of align or width is not important.
 - Column '<width>' can be either an integer proportional value (1...)
   or a percentage (1%...100%). The default value is 1. To ensure
   portability across different backends, there is no provision for

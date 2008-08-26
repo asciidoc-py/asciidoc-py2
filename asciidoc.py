@@ -2672,15 +2672,21 @@ class Table(AbstractBlock):
         """
         Build list of column objects from table 'cols' attribute.
         """
-        COLS_RE = r'^((?P<count>\d+)\*)?(?P<align>[<\^>])?(?P<width>\d+%?)?(?P<style>[a-zA-Z]\w*)?$'
-        reo = re.compile(COLS_RE)
+        # [<multiplier>*][<align>][<width>][<style>]
+        COLS_RE1 = r'^((?P<count>\d+)\*)?(?P<align>[<\^>])?(?P<width>\d+%?)?(?P<style>[a-zA-Z]\w*)?$'
+        # [<multiplier>*][<width>][<align>][<style>]
+        COLS_RE2 = r'^((?P<count>\d+)\*)?(?P<width>\d+%?)?(?P<align>[<\^>])?(?P<style>[a-zA-Z]\w*)?$'
+        reo1 = re.compile(COLS_RE1)
+        reo2 = re.compile(COLS_RE2)
         cols = str(cols)
         if re.match(r'^\d+$',cols):
             for i in range(int(cols)):
                 self.columns.append(Column())
         else:
             for col in re.split(r'\s*,\s*',cols):
-                mo = reo.match(col)
+                mo = reo1.match(col)
+                if not mo:
+                    mo = reo2.match(col)
                 if mo:
                     count = int(mo.groupdict().get('count') or 1)
                     for i in range(count):

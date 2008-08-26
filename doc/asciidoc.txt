@@ -1019,7 +1019,7 @@ The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.
 
 .Default DelimitedBlock substitutions
-[cols="2,5*.",tablewidth="80%",options="header"]
+[cols="2,5*^",tablewidth="80%",options="header"]
 |==================================================================
 |              |Passthrough |Listing  |Literal  |Sidebar  |Quote
 |Callouts      |  No        | Yes     | Yes     | No      | No
@@ -2378,7 +2378,7 @@ Columns formatted with strong, monospaced and emphasis styles
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .An example table
-[tablewidth="50%",cols=">s,.m,e",frame="none",options="header,footer"]
+[tablewidth="50%",cols=">s,^m,e",frame="none",options="header,footer"]
 |==========================
 |        |Column 2|Column 3
 |1       |Item 1  |Item 1
@@ -2392,7 +2392,7 @@ AsciiDoc source:
 
 ---------------------------------------------------------------------
 .An example table
-[tablewidth="50%",cols=">s,.m,e",frame="none",options="header,footer"]
+[tablewidth="50%",cols=">s,^m,e",frame="none",options="header,footer"]
 |==========================
 |        |Column 2|Column 3
 |1       |Item 1  |Item 1
@@ -2410,7 +2410,7 @@ default behavior is to strip leading and trailing blank lines within a
 cell. These characteristics aid readability and data entry.
 
 .Windtrainer workouts
-[tablewidth="80%",cols="3,.2,.2,10",options="header"]
+[tablewidth="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |Date |Duration |Avg HR |Notes
 
@@ -2431,7 +2431,7 @@ AsciiDoc source:
 
 ---------------------------------------------------------------------
 .Windtrainer workouts
-[tablewidth="80%",cols="3,.2,.2,10",options="header"]
+[tablewidth="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |Date |Duration |Avg HR |Notes
 
@@ -2452,7 +2452,7 @@ hard + 1min really hard taking the HR up to 160).
 A table with externally sourced CSV data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-[format="csv",cols=".1,4*2",options="header"]
+[format="csv",cols="^1,4*2",options="header"]
 |===================================================
 ID,Customer Name,Contact Name,Customer Address,Phone
 include::customers.csv[]
@@ -2461,7 +2461,7 @@ include::customers.csv[]
 AsciiDoc source:
 
 ---------------------------------------------------------------------
- [format="csv",cols=".1,4*2",options="header"]
+ [format="csv",cols="^1,4*2",options="header"]
  |===================================================
  ID,Customer Name,Contact Name,Customer Address,Phone
  include::customers.csv[]
@@ -2574,7 +2574,7 @@ style values and is formatted like:
   absolute column widths (not to be confused with output column width
   <<X72,markup attributes>> which are available in both percentage and
   absolute units).
-- The column '<align>' character can be '<' (left), '.' (center) or
+- The column '<align>' character can be '<' (left), '^' (center) or
   '>' (right). Cells are left aligned by default.
 - A '<multiplier>' can be used to specify repeated columns e.g.
   `cols="4*<"` specifies four left-justified columns. Default value 1.

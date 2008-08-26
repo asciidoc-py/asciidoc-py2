@@ -2561,7 +2561,7 @@ class Column:
         self.pcwidth=None     # 1..99 (percentage).
 
 class Table(AbstractBlock):
-    ALIGNMENTS = {'<':'left', '>':'right', '.':'center'}
+    ALIGNMENTS = {'<':'left', '>':'right', '^':'center'}
     FORMATS = ('psv','csv','dsv')
     SEPARATORS = dict(
                     csv=',',
@@ -2672,7 +2672,7 @@ class Table(AbstractBlock):
         """
         Build list of column objects from table 'cols' attribute.
         """
-        COLS_RE = r'^((?P<count>\d+)\*)?(?P<align>[<.>])?(?P<width>\d+%?)?(?P<style>[a-zA-Z]\w*)?$'
+        COLS_RE = r'^((?P<count>\d+)\*)?(?P<align>[<\^>])?(?P<width>\d+%?)?(?P<style>[a-zA-Z]\w*)?$'
         reo = re.compile(COLS_RE)
         cols = str(cols)
         if re.match(r'^\d+$',cols):

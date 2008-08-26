@@ -76,7 +76,7 @@ Columns formatted with 'strong', 'monospaced' and 'emphasis' styles
 -------------------------------------------------------------------
 
 .An example table
-[tablewidth="50%",cols=">s,.2m,.2e",frame="none",options="header,footer"]
+[tablewidth="50%",cols=">s,^2m,^2e",frame="none",options="header,footer"]
 |==========================
 |        |Column 2|Column 3
 |1       |Item 1  |Item 1
@@ -89,7 +89,7 @@ Columns formatted with 'strong', 'monospaced' and 'emphasis' styles
 .AsciiDoc source
 ---------------------------------------------------------------------
 .An example table
-[tablewidth="50%",cols=">s,.2m,.2e",frame="none",options="header,footer"]
+[tablewidth="50%",cols=">s,^2m,^2e",frame="none",options="header,footer"]
 |==========================
 |        |Column 2|Column 3
 |1       |Item 1  |Item 1
@@ -103,7 +103,7 @@ Columns formatted with 'strong', 'monospaced' and 'emphasis' styles
 A table with externally sourced CSV data
 ----------------------------------------
 
-[format="csv",cols=".1,4*2",options="header"]
+[format="csv",cols="^1,4*2",options="header"]
 |===================================================
 ID,Customer Name,Contact Name,Customer Address,Phone
 include::customers.csv[]
@@ -111,7 +111,7 @@ include::customers.csv[]
 
 .AsciiDoc source
 ---------------------------------------------------------------------
- [format="csv",cols=".1,4*2",options="header"]
+ [format="csv",cols="^1,4*2",options="header"]
  |===================================================
  ID,Customer Name,Contact Name,Customer Address,Phone
  include::customers.csv[]
@@ -154,7 +154,7 @@ default behavior is to strip leading and trailing blank lines within a
 cell. These characteristics aid readability and data entry.
 
 .Windtrainer workouts
-[tablewidth="80%",cols="3,.2,.2,10",options="header"]
+[tablewidth="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |Date |Duration |Avg HR |Notes
 
@@ -175,7 +175,7 @@ AsciiDoc source:
 
 ---------------------------------------------------------------------
 .Windtrainer workouts
-[tablewidth="80%",cols="3,.2,.2,10",options="header"]
+[tablewidth="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |Date |Duration |Avg HR |Notes
 
@@ -197,7 +197,7 @@ hard + 1min really hard taking the HR up to 160).
 Default and verse styles
 ------------------------
 
-[cols=",.v",options="header"]
+[cols=",^v",options="header"]
 |===================================
 |Default paragraphs |Centered verses
 2*|Per id.
@@ -213,7 +213,7 @@ homero verear ea mea, qui.
 
 .AsciiDoc source
 ---------------------------------------------------------------------
-[cols=",.v",options="header"]
+[cols=",^v",options="header"]
 |===================================
 |Default paragraphs |Centered verses
 2*|Per id.

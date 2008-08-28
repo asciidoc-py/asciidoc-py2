@@ -26,7 +26,7 @@ SUBS_NORMAL = ('specialcharacters','quotes','attributes',
     'specialwords','replacements','macros','passthroughs')
 SUBS_VERBATIM = ('specialcharacters','callouts')
 
-NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attrbibute name.
+NAME_RE = r'(?u)^[^\W\d][-\w]*$'  # Valid section or attrbibute name.
 
 
 #---------------------------------------------------------------------------
@@ -2020,6 +2020,8 @@ class AbstractBlock:
         if self.is_conf_entry('delimiter') and not self.delimiter:
             raise EAsciiDoc,'[%s] missing delimiter' % self.name
         if self.style:
+            if not is_name(self.style):
+                raise EAsciiDoc, 'illegal style name: %s' % self.style
             if not self.styles.has_key(self.style):
                 if not isinstance(self,List):   # Lists don't have templates.
                     warning(' missing [%s] %s-style entry' % (
@@ -2099,6 +2101,8 @@ class AbstractBlock:
         if not style:
             style = self.attributes.get('style',self.style)
         if style is not None:
+            if not is_name(style):
+                raise EAsciiDoc, 'illegal style name: %s' % style
             if not self.styles.has_key(style):
                 if not isinstance(self,List):   # Lists don't have templates.
                     warning('[%s] missing %s-style entry' % (self.name,style))

@@ -2628,7 +2628,7 @@ class Table(AbstractBlock):
                     tags = v
             elif k == 'separator':
                 separator = v
-            elif k == 'tablewidth':
+            elif k == 'width':
                 if not re.match(r'^\d{1,2}%$',v):
                     self.error('illegal %s=%s' % (k,v))
                 else:

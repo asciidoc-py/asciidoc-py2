@@ -16,7 +16,7 @@ The website layout is determined by the layout configuration file
 (`layout1.css` or `layout2.css`). The example website comes with the
 following layouts:
 
-[tablewidth="80%",cols="1,4",options="header"]
+[width="80%",cols="1,4",options="header"]
 |====================================================================
 |Layout   |  Description
 |layout1  |  Table based layout (this is the default layout)

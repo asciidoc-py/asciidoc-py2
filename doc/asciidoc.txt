@@ -1019,7 +1019,7 @@ The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.
 
 .Default DelimitedBlock substitutions
-[cols="2,5*^",tablewidth="80%",options="header"]
+[cols="2,5*^",width="80%",options="header"]
 |==================================================================
 |              |Passthrough |Listing  |Literal  |Sidebar  |Quote
 |Callouts      |  No        | Yes     | Yes     | No      | No
@@ -2356,7 +2356,7 @@ Example tables
 Simple table
 ^^^^^^^^^^^^
 
-[tablewidth="15%"]
+[width="15%"]
 |=======
 |1 |2 |A
 |3 |4 |B
@@ -2366,7 +2366,7 @@ Simple table
 AsciiDoc source:
 
 ---------------------------------------------------------------------
-[tablewidth="15%"]
+[width="15%"]
 |=======
 |1 |2 |A
 |3 |4 |B
@@ -2378,7 +2378,7 @@ Columns formatted with strong, monospaced and emphasis styles
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .An example table
-[tablewidth="50%",cols=">s,^m,e",frame="none",options="header,footer"]
+[width="50%",cols=">s,^m,e",frame="none",options="header,footer"]
 |==========================
 |        |Column 2|Column 3
 |1       |Item 1  |Item 1
@@ -2392,7 +2392,7 @@ AsciiDoc source:
 
 ---------------------------------------------------------------------
 .An example table
-[tablewidth="50%",cols=">s,^m,e",frame="none",options="header,footer"]
+[width="50%",cols=">s,^m,e",frame="none",options="header,footer"]
 |==========================
 |        |Column 2|Column 3
 |1       |Item 1  |Item 1
@@ -2410,7 +2410,7 @@ default behavior is to strip leading and trailing blank lines within a
 cell. These characteristics aid readability and data entry.
 
 .Windtrainer workouts
-[tablewidth="80%",cols="3,^2,^2,10",options="header"]
+[width="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |Date |Duration |Avg HR |Notes
 
@@ -2431,7 +2431,7 @@ AsciiDoc source:
 
 ---------------------------------------------------------------------
 .Windtrainer workouts
-[tablewidth="80%",cols="3,^2,^2,10",options="header"]
+[width="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |Date |Duration |Avg HR |Notes
 
@@ -2546,8 +2546,8 @@ specifiers>>. For example `cols="2<p,2*,4p,>"`.
 - The degenerate form for the 'cols' attribute is an integer
   specifying the number of columns e.g. `cols=4`.
 
-tablewidth::
-The 'tablewidth' attribute is expressed as a percentage value
+width::
+The 'width' attribute is expressed as a percentage value
 ('"1%"'...'"99%"') of the 'pagewidth' value. The 'pagewidth' attribute
 value is specified in the `[miscellaneous]` section of the backend
 configuration file (defaults to 380 points for DocBook and 800 pixels
@@ -2633,7 +2633,7 @@ From `asciidoc.conf`. The nominal output page width in 'pageunit'
 units. '380' for DocBook, '800 for HTML.
 
 tableabswidth::
-Integer value calculated from 'tablewidth' and 'pagewidth' attributes.
+Integer value calculated from 'width' and 'pagewidth' attributes.
 In 'pageunit' units.
 
 tablepcwidth::
@@ -2644,7 +2644,7 @@ colalign::
 'left', 'right' or 'center'.
 
 colabswidth::
-Integer value calculated from 'cols' column width, 'tablewidth' and
+Integer value calculated from 'cols' column width, 'width' and
 'pagewidth' attributes.  In 'pageunit' units.
 
 colpcwidth::

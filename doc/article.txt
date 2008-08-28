@@ -42,7 +42,7 @@ image::images/tiger.png[Tiger image]
 Followed by an example table:
 
 .An example table
-[tablewidth="60%",options="header"]
+[width="60%",options="header"]
 |==============================================
 | Option          | Description
 | -a 'USER GROUP' | Add 'USER' to 'GROUP'.

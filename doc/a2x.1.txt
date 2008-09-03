@@ -66,6 +66,9 @@ OPTIONS
   and navigation icons. Defaults to './images/icons/'.
   Applies to 'xhtml', 'chunked', 'htmlhelp' formats.
 
+*-L, --no-xmllint*::
+  Don't check asciidoc output with 'xmllint(1)'.
+
 *-n, --dry-run*::
   Don't do anything just print what would have been done.
 
@@ -89,9 +92,12 @@ OPTIONS
   Additional xsltproc(1) options.  This option may be specified more
   than once.
 
+*--fop*::
+  Use FOP to generate PDFs.
+
 *--fop-opts*='FOP_OPTS'::
   Additional fop options.  This option may be specified more than
-  once. If this option is specified fop is used to generate PDFs.
+  once. If this option is specified FOP is used to generate PDFs.
 
 *--dblatex-opts*='DBLATEX_OPTS'::
   Additional dblatex options.  This option may be specified more than once.

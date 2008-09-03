@@ -211,6 +211,7 @@ options:
   --version                      print program version to stdout
   -v, --verbose                  print operational details to stderr
   --dblatex-opts=DBLATEX_OPTS    dblatex options
+  --fop                          use FOP to generate PDF files
   --fop-opts=FOP_OPTS            options for FOP pdf generation
   --xsltproc-opts=XSLTPROC_OPTS  xsltproc options
 EOF
@@ -244,7 +245,7 @@ function parse_options()
         quit "enhanced getopt(1) required"
     fi
     short_opts="a:d:D:f:hLnsv"
-    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,dblatex-opts:,fop-opts:,no-xmllint"
+    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,dblatex-opts:,fop,fop-opts:,no-xmllint"
     args=$(getopt -o $short_opts -l $long_opts -n $BASENAME -- "$@" 2>/dev/null)
     if [ $? -ne 0 ]; then
         quit "invalid command options, run: a2x --help"
@@ -302,6 +303,9 @@ function parse_options()
             --xsltproc-opts)
                 XSLTPROC_OPTS="$XSLTPROC_OPTS $2"
                 shift 2 ;;
+            --fop)
+                FOP=yes;
+                shift ;;
             --fop-opts)
                 FOP_OPTS="$FOP_OPTS $2"
                 FOP=yes

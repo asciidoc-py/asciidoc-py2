@@ -223,6 +223,9 @@ and I'll add them to the list.
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] uses
   AsciiDoc for documentation and has released an Emacs syntax
   highlighter (see <<X2,Resources>> above).
+- The http://www.wesnoth.org/[Battle for Wesnoth] project uses
+  AsciiDoc for it's http://www.wesnoth.org/wiki/WesnothManual[Manual]
+  in a number of different languages.
 
 
 AsciiDoc version 9

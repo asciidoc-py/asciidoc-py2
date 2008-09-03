@@ -2633,7 +2633,7 @@ class Table(AbstractBlock):
             elif k == 'separator':
                 separator = v
             elif k == 'width':
-                if not re.match(r'^\d{1,2}%$',v):
+                if not re.match(r'^\d{1,3}%$',v) or int(v[:-1]) > 100:
                     self.error('illegal %s=%s' % (k,v))
                 else:
                     abswidth = float(v[:-1])/100 * config.pagewidth

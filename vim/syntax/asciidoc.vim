@@ -72,6 +72,8 @@ syn match asciidocSidebarDelimiter /^*\{4,}$/
 "contents from highlighting.
 syn match asciidocTablePrefix /\(\d\+\*\)\?|/ containedin=asciidocTableBlock contained
 syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^|=\{3,}$/ end=/^|=\{3,}$/ keepend contains=ALL
+syn match asciidocTablePrefix2 /\(\d\+\*\)\?!/ containedin=asciidocTableBlock2 contained
+syn region asciidocTableBlock2 matchgroup=asciidocTableDelimiter2 start=/^!=\{3,}$/ end=/^!=\{3,}$/ keepend contains=ALL
 
 syn match asciidocListContinuation /^+$/
 syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=asciidocCallout keepend
@@ -114,6 +116,9 @@ highlight link asciidocTable_OLD Type
 highlight link asciidocTableDelimiter Label
 highlight link asciidocTableBlock NONE
 highlight link asciidocTablePrefix Label
+highlight link asciidocTableDelimiter2 Label
+highlight link asciidocTableBlock2 NONE
+highlight link asciidocTablePrefix2 Label
 highlight link asciidocListBlockDelimiter Label
 highlight link asciidocListContinuation Label
 highlight link asciidocLiteralParagraph Identifier

@@ -2330,7 +2330,6 @@ There are a wide variety of built-in customizable styles.
 
 - All table meta-data is contained specified in the table's attribute
   list, not in the the table data.
-- Nested tables are not permitted.
 - There is no provision for cells to span multiple columns.
 
 .Use tables sparingly
@@ -2653,6 +2652,13 @@ value (0..100).
 
 colnumber::
 Integer value: '1' for column 1, '2' for column 2 ...
+
+Nested tables
+~~~~~~~~~~~~~
+An alternative table syntax using a '!' character instead of a '|'
+character is provided to allow a single level of table nesting.
+Columns containing nested tables must use the 'asciidoc' style. An
+example can be found in `./examples/website/newtables.txt`.
 
 
 [[X1]]

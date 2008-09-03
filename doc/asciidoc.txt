@@ -2660,6 +2660,13 @@ character is provided to allow a single level of table nesting.
 Columns containing nested tables must use the 'asciidoc' style. An
 example can be found in `./examples/website/newtables.txt`.
 
+NOTE: When generating PDF nested tables using `a2x(1)` you will need
+to use the `--no-xmllint` option. This is because the nested tables
+are not legal in DocBook (you have to use the DocBook 4 'entrytbl'
+element). But both 'dblatex' (as of version 0.28) and 'FOP' (as of
+version 0.95beta) will process nested DocBook tables, but not
+'entrytbl' elements.
+
 
 [[X1]]
 Manpage Documents

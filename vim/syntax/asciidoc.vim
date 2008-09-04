@@ -28,8 +28,8 @@ syn match asciidocRuler /^'\{4,}$/
 " preceeded by blank line, handles only bulleted items (see 'Limitations' above
 " for workarounds).
 syn region asciidocLiteralParagraph start=/^\n[ \t]\+\(\([^-*. \t] \)\|\(\S\S\)\)/ end=/\(^+\?\s*$\)\@=/
-syn match asciidocListBullet /^\s*[-*+]\s/
-syn match asciidocListNumber /^\s*\(\(\d\+\.\)\|\.\{1,2}\|\(\l\.\)\)\s\+/
+syn match asciidocListBullet /^\s*\zs[-*+]\ze\s/
+syn match asciidocListNumber /^\s*\zs\(\(\d\+\.\)\|\.\{1,2}\|\(\l\.\)\)\ze\s\+/
 syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\|irc\):\/\/[^| \t]*\(\w\|\/\)/
 syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_.]\@!/
 syn match asciidocAttributeRef /\\\@<!{\w\(\w\|-\)*\([=!@#$%?:].*\)\?}/

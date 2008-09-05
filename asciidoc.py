@@ -2236,16 +2236,10 @@ class Paragraphs(AbstractBlocks):
             raise EAsciiDoc,'missing [paradef-default] section'
 
 class List(AbstractBlock):
-    TAGS = ('listtag','itemtag','texttag','entrytag','labeltag')
     TYPES = ('bulleted','numbered','labeled','callout')
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.CONF_ENTRIES += ('type',) + self.TAGS
-        self.listtag=None
-        self.itemtag=None
-        self.texttag=None   # Tag for list item text.
-        self.labeltag=None  # Variable lists only.
-        self.entrytag=None  # Variable lists only.
+        self.CONF_ENTRIES += ('type','tags')
         self.label=None     # List item label (labeled lists).
         self.text=None      # Text in first line of list item.
         self.index=None     # Matched delimiter 'index' group (numbered lists).
@@ -2275,6 +2269,13 @@ class List(AbstractBlock):
             write('entrytag='+self.entrytag)
             write('labeltag='+self.labeltag)
         write('')
+    def validate(self):
+        AbstractBlock.validate(self)
+        tags = [self.tags]
+        tags += [s['tags'] for s in self.styles.values() if 'tags' in s]
+        for t in tags:
+            if t not in lists.tags:
+                self.error('missing section: [listtags-%s]' % t,halt=True)
     def isnext(self):
         result = AbstractBlock.isnext(self)
         if result:
@@ -2461,28 +2462,42 @@ class Lists(AbstractBlocks):
     PREFIX = 'listdef-'
     def __init__(self):
         AbstractBlocks.__init__(self)
+        self.TAGS = ('list', 'entry','item','text',
+                     'label','term')
         self.open = []           # A stack of the current and parent lists.
         self.listblock = None    # Current list is in list block.
+        # List tags dictionary. Each entry is a tags dictionary.
+        self.tags={}
     def load(self,sections):
         AbstractBlocks.load(self,sections)
+        self.load_tags(sections)
+    def load_tags(self,sections):
+        """
+        Load listtags-* conf file sections to self.tags.
+        """
+        for section in sections.keys():
+            mo = re.match(r'^listtags-(?P<name>\w+)$',section)
+            if mo:
+                name = mo.group('name')
+                d = AttrDict()
+                parse_entries(sections.get(section,()),d)
+                for k in d.keys():
+                    if k not in self.TAGS:
+                        warning('[%s] contains illegal list tag: %s' %
+                                (section,k))
+                self.tags[name] = d
     def validate(self):
         AbstractBlocks.validate(self)
         for b in self.blocks:
             # Check list has valid type.
             if not b.type in b.TYPES:
                 raise EAsciiDoc,'[%s] illegal type' % b.name
-            # Check all list tags.
-            if not b.listtag or not config.tags.has_key(b.listtag):
-                warning('[%s] missing listtag' % b.name)
-            if not b.itemtag or not config.tags.has_key(b.itemtag):
-                warning('[%s] missing tag itemtag' % b.name)
-            if not b.texttag or not config.tags.has_key(b.texttag):
-                warning('[%s] missing tag texttag' % b.name)
-            if b.type == 'labeled':
-                if not b.entrytag or not config.tags.has_key(b.entrytag):
-                    warning('[%s] missing entrytag' % b.name)
-                if not b.labeltag or not config.tags.has_key(b.labeltag):
-                    warning('[%s] missing labeltag' % b.name)
+            b.validate()
+    def dump(self):
+        AbstractBlocks.dump(self)
+        for k,v in self.tags.items():
+            dump_section('listtags-'+k, v)
+
 
 class DelimitedBlock(AbstractBlock):
     def __init__(self):
@@ -2991,7 +3006,7 @@ class Tables(AbstractBlocks):
                 parse_entries(sections.get(section,()),d)
                 for k in d.keys():
                     if k not in self.TAGS:
-                        warning('[%s] contains unknown table tag: %s' %
+                        warning('[%s] contains illegal table tag: %s' %
                                 (section,k))
                 self.tags[name] = d
     def validate(self):

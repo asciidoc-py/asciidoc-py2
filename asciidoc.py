@@ -1906,11 +1906,12 @@ class AbstractBlock:
     def load(self,name,entries):
         """Update block definition from section 'entries' dictionary."""
         self.name = name
-        self.update_parameters(entries, self)
-    def update_parameters(self,src,dst=None):
+        self.update_parameters(entries, self, all=True)
+    def update_parameters(self, src, dst=None, all=False):
         """
         Parse processing parameters from src dictionary to dst object.
         dst defaults to self.parameters.
+        If all is True then copy src entries that aren't parameter names.
         """
         dst = dst or self.parameters
         msg = '[%s] malformed entry %%s: %%s' % self.name
@@ -1967,12 +1968,12 @@ class AbstractBlock:
                         d['presubs'] = d['subs']
                         del d['subs']
                     self.styles[style] = d
-                else:
+                elif all or k in self.PARAM_NAMES:
                     copy(dst,k,v) # Derived class specific entries.
     def get_param(self,name,params=None):
         """
         Return named processing parameter from params dictionary.
-        If the parameter is not in style look in self.parameters.
+        If the parameter is not in params look in self.parameters.
         """
         if params and name in params:
             return params[name]
@@ -2041,7 +2042,8 @@ class AbstractBlock:
                 if not config.sections.has_key(self.template):
                     warning('[%s] missing template section' % self.template)
             elif not all_styles_have_template:
-                warning('[%s] styles missing templates' % self.name)
+                if not isinstance(self,List): # Lists don't have templates.
+                    warning('[%s] styles missing templates' % self.name)
     def isnext(self):
         """Check if this block is next in document reader."""
         result = False
@@ -2058,7 +2060,7 @@ class AbstractBlock:
             self.presubs = config.subsnormal
         if reader.cursor:
             self.start = reader.cursor[:]
-    def merge_attributes(self,attrs):
+    def merge_attributes(self,attrs,params=[]):
         """
         Use the current blocks attribute list (attrs dictionary) to build a
         dictionary of block processing parameters (self.parameters) and tag
@@ -2066,6 +2068,7 @@ class AbstractBlock:
 
         1. Copy the default parameters (self.*) to self.parameters.
         self.parameters are used internally to render the current block.
+        Optional params array of addtional parameters.
 
         2. Copy attrs to self.attributes. self.attributes are used for template
         and tag substitution in the current block.
@@ -2082,16 +2085,14 @@ class AbstractBlock:
         specified in attrs.
 
         """
+        params = list(self.PARAM_NAMES) + params
         self.attributes = {}
         self.attributes.update(attrs)
         # Calculate dynamic block parameters.
         # Start with configuration file defaults.
         self.parameters = AttrDict()
-        self.parameters.template = self.template
-        self.parameters.options = self.options
-        self.parameters.presubs = self.presubs
-        self.parameters.postsubs = self.postsubs
-        self.parameters.filter = self.filter
+        for name in params:
+            self.parameters[name] = getattr(self,name)
         # Load the selected style attributes.
         posattrs = self.posattrs
         if posattrs and posattrs[0] == 'style':
@@ -2111,7 +2112,7 @@ class AbstractBlock:
                 for k,v in self.styles[style].items():
                     if k == 'posattrs':
                         posattrs = v
-                    elif k in self.PARAM_NAMES:
+                    elif k in params:
                         self.parameters[k] = v
                     elif not self.attributes.has_key(k):
                         # Style attributes don't take precedence over explicit.
@@ -2236,10 +2237,15 @@ class Paragraphs(AbstractBlocks):
             raise EAsciiDoc,'missing [paradef-default] section'
 
 class List(AbstractBlock):
-    TYPES = ('bulleted','numbered','labeled','callout')
     def __init__(self):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('type','tags')
+        self.PARAM_NAMES += ('tags',)
+        # tabledef conf file parameters.
+        self.type=None
+        self.tags=None          # Name of listtags-<tags> conf section.
+        # Calculated parameters.
+        self.tag=None       # Current tags AttrDict.
         self.label=None     # List item label (labeled lists).
         self.text=None      # Text in first line of list item.
         self.index=None     # Matched delimiter 'index' group (numbered lists).
@@ -2247,27 +2253,11 @@ class List(AbstractBlock):
         self.listindex=None # Current list index (1..)
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
-        for k,v in entries.items():
-            if k == 'type':
-                if v in self.TYPES:
-                    self.type = v
-                else:
-                    raise EAsciiDoc,'illegal list type: %s' % v
-            elif k in self.TAGS:
-                if is_name(v):
-                    setattr(self,k,v)
-                else:
-                    raise EAsciiDoc,'illegal list %s name: %s' % (k,v)
     def dump(self):
         AbstractBlock.dump(self)
         write = lambda s: sys.stdout.write('%s%s' % (s,writer.newline))
         write('type='+self.type)
-        write('listtag='+self.listtag)
-        write('itemtag='+self.itemtag)
-        write('texttag='+self.texttag)
-        if self.type == 'labeled':
-            write('entrytag='+self.entrytag)
-            write('labeltag='+self.labeltag)
+        write('tags='+self.tags)
         write('')
     def validate(self):
         AbstractBlock.validate(self)
@@ -2285,24 +2275,25 @@ class List(AbstractBlock):
         return result
     def translate_entry(self):
         assert self.type == 'labeled'
-        stag,etag = config.tag(self.entrytag, self.attributes)
-        if stag:
-            writer.write(stag)
-        if self.listtag == 'hlist':
-            # Horizontal label list.
+        entrytag = subs_tag(self.tag.entry, self.attributes)
+        labeltag = subs_tag(self.tag.label, self.attributes)
+        writer.write(entrytag[0])
+        writer.write(labeltag[0])
+        if self.text:
+            # Horizontal labeled list.
             reader.read()   # Discard (already parsed item first line).
-            writer.write_tag(self.labeltag, [self.label],
+            writer.write_tag(self.tag.term, [self.label],
                              self.presubs, self.attributes)
         else:
             # Write multiple labels (vertical label list).
             while Lex.next() is self:
                 reader.read()   # Discard (already parsed item first line).
-                writer.write_tag(self.labeltag, [self.label],
+                writer.write_tag(self.tag.term, [self.label],
                                  self.presubs, self.attributes)
+        writer.write(labeltag[1])
         # Write item text.
         self.translate_item()
-        if etag:
-            writer.write(etag)
+        writer.write(entrytag[1])
     def iscontinued(self):
         if reader.read_next() == '+':
             reader.read()   # Discard.
@@ -2321,15 +2312,14 @@ class List(AbstractBlock):
         """Translation for '+' style list continuation."""
         if self.type == 'callout':
             self.attributes['coids'] = calloutmap.calloutids(self.listindex)
-        stag,etag = config.tag(self.itemtag, self.attributes)
-        if stag:
-            writer.write(stag)
+        itemtag = subs_tag(self.tag.item, self.attributes)
+        writer.write(itemtag[0])
         if self.text and self.text == '+':
-            # Pathalogical case: continued Horizontal Labeled List with no
+            # Pathological case: continued Horizontal Labeled List with no
             # item text.
             continued = True
         elif not self.text and self.iscontinued():
-            # Pathalogical case: continued Vertical Labeled List with no
+            # Pathological case: continued Vertical Labeled List with no
             # item text.
             continued = True
         else:
@@ -2343,7 +2333,7 @@ class List(AbstractBlock):
                 text = [self.text] + list(text)
             text = join_lines(text)
             if text:
-                writer.write_tag(self.texttag, text, self.presubs, self.attributes)
+                writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
             continued = self.iscontinued()
         while True:
             next = Lex.next()
@@ -2360,15 +2350,13 @@ class List(AbstractBlock):
             else:
                 break
             continued = self.iscontinued()
-        if etag:
-            writer.write(etag)
+        writer.write(itemtag[1])
     def translate_item_2(self):
         """Translation for List block style lists."""
         if self.type == 'callout':
             self.attributes['coids'] = calloutmap.calloutids(self.listindex)
-        stag,etag = config.tag(self.itemtag, self.attributes)
-        if stag:
-            writer.write(stag)
+        itemtag = subs_tag(self.tag.item, self.attributes)
+        writer.write(itemtag[0])
         if self.text or reader.read_next():
             # Write ItemText.
             text = reader.read_until(
@@ -2379,7 +2367,7 @@ class List(AbstractBlock):
             if self.text is not None:
                 text = [self.text] + list(text)
             text = join_lines(text)
-            writer.write_tag(self.texttag, text, self.presubs, self.attributes)
+            writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
         while True:
             next = Lex.next()
             if next in lists.open:
@@ -2396,8 +2384,7 @@ class List(AbstractBlock):
                 next.translate()
             else:
                 break
-        if etag:
-            writer.write(etag)
+        writer.write(itemtag[1])
     def check_index(self):
         """ Check calculated listindex (1,2,...) against the item index in the
         document (self.index)."""
@@ -2413,6 +2400,14 @@ class List(AbstractBlock):
             if matched and i != self.listindex:
                 print 'type: ',self.type,': expected ',self.listindex,' got ',i
                 warning('list item %s out of sequence' % self.index)
+    def check_tags(self):
+        """ Check for all required tags are present. """
+        tags = set(Lists.TAGS)
+        if self.type != 'labeled':
+            tags = tags.difference(['entry','label','term'])
+        missing = tags.difference(self.tag.keys())
+        if missing:
+            self.error('missing tag(s): %s' % ','.join(missing), halt=True)
     def translate(self):
         AbstractBlock.translate(self)
         lists.open.append(self)
@@ -2420,7 +2415,9 @@ class List(AbstractBlock):
         attrs.update(self.mo.groupdict())
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
-        self.merge_attributes(attrs)
+        self.merge_attributes(attrs,['tags'])
+        self.tag = lists.tags[self.parameters.tags]
+        self.check_tags()
         if 'width' in self.attributes:
             # Set horizontal list 'labelwidth' and 'itemwidth' attributes.
             v = str(self.attributes['width'])
@@ -2431,7 +2428,7 @@ class List(AbstractBlock):
                 self.attributes['itemwidth'] = str(100-labelwidth)
             else:
                 self.error('illegal attribute value: label="%s"' % v)
-        stag,etag = config.tag(self.listtag, self.attributes)
+        stag,etag = subs_tag(self.tag.list, self.attributes)
         if stag:
             writer.write(stag)
         self.listindex = 0
@@ -2460,14 +2457,13 @@ class Lists(AbstractBlocks):
     """List of List objects."""
     BLOCK_TYPE = List
     PREFIX = 'listdef-'
+    TYPES = ('bulleted','numbered','labeled','callout')
+    TAGS = ('list', 'entry','item','text', 'label','term')
     def __init__(self):
         AbstractBlocks.__init__(self)
-        self.TAGS = ('list', 'entry','item','text',
-                     'label','term')
         self.open = []           # A stack of the current and parent lists.
         self.listblock = None    # Current list is in list block.
-        # List tags dictionary. Each entry is a tags dictionary.
-        self.tags={}
+        self.tags={}    # List tags dictionary. Each entry is a tags AttrDict.
     def load(self,sections):
         AbstractBlocks.load(self,sections)
         self.load_tags(sections)
@@ -2490,7 +2486,7 @@ class Lists(AbstractBlocks):
         AbstractBlocks.validate(self)
         for b in self.blocks:
             # Check list has valid type.
-            if not b.type in b.TYPES:
+            if not b.type in Lists.TYPES:
                 raise EAsciiDoc,'[%s] illegal type' % b.name
             b.validate()
     def dump(self):
@@ -2985,10 +2981,10 @@ class Tables(AbstractBlocks):
     """List of tables."""
     BLOCK_TYPE = Table
     PREFIX = 'tabledef-'
+    TAGS = ('colspec', 'headrow','footrow','bodyrow',
+            'headdata','footdata', 'bodydata','paragraph')
     def __init__(self):
         AbstractBlocks.__init__(self)
-        self.TAGS = ('colspec', 'headrow','footrow','bodyrow',
-                     'headdata','footdata', 'bodydata','paragraph')
         # Table tags dictionary. Each entry is a tags dictionary.
         self.tags={}
     def load(self,sections):
@@ -3634,13 +3630,13 @@ class Writer:
                         self.write_line(s)
                 elif arg is not None:
                     self.write_line(arg)
-    def write_tag(self,tagname,content,subs=None,d=None):
-        """Write content enveloped by configuration file tag tagname.
+    def write_tag(self,tag,content,subs=None,d=None):
+        """Write content enveloped by tag.
         Substitutions specified in the 'subs' list are perform on the
         'content'."""
         if subs is None:
             subs = config.subsnormal
-        stag,etag = config.tag(tagname,d)
+        stag,etag = subs_tag(tag,d)
         if stag:
             self.write(stag)
         if content:

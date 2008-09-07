@@ -245,20 +245,20 @@ p.table {
 }
 
 
-div.hlist {
+div.hdlist {
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
-div.hlist td {
+div.hdlist td {
   padding-bottom: 15px;
 }
-td.hlist1 {
+td.hdlist1 {
   vertical-align: top;
   font-style: normal;
   padding-right: 0.8em;
   color: navy;
 }
-td.hlist2 {
+td.hdlist2 {
   vertical-align: top;
 }
 

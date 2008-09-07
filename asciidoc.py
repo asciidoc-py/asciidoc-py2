@@ -1894,6 +1894,13 @@ class AbstractBlock:
         self.parameters=None
         # Leading delimiter match object.
         self.mo=None
+    def short_name(self):
+        """ Return the text following the last dash in the section namem """
+        i = self.name.rfind('-')
+        if i == -1:
+            return self.name
+        else:
+            return self.name[i+1:]
     def error(self, msg, cursor=None, halt=False):
         error('[%s] %s' % (self.name,msg), cursor, halt)
     def is_conf_entry(self,param):
@@ -2412,6 +2419,8 @@ class List(AbstractBlock):
             self.error('missing tag(s): %s' % ','.join(missing), halt=True)
     def translate(self):
         AbstractBlock.translate(self)
+        if self.short_name() in ('bibliography','glossary','qanda'):
+            deprecated('old %s list syntax' % self.short_name())
         lists.open.append(self)
         attrs = {}
         attrs.update(self.mo.groupdict())

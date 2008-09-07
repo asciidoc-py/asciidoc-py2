@@ -1370,12 +1370,11 @@ Which render as:
   3. Donec eget arcu bibendum nunc consequat lobortis.
   4. Nam fermentum mattis ante.
 
-The first positional list attribute is a 'style' value which can be
-'compact' or 'normal', this is translates to the DocBook 'spacing'
-attribute which may or may not be processed by the DocBook toolchain.
-Example:
+A predefined 'compact' option is supported -- this translates to the
+DocBook 'spacing="compact"' lists attribute which may or may not be
+processed by the DocBook toolchain.  Example:
 
-  [compact]
+  [options="compact"]
   - Compact list item.
   - Another compact list item.
 
@@ -1486,37 +1485,42 @@ labitur dolorum an. Est ne magna primis adolescens.
   Stylesheets>> process them correctly).
 - The label width can be set as a percentage of the total width by
   setting the 'width' attribute e.g. `width="10%"`
+- Horizontal labeled lists can also be generated using the vertical
+  labeled list syntax with a 'horizontal' style.
+
 =====================================================================
 
 Question and Answer Lists
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-AsciiDoc comes pre-configured with a labeled list for generating
-DocBook question and answer (Q&A) lists (`??` label delimiter).
-Example:
+AsciiDoc comes pre-configured with a 'qanda' style labeled list for generating
+DocBook question and answer (Q&A) lists. Example:
 
 ---------------------------------------------------------------------
-Question one??
+[qanda]
+Question one::
         Answer one.
-Question two??
+Question two::
         Answer two.
 ---------------------------------------------------------------------
 
 Renders:
 
-Question one??
+[qanda]
+Question one::
         Answer one.
-Question two??
+Question two::
         Answer two.
 
 Glossary Lists
 ~~~~~~~~~~~~~~
-AsciiDoc comes pre-configured with a labeled list (`:-` label
-delimiter) for generating DocBook glossary lists. Example:
+AsciiDoc comes pre-configured with a 'glossary' style labeled list for
+generating DocBook glossary lists. Example:
 
 ---------------------------------------------------------------------
-A glossary term:-
+[glossary]
+A glossary term::
     The corresponding definition.
-A second glossary term:-
+A second glossary term::
     The corresponding definition.
 ---------------------------------------------------------------------
 
@@ -1528,13 +1532,14 @@ in a glossary section.
 
 Bibliography Lists
 ~~~~~~~~~~~~~~~~~~
-AsciiDoc comes with a predefined itemized list (`+` item bullet) for
-generating bibliography entries.  Example:
+AsciiDoc comes with a predefined 'bibliography' bulleted list style
+generating DocBook bibliography entries. Example:
 
 ---------------------------------------------------------------------
-+ [[[taoup]]] Eric Steven Raymond. 'The Art of UNIX
+[bibliography]
+- [[[taoup]]] Eric Steven Raymond. 'The Art of UNIX
   Programming'. Addison-Wesley. ISBN 0-13-142901-9.
-+ [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.
+- [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.
   'DocBook - The Definitive Guide'. O'Reilly & Associates.
   1999. ISBN 1-56592-580-7.
 ---------------------------------------------------------------------

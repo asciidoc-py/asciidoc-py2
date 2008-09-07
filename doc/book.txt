@@ -100,29 +100,27 @@ Sub-section body.
 
 Bibliography
 ------------
-The bibliography list is an example of an AsciiDoc SimpleList, the
-AsciiDoc source list items are bulleted with a `+` character.  The
-first entry in this example has an anchor.
+The bibliography list is a style of AsciiDoc bulleted list.
 
-+ [[[taoup]]] Eric Steven Raymond. 'The Art of Unix Programming'.
-  Addison-Wesley. ISBN 0-13-142901-9.
-
-+ [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.
-  'DocBook - The Definative Guide'. O'Reilly & Associates. 199.
+[bibliography]
+- [[[taoup]]] Eric Steven Raymond. 'The Art of Unix
+  Programming'. Addison-Wesley. ISBN 0-13-142901-9.
+- [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.
+  'DocBook - The Definitive Guide'. O'Reilly & Associates. 1999.
   ISBN 1-56592-580-7.
 
 
 Glossary
 --------
-Glossaries are optional. Glossaries are an example of an AsciiDoc
-VariableList, the AsciiDoc glossary entry terms are terminated
-by the `:-` characters.
+Glossaries are optional. Glossaries entries are an example of a style
+of AsciiDoc labeled lists.
 
-A glossary term:-
-	The corresponding (indented) definition.
+[glossary]
+A glossary term::
+  The corresponding (indented) definition.
 
-A second glossary term:-
-	The corresponding (indented) definition.
+A second glossary term::
+  The corresponding (indented) definition.
 
 
 Index

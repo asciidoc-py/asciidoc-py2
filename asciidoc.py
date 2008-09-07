@@ -1867,7 +1867,7 @@ class Section:
 
 class AbstractBlock:
     def __init__(self):
-        self.OPTIONS = ()   # The set of allowed options values
+        self.OPTIONS = ()   # The set of allowed options values. () allows all.
         # Configuration parameter names common to all blocks.
         self.CONF_ENTRIES = ('delimiter','options','subs','presubs','postsubs',
                              'posattrs','style','.*-style','template','filter')
@@ -2101,12 +2101,11 @@ class AbstractBlock:
             style = None
         if not style:
             style = self.attributes.get('style',self.style)
-        if style is not None:
+        if style:
             if not is_name(style):
                 raise EAsciiDoc, 'illegal style name: %s' % style
             if not self.styles.has_key(style):
-                if not isinstance(self,List):   # Lists don't have templates.
-                    warning('[%s] missing %s-style entry' % (self.name,style))
+                warning('[%s] missing %s-style entry' % (self.name,style))
             else:
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():
@@ -2123,6 +2122,9 @@ class AbstractBlock:
                 self.attributes[v] = self.attributes[str(i+1)]
         # Override config and style attributes with attribute list attributes.
         self.update_parameters(attrs)
+        # Set options attributes.
+        for option in self.parameters.options:
+            self.attributes[option+'-option'] = ''
         assert is_array(self.parameters.options)
         assert is_array(self.parameters.presubs)
         assert is_array(self.parameters.postsubs)
@@ -2401,7 +2403,7 @@ class List(AbstractBlock):
                 print 'type: ',self.type,': expected ',self.listindex,' got ',i
                 warning('list item %s out of sequence' % self.index)
     def check_tags(self):
-        """ Check for all required tags are present. """
+        """ Check that all necessary tags are present. """
         tags = set(Lists.TAGS)
         if self.type != 'labeled':
             tags = tags.difference(['entry','label','term'])

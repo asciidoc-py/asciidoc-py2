@@ -4549,20 +4549,21 @@ formed.
 
 Glossary
 --------
-[[X8]] Block element:-
+[glossary]
+[[X8]] Block element::
     An AsciiDoc block element is a document entity composed of one or
     more whole lines of text.
 
-[[X34]] Inline element:-
+[[X34]] Inline element::
     AsciiDoc inline elements occur within block element textual
     content, they perform formatting and substitution tasks.
 
-Formal element:-
+Formal element::
     An AsciiDoc block element that has a BlockTitle. Formal elements
     are normally listed in front or back matter, for example lists of
     tables, examples and figures.
 
-Verbatim element:-
+Verbatim element::
     The word verbatim indicates that white space and line breaks in
     the source document are to be preserved in the output document.
 

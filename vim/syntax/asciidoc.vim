@@ -28,7 +28,7 @@ syn match asciidocRuler /^'\{4,}$/
 " preceeded by blank line, handles only bulleted items (see 'Limitations' above
 " for workarounds).
 syn region asciidocLiteralParagraph start=/^\n[ \t]\+\(\([^-*. \t] \)\|\(\S\S\)\)/ end=/\(^+\?\s*$\)\@=/
-syn match asciidocListBullet /^\s*\zs[-*+]\ze\s/
+syn match asciidocListBullet /^\s*\zs[-*]\ze\s/
 syn match asciidocListNumber /^\s*\zs\(\(\d\+\.\)\|\.\{1,2}\|\(\l\.\)\)\ze\s\+/
 syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\|irc\):\/\/[^| \t]*\(\w\|\/\)/
 syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_.]\@!/
@@ -52,9 +52,6 @@ syn match asciidocQuotedQuoted /\(^\|[| \t([.,=]\)\@<=``\([ )\n]\)\@!\_.\{-}\S\(
 
 syn match asciidocDoubleDollarPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=\$\$..\{-}\(\$\$\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
 syn match asciidocTriplePlusPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=+++..\{-}\(+++\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
-
-syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\|:-\|??\)$/ oneline contains=asciidocQuoted.* keepend
-syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.* keepend
 
 syn region asciidocTable_OLD start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*,asciidocAttributeRef
@@ -92,6 +89,9 @@ syn region asciidocMacroAttributes matchgroup=asciidocIndexTerm start=/\\\@<!(\{
 syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\(\w\|-\)\+}\)\@<=\[/ skip=/\\\]/ end=/\]/ keepend
 
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
+
+syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\)$/ oneline contains=asciidocQuoted.*,asciidocMacroAttributes keepend
+syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*,asciidocMacroAttributes keepend
 
 highlight link asciidocMacroAttributes Label
 highlight link asciidocIdMarker Special

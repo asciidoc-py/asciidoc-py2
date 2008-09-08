@@ -1435,7 +1435,7 @@ Dolor::
 
 Horizontal labeled list style
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The 'horizontal' labled list style places the list text side-by-side
+The 'horizontal' labeled list style places the list text side-by-side
 with the label instead of under the label. Here is an example:
 
 ---------------------------------------------------------------------
@@ -1474,7 +1474,7 @@ labitur dolorum an. Est ne magna primis adolescens.
 [NOTE]
 =====================================================================
 - Current PDF toolchains do not make a good job of determining
-  the relative column widths for horizontal labled lists.
+  the relative column widths for horizontal labeled lists.
 - If you are generating DocBook markup then horizontal labeled lists
   should not be nested because the 'DocBook XML V4.2' DTD does not
   permit nested informal tables (although <<X13,DocBook XSL
@@ -3573,7 +3573,10 @@ template::
   parameters instead of a single template.
 
 options::
-  A comma delimited list of element specific option names.
+  A comma delimited list of element specific option names. In addition
+  to being used internally, options are available during markup tag
+  and template substitution as attributes with an empty string value
+  named like `<option>-option` (where `<option>` is the option name).
 
 subs, presubs, postsubs::
   * 'presubs' and 'postsubs' are lists of comma separated substitutions that are
@@ -3740,29 +3743,19 @@ type::
 
 delimiter::
   A Python regular expression that matches the first line of a
-  list element entry. This expression must contain the named
-  group 'text' which matches text in the first line.
+  list element entry. This expression can contain the named groups
+  'text' (bulleted groups), 'index' and 'text' (numbered lists),
+  'label' and 'text' (labeled lists).
 
 subs::
   Substitutions that are performed on list item text and terms.
 
-listtag::
-  The name of the tag that envelopes the List.
-
-itemtag::
-  The name of the tag that envelopes the ListItem.
-
-texttag::
-  The name of the tag that envelopes the list item text.
-
-labeltag::
-  The name of the tag that envelopes a variable list label.
-
-entrytag::
-  The name of the tag that envelopes a labeled list entry.
-
-The tag entries map the AsciiDoc list structure to backend markup; see
-the AsciiDoc distribution `.conf` configuration files for examples.
+tags::
+  The `<name>` of the `[listtags-<name>]` configuration file section
+  containing list markup tag definitions.  The tag entries ('list',
+  'entry', 'label', 'term', 'text') map the AsciiDoc list structure to
+  backend markup; see the 'listtags' sections in the AsciiDoc
+  distributed backend `.conf` configuration files for examples.
 
 Tables
 ~~~~~~

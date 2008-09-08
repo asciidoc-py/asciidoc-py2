@@ -1,0 +1,32 @@
+AsciiDoc New Lists
+==================
+
+The 'new lists' changes were added to the trunk in September 2008 and
+will appear in a future release. Adventurous sorts can grab the trunk
+from http://hg.sharesource.org/asciidoc/.
+
+'newlists' have been implemented to:
+
+. Simplify the list syntax:
+
+  * 'glossary', 'qanda' (Question and Answer) and 'bibliography' lists
+    use the existing 'bulleted' and 'numbered' syntaxes with
+    'glossary', 'qanda' and 'bibliography' styles. The old list
+    syntaxes are still processed but a deprecation warning is issued.
+
+  * The two 'labeled list' syntaxes ('vertical' and 'horizontal') have
+    been combined into a single 'labeled list' syntax. The
+    'horizontal' style is used to render a horizontal labeled list.
+
+. Rewrite the list internals to implement 'styles' and to refactor
+  list tags into separate `[listtags-<name>]` conf file sections.
+
+These changes necessitated the following backward incompatibilities:
+
+. You have to explicitly precede horizontal labeled lists with the
+  `[horizontal]` style attribute -- if you do nothing the existing
+  horizontal labeled lists will be rendered vertically.
+. The old 'compact' list style is now implemented as a list option, to
+  update replace `[compact]` with `[options="compact"]`.
+. You'll need to update any customized the configuration files list
+  definitions that have been made.

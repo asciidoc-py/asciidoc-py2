@@ -1,12 +1,21 @@
 AsciiDoc Home Page
 ==================
 
+.8 September 2008: New lists
+************************************************************************
+AsciiDoc 'new lists' is a unification and simplification of the
+existing list syntax and and internal rewrite.  It will debut
+officially in the next release.  link:newlists.html[Here is some more
+information about the upcoming changes].
+
+************************************************************************
+
 .25 August 2008: New tables
 ************************************************************************
 AsciiDoc 'new tables' is a complete redesign of the tables syntax and
 generation. It's a huge improvement over the old tables and has been
 committed to the trunk. It will debut officially in the next release.
-link:newtables.html[Here are some new tables examples]
+link:newtables.html[Here are some new tables examples].
 
 ************************************************************************
 

@@ -3747,9 +3747,6 @@ delimiter::
   'text' (bulleted groups), 'index' and 'text' (numbered lists),
   'label' and 'text' (labeled lists).
 
-subs::
-  Substitutions that are performed on list item text and terms.
-
 tags::
   The `<name>` of the `[listtags-<name>]` configuration file section
   containing list markup tag definitions.  The tag entries ('list',

@@ -1370,13 +1370,18 @@ Which render as:
   3. Donec eget arcu bibendum nunc consequat lobortis.
   4. Nam fermentum mattis ante.
 
-A predefined 'compact' option is supported -- this translates to the
-DocBook 'spacing="compact"' lists attribute which may or may not be
-processed by the DocBook toolchain.  Example:
+A predefined 'compact' option is available to bulleted and numbered
+lists -- this translates to the DocBook 'spacing="compact"' lists
+attribute which may or may not be processed by the DocBook toolchain.
+Example:
 
   [options="compact"]
   - Compact list item.
   - Another compact list item.
+
+TIP: To apply the 'compact' option globally define a document-wide
+'compact-option' attribute, e.g. using the `-a compact-option`
+command-line option.
 
 Labeled Lists
 ~~~~~~~~~~~~~

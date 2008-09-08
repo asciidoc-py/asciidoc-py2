@@ -27,6 +27,8 @@ These changes necessitated the following backward incompatibilities:
   `[horizontal]` style attribute -- if you do nothing the existing
   horizontal labeled lists will be rendered vertically.
 . The old 'compact' list style is now implemented as a list option, to
-  update replace `[compact]` with `[options="compact"]`.
+  update replace `[compact]` with `[options="compact"]`. You can now
+  apply the 'compact' option globally by setting the `compact-option`
+  document attribute.
 . You'll need to update any customized the configuration files list
   definitions that have been made.

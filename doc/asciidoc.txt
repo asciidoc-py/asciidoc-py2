@@ -1378,28 +1378,29 @@ processed by the DocBook toolchain.  Example:
   - Compact list item.
   - Another compact list item.
 
-Vertical Labeled Lists
-~~~~~~~~~~~~~~~~~~~~~~
+Labeled Lists
+~~~~~~~~~~~~~
 Labeled list items consist of one or more text labels followed the
 text of the list item.
 
 An item label begins a line with an alphanumeric character hard
 against the left margin and ends with a double colon `::` or
-semi-colon `;;`.
+semi-colon `;;`. A list item can have multiple labels, one per line.
 
-The list item text consists of one or more lines of text starting on
-the line immediately following the label and can be followed by nested
-List or ListParagraph elements. Item text can be optionally indented.
+The list item text consists of one or more lines of text starting
+after the last label (either on the same line or a new line) and can
+be followed by nested List or ListParagraph elements. Item text can be
+optionally indented.
 
 Here are some examples:
 ---------------------------------------------------------------------
+In::
 Lorem::
   Fusce euismod commodo velit.
 
   Fusce euismod commodo velit.
 
-Ipsum::
-  Vivamus fringilla mi eu lacus.
+Ipsum:: Vivamus fringilla mi eu lacus.
   * Vivamus fringilla mi eu lacus.
   * Donec eget arcu bibendum nunc consequat lobortis.
 Dolor::
@@ -1414,13 +1415,13 @@ Dolor::
 
 Which render as:
 
+In::
 Lorem::
   Fusce euismod commodo velit.
 
   Fusce euismod commodo velit.
 
-Ipsum::
-  Vivamus fringilla mi eu lacus.
+Ipsum:: Vivamus fringilla mi eu lacus.
   * Vivamus fringilla mi eu lacus.
   * Donec eget arcu bibendum nunc consequat lobortis.
 Dolor::
@@ -1432,18 +1433,13 @@ Dolor::
   In;;
     Dictum mauris in urna.
 
-Horizontal Labeled Lists
-~~~~~~~~~~~~~~~~~~~~~~~~
-Horizontal labeled lists differ from vertical labeled lists in that
-the label and the list item sit side-by-side as opposed to the item
-under the label. Item text must begin on the same line as the label
-although you can begin item text on the next line if you follow the
-label with a backslash.
-
-The following horizontal list example also illustrates the omission
-of optional indentation:
+Horizontal labeled list style
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The 'horizontal' labled list style places the list text side-by-side
+with the label instead of under the label. Here is an example:
 
 ---------------------------------------------------------------------
+[horizontal]
 *Lorem*:: Fusce euismod commodo velit.  Qui in magna commodo, est
 labitur dolorum an. Est ne magna primis adolescens.
 
@@ -1453,7 +1449,7 @@ labitur dolorum an. Est ne magna primis adolescens.
 - Vivamus fringilla mi eu lacus.
 - Donec eget arcu bibendum nunc consequat lobortis.
 
-*Dolor*:: \
+*Dolor*::
   - Vivamus fringilla mi eu lacus.
   - Donec eget arcu bibendum nunc consequat lobortis.
 
@@ -1461,6 +1457,7 @@ labitur dolorum an. Est ne magna primis adolescens.
 
 Which render as:
 
+[horizontal]
 *Lorem*:: Fusce euismod commodo velit.  Qui in magna commodo, est
 labitur dolorum an. Est ne magna primis adolescens.
 
@@ -1470,23 +1467,20 @@ labitur dolorum an. Est ne magna primis adolescens.
 - Vivamus fringilla mi eu lacus.
 - Donec eget arcu bibendum nunc consequat lobortis.
 
-*Dolor*:: \
+*Dolor*::
   - Vivamus fringilla mi eu lacus.
   - Donec eget arcu bibendum nunc consequat lobortis.
 
 [NOTE]
 =====================================================================
-- Use vertical labeled lists in preference to horizontal labeled lists
-  -- current PDF toolchains do not make a good job of determining
-  the relative column widths.
-- If you are generating DocBook markup the horizontal labeled lists
+- Current PDF toolchains do not make a good job of determining
+  the relative column widths for horizontal labled lists.
+- If you are generating DocBook markup then horizontal labeled lists
   should not be nested because the 'DocBook XML V4.2' DTD does not
   permit nested informal tables (although <<X13,DocBook XSL
-  Stylesheets>> process them correctly).
+  Stylesheets>> and <<X31,dblatex>> process them correctly).
 - The label width can be set as a percentage of the total width by
   setting the 'width' attribute e.g. `width="10%"`
-- Horizontal labeled lists can also be generated using the vertical
-  labeled list syntax with a 'horizontal' style.
 
 =====================================================================
 

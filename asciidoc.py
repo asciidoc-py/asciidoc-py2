@@ -2288,17 +2288,12 @@ class List(AbstractBlock):
         labeltag = subs_tag(self.tag.label, self.attributes)
         writer.write(entrytag[0])
         writer.write(labeltag[0])
-        if self.text:
-            # Horizontal labeled list.
+        # Write labels.
+        while Lex.next() is self:
             reader.read()   # Discard (already parsed item first line).
             writer.write_tag(self.tag.term, [self.label],
                              self.presubs, self.attributes)
-        else:
-            # Write multiple labels (vertical label list).
-            while Lex.next() is self:
-                reader.read()   # Discard (already parsed item first line).
-                writer.write_tag(self.tag.term, [self.label],
-                                 self.presubs, self.attributes)
+            if self.text: break
         writer.write(labeltag[1])
         # Write item text.
         self.translate_item()

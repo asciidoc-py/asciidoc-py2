@@ -2032,8 +2032,8 @@ class AbstractBlock:
                 raise EAsciiDoc, 'illegal style name: %s' % self.style
             if not self.styles.has_key(self.style):
                 if not isinstance(self,List):   # Lists don't have templates.
-                    warning(' missing [%s] %s-style entry' % (
-                            self.name,self.style))
+                    warning('[%s] \'%s\' style not in %s' % (
+                        self.name,self.style,self.styles.keys()))
         # Check all styles for missing templates.
         all_styles_have_template = True
         for k,v in self.styles.items():
@@ -2112,7 +2112,8 @@ class AbstractBlock:
             if not is_name(style):
                 raise EAsciiDoc, 'illegal style name: %s' % style
             if not self.styles.has_key(style):
-                warning('[%s] missing %s-style entry' % (self.name,style))
+                warning('[%s] \'%s\' style not in %s' % (
+                    self.name,style,self.styles.keys()))
             else:
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():

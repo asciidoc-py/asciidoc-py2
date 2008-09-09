@@ -227,6 +227,13 @@ div.olist2 > ol {
   list-style-type: lower-alpha;
 }
 
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
 div.tableblock > table {
   border: 3px solid #527bbd;
 }

@@ -1705,14 +1705,14 @@ footnotes:
 Example footnote:
 
   A footnote footnote:[An example footnote.];
-  a second footnote with a reference ID footnoteref:[2,Second footnote.];
-  finally a reference to the second footnote footnoteref:[2].
+  a second footnote with a reference ID footnoteref:[note2,Second footnote.];
+  finally a reference to the second footnote footnoteref:[note2].
 
 Which renders:
 
 A footnote footnote:[An example footnote.];
-a second footnote with a reference ID footnoteref:[2,Second footnote];
-finally a reference to the second footnote footnoteref:[2].
+a second footnote with a reference ID footnoteref:[note2,Second footnote];
+finally a reference to the second footnote footnoteref:[note2].
 
 Footnotes are primarily useful when generating DocBook output --
 DocBook conversion programs render footnote outside the primary text
@@ -2573,7 +2573,7 @@ style values and is formatted like:
   [<multiplier>*][<align>][<width>][<style>]
 
 - All components are optional. The multiplier must be first and the
-  style last. The order of align or width is not important.
+  style last. The order of 'align' or 'width' is not important.
 - Column '<width>' can be either an integer proportional value (1...)
   or a percentage (1%...100%). The default value is 1. To ensure
   portability across different backends, there is no provision for
@@ -3792,7 +3792,7 @@ configuration file entries:
 
 pagewidth::
   This integer value is the printable width of the output media. See
-  <<X,table attributes>>.
+  <<X69,table attributes>>.
 
 pageunits::
   The units of width in output markup width attribute values.

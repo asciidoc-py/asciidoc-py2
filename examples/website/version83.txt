@@ -1,0 +1,36 @@
+AsciiDoc Version 8.3
+====================
+
+This is significant release, it gets rid of unused cruft, simplifies
+the http://www.methods.co.nz/asciidoc/newlists.html[lists] syntax and
+introduces a decent
+http://www.methods.co.nz/asciidoc/newtables.html[tables] syntax.
+
+New Features
+------------
+- AsciiDoc http://www.methods.co.nz/asciidoc/newtables.html[new
+  tables] are a complete redesign of the tables syntax and generation.
+  It's a huge improvement over the old tables.
+
+- AsciiDoc http://www.methods.co.nz/asciidoc/newlists.html[new lists]
+  are a unification and simplification of the existing list syntax and
+  and internal rewrite.
+
+Backward Incompatibilities
+--------------------------
+The 8.3 release is not fully backward compatible as detailed below.
+If the changes impact you and you are unable or unwilling to upgrade
+your AsciiDoc files then you should continue to use version
+8.2.7.
+
+- The AsciiDoc version 6 'xhtml-deprecated' backend has been dropped.
+
+- The 'linuxdoc' backend has been dropped (this backend is not longer
+  used and was marked for removal when AsciiDoc version 7 was
+  released).
+
+- The http://www.methods.co.nz/asciidoc/#X1[experimental LaTeX
+  backend] is currently unsupported.
+
+- The http://www.methods.co.nz/asciidoc/newlists.html[new lists] have
+  introduced a number of incompatibilities.

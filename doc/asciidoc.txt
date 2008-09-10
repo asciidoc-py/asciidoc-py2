@@ -4582,46 +4582,6 @@ constrained quotes syntax and the new index entry syntax then you can
 define the attribute `asciidoc7compatible` (for example by using the
 `-a asciidoc7compatible` command-line option).
 
-[[X32]]
-Version 6 to version 7
-~~~~~~~~~~~~~~~~~~~~~~
-The changes that affect the most users relate to renamed and
-deprecated backends and command-line syntax:
-
-. The 'html' backend has been renamed 'html4'.
-. The 'xhtml' backend has been deprecated to 'xhtml-deprecated' (use
-  the new 'xhtml11' backend in preference).
-. The use of CSS specific `css` and `css-embedded` backends has been
-  dropped in favor of using attributes (see the table below and
-  <<X33,xhtml backend attributes>>).
-. Deprecated features that emitted warnings in prior versions are no
-  longer tolerated.
-. The command-line syntax for deleting (undefining) an attribute has
-  changed from `-a ^name` to `-a name!`.
-
-.Equivalent command-line syntax
-[cols="<5,<8,<10",options="header"]
-|====================================================================
-|Version 6 (old)|Version 7 (new)|Version 7 (backward compatible)
-|-b html|-b html4|-b html4
-|-b css|-b xhtml11 -a linkcss -a icons|-b xhtml-deprecated -a css -a linkcss -a icons
-|-b css-embedded|-b xhtml11 -a icons|-b xhtml-deprecated -a css -a icons
-|-b xhtml|-b xhtml11|-b xhtml-deprecated
-|-b docbook-sgml|-b docbook -a sgml|-b docbook -a sgml
-|====================================================================
-
-If you've customized version 6 distribution stylesheets then you'll
-need to either bring them in line with the new
-`./stylesheets/xhtml11*.css` class and id names or stick with the
-backward compatible `xhtml-deprecated` backend.
-
-Changes to configuration file syntax:
-
-. To undefine an attribute in the `[attributes]` section use `name!`
-  instead of `name` (`name` now sets that attribute to a blank
-  string).
-
-
 [[X38]]
 Appendix B: Packager Notes
 ---------------------------

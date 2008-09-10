@@ -315,27 +315,6 @@ html4
 This backend generates plain (unstyled) HTML 4.01 Transitional markup.
 
 
-linuxdoc
-~~~~~~~~
-WARNING: The AsciiDoc linuxdoc backend is still distributed but is no
-longer being actively developed or tested with new AsciiDoc releases
-(the last supported release was AsciiDoc 6.0.3).
-
-- Tables are not supported.
-- Images are not supported.
-- Callouts are not supported.
-- Horizontal labeled lists are not supported.
-- Only article document types are allowed.
-- The Abstract section can consist only of a single paragraph.
-- An AsciiDoc Preamble is not allowed.
-- The LinuxDoc output format does not support multiple labels per
-  labeled list item although LinuxDoc conversion programs generally
-  output all the labels with a warning.
-- Don't apply character formatting to the `link` macro attributes,
-  LinuxDoc does not allow displayed link text to be formatted.
-
-The default output file name extension is `.sgml`.
-
 latex
 ~~~~~
 An experimental LaTeX backend has been written for AsciiDoc by

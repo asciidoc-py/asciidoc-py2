@@ -469,9 +469,11 @@ def subs_quotes(text):
 def subs_tag(tag,dict={}):
     """Perform attribute substitution and split tag string returning start, end
     tag tuple (c.f. Config.tag())."""
+    if not tag:
+        return [None,None]
     s = subs_attrs(tag,dict)
     if not s:
-        warning('tag "%s" dropped: contains undefined attribute' % tag)
+        warning('tag \'%s\' dropped: contains undefined attribute' % tag)
         return [None,None]
     result = s.split('|')
     if len(result) == 1:
@@ -3026,7 +3028,7 @@ class Tables(AbstractBlocks):
             if b is not default:
                 if b.format is None: b.format = default.format
                 if b.template is None: b.template = default.template
-        # Check tags and propagate default tags (except for 'paragraph').
+        # Check tags and propagate default tags.
         if not 'default' in self.tags:
             raise EAsciiDoc,'missing [tabletags-default] section'
         default = self.tags['default']
@@ -3042,6 +3044,7 @@ class Tables(AbstractBlocks):
                 if t.headdata is None: t.headdata = default.headdata
                 if t.footdata is None: t.footdata = default.footdata
                 if t.bodydata is None: t.bodydata = default.bodydata
+                if t.paragraph is None: t.paragraph = default.paragraph
         # Use body tags if header and footer tags are not specified.
         for t in self.tags.values():
             if not t.headrow: t.headrow = t.bodyrow
@@ -3963,7 +3966,7 @@ class Config:
             if v is None:
                 if self.tags.has_key(k):
                     del self.tags[k]
-            elif v == 'none':
+            elif v == '':
                 self.tags[k] = (None,None)
             else:
                 mo = re.match(r'(?P<stag>.*)\|(?P<etag>.*)',v)

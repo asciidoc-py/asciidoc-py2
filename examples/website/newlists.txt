@@ -38,5 +38,5 @@ These changes necessitated the following backward incompatibilities:
   update replace `[compact]` with `[options="compact"]`. You can now
   apply the 'compact' option globally by setting the `compact-option`
   document attribute.
-. You'll need to update any customized the configuration files list
+. You'll need to update any customized configuration file list
   definitions that have been made.

@@ -2761,26 +2761,7 @@ conjunction with asciidoc(1) output files. You can view configuration
 file load sequence by turning on the asciidoc(1) `-v` (`--verbose`)
 command-line option.
 
-Markup Template Sections
-~~~~~~~~~~~~~~~~~~~~~~~~
-Markup template sections supply backend markup for translating
-AsciiDoc elements.  Since the text is normally backend dependent
-you'll find these sections in the backend specific configuration
-files. A markup template section body can contain:
-
-- Backend markup
-- Attribute references
-- System macro calls.
-- A document content placeholder
-
-The document content placeholder is a single | character and is
-replaced by text from the source element.  Use the `\{brvbar}`
-attribute reference if you need a literal | character in the template.
-
-Special Sections
-~~~~~~~~~~~~~~~~
-AsciiDoc reserves the following predefined special section names for
-specific purposes:
+AsciiDoc reserves the following section names for specific purposes:
 
 miscellaneous::
         Configuration options that don't belong anywhere else.
@@ -2802,18 +2783,20 @@ macros::
         Macro syntax definitions.
 titles::
         Heading, section and block title definitions.
-paradef*::
+paradef-*::
         Paragraph element definitions.
-blockdef*::
+blockdef-*::
         DelimitedBlock element definitions.
-listdef*::
+listdef-*::
         List element definitions.
-tabledef*::
+listtags-*::
+        List element tag definitions.
+tabledef-*::
         Table element definitions.
-tabletags*::
+tabletags-*::
         Table element tag definitions.
 
-Each line of text in a special section is a 'section entry'. Section
+Each line of text in these sections is a 'section entry'. Section
 entries share the following syntax:
 
 name=value::
@@ -2835,8 +2818,8 @@ name::
   template sections).
 
 
-Miscellaneous
-^^^^^^^^^^^^^
+Miscellaneous section
+~~~~~~~~~~~~~~~~~~~~~
 The optional `[miscellaneous]` section specifies the following
 `name=value` options:
 
@@ -2864,8 +2847,8 @@ pagewidth, pageunits::
 NOTE: `[miscellaneous]` configuration file entries can be set using
 the asciidoc(1) `-a` (`--attribute`) command-line option.
 
-Titles
-^^^^^^
+Titles section
+~~~~~~~~~~~~~~
 sectiontitle::
         Two line section title pattern. The entry value is a Python
         regular expression containing the named group 'title'.
@@ -2890,8 +2873,8 @@ subs::
         the document header and section titles. Defaults to 'normal'
         substitution.
 
-Tags
-^^^^
+Tags section
+~~~~~~~~~~~~
 The `[tags]` section contains backend tag definitions (one per
 line). Tags are used to translate AsciiDoc elements to backend
 markup.
@@ -2908,8 +2891,8 @@ the output file.
 Use the `\{brvbar}` attribute reference if you need to include a | pipe
 character inside tag text.
 
-Attributes Section
-^^^^^^^^^^^^^^^^^^
+Attributes section
+~~~~~~~~~~~~~~~~~~
 The optional `[attributes]` section contains predefined attributes.
 
 If the attribute value requires leading or trailing spaces then the
@@ -2920,8 +2903,8 @@ configuration file or use the asciidoc(1) `--attribute name!`
 command-line option (the attribute name is suffixed with a ! character
 to delete it).
 
-Special Characters
-^^^^^^^^^^^^^^^^^^
+Special Characters section
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 The `[specialcharacters]` section specifies how to escape characters
 reserved by the backend markup. Each translation is specified on a
 single line formatted like:
@@ -2935,8 +2918,8 @@ occurrences of the `<` character to be replaced by `&lt;`.
 
   <=&lt;
 
-Quoted Text
-^^^^^^^^^^^
+Quoted Text section
+~~~~~~~~~~~~~~~~~~~
 Quoting is used primarily for text formatting.  The `[quotes]` section
 defines AsciiDoc quoting characters and their corresponding backend
 markup tags.  Each section entry value is the name of a of a `[tags]`
@@ -2973,8 +2956,8 @@ name with a hash character, for example:
 - To minimize quoting ambiguity try not to use the same quote
   characters in different quote types.
 
-Special Words
-^^^^^^^^^^^^^
+Special Words section
+~~~~~~~~~~~~~~~~~~~~~
 The `[specialwords]` section is used to single out words and phrases
 that you want to consistently format in some way throughout your
 document without having to repeatedly specify the markup. The name of
@@ -3025,8 +3008,8 @@ ones.
   `ten` only if they are not preceded by a backslash.
 
 [[X10]]
-Replacements
-^^^^^^^^^^^^
+Replacements section
+~~~~~~~~~~~~~~~~~~~~
 `[replacements]` and `[replacements2]` configuration file entries
 specify find and replace text and are formatted like:
 
@@ -3050,6 +3033,23 @@ macro name):
   be careful to escape regular expression special characters.
 - Replacements are performed in the same order they appear in the
   configuration file replacements section.
+
+Markup Template Sections
+~~~~~~~~~~~~~~~~~~~~~~~~
+Markup template sections supply backend markup for translating
+AsciiDoc elements.  Since the text is normally backend dependent
+you'll find these sections in the backend specific configuration
+files. Template sections differ from other sections in that they
+contain a single block of text instead of per line 'name=value'
+entries. A markup template section body can contain:
+
+- Attribute references
+- System macro calls.
+- A document content placeholder
+
+The document content placeholder is a single | character and is
+replaced by text from the source element.  Use the `\{brvbar}`
+attribute reference if you need a literal | character in the template.
 
 [[X27]]
 Configuration File Names and Locations

@@ -2484,7 +2484,10 @@ class Lists(AbstractBlocks):
             mo = re.match(r'^listtags-(?P<name>\w+)$',section)
             if mo:
                 name = mo.group('name')
-                d = AttrDict()
+                if self.tags.has_key(name):
+                    d = self.tags[name]
+                else:
+                    d = AttrDict()
                 parse_entries(sections.get(section,()),d)
                 for k in d.keys():
                     if k not in self.TAGS:
@@ -3007,7 +3010,10 @@ class Tables(AbstractBlocks):
             mo = re.match(r'^tabletags-(?P<name>\w+)$',section)
             if mo:
                 name = mo.group('name')
-                d = AttrDict()
+                if self.tags.has_key(name):
+                    d = self.tags[name]
+                else:
+                    d = AttrDict()
                 parse_entries(sections.get(section,()),d)
                 for k in d.keys():
                     if k not in self.TAGS:
@@ -3683,11 +3689,11 @@ def _subs_specialwords(mo):
 
 class Config:
     """Methods to process configuration files."""
-    # Predefined section name regexp's.
-    SPECIAL_SECTIONS= ('tags','miscellaneous','attributes','specialcharacters',
+    # Non-template section name regexp's.
+    ENTRIES_SECTIONS= ('tags','miscellaneous','attributes','specialcharacters',
             'specialwords','macros','replacements','quotes','titles',
-            r'paradef.+',r'listdef.+',r'blockdef.+',r'tabledef.*',
-            'replacements2')
+            r'paradef-.+',r'listdef-.+',r'blockdef-.+',r'tabledef-.+',
+            r'tabletags-.+',r'listtags-.+','replacements2')
     def __init__(self):
         self.sections = OrderedDict()   # Keyed by section name containing
                                         # lists of section lines.
@@ -3750,9 +3756,9 @@ class Config:
             if found:
                 if section:             # Store previous section.
                     if sections.has_key(section) \
-                        and self.is_special_section(section):
+                        and self.entries_section(section):
                         if ''.join(contents):
-                            # Merge special sections.
+                            # Merge entries.
                             sections[section] = sections[section] + contents
                         else:
                             del sections[section]
@@ -3764,9 +3770,9 @@ class Config:
                 contents.append(s)
         if section and contents:        # Store last section.
             if sections.has_key(section) \
-                and self.is_special_section(section):
+                and self.entries_section(section):
                 if ''.join(contents):
-                    # Merge special sections.
+                    # Merge entries.
                     sections[section] = sections[section] + contents
                 else:
                     del sections[section]
@@ -3778,8 +3784,8 @@ class Config:
             for i in range(len(sections[k])-1,-1,-1):
                 if not sections[k][i]:
                     del sections[k][i]
-                elif not self.is_special_section(k):
-                    break   # Only trailing blanks from non-special sections.
+                elif not self.entries_section(k):
+                    break   # Only strip trailing blank lines from templates.
         # Add/overwrite new sections.
         self.sections.update(sections)
         self.parse_tags()
@@ -3893,8 +3899,12 @@ class Config:
         tables.validate()
         macros.validate()
 
-    def is_special_section(self,section_name):
-        for name in self.SPECIAL_SECTIONS:
+    def entries_section(self,section_name):
+        """
+        Return True if conf file section contains entries, not a markup
+        template.
+        """
+        for name in self.ENTRIES_SECTIONS:
             if re.match(name,section_name):
                 return True
         return False
@@ -3942,7 +3952,7 @@ class Config:
         macros.dump()
         # Dump remaining sections.
         for k in self.sections.keys():
-            if not self.is_special_section(k):
+            if not self.entries_section(k):
                 sys.stdout.write('[%s]%s' % (k,writer.newline))
                 for line in self.sections[k]:
                     sys.stdout.write('%s%s' % (line,writer.newline))

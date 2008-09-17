@@ -256,8 +256,11 @@ div.hdlist {
   margin-top: 0.8em;
   margin-bottom: 0.8em;
 }
-div.hdlist td {
+div.hdlist tr {
   padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
 }
 td.hdlist1 {
   vertical-align: top;
@@ -267,6 +270,10 @@ td.hdlist1 {
 }
 td.hdlist2 {
   vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
 }
 
 @media print {

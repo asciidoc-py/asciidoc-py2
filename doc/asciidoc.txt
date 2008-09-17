@@ -709,9 +709,9 @@ with with an attribute list.
 Line Breaks (HTML/XHTML)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 A plus character preceded by at least one space character at the end
-of a line forces a line break. It generates an HTML line break
-(`<br />`) tag. Line breaks are ignored when outputting to DocBook
-since it has no line break element.
+of a non-blank line forces a line break. It generates an HTML line
+break (`<br />`) tag. Line breaks are ignored when outputting to
+DocBook since it has no line break element.
 
 Rulers (HTML/XHTML)
 ~~~~~~~~~~~~~~~~~~~
@@ -1263,16 +1263,16 @@ Lists
 - Callout lists (a list of callout annotations).
 
 .List behavior
-- Indentation is optional and does not determine nesting, indentation
-  does however make the source more readable.
+- List item indentation is optional and does not determine nesting,
+  indentation does however make the source more readable.
 - A nested list must use a different syntax from its parent so that
   asciidoc(1) can distinguish the start of a nested list.
 - By default lists of the same type can only be nested two deep; this
   could be increased by defining new list definitions.
 - In addition to nested lists a list item will include immediately
   following Literal paragraphs.
-- Use <<X15, List Item Continuation>> to include other block elements
-  in a list item.
+- Use <<X15, List Item Continuation>> to append other block elements
+  to a list item.
 - The `listindex` <<X60,intrinsic attribute>> is the current list item
   index (1..). If this attribute is not inside a list then it's value
   is the number of items in the most recently closed list. Useful for
@@ -1545,7 +1545,8 @@ implicitly included nested lists and Literal paragraphs) place a
 separator line containing a single plus character between the list
 item and the ensuing list continuation element.  Multiple block
 elements (excluding section Titles and BlockTitles) may be included in
-a list item using this technique.
+a list item using this technique.  Note that the continued items must
+be indented as they normally would be outside of the list.
 
 You also need to use list item continuation if a nested list is
 accompanied by an <<X21,attribute list>>.

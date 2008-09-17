@@ -1869,7 +1869,6 @@ class Section:
 
 class AbstractBlock:
     def __init__(self):
-        self.OPTIONS = ()   # The set of allowed options values. () allows all.
         # Configuration parameter names common to all blocks.
         self.CONF_ENTRIES = ('delimiter','options','subs','presubs','postsubs',
                              'posattrs','style','.*-style','template','filter')
@@ -1940,7 +1939,7 @@ class AbstractBlock:
                 copy(dst,k,v)
             elif k == 'options':
                 if isinstance(v,str):
-                    v = parse_options(v,self.OPTIONS, msg % (k,v))
+                    v = parse_options(v, (), msg % (k,v))
                 copy(dst,k,v)
             elif k in ('subs','presubs','postsubs'):
                 # Subs is an alias for presubs.
@@ -2187,7 +2186,6 @@ class AbstractBlocks:
 class Paragraph(AbstractBlock):
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.OPTIONS = ('listelement',)
         self.text=None      # Text in first line of paragraph.
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
@@ -2510,7 +2508,6 @@ class Lists(AbstractBlocks):
 class DelimitedBlock(AbstractBlock):
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.OPTIONS = ('skip','sectionbody','list')
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2598,7 +2595,6 @@ class Table(AbstractBlock):
     def __init__(self):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('format','tags','separator')
-        self.OPTIONS = ('header','footer')
         # tabledef conf file parameters.
         self.format='psv'
         self.separator=None

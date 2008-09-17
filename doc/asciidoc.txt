@@ -3668,9 +3668,9 @@ delimiter::
   blank line, the end of file, or the start of a DelimitedBlock.
 
 options::
-  The only allowable option is 'listelement'.  The 'listelement'
-  option specifies that paragraphs of this type will automatically be
-  considered part of immediately preceding list items.
+  The 'listelement' option specifies that paragraphs of this type will
+  automatically be considered part of immediately preceding list
+  items.
 
 .Paragraph processing proceeds as follows:
 1. The paragraph text is aligned to the left margin.
@@ -3686,7 +3686,7 @@ options::
 
 Delimited Blocks
 ~~~~~~~~~~~~~~~~
-Allowed DelimitedBlock 'options' values are:
+DelimitedBlock 'options' values are:
 
 sectionbody::
     The block contents are processed as a SectionBody.

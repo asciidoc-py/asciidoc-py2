@@ -403,7 +403,7 @@ def parse_options(options,allowed,errmsg):
     result = []
     if options:
         for s in re.split(r'\s*,\s*',options):
-            if (allowed and s not in allowed) or (s == '' or not is_name(s)):
+            if (allowed and s not in allowed) or not is_name(s):
                 raise EAsciiDoc,'%s: %s' % (errmsg,s)
             result.append(s)
     return tuple(result)
@@ -3173,6 +3173,12 @@ def _subs_macro(mo):
             del d['attrlist']
         else:
             parse_attributes(d['attrlist'],d)
+            # Generate option attributes.
+            if 'options' in d:
+                options = parse_options(d['options'], (),
+                        '%s: illegal macro option' % name)
+                for option in options:
+                    d[option+'-option'] = ''
     if name == 'callout':
         listindex =int(d['index'])
         d['coid'] = calloutmap.add(listindex)

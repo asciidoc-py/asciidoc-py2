@@ -3176,7 +3176,7 @@ def _subs_macro(mo):
             # Generate option attributes.
             if 'options' in d:
                 options = parse_options(d['options'], (),
-                        '%s: illegal macro option' % name)
+                        '%s: illegal option name' % name)
                 for option in options:
                     d[option+'-option'] = ''
     if name == 'callout':

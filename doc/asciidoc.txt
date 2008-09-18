@@ -1864,6 +1864,11 @@ macros).  Here are some examples:
 - The optional `<target>` cannot contain white space characters.
 - `<attributelist>` is a <<X21,list of attributes>> enclosed in square
   brackets.
+- The `<attributelist>`  can include an 'options' attribute containing
+  a comma delimited list of option names.  Options are available
+  during markup template substitution as attributes with an empty
+  string value named like `<option>-option` (where `<option>` is the
+  option name).
 - The attribute list is mandatory except for URLs and email addresses.
 - Expansion of non-system macro references can be escaped by
   prefixing a backslash character.

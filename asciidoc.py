@@ -1565,6 +1565,11 @@ class AttributeList:
         if AttributeList.attrs:
             d.update(AttributeList.attrs)
             AttributeList.attrs = {}
+            # Generate option attributes.
+            if 'options' in d:
+                options = parse_options(d['options'], (), 'illegal option name')
+                for option in options:
+                    d[option+'-option'] = ''
     consume = staticmethod(consume)
 
 class BlockTitle:
@@ -2131,9 +2136,6 @@ class AbstractBlock:
                 self.attributes[v] = self.attributes[str(i+1)]
         # Override config and style attributes with attribute list attributes.
         self.update_parameters(attrs)
-        # Set options attributes.
-        for option in self.parameters.options:
-            self.attributes[option+'-option'] = ''
         assert is_array(self.parameters.options)
         assert is_array(self.parameters.presubs)
         assert is_array(self.parameters.postsubs)

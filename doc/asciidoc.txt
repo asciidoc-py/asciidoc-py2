@@ -3294,7 +3294,7 @@ by zero or more named attribute values. Here are three examples:
 - If an attribute named `options` is present it is processed as a
   comma separated list of attributes with zero length string values.
   For example `[options="opt1,opt2,opt3"]` is equivalent to
-  `[opt1="",opt2="",opt2=""]`.
+  `[opt1-option="",opt2-option="",opt2-option=""]`.
 - Attribute lists are evaluated as a list of Python function
   arguments.  If this fails or any of the items do not evaluate to a
   string, a number or None then all list items are treated as string
@@ -3309,9 +3309,9 @@ attribute values to macro markup templates.
 AttributeList Element
 ~~~~~~~~~~~~~~~~~~~~~
 An attribute list on a line by itself constitutes an 'AttributeList'
-block element, its function is to parametrize the following block
-element. The list attributes are passed to the next block element for
-markup template substitution.
+block element, its attributes apply to the following block element.
+The list attributes are passed to the next block element for markup
+template substitution.
 
 
 Attribute References

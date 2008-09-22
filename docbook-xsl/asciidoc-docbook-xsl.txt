@@ -5,7 +5,7 @@ PDF generation from AsciiDoc generated DocBook using FOP plus DocBook XSL
 Stylesheets.
 
 - FOP 0.95beta.
-- DocBook XSL Stylesheets version 1.72.0.
+- DocBook XSL Stylesheets version 1.74.0.
 
 Output file customisation is achieved by tweaking the DocBook XSL
 stylesheets.  I've tried to keep customization to a minimum and
@@ -41,5 +41,3 @@ wait for the Debian `docbook-xsl` package:
   $ cd /etc/xml/
   $ sudo cp -p docbook-xsl.xml docbook-xsl.xml.ORIG
   $ sudo vi docbook-xsl.xml
-
-- Apply optional patches (see below).

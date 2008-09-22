@@ -1013,7 +1013,7 @@ The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.
 
 .Default DelimitedBlock substitutions
-[cols="2,5*^",width="80%",options="header"]
+[cols="2,5*^",options="header"]
 |==================================================================
 |              |Passthrough |Listing  |Literal  |Sidebar  |Quote
 |Callouts      |  No        | Yes     | Yes     | No      | No
@@ -2154,8 +2154,8 @@ instruction. The block and inline versions both generate the same
 markup. These are useful for inserting DocBook XML Stylesheet
 processing instructions. Examples:
 
-- `\pi::dbhtml_toc[]` generates `<?dbhtml_toc?>`
-- `\pi:dbtimestamp-need[format="Y-m-d{nbsp}H:M:S"{nbsp}padding="0"]`
+- `\pi::dbhtml[toc="1"]` generates `<?dbhtml{nbsp}toc="1"?>`
+- `\pi:dbtimestamp[format="Y-m-d{nbsp}H:M:S"{nbsp}padding="0"]`
   generates
   `<?dbtimestamp{nbsp}format="Y-m-d{nbsp}H:M:S"{nbsp}padding="0"?>`
 

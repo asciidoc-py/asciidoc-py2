@@ -710,14 +710,25 @@ Line Breaks
 ~~~~~~~~~~~
 A plus character preceded by at least one space character at the end
 of a non-blank line forces a line break. It generates a line break
-(`br`) tag for HTML outputs an XML `asciidoc-br` processing
+(`br`) tag for HTML outputs and a custom XML `asciidoc-br` processing
 instruction for DocBook outputs. The `asciidoc-br` processing
 instruction is handled by <<X43,a2x(1)>> if you are using FOP.
+
+Page Breaks
+~~~~~~~~~~~
+A line of three or more less-than (<) characters will generate a
+hard page break in DocBook and printed HTML outputs.  It uses the CSS
+`page-break-after` property for HTML outputs and a custom XML
+`asciidoc-pagebreak` processing instruction for DocBook outputs. The
+`asciidoc-pagebreak` processing instruction is handled by
+<<X43,a2x(1)>> if you are using FOP. Hard page breaks are sometimes
+handy but as a general rule you should let your page processor
+generate page breaks for you.
 
 Rulers
 ~~~~~~
 A line of three or more apostrophe characters will generate a ruler
-line.  It generates a ruler (`hr`) tag for HTML outputs an XML
+line.  It generates a ruler (`hr`) tag for HTML outputs and a custom XML
 `asciidoc-hr` processing instruction for DocBook outputs. The
 `asciidoc-hr` processing instruction is handled by <<X43,a2x(1)>> if
 you are using FOP.

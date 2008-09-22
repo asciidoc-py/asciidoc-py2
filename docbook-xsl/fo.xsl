@@ -52,6 +52,11 @@
   </fo:block>
 </xsl:template>
 
+<!-- Hard page break -->
+<xsl:template match="processing-instruction('asciidoc-pagebreak')">
+   <fo:block break-after='page'/>
+</xsl:template>
+
 <!-- Sets title to body text indent -->
 <xsl:param name="body.start.indent">
   <xsl:choose>

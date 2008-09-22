@@ -23,7 +23,8 @@ syn region asciidocIdMarker start=/^\$Id:\s/ end=/\s\$$/
 syn match asciidocCallout /\\\@<!<\d\{1,2}>/
 syn match asciidocListBlockDelimiter /^--$/
 syn match asciidocLineBreak /[ \t]+$/
-syn match asciidocRuler /^'\{4,}$/
+syn match asciidocRuler /^'\{3,}$/
+syn match asciidocPagebreak /^<\{3,}$/
 " The tricky part is not triggering on indented list items that are also
 " preceeded by blank line, handles only bulleted items (see 'Limitations' above
 " for workarounds).
@@ -149,6 +150,7 @@ highlight link asciidocBackslash Special
 highlight link asciidocCallout Label
 highlight link asciidocLineBreak Special
 highlight link asciidocRuler Type
+highlight link asciidocPagebreak Type
 highlight link asciidocURL Macro
 
 let b:current_syntax = "asciidoc"

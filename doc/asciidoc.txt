@@ -712,7 +712,7 @@ A plus character preceded by at least one space character at the end
 of a non-blank line forces a line break. It generates a line break
 (`br`) tag for HTML outputs and a custom XML `asciidoc-br` processing
 instruction for DocBook outputs. The `asciidoc-br` processing
-instruction is handled by <<X43,a2x(1)>> if you are using FOP.
+instruction is handled by <<X43,a2x(1)>> if you use FOP.
 
 Page Breaks
 ~~~~~~~~~~~
@@ -721,9 +721,9 @@ hard page break in DocBook and printed HTML outputs.  It uses the CSS
 `page-break-after` property for HTML outputs and a custom XML
 `asciidoc-pagebreak` processing instruction for DocBook outputs. The
 `asciidoc-pagebreak` processing instruction is handled by
-<<X43,a2x(1)>> if you are using FOP. Hard page breaks are sometimes
-handy but as a general rule you should let your page processor
-generate page breaks for you.
+<<X43,a2x(1)>> if you use FOP. Hard page breaks are sometimes handy
+but as a general rule you should let your page processor generate page
+breaks for you.
 
 Rulers
 ~~~~~~
@@ -731,7 +731,7 @@ A line of three or more apostrophe characters will generate a ruler
 line.  It generates a ruler (`hr`) tag for HTML outputs and a custom XML
 `asciidoc-hr` processing instruction for DocBook outputs. The
 `asciidoc-hr` processing instruction is handled by <<X43,a2x(1)>> if
-you are using FOP.
+you use FOP.
 
 Tabs
 ~~~~
@@ -1883,10 +1883,11 @@ macros).  Here are some examples:
   a comma delimited list of option names.  Options are available
   during markup template substitution as attributes with an empty
   string value named like `<option>-option` (where `<option>` is the
-  option name).
+  option name). The <<X74,Attribute Options appendix>> lists currently
+  implemented options.
 - The attribute list is mandatory except for URLs and email addresses.
-- Expansion of non-system macro references can be escaped by
-  prefixing a backslash character.
+- Expansion of non-system macro references can be escaped by prefixing
+  a backslash character.
 - Block macro attribute reference substitution is performed prior to
   macro expansion.
 - The substitutions performed prior to Inline macro macro expansion
@@ -4786,3 +4787,27 @@ that appear blank but contain white space characters -- setting your
 editor options so that white space characters are visible is a good
 idea.
 
+
+[[X74]]
+Appendix G: Attribute Options
+-----------------------------
+Here is a list of the currently implemented attribute options.
+
+[cols="2,2,3,5",options="header"]
+|====================================================================
+|Option |Backends |AsciiDoc Elements |Description
+
+|compact |docbook, xhtml11 |bulleted list, numbered list
+|Minimizes vertical space in the list
+
+|footer |docbook, xhtml11, html4 |table
+|The last row of the table is rendered as a footer
+
+|header |docbook, xhtml11, html4 |table
+|The first row of the table is rendered as a header
+
+|pgwide |docbook |table, block image, horizontal labeled list
+|Specifies that the element should be rendered across the full text
+width of the page irrespective of the current indentation
+
+|====================================================================

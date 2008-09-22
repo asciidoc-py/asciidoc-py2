@@ -2155,8 +2155,9 @@ markup. These are useful for inserting DocBook XML Stylesheet
 processing instructions. Examples:
 
 - `\pi::dbhtml_toc[]` generates `<?dbhtml_toc?>`
-- `\pi::dbfo-need[height="5cm"{nbsp}space-before="1cm"]` generates
-  `<?dbfo-need{nbsp}height="5cm"{nbsp}space-before="1cm"?>`
+- `\pi:dbtimestamp-need[format="Y-m-d{nbsp}H:M:S"{nbsp}padding="0"]`
+  generates
+  `<?dbtimestamp{nbsp}format="Y-m-d{nbsp}H:M:S"{nbsp}padding="0"?>`
 
 System Macros
 ~~~~~~~~~~~~~

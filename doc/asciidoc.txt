@@ -706,17 +706,21 @@ Superscripts and subscripts are implemented as <<X52,unconstrained
 quotes>> so they can be escaped with a leading backslash and prefixed
 with with an attribute list.
 
-Line Breaks (HTML/XHTML)
-~~~~~~~~~~~~~~~~~~~~~~~~
+Line Breaks
+~~~~~~~~~~~
 A plus character preceded by at least one space character at the end
-of a non-blank line forces a line break. It generates an HTML line
-break (`<br />`) tag. Line breaks are ignored when outputting to
-DocBook since it has no line break element.
+of a non-blank line forces a line break. It generates a line break
+(`br`) tag for HTML outputs an XML `asciidoc-br` processing
+instruction for DocBook outputs. The `asciidoc-br` processing
+instruction is handled by <<X43,a2x(1)>> if you are using FOP.
 
-Rulers (HTML/XHTML)
-~~~~~~~~~~~~~~~~~~~
-A line of four or more apostrophe characters will generate an HTML
-ruler (`<hr />`) tag. Ignored when generating non-HTML output formats.
+Rulers
+~~~~~~
+A line of three or more apostrophe characters will generate a ruler
+line.  It generates a ruler (`hr`) tag for HTML outputs an XML
+`asciidoc-hr` processing instruction for DocBook outputs. The
+`asciidoc-hr` processing instruction is handled by <<X43,a2x(1)>> if
+you are using FOP.
 
 Tabs
 ~~~~

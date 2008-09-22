@@ -127,10 +127,15 @@
 
 <xsl:param name="callout.graphics" select="'1'"/>
 
-<xsl:param name="shade.literallayout" select="0"/>
+<!-- Only shade programlisting and screen verbatim elements-->
 <xsl:param name="shade.verbatim" select="1"/>
 <xsl:attribute-set name="shade.verbatim.style">
-  <xsl:attribute name="background-color">#F0F0F0</xsl:attribute>
+  <xsl:attribute name="background-color">
+    <xsl:choose>
+      <xsl:when test="self::programlisting|self::screen">#E0E0E0</xsl:when>
+      <xsl:otherwise>inherit</xsl:otherwise>
+    </xsl:choose>
+  </xsl:attribute>
 </xsl:attribute-set>
 
 </xsl:stylesheet>

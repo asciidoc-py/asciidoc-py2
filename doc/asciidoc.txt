@@ -4806,7 +4806,11 @@ Here is a list of the currently implemented attribute options.
 |header |docbook, xhtml11, html4 |table
 |The first row of the table is rendered as a header
 
-|pgwide |docbook |table, block image, horizontal labeled list
+|keeptogether |docbook (XSL/FO) |table
+|Prevents table from breaking across page boundaries (by default
+tables can break across pages).
+
+|pgwide |docbook (XSL/FO) |table, block image, horizontal labeled list
 |Specifies that the element should be rendered across the full text
 width of the page irrespective of the current indentation
 

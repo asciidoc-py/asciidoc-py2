@@ -127,7 +127,7 @@
 
 <xsl:param name="callout.graphics" select="'1'"/>
 
-<!-- Only shade programlisting and screen verbatim elements-->
+<!-- Only shade programlisting and screen verbatim elements -->
 <xsl:param name="shade.verbatim" select="1"/>
 <xsl:attribute-set name="shade.verbatim.style">
   <xsl:attribute name="background-color">
@@ -136,6 +136,14 @@
       <xsl:otherwise>inherit</xsl:otherwise>
     </xsl:choose>
   </xsl:attribute>
+</xsl:attribute-set>
+
+<!--
+  Force XSL Stylesheets 1.72 default table breaks to be the same as the current
+  version (1.74) default which (for tables) is keep-together="auto".
+-->
+<xsl:attribute-set name="table.properties">
+  <xsl:attribute name="keep-together.within-column">auto</xsl:attribute>
 </xsl:attribute-set>
 
 </xsl:stylesheet>

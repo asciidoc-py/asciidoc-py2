@@ -4795,25 +4795,25 @@ Here is a list of the currently implemented attribute options.
 
 [cols="2,2,2,5",options="header"]
 |====================================================================
-|Option |Backends |AsciiDoc Elements |Description
+|Option|Backends|AsciiDoc Elements|Description
 
-|compact |docbook, xhtml11 |bulleted list, numbered list
-|Minimizes vertical space in the list
+|compact |docbook, xhtml11 |bulleted list, numbered list|
+Minimizes vertical space in the list
 
-|footer |docbook, xhtml11, html4 |table
-|The last row of the table is rendered as a footer.
+|footer |docbook, xhtml11, html4 |table|
+The last row of the table is rendered as a footer.
 
-|header |docbook, xhtml11, html4 |table
-|The first row of the table is rendered as a header.
+|header |docbook, xhtml11, html4 |table|
+The first row of the table is rendered as a header.
 
-|breakable, unbreakable |docbook (XSL/FO) |table
-|The 'breakable' options allows the table to break across page
+|breakable, unbreakable |docbook (XSL/FO) |table|
+The 'breakable' options allows the table to break across page
 boundaries (the default behavior); 'unbreakable' attempts to keep the
 table together on a single page. If neither option is specified the
 defualt XSL stylesheet behavior prevails.
 
-|pgwide |docbook (XSL/FO) |table, block image, horizontal labeled list
-|Specifies that the element should be rendered across the full text
+|pgwide |docbook (XSL/FO) |table, block image, horizontal labeled list|
+Specifies that the element should be rendered across the full text
 width of the page irrespective of the current indentation.
 
 |====================================================================

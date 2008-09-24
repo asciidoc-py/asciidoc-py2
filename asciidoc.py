@@ -1511,7 +1511,9 @@ class AttributeEntry:
         if config.cmd_attrs.has_key(attr.name):
             return
         # Update document.attributes from previously parsed attribute.
-        if attr.value:
+        if attr.name == 'attributeentry-subs':
+            AttributeEntry.subs = None  # Force update in isnext().
+        elif attr.value:
             attr.value = Lex.subs((attr.value,), attr.subs)
             attr.value = writer.newline.join(attr.value)
         if attr.value is not None:

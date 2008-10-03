@@ -4800,6 +4800,9 @@ Here is a list of the currently implemented attribute options.
 |compact |docbook, xhtml11 |bulleted list, numbered list|
 Minimizes vertical space in the list
 
+|strong |xhtml11,html4 |labeled lists|
+Emboldens label text.
+
 |footer |docbook, xhtml11, html4 |table|
 The last row of the table is rendered as a footer.
 

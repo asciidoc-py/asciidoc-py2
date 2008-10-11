@@ -26,7 +26,7 @@ SUBS_NORMAL = ('specialcharacters','quotes','attributes',
     'specialwords','replacements','macros','passthroughs')
 SUBS_VERBATIM = ('specialcharacters','callouts')
 
-NAME_RE = r'(?u)^[^\W\d][-\w]*$'  # Valid section or attrbibute name.
+NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attrbibute name.
 
 
 #---------------------------------------------------------------------------
@@ -415,7 +415,7 @@ def symbolize(s):
 def is_name(s):
     """Return True if s is valid attribute, macro or tag name
     (starts with alpha containing alphanumeric and dashes only)."""
-    return re.match(NAME_RE,s) is not None
+    return re.match(r'^'+NAME_RE+r'$',s) is not None
 
 def subs_quotes(text):
     """Quoted text is marked up and the resulting text is

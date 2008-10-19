@@ -49,7 +49,9 @@ syn match asciidocQuotedEmphasized2 /\(^\|[| \t([.,=]\)\@<='\([ )\n]\)\@!\_.\{-}
 syn match asciidocQuotedUnconstrainedEmphasized /\\\@<!__\S\_.\{-}\(__\|\n\s*\n\)/
 syn match asciidocQuotedBold /\(^\|[| \t([.,=]\)\@<=\*\([ )\n]\)\@!\_.\{-}\S\(\*\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 syn match asciidocQuotedUnconstrainedBold /\\\@<!\*\*\S\_.\{-}\(\*\*\|\n\s*\n\)/
-syn match asciidocQuotedSingleQuoted /\(^\|[| \t([.,=]\)\@<=`\([ )\n]\)\@!\_.\{-}\S\('\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+"syn match asciidocQuotedSingleQuoted /\(^\|[| \t([.,=]\)\@<=`\([ )\n]\)\@!\_.\{-}\S\('\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+" Don't allow ` in single quoted (a kludge to stop confusion with `monospaced`).
+syn match asciidocQuotedSingleQuoted /\(^\|[| \t([.,=]\)\@<=`\([ )\n]\)\@!\([^`]\|\n\)\{-}[^`\s]\('\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 syn match asciidocQuotedDoubleQuoted /\(^\|[| \t([.,=]\)\@<=``\([ )\n]\)\@!\_.\{-}\S\(''\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 
 syn match asciidocDoubleDollarPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=\$\$..\{-}\(\$\$\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/

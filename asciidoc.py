@@ -420,11 +420,7 @@ def is_name(s):
 def subs_quotes(text):
     """Quoted text is marked up and the resulting text is
     returned."""
-    # The quote patterns are iterated in reverse sort order to avoid ambiguity.
-    # So, for example, __ is processed before _.
     keys = config.quotes.keys()
-    keys.sort()
-    keys.reverse()
     for q in keys:
         i = q.find('|')
         if i != -1 and q != '|' and q != '||':
@@ -3724,7 +3720,7 @@ class Config:
         self.replacements2 = OrderedDict()
         self.specialsections = {} # Name is special section name pattern, value
                                   # is corresponding section name.
-        self.quotes = {}        # Values contain corresponding tag name.
+        self.quotes = OrderedDict()    # Values contain corresponding tag name.
         self.fname = ''         # Most recently loaded configuration file name.
         self.conf_attrs = {}    # Glossary entries from conf files.
         self.cmd_attrs = {}     # Attributes from command-line -a options.

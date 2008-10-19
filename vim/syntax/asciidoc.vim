@@ -49,7 +49,8 @@ syn match asciidocQuotedEmphasized2 /\(^\|[| \t([.,=]\)\@<='\([ )\n]\)\@!\_.\{-}
 syn match asciidocQuotedUnconstrainedEmphasized /\\\@<!__\S\_.\{-}\(__\|\n\s*\n\)/
 syn match asciidocQuotedBold /\(^\|[| \t([.,=]\)\@<=\*\([ )\n]\)\@!\_.\{-}\S\(\*\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 syn match asciidocQuotedUnconstrainedBold /\\\@<!\*\*\S\_.\{-}\(\*\*\|\n\s*\n\)/
-syn match asciidocQuotedQuoted /\(^\|[| \t([.,=]\)\@<=``\([ )\n]\)\@!\_.\{-}\S\(''\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedSingleQuoted /\(^\|[| \t([.,=]\)\@<=`\([ )\n]\)\@!\_.\{-}\S\('\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedDoubleQuoted /\(^\|[| \t([.,=]\)\@<=``\([ )\n]\)\@!\_.\{-}\S\(''\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 
 syn match asciidocDoubleDollarPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=\$\$..\{-}\(\$\$\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
 syn match asciidocTriplePlusPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=+++..\{-}\(+++\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
@@ -139,7 +140,8 @@ highlight link asciidocQuotedUnconstrainedEmphasized Type
 highlight link asciidocQuotedMonospaced Identifier
 highlight link asciidocQuotedMonospaced2 Identifier
 highlight link asciidocQuotedUnconstrainedMonospaced Identifier
-highlight link asciidocQuotedQuoted Label
+highlight link asciidocQuotedSingleQuoted Label
+highlight link asciidocQuotedDoubleQuoted Label
 highlight link asciidocToDo Todo
 highlight link asciidocCommentLine Comment
 highlight link asciidocAdmonition Special

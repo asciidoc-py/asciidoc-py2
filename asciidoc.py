@@ -242,27 +242,6 @@ def validate(value,rule,errmsg):
         raise EAsciiDoc,errmsg
     return value
 
-def join_lines(lines):
-    """Return a list in which lines terminated with the backslash line
-    continuation character are joined."""
-    result = []
-    s = ''
-    continuation = False
-    for line in lines:
-        if line and line[-1] == '\\':
-            s = s + line[:-1]
-            continuation = True
-            continue
-        if continuation:
-            result.append(s+line)
-            s = ''
-            continuation = False
-        else:
-            result.append(line)
-    if continuation:
-        result.append(s)
-    return result
-
 def lstrip_list(s):
     """
     Return list with empty items from start of list removed.
@@ -2213,9 +2192,6 @@ class Paragraph(AbstractBlock):
         body = [self.text] + list(body)
         presubs = self.parameters.presubs
         postsubs = self.parameters.postsubs
-        # Don't join verbatim paragraphs.
-        if 'verbatim' not in (presubs + postsubs):
-            body = join_lines(body)
         body = Lex.set_margin(body) # Move body to left margin.
         body = Lex.subs(body,presubs)
         if self.parameters.filter:
@@ -2336,7 +2312,6 @@ class List(AbstractBlock):
             )
             if self.text is not None:
                 text = [self.text] + list(text)
-            text = join_lines(text)
             if text:
                 writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
             continued = self.iscontinued()
@@ -2371,7 +2346,6 @@ class List(AbstractBlock):
             )
             if self.text is not None:
                 text = [self.text] + list(text)
-            text = join_lines(text)
             writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
         while True:
             next = Lex.next()
@@ -4172,6 +4146,27 @@ class Config:
 # These will be removed from future versions of AsciiDoc
 #
 
+def join_lines_OLD(lines):
+    """Return a list in which lines terminated with the backslash line
+    continuation character are joined."""
+    result = []
+    s = ''
+    continuation = False
+    for line in lines:
+        if line and line[-1] == '\\':
+            s = s + line[:-1]
+            continuation = True
+            continue
+        if continuation:
+            result.append(s+line)
+            s = ''
+            continuation = False
+        else:
+            result.append(line)
+    if continuation:
+        result.append(s)
+    return result
+
 class Column_OLD:
     """Table column."""
     def __init__(self):
@@ -4385,7 +4380,7 @@ class Table_OLD(AbstractBlock):
             raise EAsciiDoc,'missing table rows'
         if i >= len(rows):
             raise EAsciiDoc,'closing [%s] underline expected' % self.name
-        return (join_lines(rows[:i]), rows[i+1:])
+        return (join_lines_OLD(rows[:i]), rows[i+1:])
     def parse_rows(self, rows, rtag, dtag):
         """Parse rows list using the row and data tags. Returns a substituted
         list of output lines."""

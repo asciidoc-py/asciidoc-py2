@@ -25,6 +25,7 @@ syn match asciidocListBlockDelimiter /^--$/
 syn match asciidocLineBreak /[ \t]+$/
 syn match asciidocRuler /^'\{3,}$/
 syn match asciidocPagebreak /^<\{3,}$/
+syn match asciidocEntityRef /\\\@<!&[#a-zA-Z]\S\{-};/
 " The tricky part is not triggering on indented list items that are also
 " preceeded by blank line, handles only bulleted items (see 'Limitations' above
 " for workarounds).
@@ -151,6 +152,7 @@ highlight link asciidocAttributeRef Special
 highlight link asciidocAttributeList Special
 highlight link asciidocAttributeEntry Special
 highlight link asciidocBackslash Special
+highlight link asciidocEntityRef Special
 highlight link asciidocCallout Label
 highlight link asciidocLineBreak Special
 highlight link asciidocRuler Type

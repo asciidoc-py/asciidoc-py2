@@ -767,6 +767,17 @@ Which are rendered as:
 -- em dash, ... ellipsis, -> right arrow, <- left arrow, => right
 double arrow, <= left double arrow.
 
+You can also include arbitrary entity references in the AsciiDoc
+source. Examples:
+
+  &#x278a; &#182;
+
+renders:
+
+&#x278a; &#182;
+
+To render a replacement literally escape it with a leading back-slash.
+
 The <<X7,Configuration Files>> section explains how to configure your
 own replacements.
 
@@ -2953,7 +2964,7 @@ single line formatted like:
 Special characters are normally confined to those that resolve
 markup ambiguity (in the case of SGML/XML markups the ampersand, less
 than and greater than characters).  The following example causes all
-occurrences of the `<` character to be replaced by `&lt;`.
+occurrences of the `<` character to be replaced by `\&lt;`.
 
   <=&lt;
 
@@ -4147,8 +4158,8 @@ composing your own configuration file `[header]` section).
 TIP: If you get an 'undefined entity' error when processing DocBook
 files you'll may find that you've used an undefined HTML character
 entity.  An easy (although inelegant) fix is to use the character's
-character code instead of its symbolic name (for example use `&#160;`
-instead of `&nbsp;`).
+character code instead of its symbolic name (for example use `\&#160;`
+instead of `\&nbsp;`).
 
 If your system has been configured with an XML catalog you may find a
 number of entity sets are already automatically included.

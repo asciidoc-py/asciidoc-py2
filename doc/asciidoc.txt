@@ -3857,9 +3857,6 @@ WARNING: Filters can potentially generate unsafe output. Before
 installing a filter you should verify that it can't be coerced into
 generating malicious output or exposing sensitive information.
 
-NOTE: Filter functionality is currently only available on POSIX
-platforms (this includes Cygwin).
-
 Filter Search Paths
 ~~~~~~~~~~~~~~~~~~~
 If the filter command does not specify a directory path then

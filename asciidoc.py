@@ -6,7 +6,7 @@ Copyright (C) 2002-2008 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
 """
 
-import sys, os, re, time, traceback, tempfile, popen2, codecs, locale
+import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 from types import *
 
 VERSION = '8.2.7'   # See CHANGLOG file for version history.
@@ -189,16 +189,6 @@ def safe_filename(fname, parentdir):
 
 def unsafe_error(msg):
     error('unsafe: '+msg)
-
-def syseval(cmd):
-    # Run shell command and return stdout.
-    child = os.popen(cmd)
-    data = child.read()
-    err = child.close()
-    if not err:
-        return data
-    else:
-        return ''
 
 def assign(dst,src):
     """Assign all attributes from 'src' object to 'dst' object."""
@@ -578,18 +568,27 @@ def filter_lines(filter_cmd, lines, dict={}):
     Run 'lines' through the 'filter_cmd' shell command and return the result.
     The 'dict' dictionary contains additional filter attributes.
     """
-    # BUG: Has problems finding filters with spaces in command name.
-    if not filter_cmd:
+    # Return input lines if there's not filter.
+    if not filter_cmd or not filter_cmd.strip():
         return lines
     # Perform attributes substitution on the filter command.
     s = subs_attrs(filter_cmd, dict)
+    s = s.strip()
     if not s:
-        raise EAsciiDoc,'missing filter attribute: %s' % filter_cmd
+        raise EAsciiDoc,'undefined filter attribute: %s' % filter_cmd
     filter_cmd = s
+    # Parse for quoted and unquoted command and command tail.
+    # Double quoted.
+    mo = re.match(r'^"(?P<cmd>[^"]+)"(?P<tail>.*)$', filter_cmd)
+    if not mo:
+        # Single quoted.
+        mo = re.match(r"^'(?P<cmd>[^']+)'(?P<tail>.*)$", filter_cmd)
+        if not mo:
+            # Unquoted catch all.
+            mo = re.match(r'^(?P<cmd>\S+)(?P<tail>.*)$', filter_cmd)
+    cmd = mo.group('cmd').strip()
     # Search for the filter command in  both user and application 'filters'
     # sub-directories.
-    mo = re.match(r'^(?P<cmd>\S+)(?P<tail>.*)$', filter_cmd)
-    cmd = mo.group('cmd')
     found = False
     if not os.path.dirname(cmd):
         # Check in asciidoc user and application directories for unqualified
@@ -609,73 +608,36 @@ def filter_lines(filter_cmd, lines, dict={}):
         if found:
             cmd = cmd2
     else:
-        if os.__dict__.has_key('uname') and os.uname()[0][:6] == 'CYGWIN':
-            # popen2() does not like non-drive letter path names under
-            # Cygwin.
-            s = syseval('cygpath -m ' + cmd).strip()
-            if s:
-                cmd = s
         if os.path.isfile(cmd):
             found = True
         else:
             warning('filter not found: %s' % cmd)
     if found:
         filter_cmd = '"' + cmd + '"' + mo.group('tail')
-    verbose('filtering: ' + filter_cmd)
     if sys.platform == 'win32':
-        # Paul Melis's <p.e.c.melis@rug.nl> patch for filters on Win32
-        # This workaround is necessary because Windows select() doesn't
-        # work with regular files.
-        fd,tmp = tempfile.mkstemp()
-        os.close(fd)
-        try:
-            try:
-                # Windows doesn't like running scripts directly so explicitly
-                # specify interpreter.
-                if found:
-                    if cmd[-3:] == '.py':
-                        filter_cmd = 'python ' + filter_cmd
-                    elif cmd[-3:] == '.rb':
-                        filter_cmd = 'ruby ' + filter_cmd
-                w = os.popen(filter_cmd + ' > "%s"' % tmp, 'w')
-                i = 0
-                while i < len(lines):
-                    line = lines[i]
-                    w.write(line + os.linesep)
-                    i = i + 1
-                w.close()
-                result = []
-                for s in open(tmp, 'rt'):
-                    result.append(s.rstrip())
-            except:
-                raise EAsciiDoc,'filter error: %s' % filter_cmd
-        finally:
-            os.unlink(tmp)
+        # Windows doesn't like running scripts directly so explicitly
+        # specify interpreter.
+        if found:
+            if cmd.endswith('.py'):
+                filter_cmd = 'python ' + filter_cmd
+            elif cmd.endswith('.rb'):
+                filter_cmd = 'ruby ' + filter_cmd
+    verbose('filtering: ' + filter_cmd)
+    input = os.linesep.join(lines)
+    try:
+        p = subprocess.Popen(filter_cmd, shell=True,
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        output = p.communicate(input)[0]
+    except:
+        raise EAsciiDoc,'filter error: %s: %s' % (filter_cmd, sys.exc_info()[1])
+    if output:
+        result = [s.rstrip() for s in output.split(os.linesep)]
     else:
-        try:
-            import select
-            result = []
-            r,w = popen2.popen2(filter_cmd)
-            # Polled I/O loop to alleviate full buffer deadlocks.
-            i = 0
-            while i < len(lines):
-                line = lines[i]
-                if select.select([],[w.fileno()],[],0)[1]:
-                    w.write(line+os.linesep)    # Use platform line terminator.
-                    i = i+1
-                if select.select([r.fileno()],[],[],0)[0]:
-                    s = r.readline()
-                    if not s: break             # Exit if filter output closes.
-                    result.append(s.rstrip())
-            w.close()
-            for s in r:
-                result.append(s.rstrip())
-            r.close()
-        except:
-            raise EAsciiDoc,'filter error: %s' % filter_cmd
-    # There's no easy way to guage whether popen2() found and executed the
-    # filter, so guess that if it produced no output there is probably a
-    # problem.
+        result = []
+    filter_status = p.wait()
+    if filter_status:
+        warning('filter non-zero exit code: %s: returned %d' %
+               (filter_cmd, filter_status))
     if lines and not result:
         warning('no output from filter: %s' % filter_cmd)
     return result

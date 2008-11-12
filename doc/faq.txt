@@ -3,6 +3,15 @@ AsciiDoc Frequently Asked Questions
 
 An embryonic AsciiDoc FAQ.
 
+== Why do I get a filter non-zero exit code error
+
+An error was returned when AsciiDoc tried to execute an external
+filter command. The most common reason for this is that the filter
+command could not be found by the command shell. To figure out what
+the problem is run AsciiDoc with the `--verbose` option to determine
+the command that is failing and then try to run the command manually
+from the command-line.
+
 
 == Can you create ODF documents using AsciiDoc?
 
@@ -20,11 +29,12 @@ into OpenOffice Writer.
 This tip was contributed by Bernard Amade.
 
 
-== How can supress cell separators in included data files?
+== How can I supress cell separators in included table data files?
 
 Use the `\{include:}` system attribute instead of the `\include::[]`
-macro (the former is not expanded until after the cell data has been
-parsed, whereas the latter is included before the table is processed.
+macro (the former is not expanded until after the table data has been
+parsed into cells, whereas the latter is included before the table is
+processed.
 
 
 == How can I preserve paragraph line boundaries?
@@ -43,7 +53,14 @@ homero verear ea mea, qui.
 == How can I include non-breaking space characters?
 
 The predefined `\{nbsp}` attribute reference will be replaced by a
-non-breaking space character.
+non-breaking space character. You could also use the non-breaking
+space character entity reference `\&#160;` (see the next question).
+
+
+== Can I include HTML and XML character entity references in my document?
+
+Yes, just enter the reference in your document. For example `\&#946;`
+will print a Greek small beta character &#946;
 
 
 [[X1]]
@@ -102,7 +119,7 @@ example:
 
 asciidoc(1) replaces the underscores with spaces.
 
-The longer, but semantically correct way, is to override the
+The longer, semantically correct, way is to override the
 `[header]` configuration file section in a document specific `.conf`
 file. For example if your document is `mydoc.txt` then a file called
 `mydoc.conf` in the document directory would be picked up

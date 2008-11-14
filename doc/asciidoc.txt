@@ -631,7 +631,7 @@ is a number which treated as em units. Here are some examples:
 New quotes can be defined by editing asciidoc(1) configuration files.
 See the <<X7,Configuration Files>> section for details.
 
-.Quoted text properties
+.Quoted text behavior
 - Quoting cannot be overlapped.
 - Different quoting types can be nested.
 - To suppress quoted text formatting place a backslash character
@@ -1896,12 +1896,6 @@ macros).  Here are some examples:
 - The optional `<target>` cannot contain white space characters.
 - `<attributelist>` is a <<X21,list of attributes>> enclosed in square
   brackets.
-- The `<attributelist>`  can include an 'options' attribute containing
-  a comma delimited list of option names.  Options are available
-  during markup template substitution as attributes with an empty
-  string value named like `<option>-option` (where `<option>` is the
-  option name). The <<X74,Attribute Options appendix>> lists currently
-  implemented options.
 - The attribute list is mandatory except for URLs and email addresses.
 - Expansion of non-system macro references can be escaped by prefixing
   a backslash character.
@@ -3230,7 +3224,7 @@ To delete (undefine) an attribute use the following syntax:
 
   :<name>!:
 
-.AttributeEntry properties
+.AttributeEntry behavior
 - The attribute entry line begins with colon -- no white space allowed
   in left margin.
 - AsciiDoc converts the `<name>` to a legal attribute name (lower
@@ -3322,7 +3316,7 @@ by zero or more named attribute values. Here are three examples:
   [quote, Bertrand Russell, The World of Mathematics (1956)]
   ["22 times", backcolor="#0e0e0e", options="noborders,wide"]
 
-.Attribute list properties
+.Attribute list behavior
 - If one or more attribute values contains a comma the all values must
   be quoted (enclosed in quotation characters).
 - If the list contains any named attributes the all string attribute
@@ -3335,14 +3329,27 @@ by zero or more named attribute values. Here are three examples:
 - Positional attributes are referred to as `\{1}`,`\{2}`,`\{3}`,...
 - Attribute `\{0}` refers to the entire list (excluding the enclosing
   square brackets).
-- If an attribute named `options` is present it is processed as a
-  comma separated list of attributes with zero length string values.
-  For example `[options="opt1,opt2,opt3"]` is equivalent to
-  `[opt1-option="",opt2-option="",opt2-option=""]`.
 - Attribute lists are evaluated as a list of Python function
   arguments.  If this fails or any of the items do not evaluate to a
   string, a number or None then all list items are treated as string
   literals.
+
+[[X75]]
+Options attribute
+~~~~~~~~~~~~~~~~~
+If the attribute list contains an attribute named `options` it is
+processed as a comma separated list of option names:
+
+- Each name generates an attribute named like `<option>-option` (where
+  `<option>` is the option name) with an empty string value.  For
+  example `[options="opt1,opt2,opt3"]` is equivalent to setting the
+  following three attributes
+  `[opt1-option="",opt2-option="",opt2-option=""]`.
+- If you define a an option attribute globally (for example with an
+  <<X18,attribute entry>>) then it will apply to all elements in the
+  document.
+- AsciiDoc implements a number of predefined options which are listed
+  in the <<X74,Attribute Options appendix>>.
 
 Macro Attribute lists
 ~~~~~~~~~~~~~~~~~~~~~
@@ -3352,10 +3359,10 @@ attribute values to macro markup templates.
 
 AttributeList Element
 ~~~~~~~~~~~~~~~~~~~~~
-An attribute list on a line by itself constitutes an 'AttributeList'
-block element, its attributes apply to the following block element.
-The list attributes are passed to the next block element for markup
-template substitution.
+An <<X21,attribute list>> on a line by itself constitutes an
+'AttributeList' block element, its attributes apply to the following
+block element.  The list attributes are passed to the next block
+element for markup template substitution.
 
 
 Attribute References
@@ -4805,7 +4812,8 @@ idea.
 [[X74]]
 Appendix G: Attribute Options
 -----------------------------
-Here is a list of the currently implemented attribute options.
+Here is the list of predefined <<X75,attribute list options>>:
+
 
 [cols="2,2,2,5",options="header"]
 |====================================================================

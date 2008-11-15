@@ -3,7 +3,34 @@ AsciiDoc Frequently Asked Questions
 
 An embryonic AsciiDoc FAQ.
 
-== Why do I get a filter non-zero exit code error
+
+== How can I set default list and tables styles?
+
+You need to set the element's 'style' entry in a global or custom
+configuration file.
+
+This example this will horizontally style all labeled lists that don't
+have an explicit style attribute:
+
+----------------------------------
+[listdef-labeled]
+style=horizontal
+
+[listdef-labeled2]
+style=horizontal
+----------------------------------
+
+This example will put a top and bottom border on all tables that don't
+already have an explicit style attribute:
+
+----------------------------------
+[tabledef-default]
+style=topbot
+topbot-style=frame="topbot"
+----------------------------------
+
+
+== Why do I get a filter non-zero exit code error?
 
 An error was returned when AsciiDoc tried to execute an external
 filter command. The most common reason for this is that the filter
@@ -64,7 +91,7 @@ will print a Greek small beta character &#946;
 
 
 [[X1]]
-== How do I include spaces in URL addresses?
+== How do I include spaces in URLs?
 
 URL inline macro targets (addresses) cannot contain white space
 characters. If you need spaces encode them as `%20`. For example:

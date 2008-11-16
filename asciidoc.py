@@ -325,8 +325,11 @@ def parse_attributes(attrs,dict):
                 raise
         dict.update(d)
     except:
-        # Try quoting the attrs.
-        s = s.replace('"',r'\"') # Escape double-quotes.
+        # Non-quoted attributes cannot contain double-quote characters, this
+        # restriction catches most quoted attribute syntax errors.
+        if s.find('"') >= 0:
+            error('malformed attributes: %s' % s)
+            return
         s = s.split(',')
         s = map(lambda x: '"' + x.strip() + '"', s)
         s = ','.join(s)
@@ -2037,6 +2040,15 @@ class AbstractBlock:
         specified in attrs.
 
         """
+
+        def check_array_parameter(param):
+            # Check the parameter is a sequence type.
+            if not is_array(self.parameters[param]):
+                error('malformed presubs attribute: %s' %
+                        self.parameters[param])
+                # Revert to default value.
+                self.parameters[param] = getattr(self,param)
+
         params = list(self.PARAM_NAMES) + params
         self.attributes = {}
         self.attributes.update(attrs)
@@ -2075,9 +2087,9 @@ class AbstractBlock:
                 self.attributes[v] = self.attributes[str(i+1)]
         # Override config and style attributes with attribute list attributes.
         self.update_parameters(attrs)
-        assert is_array(self.parameters.options)
-        assert is_array(self.parameters.presubs)
-        assert is_array(self.parameters.postsubs)
+        check_array_parameter('options')
+        check_array_parameter('presubs')
+        check_array_parameter('postsubs')
 
 class AbstractBlocks:
     """List of block definitions."""

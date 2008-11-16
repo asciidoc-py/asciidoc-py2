@@ -169,12 +169,34 @@ end
 
 Installation
 ------------
-If you want to syntax highlight AsciiDoc HTML outputs you need to
+HTML
+~~~~
+If you want to syntax highlight AsciiDoc HTML outputs (`html4` and
+`xhtml11` backends) you need to
 install http://www.gnu.org/software/src-highlite/[GNU
-source-highlight] (most distributions have this package). It's not
-required if you are generating DocBook output (DocBook syntax
-highlighting is handled by the DocBook toolchain).
+source-highlight] (most distributions have this package).
 
+DocBook
+~~~~~~~
+AsciiDoc encloses the source code in a DocBook 'programlisting'
+element and leaves source code highlighting to the DocBook toolchain
+(dblatex has a particularly nice programlisting highlighter). The
+DocBook programlisting element is assigned two attributes:
+
+. The 'language' attribute is set to the AsciiDoc 'language'
+  attribute.
+. The 'linenumbering' attribute is set to the AsciiDoc 'src_numbered'
+  attribute ('numbered' or 'unnumbered').
+
+If you use `a2x(1)` to generate PDF you need to include the
+`--no-xmllint` option to suppress `xmllint(1)` checking -- the
+programlisting 'language' attribute (required by the dblatex source
+highlighter) is not part of the DocBook 4 specification (but it is in
+the newer DocBook 5 specification).
+
+
+Testing
+~~~~~~~
 Test the filter by converting the test file to HTML with AsciiDoc:
 
    $ asciidoc -v ./filters/source-highlight-filter-test.txt

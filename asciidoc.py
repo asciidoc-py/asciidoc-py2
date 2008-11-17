@@ -2986,7 +2986,10 @@ class Macros:
         # Dump all macros except the first (built-in system) macro.
         for m in self.macros[1:]:
             # Escape = in pattern.
-            write('%s=%s%s' % (m.pattern.replace('=',r'\='),m.prefix,m.name))
+            macro = '%s=%s%s' % (m.pattern.replace('=',r'\='), m.prefix, m.name)
+            if m.is_passthrough():
+                macro += '[' + ','.join(m.presubs) + ']'
+            write(macro)
         write('')
     def validate(self):
         # Check all named sections exist.
@@ -3202,8 +3205,8 @@ class Macro:
                         d.get('name',''))
                 return mo.group()
             attrlist = d['attrlist']
+            # Target can specify subs (except for pi macros).
             if d.get('name') != 'pi' and d.get('target'):
-#            if d.get('name') in ('passthrough','math','cdata') and d.get('target'):
                 presubs = parse_options(d['target'], SUBS_OPTIONS,
                           'illegal passthrough macro subs option')
             else:

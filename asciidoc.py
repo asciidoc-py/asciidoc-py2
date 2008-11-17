@@ -20,10 +20,10 @@ DEFAULT_DOCTYPE = 'article'
 # definition subs entry.
 SUBS_OPTIONS = ('specialcharacters','quotes','specialwords',
     'replacements', 'attributes','macros','callouts','normal','verbatim',
-    'none','passthroughs','replacements2')
+    'none','replacements2')
 # Default value for unspecified subs and presubs configuration file entries.
 SUBS_NORMAL = ('specialcharacters','quotes','attributes',
-    'specialwords','replacements','macros','passthroughs')
+    'specialwords','replacements','macros')
 SUBS_VERBATIM = ('specialcharacters','callouts')
 
 NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attrbibute name.
@@ -725,7 +725,7 @@ def system(name, args, is_macro=False):
 
 def subs_attrs(lines, dictionary=None):
     """Substitute 'lines' of text with attributes from the global
-    document.attributes dictionary and from t'dictionary' ('dictionary'
+    document.attributes dictionary and from 'dictionary' ('dictionary'
     entries take precedence). Return a tuple of the substituted lines.  'lines'
     containing undefined attributes are deleted. If 'lines' is a string then
     return a string.
@@ -990,80 +990,23 @@ class Lex:
         return result
     next = staticmethod(next)
 
-    # Extract the passthrough text and replace with temporary placeholders.
-    def extract_passthroughs(text, passthroughs):
-        # +++ passthrough.
-        lq1 = r'(?P<lq>\+{3})'
-        rq1 = r'\+{3}'
-        reo1 = re.compile(r'(?msu)(^|[^\w+])(' + lq1 + r')' \
-            + r'(?P<content>.+?)(' + rq1 + r')(?=[^\w+]|$)')
-        # $$ passthrough.
-        lq2 = r'(\[(?P<attrs>[^[]+?)\])?(?P<lq>\${2})'
-        rq2 = r'\${2}'
-        reo2 = re.compile(r'(?msu)(^|[^\w$\]])(' + lq2 + r')' \
-            + r'(?P<content>.+?)(' + rq2 + r')(?=[^\w$]|$)')
-        reo = reo1
-        pos = 0
-        while True:
-            mo = reo.search(text,pos)
-            if not mo:
-                if reo == reo1:
-                    reo = reo2
-                    pos = 0
-                    continue
-                else:
-                    break
-            if text[mo.start()] == '\\':
-                pos = mo.end()
-            else:
-                content = mo.group('content')
-                if mo.group('lq') == '$$':
-                    content = config.subs_specialchars(content)
-                    attrs = {}
-                    parse_attributes(mo.group('attrs'), attrs)
-                    stag,etag = config.tag('$$passthrough', attrs)
-                    if not stag:
-                        etag = ''   # Drop end tag if start tag has been.
-                    content = stag + content + etag
-                passthroughs.append(content)
-                # Tabs are expanded when the source is read so using them here
-                # guarantees the placeholders are unambiguous.
-                s = mo.group(1) + '\t' + str(len(passthroughs)-1) + '\t'
-                text = text[:mo.start()] + s + text[mo.end():]
-                pos = mo.start() + len(s)
-        # Unescape escaped passthroughs.
-        text = text.replace('\\+++', '+++')
-        text = text.replace('\\$$', '$$')
-        return text
-    extract_passthroughs = staticmethod(extract_passthroughs)
-
-    # Replace passthough placeholders with the original passthrough text.
-    def restore_passthroughs(text, passthroughs):
-        for i,v in enumerate(passthroughs):
-            text = text.replace('\t'+str(i)+'\t', passthroughs[i], 1)
-        return text
-    restore_passthroughs = staticmethod(restore_passthroughs)
-
     def subs_1(s,options):
         """Perform substitution specified in 'options' (in 'options' order) on
-        a single line 's' of text.  Returns the substituted string.
-        Does not process 'attributes' or 'passthroughs' substitutions."""
+        Does not process 'attributes' substitutions."""
         if not s:
             return s
         result = s
         for o in options:
             if o == 'specialcharacters':
                 result = config.subs_specialchars(result)
-            # Quoted text.
+            elif o == 'attributes':
+                result = subs_attrs(result)
             elif o == 'quotes':
                 result = subs_quotes(result)
-            # Special words.
             elif o == 'specialwords':
                 result = config.subs_specialwords(result)
-            # Replacements.
             elif o in ('replacements','replacements2'):
                 result = config.subs_replacements(result,o)
-            # Inline macros.
             elif o == 'macros':
                 result = macros.subs(result)
             elif o == 'callouts':
@@ -1087,19 +1030,16 @@ class Lex:
             return lines
         # Join lines so quoting can span multiple lines.
         para = '\n'.join(lines)
-        if 'passthroughs' in options:
-            passthroughs = []
-            para = Lex.extract_passthroughs(para,passthroughs)
+        para = macros.extract_passthroughs(para)
         for o in options:
             if o == 'attributes':
                 # If we don't substitute attributes line-by-line then a single
                 # undefined attribute will drop the entire paragraph.
                 lines = subs_attrs(para.split('\n'))
                 para = '\n'.join(lines)
-            elif o != 'passthroughs':
+            else:
                 para = Lex.subs_1(para,(o,))
-        if 'passthroughs' in options:
-            para = Lex.restore_passthroughs(para,passthroughs)
+        para = macros.restore_passthroughs(para)
         return para.splitlines()
     subs = staticmethod(subs)
 
@@ -3016,6 +2956,7 @@ class Macros:
     def __init__(self):
         self.macros = []        # List of Macros.
         self.current = None     # The last matched block macro.
+        self.passthroughs = []
         # Initialize default system macro.
         m = Macro()
         m.pattern = self.SYS_DEFAULT
@@ -3085,78 +3026,20 @@ class Macros:
                     if re.match(name,mo.group('name')):
                         return mo
         return None
-
-# Macro set just prior to calling _subs_macro(). Ugly but there's no way
-# to pass optional arguments with _subs_macro().
-_macro = None
-
-def _subs_macro(mo):
-    """Function called to perform inline macro substitution. Uses matched macro
-    regular expression object and returns string containing the substituted
-    macro body. Called by Macros().subs()."""
-    # Check if macro reference is escaped.
-    if mo.group()[0] == '\\':
-        return mo.group()[1:]   # Strip leading backslash.
-    d = mo.groupdict()
-    # Delete groups that didn't participate in match.
-    for k,v in d.items():
-        if v is None: del d[k]
-    if _macro.name:
-        name = _macro.name
-    else:
-        if not d.has_key('name'):
-            warning('missing macro name group: %s' % mo.re.pattern)
-            return ''
-        name = d['name']
-    section_name = _macro.section_name(name)
-    if not section_name:
-        return ''
-    # If we're dealing with a block macro get optional block ID and block title.
-    if _macro.prefix == '#':
-        AttributeList.consume(d)
-        BlockTitle.consume(d)
-    # Parse macro attributes.
-    if d.has_key('attrlist'):
-        if d['attrlist'] in (None,''):
-            del d['attrlist']
-        else:
-            parse_attributes(d['attrlist'],d)
-            # Generate option attributes.
-            if 'options' in d:
-                options = parse_options(d['options'], (),
-                        '%s: illegal option name' % name)
-                for option in options:
-                    d[option+'-option'] = ''
-    if name == 'callout':
-        listindex =int(d['index'])
-        d['coid'] = calloutmap.add(listindex)
-    # Unescape special characters in LaTeX target file names.
-    if document.backend == 'latex' and d.has_key('target') and d['target']:
-        if not d.has_key('0'):
-            d['0'] = d['target']
-        d['target']= config.subs_specialchars_reverse(d['target'])
-    # BUG: We've already done attribute substitution on the macro which means
-    # that any escaped attribute references are now unescaped and will be
-    # substituted by config.subs_section() below. As a partial fix have withheld
-    # {0} from substitution but this kludge doesn't fix it for other attributes
-    # containing unescaped references.
-    a0 = d.get('0')
-    if a0:
-        d['0'] = chr(0)  # Replace temporarily with unused character.
-    body = config.subs_section(section_name,d)
-    if len(body) == 0:
-        result = ''
-    elif len(body) == 1:
-        result = body[0]
-    else:
-        if _macro.prefix == '#':
-            result = writer.newline.join(body)
-        else:
-            # Internally processed inline macros use UNIX line separator.
-            result = '\n'.join(body)
-    if a0:
-        result = result.replace(chr(0), a0)
-    return result
+    def extract_passthroughs(self,text,prefix=''):
+        """ Extract the passthrough text and replace with temporary
+        placeholders."""
+        self.passthroughs = []
+        for m in self.macros:
+            if m.is_passthrough() and m.prefix == prefix:
+                text = m.subs_passthroughs(text, self.passthroughs)
+        return text
+    def restore_passthroughs(self,text):
+        """ Replace passthough placeholders with the original passthrough
+        text."""
+        for i,v in enumerate(self.passthroughs):
+            text = text.replace('\t'+str(i)+'\t', self.passthroughs[i], 1)
+        return text
 
 class Macro:
     def __init__(self):
@@ -3164,6 +3047,9 @@ class Macro:
         self.name = ''          # Conf file macro name (None if implicit).
         self.prefix = ''        # '' if inline, '+' if system, '#' if block.
         self.reo = None         # Compiled pattern re object.
+        self.presubs = None     # Subs for passthrough macros.
+    def is_passthrough(self):
+        return self.presubs is not None
     def section_name(self,name=None):
         """Return macro markup template section name based on macro name and
         prefix.  Return None section not found."""
@@ -3193,28 +3079,141 @@ class Macro:
         if not e:
             raise EAsciiDoc,'malformed macro entry: %s' % entry
         if not is_regexp(e[0]):
-            raise EAsciiDoc,'illegal %s macro regular expression: %s' \
-                % (e[1],e[0])
-        self.pattern, self.name = e
-        self.reo = re.compile(self.pattern)
-        if self.name:
-            if self.name[0] in ('+','#'):
-                self.prefix, self.name = self.name[0], self.name[1:]
-        if self.name and not is_name(self.name):
+            raise EAsciiDoc,'illegal macro regular expression: %s' % e[0]
+        pattern, name = e
+        if name and name[0] in ('+','#'):
+            prefix, name = name[0], name[1:]
+        else:
+            prefix = ''
+        mo = re.match(r'^(?P<name>[^[]*)(\[(?P<presubs>.*)\])?$', name)
+        name = mo.group('name')
+        if name and not is_name(name):
             raise EAsciiDoc,'illegal section name in macro entry: %s' % entry
+        presubs = mo.group('presubs')
+        if presubs is not None:
+            # Parse and validate passthrough subs.
+            presubs = parse_options(presubs, SUBS_OPTIONS,
+                                 'illegal subs in macro entry: %s' % entry)
+        self.pattern = pattern
+        self.reo = re.compile(pattern)
+        self.prefix = prefix
+        self.name = name
+        self.presubs = presubs
+
     def subs(self,text):
-        global _macro
-        _macro = self           # Pass the macro to _subs_macro().
-        return self.reo.sub(_subs_macro,text)
+        def subs_func(mo):
+            """Function called to perform inline macro substitution.
+            Uses matched macro regular expression object and returns string
+            containing the substituted macro body."""
+            # Check if macro reference is escaped.
+            if mo.group()[0] == '\\':
+                return mo.group()[1:]   # Strip leading backslash.
+            d = mo.groupdict()
+            # Delete groups that didn't participate in match.
+            for k,v in d.items():
+                if v is None: del d[k]
+            if self.name:
+                name = self.name
+            else:
+                if not d.has_key('name'):
+                    warning('missing macro name group: %s' % mo.re.pattern)
+                    return ''
+                name = d['name']
+            section_name = self.section_name(name)
+            if not section_name:
+                return ''
+            # If we're dealing with a block macro get optional block ID and
+            # block title.
+            if self.prefix == '#':
+                AttributeList.consume(d)
+                BlockTitle.consume(d)
+            # Parse macro attributes.
+            if d.has_key('attrlist'):
+                if d['attrlist'] in (None,''):
+                    del d['attrlist']
+                else:
+                    parse_attributes(d['attrlist'],d)
+                    # Generate option attributes.
+                    if 'options' in d:
+                        options = parse_options(d['options'], (),
+                                '%s: illegal option name' % name)
+                        for option in options:
+                            d[option+'-option'] = ''
+            if name == 'callout':
+                listindex =int(d['index'])
+                d['coid'] = calloutmap.add(listindex)
+            # Unescape special characters in LaTeX target file names.
+            if document.backend == 'latex' and d.has_key('target') and d['target']:
+                if not d.has_key('0'):
+                    d['0'] = d['target']
+                d['target']= config.subs_specialchars_reverse(d['target'])
+            # BUG: We've already done attribute substitution on the macro which
+            # means that any escaped attribute references are now unescaped and
+            # will be substituted by config.subs_section() below. As a partial
+            # fix have withheld {0} from substitution but this kludge doesn't
+            # fix it for other attributes containing unescaped references.
+            a0 = d.get('0')
+            if a0:
+                d['0'] = chr(0)  # Replace temporarily with unused character.
+            body = config.subs_section(section_name,d)
+            if len(body) == 0:
+                result = ''
+            elif len(body) == 1:
+                result = body[0]
+            else:
+                if self.prefix == '#':
+                    result = writer.newline.join(body)
+                else:
+                    # Internally processed inline macros use UNIX line
+                    # separator.
+                    result = '\n'.join(body)
+            if a0:
+                result = result.replace(chr(0), a0)
+            return result
+
+        return self.reo.sub(subs_func, text)
+
     def translate(self):
         """ Block macro translation."""
         assert self.prefix == '#'
         s = reader.read()
-        s = subs_attrs(s)       # Substitute global attributes.
+        if self.is_passthrough():
+            s = macros.extract_passthroughs(s,'#')
+        else:
+            s = subs_attrs(s)
         if s:
             s = self.subs(s)
+            if self.is_passthrough():
+                s = macros.restore_passthroughs(s)
             if s:
                 writer.write(s)
+
+    def subs_passthroughs(self, text, passthroughs):
+        """ Replace macro attribute lists in text with placeholders.
+        Substitute and append the passthrough attribute lists to the
+        passthroughs list."""
+        def subs_func(mo):
+            """Function called to perform inline macro substitution.
+            Uses matched macro regular expression object and returns string
+            containing the substituted macro body."""
+            d = mo.groupdict()
+            if not d.has_key('attrlist'):
+                warning('passthrough macro %s: missing attrlist group' %
+                        d.get('name',''))
+                return mo.group()
+            attrlist = d['attrlist']
+            attrlist = Lex.subs_1(attrlist,self.presubs)
+            passthroughs.append(attrlist)
+            # Tabs guarantee the placeholders are unambiguous.
+            result = (
+                text[mo.start():mo.start('attrlist')] +
+                '\t' + str(len(passthroughs)-1) + '\t' +
+                text[mo.end('attrlist'):mo.end()]
+            )
+            return result
+
+        return self.reo.sub(subs_func, text)
+
 
 class CalloutMap:
     def __init__(self):

@@ -3202,7 +3202,13 @@ class Macro:
                         d.get('name',''))
                 return mo.group()
             attrlist = d['attrlist']
-            attrlist = Lex.subs_1(attrlist,self.presubs)
+            if d.get('name') != 'pi' and d.get('target'):
+#            if d.get('name') in ('passthrough','math','cdata') and d.get('target'):
+                presubs = parse_options(d['target'], SUBS_OPTIONS,
+                          'illegal passthrough macro subs option')
+            else:
+                presubs = self.presubs
+            attrlist = Lex.subs_1(attrlist,presubs)
             if attrlist is None: attrlist = ''
             passthroughs.append(attrlist)
             # Tabs guarantee the placeholders are unambiguous.

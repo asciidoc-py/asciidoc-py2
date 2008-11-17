@@ -14,6 +14,7 @@ vers:
     :print Version: $VERS (released $DATE)
 
 tags:
+    :sys rm -f tags
     :sys ctags asciidoc.py
 
 docs:

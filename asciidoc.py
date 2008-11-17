@@ -3203,6 +3203,7 @@ class Macro:
                 return mo.group()
             attrlist = d['attrlist']
             attrlist = Lex.subs_1(attrlist,self.presubs)
+            if attrlist is None: attrlist = ''
             passthroughs.append(attrlist)
             # Tabs guarantee the placeholders are unambiguous.
             result = (

@@ -405,14 +405,14 @@ def subs_quotes(text):
         if tag[0] == '#':
             tag = tag[1:]
             # Unconstrained quotes can appear anywhere.
-            reo = re.compile(r'(?msu)(^|.)(\[(?P<attrs>[^[]+?)\])?' \
+            reo = re.compile(r'(?msu)(^|.)(\[(?P<attrlist>[^[]+?)\])?' \
                     + r'(?:' + re.escape(lq) + r')' \
                     + r'(?P<content>.+?)(?:'+re.escape(rq)+r')')
         else:
             # The text within constrained quotes must be bounded by white space.
             # Non-word (\W) characters are allowed at boundaries to accomodate
             # enveloping quotes.
-            reo = re.compile(r'(?msu)(^|\W)(\[(?P<attrs>[^[]+?)\])?' \
+            reo = re.compile(r'(?msu)(^|\W)(\[(?P<attrlist>[^[]+?)\])?' \
                 + r'(?:' + re.escape(lq) + r')' \
                 + r'(?P<content>.*?\S)(?:'+re.escape(rq)+r')(?=\W|$)')
         pos = 0
@@ -422,9 +422,9 @@ def subs_quotes(text):
             if text[mo.start()] == '\\':
                 pos += 1 # Skip over backslash.
             else:
-                attrs = {}
-                parse_attributes(mo.group('attrs'), attrs)
-                stag,etag = config.tag(tag, attrs)
+                attrlist = {}
+                parse_attributes(mo.group('attrlist'), attrlist)
+                stag,etag = config.tag(tag, attrlist)
                 s = mo.group(1) + stag + mo.group('content') + etag
                 text = text[:mo.start()] + s + text[mo.end():]
                 pos = mo.start() + len(s)
@@ -3200,25 +3200,25 @@ class Macro:
             Uses matched macro regular expression object and returns string
             containing the substituted macro body."""
             d = mo.groupdict()
-            if not d.has_key('attrlist'):
-                warning('passthrough macro %s: missing attrlist group' %
+            if not d.has_key('passtext'):
+                warning('passthrough macro %s: missing passtext group' %
                         d.get('name',''))
                 return mo.group()
-            attrlist = d['attrlist']
+            passtext = d['passtext']
             # Target can specify subs (except for pi macros).
             if d.get('name') != 'pi' and d.get('target'):
                 presubs = parse_options(d['target'], SUBS_OPTIONS,
                           'illegal passthrough macro subs option')
             else:
                 presubs = self.presubs
-            attrlist = Lex.subs_1(attrlist,presubs)
-            if attrlist is None: attrlist = ''
-            passthroughs.append(attrlist)
+            passtext = Lex.subs_1(passtext,presubs)
+            if passtext is None: passtext = ''
+            passthroughs.append(passtext)
             # Tabs guarantee the placeholders are unambiguous.
             result = (
-                text[mo.start():mo.start('attrlist')] +
+                text[mo.start():mo.start('passtext')] +
                 '\t' + str(len(passthroughs)-1) + '\t' +
-                text[mo.end('attrlist'):mo.end()]
+                text[mo.end('passtext'):mo.end()]
             )
             return result
 

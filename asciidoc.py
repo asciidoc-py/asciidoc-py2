@@ -2987,8 +2987,8 @@ class Macros:
         for m in self.macros[1:]:
             # Escape = in pattern.
             macro = '%s=%s%s' % (m.pattern.replace('=',r'\='), m.prefix, m.name)
-            if m.is_passthrough():
-                macro += '[' + ','.join(m.presubs) + ']'
+            if m.subslist is not None:
+                macro += '[' + ','.join(m.subslist) + ']'
             write(macro)
         write('')
     def validate(self):
@@ -3034,7 +3034,7 @@ class Macros:
         placeholders."""
         self.passthroughs = []
         for m in self.macros:
-            if m.is_passthrough() and m.prefix == prefix:
+            if m.has_passthrough() and m.prefix == prefix:
                 text = m.subs_passthroughs(text, self.passthroughs)
         return text
     def restore_passthroughs(self,text):
@@ -3050,9 +3050,9 @@ class Macro:
         self.name = ''          # Conf file macro name (None if implicit).
         self.prefix = ''        # '' if inline, '+' if system, '#' if block.
         self.reo = None         # Compiled pattern re object.
-        self.presubs = None     # Subs for passthrough macros.
-    def is_passthrough(self):
-        return self.presubs is not None
+        self.subslist = None    # Default subs for macros passtext group.
+    def has_passthrough(self):
+        return self.pattern.find(r'(?P<passtext>') >= 0
     def section_name(self,name=None):
         """Return macro markup template section name based on macro name and
         prefix.  Return None section not found."""
@@ -3088,20 +3088,21 @@ class Macro:
             prefix, name = name[0], name[1:]
         else:
             prefix = ''
-        mo = re.match(r'^(?P<name>[^[]*)(\[(?P<presubs>.*)\])?$', name)
+        # Parse passthrough subslist.
+        mo = re.match(r'^(?P<name>[^[]*)(\[(?P<subslist>.*)\])?$', name)
         name = mo.group('name')
         if name and not is_name(name):
             raise EAsciiDoc,'illegal section name in macro entry: %s' % entry
-        presubs = mo.group('presubs')
-        if presubs is not None:
+        subslist = mo.group('subslist')
+        if subslist is not None:
             # Parse and validate passthrough subs.
-            presubs = parse_options(presubs, SUBS_OPTIONS,
+            subslist = parse_options(subslist, SUBS_OPTIONS,
                                  'illegal subs in macro entry: %s' % entry)
         self.pattern = pattern
         self.reo = re.compile(pattern)
         self.prefix = prefix
         self.name = name
-        self.presubs = presubs
+        self.subslist = subslist
 
     def subs(self,text):
         def subs_func(mo):
@@ -3184,13 +3185,12 @@ class Macro:
         """ Block macro translation."""
         assert self.prefix == '#'
         s = reader.read()
-        if self.is_passthrough():
+        if self.has_passthrough():
             s = macros.extract_passthroughs(s,'#')
-        else:
-            s = subs_attrs(s)
+        s = subs_attrs(s)
         if s:
             s = self.subs(s)
-            if self.is_passthrough():
+            if self.has_passthrough():
                 s = macros.restore_passthroughs(s)
             if s:
                 writer.write(s)
@@ -3213,11 +3213,11 @@ class Macro:
                 return mo.group()
             passtext = d['passtext']
             if d.get('subslist'):
-                presubs = parse_options(d['subslist'], SUBS_OPTIONS,
+                subslist = parse_options(d['subslist'], SUBS_OPTIONS,
                           'illegal passthrough macro subs option')
             else:
-                presubs = self.presubs
-            passtext = Lex.subs_1(passtext,presubs)
+                subslist = self.subslist
+            passtext = Lex.subs_1(passtext,subslist)
             if passtext is None: passtext = ''
             if self.prefix == '':
                 # Unescape ] characters in inline macros.

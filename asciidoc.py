@@ -3135,6 +3135,9 @@ class Macro:
                 if d['attrlist'] in (None,''):
                     del d['attrlist']
                 else:
+                    if self.prefix == '':
+                        # Unescape ] characters in inline macros.
+                        d['attrlist'] = d['attrlist'].replace('\\]',']')
                     parse_attributes(d['attrlist'],d)
                     # Generate option attributes.
                     if 'options' in d:
@@ -3155,6 +3158,7 @@ class Macro:
             # will be substituted by config.subs_section() below. As a partial
             # fix have withheld {0} from substitution but this kludge doesn't
             # fix it for other attributes containing unescaped references.
+            # Passthrough macros don't have this problem.
             a0 = d.get('0')
             if a0:
                 d['0'] = chr(0)  # Replace temporarily with unused character.
@@ -3199,6 +3203,9 @@ class Macro:
             """Function called to perform inline macro substitution.
             Uses matched macro regular expression object and returns string
             containing the substituted macro body."""
+            # Don't process escaped macro references.
+            if mo.group()[0] == '\\':
+                return mo.group()
             d = mo.groupdict()
             if not d.has_key('passtext'):
                 warning('passthrough macro %s: missing passtext group' %
@@ -3213,6 +3220,9 @@ class Macro:
                 presubs = self.presubs
             passtext = Lex.subs_1(passtext,presubs)
             if passtext is None: passtext = ''
+            if self.prefix == '':
+                # Unescape ] characters in inline macros.
+                passtext = passtext.replace('\\]',']')
             passthroughs.append(passtext)
             # Tabs guarantee the placeholders are unambiguous.
             result = (

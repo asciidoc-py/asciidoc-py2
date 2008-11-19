@@ -1899,6 +1899,12 @@ macros).  Here are some examples:
 - The attribute list is mandatory except for URLs and email addresses.
 - Expansion of non-system macro references can be escaped by prefixing
   a backslash character.
+  ZZZ
+- Macro reference expansion can be escaped by prefixing
+  a backslash character with the following exceptions:
+  * System macros.
+  * Inline URL macros
+
 - Block macro attribute reference substitution is performed prior to
   macro expansion.
 - The substitutions performed prior to Inline macro macro expansion

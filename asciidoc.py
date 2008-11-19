@@ -3661,7 +3661,8 @@ class Config:
     ENTRIES_SECTIONS= ('tags','miscellaneous','attributes','specialcharacters',
             'specialwords','macros','replacements','quotes','titles',
             r'paradef-.+',r'listdef-.+',r'blockdef-.+',r'tabledef-.+',
-            r'tabletags-.+',r'listtags-.+','replacements2')
+            r'tabletags-.+',r'listtags-.+','replacements2',
+            r'old_tabledef-.+')
     def __init__(self):
         self.sections = OrderedDict()   # Keyed by section name containing
                                         # lists of section lines.

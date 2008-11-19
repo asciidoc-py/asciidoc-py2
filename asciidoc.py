@@ -1681,9 +1681,10 @@ class Section:
         NameChar        ::=     Letter | Digit | '.' | '-' | '_' | ':'
         """
         base_ident = re.sub(r'[^a-zA-Z0-9]+', '_', title).strip('_').lower()
-        # Prefix with underscore to ensure a valid id start character and to
-        # ensure the id does not clash with existing document id's.
-        base_ident = '_' + base_ident
+        # Prefix the ID name with idprefix attribute or underscore if not
+        # defined. Prefix ensures the ID does not clash with existing IDs.
+        idprefix = document.attributes.get('idprefix','_')
+        base_ident = idprefix + base_ident
         i = 1
         while True:
             if i == 1:

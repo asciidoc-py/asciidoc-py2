@@ -3241,9 +3241,9 @@ To delete (undefine) an attribute use the following syntax:
 - Leading and trailing white space is stripped from the `<value>`.
 - If the `<value>` is blank then the corresponding attribute value is
   set to an empty string.
-- Special characters in the entry `<value>` are substituted. To
-  include special characters use the predefined `\{gt}`, `\{lt}`,
-  `\{amp}` attribute references.
+- Special characters in the entry `<value>` are substituted. You can
+  enter special characters using character entity values, for example
+  `\&amp;`.
 - Attribute references contained in the entry `<value>` will be
   expanded.
 - By default AttributeEntry values are substituted for

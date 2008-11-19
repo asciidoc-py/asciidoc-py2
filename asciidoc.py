@@ -3212,9 +3212,8 @@ class Macro:
                         d.get('name',''))
                 return mo.group()
             passtext = d['passtext']
-            # Target can specify subs (except for pi macros).
-            if d.get('name') != 'pi' and d.get('target'):
-                presubs = parse_options(d['target'], SUBS_OPTIONS,
+            if d.get('subslist'):
+                presubs = parse_options(d['subslist'], SUBS_OPTIONS,
                           'illegal passthrough macro subs option')
             else:
                 presubs = self.presubs

@@ -65,6 +65,7 @@ p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
+div.para.indented {text-indent: 3em;}
 
 ul, ol, li > p {
   margin-top: 0;

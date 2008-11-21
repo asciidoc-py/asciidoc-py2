@@ -566,8 +566,7 @@ following default order:
 4. Replacements
 5. Attributes
 6. Inline Macros
-7. Passthroughs
-8. Replacements2
+7. Replacements2
 
 The substitutions and substitution order performed on
 Title, Paragraph and DelimitedBlock elements is determined by
@@ -680,20 +679,6 @@ constrained quotes) -- here's how to escape the previous example:
   \*\*F**ile Open...
 
 =====================================================================
-
-[[X50]]
-Inline Passthroughs
-~~~~~~~~~~~~~~~~~~~
-This special text quoting mechanism passes inline text to the output
-document without the usual substitutions. There are two flavors:
-
-\+\++Triple-plus passthrough\+\++::
-    No change is made to the quoted text, it is passed verbatim to the
-    output document.
-
-\$$Double-dollar passthrough$$::
-    Special characters are escaped but no other changes are made.
-    This passthrough can be prefixed with inline attributes.
 
 Superscripts and Subscripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1138,11 +1123,12 @@ asciidoc(1).
 
 See also <<X25,Comment Lines>>.
 
+[[X76]]
 Passthrough Blocks
 ~~~~~~~~~~~~~~~~~~
-PassthroughBlocks are for backend specific markup, text is only
-subject to attribute and macro substitution.  PassthroughBlock content
-will generally be backend specific. Here's an example:
+By default the block contents is subject to attribute and macro
+substitution, no other markup is generated.  PassthroughBlock content
+will often be backend specific. Here's an example:
 
 ---------------------------------------------------------------------
 ++++++++++++++++++++++++++++++++++++++
@@ -1152,6 +1138,21 @@ will generally be backend specific. Here's an example:
 </tr></table>
 ++++++++++++++++++++++++++++++++++++++
 ---------------------------------------------------------------------
+
+Use and explicit 'subs' attribute to control substitution.  The
+following styles can be applied to passthrough blocks:
+
+[horizontal]
+pass::
+  By default no substitutions are performed.
+
+cdata::
+  By default no substitutions are performed, the contents are
+  enveloped in an XML `CDATA` element.
+
+math::
+  By default no substitutions are performed, the contents are rendered
+  as <<X78,mathematical formulas>>.
 
 Quote Blocks
 ~~~~~~~~~~~~
@@ -1883,8 +1884,8 @@ Macros are a mechanism for substituting parametrized text into output
 documents.
 
 Macros have a 'name', a single 'target' argument and an 'attribute
-list'.  The default syntax is `<name>:<target>[<attributelist>]` (for
-inline macros) and `<name>::<target>[<attributelist>]` (for block
+list'.  The usual syntax is `<name>:<target>[<attrlist>]` (for
+inline macros) and `<name>::<target>[<attrlist>]` (for block
 macros).  Here are some examples:
 
   http://www.methods.co.nz/asciidoc/index.html[Asciidoc home page]
@@ -1895,25 +1896,24 @@ macros).  Here are some examples:
 - `<name>` is the macro name. It can only contain letters, digits or
   dash characters and cannot start with a dash.
 - The optional `<target>` cannot contain white space characters.
-- `<attributelist>` is a <<X21,list of attributes>> enclosed in square
+- `<attrlist>` is a <<X21,list of attributes>> enclosed in square
   brackets.
 - The attribute list is mandatory except for URLs and email addresses.
-- Expansion of non-system macro references can be escaped by prefixing
-  a backslash character.
-  ZZZ
-- Macro reference expansion can be escaped by prefixing
-  a backslash character with the following exceptions:
-  * System macros.
-  * Inline URL macros
-
-- Block macro attribute reference substitution is performed prior to
-  macro expansion.
+- Expansion of non-system macro references can normally be escaped by
+  prefixing a backslash character (see the AsciiDoc 'FAQ' for
+  examples of exceptions to this rule).
+- System macros cannot be escaped.
+- Attribute references in block macros are
+  expanded.
 - The substitutions performed prior to Inline macro macro expansion
   are determined by the inline context.
 - Macros are processed in the order they appear in the configuration
   file(s).
 - Calls to inline macros can be nested inside different inline macros
   (an inline macro call cannot contain a nested call to itself).
+- In addition to `<name>`, `<target>` and `<attrlist>` the
+  `<passtext>` and `<subslist>` named groups are available to
+  <<X77,passthrough macros>>.
 
 Inline Macros
 ~~~~~~~~~~~~~
@@ -2091,7 +2091,7 @@ Block macros behave just like Inline macros, with the following
 differences:
 
 - They occur in a block context.
-- The default syntax is `<name>::<target>[<attributelist>]` (two
+- The default syntax is `<name>::<target>[<attrlist>]` (two
   colons, not one).
 - Markup template section names end in `-blockmacro` instead of
   `-inlinemacro`.
@@ -2165,18 +2165,6 @@ paragraphs or delimited blocks. Example comment line:
   // This is a comment.
 
 See also <<X26,Comment Blocks>>.
-
-XML Processing Instruction Macro
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The 'pi' block and inline macros insert an arbitrary XML processing
-instruction. The block and inline versions both generate the same
-markup. These are useful for inserting DocBook XML Stylesheet
-processing instructions. Examples:
-
-- `\pi::dbhtml[toc="1"]` generates `<?dbhtml{nbsp}toc="1"?>`
-- `\pi:dbtimestamp[format="Y-m-d{nbsp}H:M:S"{nbsp}padding="0"]`
-  generates
-  `<?dbtimestamp{nbsp}format="Y-m-d{nbsp}H:M:S"{nbsp}padding="0"?>`
 
 System Macros
 ~~~~~~~~~~~~~
@@ -2325,23 +2313,96 @@ section:
   after all configuration files have been read.
 
 
+[[X77]]
+Passthrough macros
+~~~~~~~~~~~~~~~~~~
+Passthrough macros are analogous to <<X76,passthrough blocks>> and are
+used to pass text directly to the output. The substitution performed
+on the text is determined by the macro definition or the optional
+substitutions specified when it is called.  The usual syntax is
+`<name>:<subslist>[<passtext>]` (for inline macros) and
+`<name>::<subslist>[<passtext>]` (for block macros).
+
+pass::
+  Inline and block. Passes text unmodified. Examples:
+
+TODO
+
+cdata::
+  Inline and block. Passes text unmodified. Text enveloped in XML
+  `CDATA` element.
+
+pi::
+  Inline and block. Passes text unmodified. Used to generate XML
+  processing instructions. Differs from other passthrough macros in
+  that `<target>` replaces the `<sublist>` and is the mandatory
+  processing instruction name. Useful for inserting DocBook XML
+  Stylesheet processing instructions. Examples:
+
+  pi::dbhtml[toc="1"]
+  pi:dbtimestamp[format="Y-m-d H:M:S" padding="0"]
+
+math::
+  Inline and block. Passes text unmodified.  Used for
+  <<X78,mathematical formulas>>.
+
++++::
+  Inline and block. The triple-plus passthrough is functionally
+  identical to the 'pass' macro but you don't have to escape `]`
+  characters and you can prefix with quoted attributes in the inline
+  version. Examples:
+
+TODO
+
+$$::
+  Inline and block. The double-dollar passthrough is functionally
+  identical with one exception: special characters are escaped.
+  Examples:
+
+TODO
+
 Macro Definitions
 ~~~~~~~~~~~~~~~~~
 Each entry in the configuration `[macros]` section is a macro
 definition which can take one of the following forms:
 
-`<pattern>=<name>`::
+`<pattern>=<name>[<subslist]`::
         Inline macro definition.
-`<pattern>=#<name>`::
+`<pattern>=#<name>[<subslist]`::
         Block macro definition.
-`<pattern>=+<name>`::
+`<pattern>=+<name>[<subslist]`::
         System macro definition.
 `<pattern>`::
         Delete the existing macro with this `<pattern>`.
 
 `<pattern>` is a Python regular expression and `<name>` is the name of
 a markup template. If `<name>` is omitted then it is the value of the
-regular expression match group named 'name'.
+regular expression match group named 'name'.  The optional
+`[<subslist]` is a comma-separated list of substitution names enclosed
+in `[]` brackets, it sets the default substitutions for passthrough
+text.
+
+.Pattern named groups
+The following named groups can be used in macro `<pattern>` regular
+expressions and are available as markup template attributes:
+
+name::
+  The macro name.
+
+target::
+  The macro target.
+
+attrlist::
+  The macro attriute list.
+
+passtext::
+  Contents of this group are passed unmodified to the output subject
+  only to 'subslist' substitutions.
+
+subslist::
+  Processed as a comma-separated list of substitution names for
+  'passtext' substitution, overrides the the macro definition
+  'subslist'.
 
 .Here's what happens during macro substitution
 - Each contextually relevant macro 'pattern' from the `[macros]`
@@ -2582,10 +2643,11 @@ specifiers>>. For example `cols="2<p,2*,4p,>"`.
 
 width::
 The 'width' attribute is expressed as a percentage value
-('"1%"'...'"99%"') of the 'pagewidth' value. The 'pagewidth' attribute
-value is specified in the `[miscellaneous]` section of the backend
-configuration file (defaults to 380 points for DocBook and 800 pixels
-for HTML.
+('"1%"'...'"99%"'). The width specifies the table width relative to
+the available width. HTML outputs use this value directly. If width is
+specified DocBook uses the absolute widths (see calculated
+<<X72,markup attributes>> ), if no width is specified all of the
+available width is used.
 
 filter::
 The 'filter' attribute defines an external shell command that is
@@ -2662,11 +2724,11 @@ available. Column specific attributes are available when substituting
 the 'colspec' cell data tags.
 
 pageunits::
-  From `asciidoc.conf`, 'pt' for DocBook, blank for HTML.
+Only used by DocBook, defaults to 'pt'.
 
 pagewidth::
-From `asciidoc.conf`. The nominal output page width in 'pageunit'
-units. '380' for DocBook, '800 for HTML.
+The nominal output page width in 'pageunit' units. Used to calculate
+table and column widths.  Only used by DocBook, defaults to '425'.
 
 tableabswidth::
 Integer value calculated from 'width' and 'pagewidth' attributes.
@@ -2779,6 +2841,44 @@ source file:
   :man source:   AsciiDoc
   :man version:  {revision}
   :man manual:   AsciiDoc Manual
+
+
+[[X78]]
+Mathematical Formulas
+---------------------
+The 'math' <<X77,passthrough macros>> and 'math' <<X76,passthrough
+block>> provide a (backend dependent) mechanism for rendering
+mathematical formulas. You can use the following math markups:
+
+LaTeX Math::
+  ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf[LaTeX
+  math] can be included in documents that are processed by
+  <<X31,dblatex(1)>>.  Example inline formula:
+
+  math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
+
+ASCIIMathML::
+  http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
+  formulas can be included in documents that generate HTML using the
+  'xhtml11' backend.  See <<X79,Appendix E>> for more details.  To
+  enable ASCIIMathML support you must define the 'asciimath'
+  attribute, for example using the `-a asciimath` command-line option.
+  Example inline formula:
+
+  math:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
+
+LaTeXMathML::
+  http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
+  is derived from, and similar to ASCIIMathML and is for users who are
+  more familar with or prefer using LaTeX math formulas.  To enable
+  LaTeXMathML support you must define the 'latexmath' attribute, for
+  example using the `-a latexmath` command-line option.  Example
+  inline formula:
+
+  math:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
+
+There are more examples on the
+http://www.methods.co.nz/asciidoc/[AsciiDoc website].
 
 
 [[X7]]
@@ -3661,7 +3761,7 @@ subs, presubs, postsubs::
     'normal';;
         The following substitutions:
         'specialcharacters','quotes','attributes','specialwords',
-        'replacements','macros','passthroughs'.
+        'replacements','macros'.
     'verbatim';;
         'specialcharacters' and 'callouts' substitutions.
 
@@ -4731,6 +4831,7 @@ you need to be aware of:
   format.
 
 
+[[79]]
 Appendix E: ASCIIMathML Support
 -------------------------------
 http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML] is
@@ -4747,7 +4848,7 @@ does:
 - Escapes ASCIIMathML delimiters.
 
 When entering ASCIIMathML formulas you *must* enclose them inside
-<<X50,double-dollar passthroughs>> (this is necessary because
+<<X50,math  passthroughs>> (this is necessary because
 ASCIIMathML characters clash with AsciiDoc formatting characters). The
 double-dollar passthrough has the bonus of also escaping special
 characters so the output document is valid XHTML. You can see an

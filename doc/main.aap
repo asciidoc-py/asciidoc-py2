@@ -60,6 +60,7 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         ${HTMLHELP_FILE}.chm \
         $CHUNK_DIR/index.html \
         article.pdf \
+        latexmath.pdf \
         source-highlight-filter.pdf \
         music-filter.pdf
 
@@ -169,10 +170,12 @@ TEST_FILES = $*(ROOT).css-embedded.html
 :rule %.fo: %.xml
     :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 ../docbook-xsl/fo.xsl $source >$target
 
-# This kludge forces the User Guide PDF to be generated using dblatex
-# so we include a dblatex example in the distribution.
+# This kludge forces the User Guide and LaTeX Math PDFs to be generated using
+# dblatex so we include a dblatex example in the distribution.
 @if _no.DBLATEX:
     asciidoc.pdf: asciidoc.xml
+        :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source
+    latexmath.pdf: latexmath.xml
         :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source
 
 # Force the Source Highlighter PDF to be generated using dblatex

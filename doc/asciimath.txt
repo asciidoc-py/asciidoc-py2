@@ -4,7 +4,7 @@ ASCIIMathML Formulae
 http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML] is
 a clever JavaScript written by Peter Jipsen that transforms
 mathematical formulae written in plain text to standard mathematical
-notation on an HTML page. See 'Appendix I' in the AsciiDoc User Guide
+notation on an HTML page. See 'Appendix E' in the AsciiDoc User Guide
 for more details.
 
 The AsciiDoc `xhtml11` backend supports ASCIIMathML -- it links the
@@ -27,6 +27,11 @@ page.
   install the correct math fonts (see the
   http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
   website for details).
+- When you use the `\math[]` macro you need to escape `]` characters
+  in the formulas with a backslash, escaping is unnecessary if you use
+  the double-dollar macro (for examples see the first two formulas
+  below).
+
 - See the link:latexmath.html[LaTeXMathML page] if you prefer to use
   LaTeX math formulas.
 

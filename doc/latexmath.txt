@@ -1,41 +1,202 @@
-LaTeXMathML Formulae
-====================
+Embedding LaTeX Math in AsciiDoc dblatex documents
+==================================================
 
-http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
-capability has been added to AsciiDoc for users who are more familar
-with or prefer LaTeX math formulas to the
-http://www.methods.co.nz/asciidoc/asciimath.html[ASCIIMathML]
-notation.
+You can include
+ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf[LaTeX math]
+equations in AsciiDoc documents that are processed by 'dblatex'.
 
-'LaTeXMathML' is a derivative of
-http://www.methods.co.nz/asciidoc/asciimath.html[ASCIIMathML] -- in
-terms of usage the only difference it that you use the `latexmath`
-attribute instead of the `asciimath` attribute.
 
-'LaTeXMathML' processes LaTeX math formulas not arbitrary LaTeX (as
-`dblatex(1)` does). See the
-http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
-website for details.
+Inline equations
+----------------
+This markup:
 
-Here's the link:latexmath.txt[AsciiDoc source] that generated this
-page.
+---------------------------------------------------------------------
+An inline equation math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
+using the 'math' inline macro.
 
-Some example 'LaTeXMathML' formulas:
+You can use the same 'math' macro to inject arbitrary math:[\LaTeX] markup
+(but beware, this is an undocumented trick).
+---------------------------------------------------------------------
 
-- math:[$R_x = 10.0 \times \sin(R_\phi)$]
+Renders:
 
-- [,,2]##math:[$\sum_{n=1}^\infty \frac{1}{2^n}$]##
+An inline equation math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
+using the 'math' inline macro.
 
-- math:[$\lim_{x\to\infty} f(x) = k \choose r + \frac ab
-  \sum_{n=1}^\infty a_n + \displaystyle{ \left\{ \frac{1}{13}
-  \sum_{n=1}^\infty b_n \right\} }$]
+You can use the same 'math' macro to inject arbitrary math:[\LaTeX] markup
+(but beware, this is an undocumented trick).
 
-- math:[$\$\alpha + \$\beta = \$(\alpha + \beta)$]
 
-- math:[$\begin{eqnarray} x & = & \frac{-7 \pm
-  \sqrt{49 - 24}}{6} \\ & = & -2 \textrm{ or } -\frac13.
-  \end{eqnarray}$]
+Informal equations
+------------------
+Informal (untitled) equations are generated with a 'math' style
+passthrough delimited block. This markup:
 
-- math:[$\displaystyle{ V_i = C_0 - C_3
-  \frac{C_1\cos(\theta_i+C_3)}{C_4+C_1\cos(\theta_i+C_2)} }$]
+---------------------------------------------------------------------
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\[C = \alpha + \beta Y^{\gamma} + \epsilon\]
+++++++++++++++++++++++++++++++++++++++++++++
+---------------------------------------------------------------------
 
+Renders:
+
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\[C = \alpha + \beta Y^{\gamma} + \epsilon\]
+++++++++++++++++++++++++++++++++++++++++++++
+
+Functionally identical block macro syntax:
+
+---------------------------------------------------------------------
+math::[\[C = \alpha + \beta Y^{\gamma} + \epsilon\]]
+---------------------------------------------------------------------
+
+Renders:
+
+math::[\[C = \alpha + \beta Y^{\gamma} + \epsilon\]]
+
+
+Formal equations
+----------------
+Formal equations are titled and are generated with a 'math' style
+passthrough delimited block.
+
+This markup:
+
+---------------------------------------------------------------------
+.Unnumbered
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\[C = \alpha + \beta Y^{\gamma} + \epsilon\]
+++++++++++++++++++++++++++++++++++++++++++++
+---------------------------------------------------------------------
+
+Renders:
+
+.Unnumbered
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\[C = \alpha + \beta Y^{\gamma} + \epsilon\]
+++++++++++++++++++++++++++++++++++++++++++++
+
+This markup:
+
+---------------------------------------------------------------------
+.Aligned
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{align*}
+2x^2 + 3(x-1)(x-2) & = 2x^2 + 3(x^2-3x+2) \\
+&= 2x^2 + 3x^2 - 9x + 6 \\
+&= 5x^2 - 9x + 6
+\end{align*}
+++++++++++++++++++++++++++++++++++++++++++++
+---------------------------------------------------------------------
+
+Renders:
+
+.Unnumbered
+.Aligned
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{align*}
+2x^2 + 3(x-1)(x-2) & = 2x^2 + 3(x^2-3x+2) \\
+&= 2x^2 + 3x^2 - 9x + 6 \\
+&= 5x^2 - 9x + 6
+\end{align*}
+++++++++++++++++++++++++++++++++++++++++++++
+
+This markup:
+
+---------------------------------------------------------------------
+.Array
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{eqnarray}
+x & = & \frac{-7 \pm \sqrt{49 - 24}}{6} \\
+& = & -2 \textrm{ or } -\frac13
+\end{eqnarray}
+++++++++++++++++++++++++++++++++++++++++++++
+---------------------------------------------------------------------
+
+Renders:
+
+.Array
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{eqnarray}
+x & = & \frac{-7 \pm \sqrt{49 - 24}}{6} \\
+& = & -2 \textrm{ or } -\frac13
+\end{eqnarray}
+++++++++++++++++++++++++++++++++++++++++++++
+
+This markup:
+
+---------------------------------------------------------------------
+.Array
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{eqnarray*}
+4r^2\int_0^{\pi/2} \cos^2 \theta\, d\theta
+&=& 4r^2\int_0^{\pi/2} \frac{1}{2}(1 + \cos 2\theta) \,d\theta\\
+& = & {2r^2\theta}\Bigg{|}_0^{\pi/2}
+  + 2r^2\int_0^{\pi/2} \cos 2\theta \,d\theta\\
+& = & \pi r^2 + 2r^2(\sin2\theta)\Bigg{|}_0^{\pi/2}\\
+& = & \pi r^2
+\end{eqnarray*}
+++++++++++++++++++++++++++++++++++++++++++++
+---------------------------------------------------------------------
+
+Renders:
+
+.Array
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{eqnarray*}
+4r^2\int_0^{\pi/2} \cos^2 \theta\, d\theta
+&=& 4r^2\int_0^{\pi/2} \frac{1}{2}(1 + \cos 2\theta) \,d\theta\\
+& = & {2r^2\theta}\Bigg{|}_0^{\pi/2}
+  + 2r^2\int_0^{\pi/2} \cos 2\theta \,d\theta\\
+& = & \pi r^2 + 2r^2(\sin2\theta)\Bigg{|}_0^{\pi/2}\\
+& = & \pi r^2
+\end{eqnarray*}
+++++++++++++++++++++++++++++++++++++++++++++
+
+This markup:
+
+---------------------------------------------------------------------
+.List
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{enumerate}
+\item $\frac{da}{dx} = 0$
+\item $\frac{d}{dx} ax = a$
+\item $\frac{d}{dx} x^n = nx^{n-1}$
+\item $\displaystyle \frac{d}{dx} (f(x) + g(x))
+  = \frac{d}{dx} f(x) + \frac{d}{dx} g(x)$
+\item $\displaystyle \frac{d}{dx} f(x)g(x)
+  = g(x) \frac{d}{dx} f(x) + f(x) \frac{d}{dx} g(x)$
+\item $\displaystyle  \frac{d}{dx} \frac{f(x)}{g(x)}
+  = \frac{g(x) \frac{d}{dx} f(x) - f(x) \frac{d}{dx} g(x)}{(g(x))^2}$
+\end{enumerate}
+++++++++++++++++++++++++++++++++++++++++++++
+---------------------------------------------------------------------
+
+Renders:
+
+.List
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\begin{enumerate}
+\item $\frac{da}{dx} = 0$
+\item $\frac{d}{dx} ax = a$
+\item $\frac{d}{dx} x^n = nx^{n-1}$
+\item $\displaystyle \frac{d}{dx} (f(x) + g(x))
+  = \frac{d}{dx} f(x) + \frac{d}{dx} g(x)$
+\item $\displaystyle \frac{d}{dx} f(x)g(x)
+  = g(x) \frac{d}{dx} f(x) + f(x) \frac{d}{dx} g(x)$
+\item $\displaystyle  \frac{d}{dx} \frac{f(x)}{g(x)}
+  = \frac{g(x) \frac{d}{dx} f(x) - f(x) \frac{d}{dx} g(x)}{(g(x))^2}$
+\end{enumerate}
+++++++++++++++++++++++++++++++++++++++++++++

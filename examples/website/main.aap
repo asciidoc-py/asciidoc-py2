@@ -22,7 +22,7 @@ WEB_ROOT =
     index
     INSTALL
     latex-backend
-    latexmath
+    latexmathml
     manpage
     music-filter
     README
@@ -61,6 +61,7 @@ DOCS =
     book-multi.txt book-multi.html
     docbook-xsl.css
     article.pdf
+    latexmath.pdf
 
 # Client applications.
 @if OSTYPE == 'posix':
@@ -93,7 +94,7 @@ ASCIIDOC_HTML =
         opts = -d manpage
     @elif target == 'asciimath.html':
         opts = -a asciimath
-    @elif target == 'latexmath.html':
+    @elif target == 'latexmathml.html':
         opts = -a latexmath
     @else:
         opts =

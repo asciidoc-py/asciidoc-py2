@@ -136,7 +136,7 @@ def error(msg, cursor=None, halt=False):
     fatal errors finishing with a non-zero exit code.
     """
     if halt:
-        raise EAsciiDoc, message(msg,cursor=cursor)
+        raise EAsciiDoc, message(msg,linenos=False,cursor=cursor)
     else:
         console(msg,'ERROR: ',cursor=cursor)
         document.has_errors = True
@@ -1030,7 +1030,8 @@ class Lex:
             return lines
         # Join lines so quoting can span multiple lines.
         para = '\n'.join(lines)
-        para = macros.extract_passthroughs(para)
+        if 'macros' in options:
+            para = macros.extract_passthroughs(para)
         for o in options:
             if o == 'attributes':
                 # If we don't substitute attributes line-by-line then a single
@@ -1039,7 +1040,8 @@ class Lex:
                 para = '\n'.join(lines)
             else:
                 para = Lex.subs_1(para,(o,))
-        para = macros.restore_passthroughs(para)
+        if 'macros' in options:
+            para = macros.restore_passthroughs(para)
         return para.splitlines()
     subs = staticmethod(subs)
 
@@ -2009,10 +2011,7 @@ class AbstractBlock:
         if style:
             if not is_name(style):
                 raise EAsciiDoc, 'illegal style name: %s' % style
-            if not self.styles.has_key(style):
-                warning('[%s] \'%s\' style not in %s' % (
-                    self.name,style,self.styles.keys()))
-            else:
+            if self.styles.has_key(style):
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():
                     if k == 'posattrs':
@@ -3214,6 +3213,9 @@ class Macro:
                 return mo.group()
             passtext = d['passtext']
             if d.get('subslist'):
+                if d['subslist'].startswith(':'):
+                    error('block macro cannot occur here: %s' % mo.group(),
+                          halt=True)
                 subslist = parse_options(d['subslist'], SUBS_OPTIONS,
                           'illegal passthrough macro subs option')
             else:

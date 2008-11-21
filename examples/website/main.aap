@@ -15,7 +15,7 @@ LOCAL_WEB = ~/tmp/asciidoc-web # Local web marshalling location.
 WEB_ROOT =
     a2x.1
     asciidoc-docbook-xsl
-    asciimath
+    asciimathml
     CHANGELOG
     downloads
     faq
@@ -92,7 +92,7 @@ ASCIIDOC_HTML =
         opts = -a index-only
     @elif target in ('manpage.html','a2x.1.html'):
         opts = -d manpage
-    @elif target == 'asciimath.html':
+    @elif target == 'asciimathml.html':
         opts = -a asciimath
     @elif target == 'latexmathml.html':
         opts = -a latexmath

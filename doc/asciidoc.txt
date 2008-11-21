@@ -4831,7 +4831,7 @@ you need to be aware of:
   format.
 
 
-[[79]]
+[[X79]]
 Appendix E: ASCIIMathML Support
 -------------------------------
 http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML] is

@@ -264,11 +264,11 @@ book-multi.xml: book-multi.txt
     # Make INSTALL.text and copy to INSTALL.
     :copy ../INSTALL.text ../INSTALL
 
-asciimath.html: asciimath.txt
+asciimathml.html: asciimathml.txt
     :sys $ASCIIDOC -a asciimath $source
     # No xmllint(1) checking -- fails on embedded JavaScript.
 
-latexmath.html: latexmath.txt
+latexmathml.html: latexmathml.txt
     :sys $ASCIIDOC -a latexmath $source
     # No xmllint(1) checking -- fails on embedded JavaScript.
 

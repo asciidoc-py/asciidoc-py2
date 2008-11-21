@@ -16,23 +16,22 @@ characters to yield valid XHTML. To use ASCIIMathML:
 2. Enclose ASCIIMathML formulas inside math or double-dollar
    passthroughs or in math passthrough blocks.
 
-NOTE: You need to escape `]` characters with a backslash when using
-the `\math:[]` inline passthrough macro.
-
 Here's the link:asciimath.txt[AsciiDoc source] that generated this
 page.
 
 .NOTE
-- If the formulas don't appear to be correct you probably need to
-  install the correct math fonts (see the
-  http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
-  website for details).
 - When you use the `\math[]` macro you need to escape `]` characters
   in the formulas with a backslash, escaping is unnecessary if you use
   the double-dollar macro (for examples see the first two formulas
   below).
-
-- See the link:latexmath.html[LaTeXMathML page] if you prefer to use
+- See the
+  http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
+  website for ASCIIMathML documentation and the latest version.
+- If the formulas don't appear to be correct you probably need to
+  install the correct math fonts (see the
+  http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
+  website for details).
+- See the link:latexmathml.html[LaTeXMathML page] if you prefer to use
   LaTeX math formulas.
 
 A list of formulas with a mixture of formatting:

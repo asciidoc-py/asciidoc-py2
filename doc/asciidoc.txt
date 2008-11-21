@@ -1142,7 +1142,6 @@ will often be backend specific. Here's an example:
 Use and explicit 'subs' attribute to control substitution.  The
 following styles can be applied to passthrough blocks:
 
-[horizontal]
 pass::
   By default no substitutions are performed.
 
@@ -2318,15 +2317,16 @@ Passthrough macros
 ~~~~~~~~~~~~~~~~~~
 Passthrough macros are analogous to <<X76,passthrough blocks>> and are
 used to pass text directly to the output. The substitution performed
-on the text is determined by the macro definition or the optional
-substitutions specified when it is called.  The usual syntax is
+on the text is determined by the macro definition but can be overridden
+by the `<subslist>`.  The usual syntax is
 `<name>:<subslist>[<passtext>]` (for inline macros) and
 `<name>::<subslist>[<passtext>]` (for block macros).
 
 pass::
   Inline and block. Passes text unmodified. Examples:
 
-TODO
+  Select pass:[<guimenuitem>Exit Emacs</guimenuitem>] from
+  the pass:[<guimenu>Files</guimenu>] menu.
 
 cdata::
   Inline and block. Passes text unmodified. Text enveloped in XML
@@ -2335,9 +2335,10 @@ cdata::
 pi::
   Inline and block. Passes text unmodified. Used to generate XML
   processing instructions. Differs from other passthrough macros in
-  that `<target>` replaces the `<sublist>` and is the mandatory
-  processing instruction name. Useful for inserting DocBook XML
-  Stylesheet processing instructions. Examples:
+  that the `<sublist>` contains a mandatory processing instruction
+  name (not a list of subs attributes). Useful for inserting DocBook
+  XML Stylesheet processing instructions. Examples:
+
 
   pi::dbhtml[toc="1"]
   pi:dbtimestamp[format="Y-m-d H:M:S" padding="0"]
@@ -2346,20 +2347,20 @@ math::
   Inline and block. Passes text unmodified.  Used for
   <<X78,mathematical formulas>>.
 
-+++::
+\+\++::
   Inline and block. The triple-plus passthrough is functionally
   identical to the 'pass' macro but you don't have to escape `]`
   characters and you can prefix with quoted attributes in the inline
-  version. Examples:
+  version. Example:
 
-TODO
+  Red [red]+++`sum_(i=1)\^n i=(n(n+1))/2`$+++ AsciiMathML formula
 
 $$::
   Inline and block. The double-dollar passthrough is functionally
   identical with one exception: special characters are escaped.
-  Examples:
+  Example:
 
-TODO
+  $$`[[a,b\],[c,d\]\]((n),(k))`$$
 
 Macro Definitions
 ~~~~~~~~~~~~~~~~~
@@ -2393,7 +2394,7 @@ target::
   The macro target.
 
 attrlist::
-  The macro attriute list.
+  The macro attribute list.
 
 passtext::
   Contents of this group are passed unmodified to the output subject
@@ -2856,26 +2857,34 @@ LaTeX Math::
   <<X31,dblatex(1)>>.  Example inline formula:
 
   math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
++
+For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
+website] or the distributed `doc/latexmath.txt` file.
 
 ASCIIMathML::
   http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
   formulas can be included in documents that generate HTML using the
-  'xhtml11' backend.  See <<X79,Appendix E>> for more details.  To
-  enable ASCIIMathML support you must define the 'asciimath'
-  attribute, for example using the `-a asciimath` command-line option.
-  Example inline formula:
+  'xhtml11' backend. To enable ASCIIMathML support you must define the
+  'asciimath' attribute, for example using the `-a asciimath`
+  command-line option.  Example inline formula:
 
   math:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
++
+For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
+website] or the distributed `doc/asciimathml.txt` file.
 
 LaTeXMathML::
   http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
   is derived from, and similar to ASCIIMathML and is for users who are
-  more familar with or prefer using LaTeX math formulas.  To enable
+  more familiar with or prefer using LaTeX math formulas.  To enable
   LaTeXMathML support you must define the 'latexmath' attribute, for
   example using the `-a latexmath` command-line option.  Example
   inline formula:
 
   math:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
++
+For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
+website] or the distributed `doc/latexmathml.txt` file.
 
 There are more examples on the
 http://www.methods.co.nz/asciidoc/[AsciiDoc website].
@@ -4831,44 +4840,7 @@ you need to be aware of:
   format.
 
 
-[[X79]]
-Appendix E: ASCIIMathML Support
--------------------------------
-http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML] is
-a clever JavaScript written by Peter Jipsen that transforms
-mathematical formulae written in plain text to standard mathematical
-notation on an HTML page.
-
-To enable ASCIIMathML support on the `xhtml11` backend include the `-a
-asciimath` command-line option. Here's what the `asciimath` attribute
-does:
-
-- Embeds the `ASCIIMathML.js` script in the output document (links it
-  if `-a linkcss` has been specified).
-- Escapes ASCIIMathML delimiters.
-
-When entering ASCIIMathML formulas you *must* enclose them inside
-<<X50,math  passthroughs>> (this is necessary because
-ASCIIMathML characters clash with AsciiDoc formatting characters). The
-double-dollar passthrough has the bonus of also escaping special
-characters so the output document is valid XHTML. You can see an
-ASCIIMathML example at
-http://www.methods.co.nz/asciidoc/asciimath.html, the same example
-can be found in the AsciiDoc distribution `./doc` directory.
-
-[NOTE]
-=====================================================================
-- See the
-  http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
-  website for ASCIIMathML documentation and the latest version.
-- If you use Mozilla you need to install the
-  http://www.mozilla.org/projects/mathml/fonts/[required math fonts].
-- If you use Microsoft Internet Explorer 6 you need to install
-  http://www.dessci.com/en/products/mathplayer/[MathPlayer].
-=====================================================================
-
-
-Appendix F: Vim Syntax Highlighter
+Appendix E: Vim Syntax Highlighter
 ----------------------------------
 The AsciiDoc `./vim/` distribution directory contains Vim syntax
 highlighter and filetype detection scripts for AsciiDoc.  Syntax
@@ -4931,7 +4903,7 @@ idea.
 
 
 [[X74]]
-Appendix G: Attribute Options
+Appendix F: Attribute Options
 -----------------------------
 Here is the list of predefined <<X75,attribute list options>>:
 

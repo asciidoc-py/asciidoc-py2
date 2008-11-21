@@ -4,11 +4,11 @@ LaTeXMathML Formulae
 http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
 capability has been added to AsciiDoc for users who are more familar
 with or prefer LaTeX math formulas to the
-http://www.methods.co.nz/asciidoc/asciimath.html[ASCIIMathML]
+http://www.methods.co.nz/asciidoc/asciimathml.html[ASCIIMathML]
 notation.
 
 'LaTeXMathML' is a derivative of
-http://www.methods.co.nz/asciidoc/asciimath.html[ASCIIMathML] -- in
+http://www.methods.co.nz/asciidoc/asciimathml.html[ASCIIMathML] -- in
 terms of usage the only difference it that you use the `latexmath`
 attribute instead of the `asciimath` attribute.
 

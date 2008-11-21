@@ -139,7 +139,7 @@ included in the distribution `./filters/` directory.
 Mathematical Formulae
 ---------------------
 You can include mathematical formulae in AsciiDoc XHTML documents using
-link:asciimath.html[ASCIIMathML] or link:latexmathml.html[LaTeXMathML]
+link:asciimathml.html[ASCIIMathML] or link:latexmathml.html[LaTeXMathML]
 notation.
 
 link:latexmath.pdf[LaTeX Math] can be included in AsciiDoc

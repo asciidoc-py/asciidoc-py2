@@ -138,9 +138,12 @@ included in the distribution `./filters/` directory.
 [[X3]]
 Mathematical Formulae
 ---------------------
-You can include mathematical formulae in your AsciiDoc documents using
-link:asciimath.html[ASCIIMathML] or link:latexmath.html[LaTeXMathML]
+You can include mathematical formulae in AsciiDoc XHTML documents using
+link:asciimath.html[ASCIIMathML] or link:latexmathml.html[LaTeXMathML]
 notation.
+
+link:latexmath.pdf[LaTeX Math] can be included in AsciiDoc
+documents processed by `dblatex(1)`.
 
 
 Vim Syntax Highlighter

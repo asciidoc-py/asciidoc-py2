@@ -1897,13 +1897,13 @@ macros).  Here are some examples:
 - The optional `<target>` cannot contain white space characters.
 - `<attrlist>` is a <<X21,list of attributes>> enclosed in square
   brackets.
-- The attribute list is mandatory except for URLs and email addresses.
+- `]` characters in attribute lists that are enclosed in `[]` brackets
+  must be escaped with a backslash.
 - Expansion of non-system macro references can normally be escaped by
-  prefixing a backslash character (see the AsciiDoc 'FAQ' for
-  examples of exceptions to this rule).
+  prefixing a backslash character (see the AsciiDoc 'FAQ' for examples
+  of exceptions to this rule).
 - System macros cannot be escaped.
-- Attribute references in block macros are
-  expanded.
+- Attribute references in block macros are expanded.
 - The substitutions performed prior to Inline macro macro expansion
   are determined by the inline context.
 - Macros are processed in the order they appear in the configuration
@@ -1927,7 +1927,7 @@ rendered using predefined inline macros.
 - If you don't need a customized the link caption you can enter the
   'http', 'https', 'ftp', 'file' URLs and email addresses without any
   special macro syntax.
-- If no caption text is specified the URL is displayed.
+- If the `<attrlist>` is empty the URL is displayed.
 
 Here are some examples:
 
@@ -2432,9 +2432,9 @@ There are a wide variety of built-in customizable styles.
 .Use tables sparingly
 *********************************************************************
 When technical users first start creating documents, tables (complete
-with column spanning and table nesting) are considered an awfully
-important must-have feature. The reality is that tables are seldom
-used, even in technical documentation.
+with column spanning and table nesting) are often considered very
+important.  important must-have feature. The reality is that tables
+are seldom used, even in technical documentation.
 
 Try this exercise: thumb through your library of technical books,
 you'll be surprised just how seldom tables are actually used, even

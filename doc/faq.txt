@@ -6,11 +6,26 @@ An embryonic AsciiDoc FAQ.
 
 == How can I render indented paragraphs?
 
-NOTE: This FAQ applies to XHTML output not DocBook. You can customize
-DocBook XSL stylesheets to globally indent all paragraphs but DocBook
-has no mechanism for selectively styling paragraphs.
+To unconditionally indent all paragraphs add the following line to the
+`xhtml11.css` stylesheet (or a custom stylesheet).
 
-Apply the 'indented' style to normal paragraphs, for example:
+---------------------------------------------------------------------
+div.paragraph p {text-indent: 3em;}
+---------------------------------------------------------------------
+
+This will restyle the entire document by indenting all paragraphs
+which is normally what you want to do (mixed paragraph styles produce
+ugly documents).
+
+To selectively indent paragraphs with the 'indented' style add the
+following line to the `xhtml11.css` stylesheet (or a custom
+stylesheet).
+
+---------------------------------------------------------------------
+div.paragraph.indented p {text-indent: 3em;}
+---------------------------------------------------------------------
+
+Then apply the 'indented' style to normal paragraphs, for example:
 
 ---------------------------------------------------------------------
 [indented]
@@ -20,16 +35,10 @@ vestibulum mi. Aliquam pede. Aenean lobortis lorem et lacus. Sed
 lacinia. Vivamus at lectus.
 ---------------------------------------------------------------------
 
-To unconditionally indent all paragraphs add the following line to the
-`xhtml11.css` stylesheet (or a custom stylesheet).
-
----------------------------------------------------------------------
-div.para {text-indent: 3em;}
----------------------------------------------------------------------
-
-This will restyle the entire document by indenting all paragraphs
-which is normally what you want to do (mixed paragraph styles produce
-ugly documents).
+NOTE: This FAQ applies to XHTML output not DocBook. To achieve the
+same results with DocBook you would need to customize the DocBook XSL
+stylesheets to indent paragraphs with the `simpara` element
+`role="indented"` attribute.
 
 
 == Is there a way to set default image height and width attributes?

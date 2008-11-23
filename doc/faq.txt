@@ -9,7 +9,7 @@ Quote the entry name -- this nonsensical example replaces `\x` with
 `y`:
 
   "x\"=y
-+
+
 If quoting were omitted the equals character (separating the
 entry name `x` from the value `y`) would be escaped.
 

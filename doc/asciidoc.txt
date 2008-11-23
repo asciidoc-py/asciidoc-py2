@@ -360,7 +360,9 @@ definition] as follows:
   BulletedList  ::= (ListItem)+
   NumberedList  ::= (ListItem)+
   CalloutList   ::= (ListItem)+
-  LabeledList   ::= (ItemLabel+,ListItem)+
+  LabeledList   ::= (ListEntry)+
+  ListEntry     ::= (ListLabel,ListItem)
+  ListLabel     ::= (ListTerm+)
   ListItem      ::= (ItemText,(List|ListParagraph|ListContinuation)*)
 
 Where:
@@ -2857,43 +2859,55 @@ The 'math' <<X77,passthrough macros>> and 'math' <<X76,passthrough
 block>> provide a (backend dependent) mechanism for rendering
 mathematical formulas. You can use the following math markups:
 
-LaTeX Math::
-  ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf[LaTeX
-  math] can be included in documents that are processed by
-  <<X31,dblatex(1)>>.  Example inline formula:
+LaTeX Math
+~~~~~~~~~~
+ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf[LaTeX
+math] can be included in documents that are processed by
+<<X31,dblatex(1)>>.  Example inline formula:
 
   math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
-+
+
 For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
 website] or the distributed `doc/latexmath.txt` file.
 
-ASCIIMathML::
-  http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
-  formulas can be included in documents that generate HTML using the
-  'xhtml11' backend. To enable ASCIIMathML support you must define the
-  'asciimath' attribute, for example using the `-a asciimath`
-  command-line option.  Example inline formula:
+ASCIIMathML
+~~~~~~~~~~~
+http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
+formulas can be included in documents that generate HTML using the
+'xhtml11' backend. To enable ASCIIMathML support you must define the
+'asciimath' attribute, for example using the `-a asciimath`
+command-line option.  Example inline formula:
 
   math:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
-+
+
 For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
 website] or the distributed `doc/asciimathml.txt` file.
 
-LaTeXMathML::
-  http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
-  is derived from, and similar to ASCIIMathML and is for users who are
-  more familiar with or prefer using LaTeX math formulas.  To enable
-  LaTeXMathML support you must define the 'latexmath' attribute, for
-  example using the `-a latexmath` command-line option.  Example
-  inline formula:
+LaTeXMathML
+~~~~~~~~~~~
+http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
+formulas can be included in documents that generate HTML using the
+'xhtml11' backend.  'LaTeXMathML' is derived from ASCIIMathML and is
+for users who are more familiar with or prefer using LaTeX math
+formulas (it recognizes a subset of LaTeX Math, the differences are
+documented on the 'LaTeXMathML' web page).  To enable LaTeXMathML
+support you must define the 'latexmath' attribute, for example using
+the `-a latexmath` command-line option.  Example inline formula:
 
   math:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
-+
+
 For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
 website] or the distributed `doc/latexmathml.txt` file.
 
 There are more examples on the
 http://www.methods.co.nz/asciidoc/[AsciiDoc website].
+
+MathML
+~~~~~~
+http://www.w3.org/Math/[MathML] is a low level XML markup for
+mathematics. AsciiDoc has no macros for MathML but users familar with
+this markup could use passthrough macros and passthrough blocks to
+include MathML in output documents.
 
 
 [[X7]]

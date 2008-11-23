@@ -200,3 +200,45 @@ Renders:
   = \frac{g(x) \frac{d}{dx} f(x) - f(x) \frac{d}{dx} g(x)}{(g(x))^2}$
 \end{enumerate}
 ++++++++++++++++++++++++++++++++++++++++++++
+
+This markup:
+
+---------------------------------------------------------------------
+.Matrix
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\[ P^{e \rightarrow c}= \left[
+  \begin{array}{*{3}{r@{}l}}
+  & \cos \theta & & \sin \theta \sin \varphi & & \sin \theta \cos \varphi\\
+
+  & \sin \theta \sin \psi
+  & & \cos \varphi \cos \psi - \cos \theta \sin \varphi \sin \psi
+  & - & \sin \varphi \cos \psi - \cos \theta \cos \varphi \sin \psi\\
+
+  - & \sin \theta \cos \psi
+  & & \cos \varphi \sin \psi + \cos \theta \sin \varphi \cos \psi
+  & - & \sin \varphi \sin \psi + \cos \theta \cos \varphi \cos \psi\\
+  \end{array}
+\right] \]
+++++++++++++++++++++++++++++++++++++++++++++
+---------------------------------------------------------------------
+
+Renders:
+
+.Matrix
+[math]
+++++++++++++++++++++++++++++++++++++++++++++
+\[ P^{e \rightarrow c}= \left[
+  \begin{array}{*{3}{r@{}l}}
+  & \cos \theta & & \sin \theta \sin \varphi & & \sin \theta \cos \varphi\\
+
+  & \sin \theta \sin \psi
+  & & \cos \varphi \cos \psi - \cos \theta \sin \varphi \sin \psi
+  & - & \sin \varphi \cos \psi - \cos \theta \cos \varphi \sin \psi\\
+
+  - & \sin \theta \cos \psi
+  & & \cos \varphi \sin \psi + \cos \theta \sin \varphi \cos \psi
+  & - & \sin \varphi \sin \psi + \cos \theta \cos \varphi \cos \psi\\
+  \end{array}
+\right] \]
+++++++++++++++++++++++++++++++++++++++++++++

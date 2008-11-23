@@ -1,17 +1,43 @@
 AsciiDoc ChangeLog
 ==================
 
-Version 8.2.7 (2008-07-04)
---------------------------
 See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial
 repository] for a full list of changes.
 
+Version 8.3.0 (2008-11-29)
+--------------------------
+.Additions and changes
+
+
+.Bug fixes
+
+Compatibility issues
+~~~~~~~~~~~~~~~~~~~~
+This release includes a number of backward incompatibilities.
+If you've modified the or written your own AsciiDoc configuration
+files you may need to update them to use them with this release:
+
+- The old table syntax is still processed but a 'DEPRECATED' warning
+  is issued.
+- Entity references have to be escaped with a backslash.
+- You have to explicitly precede horizontal style labeled lists with
+  the `[horizontal]` style attribute -- existing horizontal labeled
+  lists will be rendered vertically.
+- The list 'compact' style is now a list option.
+- AsciiDoc version 6 sytnax no longer supported.
+- Linuxdoc finally been removed from the distribution.
+- The unsupported experimental 'latex' backend has not been tested on
+  this release.
+
+
+Version 8.2.7 (2008-07-04)
+--------------------------
 .Additions and changes
 - Added `dvi`, `ps` and `tex` output format options to a2x(1).
 - Added `--dblatex` option to a2x(1) so `dblatex(1)` can be used to
   generate PDFs.
 - Added custom `dblatex(1)` configuration files (in distribution
-  `./dblatex` directory) which are used by a2x(1).
+  `./dblatex` directory) that are used by a2x(1).
 - `dblatex(1)` is now used to generate the distributed PDF version of
   the AsciiDoc User Guide.
 - If you don't need a customized the link caption you can enter the
@@ -66,9 +92,6 @@ repository changelog].
 
 Version 8.2.6 (2008-04-29)
 --------------------------
-See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial
-repository] for a full list of changes.
-
 .Additions and changes
 - Enhancements to the Vim AsciiDoc syntax highlighter, for example,
   quoted text is now highlighted in titles and macro captions.

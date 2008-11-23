@@ -4,6 +4,16 @@ AsciiDoc Frequently Asked Questions
 An embryonic AsciiDoc FAQ.
 
 
+== How can a replacement have a trailing backslash?
+Quote the entry name -- this nonsensical example replaces `\x` with
+`y`:
+
+  "x\"=y
++
+If quoting were omitted the equals character (separating the
+entry name `x` from the value `y`) would be escaped.
+
+
 == How can I render indented paragraphs?
 
 To unconditionally indent all paragraphs add the following line to the
@@ -78,6 +88,7 @@ some non-standard escape examples:
 
 |Other |
 \+\++
+A C+\+ Library for C++
 |====================================================================
 
 The source of this problem is ambiguity across substitution types --
@@ -276,10 +287,10 @@ Qui in magna commodo{two_colons} est labitur dolorum an. Est ne
 magna primis adolescens.
 
 
-== How can I disable a quoted text substitution?
+== How can I selectively disable a quoted text substitution?
 
-Omitting the tag will disable quoting. For example, if you don't want
-superscripts or subscripts then put the following in a custom
+Omitting the tag name will disable quoting. For example, if you don't
+want superscripts or subscripts then put the following in a custom
 configuration file or edit the global `asciidoc.conf` configuration
 file:
 
@@ -287,19 +298,6 @@ file:
 [quotes]
 ^=
 ~=
----------------------------------------------------------------------
-
-
-== I have a paragraph containing some funky URLs, is there a way to suppress AsciiDoc substitutions in the URL address?
-
-You can selectively choose which substitutions to perform by setting
-the 'subs' attribute at the start of a block. For example:
-
----------------------------------------------------------------------
-[subs="macros"]
-~subscripts~ and ^superscripts^ quotes won't be substituted.
-Nor will the non-alphanumeric characters in the following URL:
-http://host/~user/file#_anchor_tag_str_
 ---------------------------------------------------------------------
 
 

@@ -2360,7 +2360,7 @@ $$::
   identical with one exception: special characters are escaped.
   Example:
 
-  $$`[[a,b\],[c,d\]\]((n),(k))`$$
+  $$`[[a,b],[c,d]]((n),(k))`$$
 
 Macro Definitions
 ~~~~~~~~~~~~~~~~~

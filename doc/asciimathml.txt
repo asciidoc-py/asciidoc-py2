@@ -37,7 +37,7 @@ page.
 A list of formulas with a mixture of formatting:
 
 - math:[`[[a,b\],[c,d\]\]((n),(k))`]
-- $$`[[a,b\],[c,d\]\]((n),(k))`$$
+- $$`[[a,b],[c,d]]((n),(k))`$$
 - math:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
 - math:[`d/dxf(x)=lim_(h->0)(f(x+h)-f(x))/h`]
 - Red [red]+++`sum_(i=1)\^n i=(n(n+1))/2`$+++ and [blue]*bold

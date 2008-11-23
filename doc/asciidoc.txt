@@ -225,9 +225,11 @@ stylesdir::
   The name of the directory containing linked stylesheets. Defaults to
   `.` (the same directory as the linking document).
 
-scriptsdir::
-  The name of the directory containing linked JavaScripts. Defaults to
-  `.` (the same directory as the linking document).
+stylesheet::
+  The file name of an optional additional CSS stylesheet. If you are
+  embedding the stylesheet specify the actual file name; if you are
+  linking CSS specify the file name relative to the directory
+  specified by the 'stylesdir' attribute.
 
 [[X45]]
 icons::
@@ -305,10 +307,14 @@ Default 'xhtml11' stylesheets:
     Stylesheet modifications to work around IE6 browser
     incompatibilities.
 
-Use the 'theme' attribute to select and alternative set of
-stylesheets. For example, the command-line option `-a theme=foo` will
-use stylesheets `foo.css`, `foo-manpage.css` and `foo-quirks.css`.
+Use the 'theme' attribute to select an alternative set of stylesheets.
+For example, the command-line option `-a theme=foo` will use
+stylesheets `foo.css`, `foo-manpage.css` and `foo-quirks.css` instead
+of the default stylesheets.
 
+Use the 'stylesheet' attribute to include an additional stylesheet in
+XHTML documents.  For example, the command-line option `-a
+stylesheet=newsletter.css` will use stylesheets `newsletter.css`.
 
 html4
 ~~~~~

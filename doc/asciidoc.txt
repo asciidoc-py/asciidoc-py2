@@ -221,6 +221,10 @@ linkcss::
   which case stylesheets and scripts are automatically embedded in the
   output document.
 
+scriptsdir::
+  The name of the directory containing linked JavaScripts. Defaults to
+  `.` (the same directory as the linking document).
+
 stylesdir::
   The name of the directory containing linked stylesheets. Defaults to
   `.` (the same directory as the linking document).
@@ -1157,7 +1161,7 @@ cdata::
   By default no substitutions are performed, the contents are
   enveloped in an XML `CDATA` element.
 
-math::
+asciimath, latexmath::
   By default no substitutions are performed, the contents are rendered
   as <<X78,mathematical formulas>>.
 
@@ -2855,9 +2859,10 @@ source file:
 [[X78]]
 Mathematical Formulas
 ---------------------
-The 'math' <<X77,passthrough macros>> and 'math' <<X76,passthrough
-block>> provide a (backend dependent) mechanism for rendering
-mathematical formulas. You can use the following math markups:
+The 'asciimath' and 'latexmath' <<X77,passthrough macros>> along with
+'asciimath' and 'latexmath'  <<X76,passthrough blocks>> provide a (backend
+dependent) mechanism for rendering mathematical formulas. You can use the
+following math markups:
 
 LaTeX Math
 ~~~~~~~~~~
@@ -2865,36 +2870,53 @@ ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf[LaTeX
 math] can be included in documents that are processed by
 <<X31,dblatex(1)>>.  Example inline formula:
 
-  math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
+  latexmath:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
 
 For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
 website] or the distributed `doc/latexmath.txt` file.
 
 ASCIIMathML
 ~~~~~~~~~~~
+/////////////////////////////////////////////////////////////////////
+The older ASCIIMathML 1.47 version is used instead of version 2
+because:
+
+1. Version 2 doesn't work when embedded.
+2. Version 2 is much larger.
+/////////////////////////////////////////////////////////////////////
+
 http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
-formulas can be included in documents that generate HTML using the
+formulas can be included in XHTML documents generated using the
 'xhtml11' backend. To enable ASCIIMathML support you must define the
 'asciimath' attribute, for example using the `-a asciimath`
 command-line option.  Example inline formula:
 
-  math:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
+  asciimath:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
 
 For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
 website] or the distributed `doc/asciimathml.txt` file.
 
 LaTeXMathML
 ~~~~~~~~~~~
-http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
-formulas can be included in documents that generate HTML using the
-'xhtml11' backend.  'LaTeXMathML' is derived from ASCIIMathML and is
-for users who are more familiar with or prefer using LaTeX math
-formulas (it recognizes a subset of LaTeX Math, the differences are
-documented on the 'LaTeXMathML' web page).  To enable LaTeXMathML
-support you must define the 'latexmath' attribute, for example using
-the `-a latexmath` command-line option.  Example inline formula:
+/////////////////////////////////////////////////////////////////////
+There is an http://math.etsu.edu/LaTeXMathML/[extended LaTeXMathML
+version] by Jeff Knisley, in addition to a JavaScript file it requires
+the inclusion of a CSS file.
+/////////////////////////////////////////////////////////////////////
 
-  math:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
+'LaTeXMathML' allows LaTeX Math style formulas to be included in XHTML
+documents generated using the AsciiDoc 'xhtml11' backend.
+AsciiDoc uses the
+http://www.maths.nottingham.ac.uk/personal/drw/lm.html[original
+LaTeXMathML] by Douglas Woodall.  'LaTeXMathML' is derived from
+ASCIIMathML and is for users who are more familiar with or prefer
+using LaTeX math formulas (it recognizes a subset of LaTeX Math, the
+differences are documented on the 'LaTeXMathML' web page).  To enable
+LaTeXMathML support you must define the 'latexmath' attribute, for
+example using the `-a latexmath` command-line option.  Example inline
+formula:
+
+  latexmath:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
 
 For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
 website] or the distributed `doc/latexmathml.txt` file.

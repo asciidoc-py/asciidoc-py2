@@ -11,19 +11,19 @@ Inline equations
 This markup:
 
 ---------------------------------------------------------------------
-An inline equation math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
+An inline equation latexmath:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
 using the 'math' inline macro.
 
-You can use the same 'math' macro to inject arbitrary math:[\LaTeX] markup
+You can use the same 'math' macro to inject arbitrary latexmath:[\LaTeX] markup
 (but beware, this is an undocumented trick).
 ---------------------------------------------------------------------
 
 Renders:
 
-An inline equation math:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
+An inline equation latexmath:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
 using the 'math' inline macro.
 
-You can use the same 'math' macro to inject arbitrary math:[\LaTeX] markup
+You can use the same 'math' macro to inject arbitrary latexmath:[\LaTeX] markup
 (but beware, this is an undocumented trick).
 
 
@@ -33,7 +33,7 @@ Informal (untitled) equations are generated with a 'math' style
 passthrough delimited block. This markup:
 
 ---------------------------------------------------------------------
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \[C = \alpha + \beta Y^{\gamma} + \epsilon\]
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -41,7 +41,7 @@ passthrough delimited block. This markup:
 
 Renders:
 
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \[C = \alpha + \beta Y^{\gamma} + \epsilon\]
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -49,12 +49,12 @@ Renders:
 Functionally identical block macro syntax:
 
 ---------------------------------------------------------------------
-math::[\[C = \alpha + \beta Y^{\gamma} + \epsilon\]]
+latexmath::[\[C = \alpha + \beta Y^{\gamma} + \epsilon\]]
 ---------------------------------------------------------------------
 
 Renders:
 
-math::[\[C = \alpha + \beta Y^{\gamma} + \epsilon\]]
+latexmath::[\[C = \alpha + \beta Y^{\gamma} + \epsilon\]]
 
 
 Formal equations
@@ -66,7 +66,7 @@ This markup:
 
 ---------------------------------------------------------------------
 .Unnumbered
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \[C = \alpha + \beta Y^{\gamma} + \epsilon\]
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -75,7 +75,7 @@ This markup:
 Renders:
 
 .Unnumbered
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \[C = \alpha + \beta Y^{\gamma} + \epsilon\]
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -84,7 +84,7 @@ This markup:
 
 ---------------------------------------------------------------------
 .Aligned
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{align*}
 2x^2 + 3(x-1)(x-2) & = 2x^2 + 3(x^2-3x+2) \\
@@ -98,7 +98,7 @@ Renders:
 
 .Unnumbered
 .Aligned
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{align*}
 2x^2 + 3(x-1)(x-2) & = 2x^2 + 3(x^2-3x+2) \\
@@ -111,7 +111,7 @@ This markup:
 
 ---------------------------------------------------------------------
 .Array
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{eqnarray}
 x & = & \frac{-7 \pm \sqrt{49 - 24}}{6} \\
@@ -123,7 +123,7 @@ x & = & \frac{-7 \pm \sqrt{49 - 24}}{6} \\
 Renders:
 
 .Array
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{eqnarray}
 x & = & \frac{-7 \pm \sqrt{49 - 24}}{6} \\
@@ -135,7 +135,7 @@ This markup:
 
 ---------------------------------------------------------------------
 .Array
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{eqnarray*}
 4r^2\int_0^{\pi/2} \cos^2 \theta\, d\theta
@@ -151,7 +151,7 @@ This markup:
 Renders:
 
 .Array
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{eqnarray*}
 4r^2\int_0^{\pi/2} \cos^2 \theta\, d\theta
@@ -167,7 +167,7 @@ This markup:
 
 ---------------------------------------------------------------------
 .List
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{enumerate}
 \item $\frac{da}{dx} = 0$
@@ -186,7 +186,7 @@ This markup:
 Renders:
 
 .List
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \begin{enumerate}
 \item $\frac{da}{dx} = 0$
@@ -205,7 +205,7 @@ This markup:
 
 ---------------------------------------------------------------------
 .Matrix
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \[ P^{e \rightarrow c}= \left[
   \begin{array}{*{3}{r@{}l}}
@@ -226,7 +226,7 @@ This markup:
 Renders:
 
 .Matrix
-[math]
+[latexmath]
 ++++++++++++++++++++++++++++++++++++++++++++
 \[ P^{e \rightarrow c}= \left[
   \begin{array}{*{3}{r@{}l}}

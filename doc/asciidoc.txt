@@ -1158,8 +1158,13 @@ pass::
   By default no substitutions are performed.
 
 cdata::
-  By default only attributes are substituted, the contents are
+  By default only attributes are substituted, the block contents are
   enveloped in an XML `CDATA` section.
+
+comment::
+  Inline and block. Only attributes are substituted, the block
+  contents are written to the output document in an XML `<!-- ... -->`
+  comment section.
 
 asciimath, latexmath::
   By default no substitutions are performed, the contents are rendered
@@ -2342,7 +2347,11 @@ pass::
 
 cdata::
   Inline and block. Only attributes are substituted. Text enveloped in
-  XML `CDATA` element.
+  XML `CDATA` section.
+
+comment::
+  Inline and block. Only attributes are substituted. Text is inserted
+  into the output document in an XML `<!-- ... -->` comment section.
 
 pi::
   Inline and block. Only attributes are substituted. Used to generate

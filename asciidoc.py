@@ -576,10 +576,9 @@ def filter_lines(filter_cmd, lines, dict={}):
         return lines
     # Perform attributes substitution on the filter command.
     s = subs_attrs(filter_cmd, dict)
-    s = s.strip()
     if not s:
-        raise EAsciiDoc,'undefined filter attribute: %s' % filter_cmd
-    filter_cmd = s
+        raise EAsciiDoc,'undefined filter attribute in command: %s' % filter_cmd
+    filter_cmd = s.strip()
     # Parse for quoted and unquoted command and command tail.
     # Double quoted.
     mo = re.match(r'^"(?P<cmd>[^"]+)"(?P<tail>.*)$', filter_cmd)
@@ -2102,6 +2101,7 @@ class Paragraph(AbstractBlock):
         body = reader.read_until(r'^\+$|^$|' + blocks.delimiter
                 + r'|' + tables.delimiter
                 + r'|' + tables_OLD.delimiter
+                + r'|' + AttributeList.pattern
         )
         body = [self.text] + list(body)
         presubs = self.parameters.presubs

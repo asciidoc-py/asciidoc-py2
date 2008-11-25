@@ -53,11 +53,10 @@ The first three terms factor to give
 
 [red]##asciimath:[x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)]##.
 
-Now we take square roots
-on both sides and get
-[red]##asciimath:[x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)]##.
-Finally we move the [red]##asciimath:[b/(2a)]## to the right and simplify to
-get the two solutions:
+Now we take square roots on both sides and get
+[red]##asciimath:[x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)]##.  Finally we
+move the [red]##asciimath:[b/(2a)]## to the right and simplify to get
+the two solutions:
 [red]*asciimath:[x_(1,2)=(-b+-sqrt(b^2-4ac))/(2a)]*.
 
 *********************************************************************

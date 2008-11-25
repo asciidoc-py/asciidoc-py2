@@ -1159,7 +1159,7 @@ pass::
 
 cdata::
   By default no substitutions are performed, the contents are
-  enveloped in an XML `CDATA` element.
+  enveloped in an XML `CDATA` section.
 
 asciimath, latexmath::
   By default no substitutions are performed, the contents are rendered

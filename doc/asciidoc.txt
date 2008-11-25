@@ -1158,7 +1158,7 @@ pass::
   By default no substitutions are performed.
 
 cdata::
-  By default no substitutions are performed, the contents are
+  By default only attributes are substituted, the contents are
   enveloped in an XML `CDATA` section.
 
 asciimath, latexmath::
@@ -2341,13 +2341,13 @@ pass::
   the pass:[<guimenu>Files</guimenu>] menu.
 
 cdata::
-  Inline and block. Passes text unmodified. Text enveloped in XML
-  `CDATA` element.
+  Inline and block. Only attributes are substituted. Text enveloped in
+  XML `CDATA` element.
 
 pi::
-  Inline and block. Passes text unmodified. Used to generate XML
-  processing instructions. Differs from other passthrough macros in
-  that the `<sublist>` contains a mandatory processing instruction
+  Inline and block. Only attributes are substituted. Used to generate
+  XML processing instructions. Differs from other passthrough macros
+  in that the `<sublist>` contains a mandatory processing instruction
   name (not a list of subs attributes). Useful for inserting DocBook
   XML Stylesheet processing instructions. Examples:
 

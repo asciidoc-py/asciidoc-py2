@@ -306,12 +306,6 @@ def parse_attributes(attrs,dict):
     dict: {'planet': 'earth', '0': '"hello",planet="earth"', '1': 'hello'}
     """
     def f(*args,**keywords):
-        # Create 'tagattrs' entry.
-        tagattrs = []
-        for k,v in keywords.iteritems():
-            tagattrs.append('%s="%s"' % (k,v))
-        if tagattrs:
-            keywords['tagattrs'] = ' '.join(tagattrs)
         # Name and add aguments '1','2'... to keywords.
         for i in range(len(args)):
             if not keywords.has_key(str(i+1)):

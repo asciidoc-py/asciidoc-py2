@@ -2355,14 +2355,11 @@ comment::
 
 pi::
   Inline and block. Only attributes are substituted. Used to generate
-  XML processing instructions. Differs from other passthrough macros
-  in that the `<sublist>` contains a mandatory processing instruction
-  name (not a list of subs attributes). Useful for inserting DocBook
-  XML Stylesheet processing instructions. Examples:
+  XML processing instructions.  Useful for inserting DocBook XML
+  Stylesheet processing instructions. Examples:
 
-
-  pi::dbhtml[toc="1"]
-  pi:dbtimestamp[format="Y-m-d H:M:S" padding="0"]
+  pi::[dbhtml toc="1"]
+  pi:[dbtimestamp format="Y-m-d H:M:S" padding="0"]
 
 math::
   Inline and block. Passes text unmodified.  Used for

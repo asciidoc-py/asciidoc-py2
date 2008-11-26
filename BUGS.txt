@@ -4,7 +4,7 @@ Bugs and Known Problems
 AsciiDoc
 --------
 - A benign warning 'with will become a reserved keyword
-  in Python 2.6' sometimes occurs when using Python 2.5-- it's
+  in Python 2.6' sometimes occurs when using Python 2.5 -- it's
   harmless and will disappear with Python 3.
 - The `toc` attribute will be ignored if it's set in a custom user or
   document configuration file. This is because the default

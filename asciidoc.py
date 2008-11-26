@@ -996,7 +996,9 @@ class Lex:
             return s
         result = s
         for o in options:
-            if o == 'specialcharacters':
+            if o == 'none':
+                return s
+            elif o == 'specialcharacters':
                 result = config.subs_specialchars(result)
             elif o == 'attributes':
                 result = subs_attrs(result)

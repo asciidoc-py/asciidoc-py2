@@ -1157,15 +1157,6 @@ following styles can be applied to passthrough blocks:
 pass::
   By default no substitutions are performed.
 
-cdata::
-  By default only attributes are substituted, the block contents are
-  enveloped in an XML `CDATA` section.
-
-comment::
-  Inline and block. Only attributes are substituted, the block
-  contents are written to the output document in an XML `<!-- ... -->`
-  comment section.
-
 asciimath, latexmath::
   By default no substitutions are performed, the contents are rendered
   as <<X78,mathematical formulas>>.
@@ -2344,22 +2335,6 @@ pass::
 
   Select pass:[<guimenuitem>Exit Emacs</guimenuitem>] from
   the pass:[<guimenu>Files</guimenu>] menu.
-
-cdata::
-  Inline and block. Only attributes are substituted. Text enveloped in
-  XML `CDATA` section.
-
-comment::
-  Inline and block. Only attributes are substituted. Text is inserted
-  into the output document in an XML `<!-- ... -->` comment section.
-
-pi::
-  Inline and block. Only attributes are substituted. Used to generate
-  XML processing instructions.  Useful for inserting DocBook XML
-  Stylesheet processing instructions. Examples:
-
-  pi::[dbhtml toc="1"]
-  pi:[dbtimestamp format="Y-m-d H:M:S" padding="0"]
 
 math::
   Inline and block. Passes text unmodified.  Used for

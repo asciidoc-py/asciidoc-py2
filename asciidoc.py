@@ -306,6 +306,12 @@ def parse_attributes(attrs,dict):
     dict: {'planet': 'earth', '0': '"hello",planet="earth"', '1': 'hello'}
     """
     def f(*args,**keywords):
+        # Create 'tagattrs' entry.
+        tagattrs = []
+        for k,v in keywords.iteritems():
+            tagattrs.append('%s="%s"' % (k,v))
+        if tagattrs:
+            keywords['tagattrs'] = ' '.join(tagattrs)
         # Name and add aguments '1','2'... to keywords.
         for i in range(len(args)):
             if not keywords.has_key(str(i+1)):
@@ -323,7 +329,6 @@ def parse_attributes(attrs,dict):
         for v in d.values():
             if not (isinstance(v,str) or isinstance(v,int) or isinstance(v,float) or v is None):
                 raise
-        dict.update(d)
     except:
         # Non-quoted attributes cannot contain double-quote characters, this
         # restriction catches most quoted attribute syntax errors.
@@ -339,7 +344,7 @@ def parse_attributes(attrs,dict):
             return  # If there's a syntax error leave with {0}=attrs.
         for k in d.keys():  # Drop any empty positional arguments.
             if d[k] == '': del d[k]
-        dict.update(d)
+    dict.update(d)
     assert len(d) > 0
 
 def parse_named_attributes(s,attrs):

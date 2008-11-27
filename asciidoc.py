@@ -1013,6 +1013,8 @@ class Lex:
                 result = macros.subs(result,callouts=True)
             else:
                 raise EAsciiDoc,'illegal substitution option: %s' % o
+            if not result:
+                break
         return result
     subs_1 = staticmethod(subs_1)
 

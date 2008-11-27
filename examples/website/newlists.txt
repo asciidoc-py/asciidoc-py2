@@ -1,9 +1,7 @@
 AsciiDoc New Lists
 ==================
 
-The 'new lists' changes were added to the trunk in September 2008 and
-will appear in a future release. Adventurous sorts can grab the trunk
-from http://hg.sharesource.org/asciidoc/.
+*New in version 8.3.0*
 
 Lists can now be styled like other block elements, this allows the
 normal bulleted and labeled list syntax to be used for 'glossary',

@@ -108,6 +108,9 @@ The following platform specific packages are available:
   distributions, they can be downloaded from
   http://dag.wieers.com/rpm/packages/asciidoc/.
 
+*CSW Package for Sun Solaris*::
+  Ben Walton has created a CSW package for AsciiDoc, you can find it
+  here: http://opencsw.org/packages/asciidoc.
 
 See also link:userguide.html#X38[Packager Notes] in the 'AsciiDoc User
 Guide'.

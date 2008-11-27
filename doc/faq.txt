@@ -135,6 +135,29 @@ the command that is failing and then try to run the command manually
 from the command-line.
 
 
+== Are there any DocBook viewers?
+
+http://live.gnome.org/Yelp[Yelp], the GNOME help viewer does a
+creditable job of displaying DocBook files XML files directly. Just
+run it from the command-line, for example:
+
+  $ yelp file://home/srackham/tmp/book.xml
+
+Note that you have to supply the full path name in URI format, this
+shell script makes interactive use easier:
+
+-------------------------------
+#!/bin/sh
+if [ -z "$1" ]; then
+    echo "usage: dbkview FILE"
+    exit 1
+fi
+yelp "file://$(pwd)/$1"
+-------------------------------
+
+This tip was submitted by Lionel Orry.
+
+
 == Can you create ODF documents using AsciiDoc?
 
 The easiest and highest fidelity methods I've seen is to generate

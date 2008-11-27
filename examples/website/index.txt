@@ -1,39 +1,30 @@
 AsciiDoc Home Page
 ==================
 
-.8 September 2008: New lists
-************************************************************************
-AsciiDoc 'new lists' is a unification and simplification of the
-existing list syntax and and internal rewrite.  It will debut
-officially in the next release.  link:newlists.html[Here is some more
-information about the upcoming changes].
-
-************************************************************************
-
-.25 August 2008: New tables
-************************************************************************
-AsciiDoc 'new tables' is a complete redesign of the tables syntax and
-generation. It's a huge improvement over the old tables and has been
-committed to the trunk. It will debut officially in the next release.
-link:newtables.html[Here are some new tables examples].
-
-************************************************************************
-
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-Useful additions include:
+This is a significant release containing major additions and changes.
+There are a few fairly minor backward compatibility issues, please
+read the link:CHANGELOG.html[Compatibility issues] section in the
+CHANGLOG before upgrading.
 
-- http://dblatex.sourceforge.net/[dblatex] is now fully supported by
-  a2x(1) and is the default a2x(1) PDF generator.
-- Added `dvi`, `ps` and `tex` output format options to a2x(1)
-  (courtesy of `dblatex(1)`).
-- URLs and email addresses are recognized without having to use the
-  macro syntax.
-- link:source-highlight-filter.html[Source code paragraphs] make small
-  code examples easier to enter.
+- AsciiDoc tables have been redesigned.  The link:newtables.html[new
+  syntax and features] are a huge improvement over the old tables. The
+  old tables syntax has been deprecated but is currently still
+  processed.
+- Lists can now be styled like other block elements. This allows a
+  single list syntax for 'glossary', 'qanda' (Question and Answer) and
+  'bibliography' lists instead of having to remember a different
+  syntax for each type.  link:newlists.html[Here is some more
+  information].
+- Inline passthroughs macros have been improved and block passthrough
+  macros added. Attribute substitution can be optionally specified
+  when the macro is called.
+- The passthrough block has a fully transparent paththrough delimited
+  block block style called 'pass'.
 
-Read the link:CHANGELOG.html[CHANGELOG] for a full description of all
-the other additions and changes.
+Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
+additions and changes.
 
 mailto:srackham@gmail.com['Stuart Rackham']
 ************************************************************************

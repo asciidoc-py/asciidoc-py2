@@ -2313,10 +2313,10 @@ section:
   template::[admonitionblock]
 
 .Template macro behavior
-- The `\template::[]` macro is useful for factoring configuration file
+- The `template::[]` macro is useful for factoring configuration file
   markup.
-- `\template::[]` macros cannot be nested.
-- `\template::[]` macro expansion is applied to all sections
+- `template::[]` macros cannot be nested.
+- `template::[]` macro expansion is applied to all sections
   after all configuration files have been read.
 
 
@@ -2331,12 +2331,13 @@ by the `<subslist>`.  The usual syntax is
 `<name>::<subslist>[<passtext>]` (for block macros).
 
 pass::
-  Inline and block. Passes text unmodified. Examples:
+  Inline and block. Passes text unmodified apart from explicitly
+  specified substitutions). Examples:
 
-  Select pass:[<guimenuitem>Exit Emacs</guimenuitem>] from
-  the pass:[<guimenu>Files</guimenu>] menu.
+  pass:[<q>To be or not to be</q>]
+  pass:attributes,quotes[<u>the '{author}'</u>]
 
-math::
+asciimath, latexmath::
   Inline and block. Passes text unmodified.  Used for
   <<X78,mathematical formulas>>.
 
@@ -4684,7 +4685,7 @@ to using style sheets.
 Closing Open Sections
 ~~~~~~~~~~~~~~~~~~~~~
 You can close off section tags up to level `N` by calling the
-`\eval::[Section.setlevel(N)]` system macro. This is useful if you
+`eval::[Section.setlevel(N)]` system macro. This is useful if you
 want to include a section composed of raw markup. The following
 example includes a DocBook glossary division at the top section level
 (level 0):

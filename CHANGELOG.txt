@@ -7,11 +7,11 @@ repository] for a full list of changes.
 Version 8.3.0 (2008-11-29)
 --------------------------
 .Additions and changes
-- AsciiDoc new tables is a complete redesign of the tables syntax and
-  generation. The new syntax and features are a huge improvement over
-  the old tables. The old tables syntax has been deprecated but is
-  currently still processed.
-- web:newlists.html[Lists] can now be styled like other block
+- web:newtables.html[AsciiDoc new tables] is a complete redesign of
+  the tables syntax and generation. The new syntax and features are a
+  huge improvement over the old tables. The old tables syntax has been
+  deprecated but is currently still processed.
+- web:newlists.html[Lists can now be styled] like other block
   elements. This allows a single list syntax for 'glossary', 'qanda'
   (Question and Answer) and 'bibliography' lists instead of having to
   remember a different syntax for each type.
@@ -26,6 +26,10 @@ Version 8.3.0 (2008-11-29)
   dependent) mechanism for rendering mathematical formulas. There are
   web:latexmath.pdf[LaTeX Math], web:asciimathml.html[AsciiMathML] and
   web:latexmathml.html[LaTeXMathML] examples on the AsciiDoc website.
+- Reimplemented and cleaned up filter processing based on a patch
+  submitted by Kelly Anderson.  Uses the newer subprocess module
+  instead of the deprecated popen2 module.  Now works in Win32 command
+  shell.
 - Addition FAQs, more documentation updates.
 - Arbitrary HTML/XML entities can be entered in AsciiDoc source.
 - Did away with the need for the `shaded-literallayout.patch` (thanks
@@ -40,9 +44,11 @@ Version 8.3.0 (2008-11-29)
   patch).
 - Title elements now process the 'options' attribute like other block
   elements.
-- Added single quote 'quoted' element.
-- The old tables syntax has been deprecated but is currently still
-  processed.
+- Added `single quoted' element.
+- Spaces on both sides of a -- em-dash are translated to thin space
+  characters.
+- Improved detection and reporting of malformed attribute lists.
+- The list 'compact' style is now a list option.
 - Added 'strong' labeled list option which makes the labels bold (HTML
   outputs only).
 - Dropped unsupported 'linuxdoc' backend.
@@ -64,8 +70,13 @@ Version 8.3.0 (2008-11-29)
   outputs.
 - Use `w3m(1)` as default `a2x(1)` text format generator (fallback to
   `lynx(1)`).
--  Changed callout formats in html4 and xhtml11 outputs to angle
-   brackets to match source highlighter rendering.
+- Changed callout formats in html4 and xhtml11 outputs to angle
+  brackets to match source highlighter rendering.
+- Macros now inject user defined `<optionname>-option` attributes into
+  markup.
+- Added IRC URLs to AsciiDoc inline macros.
+- Added `depth` attribute to `include::[]` system macro.
+- Added 'footnoteref' inline macro.
 
 .Bug fixes
 - Escaped quote skipped over leading and trailing quote instead of
@@ -96,6 +107,18 @@ Version 8.3.0 (2008-11-29)
   filter command.
 - AttributeList block can now follow a paragraph without intervening
   blank line.
+- The include macro tabsize attribute is no longer propagated to
+  nested includes.
+
+.Omissions
+The following features were implemented but then but removed from this
+release:
+
+- Single quotes (monospaced quoting compatibility problems).
+- 'pi', 'cdata' and 'comment' passthrough macros and passthrough block
+  styles (creeping featurism, use 'pass' macros instead).
+- Generic 'tag' inline macro (creeping featurism, use 'pass' macros
+  instead).
 
 
 Compatibility issues
@@ -110,7 +133,7 @@ files you may need to update them to use them with this release:
 - You have to explicitly precede horizontal style labeled lists with
   the `[horizontal]` style attribute -- existing horizontal labeled
   lists will be rendered vertically.
-- The list 'compact' style is now a list option.
+- The list 'compact' style has been dropped and is now a list option.
 - AsciiDoc version 6 sytnax no longer supported.
 - Linuxdoc finally been removed from the distribution.
 - The unsupported experimental 'latex' backend has not been tested on

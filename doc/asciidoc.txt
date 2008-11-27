@@ -4057,19 +4057,21 @@ it's much to simplistic to be passed off as a code syntax highlighter.
 If you want a full featured multi-language highlighter use the
 <<X57,Source Code Highlighter Filter>>.
 
-  .Code filter example
-  [code,python]
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ''' A multi-line
-      comment.'''
-  def sub_word(mo):
-      ''' Single line comment.'''
-      word = mo.group('word')   # Inline comment
-      if word in keywords[language]:
-          return quote + word + quote
-      else:
-          return word
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------------------------
+.Code filter example
+[code,python]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+''' A multi-line
+    comment.'''
+def sub_word(mo):
+    ''' Single line comment.'''
+    word = mo.group('word')   # Inline comment
+    if word in keywords[language]:
+        return quote + word + quote
+    else:
+        return word
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------------------------
 
 Outputs:
 

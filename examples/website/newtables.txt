@@ -1,6 +1,7 @@
 AsciiDoc New tables
 ===================
 
+*New in version 8.3.0*
 
 I've finally come up with a 'new tables' syntax that I'm happy with
 and can at last remove this footnote from the 'User Guide': ``The
@@ -9,20 +10,11 @@ hopefully a more usable syntax will appear in future versions of
 AsciiDoc.''
 
 At first glance it doesn't look much different to the old syntax but
-it's a lot more flexible, easy to enter and supports a lot of column
+it's a lot more flexible, easier to enter and supports a lot of column
 styles (for example the 'asciidoc' style supports AsciiDoc block and
-inline elements).
-
-Here are some examples of AsciiDoc 'new tables'. The new tables syntax
-was added to the trunk in September 2008 and will appear in a future
-release. Adventurous sorts can grab the trunk from
-http://hg.sharesource.org/asciidoc/.
-
-New tables are documented in the AsciiDoc 'User Guide' in the trunk
-(`./doc/asciidoc.txt`).
-
-The old tables syntax has been deprecated but is currently still
-processed.
+inline elements).  The old tables syntax has been deprecated but is
+currently still processed.  Here are some examples of AsciiDoc 'new
+tables':
 
 Simple table
 ------------

@@ -22,6 +22,12 @@ CHANGLOG before upgrading.
   when the macro is called.
 - The passthrough block has a fully transparent paththrough delimited
   block block style called 'pass'.
+- The 'asciimath' and 'latexmath' web:userguide.html#X77[passthrough
+  macros] along with 'asciimath' and 'latexmath'
+  web:userguide.html#X76[passthrough blocks] provide a (backend
+  dependent) mechanism for rendering mathematical formulas. There are
+  web:latexmath.pdf[LaTeX Math], web:asciimathml.html[AsciiMathML] and
+  web:latexmathml.html[LaTeXMathML] examples on the AsciiDoc website.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions and changes.

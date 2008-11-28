@@ -102,7 +102,7 @@ There are three types of AsciiDoc documents: article, book and
 manpage. All document types share the same AsciiDoc format with some
 minor variations.
 
-Use the asciidoc(1) `-d` (`--doctype`) option to specify the AsciiDoc
+Use the asciidoc(1) `-d` (`\--doctype`) option to specify the AsciiDoc
 document type -- the default document type is 'article'.
 
 By convention the `.txt` file extension is used for AsciiDoc document
@@ -148,7 +148,7 @@ the AsciiDoc distribution.
 AsciiDoc Backends
 -----------------
 The asciidoc(1) command translates an AsciiDoc formatted file to the
-backend format specified by the `-b` (`--backend`) command-line
+backend format specified by the `-b` (`\--backend`) command-line
 option. asciidoc(1) itself has little intrinsic knowledge of backend
 formats, all translation rules are contained in customizable cascading
 configuration files.
@@ -167,9 +167,9 @@ toolchain) for <<X12,converting DocBook files>> to presentation
 formats such as Postscript, HTML, PDF, DVI, PostScript, LaTeX, roff
 (the native man page format), HTMLHelp, JavaHelp and text.
 
-- The `--backend=docbook` command-line option produces DocBook XML.
+- The `\--backend=docbook` command-line option produces DocBook XML.
   You can produce the older DocBook SGML format using the
-  `--attribute sgml` command-line option.
+  `\--attribute sgml` command-line option.
 - Use the optional <<X54,`encoding`>> attribute to set the character
   set encoding.
 - Use the optional `imagesdir` attribute to prepend to the target file
@@ -263,7 +263,7 @@ output document not the source document.
 [[X54]]
 encoding::
   Set the input and output document character set encoding. For
-  example the `--attribute encoding=ISO-8859-1` command-line option
+  example the `\--attribute encoding=ISO-8859-1` command-line option
   will set the character set encoding to `ISO-8859-1`.
 
   - The default encoding is UTF-8.
@@ -296,7 +296,7 @@ omissions and errors that the `xhtml11-quirks.css` stylesheet and
 `xhtml11-quirks.conf` configuration files are included during XHTML
 backend processing to to implement workarounds for IE6. If you don't
 use IE6 then the quirks stylesheet and configuration files can be
-omitted using the `--attribute quirks!` command-line option.
+omitted using the `\--attribute quirks!` command-line option.
 =====================================================================
 
 Default 'xhtml11' stylesheets:
@@ -421,7 +421,7 @@ Here's an example AsciiDoc document header:
 
 You can override or set header parameters by passing 'revision',
 'data', 'email', 'author', 'authorinitials', 'firstname' and
-'lastname' attributes using the asciidoc(1) `-a` (`--attribute`)
+'lastname' attributes using the asciidoc(1) `-a` (`\--attribute`)
 command-line option. For example:
 
   $ asciidoc -a date=2004/07/27 article.txt
@@ -446,7 +446,7 @@ searches for special section titles in the <<X16,`[specialsections]`>>
 configuration entries, if not found it uses the `[sect<level>]`
 template.
 
-The `-n` (`--section-numbers`) command-line option auto-numbers HTML
+The `-n` (`\--section-numbers`) command-line option auto-numbers HTML
 outputs (DocBook line numbering is handled automatically by the
 DocBook toolchain commands).
 
@@ -603,7 +603,8 @@ _Emphasized text_::
 
 +Monospaced text+::
         Word phrases \`enclosed in backtick characters` (grave
-        accents) or \+plus characters+ are rendered in a monospaced font.
+        accents) or \+plus characters+ are rendered in a monospaced
+        font.
 
 `Single quoted text'::
         Phrases enclosed with a \`single grave accent to the left and
@@ -611,7 +612,7 @@ _Emphasized text_::
         quotation marks.
 
 ``Double quoted text''::
-        Phrases enclosed with \`\`two grave accents to the left and
+        Phrases enclosed with \\``two grave accents to the left and
         two acute accents to the right'' are rendered in quotation
         marks.
 
@@ -970,8 +971,8 @@ Admonition Icons and Captions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 NOTE: Admonition customization with `icons`, `iconsdir`, `icon` and
 `caption` attributes does not apply when generating DocBook output. If
-you are going the DocBook route then the <<X43,a2x(1)>> `--no-icons`
-and `--icons-dir` options can be used to set the appropriate XSL
+you are going the DocBook route then the <<X43,a2x(1)>> `\--no-icons`
+and `\--icons-dir` options can be used to set the appropriate XSL
 Stylesheets parameters.
 
 By default the asciidoc(1) `xhtml11` and `html4` backends generate
@@ -1050,14 +1051,16 @@ often used for code and file listings.
 
 Here's an example:
 
-  --------------------------------------
-  #include <stdio.h>
+---------------------------------------
+ --------------------------------------
+ #include <stdio.h>
 
   int main() {
-      printf("Hello World!\n");
-      exit(0);
-  }
-  --------------------------------------
+     printf("Hello World!\n");
+     exit(0);
+ }
+ --------------------------------------
+---------------------------------------
 
 Which will be rendered like:
 
@@ -1836,7 +1839,7 @@ Which renders:
   callout mark.
 
 NOTE: To include callout icons in PDF files generated by
-<<X43,a2x(1)>> you need to use the `--icons` command-line option.
+<<X43,a2x(1)>> you need to use the `\--icons` command-line option.
 
 Implementation Notes
 ~~~~~~~~~~~~~~~~~~~~
@@ -2152,7 +2155,7 @@ documents with embedded images and CSS, for example:
 
   $ asciidoc --unsafe -a data-uri mydocument.txt
 
-You will need to specify the `--unsafe` option because the AsciiDoc
+You will need to specify the `\--unsafe` option because the AsciiDoc
 `data-uri` is implemented using the `\{sys}` attribute.
 
 NOTE: Internet Explorer up to version 7 does not support 'data: URIs',
@@ -2341,7 +2344,7 @@ asciimath, latexmath::
   Inline and block. Passes text unmodified.  Used for
   <<X78,mathematical formulas>>.
 
-\+\++::
+\+++::
   Inline and block. The triple-plus passthrough is functionally
   identical to the 'pass' macro but you don't have to escape `]`
   characters and you can prefix with quoted attributes in the inline
@@ -2755,7 +2758,7 @@ Columns containing nested tables must use the 'asciidoc' style. An
 example can be found in `./examples/website/newtables.txt`.
 
 NOTE: When generating PDF nested tables using `a2x(1)` you will need
-to use the `--no-xmllint` option. This is because the nested tables
+to use the `\--no-xmllint` option. This is because the nested tables
 are not legal in DocBook (you have to use the DocBook 4 'entrytbl'
 element). But both 'dblatex' (as of version 0.28) and 'FOP' (as of
 version 0.95beta) will process nested DocBook tables, but not
@@ -2944,7 +2947,7 @@ the sections and entries that differ from the default configuration.
 TIP: The best way to learn about configuration files is to read the
 default configuration files in the AsciiDoc distribution in
 conjunction with asciidoc(1) output files. You can view configuration
-file load sequence by turning on the asciidoc(1) `-v` (`--verbose`)
+file load sequence by turning on the asciidoc(1) `-v` (`\--verbose`)
 command-line option.
 
 AsciiDoc reserves the following section names for specific purposes:
@@ -3031,7 +3034,7 @@ pagewidth, pageunits::
         <<X4,Table Configuration File Definitions>> sub-section.
 
 NOTE: `[miscellaneous]` configuration file entries can be set using
-the asciidoc(1) `-a` (`--attribute`) command-line option.
+the asciidoc(1) `-a` (`\--attribute`) command-line option.
 
 Titles section
 ~~~~~~~~~~~~~~
@@ -3085,7 +3088,7 @@ If the attribute value requires leading or trailing spaces then the
 text text should be enclosed in quotation mark (") characters.
 
 To delete a attribute insert a name only entry in a downstream
-configuration file or use the asciidoc(1) `--attribute name!`
+configuration file or use the asciidoc(1) `\--attribute name!`
 command-line option (the attribute name is suffixed with a ! character
 to delete it).
 
@@ -3242,13 +3245,14 @@ Configuration File Names and Locations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configuration files have a `.conf` file name extension; they are
 loaded implicitly (using predefined file names and locations) or
-explicitly (using the asciidoc(1) `-f` (`--conf-file`) command-line
+explicitly (using the asciidoc(1) `-f` (`\--conf-file`) command-line
 option).
 
 Implicit configuration files are loaded from the following directories
 in the following order:
 
-1. The `/etc/asciidoc` directory (if it exists).
+1. The global configuration directory (normally `/etc/asciidoc` or
+   `/usr/local/etc/asciidoc`) if it exists.
 2. The directory containing the asciidoc executable.
 3. The user's `$HOME/.asciidoc` directory (if it exists).
 4. The directory containing the AsciiDoc source file.
@@ -3262,21 +3266,21 @@ locations are loaded in the following order:
 4. `lang-<lang>.conf`
 
 Where `<backend>` and `<doctype>` are values specified by the
-asciidoc(1) `-b` (`--backend`) and `-d` (`--doctype`) command-line
+asciidoc(1) `-b` (`\--backend`) and `-d` (`\--doctype`) command-line
 options. `<lang>` is the value of the AsciiDoc `lang` attribute
 (defaults to `en` (English)).
 
 Finally, configuration files named like the source file will be
 automatically loaded if they are found in the source file directory.
 For example if the source file is `mydoc.txt` and the
-`--backend=html4` option is used then asciidoc(1) will look for
+`\--backend=html4` option is used then asciidoc(1) will look for
 `mydoc.conf` and `mydoc-html4.conf` in that order.
 
 Implicit configuration files that don't exist will be silently
 skipped.
 
 The user can explicitly specify additional configuration files using
-the asciidoc(1) `-f` (`--conf-file`) command-line option.  The `-f`
+the asciidoc(1) `-f` (`\--conf-file`) command-line option.  The `-f`
 option can be specified multiple times, in which case configuration
 files will be processed in the order they appear on the command-line.
 
@@ -3315,7 +3319,7 @@ order:
 
    extra.conf
 
-TIP: Use the asciidoc(1) `-v` (`--verbose`) command-line option to see
+TIP: Use the asciidoc(1) `-v` (`\--verbose`) command-line option to see
 which configuration files are loaded and the order in which they are
 loaded.
 
@@ -4147,7 +4151,7 @@ example forces FOP to be used:
 
 See the `a2x(1)` man page for details.
 
-TIP: Use the `--verbose` command-line option to view executed
+TIP: Use the `\--verbose` command-line option to view executed
 toolchain commands.
 
 HTML generation
@@ -4462,7 +4466,7 @@ autocmd BufRead,BufNewFile *.txt,README,TODO,CHANGELOG,NOTES
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
-- The asciidoc(1) `-v` (`--verbose`) command-line option displays the
+- The asciidoc(1) `-v` (`\--verbose`) command-line option displays the
   order of configuration file loading and warns of potential
   configuration file problems.
 - Not all valid AsciiDoc documents produce valid backend markup. Read
@@ -4563,7 +4567,7 @@ section titles are pushed down one level.
 
   $ asciidoc --conf-file=combined.conf combined.txt
 
-Actually the `--conf-file` option is unnecessary as asciidoc(1)
+Actually the `\--conf-file` option is unnecessary as asciidoc(1)
 automatically looks for a same-named `.conf` file.
 
 - The combined document title uses the newly defined level 0 underline
@@ -4619,7 +4623,7 @@ through it. For example:
   $ echo 'Hello *World!*' | asciidoc -s -
   <div class="para"><p>Hello <strong>World!</strong></p></div>
 
-The `-s` (`--no-header-footer`) command-line option suppresses header
+The `-s` (`\--no-header-footer`) command-line option suppresses header
 and footer output and is useful if the processed output is to be
 included in another file.
 
@@ -4658,7 +4662,7 @@ major problem: unless your configuration files are the same as the
 creator's you won't get the same output.
 
 The solution is to create a single backend specific configuration file
-using the asciidoc(1) `-c` (`--dump-conf`) command-line option. You
+using the asciidoc(1) `-c` (`\--dump-conf`) command-line option. You
 then ship this file along with the AsciiDoc source document plus the
 `asciidoc.py` script. The only end user requirement is that they have
 Python installed (and of course that they consider you a trusted
@@ -4673,7 +4677,7 @@ regenerate the HMTL output:
 
   $ ./asciidoc.py -eb xhtml11 mydoc.txt
 
-The `-e` (`--no-conf`) option excludes the use of implicit
+The `-e` (`\--no-conf`) option excludes the use of implicit
 configuration files, ensuring that only entries from the
 `mydoc-html.conf` configuration are used.
 
@@ -4718,10 +4722,10 @@ formed and valid. Here are some examples:
   $ xmllint --nonet --noout --valid xhtml11-file.html
   $ xmllint --nonet --noout --valid --html html4-file.html
 
-The `--valid` option checks the file is valid against the document
+The `\--valid` option checks the file is valid against the document
 type's DTD, if the DTD is not installed in your system's catalog then
 it will be fetched from its Internet location. If you omit the
-`--valid` option the document will only be checked that it is well
+`\--valid` option the document will only be checked that it is well
 formed.
 
 
@@ -4811,7 +4815,7 @@ source files by inhibiting the execution of arbitrary code or the
 inclusion of arbitrary files.
 
 The safe mode is enabled by default and can only be disabled using the
-asciidoc(1) `--unsafe` command-line option.
+asciidoc(1) `\--unsafe` command-line option.
 
 .Safe mode constraints
 - `eval`, `sys` and `sys2` executable attributes and block macros are

@@ -77,6 +77,10 @@ Version 8.3.0 (2008-11-29)
 - Added IRC URLs to AsciiDoc inline macros.
 - Added `depth` attribute to `include::[]` system macro.
 - Added 'footnoteref' inline macro.
+- Added 'stylesheet' XHTML attribute to specify additional custom CSS
+  stylesheet.
+- If a paragraph style is specified it will be added to the XHTML
+  'class' attribute and DocBook 'role' attribute.
 
 .Bug fixes
 - Escaped quote skipped over leading and trailing quote instead of
@@ -114,7 +118,6 @@ Version 8.3.0 (2008-11-29)
 The following features were implemented but then but removed from this
 release:
 
-- Single quotes (monospaced quoting compatibility problems).
 - 'pi', 'cdata' and 'comment' passthrough macros and passthrough block
   styles (creeping featurism, use 'pass' macros instead).
 - Generic 'tag' inline macro (creeping featurism, use 'pass' macros
@@ -138,6 +141,8 @@ files you may need to update them to use them with this release:
 - Linuxdoc finally been removed from the distribution.
 - The unsupported experimental 'latex' backend has not been tested on
   this release.
+- The introduction of single-quote quoting requires that double-quote
+  quoting is escaped with two backslashes.
 
 
 Version 8.2.7 (2008-07-04)

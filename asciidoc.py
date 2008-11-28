@@ -419,7 +419,10 @@ def subs_quotes(text):
             mo = reo.search(text,pos)
             if not mo: break
             if text[mo.start()] == '\\':
-                pos += 1 # Skip over backslash.
+                # Delete leading backslash.
+                text = text[:mo.start()] + text[mo.start()+1:]
+                # Skip past start of match.
+                pos = mo.start() + 1
             else:
                 attrlist = {}
                 parse_attributes(mo.group('attrlist'), attrlist)
@@ -427,10 +430,6 @@ def subs_quotes(text):
                 s = mo.group(1) + stag + mo.group('content') + etag
                 text = text[:mo.start()] + s + text[mo.end():]
                 pos = mo.start() + len(s)
-        # Unescape escaped quotes.
-        text = text.replace('\\'+lq, lq)
-        if lq != rq:
-            text = text.replace('\\'+rq, rq)
     return text
 
 def subs_tag(tag,dict={}):

@@ -70,9 +70,8 @@ image:images/tiger.png[]
 == Some elements can't be escaped with a single backslash
 
 There are a number of  exceptions to the usual single backslash rule
--- mostly relating to URL macros that  have two syntaxes.
-Here are
-some non-standard escape examples:
+-- mostly relating to URL macros that  have two syntaxes or quoting
+ambiguity.  Here are some non-standard escape examples:
 
 [cols="1default,4literal",width="70%",grid="none",frame="none"]
 |====================================================================
@@ -87,14 +86,15 @@ some non-standard escape examples:
 \\http://www.foobar.com[Foobar Limited]
 
 |Other |
-\+\++
 A C+\+ Library for C++
+A C+\+ Library for C+\+ \+++
+\\``double-quotes''
 |====================================================================
 
 The source of this problem is ambiguity across substitution types --
 the first match unescapes allowing the second to substitute. A
-work-around for impossible cases is to side-step the problem using the
-`\pass:[]` passthrough macro.
+work-around for difficult cases is to side-step the problem using the
+`\pass:[]` passthrough inline macro.
 
 NOTE: System macros cannot be escaped.
 

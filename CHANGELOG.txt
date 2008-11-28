@@ -81,6 +81,8 @@ Version 8.3.0 (2008-11-29)
   stylesheet.
 - If a paragraph style is specified it will be added to the XHTML
   'class' attribute and DocBook 'role' attribute.
+- Replacements can be set in a document using the reserved
+  AttributeEntry name 'replacement'.
 
 .Bug fixes
 - Escaped quote skipped over leading and trailing quote instead of

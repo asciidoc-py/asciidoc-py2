@@ -3398,8 +3398,13 @@ To delete (undefine) an attribute use the following syntax:
   markup template substitution.
 - Attribute elements override configuration file and intrinsic
   attributes but do not override command-line attributes.
+- The reserved attribute name 'replacement' does not set an attribute
+  instead it sets a replacement. The entry value is formatted the same
+  as a <<X10,replacements configuration file entry>>. For example:
 
-Here's another example:
+  :replacement: \bweb:=http://www.methods.co.nz/asciidoc/
+
+Here are some more attribute entry examples:
 
 ---------------------------------------------------------------------
 AsciiDoc User Manual

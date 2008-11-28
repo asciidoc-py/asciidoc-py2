@@ -1390,19 +1390,29 @@ class AttributeEntry:
         assert Lex.next() is AttributeEntry
         attr = AttributeEntry   # Alias for brevity.
         reader.read()   # Discard attribute from reader.
-        # Don't override command-line attributes.
-        if config.cmd_attrs.has_key(attr.name):
-            return
-        # Update document.attributes from previously parsed attribute.
-        if attr.name == 'attributeentry-subs':
-            AttributeEntry.subs = None  # Force update in isnext().
-        elif attr.value:
-            attr.value = Lex.subs((attr.value,), attr.subs)
-            attr.value = writer.newline.join(attr.value)
-        if attr.value is not None:
-            document.attributes[attr.name] = attr.value
-        elif document.attributes.has_key(attr.name):
-            del document.attributes[attr.name]
+        if attr.name == 'replacement': # Special name to define replacements.
+            entry = parse_entry(attr.value)
+            if entry is None:
+                warning('illegal replacement: %s' % attr.value)
+            else:
+                pat,rep = entry
+                if not config.set_replacement(pat, rep, config.replacements):
+                    warning('replacement has illegal regular expression: %s'
+                        % attr.value)
+        else:
+            # Don't override command-line attributes.
+            if config.cmd_attrs.has_key(attr.name):
+                return
+            # Update document.attributes from previously parsed attribute.
+            if attr.name == 'attributeentry-subs':
+                AttributeEntry.subs = None  # Force update in isnext().
+            elif attr.value:
+                attr.value = Lex.subs((attr.value,), attr.subs)
+                attr.value = writer.newline.join(attr.value)
+            if attr.value is not None:
+                document.attributes[attr.name] = attr.value
+            elif document.attributes.has_key(attr.name):
+                del document.attributes[attr.name]
     translate = staticmethod(translate)
     def translate_all():
         """ Process all contiguous attribute lines on reader."""
@@ -4004,19 +4014,25 @@ class Config:
 
     def parse_replacements(self,sect='replacements'):
         """Parse replacements section into self.replacements dictionary."""
-        replacements = getattr(self,sect)
         d = OrderedDict()
         parse_entries(self.sections.get(sect,()), d, unquote=True)
         for pat,rep in d.items():
-            pat = strip_quotes(pat)
-            if not is_regexp(pat):
+            if not self.set_replacement(pat, rep, getattr(self,sect)):
                 raise EAsciiDoc,'[%s] entry in %s is not a valid' \
                     ' regular expression: %s' % (sect,self.fname,pat)
-            if rep is None:
-                if replacements.has_key(pat):
-                    del replacements[pat]
-            else:
-                replacements[pat] = strip_quotes(rep)
+
+    def set_replacement(pat, rep, replacements):
+        """Add pattern and replacement to replacements dictionary."""
+        pat = strip_quotes(pat)
+        if not is_regexp(pat):
+            return False
+        if rep is None:
+            if replacements.has_key(pat):
+                del replacements[pat]
+        else:
+            replacements[pat] = strip_quotes(rep)
+        return True
+    set_replacement = staticmethod(set_replacement)
 
     def subs_replacements(self,s,sect='replacements'):
         """Substitute patterns from self.replacements in 's'."""

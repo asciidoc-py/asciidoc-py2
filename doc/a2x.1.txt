@@ -170,7 +170,10 @@ dblatex (for PDF, DVI, PostScript and LaTeX file generation)::
 FOP (alternative PDF file generation)::
   http://xmlgraphics.apache.org/fop/
 
-Lynx (for text file generation)::
+w3m (text file generation)::
+  http://w3m.sourceforge.net/index.en.html
+
+Lynx (used for text file generation if `w3m(1)` not installed)::
   http://lynx.isc.org/
 
 See also the latest README file.

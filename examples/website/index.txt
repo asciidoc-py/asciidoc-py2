@@ -20,7 +20,7 @@ CHANGLOG before upgrading.
 - Inline passthroughs macros have been improved and block passthrough
   macros added. Attribute substitution can be optionally specified
   when the macro is called.
-- The passthrough block has a fully transparent paththrough delimited
+- The passthrough block has a fully transparent passthrough delimited
   block block style called 'pass'.
 - The 'asciimath' and 'latexmath' web:userguide.html#X77[passthrough
   macros] along with 'asciimath' and 'latexmath'

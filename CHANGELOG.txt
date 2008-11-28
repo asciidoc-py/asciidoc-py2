@@ -1,8 +1,7 @@
 AsciiDoc ChangeLog
 ==================
 
-See the http://hg.sharesource.org/asciidoc/shortlog[AsciiDoc Mercurial
-repository] for a full list of changes.
+:replacement: \bweb:=http://www.methods.co.nz/asciidoc/
 
 Version 8.3.0 (2008-11-29)
 --------------------------
@@ -18,7 +17,7 @@ Version 8.3.0 (2008-11-29)
 - Inline passthroughs macros have been improved and block passthrough
   macros added. Attribute substitution can be optionally specified
   when the macro is called.
-- The passthrough block has a fully transparent paththrough delimited
+- The passthrough block has a fully transparent passthrough delimited
   block block style called 'pass'.
 - The 'asciimath' and 'latexmath' web:userguide.html#X77[passthrough
   macros] along with 'asciimath' and 'latexmath'

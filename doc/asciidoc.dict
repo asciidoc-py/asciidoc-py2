@@ -1,7 +1,7 @@
-personal_ws-1.1 en 705 
+personal_ws-1.1 en 717 
 Sturmer
-Kléber
 Kleber
+Kléber
 quis
 auctor
 linkcss
@@ -12,9 +12,10 @@ BOLID
 callouts
 bulleted
 starttags
-ListingBlock
 listingblock
+ListingBlock
 eval
+ListLabel
 asc
 https
 endif
@@ -50,8 +51,8 @@ aliquam
 pagebreak
 munere
 startup
-listcontinuation
 ListContinuation
+listcontinuation
 consectetuer
 Magnocavallo
 defacto
@@ -86,6 +87,7 @@ amet
 tabstop
 csv
 Yakshin's
+ListTerm
 stylesheets
 pageunits
 LaTeX
@@ -93,9 +95,10 @@ citetitle
 emphasizedwords
 BlockTitle
 blocktitle
-CVS
 DTD
+CVS
 valign
+ListEntry
 Ashworth
 Bowlin
 latin
@@ -118,8 +121,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-middlename
 MiddleName
+middlename
 subdirectories
 footnoteref
 passtext
@@ -139,8 +142,8 @@ entrytbl
 Ghostscript
 verear
 Buenos
-LinuxDoc
 linuxdoc
+LinuxDoc
 PostScript
 hhp
 Pretium
@@ -152,8 +155,8 @@ fermentum
 ListingBlocks
 GPL
 hsides
-Bólido
 Bolido
+Bólido
 footrow
 misspelt
 WINNT
@@ -165,8 +168,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-verbatimblock
 VerbatimBlock
+verbatimblock
 shiftwidth
 misevaluations
 asciidocEmphasized
@@ -177,6 +180,7 @@ gui
 Blondel
 ile
 Bazon
+subprocess
 bodyrows
 TODO
 mailto
@@ -189,8 +193,8 @@ docname
 BLAUS
 Daly
 arcu
-PDFs
 PDF's
+PDFs
 jim
 MSIE
 eval's
@@ -304,6 +308,7 @@ latexmath
 odt
 VMiklos's
 ltr
+newtables
 namespace
 tzname
 pdf
@@ -316,8 +321,10 @@ Fusce
 PassthroughBlocks
 testblock
 infty
+Woodall
 Firefox
 userguide
+Knisley
 FilterBlocks
 posattrs
 listdef
@@ -329,6 +336,7 @@ preconfigured
 Cerrito
 Bouchers
 JavaScript
+newlists
 guimenu
 ListParagraphs
 bodydata
@@ -358,6 +366,7 @@ Rackham
 autoindent
 colspec
 ifndef
+popen
 Wieers
 XSLTLib
 pre
@@ -410,6 +419,7 @@ callout
 toclevels
 eget
 ispum
+Maier
 http
 Greaves
 debian
@@ -432,8 +442,8 @@ WINA
 fringilla
 retab
 BackendBlocks
-ChangeLog
 changelog
+ChangeLog
 tis
 Ubuntu
 sectids
@@ -451,8 +461,8 @@ Vasilev
 crlf
 vel
 localtime
-BlockMacro
 blockmacro
+BlockMacro
 Xandros
 groff
 POSIX
@@ -495,8 +505,8 @@ dbtimestamp
 txt
 BlockId
 passthrough
-Berguvsvägen
 Berguvsvagen
+Berguvsvägen
 noincsearch
 TableRow
 inlinemediaobject
@@ -544,9 +554,9 @@ Redhat
 cb
 tuple
 cd
-asciimathml
-AsciiMathML
 ASCIIMathML
+AsciiMathML
+asciimathml
 arounds
 filename
 mansource
@@ -562,8 +572,8 @@ scaledwidth
 cp
 xsl
 fb
-DocBook
 docbook
+DocBook
 stylesheet
 pagefile
 superscripted
@@ -581,8 +591,8 @@ fprintf
 colabswidth
 tabsize
 smallnew
-BlockTitles
 blocktitles
+BlockTitles
 localdate
 bodyrow
 hs
@@ -617,6 +627,7 @@ ly
 mv
 QuoteBlock
 nochunks
+MathML
 SidebarBlock
 topbot
 sectnum
@@ -631,8 +642,8 @@ permalink
 td
 py
 AROUT
-literalblock
 LiteralBlock
+literalblock
 sgml
 biggy
 softtabstop
@@ -648,11 +659,12 @@ tt
 blandit
 inline
 Martín
-SectionBody
 sectionbody
+SectionBody
 VM
 conformant
 listchars
+wj
 refentry
 guimenuitem
 adipiscing
@@ -690,8 +702,8 @@ nbsp
 qanda
 noout
 massa
-AsciiDoc
 asciidoc
+AsciiDoc
 manmanual
 TableBody
 realpath

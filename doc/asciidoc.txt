@@ -2909,7 +2909,7 @@ website] or the distributed `doc/latexmathml.txt` file.
 There are more examples on the
 http://www.methods.co.nz/asciidoc/[AsciiDoc website].
 
-NOTE: Athought both use the same named 'latexmath' macro 'LaTeXMathML'
+NOTE: Although both use the same named 'latexmath' macro 'LaTeXMathML'
 is not the same as 'LaTeX Math'. 'LaTeXMathML' is very much a subset
 of 'LaTeX Math' and applies to XHTML documents; 'LaTeX Math' applies
 to DocBook output processed by <<X31,dblatex>> and is normally used to
@@ -2918,7 +2918,7 @@ generate PDF files.
 MathML
 ~~~~~~
 http://www.w3.org/Math/[MathML] is a low level XML markup for
-mathematics. AsciiDoc has no macros for MathML but users familar with
+mathematics. AsciiDoc has no macros for MathML but users familiar with
 this markup could use passthrough macros and passthrough blocks to
 include MathML in output documents.
 
@@ -4158,7 +4158,7 @@ example uses `dblatex(1)` (the default PDF generator) the second
 example forces FOP to be used:
 
   $ a2x -f pdf doc/source-highlight-filter.txt
-  $ a2x -f pdf --fop-options="" doc/source-highlight-filter.txt
+  $ a2x -f pdf --fop doc/source-highlight-filter.txt
 
 See the `a2x(1)` man page for details.
 

@@ -4,16 +4,6 @@ AsciiDoc Frequently Asked Questions
 An embryonic AsciiDoc FAQ.
 
 
-== How can a replacement have a trailing backslash?
-Quote the entry name -- this nonsensical example replaces `\x` with
-`y`:
-
-  "x\"=y
-
-If quoting were omitted the equals character (separating the
-entry name `x` from the value `y`) would be escaped.
-
-
 == How can I render indented paragraphs?
 
 To unconditionally indent all paragraphs add the following line to the
@@ -65,6 +55,34 @@ pixels.
 
 image:images/tiger.png[]
 ---------------------------------------------------------------------
+
+
+== How can I place a backslash character in front of an attribute reference without escaping the reference?
+
+Use the predefined `\{backslash}` attribute reference instead of an
+actual backslash, for example if the `\{projectname}` attribute has
+the value `foobar` then:
+
+  d:\data{backslash}{projectname}
+
+would be rendered as:
+
+  d:\data\foobar
+
+== How can I escape AsciiDoc markup?
+
+Most AsciiDoc inline elements can be suppressed by preceding them with
+a backslash character. These elements include:
+
+- Attribute references.
+- Text formatting.
+- Quoting,
+- 'URLs', 'image' and 'link' macros.
+- Replacements.
+- Special words.
+- Table cell separators.
+
+But there are exceptions -- see the next question.
 
 
 == Some elements can't be escaped with a single backslash
@@ -137,7 +155,7 @@ from the command-line.
 
 == Are there any DocBook viewers?
 
-http://live.gnome.org/Yelp[Yelp], the GNOME help viewer does a
+http://live.gnome.org/Yelp[Yelp], the GNOME help viewer, does a
 creditable job of displaying DocBook files XML files directly. Just
 run it from the command-line, for example:
 
@@ -191,6 +209,15 @@ line boundaries and is useful for lyrics and poems.  For example:
 [verse]
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+---------------------------------------------------------------------
+
+If you are generating PDF files (using FOP) or HTML files then you can
+use line breaks. For example:
+
+---------------------------------------------------------------------
+Consul *necessitatibus* per id, +
+consetetur, eu pro everti postulant +
 homero verear ea mea, qui.
 ---------------------------------------------------------------------
 
@@ -278,23 +305,6 @@ related markup:
     :
 
 
-== How can I escape AsciiDoc markup?
-
-Most AsciiDoc inline elements can be suppressed by preceding them with
-a backslash character. These elements include:
-
-- Attribute references.
-- Text formatting.
-- Quoting,
-- 'URLs', 'image' and 'link' macros.
-- Replacements.
-- Special words.
-- Table cell separators.
-
-In some cases you may need to escape both left and right quotes (see
-the 'AsciiDoc User Guide').
-
-
 == How can I escape a labeled list entry?
 
 Two colons or semicolons in a paragraph may be confused with a labeled
@@ -379,19 +389,6 @@ AsciiDoc documentation (even if you don't use A-A-P you'll still find
 it useful).
 
 
-== How can I place a backslash character in front of an attribute reference without escaping the reference?
-
-Use the predefined `\{backslash}` attribute reference instead of an
-actual backslash, for example if the `\{projectname}` attribute has
-the value `foobar` then:
-
-  d:\data{backslash}{projectname}
-
-would be rendered as:
-
-  d:\data\foobar
-
-
 == Why have you used the DocBook <simpara> element instead of <para>?
 
 `<simpara>` is really the same as `<para>` except it can't contain
@@ -399,13 +396,13 @@ block elements -- this matched, more closely, the AsciiDoc paragraph
 semantics.
 
 
-== How can I format text inside a listting block?
+== How can I format text inside a listing block?
 
 By default only 'specialcharacters' and 'callouts' are substituted in
 listing blocks; you can add quotes substitutions by explicitly setting
 the block 'subs' attribute, for example:
 
-  [subs="specialcharacters,callouts,quotes"]
+  [subs="quotes"]
   ------------------------------------------
   $ ls *-al*
   ------------------------------------------
@@ -459,3 +456,15 @@ For example, the following call won't work:
 Use this instead:
 
   mailto:jb%40foobar.com,jd%40acme.co.nz?subject=New%20foofoo%20release[New foofoo release]
+
+
+== How can a replacement have a trailing backslash?
+Quote the entry name -- this nonsensical example replaces `x\` with
+`y`:
+
+  "x\\"=y
+
+If quoting were omitted the equals character (separating the
+entry name `x` from the value `y`) would be escaped.
+
+

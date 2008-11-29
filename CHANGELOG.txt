@@ -82,6 +82,8 @@ Version 8.3.0 (2008-11-29)
   'class' attribute and DocBook 'role' attribute.
 - Replacements can be set in a document using the reserved
   AttributeEntry name 'replacement'.
+- The prefix for auto-generated section name IDs can be set with the
+  'idprefix' attribute.
 
 .Bug fixes
 - Escaped quote skipped over leading and trailing quote instead of
@@ -125,21 +127,22 @@ release:
   instead).
 
 
+[[X1]]
 Compatibility issues
 ~~~~~~~~~~~~~~~~~~~~
-This release includes a number of backward incompatibilities.
-If you've modified the or written your own AsciiDoc configuration
-files you may need to update them to use them with this release:
+Version 8.3.0 has a number of backward incompatibilities with respect
+to the previous 8.2.7 release:
 
 - The old table syntax is still processed but a 'DEPRECATED' warning
   is issued.
 - Entity references have to be escaped with a backslash.
 - You have to explicitly precede horizontal style labeled lists with
-  the `[horizontal]` style attribute -- existing horizontal labeled
-  lists will be rendered vertically.
-- The list 'compact' style has been dropped and is now a list option.
+  the `[horizontal]` style attribute -- by default all labeled lists
+  are rendered vertically.
+- The list 'compact' style has been dropped and is now a list option
+  (use `options="compact"` in attribute lists).
 - AsciiDoc version 6 sytnax no longer supported.
-- Linuxdoc finally been removed from the distribution.
+- Linuxdoc been removed from the distribution.
 - The unsupported experimental 'latex' backend has not been tested on
   this release.
 - The introduction of single-quote quoting requires that double-quote

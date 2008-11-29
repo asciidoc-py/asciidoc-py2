@@ -107,6 +107,7 @@ ambiguity.  Here are some non-standard escape examples:
 A C+\+ Library for C++
 A C+\+ Library for C+\+ \+++
 \\``double-quotes''
+\*\*F**ile Open...
 |====================================================================
 
 The source of this problem is ambiguity across substitution types --

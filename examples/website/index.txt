@@ -5,8 +5,8 @@ AsciiDoc Home Page
 ************************************************************************
 This is a significant release containing major additions and changes.
 There are a few fairly minor backward compatibility issues, please
-read the link:CHANGELOG.html[Compatibility issues] section in the
-CHANGLOG before upgrading.
+read the link:CHANGELOG.html#X1[compatibility issues] section in the
+CHANGLOG before upgrading. Significant additions include:
 
 - AsciiDoc tables have been redesigned.  The link:newtables.html[new
   syntax and features] are a huge improvement over the old tables. The
@@ -22,12 +22,13 @@ CHANGLOG before upgrading.
   when the macro is called.
 - The passthrough block has a fully transparent passthrough delimited
   block block style called 'pass'.
-- The 'asciimath' and 'latexmath' web:userguide.html#X77[passthrough
+- The 'asciimath' and 'latexmath' link:userguide.html#X77[passthrough
   macros] along with 'asciimath' and 'latexmath'
-  web:userguide.html#X76[passthrough blocks] provide a (backend
+  link:userguide.html#X76[passthrough blocks] provide a (backend
   dependent) mechanism for rendering mathematical formulas. There are
-  web:latexmath.pdf[LaTeX Math], web:asciimathml.html[AsciiMathML] and
-  web:latexmathml.html[LaTeXMathML] examples on the AsciiDoc website.
+  link:latexmath.pdf[LaTeX Math], link:asciimathml.html[AsciiMathML]
+  and link:latexmathml.html[LaTeXMathML] examples on the AsciiDoc
+  website.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions and changes.
@@ -210,6 +211,11 @@ Benjamin Klum.  Benjamin has done a superhuman job (I admit it, I
 didn't think this was doable due to AsciiDoc's SGML/XML bias).
 
 Here's link:latex-backend.html[Benjamin's documentation].
+
+NOTE: Owning to to other commitments, Benjamin is unable to maintain
+this backend. I don't have the expertise or time to take this on
+consequently the LaTeX backend has not been tested or updated since
+AsiiDoc version 8.2.7 and is currently unsupported.
 
 
 Projects using AsciiDoc

@@ -721,7 +721,7 @@ instruction is handled by <<X43,a2x(1)>> if you use FOP.
 
 Page Breaks
 ~~~~~~~~~~~
-A line of three or more less-than (<) characters will generate a
+A line of three or more less-than (`<<<`) characters will generate a
 hard page break in DocBook and printed HTML outputs.  It uses the CSS
 `page-break-after` property for HTML outputs and a custom XML
 `asciidoc-pagebreak` processing instruction for DocBook outputs. The
@@ -2845,9 +2845,16 @@ source file:
 Mathematical Formulas
 ---------------------
 The 'asciimath' and 'latexmath' <<X77,passthrough macros>> along with
-'asciimath' and 'latexmath'  <<X76,passthrough blocks>> provide a (backend
-dependent) mechanism for rendering mathematical formulas. You can use the
-following math markups:
+'asciimath' and 'latexmath'  <<X76,passthrough blocks>> provide a
+(backend dependent) mechanism for rendering mathematical formulas. You
+can use the following math markups:
+
+NOTE: The 'latexmath' macro used to include 'LaTeX Math' in DocBook
+outputs is not the same as the 'latexmath' macro used to include
+'LaTeX MathML' in XHTML outputs.  'LaTeX Math' applies to DocBook
+outputs that are processed by <<X31,dblatex>> and is normally used to
+generate PDF files.  'LaTeXMathML' is very much a subset of 'LaTeX
+Math' and applies to XHTML documents.
 
 LaTeX Math
 ~~~~~~~~~~
@@ -2890,8 +2897,8 @@ the inclusion of a CSS file.
 /////////////////////////////////////////////////////////////////////
 
 'LaTeXMathML' allows LaTeX Math style formulas to be included in XHTML
-documents generated using the AsciiDoc 'xhtml11' backend.
-AsciiDoc uses the
+documents generated using the AsciiDoc 'xhtml11' backend.  AsciiDoc
+uses the
 http://www.maths.nottingham.ac.uk/personal/drw/lm.html[original
 LaTeXMathML] by Douglas Woodall.  'LaTeXMathML' is derived from
 ASCIIMathML and is for users who are more familiar with or prefer
@@ -2908,12 +2915,6 @@ website] or the distributed `doc/latexmathml.txt` file.
 
 There are more examples on the
 http://www.methods.co.nz/asciidoc/[AsciiDoc website].
-
-NOTE: Although both use the same named 'latexmath' macro 'LaTeXMathML'
-is not the same as 'LaTeX Math'. 'LaTeXMathML' is very much a subset
-of 'LaTeX Math' and applies to XHTML documents; 'LaTeX Math' applies
-to DocBook output processed by <<X31,dblatex>> and is normally used to
-generate PDF files.
 
 MathML
 ~~~~~~
@@ -2998,8 +2999,10 @@ name=value::
         The entry value is set to value.
 name=::
         The entry value is set to a zero length string.
-name::
-        The entry is undefined (deleted from the configuration).
+name!::
+        The entry is undefined (deleted from the configuration). This
+        syntax only applies to 'attribute' and 'miscellaneous'
+        sections.
 
 .Section entry behavior
 - All equals characters inside the `name` must be escaped with a
@@ -3093,10 +3096,10 @@ The optional `[attributes]` section contains predefined attributes.
 If the attribute value requires leading or trailing spaces then the
 text text should be enclosed in quotation mark (") characters.
 
-To delete a attribute insert a name only entry in a downstream
+To delete a attribute insert a `name!` entry in a downstream
 configuration file or use the asciidoc(1) `--attribute name!`
-command-line option (the attribute name is suffixed with a ! character
-to delete it).
+command-line option (an attribute name suffixed with a `!` character
+deletes the attribute)
 
 Special Characters section
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

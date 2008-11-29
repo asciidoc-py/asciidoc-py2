@@ -325,14 +325,6 @@ html4
 This backend generates plain (unstyled) HTML 4.01 Transitional markup.
 
 
-latex
-~~~~~
-An experimental LaTeX backend has been written for AsciiDoc by
-Benjamin Klum.  A tutorial `./doc/latex-backend.html` is included in
-the AsciiDoc distribution which can also be viewed at
-http://www.methods.co.nz/asciidoc/latex-backend.html.
-
-
 Document Structure
 ------------------
 An AsciiDoc document consists of a series of <<X8,block elements>>

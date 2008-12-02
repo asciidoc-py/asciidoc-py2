@@ -3464,9 +3464,8 @@ to pass parameters to macros, blocks and inline quotes:
 - The list consists of zero or more positional attribute values
   followed by zero or more named attribute values.
 - Attribute values are enclosed in quotation mark (") characters.
-- If the attribute list contains no named attributes and the attribute
-  values contain no commas or quotation marks then quoting is
-  unnecessary.
+- If the attribute list only contains positional attribute values and
+  the values contain no commas then quoting is unnecessary.
 
 Here are three examples (a single unquoted positional attribute; three
 unquoted attribute values; one positional attribute followed by two
@@ -3479,11 +3478,10 @@ named attributes):
 .Attribute list behavior
 - If one or more attribute values contains a comma the all values must
   be quoted (enclosed in quotation characters).
-- If the list contains any named or quoted attributes the all string
+- If the list contains any named or quoted attributes then all string
   attribute values must be quoted.
-- To include a quotation mark (") character in an attribute value the
-  value must be quoted and the quotation mark escaped with a
-  backslash.
+- To include a quotation mark (") character in a quoted attribute
+  value the the quotation mark must be escaped with a backslash.
 - List attributes take precedence over existing attributes.
 - List attributes can only be referenced in configuration file markup
   templates and tags, they are not available inside the document.

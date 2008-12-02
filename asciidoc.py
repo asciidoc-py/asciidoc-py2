@@ -324,11 +324,7 @@ def parse_attributes(attrs,dict):
             if not (isinstance(v,str) or isinstance(v,int) or isinstance(v,float) or v is None):
                 raise
     except:
-        # Non-quoted attributes cannot contain double-quote characters, this
-        # restriction catches most quoted attribute syntax errors.
-        if s.find('"') >= 0:
-            error('malformed attributes: %s' % s)
-            return
+        s = s.replace('"','\\"')
         s = s.split(',')
         s = map(lambda x: '"' + x.strip() + '"', s)
         s = ','.join(s)

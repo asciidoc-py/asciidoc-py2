@@ -1347,6 +1347,7 @@ class AttributeEntry:
     pattern = None
     subs = None
     name = None
+    name2 = None
     value = None
     def __init__(self):
         raise AssertionError,'no class instances allowed'
@@ -1367,37 +1368,38 @@ class AttributeEntry:
             AttributeEntry.subs = subs
         line = reader.read_next()
         if line:
+            # Attribute entry formatted like :<name>[.<name2>]:[ <value>]
             mo = re.match(AttributeEntry.pattern,line)
             if mo:
-                name = mo.group('attrname').strip()
-                if name[-1] == '!':     # Names like name! are None.
-                    name = name[:-1]
-                    value = None
-                else:
-                    value = mo.group('attrvalue').strip()
-                # Strip white space and illegal name chars.
-                name = re.sub(r'(?u)[^\w\-_]', '', name).lower()
-                AttributeEntry.name = name
-                AttributeEntry.value = value
+                AttributeEntry.name = mo.group('attrname')
+                AttributeEntry.name2 = mo.group('attrname2')
+                AttributeEntry.value = mo.group('attrvalue') or ''
+                AttributeEntry.value = AttributeEntry.value.strip()
                 result = True
         return result
     isnext = staticmethod(isnext)
     def translate():
         assert Lex.next() is AttributeEntry
         attr = AttributeEntry   # Alias for brevity.
-        reader.read()   # Discard attribute from reader.
-        if attr.name == 'replacement': # Special name to define replacements.
-            entry = parse_entry(attr.value)
-            if entry is None:
-                warning('illegal replacement: %s' % attr.value)
+        reader.read()   # Discard attribute entry from reader.
+        if AttributeEntry.name2: # The entry is a conf file entry.
+            section = {}
+            # [attributes] and [miscellaneous] entries can have name! syntax.
+            if attr.name in ('attributes','miscellaneous') and attr.name2[-1] == '!':
+                section[attr.name] = [attr.name2]
             else:
-                pat,rep = entry
-                if not config.set_replacement(pat, rep, config.replacements):
-                    warning('replacement has illegal regular expression: %s'
-                        % attr.value)
-        else:
+               section[attr.name] = ['%s=%s' % (attr.name2,attr.value)]
+            config.load_sections(section)
+            config.validate()
+        else: # The entry is an attribute.
+            if attr.name[-1] == '!':
+                # Names like name! undefine the attribute.
+                attr.name = attr.name[:-1]
+                attr.value = None
+            # Strip white space and illegal name chars.
+            attr.name = re.sub(r'(?u)[^\w\-_]', '', attr.name).lower()
             # Don't override command-line attributes.
-            if config.cmd_attrs.has_key(attr.name):
+            if attr.name in config.cmd_attrs:
                 return
             # Update document.attributes from previously parsed attribute.
             if attr.name == 'attributeentry-subs':
@@ -1407,7 +1409,7 @@ class AttributeEntry:
                 attr.value = writer.newline.join(attr.value)
             if attr.value is not None:
                 document.attributes[attr.name] = attr.value
-            elif document.attributes.has_key(attr.name):
+            elif attr.name in document.attributes:
                 del document.attributes[attr.name]
     translate = staticmethod(translate)
     def translate_all():
@@ -3706,7 +3708,7 @@ class Config:
         self.include1 = {}      # Holds include1::[] files for {include1:}.
         self.dumping = False    # True if asciidoc -c option specified.
 
-    def load(self,fname,dir=None):
+    def load_file(self,fname,dir=None):
         """Loads sections dictionary with sections from file fname.
         Existing sections are overlaid. Silently skips missing configuration
         files."""
@@ -3759,13 +3761,20 @@ class Config:
             else:
                 sections[section] = contents
         rdr.close()
-        # Delete blank lines from sections.
+        self.load_sections(sections)
+        self.loaded.append(os.path.realpath(fname))
+
+    def load_sections(self,sections):
+        '''Loads sections dictionary. Each dictionary entry contains a
+        list of lines.
+        '''
+        # Delete trailing blank lines from sections.
         for k in sections.keys():
             for i in range(len(sections[k])-1,-1,-1):
                 if not sections[k][i]:
                     del sections[k][i]
                 elif not self.entries_section(k):
-                    break   # Only strip trailing blank lines from templates.
+                    break
         # Add/overwrite new sections.
         self.sections.update(sections)
         self.parse_tags()
@@ -3795,25 +3804,24 @@ class Config:
         tables_OLD.load(sections)
         tables.load(sections)
         macros.load(sections.get('macros',()))
-        self.loaded.append(os.path.realpath(fname))
 
     def load_all(self,dir):
         """Load the standard configuration files from directory 'dir'."""
-        self.load('asciidoc.conf',dir)
+        self.load_file('asciidoc.conf',dir)
         conf = document.backend + '.conf'
-        self.load(conf,dir)
+        self.load_file(conf,dir)
         conf = document.backend + '-' + document.doctype + '.conf'
-        self.load(conf,dir)
+        self.load_file(conf,dir)
         lang = document.attributes.get('lang')
         if lang:
             conf = 'lang-' + lang + '.conf'
-            self.load(conf,dir)
+            self.load_file(conf,dir)
         # Load ./filters/*.conf files if they exist.
         filters = os.path.join(dir,'filters')
         if os.path.isdir(filters):
             for f in os.listdir(filters):
                 if re.match(r'^.+\.conf$',f):
-                    self.load(f,filters)
+                    self.load_file(f,filters)
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""
@@ -4711,13 +4719,13 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 config.load_all(os.path.dirname(infile))
         if infile != '<stdin>':
             # Load implicit document specific configuration files if they exist.
-            config.load(os.path.splitext(infile)[0] + '.conf')
-            config.load(os.path.splitext(infile)[0] + '-' + backend + '.conf')
+            config.load_file(os.path.splitext(infile)[0] + '.conf')
+            config.load_file(os.path.splitext(infile)[0] + '-' + backend + '.conf')
         # If user specified configuration file(s) overlay the defaults.
         if confiles:
             for conf in confiles:
                 if os.path.isfile(conf):
-                    config.load(conf)
+                    config.load_file(conf)
                 else:
                     raise EAsciiDoc,'configuration file %s missing' % conf
         document.init_attrs()   # Add conf files.

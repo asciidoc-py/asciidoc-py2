@@ -1,7 +1,7 @@
 AsciiDoc ChangeLog
 ==================
 
-:replacement: \bweb:=http://www.methods.co.nz/asciidoc/
+:replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
 Version 8.3.0 (2008-11-29)
 --------------------------

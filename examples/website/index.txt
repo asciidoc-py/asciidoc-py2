@@ -215,7 +215,7 @@ Here's link:latex-backend.html[Benjamin's documentation].
 NOTE: Owning to to other commitments, Benjamin is unable to maintain
 this backend. I don't have the expertise or time to take this on
 consequently the LaTeX backend has not been tested or updated since
-AsiiDoc version 8.2.7 and is currently unsupported.
+AsciiDoc version 8.2.7 and is currently unsupported.
 
 
 Projects using AsciiDoc

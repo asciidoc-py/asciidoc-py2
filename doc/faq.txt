@@ -120,7 +120,7 @@ NOTE: System macros cannot be escaped.
 
 == How can I set default list and tables styles?
 
-You need to set the element's 'style' entry in a global or custom
+You can set the element's 'style' entry in a global or custom
 configuration file.
 
 This example this will horizontally style all labeled lists that don't
@@ -141,6 +141,17 @@ already have an explicit style attribute:
 [tabledef-default]
 style=topbot
 topbot-style=frame="topbot"
+----------------------------------
+
+Alternatively you can set the configuration entries from inside your
+document, the above examples are equivalent to:
+
+----------------------------------
+:listdef-labeled.style: horizontal
+:listdef-labeled2.style: horizontal
+
+:tabledef-default.topbot-style: frame="topbot"
+:tabledef-default.style: topbot
 ----------------------------------
 
 
@@ -328,11 +339,19 @@ want superscripts or subscripts then put the following in a custom
 configuration file or edit the global `asciidoc.conf` configuration
 file:
 
----------------------------------------------------------------------
+-------------------
 [quotes]
 ^=
 ~=
----------------------------------------------------------------------
+-------------------
+
+Alternatively you can set the configuration entries from within your
+document, the above examples are equivalent to:
+
+-------------------
+:quotes.^:
+:quotes.~:
+-------------------
 
 
 == How can I customize the \{localdate} format?

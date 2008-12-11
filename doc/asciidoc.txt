@@ -2993,7 +2993,7 @@ name=::
         The entry value is set to a zero length string.
 name!::
         The entry is undefined (deleted from the configuration). This
-        syntax only applies to 'attribute' and 'miscellaneous'
+        syntax only applies to 'attributes' and 'miscellaneous'
         sections.
 
 .Section entry behavior
@@ -3393,12 +3393,6 @@ To delete (undefine) an attribute use the following syntax:
   markup template substitution.
 - Attribute elements override configuration file and intrinsic
   attributes but do not override command-line attributes.
-- The reserved attribute name 'replacement' does not set an attribute
-  instead it sets a replacement. The entry value is formatted the same
-  as a <<X10,replacements configuration file entry>>. For example:
-
-  :replacement: \bweb:=http://www.methods.co.nz/asciidoc/
-
 Here are some more attribute entry examples:
 
 ---------------------------------------------------------------------
@@ -3426,6 +3420,25 @@ outputs. If a file named like `\{docname}-revhistory.xml` exists in
 the document's directory then it will be added verbatim to the DocBook
 header (see the `./doc/asciidoc-revhistory.xml` example that comes
 with the AsciiDoc distribution).].
+
+Setting configuration entries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+A variant of the Attribute Entry syntax allows configuration file
+entries to be set from within an AsciiDoc document:
+
+  :<section_name>.<entry_name>: <entry_value>
+
+Where `<section_name>` is the configuration section name,
+`<entry_name>` is the name of the entry and `<entry_value>` is the
+optional entry value. This example sets the default labeled list style
+to 'horizontal':
+
+  :listdef-labeled.style: horizontal
+
+It is exactly equivalent to a configuration file containing:
+
+  [listdef-labeled]
+  style=horizontal
 
 [[X62]]
 .Attribute entries promote clarity and eliminate repetition

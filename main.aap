@@ -25,7 +25,7 @@ website:
 
 distribution: docs website
     # Make configure script.
-    autoconf
+    :sys autoconf
     # Make tarball of all files in MANIFEST.
     :syseval pwd | :assign WD
     :sys cd .. && ln -s $(WD) asciidoc-$(VERS)

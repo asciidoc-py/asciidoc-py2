@@ -4795,11 +4795,9 @@ define the attribute `asciidoc7compatible` (for example by using the
 Appendix B: Packager Notes
 ---------------------------
 Read the `README` and `INSTALL` files (in the distribution root
-directory) for install prerequisites and procedures.
-
-The distribution `Makefile.in` (used by `configure` to generate the
-actual `Makefile`) is the canonical installation procedure.  Here's a
-summary of the installation procedure:
+directory) for install prerequisites and procedures.  The distribution
+`Makefile.in` (used by `configure` to generate the `Makefile`) is the
+canonical installation procedure.
 
 
 [[X39]]

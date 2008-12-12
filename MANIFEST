@@ -67,6 +67,7 @@ INSTALL.txt
 configure
 configure.ac
 Makefile.in
+install-sh
 javascripts/ASCIIMathML.js
 javascripts/LaTeXMathML.js
 javascripts/toc.js

@@ -20,11 +20,12 @@ lists AsciiDoc packages for various Linux distributions.
 Distribution tarball installation
 ---------------------------------
 If your flavor or UNIX or Linux does not have a packaged AsciiDoc
-distribution or if you prefer to install from source use the
-`configure` shell script in the tarball root directory.
+distribution or if you prefer to install the latest AsciiDoc version
+from source use the `configure` shell script in the tarball root
+directory.
 
 The `autoconf(1)` generated `configure` script creates a make file
-that is tailored for you system. To install:
+that is tailored for your system. To install:
 
 [subs="attributes"]
   $ tar -xzf asciidoc-{revision}.tar.gz
@@ -41,10 +42,10 @@ To uninstall AsciiDoc:
 
   $ sudo make uninstall
 
-If Vim is installed on your system syntax highlighter and filetype
-detection scripts will be install in the global Vim configuration file
-directory (`asciidoc.vim` in the `syntax` directory and
-`asciidoc_filetype.vim` in the `ftdetect` directory).
+If Vim is installed on your system the AsciiDoc Vim syntax highlighter
+and filetype detection scripts will be install in the global Vim
+configuration file directory (`asciidoc.vim` in the `syntax` directory
+and `asciidoc_filetype.vim` in the `ftdetect` directory).
 
 
 Microsoft Windows installation

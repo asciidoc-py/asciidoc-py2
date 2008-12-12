@@ -7,7 +7,6 @@ INSTALL_PROG = @INSTALL_PROGRAM@
 INSTALL_DATA = @INSTALL_DATA@
 
 SED = @SED@
-LN_S = @LN_S@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
@@ -33,8 +32,11 @@ manpdir = $(mandir)/man1
 conf = $(wildcard *.conf)
 confdir = $(ASCIIDOCCONF)
 
-filters = $(wildcard filters/*.py) $(wildcard filters/*.conf)
+filters = $(wildcard filters/*.py)
 filtersdir = $(ASCIIDOCCONF)/filters
+
+filterconfs = $(wildcard filters/*.conf)
+filterconfsdir = $(ASCIIDOCCONF)/filters
 
 docbook = $(wildcard docbook-xsl/*.xsl)
 docbookdir = $(ASCIIDOCCONF)/docbook-xsl
@@ -54,11 +56,11 @@ calloutsdir = $(ASCIIDOCCONF)/images/icons/callouts
 icons = $(wildcard images/icons/*.png) images/icons/README
 iconsdir = $(ASCIIDOCCONF)/images/icons
 
-doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*)
+doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*) $(wildcard CHANGELOG*)
 docdir = $(datadir)/doc/asciidoc
 
-DATATARGETS = manp conf filters docbook dblatex css js callouts icons
-PROGTARGETS = prog
+DATATARGETS = manp conf filterconfs docbook dblatex css js callouts icons
+PROGTARGETS = prog filters
 TARGETS = $(DATATARGETS) $(PROGTARGETS) doc
 
 INSTDIRS = $(TARGETS:%=%dir)
@@ -78,7 +80,12 @@ $(DATATARGETS): % : %dir
 	$(INSTALL_DATA) $($@) $(DESTDIR)/$($<)/
 
 docs:
+	$(INSTALL) -d $(DESTDIR)/$(docdir)
 	$(INSTALL_DATA) $(doc) $(DESTDIR)/$(docdir)
+	$(INSTALL) -d $(DESTDIR)/$(docdir)/docbook-xsl
+	$(INSTALL_DATA) docbook-xsl/asciidoc-docbook-xsl.txt $(DESTDIR)/$(docdir)/docbook-xsl
+	$(INSTALL) -d $(DESTDIR)/$(docdir)/dblatex
+	$(INSTALL_DATA) dblatex/dblatex-readme.txt $(DESTDIR)/$(docdir)/dblatex
 	$(INSTALL) -d $(DESTDIR)/$(docdir)/stylesheets
 	$(INSTALL_DATA) $(css) $(DESTDIR)/$(docdir)/stylesheets
 	$(INSTALL) -d $(DESTDIR)/$(docdir)/javascripts
@@ -93,8 +100,8 @@ docs:
 	( cd examples/website && \
 		cp -R * $(DESTDIR)/$(docdir)/examples/website )
 
-linkpy:
-	(cd $(DESTDIR)/$(progdir); $(LN_S) asciidoc.py asciidoc)
+renameprog:
+	(cd $(DESTDIR)/$(progdir); mv asciidoc.py asciidoc)
 
 fixconfpath:
 	@for f in $(prog); do \
@@ -104,30 +111,34 @@ fixconfpath:
 	done
 
 install-vim:
-	test -d $(DESTDIR)/$(vimdir) && \
-		$(INSTALL) -d $(DESTDIR)/$(vimdir)/syntax
-	test -d $(DESTDIR)/$(vimdir) && \
-		$(INSTALL_DATA) vim/syntax/asciidoc.vim $(DESTDIR)/$(vimdir)/syntax/
-	test -d $(DESTDIR)/$(vimdir) && \
-		$(INSTALL) -d $(DESTDIR)/$(vimdir)/ftdetect
-	test -d $(DESTDIR)/$(vimdir) && \
-		$(INSTALL_DATA) vim/ftdetect/asciidoc_filetype.vim \
-		$(DESTDIR)/$(vimdir)/ftdetect/
+	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
+		if ! test -d $$d; then continue; fi ; \
+		echo "installing Vim files in $$d" ; \
+		$(INSTALL) -d $$d/syntax ; \
+		$(INSTALL_DATA) vim/syntax/asciidoc.vim $$d/syntax ; \
+		$(INSTALL) -d $$d/ftdetect ; \
+		$(INSTALL_DATA) vim/ftdetect/asciidoc_filetype.vim $$d/ftdetect ; \
+	done
+
+uninstall-vim:
+	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
+		if ! test -d $$d; then continue; fi ; \
+		echo "uninstalling Vim files in $$d" ; \
+		rm -f $$d/syntax/asciidoc.vim ; \
+		rm -f $$d/ftdetect/asciidoc_filetype.vim ; \
+	done
 
 
 build: fixconfpath
 
-install: $(PROGTARGETS) $(DATATARGETS) linkpy install-vim
+install: $(PROGTARGETS) $(DATATARGETS) renameprog install-vim
 
-uninstall:
+uninstall: uninstall-vim
 	rm -f $(DESTDIR)/$(progdir)/asciidoc
-	rm -f $(DESTDIR)/$(progdir)/asciidoc.py
 	rm -f $(DESTDIR)/$(progdir)/a2x
 	rm -f $(DESTDIR)/$(mandir)/asciidoc.1
 	rm -f $(DESTDIR)/$(mandir)/a2x.1
 	rm -rf $(DESTDIR)/$(confdir)
-	rm -f $(DESTDIR)/$(vimdir)/syntax/asciidoc.vim
-	rm -f $(DESTDIR)/$(vimdir)/ftdetect/asciidoc_filetype.vim
 	rm -rf $(DESTDIR)/$(docdir)
 
 test:

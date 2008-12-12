@@ -9,7 +9,7 @@ under the terms of the GNU General Public License (GPL).
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 from types import *
 
-VERSION = '8.3.0'   # See CHANGLOG file for version history.
+VERSION = '8.3.1'   # See CHANGLOG file for version history.
 
 #---------------------------------------------------------------------------
 # Program onstants.

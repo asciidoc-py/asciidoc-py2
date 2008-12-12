@@ -1,0 +1,107 @@
+INSTALL = @INSTALL@
+INSTALL_PROG = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+
+SED = @SED@
+LN_S = @LN_S@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+bindir = @bindir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+datarootdir = @datarootdir@
+mandir=@mandir@
+srcdir = @srcdir@
+
+VPATH = @srcdir@
+
+ASCIIDOCCONF = $(sysconfdir)/asciidoc
+
+prog = asciidoc.py a2x
+progdir = $(bindir)
+
+vimdir = @sysconfdir@/vim
+
+manp = $(wildcard doc/*.1)
+manpdir = $(mandir)/man1
+
+conf = $(wildcard *.conf)
+confdir = $(ASCIIDOCCONF)
+
+filters = $(wildcard filters/*.py)
+filtersdir = $(ASCIIDOCCONF)/filters
+
+docbook = $(wildcard docbook-xsl/*xsl)
+docbookdir = $(ASCIIDOCCONF)/docbook-xsl
+
+dblatex = $(wildcard dblatex/*.xsl) $(wildcard dblatex/*.sty)
+dblatexdir = $(ASCIIDOCCONF)/dblatex
+
+css = $(wildcard stylesheets/*.css)
+cssdir = $(ASCIIDOCCONF)/stylesheets
+
+js = $(wildcard javascripts/*.js)
+jsdir = $(ASCIIDOCCONF)/javascripts
+
+callouts = $(wildcard images/icons/callouts/*)
+calloutsdir = $(ASCIIDOCCONF)/images/icons/callouts
+
+icons = $(wildcard images/icons/*.png) images/icons/README
+iconsdir = $(ASCIIDOCCONF)/images/icons
+
+doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*)
+docdir = $(datadir)/doc/asciidoc
+
+DATATARGETS = manp conf filters docbook dblatex css js callouts icons
+PROGTARGETS = prog
+TARGETS = $(DATATARGETS) $(PROGTARGETS) doc
+
+INSTDIRS = $(TARGETS:%=%dir)
+
+.PHONY: $(TARGETS)
+
+all: build
+
+# create directories used during the install
+$(INSTDIRS):
+	$(INSTALL) -d $(DESTDIR)/$($@)
+
+$(PROGTARGETS): % : %dir
+	$(INSTALL_PROG) $($@) $(DESTDIR)/$($<)/
+
+$(DATATARGETS): % : %dir
+	$(INSTALL_DATA) $($@) $(DESTDIR)/$($<)/
+
+vim:
+	$(INSTALL) -d $(DESTDIR)/$(vimdir)/syntax
+	$(INSTALL_DATA) vim/syntax/asciidoc.vim $(DESTDIR)/$(vimdir)/syntax/
+	$(INSTALL) -d $(DESTDIR)/$(vimdir)/ftdetect
+	$(INSTALL_DATA) vim/ftdetect/asciidoc_filetype.vim \
+		$(DESTDIR)/$(vimdir)/ftdetect/
+
+docs: docdir
+	$(INSTALL_DATA) $(doc) $(DESTDIR)/$(docdir)
+	$(INSTALL) -d $(DESTDIR)/$(docdir)/examples/website
+	( cd examples/website; \
+		cp -R * $(DESTDIR)/$(docdir)/examples/website )
+
+linkpy:
+	(cd $(DESTDIR)/$(progdir); $(LN_S) asciidoc.py asciidoc)
+
+fixconfpath:
+	@for f in $(prog); do \
+		echo "Fixing CONF_DIR in $$f"; \
+		$(SED) "s#^CONF_DIR = '.*'#CONF_DIR = '$(ASCIIDOCCONF)'#; s#^CONF_DIR=.*#CONF_DIR=$(ASCIIDOCCONF)#" $$f > $$f.out; \
+		mv $$f.out $$f; \
+	done
+
+
+build: fixconfpath
+
+install: $(PROGTARGETS) $(DATATARGETS) linkpy docs
+
+install-vim: vim
+
+test:
+	@echo "Nothing to see here...Move along."

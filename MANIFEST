@@ -63,7 +63,8 @@ images/smallnew.png
 images/tiger.png
 images/highlighter.png
 INSTALL
-install.sh
+configure.ac
+Makefile.in
 uninstall.sh
 INSTALL.txt
 javascripts/ASCIIMathML.js

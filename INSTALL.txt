@@ -19,33 +19,32 @@ lists AsciiDoc packages for various Linux distributions.
 
 Distribution tarball installation
 ---------------------------------
-If your flavor or UNIX or Linux is not supported or you prefer to
-install from source use the `install.sh` shell script in the tarball
-root directory (thanks to mailto:jlm@ofb.net[Jacob Mandelson] for the
-initial implementation of this script).
+If your flavor or UNIX or Linux does not have a packaged AsciiDoc
+distribution or if you prefer to install from source use the
+`configure` shell script in the tarball root directory.
 
-`install.sh` installs AsciiDoc executables, configuration files and
-man pages in the usual locations. Here's how:
+The `autoconf(1)` generated `configure` script creates a make file
+that is tailored for you system. To install:
 
-[subs="normal"]
+[subs="attributes"]
   $ tar -xzf asciidoc-{revision}.tar.gz
   $ cd asciidoc-{revision}
-  $ sudo ./install.sh
+  $ ./configure
+  $ sudo make
+  $ sudo make install
 
-NOTE: This script was tested on Ubuntu Linux.  You may need to edit
-`install.sh` if your file locations differ from those wired into the
-script.
+To install the documentation:
 
-The `uninstall.sh` script (actually just a symlink to `install.sh`)
-will uninstall AsciiDoc.
+  $ sudo make docs
 
-If Vim is installed on your system `install.sh` will install the Vim
-syntax highlighter and filetype detection scripts in the global
-`/etc/vim` directory (`asciidoc.vim` in `/etc/vim/syntax/` and
-`asciidoc_filetype.vim` in `/etc/vim/ftdetect/`).
+To uninstall AsciiDoc:
 
-To install locally put `asciidoc.vim` in `\~/.vim/syntax/` and
-`asciidoc_filetype.vim` in `~/.vim/ftdetect/`.
+  $ sudo make uninstall
+
+If Vim is installed on your system syntax highlighter and filetype
+detection scripts will be install in the global Vim configuration file
+directory (`asciidoc.vim` in the `syntax` directory and
+`asciidoc_filetype.vim` in the `ftdetect` directory).
 
 
 Microsoft Windows installation
@@ -53,7 +52,7 @@ Microsoft Windows installation
 To install the zip formatted distribution just unzip the contents to a
 new folder:
 
-[subs="normal"]
+[subs="attributes"]
   $ mkdir asciidoc
   $ cd asciidoc
   $ unzip ../asciidoc-{revision}.zip

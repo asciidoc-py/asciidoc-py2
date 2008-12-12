@@ -1,3 +1,7 @@
+#
+# Make file to install/uninstall AsciiDoc
+#
+
 INSTALL = @INSTALL@
 INSTALL_PROG = @INSTALL_PROGRAM@
 INSTALL_DATA = @INSTALL_DATA@
@@ -29,10 +33,10 @@ manpdir = $(mandir)/man1
 conf = $(wildcard *.conf)
 confdir = $(ASCIIDOCCONF)
 
-filters = $(wildcard filters/*.py)
+filters = $(wildcard filters/*.py) $(wildcard filters/*.conf)
 filtersdir = $(ASCIIDOCCONF)/filters
 
-docbook = $(wildcard docbook-xsl/*xsl)
+docbook = $(wildcard docbook-xsl/*.xsl)
 docbookdir = $(ASCIIDOCCONF)/docbook-xsl
 
 dblatex = $(wildcard dblatex/*.xsl) $(wildcard dblatex/*.sty)
@@ -73,17 +77,20 @@ $(PROGTARGETS): % : %dir
 $(DATATARGETS): % : %dir
 	$(INSTALL_DATA) $($@) $(DESTDIR)/$($<)/
 
-vim:
-	$(INSTALL) -d $(DESTDIR)/$(vimdir)/syntax
-	$(INSTALL_DATA) vim/syntax/asciidoc.vim $(DESTDIR)/$(vimdir)/syntax/
-	$(INSTALL) -d $(DESTDIR)/$(vimdir)/ftdetect
-	$(INSTALL_DATA) vim/ftdetect/asciidoc_filetype.vim \
-		$(DESTDIR)/$(vimdir)/ftdetect/
-
-docs: docdir
+docs:
 	$(INSTALL_DATA) $(doc) $(DESTDIR)/$(docdir)
+	$(INSTALL) -d $(DESTDIR)/$(docdir)/stylesheets
+	$(INSTALL_DATA) $(css) $(DESTDIR)/$(docdir)/stylesheets
+	$(INSTALL) -d $(DESTDIR)/$(docdir)/javascripts
+	$(INSTALL_DATA) $(js) $(DESTDIR)/$(docdir)/javascripts
+	$(INSTALL) -d $(DESTDIR)/$(docdir)/images
+	( cd images && \
+		cp -R * $(DESTDIR)/$(docdir)/images )
+	$(INSTALL) -d $(DESTDIR)/$(docdir)/doc
+	( cd doc && \
+		cp -R * $(DESTDIR)/$(docdir)/doc )
 	$(INSTALL) -d $(DESTDIR)/$(docdir)/examples/website
-	( cd examples/website; \
+	( cd examples/website && \
 		cp -R * $(DESTDIR)/$(docdir)/examples/website )
 
 linkpy:
@@ -96,12 +103,32 @@ fixconfpath:
 		mv $$f.out $$f; \
 	done
 
+install-vim:
+	test -d $(DESTDIR)/$(vimdir) && \
+		$(INSTALL) -d $(DESTDIR)/$(vimdir)/syntax
+	test -d $(DESTDIR)/$(vimdir) && \
+		$(INSTALL_DATA) vim/syntax/asciidoc.vim $(DESTDIR)/$(vimdir)/syntax/
+	test -d $(DESTDIR)/$(vimdir) && \
+		$(INSTALL) -d $(DESTDIR)/$(vimdir)/ftdetect
+	test -d $(DESTDIR)/$(vimdir) && \
+		$(INSTALL_DATA) vim/ftdetect/asciidoc_filetype.vim \
+		$(DESTDIR)/$(vimdir)/ftdetect/
+
 
 build: fixconfpath
 
-install: $(PROGTARGETS) $(DATATARGETS) linkpy docs
+install: $(PROGTARGETS) $(DATATARGETS) linkpy install-vim
 
-install-vim: vim
+uninstall:
+	rm -f $(DESTDIR)/$(progdir)/asciidoc
+	rm -f $(DESTDIR)/$(progdir)/asciidoc.py
+	rm -f $(DESTDIR)/$(progdir)/a2x
+	rm -f $(DESTDIR)/$(mandir)/asciidoc.1
+	rm -f $(DESTDIR)/$(mandir)/a2x.1
+	rm -rf $(DESTDIR)/$(confdir)
+	rm -f $(DESTDIR)/$(vimdir)/syntax/asciidoc.vim
+	rm -f $(DESTDIR)/$(vimdir)/ftdetect/asciidoc_filetype.vim
+	rm -rf $(DESTDIR)/$(docdir)
 
 test:
 	@echo "Nothing to see here...Move along."

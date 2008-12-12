@@ -4664,7 +4664,8 @@ class Tables_OLD(AbstractBlocks):
 APP_FILE = None             # This file's full path.
 APP_DIR = None              # This file's directory.
 USER_DIR = None             # ~/.asciidoc
-CONF_DIR = '/etc/asciidoc'  # Global configuration files directory.
+# Global configuration files directory (set by Makefile build target).
+CONF_DIR = '/etc/asciidoc'
 HELP_FILE = 'help.conf'     # Default (English) help file.
 
 # Globals

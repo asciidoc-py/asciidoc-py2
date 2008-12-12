@@ -4797,31 +4797,9 @@ Appendix B: Packager Notes
 Read the `README` and `INSTALL` files (in the distribution root
 directory) for install prerequisites and procedures.
 
-The distribution `install.sh` shell script is the canonical
-installation procedure and is the definitive installation description.
-Here's a summary of the installation procedure:
-
-- Unpack entire distribution tarball to `/usr/share/asciidoc/`.
-- Move `asciidoc.py` to `/usr/bin/`; rename to `asciidoc`; if
-  necessary modify shebang line; ensure executable permissions are
-  set.
-- Move `a2x` to `/usr/bin/`; if necessary modify shebang line; ensure
-  executable permissions are set.
-- Move the `./*.conf` files to `/etc/asciidoc/`.
-- Move `./filters/{\*.conf,*.py}` to `/etc/asciidoc/filters/`.
-- Move `./docbook-xsl/*.xsl` to `/etc/asciidoc/docbook-xsl/`.
-- Move `./dblatex/*.{xsl,sty}` to `/etc/asciidoc/dblatex/`.
-- Copy `./stylesheets/*.css` to `/etc/asciidoc/stylesheets/`.
-- Copy `./javascripts/*.js` to `/etc/asciidoc/javascripts/`.
-- Copy `./images/icons/*` to `/etc/asciidoc/images/icons/`
-  (recursively including the `icons` subdirectory and its contents).
-- Compress the asciidoc(1) and ax2(1) man pages (`./doc/*.1`) with
-  gzip(1) and move them to `/usr/share/man/man1/`.
-- If Vim is installed then install Vim syntax and filetype detection
-  files.
-
-Leaving stylesheets and images in `/usr/share/asciidoc/` ensures the
-docs and example website are not broken.
+The distribution `Makefile.in` (used by `configure` to generate the
+actual `Makefile`) is the canonical installation procedure.  Here's a
+summary of the installation procedure:
 
 
 [[X39]]

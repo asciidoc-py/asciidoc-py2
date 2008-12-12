@@ -31,7 +31,7 @@ that is tailored for your system. To install:
   $ tar -xzf asciidoc-{revision}.tar.gz
   $ cd asciidoc-{revision}
   $ ./configure
-  $ sudo make
+  $ make
   $ sudo make install
 
 To install the documentation:

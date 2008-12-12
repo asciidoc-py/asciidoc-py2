@@ -1,7 +1,7 @@
-personal_ws-1.1 en 718 
+personal_ws-1.1 en 723 
 Sturmer
-Kléber
 Kleber
+Kléber
 quis
 auctor
 linkcss
@@ -12,8 +12,8 @@ BOLID
 callouts
 bulleted
 starttags
-ListingBlock
 listingblock
+ListingBlock
 eval
 ListLabel
 asc
@@ -121,8 +121,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-middlename
 MiddleName
+middlename
 subdirectories
 footnoteref
 passtext
@@ -142,10 +142,11 @@ entrytbl
 Ghostscript
 verear
 Buenos
-LinuxDoc
 linuxdoc
+LinuxDoc
 PostScript
 hhp
+Vijay
 Pretium
 systemIdStartString
 README
@@ -155,8 +156,8 @@ fermentum
 ListingBlocks
 GPL
 hsides
-Bólido
 Bolido
+Bólido
 footrow
 misspelt
 WINNT
@@ -168,12 +169,13 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-verbatimblock
 VerbatimBlock
+verbatimblock
 shiftwidth
 misevaluations
 asciidocEmphasized
 mattis
+Chai
 headrow
 Efros
 gui
@@ -196,6 +198,7 @@ arcu
 PDF's
 PDFs
 jim
+Makefile
 MSIE
 eval's
 Movet
@@ -221,6 +224,7 @@ termtag
 joe
 indir
 Comidas
+Kumar
 JPG
 listnumber
 Tiago
@@ -443,8 +447,8 @@ WINA
 fringilla
 retab
 BackendBlocks
-ChangeLog
 changelog
+ChangeLog
 tis
 Ubuntu
 sectids
@@ -462,8 +466,8 @@ Vasilev
 crlf
 vel
 localtime
-BlockMacro
 blockmacro
+BlockMacro
 Xandros
 groff
 POSIX
@@ -506,8 +510,8 @@ dbtimestamp
 txt
 BlockId
 passthrough
-Berguvsvägen
 Berguvsvagen
+Berguvsvägen
 noincsearch
 TableRow
 inlinemediaobject
@@ -555,9 +559,9 @@ Redhat
 cb
 tuple
 cd
-asciimathml
-AsciiMathML
 ASCIIMathML
+AsciiMathML
+asciimathml
 arounds
 filename
 mansource
@@ -573,8 +577,8 @@ scaledwidth
 cp
 xsl
 fb
-DocBook
 docbook
+DocBook
 stylesheet
 pagefile
 superscripted
@@ -592,8 +596,8 @@ fprintf
 colabswidth
 tabsize
 smallnew
-BlockTitles
 blocktitles
+BlockTitles
 localdate
 bodyrow
 hs
@@ -643,8 +647,8 @@ permalink
 td
 py
 AROUT
-literalblock
 LiteralBlock
+literalblock
 sgml
 biggy
 softtabstop
@@ -660,8 +664,8 @@ tt
 blandit
 inline
 Martín
-SectionBody
 sectionbody
+SectionBody
 VM
 conformant
 listchars
@@ -687,6 +691,7 @@ bfoobar
 Wiese
 noteblock
 admonitionparagraph
+autoconf
 refactored
 refmiscinfo
 tcqn
@@ -703,8 +708,8 @@ nbsp
 qanda
 noout
 massa
-AsciiDoc
 asciidoc
+AsciiDoc
 manmanual
 TableBody
 realpath

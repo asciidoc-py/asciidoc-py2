@@ -5,32 +5,33 @@ This is significant release, it gets rid of unused cruft, simplifies
 the http://www.methods.co.nz/asciidoc/newlists.html[lists] syntax and
 introduces a decent
 http://www.methods.co.nz/asciidoc/newtables.html[tables] syntax.
+There are a few fairly minor backward compatibility issues, please
+read the link:CHANGELOG.html#X1[compatibility issues] section in the
+CHANGLOG before upgrading.
 
 New Features
 ------------
-- AsciiDoc http://www.methods.co.nz/asciidoc/newtables.html[new
-  tables] are a complete redesign of the tables syntax and generation.
-  It's a huge improvement over the old tables.
+- AsciiDoc tables have been redesigned.  The link:newtables.html[new
+  syntax and features] are a huge improvement over the old tables. The
+  old tables syntax has been deprecated but is currently still
+  processed.
+- Lists can now be styled like other block elements. This allows a
+  single list syntax for 'glossary', 'qanda' (Question and Answer) and
+  'bibliography' lists instead of having to remember a different
+  syntax for each type.  link:newlists.html[Here is some more
+  information].
+- Inline passthroughs macros have been improved and block passthrough
+  macros added. Attribute substitution can be optionally specified
+  when the macro is called.
+- The passthrough block has a fully transparent passthrough delimited
+  block block style called 'pass'.
+- The 'asciimath' and 'latexmath' link:userguide.html#X77[passthrough
+  macros] along with 'asciimath' and 'latexmath'
+  link:userguide.html#X76[passthrough blocks] provide a (backend
+  dependent) mechanism for rendering mathematical formulas. There are
+  link:latexmath.pdf[LaTeX Math], link:asciimathml.html[AsciiMathML]
+  and link:latexmathml.html[LaTeXMathML] examples on the AsciiDoc
+  website.
 
-- AsciiDoc http://www.methods.co.nz/asciidoc/newlists.html[new lists]
-  are a unification and simplification of the existing list syntax and
-  and internal rewrite.
-
-Backward Incompatibilities
---------------------------
-The 8.3 release is not fully backward compatible as detailed below.
-If the changes impact you and you are unable or unwilling to upgrade
-your AsciiDoc files then you should continue to use version
-8.2.7.
-
-- The AsciiDoc version 6 'xhtml-deprecated' backend has been dropped.
-
-- The 'linuxdoc' backend has been dropped (this backend is not longer
-  used and was marked for removal when AsciiDoc version 7 was
-  released).
-
-- The http://www.methods.co.nz/asciidoc/#X1[experimental LaTeX
-  backend] is currently unsupported.
-
-- The http://www.methods.co.nz/asciidoc/newlists.html[new lists] have
-  introduced a number of incompatibilities.
+Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
+additions and changes.

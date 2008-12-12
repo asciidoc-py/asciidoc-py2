@@ -2694,8 +2694,8 @@ Like default but all text is bold.
 
 asciidoc::
 With this style table cells can contain any of the AsciiDoc elements
-that are allowed inside document sections (apart from tables).  This
-style runs asciidoc(1) as a filter to process cell contents.
+that are allowed inside document sections. This style runs asciidoc(1)
+as a filter to process cell contents.
 
 literal::
 No text formatting; monospaced font; all line breaks are retained

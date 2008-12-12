@@ -30,6 +30,7 @@ WEB_ROOT =
     source-highlight-filter
     support
     userguide
+    version83
     version9
     newtables
     newlists

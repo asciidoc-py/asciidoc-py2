@@ -3,6 +3,29 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.3.1 (2008-12-14)
+--------------------------
+.Additions and changes
+- Replaced the `install.sh` script with Ben Walton's updated autoconf
+  scripts -- see web:INSTALL.html[INSTALL] for details.
+- Added a generalized 'AttributeEntry' syntax to allow arbitrary
+  configuration file entries to be set from within an AsciiDoc
+  document (suggested by Henrik Maier).
+- Listing delimited blocks in DocBook outputs now support IDs; IDs of
+  titled Listing and Literal delimited blocks have been moved to the
+  enclosing DocBook example tag (thanks to Vijay Kumar for this
+  patch).
+- Replaced vertical typewriter apostrophe with punctuation apostrophe
+  (thanks to Noah Slater).
+
+.Bug fixes
+- Regression: Excluding double-quotes from unquoted attribute values
+  resulted in backward incompatibility, double-quotes in unquoted
+  attribute values has been reinstated.
+- Regression: Text like `&...;` was sometimes mistaken for an entity
+  reference -- tightened up entity reference matching.
+
+
 Version 8.3.0 (2008-11-29)
 --------------------------
 .Additions and changes

@@ -2,6 +2,8 @@
 # Make file to install/uninstall AsciiDoc
 #
 
+.NOTPARALLEL:
+
 INSTALL = @INSTALL@
 INSTALL_PROG = @INSTALL_PROGRAM@
 INSTALL_DATA = @INSTALL_DATA@

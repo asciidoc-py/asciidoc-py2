@@ -4546,30 +4546,18 @@ Macro attribute lists::
 
     ["Desktop screenshot",width=32]
 
-Combining Separate Documents
+Combining separate documents
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 You have a number of stand-alone AsciiDoc documents that you want to
 process as a single document. Simply processing them with a series of
-`include` macros won't work, because instead of starting at level 1
-the section levels of the combined document start at level 0 (the
-document title level).
+`include` macros won't work because the documents contain (level 0)
+document titles.  The solution is to create a top level wrapper
+document that redefines the document underlines, pushing them down one
+level.  For example `combined.txt`:
 
-The solution is to redefine the title underlines so that document and
-section titles are pushed down one level.
-
-. Push the standard title underlines down one level by defining a new
-  level 0 underline in a custom configuration file. For example
-  `combined.conf`:
-
-  [titles]
-  underlines="__","==","--","~~","^^"
-
-. If you use single line titles you'll need to make corresponding
-  adjustments to the `[titles]` section `sect0`...`sect4` entries.
-
-. Create a top level wrapper document. For example `combined.txt`:
-+
 ---------------------------------------------------------------------
+:titles.underlines: "__","==","--","~~","^^"
+
  Combined Document Title
  _______________________
 
@@ -4580,15 +4568,9 @@ section titles are pushed down one level.
  include::document3.txt[]
 ---------------------------------------------------------------------
 
-. Process the wrapper document. For example:
+The document titles in the included documents will now be processed as
+level 1 section titles.
 
-  $ asciidoc --conf-file=combined.conf combined.txt
-
-Actually the `--conf-file` option is unnecessary as asciidoc(1)
-automatically looks for a same-named `.conf` file.
-
-- The combined document title uses the newly defined level 0 underline
-  (underscore characters).
 - Put a blank line between the `include` macro lines to ensure the
   title of the included document is not seen as part of the last
   paragraph of the previous document.
@@ -4596,11 +4578,11 @@ automatically looks for a same-named `.conf` file.
   included files -- conditionally exclude them if they are necessary
   for stand-alone processing.
 
-Processing Document Sections Separately
+Processing document sections separately
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-You have divided your AsciiDoc document into separate files (one per top level
-section) which are combined and processed with the following top level
-document:
+You have divided your AsciiDoc document into separate files (one per
+top level section) which are combined and processed with the following
+top level document:
 
 ---------------------------------------------------------------------
  Combined Document Title
@@ -4617,39 +4599,30 @@ document:
 
 You also want to process the section files as separate documents.
 This is easy because asciidoc(1) will quite happily process
-`section1.txt`, `section2.txt` and `section3.txt` separately.
+`section1.txt`, `section2.txt` and `section3.txt` separately -- the
+resulting output documents contain the section but have no document
+title.
 
-If you want to promote the section levels up one level, so the
-document is processed just like a stand-alone document, then pop the
-section underline definition up one level:
+Use the `-s` (`--no-header-footer`) command-line option to suppress
+header and footer output, this is useful if the processed output is to
+be included in another file. For example:
 
-  [titles]
-  underlines="--","~~","^^","++","__"
+  $ asciidoc -s -b docbook section1.txt
 
-The last `"__"` underline is a dummy that won't actually be used but
-is necessary to legitimize the underline definition.
-
-This is just the reverse of the technique used for combining separate
-documents explained in the previous section.
-
-Processing Document Chunks
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Processing document snippets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 asciidoc(1) can be used as a filter, so you can pipe chunks of text
 through it. For example:
 
   $ echo 'Hello *World!*' | asciidoc -s -
-  <div class="para"><p>Hello <strong>World!</strong></p></div>
+  <div class="paragraph"><p>Hello <strong>World!</strong></p></div>
 
-The `-s` (`--no-header-footer`) command-line option suppresses header
-and footer output and is useful if the processed output is to be
-included in another file.
-
-Badges in HTML Page Footers
+Badges in HTML page footers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 See the `[footer]` section in the AsciiDoc distribution `xhtml11.conf`
 configuration file.
 
-Pretty Printing AsciiDoc Output
+Pretty printing AsciiDoc output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If the indentation and layout of the asciidoc(1) output is not to your
 liking you can:
@@ -4658,21 +4631,23 @@ liking you can:
    template sections. The `\{empty}` glossary entry is useful for
    outputting trailing blank lines in markup templates.
 
-2. Or use Dave Raggett's excellent 'HTML Tidy' program to tidy
-   asciidoc(1) output. Example:
+2. Use Dave Raggett's http://tidy.sourceforge.net/[HTML Tidy] program
+   to tidy asciidoc(1) output. Example:
 
    $ asciidoc -b docbook -o - mydoc.txt | tidy -indent -xml >mydoc.xml
 
-'HTML Tidy' can be downloaded from http://tidy.sourceforge.net/
+3. Use the `xmllint(1)` format option. Example:
 
-Supporting Minor DocBook DTD Variations
+   $ xmllint --format mydoc.xml
+
+Supporting minor DocBook DTD variations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The conditional inclusion of DocBook SGML markup at the end of the
 distribution `docbook.conf` file illustrates how to support minor DTD
 variations. The included sections override corresponding entries from
 preceding sections.
 
-Shipping Stand-alone AsciiDoc Source
+Shipping stand-alone AsciiDoc source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Reproducing presentation documents from someone else's source has one
 major problem: unless your configuration files are the same as the
@@ -4698,14 +4673,14 @@ The `-e` (`--no-conf`) option excludes the use of implicit
 configuration files, ensuring that only entries from the
 `mydoc-html.conf` configuration are used.
 
-Inserting Blank Space
+Inserting blank space
 ~~~~~~~~~~~~~~~~~~~~~
 Adjust your style sheets to add the correct separation between block
 elements. Inserting blank paragraphs containing a single non-breaking
 space character `\{nbsp}` works but is an ad hoc solution compared
 to using style sheets.
 
-Closing Open Sections
+Closing open sections
 ~~~~~~~~~~~~~~~~~~~~~
 You can close off section tags up to level `N` by calling the
 `eval::[Section.setlevel(N)]` system macro. This is useful if you
@@ -4730,7 +4705,7 @@ example includes a DocBook glossary division at the top section level
 ---------------------------------------------------------------------
 
 
-Validating Output Files
+Validating output files
 ~~~~~~~~~~~~~~~~~~~~~~~
 Use `xmllint(1)` to check the AsciiDoc generated markup is both well
 formed and valid. Here are some examples:

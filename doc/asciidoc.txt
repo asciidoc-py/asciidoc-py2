@@ -3498,7 +3498,8 @@ named attributes):
 - List attributes take precedence over existing attributes.
 - List attributes can only be referenced in configuration file markup
   templates and tags, they are not available inside the document.
-- Attribute references are allowed inside attribute lists.
+- Attribute references are allowed inside attribute lists -- this is
+  the only substitution performed on attribute lists.
 - Setting a named attribute to `None` undefines the attribute.
 - Positional attributes are referred to as `\{1}`,`\{2}`,`\{3}`,...
 - Attribute `\{0}` refers to the entire list (excluding the enclosing

@@ -1166,7 +1166,7 @@ class Document:
                     error('SYNOPSIS section expected')
                 else:
                     Title.translate()
-                    if Title.attributes['title'].upper() <> 'SYNOPSIS':
+                    if Title.attributes['title'].upper() != 'SYNOPSIS':
                         error('second section must be named SYNOPSIS')
                     if Title.level != 1:
                         error('SYNOPSIS section title must be at level 1')
@@ -1323,7 +1323,7 @@ class Header:
                 error('NAME section expected')
             else:
                 Title.translate()
-                if Title.attributes['title'].upper() <> 'NAME':
+                if Title.attributes['title'].upper() != 'NAME':
                     error('first section must be named NAME')
                 if Title.level != 1:
                     error('NAME section title must be at level 1')

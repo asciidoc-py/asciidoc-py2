@@ -1337,8 +1337,6 @@ class Header:
                 attrs['manname'] = mo.group('manname').strip()
                 attrs['manpurpose'] = mo.group('manpurpose').strip()
         document.process_author_names()
-        if document.backend == 'linuxdoc' and not 'author' in attrs:
-            warning('linuxdoc requires author name')
     translate = staticmethod(translate)
 
 class AttributeEntry:
@@ -1749,10 +1747,6 @@ class Section:
         while next and next is not terminator:
             if next is Title and isinstance(terminator,DelimitedBlock):
                 error('title not permitted in sidebar body')
-            if document.backend == 'linuxdoc'   \
-                and document.level == 0         \
-                and not isinstance(next,Paragraph):
-                warning('only paragraphs are permitted in linuxdoc synopsis')
             next.translate()
             next = Lex.next()
             isempty = False
@@ -4688,9 +4682,6 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
     try:
         if doctype not in ('article','manpage','book'):
             raise EAsciiDoc,'illegal document type'
-        if backend == 'linuxdoc' and doctype != 'article':
-            raise EAsciiDoc,'%s %s documents are not supported' \
-                            % (backend,doctype)
         document.backend = backend
         if not os.path.exists(os.path.join(APP_DIR, backend+'.conf')) and not \
                os.path.exists(os.path.join(CONF_DIR, backend+'.conf')):

@@ -7,7 +7,6 @@ under the terms of the GNU General Public License (GPL).
 """
 
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
-from types import *
 
 VERSION = '8.3.1'   # See CHANGLOG file for version history.
 
@@ -308,7 +307,7 @@ def parse_attributes(attrs,dict):
     def f(*args,**keywords):
         # Name and add aguments '1','2'... to keywords.
         for i in range(len(args)):
-            if not keywords.has_key(str(i+1)):
+            if not str(i+1) in keywords:
                 keywords[str(i+1)] = args[i]
         return keywords
 
@@ -743,7 +742,7 @@ def subs_attrs(lines, dictionary=None):
             if n == 0: break
         return result
 
-    if isinstance(lines,StringType):
+    if type(lines) == str:
         string_result = True
         lines = [lines]
     else:
@@ -1338,7 +1337,7 @@ class Header:
                 attrs['manname'] = mo.group('manname').strip()
                 attrs['manpurpose'] = mo.group('manpurpose').strip()
         document.process_author_names()
-        if document.backend == 'linuxdoc' and not attrs.has_key('author'):
+        if document.backend == 'linuxdoc' and not 'author' in attrs:
             warning('linuxdoc requires author name')
     translate = staticmethod(translate)
 
@@ -1428,7 +1427,7 @@ class AttributeList:
     def isnext():
         result = False  # Assume not next.
         if not AttributeList.pattern:
-            if not document.attributes.has_key('attributelist-pattern'):
+            if not 'attributelist-pattern' in document.attributes:
                 error("[attributes] missing 'attributelist-pattern' entry")
             AttributeList.pattern = document.attributes['attributelist-pattern']
         line = reader.read_next()
@@ -1544,7 +1543,7 @@ class Title:
         result = False
         for level in range(len(Title.underlines)):
             k = 'sect%s' % level
-            if Title.dump_dict.has_key(k):
+            if k in Title.dump_dict:
                 mo = re.match(Title.dump_dict[k], lines[0])
                 if mo:
                     Title.attributes = mo.groupdict()
@@ -1578,7 +1577,7 @@ class Title:
                 result = True
         # Check for expected pattern match groups.
         if result:
-            if not Title.attributes.has_key('title'):
+            if not 'title' in Title.attributes:
                 warning('[titles] entry has no <title> group')
                 Title.attributes['title'] = lines[0]
             for k,v in Title.attributes.items():
@@ -1587,7 +1586,7 @@ class Title:
     parse = staticmethod(parse)
     def load(entries):
         """Load and validate [titles] section entries dictionary."""
-        if entries.has_key('underlines'):
+        if 'underlines' in entries:
             errmsg = 'malformed [titles] underlines entry'
             try:
                 underlines = parse_list(entries['underlines'])
@@ -1600,17 +1599,17 @@ class Title:
                     raise EAsciiDoc,errmsg
             Title.underlines = tuple(underlines)
             Title.dump_dict['underlines'] = entries['underlines']
-        if entries.has_key('subs'):
+        if 'subs' in entries:
             Title.subs = parse_options(entries['subs'], SUBS_OPTIONS,
                 'illegal [titles] subs entry')
             Title.dump_dict['subs'] = entries['subs']
-        if entries.has_key('sectiontitle'):
+        if 'sectiontitle' in entries:
             pat = entries['sectiontitle']
             if not pat or not is_regexp(pat):
                 raise EAsciiDoc,'malformed [titles] sectiontitle entry'
             Title.pattern = pat
             Title.dump_dict['sectiontitle'] = pat
-        if entries.has_key('blocktitle'):
+        if 'blocktitle' in entries:
             pat = entries['blocktitle']
             if not pat or not is_regexp(pat):
                 raise EAsciiDoc,'malformed [titles] blocktitle entry'
@@ -1618,7 +1617,7 @@ class Title:
             Title.dump_dict['blocktitle'] = pat
         # Load single-line title patterns.
         for k in ('sect0','sect1','sect2','sect3','sect4'):
-            if entries.has_key(k):
+            if k in entries:
                 pat = entries[k]
                 if not pat or not is_regexp(pat):
                     raise EAsciiDoc,'malformed [titles] %s entry' % k
@@ -1930,7 +1929,7 @@ class AbstractBlock:
         if self.style:
             if not is_name(self.style):
                 raise EAsciiDoc, 'illegal style name: %s' % self.style
-            if not self.styles.has_key(self.style):
+            if not self.style in self.styles:
                 if not isinstance(self,List):   # Lists don't have templates.
                     warning('[%s] \'%s\' style not in %s' % (
                         self.name,self.style,self.styles.keys()))
@@ -1938,7 +1937,7 @@ class AbstractBlock:
         all_styles_have_template = True
         for k,v in self.styles.items():
             t = v.get('template')
-            if t and not config.sections.has_key(t):
+            if t and not t in config.sections:
                 warning('[%s] missing template section' % t)
             if not t:
                 all_styles_have_template = False
@@ -1946,7 +1945,7 @@ class AbstractBlock:
         # styles have templates.
         if self.is_conf_entry('template') and not 'skip' in self.options:
             if self.template:
-                if not config.sections.has_key(self.template):
+                if not self.template in config.sections:
                     warning('[%s] missing template section' % self.template)
             elif not all_styles_have_template:
                 if not isinstance(self,List): # Lists don't have templates.
@@ -2020,19 +2019,19 @@ class AbstractBlock:
         if style:
             if not is_name(style):
                 raise EAsciiDoc, 'illegal style name: %s' % style
-            if self.styles.has_key(style):
+            if style in self.styles:
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():
                     if k == 'posattrs':
                         posattrs = v
                     elif k in params:
                         self.parameters[k] = v
-                    elif not self.attributes.has_key(k):
+                    elif not k in self.attributes:
                         # Style attributes don't take precedence over explicit.
                         self.attributes[k] = v
         # Set named positional attributes.
         for i,v in enumerate(posattrs):
-            if self.attributes.has_key(str(i+1)):
+            if str(i+1) in self.attributes:
                 self.attributes[v] = self.attributes[str(i+1)]
         # Override config and style attributes with attribute list attributes.
         self.update_parameters(attrs)
@@ -2380,7 +2379,7 @@ class Lists(AbstractBlocks):
             mo = re.match(r'^listtags-(?P<name>\w+)$',section)
             if mo:
                 name = mo.group('name')
-                if self.tags.has_key(name):
+                if name in self.tags:
                     d = self.tags[name]
                 else:
                     d = AttrDict()
@@ -2904,7 +2903,7 @@ class Tables(AbstractBlocks):
             mo = re.match(r'^tabletags-(?P<name>\w+)$',section)
             if mo:
                 name = mo.group('name')
-                if self.tags.has_key(name):
+                if name in self.tags:
                     d = self.tags[name]
                 else:
                     d = AttrDict()
@@ -3074,7 +3073,7 @@ class Macro:
             suffix = '-blockmacro'
         else:
             suffix = '-inlinemacro'
-        if config.sections.has_key(name+suffix):
+        if name+suffix in config.sections:
             return name+suffix
         else:
             warning('missing macro section: [%s]' % (name+suffix))
@@ -3129,7 +3128,7 @@ class Macro:
             if self.name:
                 name = self.name
             else:
-                if not d.has_key('name'):
+                if not 'name' in d:
                     warning('missing macro name group: %s' % mo.re.pattern)
                     return ''
                 name = d['name']
@@ -3142,7 +3141,7 @@ class Macro:
                 AttributeList.consume(d)
                 BlockTitle.consume(d)
             # Parse macro attributes.
-            if d.has_key('attrlist'):
+            if 'attrlist' in d:
                 if d['attrlist'] in (None,''):
                     del d['attrlist']
                 else:
@@ -3160,8 +3159,8 @@ class Macro:
                 listindex =int(d['index'])
                 d['coid'] = calloutmap.add(listindex)
             # Unescape special characters in LaTeX target file names.
-            if document.backend == 'latex' and d.has_key('target') and d['target']:
-                if not d.has_key('0'):
+            if document.backend == 'latex' and 'target' in d and d['target']:
+                if not '0' in d:
                     d['0'] = d['target']
                 d['target']= config.subs_specialchars_reverse(d['target'])
             # BUG: We've already done attribute substitution on the macro which
@@ -3217,7 +3216,7 @@ class Macro:
             if mo.group()[0] == '\\':
                 return mo.group()
             d = mo.groupdict()
-            if not d.has_key('passtext'):
+            if not 'passtext' in d:
                 warning('passthrough macro %s: missing passtext group' %
                         d.get('name',''))
                 return mo.group()
@@ -3261,7 +3260,7 @@ class CalloutMap:
         # Add next callout index to listindex map entry. Return the callout id.
         self.calloutindex += 1
         # Append the coindex to a list in the comap dictionary.
-        if not self.comap.has_key(listindex):
+        if not listindex in self.comap:
             self.comap[listindex] = [self.calloutindex]
         else:
             self.comap[listindex].append(self.calloutindex)
@@ -3271,7 +3270,7 @@ class CalloutMap:
     calloutid = staticmethod(calloutid)
     def calloutids(self,listindex):
         # Retieve list of callout indexes that refer to listindex.
-        if self.comap.has_key(listindex):
+        if listindex in self.comap:
             result = ''
             for coindex in self.comap[listindex]:
                 result += ' ' + self.calloutid(self.listnumber,coindex)
@@ -3385,13 +3384,13 @@ class Reader1:
                 assign(parent,self)
                 self.parent = parent
                 # Set attributes in child.
-                if attrs.has_key('tabsize'):
+                if 'tabsize' in attrs:
                     self.tabsize = int(validate(attrs['tabsize'],
                         'int($)>=0',
                         'illegal include macro tabsize argument'))
                 else:
                     self.tabsize = config.tabsize
-                if attrs.has_key('depth'):
+                if 'depth' in attrs:
                     attrs['depth'] = int(validate(attrs['depth'],
                         'int($)>=1',
                         'illegal include macro depth argument'))
@@ -3649,7 +3648,7 @@ def _subs_specialwords(mo):
     Config.subs_specialwords()."""
     word = mo.re.pattern                    # The special word.
     template = config.specialwords[word]    # The corresponding markup template.
-    if not config.sections.has_key(template):
+    if not template in config.sections:
         raise EAsciiDoc,'missing special word template [%s]' % template
     if mo.group()[0] == '\\':
         return mo.group()[1:]   # Return escaped word.
@@ -3737,7 +3736,7 @@ class Config:
             found = reo.findall(s)
             if found:
                 if section:             # Store previous section.
-                    if sections.has_key(section) \
+                    if section in sections \
                         and self.entries_section(section):
                         if ''.join(contents):
                             # Merge entries.
@@ -3751,7 +3750,7 @@ class Config:
             else:
                 contents.append(s)
         if section and contents:        # Store last section.
-            if sections.has_key(section) \
+            if section in sections \
                 and self.entries_section(section):
                 if ''.join(contents):
                     # Merge entries.
@@ -3826,7 +3825,7 @@ class Config:
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""
         def set_misc(name,rule='True',intval=False):
-            if d.has_key(name):
+            if name in d:
                 errmsg = 'illegal [miscellaneous] %s entry' % name
                 if intval:
                     setattr(self, name, int(validate(d[name],rule,errmsg)))
@@ -3837,14 +3836,14 @@ class Config:
         set_misc('pagewidth','int($)>0',intval=True)
         set_misc('pageunits')
         set_misc('outfilesuffix')
-        if d.has_key('newline'):
+        if 'newline' in d:
             # Convert escape sequences to their character values.
             self.newline = eval('"'+d['newline']+'"')
-        if d.has_key('subsnormal'):
+        if 'subsnormal' in d:
             self.subsnormal = parse_options(d['subsnormal'],SUBS_OPTIONS,
                     'illegal [%s] %s: %s' %
                     ('miscellaneous','subsnormal',d['subsnormal']))
-        if d.has_key('subsverbatim'):
+        if 'subsverbatim' in d:
             self.subsverbatim = parse_options(d['subsverbatim'],SUBS_OPTIONS,
                     'illegal [%s] %s: %s' %
                     ('miscellaneous','subsverbatim',d['subsverbatim']))
@@ -3864,7 +3863,7 @@ class Config:
         for macro in self.specialwords.values():
             if not is_name(macro):
                 raise EAsciiDoc,'illegal special word name: %s' % macro
-            if not self.sections.has_key(macro):
+            if not macro in self.sections:
                 warning('missing special word macro: [%s]' % macro)
         # Check all text quotes have a corresponding tag.
         for q in self.quotes.keys():
@@ -3874,11 +3873,11 @@ class Config:
             else:
                 if tag[0] == '#':
                     tag = tag[1:]
-                if not self.tags.has_key(tag):
+                if not tag in self.tags:
                     warning('[quotes] %s missing tag definition: %s' % (q,tag))
         # Check all specialsections section names exist.
         for k,v in self.specialsections.items():
-            if not self.sections.has_key(v):
+            if not v in self.sections:
                 warning('[%s] missing specialsections section' % v)
         paragraphs.validate()
         lists.validate()
@@ -3920,7 +3919,7 @@ class Config:
         dump_section('specialcharacters',self.specialchars)
         d = {}
         for k,v in self.specialwords.items():
-            if d.has_key(v):
+            if v in d:
                 d[v] = '%s "%s"' % (d[v],k)   # Append word list.
             else:
                 d[v] = '"%s"' % k
@@ -3950,7 +3949,7 @@ class Config:
         """Section attribute substitution using attributes from
         document.attributes and 'd'.  Lines containing undefinded
         attributes are deleted."""
-        if self.sections.has_key(section):
+        if section in self.sections:
             return subs_attrs(self.sections[section],d)
         else:
             warning('missing [%s] section' % section)
@@ -3962,7 +3961,7 @@ class Config:
         parse_entries(self.sections.get('tags',()),d)
         for k,v in d.items():
             if v is None:
-                if self.tags.has_key(k):
+                if k in self.tags:
                     del self.tags[k]
             elif v == '':
                 self.tags[k] = (None,None)
@@ -3986,7 +3985,7 @@ class Config:
         # split_tag() and would call subs_tag(). self.tags dictionary values
         # would be strings not tuples.
 
-        if not self.tags.has_key(name):
+        if not name in self.tags:
             raise EAsciiDoc, 'missing tag: %s' % name
         stag,etag = self.tags[name]
         if d is not None:
@@ -4011,7 +4010,7 @@ class Config:
                 raise EAsciiDoc,'[specialsections] entry ' \
                                 'is not a valid regular expression: %s' % pat
             if sectname is None:
-                if self.specialsections.has_key(pat):
+                if pat in self.specialsections:
                     del self.specialsections[pat]
             else:
                 self.specialsections[pat] = sectname
@@ -4031,7 +4030,7 @@ class Config:
         if not is_regexp(pat):
             return False
         if rep is None:
-            if replacements.has_key(pat):
+            if pat in replacements:
                 del replacements[pat]
         else:
             replacements[pat] = strip_quotes(rep)
@@ -4104,7 +4103,7 @@ class Config:
             mo = macros.match('+',r'template',line)
             if mo:
                 s = mo.group('attrlist')
-                if self.sections.has_key(s):
+                if s in self.sections:
                     result += self.sections[s]
                 else:
                     warning('missing [%s] section' % s)
@@ -4121,7 +4120,7 @@ class Config:
         attributes plus 'd' attributes. Return tuple (stag,etag) containing
         pre and post | placeholder tags."""
         assert section is not None
-        if self.sections.has_key(section):
+        if section in self.sections:
             body = self.sections[section]
         else:
             warning('missing [%s] section' % section)

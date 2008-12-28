@@ -3053,7 +3053,7 @@ class Macro:
         self.name = ''          # Conf file macro name (None if implicit).
         self.prefix = ''        # '' if inline, '+' if system, '#' if block.
         self.reo = None         # Compiled pattern re object.
-        self.subslist = None    # Default subs for macros passtext group.
+        self.subslist = []      # Default subs for macros passtext group.
     def has_passthrough(self):
         return self.pattern.find(r'(?P<passtext>') >= 0
     def section_name(self,name=None):
@@ -3105,7 +3105,7 @@ class Macro:
         self.reo = re.compile(pattern)
         self.prefix = prefix
         self.name = name
-        self.subslist = subslist
+        self.subslist = subslist or []
 
     def subs(self,text):
         def subs_func(mo):

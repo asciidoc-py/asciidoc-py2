@@ -2370,7 +2370,7 @@ a markup template. If `<name>` is omitted then it is the value of the
 regular expression match group named 'name'.  The optional
 `[<subslist]` is a comma-separated list of substitution names enclosed
 in `[]` brackets, it sets the default substitutions for passthrough
-text.
+text, if omitted then no passthrough substitutions are performed.
 
 .Pattern named groups
 The following named groups can be used in macro `<pattern>` regular

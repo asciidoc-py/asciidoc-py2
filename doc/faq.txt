@@ -59,6 +59,9 @@ document add the following lines to the AsciiDoc source:
 image::barchart.png[]
 ---------------------------------------------------------------------
 
+NOTE: You need to run asciidoc(1) with the `--unsafe` command-line
+option to execute the `sys2` system macro.
+
 
 == How can I render indented paragraphs?
 

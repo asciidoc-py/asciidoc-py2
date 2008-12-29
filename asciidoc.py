@@ -2095,8 +2095,8 @@ class Paragraph(AbstractBlock):
         return result
     def translate(self):
         AbstractBlock.translate(self)
-        attrs = {}
-        attrs.update(self.mo.groupdict())
+        attrs = self.mo.groupdict().copy()
+        if 'text' in attrs: del attrs['text']
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
         self.merge_attributes(attrs)
@@ -2309,8 +2309,9 @@ class List(AbstractBlock):
         if self.short_name() in ('bibliography','glossary','qanda'):
             deprecated('old %s list syntax' % self.short_name())
         lists.open.append(self)
-        attrs = {}
-        attrs.update(self.mo.groupdict())
+        attrs = self.mo.groupdict().copy()
+        for k in ('label','text','index'):
+            if k in attrs: del attrs[k]
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
         self.merge_attributes(attrs,['tags'])

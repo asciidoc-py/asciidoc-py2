@@ -691,12 +691,12 @@ Put \^carets on either^ side of the text to be superscripted, put
 \~tildes on either side~ of text to be subscripted.  For example, the
 following line:
 
-  e^{amp}#960;i^+1 = 0. H~2~O and x^10^. Some ^super text^
+  e^&#960;i^+1 = 0. H~2~O and x^10^. Some ^super text^
   and ~some sub text~
 
 Is rendered like:
 
-e^{amp}#960;i^+1 = 0. H~2~O and x^10^. Some ^super text^
+e^&#960;i^+1 = 0. H~2~O and x^10^. Some ^super text^
 and ~some sub text~
 
 Superscripts and subscripts are implemented as <<X52,unconstrained

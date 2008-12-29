@@ -2955,15 +2955,15 @@ class Tables(AbstractBlocks):
 
 class Macros:
     # Default system macro syntax.
-    SYS_DEFAULT = r'(?u)^(?P<name>\w(\w|-)*?)::(?P<target>\S*?)' + \
-                  r'(\[(?P<attrlist>.*?)\])$'
+    SYS_RE = r'(?u)^(?P<name>[\\]?\w(\w|-)*?)::(?P<target>\S*?)' + \
+             r'(\[(?P<attrlist>.*?)\])$'
     def __init__(self):
         self.macros = []        # List of Macros.
         self.current = None     # The last matched block macro.
         self.passthroughs = []
         # Initialize default system macro.
         m = Macro()
-        m.pattern = self.SYS_DEFAULT
+        m.pattern = self.SYS_RE
         m.prefix = '+'
         m.reo = re.compile(m.pattern)
         self.macros.append(m)
@@ -3492,6 +3492,10 @@ class Reader(Reader1):
                 if s is not None:
                     self.cursor[2] = s  # So we don't re-evaluate.
                     result = s
+        if result:
+            # Unescape escaped system macros.
+            if macros.match('+',r'\\eval|\\sys|\\sys2|\\ifdef|\\ifndef|\\endif|\\include|\\include1',result):
+                result = result[1:]
         return result
     def eof(self):
         return self.read_next() is None

@@ -2173,7 +2173,7 @@ System Macros
 System macros are block macros that perform a predefined task which is
 hardwired into the asciidoc(1) program.
 
-- You can't escape system macros with a leading backslash character
+- You can escape system macros with a leading backslash character
   (as you can with other macros).
 - The syntax and tasks performed by system macros is built into
   asciidoc(1) so they don't appear in configuration files.  You can
@@ -4690,21 +4690,20 @@ example includes a DocBook glossary division at the top section level
 (level 0):
 
 ---------------------------------------------------------------------
-  ifdef::backend-docbook[]
+\ifdef::backend-docbook[]
 
-  eval::[Section.setlevel(0)]
+\eval::[Section.setlevel(0)]
 
-  +++++++++++++++++++++++++++++++
-  <glossary>
-    <title>Glossary</title>
-    <glossdiv>
-    ...
-    </glossdiv>
-  </glossary>
-  +++++++++++++++++++++++++++++++
-  endif::backend-docbook[]
++++++++++++++++++++++++++++++++
+<glossary>
+  <title>Glossary</title>
+  <glossdiv>
+  ...
+  </glossdiv>
+</glossary>
++++++++++++++++++++++++++++++++
+\endif::backend-docbook[]
 ---------------------------------------------------------------------
-
 
 Validating output files
 ~~~~~~~~~~~~~~~~~~~~~~~

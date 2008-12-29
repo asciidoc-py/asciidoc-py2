@@ -52,11 +52,11 @@ To execute the script and include the generated chart image in your
 document add the following lines to the AsciiDoc source:
 
 ---------------------------------------------------------------------
- // Generate chart image file.
- sys2::[python barchart.py --format=png --output=barchart.png --scale=2]
+// Generate chart image file.
+\sys2::[python barchart.py --format=png --output=barchart.png --scale=2]
 
- // Display chart image file.
- image::barchart.png[]
+// Display chart image file.
+image::barchart.png[]
 ---------------------------------------------------------------------
 
 

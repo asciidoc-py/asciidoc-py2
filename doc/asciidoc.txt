@@ -1866,12 +1866,12 @@ the `test.py` source file (containing a single callout) using the
 
 .AsciiDoc source
 ---------------------------------------------------------------------
- [source,python]
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- include::test.py[]
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[source,python]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\include::test.py[]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
- \<1> Print statement.
+\<1> Print statement.
 ---------------------------------------------------------------------
 
 .Included `test.py` source
@@ -2195,7 +2195,7 @@ verbatim embedded CSS or scripts into configuration file headers.
 Example:
 
 ------------------------------------
- include::chapter1.txt[tabsize=4]
+\include::chapter1.txt[tabsize=4]
 ------------------------------------
 
 .Include macro behavior
@@ -2546,11 +2546,11 @@ include::customers.csv[]
 AsciiDoc source:
 
 ---------------------------------------------------------------------
- [format="csv",cols="^1,4*2",options="header"]
- |===================================================
- ID,Customer Name,Contact Name,Customer Address,Phone
- include::customers.csv[]
- |===================================================
+[format="csv",cols="^1,4*2",options="header"]
+|===================================================
+ID,Customer Name,Contact Name,Customer Address,Phone
+\include::customers.csv[]
+|===================================================
 ---------------------------------------------------------------------
 
 
@@ -4559,14 +4559,14 @@ level.  For example `combined.txt`:
 ---------------------------------------------------------------------
 :titles.underlines: "__","==","--","~~","^^"
 
- Combined Document Title
- _______________________
+Combined Document Title
+_______________________
 
- include::document1.txt[]
+\include::document1.txt[]
 
- include::document2.txt[]
+\include::document2.txt[]
 
- include::document3.txt[]
+\include::document3.txt[]
 ---------------------------------------------------------------------
 
 The document titles in the included documents will now be processed as
@@ -4586,16 +4586,16 @@ top level section) which are combined and processed with the following
 top level document:
 
 ---------------------------------------------------------------------
- Combined Document Title
- =======================
- Joe Bloggs
- v1.0, 12-Aug-03
+Combined Document Title
+=======================
+Joe Bloggs
+v1.0, 12-Aug-03
 
- include::section1.txt[]
+\include::section1.txt[]
 
- include::section2.txt[]
+\include::section2.txt[]
 
- include::section3.txt[]
+\include::section3.txt[]
 ---------------------------------------------------------------------
 
 You also want to process the section files as separate documents.
@@ -4788,7 +4788,7 @@ asciidoc(1) `--unsafe` command-line option.
 .Safe mode constraints
 - `eval`, `sys` and `sys2` executable attributes and block macros are
   not executed.
-- `\include::<filename>[]` and `\include1::<filename>[]` block macro
+- `include::<filename>[]` and `\include1::<filename>[]` block macro
   files must reside inside the parent file's directory.
 - `\{include:<filename>}` executable attribute files must reside
   inside the source document directory.

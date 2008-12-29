@@ -220,11 +220,20 @@ dd > *:first-child {
 ul, ol {
     list-style-position: outside;
 }
-div.olist > ol {
+ol.arabic {
   list-style-type: decimal;
 }
-div.olist2 > ol {
+ol.loweralpha {
   list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
 }
 
 div.compact ul, div.compact ol,

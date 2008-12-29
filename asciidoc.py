@@ -2146,7 +2146,7 @@ class List(AbstractBlock):
         self.PARAM_NAMES += ('tags',)
         # tabledef conf file parameters.
         self.type=None
-        self.tags=None          # Name of listtags-<tags> conf section.
+        self.tags=None      # Name of listtags-<tags> conf section.
         # Calculated parameters.
         self.tag=None       # Current tags AttrDict.
         self.label=None     # List item label (labeled lists).

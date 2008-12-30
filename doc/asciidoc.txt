@@ -1326,17 +1326,36 @@ space or tab character. Bulleted list syntaxes are:
 * List item.
 ...................
 
-Numbered list items start with an optional number or letter followed
-by a period followed by a space or tab character.  List numbering is
-optional. Numbered list syntaxes are:
+There are two numbered list item syntaxes:
+
+. List items beginning with a single period followed by a space. The
+  period can be preceded by an optional decimal number.  By default
+  items are rendered with an arabic (decimal) numbered style, use the
+  <<X74,numeration attribute>> to specify an alternative number style.
+. List items beginning with two periods followed by a space. An alpha
+  character or a roman number (upper or lower case) can optionally be
+  used instead of the first period:
+  * An attempt is made to set the number style based on number style
+    of the first list item.
+  * The default style is lowercase alpha.
+  * You can also use the <<X74,numeration2 attribute>> to specify an
+    alternative number style.
+
+Examples of numbered list items:
+
 .....................................................................
-.  Integer numbered list item.
-1. Integer numbered list item with optional numbering.
-.. Lowercase letter numbered list item.
-a. Lowercase letter numbered list item with optional numbering.
+.    Integer numbered list item.
+1.   Integer numbered list item.
+..   Lowercase letter numbered list item.
+A.   Uppercase letter numbered list item.
+iii. Lowercase roman numbered list item.
 .....................................................................
 
-Here are some examples:
+NOTE: The optional list item numbering is just syntactic sugar -- the
+list item numbering style is determined by the 'numeration' and
+'numeration2' attributes *not* the optional list item numbering.
+
+Here are some examples of bulleted and numbered lists:
 ---------------------------------------------------------------------
 - Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
   * Fusce euismod commodo velit.
@@ -4912,6 +4931,11 @@ Here is the list of predefined <<X75,attribute list options>>:
 
 |compact |docbook, xhtml11 |bulleted list, numbered list|
 Minimizes vertical space in the list
+
+|enumeration, enumeration2 |docbook, xhtml11, html4 |numbered list|
+The following values can be used to set the numbering style of
+numbered list items: 'arabic', 'loweralpha', 'upperalpha',
+'lowerroman', 'upperroman'.
 
 |strong |xhtml11,html4 |labeled lists|
 Emboldens label text.

@@ -1,7 +1,7 @@
-personal_ws-1.1 en 723 
+personal_ws-1.1 en 728 
 Sturmer
-Kleber
 Kléber
+Kleber
 quis
 auctor
 linkcss
@@ -12,8 +12,8 @@ BOLID
 callouts
 bulleted
 starttags
-listingblock
 ListingBlock
+listingblock
 eval
 ListLabel
 asc
@@ -112,6 +112,7 @@ dsv
 O'Reilly
 dvi
 CommentBlocks
+lowerroman
 gif
 Builtin
 tabledef
@@ -121,8 +122,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-MiddleName
 middlename
+MiddleName
 subdirectories
 footnoteref
 passtext
@@ -142,8 +143,8 @@ entrytbl
 Ghostscript
 verear
 Buenos
-linuxdoc
 LinuxDoc
+linuxdoc
 PostScript
 hhp
 Vijay
@@ -156,8 +157,9 @@ fermentum
 ListingBlocks
 GPL
 hsides
-Bolido
+upperalpha
 Bólido
+Bolido
 footrow
 misspelt
 WINNT
@@ -169,8 +171,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-VerbatimBlock
 verbatimblock
+VerbatimBlock
 shiftwidth
 misevaluations
 asciidocEmphasized
@@ -299,6 +301,7 @@ rewriteURI
 formatlistpat
 Konqueror
 pageunit
+upperroman
 Blauer
 backmatter
 stdin
@@ -444,11 +447,12 @@ RTF
 DSSSL
 fileext
 WINA
+arabic
 fringilla
 retab
 BackendBlocks
-changelog
 ChangeLog
+changelog
 tis
 Ubuntu
 sectids
@@ -466,8 +470,8 @@ Vasilev
 crlf
 vel
 localtime
-blockmacro
 BlockMacro
+blockmacro
 Xandros
 groff
 POSIX
@@ -510,8 +514,8 @@ dbtimestamp
 txt
 BlockId
 passthrough
-Berguvsvagen
 Berguvsvägen
+Berguvsvagen
 noincsearch
 TableRow
 inlinemediaobject
@@ -559,9 +563,9 @@ Redhat
 cb
 tuple
 cd
-ASCIIMathML
-AsciiMathML
 asciimathml
+AsciiMathML
+ASCIIMathML
 arounds
 filename
 mansource
@@ -577,8 +581,8 @@ scaledwidth
 cp
 xsl
 fb
-docbook
 DocBook
+docbook
 stylesheet
 pagefile
 superscripted
@@ -596,8 +600,8 @@ fprintf
 colabswidth
 tabsize
 smallnew
-blocktitles
 BlockTitles
+blocktitles
 localdate
 bodyrow
 hs
@@ -647,8 +651,8 @@ permalink
 td
 py
 AROUT
-LiteralBlock
 literalblock
+LiteralBlock
 sgml
 biggy
 softtabstop
@@ -664,8 +668,8 @@ tt
 blandit
 inline
 Martín
-sectionbody
 SectionBody
+sectionbody
 VM
 conformant
 listchars
@@ -708,11 +712,12 @@ nbsp
 qanda
 noout
 massa
-asciidoc
 AsciiDoc
+asciidoc
 manmanual
 TableBody
 realpath
+loweralpha
 labitur
 prepended
 builtins

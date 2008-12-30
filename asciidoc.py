@@ -109,22 +109,19 @@ def verbose(msg,linenos=True):
     if config.verbose:
         console(msg,linenos=linenos)
 
-def warning(msg,linenos=True):
-    console(msg,'WARNING: ',linenos)
+def warning(msg,linenos=True,offset=0):
+    console(msg,'WARNING: ',linenos,offset=offset)
     document.has_warnings = True
 
 def deprecated(msg, linenos=True):
     console(msg, 'DEPRECATED: ', linenos)
 
-def message(msg, prefix='', linenos=True, cursor=None):
-    """
-    Return formatted message string. 'offset' is added to reported line number
-    for warnings emitted when reading ahead.
-    """
+def message(msg, prefix='', linenos=True, cursor=None, offset=0):
+    """Return formatted message string."""
     if linenos and reader.cursor:
         if not cursor:
             cursor = reader.cursor
-        prefix += '%s: line %d: ' % (os.path.basename(cursor[0]),cursor[1])
+        prefix += '%s: line %d: ' % (os.path.basename(cursor[0]),cursor[1]+offset)
     return prefix + msg
 
 def error(msg, cursor=None, halt=False):
@@ -140,8 +137,8 @@ def error(msg, cursor=None, halt=False):
         console(msg,'ERROR: ',cursor=cursor)
         document.has_errors = True
 
-def console(msg, prefix='', linenos=True, cursor=None):
-    print_stderr(message(msg,prefix,linenos,cursor))
+def console(msg, prefix='', linenos=True, cursor=None, offset=0):
+    print_stderr(message(msg,prefix,linenos,cursor,offset))
 
 def file_in(fname, directory):
     """Return True if file fname resides inside directory."""
@@ -928,6 +925,7 @@ class Lex:
     prev_cursor = None
     def __init__(self):
         raise AssertionError,'no class instances allowed'
+    @staticmethod
     def next():
         """Returns class of next element on the input (None if EOF).  The
         reader is assumed to be at the first line following a previous element,
@@ -980,8 +978,8 @@ class Lex:
         Lex.prev_cursor = reader.cursor
         Lex.prev_element = result
         return result
-    next = staticmethod(next)
 
+    @staticmethod
     def subs_1(s,options):
         """Perform substitution specified in 'options' (in 'options' order) on
         Does not process 'attributes' substitutions."""
@@ -1010,8 +1008,8 @@ class Lex:
             if not result:
                 break
         return result
-    subs_1 = staticmethod(subs_1)
 
+    @staticmethod
     def subs(lines,options):
         """Perform inline processing specified by 'options' (in 'options'
         order) on sequence of 'lines'."""
@@ -1039,8 +1037,8 @@ class Lex:
         if 'macros' in options:
             para = macros.restore_passthroughs(para)
         return para.splitlines()
-    subs = staticmethod(subs)
 
+    @staticmethod
     def set_margin(lines, margin=0):
         """Utility routine that sets the left margin to 'margin' space in a
         block of non-blank lines."""
@@ -1054,7 +1052,6 @@ class Lex:
         for i in range(len(lines)):
             lines[i] = ' '*margin + lines[i][width:]
         return lines
-    set_margin = staticmethod(set_margin)
 
 #---------------------------------------------------------------------------
 # Document element classes parse AsciiDoc reader input and write DocBook writer
@@ -1271,6 +1268,7 @@ class Header:
     """Static methods and attributes only."""
     def __init__(self):
         raise AssertionError,'no class instances allowed'
+    @staticmethod
     def translate():
         assert Lex.next() is Title and Title.level == 0
         Title.translate()
@@ -1337,7 +1335,6 @@ class Header:
                 attrs['manname'] = mo.group('manname').strip()
                 attrs['manpurpose'] = mo.group('manpurpose').strip()
         document.process_author_names()
-    translate = staticmethod(translate)
 
 class AttributeEntry:
     """Static methods and attributes only."""
@@ -1348,6 +1345,7 @@ class AttributeEntry:
     value = None
     def __init__(self):
         raise AssertionError,'no class instances allowed'
+    @staticmethod
     def isnext():
         result = False  # Assume not next.
         if not AttributeEntry.pattern:
@@ -1374,7 +1372,7 @@ class AttributeEntry:
                 AttributeEntry.value = AttributeEntry.value.strip()
                 result = True
         return result
-    isnext = staticmethod(isnext)
+    @staticmethod
     def translate():
         assert Lex.next() is AttributeEntry
         attr = AttributeEntry   # Alias for brevity.
@@ -1408,12 +1406,11 @@ class AttributeEntry:
                 document.attributes[attr.name] = attr.value
             elif attr.name in document.attributes:
                 del document.attributes[attr.name]
-    translate = staticmethod(translate)
+    @staticmethod
     def translate_all():
         """ Process all contiguous attribute lines on reader."""
         while AttributeEntry.isnext():
             AttributeEntry.translate()
-    translate_all = staticmethod(translate_all)
 
 class AttributeList:
     """Static methods and attributes only."""
@@ -1422,6 +1419,7 @@ class AttributeList:
     attrs = {}
     def __init__(self):
         raise AssertionError,'no class instances allowed'
+    @staticmethod
     def isnext():
         result = False  # Assume not next.
         if not AttributeList.pattern:
@@ -1435,7 +1433,7 @@ class AttributeList:
                 AttributeList.match = mo
                 result = True
         return result
-    isnext = staticmethod(isnext)
+    @staticmethod
     def translate():
         assert Lex.next() is AttributeList
         reader.read()   # Discard attribute list from reader.
@@ -1448,7 +1446,7 @@ class AttributeList:
                         parse_attributes(v, AttributeList.attrs)
                 else:
                     AttributeList.attrs[k] = v
-    translate = staticmethod(translate)
+    @staticmethod
     def consume(d):
         """Add attribute list to the dictionary 'd' and reset the
         list."""
@@ -1460,7 +1458,6 @@ class AttributeList:
                 options = parse_options(d['options'], (), 'illegal option name')
                 for option in options:
                     d[option+'-option'] = ''
-    consume = staticmethod(consume)
 
 class BlockTitle:
     """Static methods and attributes only."""
@@ -1468,6 +1465,7 @@ class BlockTitle:
     pattern = None
     def __init__(self):
         raise AssertionError,'no class instances allowed'
+    @staticmethod
     def isnext():
         result = False  # Assume not next.
         line = reader.read_next()
@@ -1477,7 +1475,7 @@ class BlockTitle:
                 BlockTitle.title = mo.group('title')
                 result = True
         return result
-    isnext = staticmethod(isnext)
+    @staticmethod
     def translate():
         assert Lex.next() is BlockTitle
         reader.read()   # Discard title from reader.
@@ -1489,13 +1487,12 @@ class BlockTitle:
         if not s:
             warning('blank block title')
         BlockTitle.title = s
-    translate = staticmethod(translate)
+    @staticmethod
     def consume(d):
         """If there is a title add it to dictionary 'd' then reset title."""
         if BlockTitle.title:
             d['title'] = BlockTitle.title
             BlockTitle.title = None
-    consume = staticmethod(consume)
 
 class Title:
     """Processes Header and Section titles. Static methods and attributes
@@ -1512,6 +1509,7 @@ class Title:
     linecount = None    # Number of lines in title (1 or 2).
     def __init__(self):
         raise AssertionError,'no class instances allowed'
+    @staticmethod
     def translate():
         """Parse the Title.attributes and Title.level from the reader. The
         real work has already been done by parse()."""
@@ -1528,11 +1526,11 @@ class Title:
         if not s:
             warning('blank section title')
         Title.attributes['title'] = s
-    translate = staticmethod(translate)
+    @staticmethod
     def isnext():
         lines = reader.read_ahead(2)
         return Title.parse(lines)
-    isnext = staticmethod(isnext)
+    @staticmethod
     def parse(lines):
         """Parse title at start of lines tuple."""
         if len(lines) == 0: return False
@@ -1581,7 +1579,7 @@ class Title:
             for k,v in Title.attributes.items():
                 if v is None: del Title.attributes[k]
         return result
-    parse = staticmethod(parse)
+    @staticmethod
     def load(entries):
         """Load and validate [titles] section entries dictionary."""
         if 'underlines' in entries:
@@ -1623,10 +1621,10 @@ class Title:
         # TODO: Check we have either a Title.pattern or at least one
         # single-line title pattern -- can this be done here or do we need
         # check routine like the other block checkers?
-    load = staticmethod(load)
+    @staticmethod
     def dump():
         dump_section('titles',Title.dump_dict)
-    dump = staticmethod(dump)
+    @staticmethod
     def setsectname():
         """Set Title section name. First search for section title in
         [specialsections], if not found use default 'sect<level>' name."""
@@ -1642,7 +1640,7 @@ class Title:
                 break
         else:
             Title.sectname = 'sect%d' % Title.level
-    setsectname = staticmethod(setsectname)
+    @staticmethod
     def getnumber(level):
         """Return next section number at section 'level' formatted like
         1.2.3.4."""
@@ -1660,7 +1658,6 @@ class Title:
                 # Reset unprocessed section levels.
                 Title.section_numbers[l] = 0
         return number
-    getnumber = staticmethod(getnumber)
 
 
 class Section:
@@ -1669,16 +1666,17 @@ class Section:
     ids = []      # List of already used ids.
     def __init__(self):
         raise AssertionError,'no class instances allowed'
+    @staticmethod
     def savetag(level,etag):
         """Save section end."""
         Section.endtags.append((level,etag))
-    savetag = staticmethod(savetag)
+    @staticmethod
     def setlevel(level):
         """Set document level and write open section close tags up to level."""
         while Section.endtags and Section.endtags[-1][0] >= level:
             writer.write(Section.endtags.pop()[1])
         document.level = level
-    setlevel = staticmethod(setlevel)
+    @staticmethod
     def gen_id(title):
         """
         The normalized value of the id attribute is an NCName according to
@@ -1705,7 +1703,7 @@ class Section:
             else:
                 ident = base_ident
             i += 1
-    gen_id = staticmethod(gen_id)
+    @staticmethod
     def translate():
         assert Lex.next() is Title
         prev_sectname = Title.sectname
@@ -1740,7 +1738,7 @@ class Section:
         Section.savetag(Title.level,etag)
         writer.write(stag)
         Section.translate_body()
-    translate = staticmethod(translate)
+    @staticmethod
     def translate_body(terminator=Title):
         isempty = True
         next = Lex.next()
@@ -1757,7 +1755,6 @@ class Section:
         if isempty:
             if document.backend == 'docbook' and Title.sectname != 'sect-index':
                 error('empty section is not valid')
-    translate_body = staticmethod(translate_body)
 
 class AbstractBlock:
     def __init__(self):
@@ -2152,8 +2149,9 @@ class List(AbstractBlock):
         self.label=None     # List item label (labeled lists).
         self.text=None      # Text in first line of list item.
         self.index=None     # Matched delimiter 'index' group (numbered lists).
-        self.type=None      # List type.
+        self.type=None      # List type ('numbered','bulleted','labeled').
         self.listindex=None # Current list index (1..)
+        self.number_style=None  # Numbered list number style ('arabic'..)
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2281,21 +2279,63 @@ class List(AbstractBlock):
             else:
                 break
         writer.write(itemtag[1])
+
+    @staticmethod
+    def parse_index(index):
+        """Parse the numbered list item index and return a (style,ordinal)
+        tuple. style in ('arabic'...); ordinal in (1...).
+        NOTE: 'i' and 'I' return (1,'lowerroman') and (1,'upperroman')."""
+        def roman_to_int(roman):
+            roman = roman.lower()
+            digits = {'i':1,'v':5,'x':10}
+            result = 0
+            for i in range(len(roman)):
+                digit = digits[roman[i]]
+                # If next digit is larger this digit is negative.
+                if i+1 < len(roman) and digits[roman[i+1]] > digit:
+                    result -= digit
+                else:
+                    result += digit
+            return result
+        if re.match(r'^\d+$', index):
+            style = 'arabic'
+            ordinal = int(index)
+        elif re.match(r'^[ivx]+$', index):
+            style = 'lowerroman'
+            ordinal = roman_to_int(index)
+        elif re.match(r'^[IVX]+$', index):
+            style = 'upperroman'
+            ordinal = roman_to_int(index)
+        elif re.match(r'^[a-z]$', index):
+            style = 'loweralpha'
+            ordinal = ord(index) - ord('a') + 1
+        elif re.match(r'^[A-Z]$', index):
+            style = 'upperalpha'
+            ordinal = ord(index) - ord('A') + 1
+        else:
+            style = None
+            ordinal = None
+        return (style,ordinal)
+
     def check_index(self):
-        """ Check calculated listindex (1,2,...) against the item index in the
-        document (self.index)."""
+        """ Check calculated listindex (1,2,...) against the item number in the
+        document (self.index) and check the number style is the same as
+        the first item (self.number_style)."""
         assert self.type in ('numbered','callout')
         if self.index:
-            matched = False
-            if re.match(r'\d+', self.index):
-                i = int(self.index)
-                matched = True
-            elif re.match(r'[a-z]', self.index):
-                i = ord(self.index) - ord('a') + 1
-                matched = True
-            if matched and i != self.listindex:
-                print 'type: ',self.type,': expected ',self.listindex,' got ',i
-                warning('list item %s out of sequence' % self.index)
+            style,ordinal = self.parse_index(self.index)
+            if style and self.number_style:
+                if (self.index in 'ivx' and self.number_style == 'loweralpha' or
+                    self.index in 'IVX' and self.number_style == 'upperalpha'):
+                    # Sidestep possible i,v,x,I,V,X ambiguity.
+                    return
+                if style != self.number_style:
+                    warning('list item style: expected %s got %s' %
+                            (self.number_style,style), offset=1)
+                if ordinal != self.listindex:
+                    warning('list item index: expected %s got %s' %
+                            (self.listindex,ordinal), offset=1)
+
     def check_tags(self):
         """ Check that all necessary tags are present. """
         tags = set(Lists.TAGS)
@@ -2312,8 +2352,17 @@ class List(AbstractBlock):
         attrs = self.mo.groupdict().copy()
         for k in ('label','text','index'):
             if k in attrs: del attrs[k]
+        if self.index:
+            # Set the numbering style from first list item.
+            style = self.parse_index(self.index)[0]
+            if style:
+                if self.name == 'listdef-numbered':
+                    attrs['numeration'] = style
+                elif self.name == 'listdef-numbered2':
+                    attrs['numeration2'] = style
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
+        self.number_style = attrs.get('numeration') or attrs.get('numeration2')
         self.merge_attributes(attrs,['tags'])
         self.tag = lists.tags[self.parameters.tags]
         self.check_tags()
@@ -3260,9 +3309,9 @@ class CalloutMap:
         else:
             self.comap[listindex].append(self.calloutindex)
         return self.calloutid(self.listnumber, self.calloutindex)
+    @staticmethod
     def calloutid(listnumber,calloutindex):
         return 'CO%d-%d' % (listnumber,calloutindex)
-    calloutid = staticmethod(calloutid)
     def calloutids(self,listindex):
         # Retieve list of callout indexes that refer to listindex.
         if listindex in self.comap:
@@ -4023,6 +4072,7 @@ class Config:
                 raise EAsciiDoc,'[%s] entry in %s is not a valid' \
                     ' regular expression: %s' % (sect,self.fname,pat)
 
+    @staticmethod
     def set_replacement(pat, rep, replacements):
         """Add pattern and replacement to replacements dictionary."""
         pat = strip_quotes(pat)
@@ -4034,7 +4084,6 @@ class Config:
         else:
             replacements[pat] = strip_quotes(rep)
         return True
-    set_replacement = staticmethod(set_replacement)
 
     def subs_replacements(self,s,sect='replacements'):
         """Substitute patterns from self.replacements in 's'."""

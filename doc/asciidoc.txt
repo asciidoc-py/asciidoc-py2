@@ -4495,9 +4495,9 @@ nnoremap Q gq}
 nnoremap W :%s/[\r \t]\+$//<CR>:set et<CR>:retab!<CR>
 
 autocmd BufRead,BufNewFile *.txt,README,TODO,CHANGELOG,NOTES
-        \ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2
+        \ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
         \ textwidth=70 wrap formatoptions=tcqn
-        \ formatlistpat=^\\s*<\\?\\d\\+[\\]:.)}\\t\ >]\\s*
+        \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
         \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:>
 ---------------------------------------------------------------------
 

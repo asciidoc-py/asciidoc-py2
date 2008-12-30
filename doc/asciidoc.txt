@@ -1130,6 +1130,10 @@ asciidoc(1).
 
 See also <<X25,Comment Lines>>.
 
+NOTE: The default CommentBlock syntax is hardwired into AsciiDoc (it
+is not defined in AsciiDoc configuration files) to ensure system
+macros are not executed inside comment blocks.
+
 [[X76]]
 Passthrough Blocks
 ~~~~~~~~~~~~~~~~~~
@@ -3942,7 +3946,7 @@ sectionbody::
     The block contents are processed as a SectionBody.
 
 skip::
-    The block is treated as a comment (see CommentBlocks).
+    The block is treated as a comment (see <<X26,CommentBlocks>>).
 
 list::
     The block is a <<X29,list block>>.

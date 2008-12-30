@@ -3560,7 +3560,8 @@ AttributeList Element
 An <<X21,attribute list>> on a line by itself constitutes an
 'AttributeList' block element, its attributes apply to the following
 block element.  The list attributes are passed to the next block
-element for markup template substitution.
+element for markup template substitution. Often the first list
+parameter is used to specify the element's <<X23,style>>.
 
 
 Attribute References
@@ -4079,13 +4080,13 @@ Filters are normally accompanied by a configuration file containing a
 Paragraph or DelimitedBlock definition along with corresponding markup
 templates.
 
-There are two ways to implement filters:
-
-- As a new Paragraph or DelimitedBlock definition.
-- By styling an existing Paragraph or DelimitedBlock using a 'style'
-  configuration entry -- the 'source highlight' and 'music' filters
-  use this technique to customize the ListingBlock. By convention the
-  style is given the same name as the filter.
+While it is possible to create new Paragraph or DelimitedBlock
+definitions the preferred way to implement a filter is to add a
+<<X23,style>> to an existing Paragraph or DelimitedBlock definition
+(all filters shipped with AsciiDoc use this technique). The filter is
+applied to the paragraph or delimited block by preceding it with an
+attribute list: the first positional attribute is the style name,
+remaining attributes are normally filter specific parameters.
 
 asciidoc(1) auto-loads all `.conf` files found in the filter search
 paths (see previous section).
@@ -4102,10 +4103,11 @@ it's much to simplistic to be passed off as a code syntax highlighter.
 If you want a full featured multi-language highlighter use the
 <<X57,Source Code Highlighter Filter>>.
 
----------------------------------------------------------------------
+[listing]
+.....................................................................
 .Code filter example
 [code,python]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------
 ''' A multi-line
     comment.'''
 def sub_word(mo):
@@ -4115,14 +4117,14 @@ def sub_word(mo):
         return quote + word + quote
     else:
         return word
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
----------------------------------------------------------------------
+----------------------------------------------
+.....................................................................
 
 Outputs:
 
 .Code filter example
 [code,python]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------
 ''' A multi-line
     comment.'''
 def sub_word(mo):
@@ -4132,7 +4134,7 @@ def sub_word(mo):
         return quote + word + quote
     else:
         return word
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------
 
 [[X57]]
 Source Code Highlighter Filter

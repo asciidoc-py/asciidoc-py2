@@ -45,6 +45,7 @@ examples/website/*.html
 examples/website/images/
 examples/website/layout?.conf
 examples/website/music?.*
+examples/website/sample?.png
 examples/website/toc.js
 examples/website/*.txt
 filters/code/code-filter.conf

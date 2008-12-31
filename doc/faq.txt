@@ -136,7 +136,7 @@ a backslash character. These elements include:
 - Attribute references.
 - Text formatting.
 - Quoting,
-- 'URLs', 'image' and 'link' macros.
+- Macros.
 - Replacements.
 - Special words.
 - Table cell separators.
@@ -173,8 +173,6 @@ The source of this problem is ambiguity across substitution types --
 the first match unescapes allowing the second to substitute. A
 work-around for difficult cases is to side-step the problem using the
 `\pass:[]` passthrough inline macro.
-
-NOTE: System macros cannot be escaped.
 
 
 == How can I set default list and tables styles?

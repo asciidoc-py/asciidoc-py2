@@ -15,6 +15,7 @@ LOCAL_WEB = ~/tmp/asciidoc-web # Local web marshalling location.
 WEB_ROOT =
     a2x.1
     asciidoc-docbook-xsl
+    asciidoc-graphviz-sample
     asciimathml
     CHANGELOG
     downloads
@@ -130,6 +131,7 @@ copy: all
     :sys mkdir -p $LOCAL_WEB/chunked/
     :sys cp $DOCS_DIR/asciidoc.chunked/*.html $LOCAL_WEB/chunked/
     :sys cp music?.* $LOCAL_WEB
+    :sys cp sample?.png $LOCAL_WEB
 
 clean:
     :del {f} $WEB_PAGES

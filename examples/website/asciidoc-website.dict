@@ -1,4 +1,4 @@
-personal_ws-1.1 en 149 
+personal_ws-1.1 en 158 
 backends
 AsciiDoc's
 Rosten
@@ -24,11 +24,13 @@ Potapov
 backmatter
 SourceForge
 Solaris
+loweralpha
 newtables
 ikiwiki
 callout
 firefox
 SGML
+graphviz
 dx
 doctests
 hg
@@ -50,8 +52,8 @@ symlink
 xhtml
 ln
 Philips
-LaTeXMathML
 latexmathml
+LaTeXMathML
 LaTexMathML
 outlang
 Efros
@@ -70,10 +72,12 @@ ImageMagick
 Pommereau
 ly
 programlisting
+upperroman
 Xubuntu
 syntaxes
 dblatex
 stdout
+Iisaka
 asciidoc
 AsciiDoc
 AsciiMathML
@@ -82,6 +86,7 @@ ASCIIMathML
 ps
 odf
 filetype
+arabic
 Rosenkraenzer
 py
 ua
@@ -105,6 +110,7 @@ pdf
 userguide
 Rapaz
 Røsten
+lowerroman
 refentry
 stylesheets
 Gingras
@@ -143,8 +149,11 @@ png
 formulae
 Mandelson
 xml
+upperalpha
 Wiese
 chunked
+Gouichi
 Jipsen
+Iisaka's
 Wiki
 dBA

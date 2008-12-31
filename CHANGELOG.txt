@@ -3,6 +3,45 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.3.2 (2009-01-01)
+--------------------------
+.Additions and changes
+- Added Gouichi Iisaka's Graphviz filter to distribution.
+- The 'SidebarBlock' element can now be rendered with an 'abstract'
+  style.
+- Reorganized filters into a separate subdirectory for each filter.
+- Updated `Makefile.in` and `MANIFEST` files to reflect new filters
+  organization.
+- Added 'listing' style to 'LiteralBlock' element so listings with
+  nested listing blocks can be rendered as a listing block.
+- Changed example 'code' filter to use preferred 'ListingBlock' syntax
+  (the old `~` delimited filter syntax is no longer used).
+- Hardwired 'CommentBlock' processing to ensure macros are not
+  executed inside comment blocks.
+- Implemented 'enumeration' and 'enumeration2' numbered list
+  attributes for specifying the list numbering style ('arabic',
+  'loweralpha', 'upperalpha', 'lowerroman' and 'upperroman').
+- AsciiDoc now recognizes 'upperalpha', 'lowerroman' and 'upperroman'
+  numbers in `listdef-numbered2` numbered lists and sets the number
+  style based on the style of the first numbered list item
+  (alternative to setting 'enumeration2' attribute).
+- Updated `formatlistpat` definition in `.vimrc` example in User
+  Guide.
+- You can now backslash escape system block macros.
+- Added 'Pychart' FAQ.
+- Drop paragraph 'text' and list 'text', 'index' and 'label' match
+  groups from attributes -- they are included in the element's text
+  and we don't want them processed a second time as attributes.
+- Changed comment line block macro to a passthrough block macro to
+  ensure no substitutions.
+- A 'subslist' no longer has to be appended to a 'PassthroughBlock'
+  macro definition, if omitted no substitutions are performed.
+- Code tidy up: replaced deprecated `<>` operator with `!=`.
+- Removed unused linuxdoc code.
+- Code tidy ups: dropped old types module reference; replaced
+  `has_key()` with preferred `in` operator.
+
+
 Version 8.3.1 (2008-12-14)
 --------------------------
 .Additions and changes

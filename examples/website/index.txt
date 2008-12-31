@@ -3,15 +3,22 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-This release fixes a couple of regression bugs in the initial
-link:version83.html[version 8.3] release along with some minor
-additions.
-The platform dependent `install.sh` script has been replaced with an
-link:INSTALL.html#_distribution_tarball_installation[autoconf make
-file] (this change didn't make it into the 8.3.0 release because of
-time constraints).
-Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
-additions and changes.
+Two significant changes in this release:
+
+- Included Gouichi Iisaka's <<X4,Graphviz filter>> in the AsciiDoc
+  distribution.
+- You can now set the numbered list number style by setting the
+  'numeration' and 'numeration2' attributes ('arabic', 'loweralpha',
+  'upperalpha', 'lowerroman' and 'upperroman') or letting AsciiDoc
+  guess the style of the first numbered item.
+
+Plus a number of smaller additions along with the usual documentation
+polishing.  Read the link:CHANGELOG.html[CHANGELOG] for a full list of
+all additions and changes.
+
+One final note: if you are upgrading from version 8.2.7 or less please
+read about possible link:CHANGELOG.html#X1[compatibility issues]
+first.
 
 mailto:srackham@gmail.com['Stuart Rackham']
 ************************************************************************
@@ -111,6 +118,16 @@ Source Code Highlight Filter
 ----------------------------
 A link:source-highlight-filter.html[source code highlight filter] is
 included in the distribution `./filters/` directory.
+
+
+[[X4]]
+Graphviz Filter
+---------------
+Gouichi Iisaka has written a http://www.graphviz.org/[Graphviz] filter
+for AsciiDoc.  Graphviz generates diagrams from a textual
+specification. Gouichi Iisaka's Graphviz filter is included in the
+AsciiDoc distribution. Here are some
+link:asciidoc-graphviz-sample.html[AsciiDoc Graphviz examples].
 
 
 [[X3]]

@@ -1,7 +1,7 @@
-personal_ws-1.1 en 728 
+personal_ws-1.1 en 732 
 Sturmer
-Kleber
 Kléber
+Kleber
 quis
 auctor
 linkcss
@@ -12,8 +12,8 @@ BOLID
 callouts
 bulleted
 starttags
-listingblock
 ListingBlock
+listingblock
 eval
 ListLabel
 asc
@@ -55,6 +55,7 @@ ListContinuation
 listcontinuation
 consectetuer
 Magnocavallo
+Gouichi
 defacto
 ListParagraph
 charset
@@ -122,8 +123,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-MiddleName
 middlename
+MiddleName
 subdirectories
 footnoteref
 passtext
@@ -133,6 +134,7 @@ itemtag
 entrytag
 hhc
 else's
+Graphviz
 executables
 basebackend
 expr
@@ -143,8 +145,8 @@ entrytbl
 Ghostscript
 verear
 Buenos
-linuxdoc
 LinuxDoc
+linuxdoc
 PostScript
 hhp
 Vijay
@@ -158,8 +160,8 @@ ListingBlocks
 GPL
 hsides
 upperalpha
-Bolido
 Bólido
+Bolido
 footrow
 misspelt
 WINNT
@@ -171,8 +173,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-VerbatimBlock
 verbatimblock
+VerbatimBlock
 shiftwidth
 misevaluations
 asciidocEmphasized
@@ -451,8 +453,8 @@ arabic
 fringilla
 retab
 BackendBlocks
-changelog
 ChangeLog
+changelog
 tis
 Ubuntu
 sectids
@@ -469,9 +471,10 @@ endtag
 Vasilev
 crlf
 vel
+Iisaka's
 localtime
-blockmacro
 BlockMacro
+blockmacro
 Xandros
 groff
 POSIX
@@ -514,8 +517,8 @@ dbtimestamp
 txt
 BlockId
 passthrough
-Berguvsvagen
 Berguvsvägen
+Berguvsvagen
 noincsearch
 TableRow
 inlinemediaobject
@@ -563,9 +566,9 @@ Redhat
 cb
 tuple
 cd
-ASCIIMathML
-AsciiMathML
 asciimathml
+AsciiMathML
+ASCIIMathML
 arounds
 filename
 mansource
@@ -581,14 +584,15 @@ scaledwidth
 cp
 xsl
 fb
-docbook
 DocBook
+docbook
 stylesheet
 pagefile
 superscripted
 glossdiv
 symlinked
 Mihai
+Pychart
 Klum
 fo
 sgmlformat
@@ -600,8 +604,8 @@ fprintf
 colabswidth
 tabsize
 smallnew
-blocktitles
 BlockTitles
+blocktitles
 localdate
 bodyrow
 hs
@@ -651,8 +655,8 @@ permalink
 td
 py
 AROUT
-LiteralBlock
 literalblock
+LiteralBlock
 sgml
 biggy
 softtabstop
@@ -668,8 +672,8 @@ tt
 blandit
 inline
 Martín
-sectionbody
 SectionBody
+sectionbody
 VM
 conformant
 listchars
@@ -712,8 +716,8 @@ nbsp
 qanda
 noout
 massa
-asciidoc
 AsciiDoc
+asciidoc
 manmanual
 TableBody
 realpath

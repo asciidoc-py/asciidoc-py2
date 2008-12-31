@@ -3865,9 +3865,9 @@ class Config:
         if lang:
             conf = 'lang-' + lang + '.conf'
             self.load_file(conf,dir)
-        # Load filters .conf files searching filters sub-directories first.
+        # Load filter .conf files.
         filtersdir = os.path.join(dir,'filters')
-        for dirpath,dirnames,filenames in os.walk(filtersdir,False):
+        for dirpath,dirnames,filenames in os.walk(filtersdir):
             for f in filenames:
                 if re.match(r'^.+\.conf$',f):
                     self.load_file(f,dirpath)

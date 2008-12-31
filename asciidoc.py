@@ -556,16 +556,28 @@ def update_attrs(attrs,dict):
             raise EAsciiDoc,'illegal attribute name: %s' % k
         attrs[k] = v
 
-def filter_lines(filter_cmd, lines, dict={}):
+def filter_lines(filter_cmd, lines, attrs={}):
     """
     Run 'lines' through the 'filter_cmd' shell command and return the result.
-    The 'dict' dictionary contains additional filter attributes.
+    The 'attrs' dictionary contains additional filter attributes.
     """
+    def findfilter(name,dir,filter):
+        """Find filter file 'fname' with style name 'name' in directory
+        'dir'. Return found file path or None if not found."""
+        if name:
+            result = os.path.join(dir,'filters',name,filter)
+            if os.path.isfile(result):
+                return result
+        result = os.path.join(dir,'filters',filter)
+        if os.path.isfile(result):
+            return result
+        return None
+
     # Return input lines if there's not filter.
     if not filter_cmd or not filter_cmd.strip():
         return lines
     # Perform attributes substitution on the filter command.
-    s = subs_attrs(filter_cmd, dict)
+    s = subs_attrs(filter_cmd, attrs)
     if not s:
         raise EAsciiDoc,'undefined filter attribute in command: %s' % filter_cmd
     filter_cmd = s.strip()
@@ -579,33 +591,23 @@ def filter_lines(filter_cmd, lines, dict={}):
             # Unquoted catch all.
             mo = re.match(r'^(?P<cmd>\S+)(?P<tail>.*)$', filter_cmd)
     cmd = mo.group('cmd').strip()
-    # Search for the filter command in  both user and application 'filters'
-    # sub-directories.
-    found = False
+    found = None
     if not os.path.dirname(cmd):
-        # Check in asciidoc user and application directories for unqualified
-        # file name.
+        # Filter command has no directory path so search filter directories.
+        filtername = attrs.get('style')
         if USER_DIR:
-            cmd2 = os.path.join(USER_DIR,'filters',cmd)
-            if os.path.isfile(cmd2):
-                found = True
+            found = findfilter(filtername, USER_DIR, cmd)
         if not found:
-            cmd2 = os.path.join(CONF_DIR,'filters',cmd)
-            if os.path.isfile(cmd2):
-                found = True
+            found = findfilter(filtername, CONF_DIR, cmd)
         if not found:
-            cmd2 = os.path.join(APP_DIR,'filters',cmd)
-            if os.path.isfile(cmd2):
-                found = True
-        if found:
-            cmd = cmd2
+            found = findfilter(filtername, APP_DIR, cmd)
     else:
         if os.path.isfile(cmd):
-            found = True
+            found = cmd
         else:
             warning('filter not found: %s' % cmd)
     if found:
-        filter_cmd = '"' + cmd + '"' + mo.group('tail')
+        filter_cmd = '"' + found + '"' + mo.group('tail')
     if sys.platform == 'win32':
         # Windows doesn't like running scripts directly so explicitly
         # specify interpreter.
@@ -3872,12 +3874,12 @@ class Config:
         if lang:
             conf = 'lang-' + lang + '.conf'
             self.load_file(conf,dir)
-        # Load ./filters/*.conf files if they exist.
-        filters = os.path.join(dir,'filters')
-        if os.path.isdir(filters):
-            for f in os.listdir(filters):
+        # Load filters .conf files searching filters sub-directories first.
+        filtersdir = os.path.join(dir,'filters')
+        for dirpath,dirnames,filenames in os.walk(filtersdir,False):
+            for f in filenames:
                 if re.match(r'^.+\.conf$',f):
-                    self.load_file(f,filters)
+                    self.load_file(f,dirpath)
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""

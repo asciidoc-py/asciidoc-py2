@@ -39,6 +39,10 @@ Version 8.3.2 (2009-01-01)
 - Code tidy ups: dropped old types module reference; replaced
   `has_key()` with preferred `in` operator.
 
+.Bug fixes
+- Old syntax source highlight filter regression: special characters
+  where not escaped in DocBook outputs.
+
 
 Version 8.3.1 (2008-12-14)
 --------------------------

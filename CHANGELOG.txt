@@ -16,8 +16,6 @@ Version 8.3.2 (2009-01-01)
   nested listing blocks can be rendered as a listing block.
 - Changed example 'code' filter to use preferred 'ListingBlock' syntax
   (the old `~` delimited filter syntax is no longer used).
-- Hardwired 'CommentBlock' processing to ensure macros are not
-  executed inside comment blocks.
 - Implemented 'enumeration' and 'enumeration2' numbered list
   attributes for specifying the list numbering style ('arabic',
   'loweralpha', 'upperalpha', 'lowerroman' and 'upperroman').

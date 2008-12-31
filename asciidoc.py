@@ -3479,7 +3479,6 @@ class Reader1:
 class Reader(Reader1):
     """ Wraps (well, sought of) Reader1 class and implements conditional text
     inclusion."""
-    COMMENT_BLOCK_REO = re.compile(r'^/{4,}$')  # Comment block delimiter.
     def __init__(self):
         Reader1.__init__(self)
         self.depth = 0          # if nesting depth.
@@ -3490,14 +3489,6 @@ class Reader(Reader1):
         result = Reader1.read(self,self.skip)
         if result is None and self.skip:
             raise EAsciiDoc,'missing endif::%s[]' % self.skipname
-        if result and self.COMMENT_BLOCK_REO.match(result):
-            # Skip over comment block.
-            while True:
-                result = Reader1.read(self,True)
-                if result is None:
-                    raise EAsciiDoc,'missing comment block delimiter'
-                if self.COMMENT_BLOCK_REO.match(result):
-                    return self.read_super()
         return result
     def read(self):
         result = self.read_super()

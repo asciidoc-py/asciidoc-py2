@@ -1140,9 +1140,7 @@ asciidoc(1).
 
 See also <<X25,Comment Lines>>.
 
-NOTE: The default CommentBlock syntax is hardwired into AsciiDoc (it
-is not defined in AsciiDoc configuration files) to ensure system
-macros are not executed inside comment blocks.
+NOTE: System macros are executed inside comment blocks.
 
 [[X76]]
 Passthrough Blocks
@@ -2203,7 +2201,7 @@ See also <<X26,Comment Blocks>>.
 
 System Macros
 ~~~~~~~~~~~~~
-System macros are block macros that perform a predefined task which is
+System macros are block macros that perform a predefined task and are
 hardwired into the asciidoc(1) program.
 
 - You can escape system macros with a leading backslash character

@@ -41,6 +41,11 @@ codefilterdir = $(filtersdir)/code
 codefilterconf = filters/code/code-filter.conf
 codefilterconfdir = $(filtersdir)/code
 
+graphvizfilter = filters/graphviz/graphviz2png.py
+graphvizfilterdir = $(filtersdir)/graphviz
+graphvizfilterconf = filters/graphviz/graphviz-filter.conf
+graphvizfilterconfdir = $(filtersdir)/graphviz
+
 musicfilter = filters/music/music2png.py
 musicfilterdir = $(filtersdir)/music
 musicfilterconf = filters/music/music-filter.conf
@@ -70,8 +75,8 @@ iconsdir = $(ASCIIDOCCONF)/images/icons
 doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*) $(wildcard CHANGELOG*)
 docdir = $(datadir)/doc/asciidoc
 
-DATATARGETS = manp conf docbook dblatex css js callouts icons codefilterconf musicfilterconf sourcefilterconf
-PROGTARGETS = prog codefilter musicfilter
+DATATARGETS = manp conf docbook dblatex css js callouts icons codefilterconf musicfilterconf sourcefilterconf graphvizfilterconf
+PROGTARGETS = prog codefilter musicfilter graphvizfilter
 TARGETS = $(DATATARGETS) $(PROGTARGETS) doc
 
 INSTDIRS = $(TARGETS:%=%dir)

@@ -56,6 +56,9 @@ filters/music/music2png.py
 filters/music/music-filter-test.txt
 filters/source/source-highlight-filter.conf
 filters/source/source-highlight-filter-test.txt
+filters/graphviz/graphviz-filter.conf
+filters/graphviz/graphviz2png.py
+filters/graphviz/asciidoc-graphviz-sample.txt
 images/icons/callouts/*.png
 images/icons/*.png
 images/icons/README

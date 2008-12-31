@@ -1346,7 +1346,7 @@ There are two numbered list item syntaxes:
   <<X74,numeration attribute>> to specify an alternative number style.
 . List items beginning with two periods followed by a space. An alpha
   character or a roman number (upper or lower case) can optionally be
-  used instead of the first period:
+  used in place of the first period:
   * An attempt is made to set the number style based on number style
     of the first list item.
   * The default style is lowercase alpha.
@@ -1356,16 +1356,14 @@ There are two numbered list item syntaxes:
 Examples of numbered list items:
 
 .....................................................................
-.    Integer numbered list item.
-1.   Integer numbered list item.
-..   Lowercase letter numbered list item.
-A.   Uppercase letter numbered list item.
-iii. Lowercase roman numbered list item.
+.    Arabic (decimal) numbered list item.
+1.   Arabic (decimal) numbered list item.
+..   Lower case letter numbered list item.
+a.   Lower case letter numbered list item.
+A.   Upper case letter numbered list item.
+iii. Lower case roman numbered list item.
+IX.  Upper case roman numbered list item.
 .....................................................................
-
-NOTE: The optional list item numbering is just syntactic sugar -- the
-list item numbering style is determined by the 'numeration' and
-'numeration2' attributes *not* the optional list item numbering.
 
 Here are some examples of bulleted and numbered lists:
 ---------------------------------------------------------------------

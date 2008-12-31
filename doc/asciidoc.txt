@@ -1115,6 +1115,15 @@ Any AsciiDoc SectionBody element (apart from
 SidebarBlocks) can be placed inside a sidebar.
 ************************************************
 
+Apply the 'abstract' style to generate an abstract, for example:
+
+---------------------------------------------------------------------
+[abstract]
+************************************************
+In this paper we will attempt to...
+************************************************
+---------------------------------------------------------------------
+
 [[X26]]
 Comment Blocks
 ~~~~~~~~~~~~~~

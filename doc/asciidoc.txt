@@ -1343,15 +1343,19 @@ There are two numbered list item syntaxes:
 . List items beginning with a single period followed by a space. The
   period can be preceded by an optional decimal number.  By default
   items are rendered with an arabic (decimal) numbered style, use the
-  <<X74,numeration attribute>> to specify an alternative number style.
+  'numeration' attribute to specify an alternative number style.
 . List items beginning with two periods followed by a space. An alpha
   character or a roman number (upper or lower case) can optionally be
   used in place of the first period:
   * An attempt is made to set the number style based on number style
     of the first list item.
   * The default style is lowercase alpha.
-  * You can also use the <<X74,numeration2 attribute>> to specify an
+  * You can also use the 'numeration2' attribute to specify an
     alternative number style.
+
+The numbered list 'numeration' and 'numeration2' attributes take the
+following values: 'arabic', 'loweralpha', 'upperalpha', 'lowerroman',
+'upperroman'.
 
 Examples of numbered list items:
 
@@ -4505,12 +4509,11 @@ highlight clear Search
 " Don't move to matched text while search pattern is being entered.
 set noincsearch
 
-" Q command to reformat paragraphs and list.
-nnoremap Q gq}
+" Reformat paragraphs and list.
+nnoremap R gq}
 
-" W command to delete trailing white space and Dos-returns and to expand tabs
-" to spaces.
-nnoremap W :%s/[\r \t]\+$//<CR>:set et<CR>:retab!<CR>
+" Delete trailing white space and Dos-returns and to expand tabs to spaces.
+nnoremap S :set et<CR>:retab!<CR>:%s/[\r \t]\+$//<CR>
 
 autocmd BufRead,BufNewFile *.txt,README,TODO,CHANGELOG,NOTES
         \ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
@@ -4949,11 +4952,6 @@ Here is the list of predefined <<X75,attribute list options>>:
 
 |compact |docbook, xhtml11 |bulleted list, numbered list|
 Minimizes vertical space in the list
-
-|enumeration, enumeration2 |docbook, xhtml11, html4 |numbered list|
-The following values can be used to set the numbering style of
-numbered list items: 'arabic', 'loweralpha', 'upperalpha',
-'lowerroman', 'upperroman'.
 
 |strong |xhtml11,html4 |labeled lists|
 Emboldens label text.

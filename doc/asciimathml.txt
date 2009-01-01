@@ -2,10 +2,11 @@ ASCIIMathML Formulae
 ====================
 
 http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML] is
-a clever JavaScript written by Peter Jipsen that transforms
-mathematical formulae written in plain text to standard mathematical
-notation on an HTML page. See 'Appendix E' in the AsciiDoc User Guide
-for more details.
+a clever JavaScript written by Peter Jipsen that dynamically
+transforms mathematical formulae written in a wiki-like plain text
+markup to http://www.w3.org/Math/[MathML] markup which is displayed as
+standard mathematical notation by the Web Browser.  See 'Appendix E'
+in the AsciiDoc User Guide for more details.
 
 The AsciiDoc `xhtml11` backend supports ASCIIMathML -- it links the
 ASCIIMathML script and escapes ASCIIMathML delimiters and special

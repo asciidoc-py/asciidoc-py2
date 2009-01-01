@@ -1341,20 +1341,18 @@ space or tab character. Bulleted list syntaxes are:
 There are two numbered list item syntaxes:
 
 . List items beginning with a single period followed by a space. The
-  period can be preceded by an optional decimal number.  By default
-  items are rendered with an arabic (decimal) numbered style, use the
-  'numeration' attribute to specify an alternative number style.
+  period can be preceded by an optional decimal number.  The default
+  numbering style is arabic (decimal).
 . List items beginning with two periods followed by a space. An alpha
   character or a roman number (upper or lower case) can optionally be
   used in place of the first period:
   * An attempt is made to set the number style based on number style
     of the first list item.
-  * The default style is lowercase alpha.
-  * You can also use the 'numeration2' attribute to specify an
-    alternative number style.
+  * The default numbering style is lowercase alpha.
 
-The numbered list 'numeration' and 'numeration2' attributes take the
-following values: 'arabic', 'loweralpha', 'upperalpha', 'lowerroman',
+You can use the 'style' attribute to specify an alternative numbering
+style.  The numbered list style can be set to one of the following
+values: 'arabic', 'loweralpha', 'upperalpha', 'lowerroman',
 'upperroman'.
 
 Examples of numbered list items:

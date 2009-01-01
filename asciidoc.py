@@ -1995,6 +1995,9 @@ class AbstractBlock:
 
         params = list(self.PARAM_NAMES) + params
         self.attributes = {}
+        if self.style:
+            # If a default style is defined make it available in the template.
+            self.attributes['style'] = self.style
         self.attributes.update(attrs)
         # Calculate dynamic block parameters.
         # Start with configuration file defaults.
@@ -2358,13 +2361,10 @@ class List(AbstractBlock):
             # Set the numbering style from first list item.
             style = self.parse_index(self.index)[0]
             if style:
-                if self.name == 'listdef-numbered':
-                    attrs['numeration'] = style
-                elif self.name == 'listdef-numbered2':
-                    attrs['numeration2'] = style
+                attrs['style'] = style
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
-        self.number_style = attrs.get('numeration') or attrs.get('numeration2')
+        self.number_style = attrs.get('style')
         self.merge_attributes(attrs,['tags'])
         self.tag = lists.tags[self.parameters.tags]
         self.check_tags()

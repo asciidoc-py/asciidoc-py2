@@ -74,7 +74,7 @@ OPTIONS
 
 *-s, --skip-asciidoc*::
   Skip asciidoc execution. This is useful for converting DocBook XML
-  files not derived from AsciiDoc sources. Ignored if --format*='text'.
+  files not derived from AsciiDoc sources. Ignored if '--format=text'.
 
 *--stylesheet*='PATH'::
   A path (relative to destination HTML files) specifying the

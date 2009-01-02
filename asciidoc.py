@@ -8,7 +8,7 @@ under the terms of the GNU General Public License (GPL).
 
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
-VERSION = '8.3.2'   # See CHANGLOG file for version history.
+VERSION = '8.3.3'   # See CHANGLOG file for version history.
 
 #---------------------------------------------------------------------------
 # Program onstants.
@@ -2198,9 +2198,6 @@ class List(AbstractBlock):
     def iscontinued(self):
         if reader.read_next() == '+':
             reader.read()   # Discard.
-            # Allow attribute list to precede continued list item element.
-            while Lex.next() is AttributeList:
-                Lex.next().translate()
             return True
         else:
             return False
@@ -2229,6 +2226,7 @@ class List(AbstractBlock):
                     lists.delimiter + r'|^\+$|^$|' + blocks.delimiter
                     + r'|' + tables.delimiter
                     + r'|' + tables_OLD.delimiter
+                    + r'|' + AttributeList.pattern
             )
             if self.text is not None:
                 text = [self.text] + list(text)
@@ -2236,6 +2234,9 @@ class List(AbstractBlock):
                 writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
             continued = self.iscontinued()
         while True:
+            # Allow attribute list to precede continued list item element.
+            while Lex.next() is AttributeList:
+                Lex.next().translate()
             next = Lex.next()
             if next in lists.open:
                 break
@@ -2263,11 +2264,16 @@ class List(AbstractBlock):
                     lists.delimiter + r'|^$|' + blocks.delimiter
                     + r'|' + tables.delimiter
                     + r'|' + tables_OLD.delimiter
+                    + r'|' + AttributeList.pattern
             )
             if self.text is not None:
                 text = [self.text] + list(text)
-            writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
+            if text:
+                writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
         while True:
+            # Allow attribute list to precede continued list item element.
+            while Lex.next() is AttributeList:
+                Lex.next().translate()
             next = Lex.next()
             if next in lists.open:
                 break

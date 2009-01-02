@@ -1379,6 +1379,7 @@ Here are some examples of bulleted and numbered lists:
 - Nulla porttitor vulputate libero.
   . Fusce euismod commodo velit.
   . Vivamus fringilla mi eu lacus.
+[upperroman]
     .. Fusce euismod commodo velit.
     .. Vivamus fringilla mi eu lacus.
   . Donec eget arcu bibendum nunc consequat lobortis.
@@ -1388,6 +1389,8 @@ Here are some examples of bulleted and numbered lists:
     b. Vivamus fringilla mi eu lacus.
     c. Donec eget arcu bibendum nunc consequat lobortis.
   2. Vivamus fringilla mi eu lacus.
+    .. Fusce euismod commodo velit.
+    .. Vivamus fringilla mi eu lacus.
   3. Donec eget arcu bibendum nunc consequat lobortis.
   4. Nam fermentum mattis ante.
 ---------------------------------------------------------------------
@@ -1404,6 +1407,7 @@ Which render as:
 - Nulla porttitor vulputate libero.
   . Fusce euismod commodo velit.
   . Vivamus fringilla mi eu lacus.
+[upperroman]
     .. Fusce euismod commodo velit.
     .. Vivamus fringilla mi eu lacus.
   . Donec eget arcu bibendum nunc consequat lobortis.
@@ -1413,6 +1417,8 @@ Which render as:
     b. Vivamus fringilla mi eu lacus.
     c. Donec eget arcu bibendum nunc consequat lobortis.
   2. Vivamus fringilla mi eu lacus.
+    .. Fusce euismod commodo velit.
+    .. Vivamus fringilla mi eu lacus.
   3. Donec eget arcu bibendum nunc consequat lobortis.
   4. Nam fermentum mattis ante.
 
@@ -2453,8 +2459,8 @@ There are a wide variety of built-in customizable styles.
 *********************************************************************
 When technical users first start creating documents, tables (complete
 with column spanning and table nesting) are often considered very
-important.  important must-have feature. The reality is that tables
-are seldom used, even in technical documentation.
+important. The reality is that tables are seldom used, even in
+technical documentation.
 
 Try this exercise: thumb through your library of technical books,
 you'll be surprised just how seldom tables are actually used, even

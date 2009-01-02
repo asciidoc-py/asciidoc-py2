@@ -7,10 +7,9 @@ Two significant changes in this release:
 
 - Included Gouichi Iisaka's <<X4,Graphviz filter>> in the AsciiDoc
   distribution.
-- You can now set the numbered list number style by setting the
-  'numeration' and 'numeration2' attributes ('arabic', 'loweralpha',
-  'upperalpha', 'lowerroman' and 'upperroman') or letting AsciiDoc
-  guess the style of the first numbered item.
+- You can now set the numbered list number style ('arabic',
+  'loweralpha', 'upperalpha', 'lowerroman', 'upperroman') or let
+  AsciiDoc guess the style of the first numbered item.
 
 Plus a number of smaller additions along with the usual documentation
 polishing.  Read the link:CHANGELOG.html[CHANGELOG] for a full list of

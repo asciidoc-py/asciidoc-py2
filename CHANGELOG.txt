@@ -3,6 +3,15 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.3.3 (2009-01-02)
+--------------------------
+This release supercedes 8.3.2.
+
+.Bug fixes
+- The broken and confusing numeration and numeration2 numbered list
+  attributes have been dropped, use the style attribute instead.
+
+
 Version 8.3.2 (2009-01-01)
 --------------------------
 .Additions and changes

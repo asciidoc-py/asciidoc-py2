@@ -1750,17 +1750,17 @@ class Section:
                 error('title not permitted in sidebar body')
             next.translate()
             next = Lex.next()
-            if next is Title:
-                # Process the title as a simple block element if a template is
-                # specified.
-                template = AttributeList.attrs.get('template') or \
-                           AttributeList.attrs.get('1')
+            if next is Title and AttributeList.attrs.get('1') == 'float':
+                # Process floating titles.
+                template = 'floatingtitle'
                 if template in config.sections:
                     Title.translate()
                     AttributeList.consume(Title.attributes)
                     stag,etag = config.section2tags(template,Title.attributes)
                     writer.write(stag)
                     next = Lex.next()
+                else:
+                    warning('missing template section: [%s]' % template)
             isempty = False
         # The section is not empty if contains a subsection.
         if next and isempty and Title.level > document.level:

@@ -829,14 +829,15 @@ corresponds to the section level minus one).  Here are some examples:
 - The one-line title syntax can be changed by editing the
   configuration file `[titles]` section `sect0`...`sect4` entries.
 
-Bridgeheads
-~~~~~~~~~~~
-Setting the first title attribute to `bridgehead` causes a
-'bridgehead' to be generated. A bridgehead is rendered just like a
-normal section title but does not have a formally associated text body
-and is not part of the regular section hierarchy. Example:
+Floating titles
+~~~~~~~~~~~~~~~
+Setting the first title attribute to `float` generates a free-floating
+title. A free-floating title is rendered just like a normal section
+title but is not formally associated with a text body and is not part
+of the regular section hierarchy so the normal ordering rules do not
+apply. Example:
 
-  [bridgehead]
+  [float]
   The second day
   ~~~~~~~~~~~~~~
 

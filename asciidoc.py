@@ -1580,6 +1580,7 @@ class Title:
                 Title.attributes['title'] = lines[0]
             for k,v in Title.attributes.items():
                 if v is None: del Title.attributes[k]
+        Title.attributes['level'] = str(Title.level)
         return result
     @staticmethod
     def load(entries):
@@ -1749,6 +1750,17 @@ class Section:
                 error('title not permitted in sidebar body')
             next.translate()
             next = Lex.next()
+            if next is Title:
+                # Process the title as a simple block element if a template is
+                # specified.
+                template = AttributeList.attrs.get('template') or \
+                           AttributeList.attrs.get('1')
+                if template in config.sections:
+                    Title.translate()
+                    AttributeList.consume(Title.attributes)
+                    stag,etag = config.section2tags(template,Title.attributes)
+                    writer.write(stag)
+                    next = Lex.next()
             isempty = False
         # The section is not empty if contains a subsection.
         if next and isempty and Title.level > document.level:

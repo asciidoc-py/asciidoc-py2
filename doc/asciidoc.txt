@@ -815,9 +815,7 @@ One line titles
 ~~~~~~~~~~~~~~~
 One line titles consist of a single line delimited on either side by
 one or more equals characters (the number of equals characters
-corresponds to the section level minus one).  Here are some examples
-(levels 2 and 3 illustrate the optional trailing equals characters
-syntax):
+corresponds to the section level minus one).  Here are some examples:
 
   = Document Title (level 0) =
   == Section title (level 1) ==
@@ -1047,10 +1045,10 @@ detailed in the <<X59,Filters>> section.
 Listing Blocks
 ~~~~~~~~~~~~~~
 ListingBlocks are rendered verbatim in a monospaced font, they retain
-line and whitespace formatting and often distinguished by a background
-or border. There is no text formatting or substitutions within Listing
-blocks apart from Special Characters and Callouts. Listing blocks are
-often used for code and file listings.
+line and whitespace formatting and are often distinguished by a
+background or border. There is no text formatting or substitutions
+within Listing blocks apart from Special Characters and Callouts.
+Listing blocks are often used for code and file listings.
 
 Here's an example:
 

@@ -433,7 +433,8 @@ include the `--unsafe` option when you run asciidoc).
 
 The reason it's not in the distribution is that DocBook does not have
 provision for strike through text and one of the AsciiDoc design goals
-is that AsciiDoc markup should be applicable to all output formats.
+is that AsciiDoc markup should strive to be applicable to all output
+formats.
 
 Strike through is normally used to mark deleted text -- a more
 comprehensive way to manage document revisions is to use a version
@@ -452,7 +453,7 @@ through text with hyphen characters:
  -=strikethrough
 
  [tags]
- strikethrough=<span style="text-decoration: line-through;">|</span>
+ strikethrough=<del>|</del>
 
  endif::basebackend-html[]
 ---------------------------------------------------------------------

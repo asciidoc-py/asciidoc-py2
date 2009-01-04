@@ -1707,6 +1707,12 @@ class Section:
                 ident = base_ident
             i += 1
     @staticmethod
+    def set_id():
+        if not document.attributes.get('sectids') is None \
+                and 'id' not in AttributeList.attrs:
+            # Generate ids for sections.
+            AttributeList.attrs['id'] = Section.gen_id(Title.attributes['title'])
+    @staticmethod
     def translate():
         assert Lex.next() is Title
         prev_sectname = Title.sectname
@@ -1730,10 +1736,7 @@ class Section:
                 warning('section title out of sequence: '
                     'expected level %d, got level %d'
                     % (document.level+1, Title.level))
-        if not document.attributes.get('sectids') is None \
-                and 'id' not in AttributeList.attrs:
-            # Generate ids for sections.
-            AttributeList.attrs['id'] = Section.gen_id(Title.attributes['title'])
+        Section.set_id()
         Section.setlevel(Title.level)
         Title.attributes['sectnum'] = Title.getnumber(document.level)
         AttributeList.consume(Title.attributes)
@@ -1755,6 +1758,7 @@ class Section:
                 template = 'floatingtitle'
                 if template in config.sections:
                     Title.translate()
+                    Section.set_id()
                     AttributeList.consume(Title.attributes)
                     stag,etag = config.section2tags(template,Title.attributes)
                     writer.write(stag)

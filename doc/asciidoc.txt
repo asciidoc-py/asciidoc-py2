@@ -1181,10 +1181,10 @@ asciimath, latexmath::
 Quote Blocks
 ~~~~~~~~~~~~
 QuoteBlocks are used for quoted passages of text. There are two
-styles: 'quote' and 'verse' (the first positional attribute).  The
-'attribution' and 'citetitle' attributes (positional attributes 2 and
-3) specify the content author and source. If no attributes are
-specified the 'quote' style is used.
+styles: 'quote' and 'verse'. The style is set by the first positional
+attribute, if no style attribute is specified the 'quote' style.  The
+optional 'attribution' and 'citetitle' attributes (positional
+attributes 2 and 3) specify the quote's author and source.
 
 The 'quote' style treats the content like a SectionBody, for example:
 

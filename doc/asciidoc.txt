@@ -4594,7 +4594,7 @@ Special characters in attribute values::
     on the substitution context, need to escape the special characters
     yourself. For example:
 
-    $ asciidoc -a 'companyname=Bill &amp; Ben' mydoc.txt
+    $ asciidoc -a 'corpname=Bill &amp; Ben Inc.' mydoc.txt
 
 Macro attribute lists::
     If named attribute list entries are present then all string

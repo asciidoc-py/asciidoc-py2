@@ -4977,6 +4977,11 @@ The last row of the table is rendered as a footer.
 |header |docbook, xhtml11, html4 |table|
 The first row of the table is rendered as a header.
 
+|autowidth |xhtml11,html4 |table|
+The column widths are determined by the browser, not the AsciiDoc
+'cols' atribute. If there is no 'width' attribute the table width is
+also left up to the browser.
+
 |breakable, unbreakable |docbook (XSL/FO) |table|
 The 'breakable' options allows the table to break across page
 boundaries (the default behavior); 'unbreakable' attempts to keep the

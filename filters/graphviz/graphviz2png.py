@@ -1,16 +1,13 @@
 #!/usr/bin/env python
+
 import os, sys
 from optparse import *
 
 __AUTHOR__ = "Gouichi Iisaka <iisaka51@gmail.com>"
-__VERSION__ = '1.1'
+__VERSION__ = '1.1.3'
 
 class EApp(Exception):
     '''Application specific exception.'''
-    pass
-
-class Struct:
-    '''variable contenor as C `struct'.'''
     pass
 
 class Application():
@@ -27,17 +24,21 @@ DESCRIPTION
 
 
 OPTIONS
-    -o OUTFILE
+    -o OUTFILE, --outfile=OUTFILE
         The file name of the output file. If not specified the output file is
         named like INFILE but with a .png file name extension.
 
-    -v
+    -L LAYOUT, --layout=LAYOUT
+        Graphviz layout: dot, neato, twopi, circo, fdp
+        Default is 'dot'.
+
+    -v, --verbose
         Verbosely print processing information to stderr.
 
-    --help, -h
+    -h, --help
         Print this documentation.
 
-    --version
+    -V, --version
         Print program version number.
 
 SEE ALSO
@@ -51,7 +52,7 @@ THANKS
     This script was inspired by his music2png.py and AsciiDoc
 
 LICENSE
-    Copyright (C) 2008 Gouichi Iisaka.
+    Copyright (C) 2008-2009 Gouichi Iisaka.
     Free use of this software is granted under the terms of
     the GNU General Public License (GPL).
     '''
@@ -59,36 +60,30 @@ LICENSE
     def __init__(self, argv=None):
         if not argv:
             argv = sys.argv
-        self.attrs = Struct()
-        self.usage_msg = '%prog [options] inputfile\n'
-        self.usage_msg += 'Version: %s\n' % __VERSION__
-        self.usage_msg += 'Copyright(c) 2008: %s' % __AUTHOR__
+
+        self.usage = '%prog [options] inputfile'
+        self.version = 'Version: %s\n' % __VERSION__
+        self.version += 'Copyright(c) 2008-2009: %s\n' % __AUTHOR__
 
         self.option_list = [
             Option("-o", "--outfile", action="store",
 		    dest="outfile",
 		    help="Output file"),
             Option("-L", "--layout", action="store",
-		    dest="layout", default="dot",
-		    help="Output file"),
+                    dest="layout", default="dot", type="choice",
+                    choices=['dot','neato','twopi','circo','fdp'],
+		    help="Layout type. LAYOUT=<dot|neato|twopi|circo|fdp>"),
             Option("--debug", action="store_true",
 		    dest="do_debug",
 		    help=SUPPRESS_HELP),
             Option("-v", "--verbose", action="store_true",
 		    dest="do_verbose", default=False,
 		    help="verbose output"),
-            Option("-V", "--version", action="store_true",
-		    dest="do_version",
-		    help="Print version"),
 	    ]
 
-        self.parser = OptionParser(option_list=self.option_list)
-        self.parser.set_usage(self.usage_msg)
+        self.parser = OptionParser( usage=self.usage, version=self.version,
+                                    option_list=self.option_list)
         (self.options, self.args) = self.parser.parse_args()
-
-	if self.options.do_version:
-            self.parser.print_usage()
-            sys.exit(1)
 
 	if len(self.args) != 1:
             self.parser.print_help()
@@ -122,9 +117,11 @@ LICENSE
             cmd = '%s -Tpng "%s" > "%s"' % (
                         self.options.layout, infile, outfile)
             self.systemcmd(cmd)
-            os.unlink(infile)
         finally:
             os.chdir(saved_cwd)
+
+        if not self.options.do_debug:
+            os.unlink(infile)
 
     def run(self):
         if self.options.infile == '-':

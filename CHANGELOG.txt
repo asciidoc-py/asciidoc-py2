@@ -5,7 +5,7 @@ AsciiDoc ChangeLog
 
 Version 8.3.3 (2009-01-02)
 --------------------------
-This release supercedes 8.3.2.
+This release supersedes 8.3.2.
 
 .Bug fixes
 - The broken and confusing numeration and numeration2 numbered list

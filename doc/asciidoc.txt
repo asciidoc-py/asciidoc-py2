@@ -886,6 +886,32 @@ template.
 The 'BlockId' element has the same syntax and serves a similar
 function to the <<X30,anchor inline macro>>.
 
+[[X79]]
+AttributeList Element
+---------------------
+An 'AttributeList' block element is an <<X21,attribute list>> on a
+line by itself.  'AttributeList' attributes are only applied to the
+following block element -- the attributes are available for markup
+template substitution. Often the first attribute in the list is used
+to specify the following element's <<X23,style>>.
+
+By default only attribute references are substituted within attribute
+values, this is because not all attributes are destined to be marked
+up and rendered as text (for example the table 'cols' attribute). To
+perform normal inline text substitutions (special characters, quotes,
+macros, replacements) on an attribute value you need to enclose it in
+single quotes. In the following quote block the second attribute value
+in the AttributeList is quoted to ensure the 'http' macro is expanded
+to a hyperlink.
+
+---------------------------------------------------------------------
+[quote,'http://en.wikipedia.org/wiki/Samuel_Johnson[Samuel Johnson]']
+_____________________________________________________________________
+Sir, a woman's preaching is like a dog's walking on his hind legs. It
+is not done well; but you are surprised to find it done at all.
+_____________________________________________________________________
+---------------------------------------------------------------------
+
 
 Paragraphs
 ----------
@@ -2636,7 +2662,7 @@ last contains an escaped separator):
 [[X69]]
 Table attributes
 ~~~~~~~~~~~~~~~~
-Individual tables are customized by an optional <<X21,AttributeList>>
+Individual tables are customized by an optional <<X79,AttributeList>>
 preceding the table. Specify attributes when you want to change the
 default table format:
 
@@ -3578,14 +3604,6 @@ Macro Attribute lists
 Macros calls are suffixed with an attribute list. The list may be
 empty but it cannot be omitted. List entries are used to pass
 attribute values to macro markup templates.
-
-AttributeList Element
-~~~~~~~~~~~~~~~~~~~~~
-An <<X21,attribute list>> on a line by itself constitutes an
-'AttributeList' block element, its attributes apply to the following
-block element.  The list attributes are passed to the next block
-element for markup template substitution. Often the first list
-parameter is used to specify the element's <<X23,style>>.
 
 
 Attribute References
@@ -4979,7 +4997,7 @@ The first row of the table is rendered as a header.
 
 |autowidth |xhtml11,html4 |table|
 The column widths are determined by the browser, not the AsciiDoc
-'cols' atribute. If there is no 'width' attribute the table width is
+'cols' attribute. If there is no 'width' attribute the table width is
 also left up to the browser.
 
 |breakable, unbreakable |docbook (XSL/FO) |table|

@@ -1439,15 +1439,22 @@ class AttributeList:
     def translate():
         assert Lex.next() is AttributeList
         reader.read()   # Discard attribute list from reader.
+        attrlist = {}
         d = AttributeList.match.groupdict()
         for k,v in d.items():
             if v is not None:
                 if k == 'attrlist':
                     v = subs_attrs(v)
                     if v:
-                        parse_attributes(v, AttributeList.attrs)
+                        parse_attributes(v, attrlist)
                 else:
                     AttributeList.attrs[k] = v
+        # Substitute single quoted attribute values.
+        reo = re.compile(r"^'.*'$")
+        for k,v in attrlist.items():
+            if reo.match(v):
+                attrlist[k] = Lex.subs_1(v[1:-1],SUBS_NORMAL)
+        AttributeList.attrs.update(attrlist)
     @staticmethod
     def consume(d):
         """Add attribute list to the dictionary 'd' and reset the

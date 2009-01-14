@@ -2157,6 +2157,10 @@ referring document.
 
   image::images/tiger.png["Tiger image",align="left"]
 
+Comment Lines
+^^^^^^^^^^^^^
+See <<X25,comment block macro>>.
+
 Block Macros
 ~~~~~~~~~~~~
 A Block macro reference must be contained in a single line separated
@@ -2233,9 +2237,9 @@ Comment Lines
 ^^^^^^^^^^^^^
 Single lines starting with two forward slashes hard up against the
 left margin are treated as comments and are stripped from the output.
-Comment lines have been implemented as a block macro and are only
-valid in a block context -- they are not treated as comments inside
-paragraphs or delimited blocks. Example comment line:
+Comment lines have been implemented as a both block and inline macros
+so a comment line can appear as a standalone block or within block
+elements that perform inline macro expansion.  Example comment line:
 
   // This is a comment.
 

@@ -982,16 +982,27 @@ class Lex:
         return result
 
     @staticmethod
+    def canonical_subs(options):
+        """Translate composite subs values."""
+        if len(options) == 1:
+            if options[0] == 'none':
+                options = ()
+            elif options[0] == 'normal':
+                options = config.subsnormal
+            elif options[0] == 'verbatim':
+                options = config.subsverbatim
+        return options
+
+    @staticmethod
     def subs_1(s,options):
         """Perform substitution specified in 'options' (in 'options' order) on
         Does not process 'attributes' substitutions."""
         if not s:
             return s
         result = s
+        options = Lex.canonical_subs(options)
         for o in options:
-            if o == 'none':
-                return s
-            elif o == 'specialcharacters':
+            if o == 'specialcharacters':
                 result = config.subs_specialchars(result)
             elif o == 'attributes':
                 result = subs_attrs(result)
@@ -1015,15 +1026,9 @@ class Lex:
     def subs(lines,options):
         """Perform inline processing specified by 'options' (in 'options'
         order) on sequence of 'lines'."""
-        if len(options) == 1:
-            if options[0] == 'none':
-                options = ()
-            elif options[0] == 'normal':
-                options = config.subsnormal
-            elif options[0] == 'verbatim':
-                options = config.subsverbatim
         if not lines or not options:
             return lines
+        options = Lex.canonical_subs(options)
         # Join lines so quoting can span multiple lines.
         para = '\n'.join(lines)
         if 'macros' in options:
@@ -1452,7 +1457,7 @@ class AttributeList:
         # Substitute single quoted attribute values.
         reo = re.compile(r"^'.*'$")
         for k,v in attrlist.items():
-            if reo.match(v):
+            if reo.match(str(v)):
                 attrlist[k] = Lex.subs_1(v[1:-1],SUBS_NORMAL)
         AttributeList.attrs.update(attrlist)
     @staticmethod
@@ -2500,18 +2505,24 @@ class DelimitedBlock(AbstractBlock):
             AttributeList.consume(attrs)
         self.merge_attributes(attrs)
         options = self.parameters.options
-        if safe() and self.name == 'blockdef-backend':
+        if 'skip' in options:
+            skip = True
+        elif safe() and self.name == 'blockdef-backend':
             unsafe_error('Backend Block')
-            # Discard block body.
-            reader.read_until(self.delimiter,same_file=True)
-        elif 'skip' in options:
-            # Discard block body.
-            reader.read_until(self.delimiter,same_file=True)
+            skip = True
         else:
             template = self.parameters.template
             stag,etag = config.section2tags(template,self.attributes)
+            if not stag and not etag:
+                skip = True
+            else:
+                skip = False
+        if skip:
+            # Discard block body.
+            reader.read_until(self.delimiter,same_file=True)
+        else:
             if 'sectionbody' in options or 'list' in options:
-                # The body is treated like a SimpleSection.
+                # The body is treated like a section body.
                 writer.write(stag)
                 Section.translate_body(self)
                 writer.write(etag)

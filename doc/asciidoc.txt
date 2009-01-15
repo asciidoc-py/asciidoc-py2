@@ -1165,7 +1165,8 @@ Comment Blocks
 ~~~~~~~~~~~~~~
 The contents of CommentBlocks are not processed; they are useful for
 annotations and for excluding new or outdated content that you don't
-want displayed.  Here's and example:
+want displayed. CommentBlocks are never written to output files.
+Example:
 
 ---------------------------------------------------------------------
 //////////////////////////////////////////
@@ -1988,7 +1989,8 @@ macros).  Here are some examples:
   (an inline macro call cannot contain a nested call to itself).
 - In addition to `<name>`, `<target>` and `<attrlist>` the
   `<passtext>` and `<subslist>` named groups are available to
-  <<X77,passthrough macros>>.
+  <<X77,passthrough macros>>. A macro is a passthrough macro if the
+  definition includes a `<passtext>` named group.
 
 Inline Macros
 ~~~~~~~~~~~~~
@@ -2236,14 +2238,23 @@ but it is supported by Internet Explorer 8 Beta 1.
 Comment Lines
 ^^^^^^^^^^^^^
 Single lines starting with two forward slashes hard up against the
-left margin are treated as comments and are stripped from the output.
-Comment lines have been implemented as a both block and inline macros
-so a comment line can appear as a standalone block or within block
-elements that perform inline macro expansion.  Example comment line:
+left margin are treated as comments. Comment lines do not appear in
+the output unless the 'showcomments' attribute is defined.  Comment
+lines have been implemented as both block and inline macros so a
+comment line can appear as a standalone block or within block elements
+that support inline macro expansion. Example comment line:
 
   // This is a comment.
 
-See also <<X26,Comment Blocks>>.
+If the 'showcomments' attribute is defined comment lines are written
+to the output:
+
+- The normal AsciiDoc inline text formatting is applied to comment
+  lines.
+- In DocBook the comment lines are enclosed by the 'remark' element
+  (which may or may not be rendered by your toolchain).
+- The 'showcomments' attribute does not expose <<X26,Comment Blocks>>.
+  Comment Blocks are never passed to the output.
 
 System Macros
 ~~~~~~~~~~~~~
@@ -3801,9 +3812,10 @@ predefined intrinsic attributes:
   {outfile}             output file name (note 1)
   {revision}            document revision number (from document header)
   {sectnum}             formatted section number (in section titles)
+  {showcomments}        send comment lines to the output
   {title}               section title (in titled elements)
-  {two_colons}          Two colon characters.
-  {two_semicolons}      Two semicolon characters.
+  {two_colons}          Two colon characters
+  {two_semicolons}      Two semicolon characters
   {user-dir}            the ~/.asciidoc directory (if it exists)
   {verbose}             defined as '' if --verbose command option specified
 

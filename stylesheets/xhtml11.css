@@ -300,6 +300,10 @@ div.hdlist.compact tr {
   padding-bottom: 0;
 }
 
+.comment {
+  background: yellow;
+}
+
 @media print {
   div#footer-badges { display: none; }
 }

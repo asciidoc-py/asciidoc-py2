@@ -399,7 +399,8 @@ the author line. The revision line can be one of two formats:
     numeric character.
   * Any non-numeric characters preceding the first numeric character
     will be dropped.
-. An RCS/CSV/SVN $Id$ marker.
+. An RCS/CSV/SVN $Id$ marker (if an $Id$ revision marker is used the
+  header author line can be omitted).
 
 The document heading is separated from the remainder of the document
 by one or more blank lines.
@@ -418,6 +419,7 @@ command-line option. For example:
 
   $ asciidoc -a date=2004/07/27 article.txt
 
+The 'revision' attribute can be an RCS/CSV/SVN $Id$ marker.
 Attributes can also be added to the header for substitution in the
 header template with <<X18,Attribute Entry>> elements.
 

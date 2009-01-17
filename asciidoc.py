@@ -1273,6 +1273,8 @@ class Document:
 
 class Header:
     """Static methods and attributes only."""
+    REV_LINE_RE = r'^(\D*(?P<revision>.*?),)?(?P<date>.+)$'
+    RCS_ID_RE = r'^\$Id: \S+ (?P<revision>\S+) (?P<date>\S+) \S+ (?P<author>\S+) (\S+ )?\$$'
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     @staticmethod
@@ -1296,32 +1298,36 @@ class Header:
                 attrs['manvolnum'] = mo.group('manvolnum').strip()
         AttributeEntry.translate_all()
         s = reader.read_next()
+        mo = None
         if s:
             s = reader.read()
-            document.parse_author(s)
+            mo = re.match(Header.RCS_ID_RE,s)
+            if not mo:
+                document.parse_author(s)
+                AttributeEntry.translate_all()
+                if reader.read_next():
+                    # Parse revision line.
+                    s = reader.read()
+                    s = subs_attrs(s)
+                    if s:
+                        mo = re.match(Header.RCS_ID_RE,s)
+                        if not mo:
+                            mo = re.match(Header.REV_LINE_RE,s)
             AttributeEntry.translate_all()
-            if reader.read_next():
-                # Parse revision line.
-                s = reader.read()
-                s = subs_attrs(s)
-                if s:
-                    # Match RCS/CVS/SVN $Id$ marker format.
-                    mo = re.match(r'^\$Id: \S+ (?P<revision>\S+)'
-                         ' (?P<date>\S+) \S+ \S+ (\S+ )?\$$',s)
-                    if not mo:
-                        # Match AsciiDoc revision,date format.
-                        mo = re.match(r'^\D*(?P<revision>.*?),(?P<date>.+)$',s)
-                    if mo:
-                        revision = mo.group('revision').strip()
-                        date = mo.group('date').strip()
-                    else:
-                        revision = None
-                        date = s.strip()
-                    if revision:
-                        attrs['revision'] = config.subs_specialchars(revision)
-                    if date:
-                        attrs['date'] = config.subs_specialchars(date)
-            AttributeEntry.translate_all()
+        if 'revision' in attrs:
+            s = attrs['revision']
+            if s:
+                mo = re.match(Header.RCS_ID_RE,s)
+        if mo:
+            revision = mo.group('revision')
+            date = mo.group('date')
+            author = mo.groupdict().get('author')
+            if revision:
+                attrs['revision'] = revision.strip()
+            if date:
+                attrs['date'] = date.strip()
+            if author and 'firstname' not in attrs:
+                document.parse_author(author)
         if document.doctype == 'manpage':
             # Translate mandatory NAME section.
             if Lex.next() is not Title:

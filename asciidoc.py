@@ -1314,10 +1314,9 @@ class Header:
                         if not mo:
                             mo = re.match(Header.REV_LINE_RE,s)
             AttributeEntry.translate_all()
-        if 'revision' in attrs:
-            s = attrs['revision']
-            if s:
-                mo = re.match(Header.RCS_ID_RE,s)
+        s = attrs.get('revision')
+        if s:
+            mo = re.match(Header.RCS_ID_RE,s)
         if mo:
             revision = mo.group('revision')
             date = mo.group('date')

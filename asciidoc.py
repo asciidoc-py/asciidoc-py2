@@ -1811,7 +1811,7 @@ class AbstractBlock:
         # Before a block is processed it's attributes (from it's
         # attributes list) are merged with the block configuration parameters
         # (by self.merge_attributes()) resulting in the template substitution
-        # dictionary (self.attributes) and the block's procssing parameters
+        # dictionary (self.attributes) and the block's processing parameters
         # (self.parameters).
         self.attributes={}
         # The names of block parameters.
@@ -2245,13 +2245,8 @@ class List(AbstractBlock):
             self.attributes['coids'] = calloutmap.calloutids(self.listindex)
         itemtag = subs_tag(self.tag.item, self.attributes)
         writer.write(itemtag[0])
-        if self.text and self.text == '+':
-            # Pathological case: continued Horizontal Labeled List with no
-            # item text.
-            continued = True
-        elif not self.text and self.iscontinued():
-            # Pathological case: continued Vertical Labeled List with no
-            # item text.
+        if not self.text and self.iscontinued():
+            # Pathological case: continued Labeled List with no item text.
             continued = True
         else:
             # Write ItemText.
@@ -2421,7 +2416,8 @@ class List(AbstractBlock):
         if stag:
             writer.write(stag)
         self.listindex = 0
-        while Lex.next() is self:
+        # Process list till list syntax or list style changes.
+        while Lex.next() is self and not AttributeList.attrs.get('1'):
             self.listindex += 1
             document.attributes['listindex'] = str(self.listindex)
             if self.type in ('numbered','callout'):
@@ -2511,21 +2507,13 @@ class DelimitedBlock(AbstractBlock):
         self.merge_attributes(attrs)
         options = self.parameters.options
         if 'skip' in options:
-            skip = True
+            reader.read_until(self.delimiter,same_file=True)
         elif safe() and self.name == 'blockdef-backend':
             unsafe_error('Backend Block')
-            skip = True
+            reader.read_until(self.delimiter,same_file=True)
         else:
             template = self.parameters.template
             stag,etag = config.section2tags(template,self.attributes)
-            if not stag and not etag:
-                skip = True
-            else:
-                skip = False
-        if skip:
-            # Discard block body.
-            reader.read_until(self.delimiter,same_file=True)
-        else:
             if 'sectionbody' in options or 'list' in options:
                 # The body is treated like a section body.
                 writer.write(stag)

@@ -4,23 +4,6 @@ AsciiDoc Frequently Asked Questions
 An embryonic AsciiDoc FAQ.
 
 
-== Can I have adjacent vertical and horizontal labeled lists?
-
-Horizontal and vertical labeled lists share the same syntax if one
-follows immediately after another they will be interpreted as a single
-list. You can prevent this by putting a comment line between the two.
-For example:
-
--------------------
-Item 1:: List 1.
-Item 2:: List 1.
-
-// New list.
-[horizontal]
-Item 1:: List 2.
-Item 2:: List 2.
--------------------
-
 == Is it possible to include charts in AsciiDoc documents?
 
 There are a number of programs available that generate presentation

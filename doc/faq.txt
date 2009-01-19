@@ -4,6 +4,23 @@ AsciiDoc Frequently Asked Questions
 An embryonic AsciiDoc FAQ.
 
 
+== How can I supress lists from nesting?
+
+If you place two lists with different syntax hard up against each
+other then the second list will be nested in the first. If you don't
+want the second list to be nested separate them with a comment line
+block macro. For example:
+
+-------------------
+1. List 1.
+2. List 1.
+
+//
+a. List 2.
+b. List 2.
+-------------------
+
+
 == Is it possible to include charts in AsciiDoc documents?
 
 There are a number of programs available that generate presentation

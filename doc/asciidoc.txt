@@ -1352,20 +1352,16 @@ Lists
 .List behavior
 - List item indentation is optional and does not determine nesting,
   indentation does however make the source more readable.
-- A nested list must use a different syntax from its parent so that
-  asciidoc(1) can distinguish the start of a nested list.
-- By default lists of the same type can only be nested two deep; this
-  could be increased by defining new list definitions.
-- In addition to nested lists a list item will include immediately
-  following Literal paragraphs.
-- Use <<X15, List Item Continuation>> to append other block elements
-  to a list item.
+- Another list or a literal paragraph immediately following a list
+  item will be implicitly included in the list item; use <<X15, list
+  item continuation>> to explicitly append other block elements to a
+  list item.
+- A comment block or a comment line block macro element will terminate
+  a list -- use inline comment lines to put comments inside lists.
 - The `listindex` <<X60,intrinsic attribute>> is the current list item
   index (1..). If this attribute is not inside a list then it's value
   is the number of items in the most recently closed list. Useful for
   displaying the number of items in a list.
-- You need to use <<X15,list item continuation>> if a nested list is
-  accompanied by an <<X21,attribute list>>.
 
 Bulleted and Numbered Lists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1652,18 +1648,14 @@ located in a bibliography section.
 [[X15]]
 List Item Continuation
 ~~~~~~~~~~~~~~~~~~~~~~
-To include subsequent block elements in list items (in addition to
-implicitly included nested lists and Literal paragraphs) place a
-separator line containing a single plus character between the list
-item and the ensuing list continuation element.  Multiple block
-elements (excluding section Titles and BlockTitles) may be included in
-a list item using this technique.  Note that the continued items must
-be indented as they normally would be outside of the list.
-
-You also need to use list item continuation if a nested list is
-accompanied by an <<X21,attribute list>>.
-
-Here's an example of list item continuation:
+Another list or a literal paragraph immediately following a list item
+is implicitly appended to the list item; to append other block
+elements to a list item you need to explicitly join them to the list
+item with a 'list continuation' (a separator line containing a single
+plus character). Multiple block elements can be appended to a list
+item using list continuations (provided they are legal list item
+children in the backend markup).  Here is an example of list item
+continuation:
 
 ---------------------------------------------------------------------
 1. List item one.
@@ -1676,7 +1668,7 @@ $ ls *.sh
 $ mv *.sh ~/tmp
 .................
 +
-List item one continued with a third paragraph.
+List item continued with a third paragraph.
 
 2. List item two.
 
@@ -1684,9 +1676,9 @@ List item one continued with a third paragraph.
 
 -  Nested list (item one).
 
-   Nested list literal paragraph (no continuation required).
+   Literal paragraph (no continuation required).
 +
-Nested list appended list item one paragraph
+Paragraph appended to current list item.
 
 -  Nested list item two.
 ---------------------------------------------------------------------
@@ -1695,15 +1687,15 @@ Renders:
 
 1. List item one.
 +
-List item one continued with a second paragraph followed by a Listing
-block.
+List item one continued with a second paragraph followed by an
+Indented block.
 +
 .................
 $ ls *.sh
 $ mv *.sh ~/tmp
 .................
 +
-List item one continued with a third paragraph.
+List item continued with a third paragraph.
 
 2. List item two.
 
@@ -1711,75 +1703,61 @@ List item one continued with a third paragraph.
 
 -  Nested list (item one).
 
-   Nested list literal paragraph (no continuation required).
+   Literal paragraph (no continuation required).
 +
-Nested list appended list item one paragraph
+Paragraph appended to current list item.
 
 -  Nested list item two.
 
 
 [[X29]]
-List Block
-~~~~~~~~~~
-A List block is a special delimited block containing a list element.
-
-- All elements between in the List Block are part of the preceding
-  list item.  In this respect the List block behaves like <<X15,List
-  Item Continuation>> except that list items contained within the
-  block do not require explicit `+` list item continuation lines:
-- The block delimiter is a single line containing two dashes.
-- Any block title or attributes are passed to the first element inside
-  the block.
-
-The List Block is useful for:
-
-1. Lists with long multi-element list items.
-2. Nesting a list within a parent list item (by default nested lists
-   follow the preceding list item).
-
-Here's an example of a nested list block:
+List Blocks
+~~~~~~~~~~~
+A 'List block' is a container for appending a collection of elements
+to a list item -- useful for long multi-element list items. The list
+block delimiter is a single line containing two dashes.  A list block
+must always be preceded by a <<X15,list continuation>> line. The list
+block can include any elements (provided they are legal list item
+children in the backend markup); you can even include lists with the
+same syntax as the parent list. List block example:
 
 ---------------------------------------------------------------------
-.Nested List Block
+.List Block Example
 1. List item one.
 +
-This paragraph is part of the preceding list item
-+
 --
-a. This list is nested and does not require explicit item continuation.
+This paragraph is part of the preceding list item.
 
-This paragraph is part of the preceding list item
+a. This list is nested and does not require explicit item continuation.
++
+This paragraph is part of the preceding list item.
 
 b. List item b.
 
-This paragraph belongs to list item b.
+This paragraph belongs to item one of the outer list.
 --
-+
-This paragraph belongs to item 1.
 
-2. Item 2 of the outer list.
+2. Item two of the outer list.
 ---------------------------------------------------------------------
 
 Renders:
 
-.Nested List Block
+.List Block Example
 1. List item one.
 +
-This paragraph is part of the preceding list item
-+
 --
-a. This list is nested and does not require explicit item continuation.
+This paragraph is part of the preceding list item.
 
-This paragraph is part of the preceding list item
+a. This list is nested and does not require explicit item continuation.
++
+This paragraph is part of the preceding list item.
 
 b. List item b.
 
-This paragraph belongs to list item b.
+This paragraph belongs to item one of the outer list.
 --
-+
-This paragraph belongs to item 1.
 
-2. Item 2 of the outer list.
+2. Item two of the outer list.
 
 
 Footnotes

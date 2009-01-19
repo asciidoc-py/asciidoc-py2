@@ -1767,7 +1767,7 @@ class Section:
         next = Lex.next()
         while next and next is not terminator:
             if next is Title and isinstance(terminator,DelimitedBlock):
-                error('title not permitted in sidebar body')
+                error('section title not permitted in delimited block')
             next.translate()
             next = Lex.next()
             if next is Title and AttributeList.attrs.get('1') == 'float':
@@ -2228,43 +2228,32 @@ class List(AbstractBlock):
         # Write item text.
         self.translate_item()
         writer.write(entrytag[1])
-    def iscontinued(self):
-        if reader.read_next() == '+':
-            reader.read()   # Discard.
-            return True
-        else:
-            return False
     def translate_item(self):
-        if lists.listblock:
-            self.translate_item_2()
-        else:
-            self.translate_item_1()
-    def translate_item_1(self):
-        """Translation for '+' style list continuation."""
         if self.type == 'callout':
             self.attributes['coids'] = calloutmap.calloutids(self.listindex)
         itemtag = subs_tag(self.tag.item, self.attributes)
         writer.write(itemtag[0])
-        if not self.text and self.iscontinued():
-            # Pathological case: continued Labeled List with no item text.
-            continued = True
-        else:
-            # Write ItemText.
-            text = reader.read_until(
-                    lists.delimiter + r'|^\+$|^$|' + blocks.delimiter
-                    + r'|' + tables.delimiter
-                    + r'|' + tables_OLD.delimiter
-                    + r'|' + AttributeList.pattern
-            )
-            if self.text is not None:
-                text = [self.text] + list(text)
-            if text:
-                writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
-            continued = self.iscontinued()
+        # Write ItemText.
+        text = reader.read_until(
+                lists.delimiter + r'|^\+$|^$|' + blocks.delimiter
+                + r'|' + tables.delimiter
+                + r'|' + tables_OLD.delimiter
+                + r'|' + AttributeList.pattern
+        )
+        if self.text:
+            text = [self.text] + list(text)
+        if text:
+            writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
+        # Process explicit and implicit list item continuations.
         while True:
-            # Allow attribute list to precede continued list item element.
-            while Lex.next() is AttributeList:
+            continuation = reader.read_next() == '+'
+            if continuation: reader.read()  # Discard continuation line.
+            while Lex.next() in (BlockTitle,AttributeList):
+                # Consume continued element title and attributes.
                 Lex.next().translate()
+            if not continuation and BlockTitle.title:
+                # Titled elements terminate the list.
+                break
             next = Lex.next()
             if next in lists.open:
                 break
@@ -2272,48 +2261,10 @@ class List(AbstractBlock):
                 next.translate()
             elif isinstance(next,Paragraph) and 'listelement' in next.options:
                 next.translate()
-            elif continued:
-                if next is Title or next is BlockTitle:
-                    error('title not allowed in list item continuation')
-                next.translate()
-            else:
-                break
-            continued = self.iscontinued()
-        writer.write(itemtag[1])
-    def translate_item_2(self):
-        """Translation for List block style lists."""
-        if self.type == 'callout':
-            self.attributes['coids'] = calloutmap.calloutids(self.listindex)
-        itemtag = subs_tag(self.tag.item, self.attributes)
-        writer.write(itemtag[0])
-        if self.text or reader.read_next():
-            # Write ItemText.
-            text = reader.read_until(
-                    lists.delimiter + r'|^$|' + blocks.delimiter
-                    + r'|' + tables.delimiter
-                    + r'|' + tables_OLD.delimiter
-                    + r'|' + AttributeList.pattern
-            )
-            if self.text is not None:
-                text = [self.text] + list(text)
-            if text:
-                writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
-        while True:
-            # Allow attribute list to precede continued list item element.
-            while Lex.next() is AttributeList:
-                Lex.next().translate()
-            next = Lex.next()
-            if next in lists.open:
-                break
-            elif next is lists.listblock:
-                break
-            elif isinstance(next,List):
-                next.translate()
-            elif isinstance(next,Paragraph) and 'listelement' in next.options:
-                next.translate()
-            elif lists.listblock:
-                if next is Title or next is BlockTitle:
-                    error('title not allowed in list item continuation')
+            elif continuation:
+                # This is where continued elements are processed.
+                if next is Title:
+                    error('section title not allowed in list item',halt=True)
                 next.translate()
             else:
                 break
@@ -2416,8 +2367,10 @@ class List(AbstractBlock):
         if stag:
             writer.write(stag)
         self.listindex = 0
-        # Process list till list syntax or list style changes.
-        while Lex.next() is self and not AttributeList.attrs.get('1'):
+        # Process list till list syntax, style or title  changes.
+        while Lex.next() is self and not (AttributeList.attrs.get('1')
+                                          or AttributeList.attrs.get('style')
+                                          or BlockTitle.title):
             self.listindex += 1
             document.attributes['listindex'] = str(self.listindex)
             if self.type in ('numbered','callout'):
@@ -2447,7 +2400,6 @@ class Lists(AbstractBlocks):
     def __init__(self):
         AbstractBlocks.__init__(self)
         self.open = []           # A stack of the current and parent lists.
-        self.listblock = None    # Current list is in list block.
         self.tags={}    # List tags dictionary. Each entry is a tags AttrDict.
     def load(self,sections):
         AbstractBlocks.load(self,sections)
@@ -2496,14 +2448,10 @@ class DelimitedBlock(AbstractBlock):
         return AbstractBlock.isnext(self)
     def translate(self):
         AbstractBlock.translate(self)
-        if 'list' in self.options:
-            lists.listblock = self
         reader.read()   # Discard delimiter.
         attrs = {}
-        # Leave list block attributes for the list element.
-        if lists.listblock is not self:
-            BlockTitle.consume(attrs)
-            AttributeList.consume(attrs)
+        BlockTitle.consume(attrs)
+        AttributeList.consume(attrs)
         self.merge_attributes(attrs)
         options = self.parameters.options
         if 'skip' in options:
@@ -2529,8 +2477,6 @@ class DelimitedBlock(AbstractBlock):
                 body = Lex.subs(body,postsubs)
                 # Write start tag, content, end tag.
                 writer.write(dovetail_tags(stag,body,etag))
-        if 'list' in options:
-            lists.listblock = None
         if reader.eof():
             self.error('missing closing delimiter',self.start)
         else:

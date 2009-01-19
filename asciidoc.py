@@ -1466,6 +1466,9 @@ class AttributeList:
                 attrlist[k] = Lex.subs_1(v[1:-1],SUBS_NORMAL)
         AttributeList.attrs.update(attrlist)
     @staticmethod
+    def style():
+        return AttributeList.attrs.get('style') or AttributeList.attrs.get('1')
+    @staticmethod
     def consume(d):
         """Add attribute list to the dictionary 'd' and reset the
         list."""
@@ -1766,11 +1769,12 @@ class Section:
         isempty = True
         next = Lex.next()
         while next and next is not terminator:
-            if next is Title and isinstance(terminator,DelimitedBlock):
+            if (isinstance(terminator,DelimitedBlock)
+                and next is Title and AttributeList.style() != 'float'):
                 error('section title not permitted in delimited block')
             next.translate()
             next = Lex.next()
-            if next is Title and AttributeList.attrs.get('1') == 'float':
+            if next is Title and AttributeList.style() == 'float':
                 # Process floating titles.
                 template = 'floatingtitle'
                 if template in config.sections:
@@ -2368,8 +2372,7 @@ class List(AbstractBlock):
             writer.write(stag)
         self.listindex = 0
         # Process list till list syntax, style or title  changes.
-        while Lex.next() is self and not (AttributeList.attrs.get('1')
-                                          or AttributeList.attrs.get('style')
+        while Lex.next() is self and not (AttributeList.style()
                                           or BlockTitle.title):
             self.listindex += 1
             document.attributes['listindex'] = str(self.listindex)

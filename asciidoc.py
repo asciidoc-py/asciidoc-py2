@@ -2,13 +2,13 @@
 """
 asciidoc - converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 
-Copyright (C) 2002-2008 Stuart Rackham. Free use of this software is granted
+Copyright (C) 2002-2009 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
 """
 
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
-VERSION = '8.3.3'   # See CHANGLOG file for version history.
+VERSION = '8.3.4'   # See CHANGLOG file for version history.
 
 #---------------------------------------------------------------------------
 # Program onstants.

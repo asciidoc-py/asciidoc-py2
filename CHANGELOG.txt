@@ -3,6 +3,43 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.3.4 (2009-01-20)
+--------------------------
+.Additions and changes
+- Implemented a title 'float' style.  A floating title (or bridgehead)
+  is rendered just like a normal section but is not formally
+  associated with a text body and is not part of the regular section
+  hierarchy so the normal ordering rules do not apply.
+- Implemented inline comment macro so comment lines can now appear
+  inside block elements.
+- Comment lines are sent to the output if the 'showcomments' attribute
+  is defined (comment blocks are never sent to the output).
+- Single quoting attribute values in 'AttributeList' elements causes
+  them to be substituted like normal inline text (without single
+  quoting only attribute substitution is performed).
+- Rewrote list item processing (was very crufty). List continuation
+  and list blocks now work as expected. Updated and clarified list
+  documentation in User Guide.
+- The 'revision' attribute now recognizes the RCS $Id$ marker format.
+- An RCS $Id$ marker formatted revision line in the header does not
+  need to be preceded by an author line.
+- If an RCS $Id$ formatted revision is specified and the author name
+  has not already been set then the author name in the $Id$ marker
+  will be used.
+- Updated Gouichi Iisaka's Graphviz filter to version 1.1.3.
+- Added 'autowidth' table attribute option for (X)HTML outputs.
+- DocBook backend now puts 'orgname' optional attribute in DocBook
+  header.
+- Deprecated undocumented 'companyname' attribute in favor of
+  DocBook's 'corpname'.
+- Removed explicit closing backslash from HTML4 self-closing tags to
+  comply with WC3 recommendation.
+
+.Bug fixes
+- Fixed 8.3.3 regression whereby adjacent lists with the same syntax
+  but different list styles were incorrectly treated as a single list.
+
+
 Version 8.3.3 (2009-01-02)
 --------------------------
 This release supersedes 8.3.2.

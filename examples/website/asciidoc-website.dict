@@ -1,4 +1,4 @@
-personal_ws-1.1 en 158 
+personal_ws-1.1 en 161 
 backends
 AsciiDoc's
 Rosten
@@ -43,6 +43,7 @@ multi
 LinuxDoc
 faq
 Rackham
+showcomments
 jw
 src
 Calixto
@@ -98,6 +99,7 @@ dvi
 callouts
 sinx
 vB
+autowidth
 Sakellariou
 frontmatter
 dxf
@@ -152,6 +154,7 @@ xml
 upperalpha
 Wiese
 chunked
+AttributeList
 Gouichi
 Jipsen
 Iisaka's

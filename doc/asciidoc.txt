@@ -837,7 +837,9 @@ Setting the first title attribute to `float` generates a free-floating
 title. A free-floating title is rendered just like a normal section
 title but is not formally associated with a text body and is not part
 of the regular section hierarchy so the normal ordering rules do not
-apply. Example:
+apply. Floating titles can also be used in contexts where section
+titles are illegal: for example sidebar, admonition and list blocks.
+Example:
 
   [float]
   The second day

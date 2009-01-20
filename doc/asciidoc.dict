@@ -1,7 +1,7 @@
-personal_ws-1.1 en 737 
+personal_ws-1.1 en 739 
 Sturmer
-Kléber
 Kleber
+Kléber
 quis
 auctor
 linkcss
@@ -12,8 +12,8 @@ BOLID
 callouts
 bulleted
 starttags
-ListingBlock
 listingblock
+ListingBlock
 eval
 ListLabel
 asc
@@ -81,6 +81,7 @@ callto
 vsides
 tablewidth
 Morbi
+DocBook's
 monospacedwords
 css
 asciimath
@@ -124,8 +125,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-middlename
 MiddleName
+middlename
 subdirectories
 footnoteref
 passtext
@@ -146,8 +147,8 @@ entrytbl
 Ghostscript
 verear
 Buenos
-LinuxDoc
 linuxdoc
+LinuxDoc
 PostScript
 hhp
 Vijay
@@ -156,13 +157,14 @@ systemIdStartString
 README
 utils
 CustomBlock
+orgname
 fermentum
 ListingBlocks
 GPL
 hsides
 upperalpha
-Bólido
 Bolido
+Bólido
 footrow
 misspelt
 WINNT
@@ -174,8 +176,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-verbatimblock
 VerbatimBlock
+verbatimblock
 corpname
 shiftwidth
 misevaluations
@@ -455,8 +457,8 @@ arabic
 fringilla
 retab
 BackendBlocks
-ChangeLog
 changelog
+ChangeLog
 tis
 Ubuntu
 sectids
@@ -475,8 +477,8 @@ crlf
 vel
 Iisaka's
 localtime
-BlockMacro
 blockmacro
+BlockMacro
 Xandros
 groff
 POSIX
@@ -519,8 +521,8 @@ dbtimestamp
 txt
 BlockId
 passthrough
-Berguvsvägen
 Berguvsvagen
+Berguvsvägen
 noincsearch
 TableRow
 inlinemediaobject
@@ -568,9 +570,9 @@ Redhat
 cb
 tuple
 cd
-asciimathml
-AsciiMathML
 ASCIIMathML
+AsciiMathML
+asciimathml
 arounds
 filename
 mansource
@@ -586,8 +588,8 @@ scaledwidth
 cp
 xsl
 fb
-DocBook
 docbook
+DocBook
 stylesheet
 pagefile
 superscripted
@@ -607,8 +609,8 @@ fprintf
 colabswidth
 tabsize
 smallnew
-BlockTitles
 blocktitles
+BlockTitles
 localdate
 bodyrow
 hs
@@ -658,8 +660,8 @@ permalink
 td
 py
 AROUT
-literalblock
 LiteralBlock
+literalblock
 sgml
 biggy
 softtabstop
@@ -675,8 +677,8 @@ tt
 blandit
 inline
 Martín
-SectionBody
 sectionbody
+SectionBody
 VM
 conformant
 listchars
@@ -721,8 +723,8 @@ nbsp
 qanda
 noout
 massa
-AsciiDoc
 asciidoc
+AsciiDoc
 manmanual
 TableBody
 realpath

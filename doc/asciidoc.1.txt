@@ -113,6 +113,6 @@ Main web site: <http://www.methods.co.nz/asciidoc/>
 
 COPYING
 -------
-Copyright \(C) 2002-2008 Stuart Rackham. Free use of this software is
+Copyright \(C) 2002-2009 Stuart Rackham. Free use of this software is
 granted under the terms of the GNU General Public License (GPL).
 

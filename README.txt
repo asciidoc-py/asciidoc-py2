@@ -31,6 +31,6 @@ Current AsciiDoc version tested on Xubuntu Linux 8.04 with:
 
 COPYING
 -------
-Copyright (C) 2002-2008 Stuart Rackham. Free use of this software
+Copyright (C) 2002-2009 Stuart Rackham. Free use of this software
 is granted under the terms of the GNU General Public License (GPL).
 

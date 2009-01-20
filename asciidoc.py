@@ -939,40 +939,25 @@ class Lex:
         # position return the element.
         if Lex.prev_element and Lex.prev_cursor == reader.cursor:
             return Lex.prev_element
-        result = None
-        # Check for AttributeEntry.
-        if not result and AttributeEntry.isnext():
+        if AttributeEntry.isnext():
             result = AttributeEntry
-        # Check for AttributeList.
-        if not result and AttributeList.isnext():
+        elif AttributeList.isnext():
             result = AttributeList
-        # Check for Title.
-        if not result and Title.isnext():
+        elif Title.isnext():
             result = Title
-        # Check for Block Macro.
-        if not result and macros.isnext():
+        elif macros.isnext():
             result = macros.current
-        # Check for List.
-        if not result and lists.isnext():
+        elif lists.isnext():
             result = lists.current
-        # Check for DelimitedBlock.
-        if not result and blocks.isnext():
-            # Skip comment blocks.
-            if 'skip' in blocks.current.options:
-                blocks.current.translate()
-                return Lex.next()
-            else:
-                result = blocks.current
-        # Check for Table.
-        if not result and tables_OLD.isnext():
+        elif blocks.isnext():
+            result = blocks.current
+        elif tables_OLD.isnext():
             result = tables_OLD.current
-        if not result and tables.isnext():
+        elif tables.isnext():
             result = tables.current
-        # Check for BlockTitle.
-        if not result and BlockTitle.isnext():
+        elif BlockTitle.isnext():
             result = BlockTitle
-        # If it's none of the above then it must be an Paragraph.
-        if not result:
+        else:
             if not paragraphs.isnext():
                 raise EAsciiDoc,'paragraph expected'
             result = paragraphs.current

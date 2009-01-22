@@ -961,7 +961,7 @@ class Lex:
             if not paragraphs.isnext():
                 raise EAsciiDoc,'paragraph expected'
             result = paragraphs.current
-        # Cache answer.
+        # Optimization: Cache answer.
         Lex.prev_cursor = reader.cursor
         Lex.prev_element = result
         return result
@@ -3477,7 +3477,9 @@ class Reader(Reader1):
                 else:   # ifdef or ifndef.
                     if not target:
                         raise EAsciiDoc,'missing macro target: %s' % result
-                    self.depth = self.depth+1
+                    attrlist = mo.group('attrlist')
+                    if not attrlist:
+                        self.depth = self.depth+1
             result = self.read_super()
             if result is None:
                 return None
@@ -3491,14 +3493,22 @@ class Reader(Reader1):
                 if not target:
                     raise EAsciiDoc,'missing macro target: %s' % result
                 defined = document.attributes.get(target) is not None
+                attrlist = mo.group('attrlist')
                 if name == 'ifdef':
-                    self.skip = not defined
+                    if attrlist:
+                        if defined: return attrlist
+                    else:
+                        self.skip = not defined
                 else:   # ifndef.
-                    self.skip = defined
-                if self.skip:
-                    self.skipto = self.depth
-                    self.skipname = target
-                self.depth = self.depth+1
+                    if attrlist:
+                        if not defined: return attrlist
+                    else:
+                        self.skip = defined
+                if not attrlist:
+                    if self.skip:
+                        self.skipto = self.depth
+                        self.skipname = target
+                    self.depth = self.depth+1
             result = self.read()
         if result:
             # Expand executable block macros.

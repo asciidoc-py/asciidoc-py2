@@ -2293,16 +2293,16 @@ Example:
 Conditional Inclusion Macros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lines of text in the source document can be selectively included or
-excluded from processing based on the existence (or not) of a
-document attribute.  There are two forms of conditional inclusion
-macro usage, the first includes document text between the `ifdef` and
-`endif` macros if a document attribute is defined:
+excluded from processing based on the existence (or not) of a document
+attribute.  There are two conditional inclusion macros; the first
+includes document text between the `ifdef` and `endif` macros if a
+document attribute is defined:
 
   ifdef::<attribute>[]
   :
   endif::<attribute>[]
 
-The second for includes document text between the `ifndef` and `endif`
+The second includes document text between the `ifndef` and `endif`
 macros if the attribute is not defined:
 
   ifndef::<attribute>[]
@@ -2311,6 +2311,18 @@ macros if the attribute is not defined:
 
 `<attribute>` is an attribute name which is optional in the trailing
 `endif` macro.
+
+If you only want to process a single line of text then the text can be
+put inside the square brackets and the `endif` macro omitted, for
+example:
+
+  ifdef::revision[Version number 42]
+
+Is equivalent to:
+
+  ifdef::revision[]
+  Version number 42
+  endif::revision[]
 
 Take a look at the `*.conf` configuration files in the AsciiDoc
 distribution for examples of conditional inclusion macro usage.

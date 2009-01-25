@@ -2450,7 +2450,7 @@ class DelimitedBlock(AbstractBlock):
         else:
             template = self.parameters.template
             stag,etag = config.section2tags(template,self.attributes)
-            if 'sectionbody' in options or 'list' in options:
+            if 'sectionbody' in options:
                 # The body is treated like a section body.
                 writer.write(stag)
                 Section.translate_body(self)

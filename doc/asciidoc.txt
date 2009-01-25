@@ -1056,22 +1056,25 @@ Predefined delimited block underlines:
   QuoteBlock:       __________________________
   ExampleBlock:     ==========================
   Filter blocks:    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+  OpenBlock:        --
 
 The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.
 
 .Default DelimitedBlock substitutions
-[cols="2,5*^",options="header"]
-|==================================================================
-|              |Passthrough |Listing  |Literal  |Sidebar  |Quote
-|Callouts      |  No        | Yes     | Yes     | No      | No
-|Attributes    |  Yes       | No      | No      | Yes     | Yes
-|Inline Macros |  Yes       | No      | No      | Yes     | Yes
-|Quotes        |  No        | No      | No      | Yes     | Yes
-|Replacements  |  No        | No      | No      | Yes     | Yes
-|Special chars |  No        | Yes     | Yes     | Yes     | Yes
-|Special words |  No        | No      | No      | Yes     | Yes
-|==================================================================
+[cols="2strong,7*^",options="header,autowidth"]
+|=====================================================
+| |Attributes |Callouts |Macros | Quotes |Replacements
+|Special chars |Special words
+
+|PassthroughBlock |Yes |No  |Yes |No  |No  |No  |No
+|ListingBlock     |No  |Yes |No  |No  |No  |Yes |No
+|LiteralBlock     |No  |Yes |No  |No  |No  |Yes |No
+|SidebarBlock     |Yes |No  |Yes |Yes |Yes |Yes |Yes
+|QuoteBlock       |Yes |No  |Yes |Yes |Yes |Yes |Yes
+|ExampleBlock     |Yes |No  |Yes |Yes |Yes |Yes |Yes
+|OpenBlock        |Yes |No  |Yes |Yes |Yes |Yes |Yes
+|=====================================================
 
 Listing Blocks
 ~~~~~~~~~~~~~~
@@ -1301,7 +1304,7 @@ adolescens.
 [[X22]]
 Admonition Blocks
 ~~~~~~~~~~~~~~~~~
-The ExampleBlock definition includes a set of admonition
+The 'ExampleBlock' definition includes a set of admonition
 <<X23,styles>> (NOTE, TIP, IMPORTANT, WARNING, CAUTION) for generating
 admonition blocks (admonitions containing more than just a
 <<X28,simple paragraph>>).  Just precede the ExampleBlock with an
@@ -1340,6 +1343,15 @@ adolescens.
 =====================================================================
 
 See also <<X47,Admonition Icons and Captions>>.
+
+[[X29]]
+Open Blocks
+~~~~~~~~~~~
+An 'OpenBlock' renders the block contents without any opening or
+closing tags. The open block start and end delimiter is a single line
+containing two dashes. Enclosed element are rendered just as they
+would inside a section body. Open blocks are used for <<X15,list item
+continuation>>.
 
 
 [[X64]]
@@ -1656,8 +1668,11 @@ elements to a list item you need to explicitly join them to the list
 item with a 'list continuation' (a separator line containing a single
 plus character). Multiple block elements can be appended to a list
 item using list continuations (provided they are legal list item
-children in the backend markup).  Here is an example of list item
-continuation:
+children in the backend markup).
+
+Here are some examples of list item continuations: list item one
+contains multiple continuations; list item two is continued with an
+<<X29,OpenBlock>> containing multip elements:
 
 ---------------------------------------------------------------------
 1. List item one.
@@ -1672,17 +1687,19 @@ $ mv *.sh ~/tmp
 +
 List item continued with a third paragraph.
 
-2. List item two.
-
-   List item two literal paragraph (no continuation required).
-
--  Nested list (item one).
-
-   Literal paragraph (no continuation required).
+2. List item two continued with an open block.
 +
-Paragraph appended to current list item.
+--
+This paragraph is part of the preceding list item.
 
--  Nested list item two.
+a. This list is nested and does not require explicit item continuation.
++
+This paragraph is part of the preceding list item.
+
+b. List item b.
+
+This paragraph belongs to item one of the outer list.
+--
 ---------------------------------------------------------------------
 
 Renders:
@@ -1699,33 +1716,7 @@ $ mv *.sh ~/tmp
 +
 List item continued with a third paragraph.
 
-2. List item two.
-
-   List item two literal paragraph (no continuation required).
-
--  Nested list (item one).
-
-   Literal paragraph (no continuation required).
-+
-Paragraph appended to current list item.
-
--  Nested list item two.
-
-
-[[X29]]
-List Blocks
-~~~~~~~~~~~
-A 'List block' is a container for appending a collection of elements
-to a list item -- useful for long multi-element list items. The list
-block delimiter is a single line containing two dashes.  A list block
-must always be preceded by a <<X15,list continuation>> line. The list
-block can include any elements (provided they are legal list item
-children in the backend markup); you can even include lists with the
-same syntax as the parent list. List block example:
-
----------------------------------------------------------------------
-.List Block Example
-1. List item one.
+2. List item two continued with an open block.
 +
 --
 This paragraph is part of the preceding list item.
@@ -1738,28 +1729,6 @@ b. List item b.
 
 This paragraph belongs to item one of the outer list.
 --
-
-2. Item two of the outer list.
----------------------------------------------------------------------
-
-Renders:
-
-.List Block Example
-1. List item one.
-+
---
-This paragraph is part of the preceding list item.
-
-a. This list is nested and does not require explicit item continuation.
-+
-This paragraph is part of the preceding list item.
-
-b. List item b.
-
-This paragraph belongs to item one of the outer list.
---
-
-2. Item two of the outer list.
 
 
 Footnotes
@@ -4001,9 +3970,6 @@ sectionbody::
 
 skip::
     The block is treated as a comment (see <<X26,CommentBlocks>>).
-
-list::
-    The block is a <<X29,list block>>.
 
 'presubs', 'postsubs' and 'filter' entries are meaningless when
 'sectionbody', 'skip' or 'list' options are set.

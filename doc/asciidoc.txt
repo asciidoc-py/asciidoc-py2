@@ -838,7 +838,7 @@ title. A free-floating title is rendered just like a normal section
 title but is not formally associated with a text body and is not part
 of the regular section hierarchy so the normal ordering rules do not
 apply. Floating titles can also be used in contexts where section
-titles are illegal: for example sidebar, admonition and list blocks.
+titles are illegal: for example sidebar and admonition blocks.
 Example:
 
   [float]
@@ -1055,14 +1055,13 @@ Predefined delimited block underlines:
   SidebarBlock:     **************************
   QuoteBlock:       __________________________
   ExampleBlock:     ==========================
-  Filter blocks:    ~~~~~~~~~~~~~~~~~~~~~~~~~~
   OpenBlock:        --
 
 The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.
 
 .Default DelimitedBlock substitutions
-[cols="2strong,7*^",options="header,autowidth"]
+[cols="2s,7*^",options="header,autowidth"]
 |=====================================================
 | |Attributes |Callouts |Macros | Quotes |Replacements
 |Special chars |Special words
@@ -1078,11 +1077,11 @@ detailed in the <<X59,Filters>> section.
 
 Listing Blocks
 ~~~~~~~~~~~~~~
-ListingBlocks are rendered verbatim in a monospaced font, they retain
-line and whitespace formatting and are often distinguished by a
+'ListingBlocks' are rendered verbatim in a monospaced font, they
+retain line and whitespace formatting and are often distinguished by a
 background or border. There is no text formatting or substitutions
 within Listing blocks apart from Special Characters and Callouts.
-Listing blocks are often used for code and file listings.
+Listing blocks are often used for computer output and file listings.
 
 Here's an example:
 
@@ -1109,11 +1108,14 @@ int main() {
 }
 --------------------------------------
 
+By convention <<X59,filter blocks>> use the listing block syntax and
+are implemented as listing block styles.
+
 [[X65]]
 Literal Blocks
 ~~~~~~~~~~~~~~
-LiteralBlocks behave just like LiteralParagraphs except you don't have
-to indent the contents.
+'LiteralBlocks' behave just like LiteralParagraphs except you don't
+have to indent the contents.
 
 LiteralBlocks can be used to resolve list ambiguity. If the following
 list was just indented it would be processed as an ordered list (not
@@ -1132,8 +1134,8 @@ Renders:
 2. Item 2
 ....................
 
-SidebarBlocks
-~~~~~~~~~~~~~
+Sidebar Blocks
+~~~~~~~~~~~~~~
 A sidebar is a short piece of text presented outside the narrative
 flow of the main text. The sidebar is normally presented inside a
 bordered box to set it apart from the main text.
@@ -1214,7 +1216,7 @@ asciimath, latexmath::
 
 Quote Blocks
 ~~~~~~~~~~~~
-QuoteBlocks are used for quoted passages of text. There are two
+'QuoteBlocks' are used for quoted passages of text. There are two
 styles: 'quote' and 'verse'. The style is set by the first positional
 attribute, if no style attribute is specified the 'quote' style.  The
 optional 'attribution' and 'citetitle' attributes (positional
@@ -1264,7 +1266,7 @@ __________________________________________________
 [[X48]]
 Example Blocks
 ~~~~~~~~~~~~~~
-ExampleBlocks encapsulate the DocBook Example element and are used
+'ExampleBlocks' encapsulate the DocBook Example element and are used
 for, well, examples.  Example blocks can be titled by preceding them
 with a 'BlockTitle'.  DocBook toolchains normally number examples and
 generate a 'List of Examples' backmatter section.
@@ -1349,7 +1351,7 @@ Open Blocks
 ~~~~~~~~~~~
 An 'OpenBlock' renders the block contents without any opening or
 closing tags. The open block start and end delimiter is a single line
-containing two dashes. Enclosed element are rendered just as they
+containing two dashes. Enclosed elements are rendered just as they
 would inside a section body. Open blocks are used for <<X15,list item
 continuation>>.
 
@@ -3972,7 +3974,7 @@ skip::
     The block is treated as a comment (see <<X26,CommentBlocks>>).
 
 'presubs', 'postsubs' and 'filter' entries are meaningless when
-'sectionbody', 'skip' or 'list' options are set.
+'sectionbody' or 'skip' options are set.
 
 DelimitedBlock processing proceeds as follows:
 
@@ -4107,7 +4109,7 @@ templates.
 
 While it is possible to create new Paragraph or DelimitedBlock
 definitions the preferred way to implement a filter is to add a
-<<X23,style>> to an existing Paragraph or DelimitedBlock definition
+<<X23,style>> to the existing Paragraph and ListingBlock definitions
 (all filters shipped with AsciiDoc use this technique). The filter is
 applied to the paragraph or delimited block by preceding it with an
 attribute list: the first positional attribute is the style name,

@@ -496,6 +496,7 @@ def parse_entries(entries, dict, unquote=False, unique_values=False,
         allow_name_only=False,escape_delimiter=True):
     """Parse name=value entries from  from lines of text in 'entries' into
     dictionary 'dict'. Blank lines are skipped."""
+    entries = config.expand_templates(entries)
     for entry in entries:
         if entry and not parse_entry(entry, dict, unquote, unique_values,
                 allow_name_only, escape_delimiter):
@@ -2387,7 +2388,7 @@ class Lists(AbstractBlocks):
     TAGS = ('list', 'entry','item','text', 'label','term')
     def __init__(self):
         AbstractBlocks.__init__(self)
-        self.open = []           # A stack of the current and parent lists.
+        self.open = []  # A stack of the current and parent lists.
         self.tags={}    # List tags dictionary. Each entry is a tags AttrDict.
     def load(self,sections):
         AbstractBlocks.load(self,sections)
@@ -4124,9 +4125,10 @@ class Config:
             result = re.sub(word, _subs_specialwords, result)
         return result
 
-    def expand_templates(self,section):
+    def expand_templates(self,entries):
+        """Expand any template::[] macros in a list of section entries."""
         result = []
-        for line in self.sections[section]:
+        for line in entries:
             mo = macros.match('+',r'template',line)
             if mo:
                 s = mo.group('attrlist')
@@ -4139,8 +4141,8 @@ class Config:
         return result
 
     def expand_all_templates(self):
-        for k in self.sections.keys():
-            self.sections[k] = self.expand_templates(k)
+        for k,v in self.sections.items():
+            self.sections[k] = self.expand_templates(v)
 
     def section2tags(self, section, d={}):
         """Perform attribute substitution on 'section' using document

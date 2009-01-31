@@ -199,13 +199,13 @@ def strip_quotes(s):
         s = s[1:-1]
     return s
 
-def is_regexp(s):
+def is_re(s):
     """Return True if s is a valid regular expression else return False."""
     try: re.compile(s)
     except: return False
     else: return True
 
-def join_regexp(relist):
+def re_join(relist):
     """Join list of regular expressions re1,re2,... to single regular
     expression (re1)|(re2)|..."""
     if len(relist) == 0:
@@ -825,7 +825,7 @@ def subs_attrs(lines, dictionary=None):
                     if len(v) not in (2,3):
                         error('illegal attribute syntax: %s' % attr)
                         s = ''
-                    elif not is_regexp('^'+v[0]+'$'):
+                    elif not is_re('^'+v[0]+'$'):
                         error('illegal attribute regexp: %s' % attr)
                         s = ''
                     else:
@@ -1061,7 +1061,7 @@ class Document:
         self.has_errors = False # Set true if processing errors were flagged.
         self.has_warnings = False # Set true if warnings were flagged.
         self.safe = True        # Default safe mode.
-    def init_attrs(self):
+    def update_attributes(self):
         # Set implicit attributes.
         d = time.localtime(time.time())
         self.attributes['localdate'] = time.strftime('%Y-%m-%d',d)
@@ -1418,12 +1418,13 @@ class AttributeList:
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     @staticmethod
+    def initialize():
+        if not 'attributelist-pattern' in document.attributes:
+            error("[attributes] missing 'attributelist-pattern' entry")
+        AttributeList.pattern = document.attributes['attributelist-pattern']
+    @staticmethod
     def isnext():
         result = False  # Assume not next.
-        if not AttributeList.pattern:
-            if not 'attributelist-pattern' in document.attributes:
-                error("[attributes] missing 'attributelist-pattern' entry")
-            AttributeList.pattern = document.attributes['attributelist-pattern']
         line = reader.read_next()
         if line:
             mo = re.match(AttributeList.pattern, line)
@@ -1610,13 +1611,13 @@ class Title:
             Title.dump_dict['subs'] = entries['subs']
         if 'sectiontitle' in entries:
             pat = entries['sectiontitle']
-            if not pat or not is_regexp(pat):
+            if not pat or not is_re(pat):
                 raise EAsciiDoc,'malformed [titles] sectiontitle entry'
             Title.pattern = pat
             Title.dump_dict['sectiontitle'] = pat
         if 'blocktitle' in entries:
             pat = entries['blocktitle']
-            if not pat or not is_regexp(pat):
+            if not pat or not is_re(pat):
                 raise EAsciiDoc,'malformed [titles] blocktitle entry'
             BlockTitle.pattern = pat
             Title.dump_dict['blocktitle'] = pat
@@ -1624,7 +1625,7 @@ class Title:
         for k in ('sect0','sect1','sect2','sect3','sect4'):
             if k in entries:
                 pat = entries[k]
-                if not pat or not is_regexp(pat):
+                if not pat or not is_re(pat):
                     raise EAsciiDoc,'malformed [titles] %s entry' % k
                 Title.dump_dict[k] = pat
         # TODO: Check we have either a Title.pattern or at least one
@@ -1862,7 +1863,7 @@ class AbstractBlock:
                     v = parse_options(v, SUBS_OPTIONS, msg % (k,v))
                 copy(dst,k,v)
             elif k == 'delimiter':
-                if v and is_regexp(v):
+                if v and is_re(v):
                     copy(dst,k,v)
                 else:
                     raise EAsciiDoc, msg % (k,v)
@@ -2066,7 +2067,7 @@ class AbstractBlocks:
         self.current=None
         self.blocks = []        # List of Block objects.
         self.default = None     # Default Block.
-        self.delimiter = None   # Combined tables delimiter regular expression.
+        self.delimiters = None  # Combined tables delimiter regular expression.
     def load(self,sections):
         """Load block definition from 'sections' dictionary."""
         for k in sections.keys():
@@ -2101,12 +2102,12 @@ class AbstractBlocks:
             b.validate()
             if b.delimiter:
                 delimiters.append(b.delimiter)
-        self.delimiter = join_regexp(delimiters)
+        self.delimiters = re_join(delimiters)
 
 class Paragraph(AbstractBlock):
     def __init__(self):
         AbstractBlock.__init__(self)
-        self.text=None      # Text in first line of paragraph.
+        self.text=None          # Text in first line of paragraph.
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2126,11 +2127,7 @@ class Paragraph(AbstractBlock):
         AttributeList.consume(attrs)
         self.merge_attributes(attrs)
         reader.read()   # Discard (already parsed item first line).
-        body = reader.read_until(r'^\+$|^$|' + blocks.delimiter
-                + r'|' + tables.delimiter
-                + r'|' + tables_OLD.delimiter
-                + r'|' + AttributeList.pattern
-        )
+        body = reader.read_until(paragraphs.terminators)
         body = [self.text] + list(body)
         presubs = self.parameters.presubs
         postsubs = self.parameters.postsubs
@@ -2150,6 +2147,15 @@ class Paragraphs(AbstractBlocks):
     PREFIX = 'paradef-'
     def __init__(self):
         AbstractBlocks.__init__(self)
+        self.terminators=None    # List of compiled re's.
+    def initialize(self):
+        self.terminators = [
+                re.compile(r'^\+$|^$'),
+                re.compile(AttributeList.pattern),
+                re.compile(blocks.delimiters),
+                re.compile(tables.delimiters),
+                re.compile(tables_OLD.delimiters),
+            ]
     def load(self,sections):
         AbstractBlocks.load(self,sections)
     def validate(self):
@@ -2224,12 +2230,7 @@ class List(AbstractBlock):
         itemtag = subs_tag(self.tag.item, self.attributes)
         writer.write(itemtag[0])
         # Write ItemText.
-        text = reader.read_until(
-                lists.delimiter + r'|^\+$|^$|' + blocks.delimiter
-                + r'|' + tables.delimiter
-                + r'|' + tables_OLD.delimiter
-                + r'|' + AttributeList.pattern
-        )
+        text = reader.read_until(lists.terminators)
         if self.text:
             text = [self.text] + list(text)
         if text:
@@ -2263,7 +2264,8 @@ class List(AbstractBlock):
     @staticmethod
     def parse_index(index):
         """Parse the numbered list item index and return a (style,ordinal)
-        tuple. style in ('arabic'...); ordinal in (1...).
+        tuple. style in ('arabic'...); ordinal in (1...). Return (None,None) if
+        the index does not match a recognized style.
         NOTE: 'i' and 'I' return (1,'lowerroman') and (1,'upperroman')."""
         def roman_to_int(roman):
             roman = roman.lower()
@@ -2390,6 +2392,16 @@ class Lists(AbstractBlocks):
         AbstractBlocks.__init__(self)
         self.open = []  # A stack of the current and parent lists.
         self.tags={}    # List tags dictionary. Each entry is a tags AttrDict.
+        self.terminators=None    # List of compiled re's.
+    def initialize(self):
+        self.terminators = [
+                re.compile(r'^\+$|^$'),
+                re.compile(AttributeList.pattern),
+                re.compile(lists.delimiters),
+                re.compile(blocks.delimiters),
+                re.compile(tables.delimiters),
+                re.compile(tables_OLD.delimiters),
+            ]
     def load(self,sections):
         AbstractBlocks.load(self,sections)
         self.load_tags(sections)
@@ -2576,7 +2588,7 @@ class Table(AbstractBlock):
                 self.error('illegal csv separator=%s' % separator)
                 separator = ','
         else:
-            if not is_regexp(separator):
+            if not is_re(separator):
                 self.error('illegal regular expression: separator=%s' %
                         separator)
         self.parameters.format = format
@@ -3104,7 +3116,7 @@ class Macro:
         e = parse_entry(entry)
         if not e:
             raise EAsciiDoc,'malformed macro entry: %s' % entry
-        if not is_regexp(e[0]):
+        if not is_re(e[0]):
             raise EAsciiDoc,'illegal macro regular expression: %s' % e[0]
         pattern, name = e
         if name and name[0] in ('+','#'):
@@ -3571,22 +3583,29 @@ class Reader(Reader1):
         return tuple(result)
     def skip_blank_lines(self):
         reader.read_until(r'\s*\S+')
-    def read_until(self,pattern,same_file=False):
+    def read_until(self,terminators,same_file=False):
         """Like read() but reads lines up to (but not including) the first line
-        that matches the pattern regular expression. If same_file is True
-        then the terminating pattern must occur in the file the was being read
-        when the routine was called."""
+        that matches the terminator regular expression, regular expression
+        object or list of regular expression objects. If same_file is True then
+        the terminating pattern must occur in the file the was being read when
+        the routine was called."""
         if same_file:
             fname = self.cursor[0]
         result = []
-        reo = re.compile(pattern)
+        if not isinstance(terminators,list):
+            if isinstance(terminators,basestring):
+                terminators = [re.compile(terminators)]
+            else:
+                terminators = [terminators]
         while not self.eof():
             save_cursor = self.cursor
             s = self.read()
-            if (not same_file or fname == self.cursor[0]) and reo.match(s):
-                self.unread(self.cursor)
-                self.cursor = save_cursor
-                break
+            if not same_file or fname == self.cursor[0]:
+                for reo in terminators:
+                    if reo.match(s):
+                        self.unread(self.cursor)
+                        self.cursor = save_cursor
+                        return tuple(result)
             result.append(s)
         return tuple(result)
     # NOT USED -- part of unimplemented attempt a generalised line continuation.
@@ -3815,7 +3834,7 @@ class Config:
                 allow_name_only=True)
         update_attrs(self.conf_attrs,d)
         # Update document attributes so they are available immediately.
-        document.init_attrs()
+        document.update_attributes()
         d = {}
         parse_entries(sections.get('titles',()),d)
         Title.load(d)
@@ -4034,7 +4053,7 @@ class Config:
         parse_entries(self.sections.get('specialsections',()),d,unquote=True)
         for pat,sectname in d.items():
             pat = strip_quotes(pat)
-            if not is_regexp(pat):
+            if not is_re(pat):
                 raise EAsciiDoc,'[specialsections] entry ' \
                                 'is not a valid regular expression: %s' % pat
             if sectname is None:
@@ -4056,7 +4075,7 @@ class Config:
     def set_replacement(pat, rep, replacements):
         """Add pattern and replacement to replacements dictionary."""
         pat = strip_quotes(pat)
-        if not is_regexp(pat):
+        if not is_re(pat):
             return False
         if rep is None:
             if pat in replacements:
@@ -4093,7 +4112,7 @@ class Config:
                 words = reo.findall(wordlist)
                 for word in words:
                     word = strip_quotes(word)
-                    if not is_regexp(word):
+                    if not is_re(word):
                         raise EAsciiDoc,'[specialwords] entry in %s ' \
                             'is not a valid regular expression: %s' \
                             % (self.fname,word)
@@ -4133,7 +4152,7 @@ class Config:
             if mo:
                 s = mo.group('attrlist')
                 if s in self.sections:
-                    result += self.sections[s]
+                    result += self.expand_templates(self.sections[s])
                 else:
                     warning('missing [%s] section' % s)
             else:
@@ -4673,7 +4692,7 @@ class Tables_OLD(AbstractBlocks):
                 b.headdata = b.bodydata
             if not b.footdata:
                 b.footdata = b.bodydata
-        self.delimiter = join_regexp(delimiters)
+        self.delimiters = re_join(delimiters)
         # Check table definitions are valid.
         for b in self.blocks:
             b.validate()
@@ -4723,7 +4742,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             warning('non-standard %s backend' % backend, linenos=False)
         document.doctype = doctype
         document.infile = infile
-        document.init_attrs()
+        document.update_attributes()
         # Set processing options.
         for o in options:
             if o == '-c': config.dumping = True
@@ -4754,7 +4773,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                     config.load_file(conf)
                 else:
                     raise EAsciiDoc,'configuration file %s missing' % conf
-        document.init_attrs()   # Add conf files.
+        document.update_attributes()
         # Check configuration for consistency.
         config.validate()
         # Build outfile name now all conf files have been read.
@@ -4773,7 +4792,10 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 writer.newline = config.newline
                 writer.open(outfile)
                 try:
-                    document.init_attrs()   # Add file name related entries.
+                    AttributeList.initialize()
+                    paragraphs.initialize()
+                    lists.initialize()
+                    document.update_attributes()   # Add file name related.
                     document.translate()
                 finally:
                     writer.close()

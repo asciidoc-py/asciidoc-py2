@@ -30,8 +30,6 @@ syn match asciidocEntityRef /\\\@<!&[#a-zA-Z]\S\{-};/
 " preceeded by blank line, handles only bulleted items (see 'Limitations' above
 " for workarounds).
 syn region asciidocLiteralParagraph start=/^\n[ \t]\+\(\([^-*. \t] \)\|\(\S\S\)\)/ end=/\(^+\?\s*$\)\@=/
-syn match asciidocListBullet /^\s*\zs[-*]\ze\s/
-syn match asciidocListNumber /^\s*\zs\(\(\d\+\.\)\|\.\{1,2}\|\(\a\.\)\|\([ivxIVX]\+\.\)\)\ze\s\+/
 syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\|irc\):\/\/[^| \t]*\(\w\|\/\)/
 syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_.]\@!/
 syn match asciidocAttributeRef /\\\@<!{\w\(\w\|-\)*\([=!@#$%?:].*\)\?}/
@@ -57,6 +55,9 @@ syn match asciidocQuotedDoubleQuoted /\(^\|[| \t([.,=]\)\@<=``\([ )\n]\)\@!\_.\{
 syn match asciidocDoubleDollarPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=\$\$..\{-}\(\$\$\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
 syn match asciidocTriplePlusPassthrough /\\\@<!\(^\|[^0-9a-zA-Z$]\)\@<=+++..\{-}\(+++\([^0-9a-zA-Z$]\|$\)\@=\|^$\)/
 
+syn match asciidocListBullet /^\s*\zs\(-\|\*\{1,5}\)\ze\s/
+syn match asciidocListNumber /^\s*\zs\(\(\d\+\.\)\|\.\{1,5}\|\(\a\.\)\|\([ivxIVX]\+)\)\)\ze\s\+/
+
 syn region asciidocTable_OLD start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*,asciidocAttributeRef
 syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/ contains=asciidocQuoted.*,asciidocAttributeRef
@@ -78,7 +79,7 @@ syn region asciidocTableBlock2 matchgroup=asciidocTableDelimiter2 start=/^!=\{3,
 
 syn match asciidocListContinuation /^+$/
 syn region asciidocLiteralBlock start=/^\.\{4,}$/ end=/^\.\{4,}$/ contains=asciidocCallout keepend
-syn region asciidocListingBlock start=/^-\{4,}$/ end=/^-\{4,}$/ contains=asciidocCallout keepend
+syn region asciidocOpenBlock start=/^-\{4,}$/ end=/^-\{4,}$/ contains=asciidocCallout keepend
 syn region asciidocCommentBlock start="^/\{4,}$" end="^/\{4,}$" contains=asciidocToDo
 syn region asciidocPassthroughBlock start="^+\{4,}$" end="^+\{4,}$"
 " Allowing leading \w characters in the filter delimiter is to accomodate
@@ -132,7 +133,7 @@ highlight link asciidocQuoteBlockDelimiter Type
 highlight link asciidocExampleBlockDelimiter Type
 highlight link asciidocSidebarDelimiter Type
 highlight link asciidocLiteralBlock Identifier
-highlight link asciidocListingBlock Identifier
+highlight link asciidocOpenBlock Identifier
 highlight link asciidocPassthroughBlock Identifier
 highlight link asciidocCommentBlock Comment
 highlight link asciidocFilterBlock Type

@@ -5,18 +5,14 @@ AsciiDoc Home Page
 ************************************************************************
 Additions and change in this release include:
 
-- Implemented a title 'float' style.  A floating title (or bridgehead)
-  is rendered just like a normal section but is not formally
-  associated with a text body and is not part of the regular section
-  hierarchy so the normal ordering rules do not apply.
-- Implemented inline comment macro so comment lines can now appear
-  inside block elements.
-- Comment lines are sent to the output if the 'showcomments' attribute
-  is defined (comment blocks are never sent to the output).
-- Added 'autowidth' table attribute option for (X)HTML outputs.
-- Single quoting attribute values in 'AttributeList' elements causes
-  them to be substituted like normal inline text (without single
-  quoting only attribute substitution is performed).
+- Up to 250% faster than previous release (precompiled regular
+  expression optimization).
+- Bulleted lists can now be nested up to six deep with the addition of
+  two, three, four and five asterisk bullet syntaxes.
+- Implicitly numbered lists can now be nested up to six deep with the
+  addition of two, three, four and five period character syntaxes.
+- Labeled lists can now be nested up to four deep with the addition of
+  three and four colon syntaxes.
 
 Plus a number of smaller additions along with the usual documentation
 polishing.  Read the link:CHANGELOG.html[CHANGELOG] for a full list of

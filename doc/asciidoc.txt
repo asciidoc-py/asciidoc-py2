@@ -847,11 +847,12 @@ Example:
 
 
 [[X42]]
-BlockTitles
------------
-A BlockTitle element is a single line beginning with a period followed
-by a title. The title is applied to the next Paragraph,
-DelimitedBlock, List, Table or BlockMacro. For example:
+Block Titles
+------------
+A 'BlockTitle' element is a single line beginning with a period
+followed by the title text. A BlockTitle is applied to the immediately
+following Paragraph, DelimitedBlock, List, Table or BlockMacro. For
+example:
 
 ........................
 .Notes
@@ -871,8 +872,8 @@ BlockId Element
 ---------------
 A 'BlockId' is a single line block element containing a unique
 identifier enclosed in double square brackets. It is used to assign an
-identifier to the ensuing block element for use by referring links. For
-example:
+identifier to the ensuing block element for use by referring links.
+For example:
 
   [[chapter-titles]]
   Chapter titles can be ...
@@ -882,10 +883,9 @@ linked from other location, for example with
 `\<<chapter-titles,chapter titles>>`.
 
 'BlockId' elements can be applied to Title, Paragraph, List,
-DelimitedBlock, Table and BlockMacro elements.  The BlockId element is
-really just an AttributeList with a special syntax which sets the
-`\{id}` attribute for substitution in the subsequent block's markup
-template.
+DelimitedBlock, Table and BlockMacro elements.  The BlockId element
+sets the `\{id}` attribute for substitution in the subsequent block's
+markup template.
 
 The 'BlockId' element has the same syntax and serves a similar
 function to the <<X30,anchor inline macro>>.
@@ -1692,7 +1692,7 @@ children in the backend markup).
 
 Here are some examples of list item continuations: list item one
 contains multiple continuations; list item two is continued with an
-<<X29,OpenBlock>> containing multip elements:
+<<X29,OpenBlock>> containing multiple elements:
 
 ---------------------------------------------------------------------
 1. List item one.
@@ -2249,9 +2249,9 @@ The `include` macro includes a file as if it were part of the parent
 document -- tabs are expanded and system macros processed. The
 contents of `include1` files are not subject to tab expansion or
 system macro processing nor are attribute or lower priority
-substitutions performed. The `include1` macro's main use is to include
-verbatim embedded CSS or scripts into configuration file headers.
-Example:
+substitutions performed. The `include1` macro's intended use is to
+include verbatim embedded CSS or scripts into configuration file
+headers.  Example:
 
 ------------------------------------
 \include::chapter1.txt[tabsize=4]

@@ -1,4 +1,4 @@
-personal_ws-1.1 en 161 
+personal_ws-1.1 en 163 
 backends
 AsciiDoc's
 Rosten
@@ -121,6 +121,7 @@ ShareSource
 Schottelius
 sqrt
 toolchain
+precompiled
 scaledwidth
 usr
 linenumbering
@@ -141,6 +142,7 @@ GPL
 Steen
 LaTeX
 latexmath
+Bulleted
 blog
 conf
 backend

@@ -280,7 +280,7 @@ This tip was contributed by Bernard Amade.
 
 == How can I supress cell separators in included table data files?
 
-Use the `\{include:}` system attribute instead of the `\include::[]`
+Use the `\{include:}` system attribute instead of the `include::[]`
 macro (the former is not expanded until after the table data has been
 parsed into cells, whereas the latter is included before the table is
 processed.
@@ -310,9 +310,9 @@ homero verear ea mea, qui.
 
 == How can I include non-breaking space characters?
 
-The predefined `\{nbsp}` attribute reference will be replaced by a
-non-breaking space character. You could also use the non-breaking
-space character entity reference `\&#160;` (see the next question).
+Use the non-breaking space character entity reference `\&#160;` (see
+the next question). You could also use the predefined `\{nbsp}`
+attribute reference.
 
 
 == Can I include HTML and XML character entity references in my document?
@@ -487,7 +487,7 @@ it useful).
 == Why have you used the DocBook <simpara> element instead of <para>?
 
 `<simpara>` is really the same as `<para>` except it can't contain
-block elements -- this matched, more closely, the AsciiDoc paragraph
+block elements -- this matches, more closely, the AsciiDoc paragraph
 semantics.
 
 

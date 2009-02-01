@@ -3,6 +3,49 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.3.5 (2009-02-02)
+--------------------------
+.Additions and changes
+- Cached compiled regular expression delimiters (speed up 'User
+  Manual' compilation by 250%).
+- Created distinct list definitions for each numbered list style to
+  allow nesting of all styles.
+- Roman numbers in numbered lists are followed by a closing
+  parenthesis instead of a period to eliminate 'i', 'v', 'x' item
+  ambiguity with respect to alpha numbered list items.
+- Added `pass:[**]`, `pass:[***]`, `pass:[****]`, `pass:[*****]`
+  bulleted lists.
+- Added `pass:[...]`, `pass:[....]`, `pass:[.....]` implicit numbered
+  lists.
+- Added `:::`, `::::` labeled lists.
+- Updated User Guide for new list syntaxes.
+- Optimized paragraph and list termination detection with separate
+  precompiled regular expressions for performance and to prevent
+  reaching Python 100 named group limit.
+- Updated Vim syntax highlighter for new list syntaxes.
+- Allow `template::[]` macros in conf file entries sections (not just
+  in template sections).
+- Dropped unused `[listdef-numbered2]` conf file sections.
+- Renamed 'ListBlock' to more appropriate 'OpenBlock'.
+- Implemented single-line versions of `ifdef::[]` and `ifndef::[]`
+  macros.
+- 'html4' backend styling:
+  * Underlined admonition captions.
+  * Added side border to Example Blocks.
+- 'xhtml11' backend styling:
+  * Dropped right hand margin from all but quote and verse blocks.
+  * html4 backend: corrected over-sized width of caption in admonition
+    block.
+
+.Bug fixes
+- Fixed broken numbered list nesting.
+
+Compatibility issues
+~~~~~~~~~~~~~~~~~~~~
+The roman numbered list parenthesis syntax is incompatible with the
+potentially ambiguous roman period syntax introduced in 8.3.2.
+
+
 Version 8.3.4 (2009-01-20)
 --------------------------
 .Additions and changes

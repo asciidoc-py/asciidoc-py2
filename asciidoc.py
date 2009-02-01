@@ -1791,6 +1791,7 @@ class AbstractBlock:
         self.name=None      # Configuration file section name.
         # Configuration parameters.
         self.delimiter=None # Regular expression matching block delimiter.
+        self.delimiter_reo=None # Compiled delimiter.
         self.template=None  # template section entry.
         self.options=()     # options entry list.
         self.presubs=None   # presubs/subs entry list.
@@ -1972,7 +1973,10 @@ class AbstractBlock:
         result = False
         reader.skip_blank_lines()
         if reader.read_next():
-            mo = re.match(self.delimiter,reader.read_next())
+            if not self.delimiter_reo:
+                # Cache compiled delimiter optimization.
+                self.delimiter_reo = re.compile(self.delimiter)
+            mo = self.delimiter_reo.match(reader.read_next())
             if mo:
                 self.mo = mo
                 result = True
@@ -2067,7 +2071,7 @@ class AbstractBlocks:
         self.current=None
         self.blocks = []        # List of Block objects.
         self.default = None     # Default Block.
-        self.delimiters = None  # Combined tables delimiter regular expression.
+        self.delimiters = None  # Combined delimiters regular expression.
     def load(self,sections):
         """Load block definition from 'sections' dictionary."""
         for k in sections.keys():

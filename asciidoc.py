@@ -922,6 +922,27 @@ def char_encode(s):
     else:
         return s
 
+def time_str(t):
+    """Convert seconds since the Epoch to formatted local time string."""
+    t = time.localtime(t)
+    s = time.strftime('%H:%M:%S',t)
+    if time.daylight:
+        result = s + ' ' + time.tzname[1]
+    else:
+        result = s + ' ' + time.tzname[0]
+    # Attempt to convert the localtime to the output encoding.
+    try:
+        result = char_encode(result.decode(locale.getdefaultlocale()[1]))
+    except:
+        pass
+    return result
+
+def date_str(t):
+    """Convert seconds since the Epoch to formatted local date string."""
+    t = time.localtime(t)
+    return time.strftime('%Y-%m-%d',t)
+
+
 class Lex:
     """Lexical analysis routines. Static methods and attributes only."""
     prev_element = None
@@ -1063,22 +1084,15 @@ class Document:
         self.safe = True        # Default safe mode.
     def update_attributes(self):
         # Set implicit attributes.
-        d = time.localtime(time.time())
-        self.attributes['localdate'] = time.strftime('%Y-%m-%d',d)
-        s = time.strftime('%H:%M:%S',d)
-        if time.daylight:
-            self.attributes['localtime'] = s + ' ' + time.tzname[1]
+        if self.infile and self.infile != '<stdin>':
+            t = os.path.getmtime(self.infile)
         else:
-            self.attributes['localtime'] = s + ' ' + time.tzname[0]
-        # Attempt to convert the localtime to the output encoding.
-        try:
-            self.attributes['localtime'] = char_encode(
-                self.attributes['localtime'].decode(
-                    locale.getdefaultlocale()[1]
-                )
-            )
-        except:
-            pass
+            t = time.time()
+        self.attributes['doctime'] = time_str(t)
+        self.attributes['docdate'] = date_str(t)
+        t = time.time()
+        self.attributes['localtime'] = time_str(t)
+        self.attributes['localdate'] = date_str(t)
         self.attributes['asciidoc-version'] = VERSION
         self.attributes['backend'] = document.backend
         self.attributes['doctype'] = document.doctype

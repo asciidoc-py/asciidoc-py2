@@ -3765,6 +3765,8 @@ predefined intrinsic attributes:
   {basebackend}         html or docbook
   {brvbar}              broken vertical bar (|) character
   {date}                document date (from document header)
+  {docdate}             document last modified date
+  {doctime}             document last modified time
   {docname}             document file name without extension
   {doctitle}            document title (from document header)
   {doctype-<doctype>}   empty string ''

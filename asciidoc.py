@@ -3811,6 +3811,7 @@ class Config:
             else:
                 sections[section] = contents
         rdr.close()
+        document.update_attributes() # So they are available immediately.
         self.load_sections(sections)
         self.loaded.append(os.path.realpath(fname))
 
@@ -3837,8 +3838,6 @@ class Config:
         parse_entries(sections.get('attributes',()), d, unquote=True,
                 allow_name_only=True)
         update_attrs(self.conf_attrs,d)
-        # Update document attributes so they are available immediately.
-        document.update_attributes()
         d = {}
         parse_entries(sections.get('titles',()),d)
         Title.load(d)

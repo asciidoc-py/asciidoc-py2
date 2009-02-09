@@ -17,7 +17,7 @@ characters to yield valid XHTML. To use ASCIIMathML:
 2. Enclose ASCIIMathML formulas inside math or double-dollar
    passthroughs or in math passthrough blocks.
 
-Here's the link:asciimath.txt[AsciiDoc source] that generated this
+Here's the link:asciimathml.txt[AsciiDoc source] that generated this
 page.
 
 .NOTE

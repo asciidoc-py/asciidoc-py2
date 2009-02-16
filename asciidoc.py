@@ -2189,6 +2189,8 @@ class Paragraphs(AbstractBlocks):
             raise EAsciiDoc,'missing [paradef-default] section'
 
 class List(AbstractBlock):
+    NUMBER_STYLES= ('arabic','loweralpha','upperalpha','lowerroman',
+                    'upperroman')
     def __init__(self):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('type','tags')
@@ -2202,8 +2204,8 @@ class List(AbstractBlock):
         self.text=None      # Text in first line of list item.
         self.index=None     # Matched delimiter 'index' group (numbered lists).
         self.type=None      # List type ('numbered','bulleted','labeled').
-        self.listindex=None # Current list index (1..)
-        self.number_style=None  # Numbered list number style ('arabic'..)
+        self.ordinal=None   # Current list item ordinal number (1..)
+        self.number_style=None # Current numbered list style ('arabic'..)
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2244,7 +2246,7 @@ class List(AbstractBlock):
         writer.write(entrytag[1])
     def translate_item(self):
         if self.type == 'callout':
-            self.attributes['coids'] = calloutmap.calloutids(self.listindex)
+            self.attributes['coids'] = calloutmap.calloutids(self.ordinal)
         itemtag = subs_tag(self.tag.item, self.attributes)
         writer.write(itemtag[0])
         # Write ItemText.
@@ -2280,11 +2282,27 @@ class List(AbstractBlock):
         writer.write(itemtag[1])
 
     @staticmethod
-    def parse_index(index):
-        """Parse the numbered list item index and return a (style,ordinal)
-        tuple. style in ('arabic'...); ordinal in (1...). Return (None,None) if
-        the index does not match a recognized style.
-        NOTE: 'i' and 'I' return (1,'lowerroman') and (1,'upperroman')."""
+    def calc_style(index):
+        """Return the numbered list style ('arabic'...) of the list item index.
+        Return None if unrecognized style."""
+        if re.match(r'^\d+[\.>]$', index):
+            style = 'arabic'
+        elif re.match(r'^[ivx]+\)$', index):
+            style = 'lowerroman'
+        elif re.match(r'^[IVX]+\)$', index):
+            style = 'upperroman'
+        elif re.match(r'^[a-z]\.$', index):
+            style = 'loweralpha'
+        elif re.match(r'^[A-Z]\.$', index):
+            style = 'upperalpha'
+        else:
+            assert False
+        return style
+
+    @staticmethod
+    def calc_index(index,style):
+        """Return the ordinal number of (1...) of the list item index
+        for the given list style."""
         def roman_to_int(roman):
             roman = roman.lower()
             digits = {'i':1,'v':5,'x':10}
@@ -2297,44 +2315,35 @@ class List(AbstractBlock):
                 else:
                     result += digit
             return result
-        if re.match(r'^\d+$', index):
-            style = 'arabic'
+        index = index[:-1]
+        if style == 'arabic':
             ordinal = int(index)
-        elif re.match(r'^[ivx]+$', index):
-            style = 'lowerroman'
+        elif style == 'lowerroman':
             ordinal = roman_to_int(index)
-        elif re.match(r'^[IVX]+$', index):
-            style = 'upperroman'
+        elif style == 'upperroman':
             ordinal = roman_to_int(index)
-        elif re.match(r'^[a-z]$', index):
-            style = 'loweralpha'
+        elif style == 'loweralpha':
             ordinal = ord(index) - ord('a') + 1
-        elif re.match(r'^[A-Z]$', index):
-            style = 'upperalpha'
+        elif style == 'upperalpha':
             ordinal = ord(index) - ord('A') + 1
         else:
-            style = None
-            ordinal = None
-        return (style,ordinal)
+            assert False
+        return ordinal
 
     def check_index(self):
-        """ Check calculated listindex (1,2,...) against the item number in the
-        document (self.index) and check the number style is the same as
+        """Check calculated self.ordinal (1,2,...) against the item number
+        in the document (self.index) and check the number style is the same as
         the first item (self.number_style)."""
         assert self.type in ('numbered','callout')
         if self.index:
-            style,ordinal = self.parse_index(self.index)
-            if style and self.number_style:
-                if (self.index in 'ivx' and self.number_style == 'loweralpha' or
-                    self.index in 'IVX' and self.number_style == 'upperalpha'):
-                    # Sidestep possible i,v,x,I,V,X ambiguity.
-                    return
-                if style != self.number_style:
-                    warning('list item style: expected %s got %s' %
-                            (self.number_style,style), offset=1)
-                if ordinal != self.listindex:
-                    warning('list item index: expected %s got %s' %
-                            (self.listindex,ordinal), offset=1)
+            style = self.calc_style(self.index)
+            if style != self.number_style:
+                warning('list item style: expected %s got %s' %
+                        (self.number_style,style), offset=1)
+            ordinal = self.calc_index(self.index,style)
+            if ordinal != self.ordinal:
+                warning('list item index: expected %s got %s' %
+                        (self.ordinal,ordinal), offset=1)
 
     def check_tags(self):
         """ Check that all necessary tags are present. """
@@ -2354,13 +2363,16 @@ class List(AbstractBlock):
             if k in attrs: del attrs[k]
         if self.index:
             # Set the numbering style from first list item.
-            style = self.parse_index(self.index)[0]
-            if style:
-                attrs['style'] = style
+            attrs['style'] = self.calc_style(self.index)
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
-        self.number_style = attrs.get('style')
         self.merge_attributes(attrs,['tags'])
+        if self.type in ('numbered','callout'):
+            self.number_style = self.attributes.get('style')
+            if self.number_style not in self.NUMBER_STYLES:
+                error('illegal numbered list style: %s' % self.number_style)
+                # Fall back to default style.
+                self.attributes['style'] = self.number_style = self.style
         self.tag = lists.tags[self.parameters.tags]
         self.check_tags()
         if 'width' in self.attributes:
@@ -2372,16 +2384,15 @@ class List(AbstractBlock):
                 self.attributes['labelwidth'] = str(labelwidth)
                 self.attributes['itemwidth'] = str(100-labelwidth)
             else:
-                self.error('illegal attribute value: label="%s"' % v)
+                self.error('illegal attribute value: width="%s"' % v)
         stag,etag = subs_tag(self.tag.list, self.attributes)
         if stag:
             writer.write(stag)
-        self.listindex = 0
-        # Process list till list syntax, style or title  changes.
-        while Lex.next() is self and not (AttributeList.style()
-                                          or BlockTitle.title):
-            self.listindex += 1
-            document.attributes['listindex'] = str(self.listindex)
+        self.ordinal = 0
+        # Process list till list syntax changes or there is a new title.
+        while Lex.next() is self and not BlockTitle.title:
+            self.ordinal += 1
+            document.attributes['listindex'] = str(self.ordinal)
             if self.type in ('numbered','callout'):
                 self.check_index()
             if self.type in ('bulleted','numbered','callout'):
@@ -2394,11 +2405,11 @@ class List(AbstractBlock):
         if etag:
             writer.write(etag)
         if self.type == 'callout':
-            calloutmap.validate(self.listindex)
+            calloutmap.validate(self.ordinal)
             calloutmap.listclose()
         lists.open.pop()
         if len(lists.open):
-            document.attributes['listindex'] = str(lists.open[-1].listindex)
+            document.attributes['listindex'] = str(lists.open[-1].ordinal)
 
 class Lists(AbstractBlocks):
     """List of List objects."""

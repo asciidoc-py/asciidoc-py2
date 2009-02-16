@@ -245,6 +245,10 @@ and I'll add them to the list.
 - The http://www.wesnoth.org/[Battle for Wesnoth] project uses
   AsciiDoc for it's http://www.wesnoth.org/wiki/WesnothManual[Manual]
   in a number of different languages.
+- Troy Hanson uses AsciiDoc to generate user guides for the
+  http://tpl.sourceforge.net/[tpl] and
+  http://uthash.sourceforge.net/[uthash] projects (the HTML versions
+  have a customised contents sidebar).
 
 
 AsciiDoc version 9

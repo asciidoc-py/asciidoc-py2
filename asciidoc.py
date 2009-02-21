@@ -1105,7 +1105,8 @@ class Document:
         if self.infile != '<stdin>':
             self.attributes['infile'] = self.infile
             self.attributes['indir'] = os.path.dirname(self.infile)
-            self.attributes['docdir'] = os.path.dirname(self.infile) #DEPRECATED
+            self.attributes['docfile'] = self.infile
+            self.attributes['docdir'] = os.path.dirname(self.infile)
             self.attributes['docname'] = os.path.splitext(
                     os.path.basename(self.infile))[0]
         if config.verbose:
@@ -3366,8 +3367,12 @@ class Reader1:
         verbose('reading: '+fname)
         if fname == '<stdin>':
             self.f = sys.stdin
+            document.attributes['infile'] = None
+            document.attributes['indir'] = None
         else:
             self.f = open(fname,'rb')
+            document.attributes['infile'] = fname
+            document.attributes['indir'] = os.path.dirname(fname)
         self._lineno = 0            # The last line read from file object f.
         self.next = []
         # Prefill buffer by reading the first line and then pushing it back.

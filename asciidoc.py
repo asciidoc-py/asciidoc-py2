@@ -119,7 +119,7 @@ def deprecated(msg, linenos=True):
 def message(msg, prefix='', linenos=True, cursor=None, offset=0):
     """Return formatted message string."""
     if linenos and reader.cursor:
-        if not cursor:
+        if cursor is None:
             cursor = reader.cursor
         prefix += '%s: line %d: ' % (os.path.basename(cursor[0]),cursor[1]+offset)
     return prefix + msg
@@ -4838,7 +4838,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # Build and print error description.
         msg = 'FAILED: '
         if reader.cursor:
-            msg = msg + '%s: line %d: ' % (reader.cursor[0],reader.cursor[1])
+            msg = msg + message('')
         if isinstance(e,EAsciiDoc):
             print_stderr(msg+str(e))
         else:

@@ -224,7 +224,7 @@ def validate(value,rule,errmsg):
     try:
         if not eval(rule.replace('$',str(value))):
             raise EAsciiDoc,errmsg
-    except:
+    except Exception:
         raise EAsciiDoc,errmsg
     return value
 
@@ -319,14 +319,14 @@ def parse_attributes(attrs,dict):
         for v in d.values():
             if not (isinstance(v,str) or isinstance(v,int) or isinstance(v,float) or v is None):
                 raise
-    except:
+    except Exception:
         s = s.replace('"','\\"')
         s = s.split(',')
         s = map(lambda x: '"' + x.strip() + '"', s)
         s = ','.join(s)
         try:
             d = eval('f('+s+')')
-        except:
+        except Exception:
             return  # If there's a syntax error leave with {0}=attrs.
         for k in d.keys():  # Drop any empty positional arguments.
             if d[k] == '': del d[k]
@@ -346,7 +346,7 @@ def parse_named_attributes(s,attrs):
         d = eval('f('+s+')')
         attrs.update(d)
         return True
-    except:
+    except Exception:
         return False
 
 def parse_list(s):
@@ -354,7 +354,7 @@ def parse_list(s):
     parsed values."""
     try:
         result = eval('tuple(['+s+'])')
-    except:
+    except Exception:
         raise EAsciiDoc,'malformed list: '+s
     return result
 
@@ -623,7 +623,7 @@ def filter_lines(filter_cmd, lines, attrs={}):
         p = subprocess.Popen(filter_cmd, shell=True,
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         output = p.communicate(input)[0]
-    except:
+    except Exception:
         raise EAsciiDoc,'filter error: %s: %s' % (filter_cmd, sys.exc_info()[1])
     if output:
         result = [s.rstrip() for s in output.split(os.linesep)]
@@ -672,7 +672,7 @@ def system(name, args, is_macro=False):
                 result = None
             elif result is not None:
                 result = str(result)
-        except:
+        except Exception:
             warning((syntax+': expression evaluation error') % (name,args))
     elif name in ('sys','sys2'):
         result = ''
@@ -690,7 +690,7 @@ def system(name, args, is_macro=False):
                     lines = [s.rstrip() for s in open(tmp)]
                 else:
                     lines = []
-            except:
+            except Exception:
                 raise EAsciiDoc,(syntax+': temp file read error') % (name,args)
             result = separator.join(lines)
         finally:
@@ -933,7 +933,7 @@ def time_str(t):
     # Attempt to convert the localtime to the output encoding.
     try:
         result = char_encode(result.decode(locale.getdefaultlocale()[1]))
-    except:
+    except Exception:
         pass
     return result
 
@@ -1611,7 +1611,7 @@ class Title:
             errmsg = 'malformed [titles] underlines entry'
             try:
                 underlines = parse_list(entries['underlines'])
-            except:
+            except Exception:
                 raise EAsciiDoc,errmsg
             if len(underlines) != len(Title.underlines):
                 raise EAsciiDoc,errmsg
@@ -2829,7 +2829,7 @@ class Table(AbstractBlock):
         try:
             for row in rdr:
                 self.rows.append(row)
-        except:
+        except Exception:
             self.error('csv parse error: %s' % row)
     def parse_psv_dsv(self,text):
         """
@@ -4564,7 +4564,7 @@ class Table_OLD(AbstractBlock):
         try:
             for row in rdr:
                 result.append(row)
-        except:
+        except Exception:
             raise EAsciiDoc,'csv parse error: %s' % row
         return result
     def parse_dsv(self,rows):
@@ -4608,7 +4608,7 @@ class Table_OLD(AbstractBlock):
             elif k == 'tablewidth':
                 try:
                     self.tablewidth = float(attrs['tablewidth'])
-                except:
+                except Exception:
                     raise EAsciiDoc, 'illegal [%s] %s: %s' % (self.name,k,v)
         self.merge_attributes(attrs)
         # Parse table ruler.
@@ -5016,7 +5016,7 @@ if __name__ == '__main__':
         pass
     except SystemExit:
         raise
-    except:
+    except Exception:
         print_stderr('%s: unexpected error: %s' %
                 (os.path.basename(sys.argv[0]), sys.exc_info()[1]))
         print_stderr('-'*60)

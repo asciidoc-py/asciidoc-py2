@@ -249,6 +249,12 @@ and I'll add them to the list.
   http://tpl.sourceforge.net/[tpl] and
   http://uthash.sourceforge.net/[uthash] projects (the HTML versions
   have a customised contents sidebar).
+- Jared Henley has written
+  http://jared.henley.id.au/software/awb/documentation.html[AsciiDoc
+  Website Builder]. 'AsciiDoc Website Builder' (awb) is a python
+  program that automates the building of of a website written in
+  AsciiDoc. All you need to write is the AsciiDoc source plus a few
+  simple configuration files.
 
 
 AsciiDoc version 9

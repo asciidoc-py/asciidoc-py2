@@ -483,7 +483,7 @@ Version 8.2.2 (2007-07-22)
 - http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
   capability has been added for users who are more familiar with or
   prefer LaTeX math formulas to the
-  http://www.methods.co.nz/asciidoc/asciimath.html[ASCIIMathML]
+  http://www.methods.co.nz/asciidoc/asciimathml.html[ASCIIMathML]
   notation (thanks to Arthur Sakellariou for the patch).
 - The 'source highlight' and 'code' filters now process embedded
   callouts.
@@ -755,8 +755,7 @@ Version 7.1.2 (2006-03-07)
   can use this to set font size and color (XHTML and HTML outputs).
 - Added `\##...\##` quoting -- it does nothing -- it's purpose is to
   allow inline attributes to be applied to normal text.
-- An link:userguide.html#X50[inline passthrough] mechanism has been
-  implemented.
+- An 'inline passthrough' mechanism has been implemented.
 - Configuration file comment lines can be escaped with a backslash --
   this is to allows the inclusion of configuration lines that start
   with a hash character.
@@ -1721,8 +1720,7 @@ Version 2.1 (2003-03-17)
 - asciidoc(1) now correctly returns non-zero exit status if an error
   occurs.
 - An AsciiDoc example website has been included in the AsciiDoc
-  distribution `examples/website` directory (also online at
-  http://www.methods.co.nz/asciidoc/examples/website/).
+  distribution `examples/website` directory.
 - NOTE: The `asciidoc` wrapper script included in the 2.0 distribution
   has been dropped, if you've symlinked or aliased to `asciidoc` you'll
   need to change them to point directly to `asciidoc.py` instead.

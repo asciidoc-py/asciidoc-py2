@@ -17,7 +17,7 @@ attribute instead of the `asciimath` attribute.
 http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
 website for details.
 
-Here's the link:latexmath.txt[AsciiDoc source] that generated this
+Here's the link:latexmathml.txt[AsciiDoc source] that generated this
 page.
 
 Some example 'LaTeXMathML' formulas:

@@ -4,6 +4,23 @@ AsciiDoc Frequently Asked Questions
 An embryonic AsciiDoc FAQ.
 
 
+== How can I place an anchor (link target) on a list item?
+
+You can't use a 'BlockId' block element inside a list but you can use
+the syntactically identical 'anchor' inline macro. For example:
+
+  one:: Item one.
+  [[X2]]two:: Item two.
+  three:: Item three.
+
+This *will not* work:
+
+  one:: Item one.
+  [[X2]]
+  two:: Item two.
+  three:: Item three.
+
+
 == How can I supress lists from nesting?
 
 If you place two lists with different syntax hard up against each

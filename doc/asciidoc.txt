@@ -4296,50 +4296,36 @@ HTML Help generation
 
 Toolchain components summary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+AsciiDoc::
+    Converts AsciiDoc (`.txt`) files to DocBook XML (`.xml`) files.
 
-AsciiDoc
-^^^^^^^^
-Converts AsciiDoc (`.txt`) files to DocBook XML (`.xml`) files.
+[[X13]]http://docbook.sourceforge.net/projects/xsl/[DocBook XSL Stylesheets]::
+  These are a set of XSL stylesheets containing rules for converting
+  DocBook XML documents to HTML, XSL-FO, manpage and HTML Help files.
+  The stylesheets are used in conjunction with an XML parser such as
+  <<X40,xsltproc(1)>>.
 
-[[X13]]
-DocBook XSL Stylesheets
-^^^^^^^^^^^^^^^^^^^^^^^
-http://docbook.sourceforge.net/projects/xsl/[DocBook XSL Stylesheets]
-are a set of XSL stylesheets containing rules for converting DocBook
-XML documents to HTML, XSL-FO, manpage and HTML Help files.  The
-stylesheets are used in conjunction with an XML parser such as
-<<X40,xsltproc(1)>>.
+[[X40]]http://www.xmlsoft.org[xsltproc]::
+  An XML parser for applying XSLT stylesheets (in our case the
+  <<X13,DocBook XSL Stylesheets>>) to XML documents.
 
-[[X40]]
-xsltproc
-^^^^^^^^
-http://www.xmlsoft.org[xsltproc] is an XML parser for applying XSLT
-stylesheets (in our case the <<X13,DocBook XSL Stylesheets>>) to XML
-documents.
+[[X31]]http://dblatex.sourceforge.net/[dblatex]::
+  Generates PDF, DVI, PostScript and LaTeX formats directly from
+  DocBook source via the intermediate LaTeX typesetting language --
+  uses <<X13,DocBook XSL Stylesheets>>, <<X40,xsltproc(1)>> and
+  `latex(1)`.
 
-[[X31]]
-dblatex
-^^^^^^^
-http://dblatex.sourceforge.net/[dblatex] generates PDF, DVI,
-PostScript and LaTeX formats directly from DocBook source via the
-intermediate LaTeX typesetting language -- uses <<X13,DocBook XSL
-Stylesheets>>, <<X40,xsltproc(1)>> and `latex(1)`.
+[[X14]]http://xml.apache.org/fop/[FOP]::
+  The Apache Formatting Objects Processor converts XSL-FO (`.fo`)
+  files to PDF files.  The XSL-FO files are generated from DocBook
+  source files using <<X13,DocBook XSL Stylesheets>> and
+  <<X40,xsltproc(1)>>.
 
-[[X14]]
-FOP
-^^^
-http://xml.apache.org/fop/[FOP] (Apache Formatting Objects Processor)
-converts XSL-FO (`.fo`) files to PDF files.  The XSL-FO files are
-generated from DocBook source files using <<X13,DocBook XSL
-Stylesheets>> and <<X40,xsltproc(1)>>.
-
-[[X67]]
-Microsoft Help Compiler
-^^^^^^^^^^^^^^^^^^^^^^^
-The Microsoft HTML Help Compiler (`hhc.exe`) is a command-line tool
-that converts HTML Help source files to a single HTML Help (`.chm`)
-file. It runs on MS Windows platforms and can be downloaded from
-http://www.microsoft.com.
+[[X67]]Microsoft Help Compiler::
+  The Microsoft HTML Help Compiler (`hhc.exe`) is a command-line tool
+  that converts HTML Help source files to a single HTML Help (`.chm`)
+  file. It runs on MS Windows platforms and can be downloaded from
+  http://www.microsoft.com.
 
 AsciiDoc dblatex configuration files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1084,12 +1084,15 @@ class Document:
         self.safe = True        # Default safe mode.
     def update_attributes(self):
         # Set implicit attributes.
-        if self.infile and self.infile != '<stdin>':
+        if self.infile and os.path.exists(self.infile):
             t = os.path.getmtime(self.infile)
-        else:
+        elif self.infile == '<stdin>':
             t = time.time()
-        self.attributes['doctime'] = time_str(t)
-        self.attributes['docdate'] = date_str(t)
+        else:
+            t = None
+        if t:
+            self.attributes['doctime'] = time_str(t)
+            self.attributes['docdate'] = date_str(t)
         t = time.time()
         self.attributes['localtime'] = time_str(t)
         self.attributes['localdate'] = date_str(t)

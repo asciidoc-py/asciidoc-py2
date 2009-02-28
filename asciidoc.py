@@ -4918,10 +4918,10 @@ def main():
         opts,args = getopt.getopt(sys.argv[1:],
             'a:b:cd:ef:hno:svw:',
             ['attribute=','backend=','conf-file=','doctype=','dump-conf',
-            'help','no-conf','no-header-footer','out-file=','profile',
+            'help','no-conf','no-header-footer','out-file=',
             'section-numbers','verbose','version','safe','unsafe'])
     except getopt.GetoptError:
-        usage()
+        usage('illegal command options')
         sys.exit(1)
     if len(args) > 1:
         usage()
@@ -4931,13 +4931,10 @@ def main():
     confiles = []
     outfile = None
     options = []
-    prof = False
     help_option = False
     for o,v in opts:
         if o in ('--help','-h'):
             help_option = True
-        if o == '--profile':
-            prof = True
         if o == '--unsafe':
             document.safe = False
         if o == '--version':
@@ -5003,12 +5000,7 @@ def main():
     if outfile and outfile != '<stdout>':
         outfile = os.path.abspath(outfile)
     # Do the work.
-    if prof:
-        import profile
-        profile.run("asciidoc('%s','%s',(),'%s',None,())"
-            % (backend,doctype,infile))
-    else:
-        asciidoc(backend, doctype, confiles, infile, outfile, options)
+    asciidoc(backend, doctype, confiles, infile, outfile, options)
     if document.has_errors:
         sys.exit(1)
 

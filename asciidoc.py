@@ -8,10 +8,13 @@ under the terms of the GNU General Public License (GPL).
 
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
-VERSION = '8.3.5'   # See CHANGLOG file for version history.
+### Used by asciidocapi.py ###
+VERSION = '8.3.6 beta 1'   # See CHANGLOG file for version history.
+
+MIN_PYTHON_VERSION = 2.3   # Require this version of Python or better.
 
 #---------------------------------------------------------------------------
-# Program onstants.
+# Program constants.
 #---------------------------------------------------------------------------
 DEFAULT_BACKEND = 'xhtml11'
 DEFAULT_DOCTYPE = 'article'
@@ -102,19 +105,29 @@ class AttrDict(dict):
     def __setstate__(self,value):
         for k,v in value.items(): self[k]=v
 
-def print_stderr(line):
-    sys.stderr.write(line+os.linesep)
+### Used by asciidocapi.py ###
+# List of message strings written to stderr.
+messages = []
+
+def print_stderr(line=''):
+    global messages
+    messages.append(line)
+    if __name__ == '__main__':
+        sys.stderr.write(line+os.linesep)
 
 def verbose(msg,linenos=True):
     if config.verbose:
-        console(msg,linenos=linenos)
+        msg = message(msg,linenos=linenos)
+        print_stderr(msg)
 
 def warning(msg,linenos=True,offset=0):
-    console(msg,'WARNING: ',linenos,offset=offset)
+    msg = message(msg,'WARNING: ',linenos,offset=offset)
     document.has_warnings = True
+    print_stderr(msg)
 
 def deprecated(msg, linenos=True):
-    console(msg, 'DEPRECATED: ', linenos)
+    msg = message(msg, 'DEPRECATED: ', linenos)
+    print_stderr(msg)
 
 def message(msg, prefix='', linenos=True, cursor=None, offset=0):
     """Return formatted message string."""
@@ -134,11 +147,9 @@ def error(msg, cursor=None, halt=False):
     if halt:
         raise EAsciiDoc, message(msg,linenos=False,cursor=cursor)
     else:
-        console(msg,'ERROR: ',cursor=cursor)
+        msg = message(msg,'ERROR: ',cursor=cursor)
+        print_stderr(msg)
         document.has_errors = True
-
-def console(msg, prefix='', linenos=True, cursor=None, offset=0):
-    print_stderr(message(msg,prefix,linenos,cursor,offset))
 
 def file_in(fname, directory):
     """Return True if file fname resides inside directory."""
@@ -618,11 +629,10 @@ def filter_lines(filter_cmd, lines, attrs={}):
             elif cmd.endswith('.rb'):
                 filter_cmd = 'ruby ' + filter_cmd
     verbose('filtering: ' + filter_cmd)
-    input = os.linesep.join(lines)
     try:
         p = subprocess.Popen(filter_cmd, shell=True,
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        output = p.communicate(input)[0]
+        output = p.communicate(os.linesep.join(lines))[0]
     except Exception:
         raise EAsciiDoc,'filter error: %s: %s' % (filter_cmd, sys.exc_info()[1])
     if output:
@@ -3353,7 +3363,7 @@ class Reader1:
     conditional inclusion system macros. Tabs are expanded and lines are right
     trimmed."""
     # This class is not used directly, use Reader class instead.
-    READ_BUFFER_MIN = 10            # Read buffer low level.
+    READ_BUFFER_MIN = 10        # Read buffer low level.
     def __init__(self):
         self.f = None           # Input file object.
         self.fname = None       # Input file name.
@@ -3584,17 +3594,6 @@ class Reader(Reader1):
             self.unread(self.cursor)
             self.cursor = save_cursor
         return result
-    def read_all(self,fname):
-        """Read all lines from file fname and return as list. Use like class
-        method: Reader().read_all(fname)"""
-        result = []
-        self.open(fname)
-        try:
-            while not self.eof():
-                result.append(self.read())
-        finally:
-            self.close()
-        return result
     def read_lines(self,count=1):
         """Return tuple containing count lines."""
         result = []
@@ -3672,14 +3671,15 @@ class Reader(Reader1):
 
 class Writer:
     """Writes lines to output file."""
-    newline = '\r\n'            # End of line terminator.
-    f = None                    # Output file object.
-    fname= None                 # Output file name.
-    lines_out = 0               # Number of lines written.
-    skip_blank_lines = False    # If True don't output blank lines.
+    def __init__(self):
+        self.newline = '\r\n'            # End of line terminator.
+        self.f = None                    # Output file object.
+        self.fname = None                # Output file name.
+        self.lines_out = 0               # Number of lines written.
+        self.skip_blank_lines = False    # If True don't output blank lines.
     def open(self,fname):
-        self.fname = os.path.abspath(fname)
         verbose('writing: '+fname)
+        self.fname = fname
         if fname == '<stdout>':
             self.f = sys.stdout
         else:
@@ -3690,10 +3690,7 @@ class Writer:
             self.f.close()
     def write_line(self, line=None):
         if not (self.skip_blank_lines and (not line or not line.strip())):
-            if line is not None:
-                self.f.write(line + self.newline)
-            else:
-                self.f.write(self.newline)
+            self.f.write((line or '') + self.newline)
             self.lines_out = self.lines_out + 1
     def write(self,*args):
         """Iterates arguments, writes tuple and list arguments one line per
@@ -4837,8 +4834,8 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                     writer.close()
             finally:
                 reader.closefile()  # Keep reader state for postmortem.
-    except (KeyboardInterrupt, SystemExit):
-        print
+    except KeyboardInterrupt:
+        raise
     except Exception,e:
         # Cleanup.
         if outfile and outfile != '<stdout>' and os.path.isfile(outfile):
@@ -4850,10 +4847,13 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         if isinstance(e,EAsciiDoc):
             print_stderr(msg+str(e))
         else:
-            print_stderr(msg+'unexpected error:')
-            print_stderr('-'*60)
-            traceback.print_exc(file=sys.stderr)
-            print_stderr('-'*60)
+            if __name__ == '__main__':
+                print_stderr(msg+'unexpected error:')
+                print_stderr('-'*60)
+                traceback.print_exc(file=sys.stderr)
+                print_stderr('-'*60)
+            else:
+                print_stderr('%sunexpected error: %s' % (msg,str(e)))
         sys.exit(1)
 
 def usage(msg=''):
@@ -4861,8 +4861,10 @@ def usage(msg=''):
         print_stderr(msg)
     show_help('default', sys.stderr)
 
-def show_help(topic, stream=sys.stdout):
-    """Print help topic to stdout."""
+def show_help(topic, f=None):
+    """Print help topic to file object f."""
+    if f is None:
+        f = sys.stdout
     # Select help file.
     lang = config.cmd_attrs.get('lang')
     if lang and lang != 'en':
@@ -4896,35 +4898,35 @@ def show_help(topic, stream=sys.stdout):
         print_stderr('ambiguous help topic: %s' % topic)
     else:
         for line in lines:
-            print >>stream, line
+            print >>f, line
 
-def main():
-    if float(sys.version[:3]) < 2.3:
-        print_stderr('FAILED: Python 2.3 or better required.')
+### Used by asciidocapi.py ###
+def execute(cmd,opts,args):
+    """
+    Execute asciidoc with command-line options and arguments.
+    cmd is asciidoc command or asciidoc.py path.
+    opts and args conform to values returned by getopt.getopt().
+    Raises SystemExit if an error occurs.
+    """
+    if float(sys.version[:3]) < MIN_PYTHON_VERSION:
+        print_stderr('FAILED: Python 2.3 or better required')
+        sys.exit(1)
+    if not os.path.exists(cmd):
+        print_stderr('FAILED: Missing asciidoc command: %s' % cmd)
         sys.exit(1)
     # Locate the executable and configuration files directory.
-    global APP_FILE,APP_DIR,USER_DIR
-    APP_FILE = os.path.realpath(sys.argv[0])
+    global APP_FILE
+    APP_FILE = os.path.realpath(cmd)
+    global APP_DIR
     APP_DIR = os.path.dirname(APP_FILE)
+    global USER_DIR
     USER_DIR = os.environ.get('HOME')
     if USER_DIR is not None:
         USER_DIR = os.path.join(USER_DIR,'.asciidoc')
         if not os.path.isdir(USER_DIR):
             USER_DIR = None
-    # Process command line options.
-    import getopt
-    try:
-        #DEPRECATED: --safe option.
-        opts,args = getopt.getopt(sys.argv[1:],
-            'a:b:cd:ef:hno:svw:',
-            ['attribute=','backend=','conf-file=','doctype=','dump-conf',
-            'help','no-conf','no-header-footer','out-file=',
-            'section-numbers','verbose','version','safe','unsafe'])
-    except getopt.GetoptError:
-        usage('illegal command options')
-        sys.exit(1)
     if len(args) > 1:
-        usage()
+        usage('To many arguments')
         sys.exit(1)
     backend = DEFAULT_BACKEND
     doctype = DEFAULT_DOCTYPE
@@ -4965,10 +4967,7 @@ def main():
             else:
                 config.cmd_attrs[k] = v
         if o in ('-o','--out-file'):
-            if v == '-':
-                outfile = '<stdout>'
-            else:
-                outfile = v
+            outfile = v
         if o in ('-s','--no-header-footer'):
             options.append('-s')
         if o in ('-v','--verbose'):
@@ -4981,40 +4980,54 @@ def main():
         sys.exit(0)
     if len(args) == 0 and len(opts) == 0:
         usage()
-        sys.exit(1)
+        sys.exit(0)
     if len(args) == 0:
         usage('No source file specified')
         sys.exit(1)
     if not backend:
         usage('No --backend option specified')
         sys.exit(1)
-    if args[0] == '-':
-        infile = '<stdin>'
-    else:
+    stdin,stdout = sys.stdin,sys.stdout
+    try:
         infile = args[0]
-    if infile == '<stdin>' and not outfile:
-        outfile = '<stdout>'
-    # Convert in and out files to absolute paths.
-    if infile != '<stdin>':
-        infile = os.path.abspath(infile)
-    if outfile and outfile != '<stdout>':
-        outfile = os.path.abspath(outfile)
-    # Do the work.
-    asciidoc(backend, doctype, confiles, infile, outfile, options)
-    if document.has_errors:
-        sys.exit(1)
+        if infile == '-':
+            infile = '<stdin>'
+        elif isinstance(infile, str):
+            infile = os.path.abspath(infile)
+        else:   # Input file is file object from API call.
+            sys.stdin = infile
+            infile = '<stdin>'
+        if outfile == '-':
+            outfile = '<stdout>'
+        elif isinstance(outfile, str):
+            outfile = os.path.abspath(outfile)
+        elif outfile is None:
+            if infile == '<stdin>':
+                outfile = '<stdout>'
+        else:   # Output file is file object from API call.
+            sys.stdout = outfile
+            outfile = '<stdout>'
+        # Do the work.
+        asciidoc(backend, doctype, confiles, infile, outfile, options)
+        if document.has_errors:
+            sys.exit(1)
+    finally:
+        sys.stdin,sys.stdout = stdin,stdout
 
 if __name__ == '__main__':
+    # Process command line options.
+    import getopt
     try:
-        main()
-    except KeyboardInterrupt:
-        pass
-    except SystemExit:
-        raise
-    except Exception:
-        print_stderr('%s: unexpected error: %s' %
-                (os.path.basename(sys.argv[0]), sys.exc_info()[1]))
-        print_stderr('-'*60)
-        traceback.print_exc(file=sys.stderr)
-        print_stderr('-'*60)
+        #DEPRECATED: --safe option.
+        opts,args = getopt.getopt(sys.argv[1:],
+            'a:b:cd:ef:hno:svw:',
+            ['attribute=','backend=','conf-file=','doctype=','dump-conf',
+            'help','no-conf','no-header-footer','out-file=',
+            'section-numbers','verbose','version','safe','unsafe'])
+    except getopt.GetoptError:
+        usage('illegal command options')
         sys.exit(1)
+    try:
+        execute(sys.argv[0],opts,args)
+    except KeyboardInterrupt:
+        print_stderr()

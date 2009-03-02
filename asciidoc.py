@@ -1131,7 +1131,7 @@ class Document:
         # Extract miscellaneous configuration section entries from attributes.
         config.load_miscellaneous(config.conf_attrs)
         config.load_miscellaneous(config.cmd_attrs)
-        self.attributes['newline'] = config.newline # Use raw (unescaped) value.
+        self.attributes['newline'] = config.newline
         if self.outfile:
             if self.outfile != '<stdout>':
                 self.attributes['outfile'] = self.outfile

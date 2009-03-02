@@ -32,13 +32,23 @@ Doctests
 >>> infile = StringIO.StringIO('Hello *{author}*')
 >>> outfile = StringIO.StringIO()
 >>> asciidoc = AsciiDoc()
->>> asciidoc.options.append('--no-header-footer')
+>>> asciidoc.options('--no-header-footer')
 >>> asciidoc.attributes['author'] = 'Joe Bloggs'
 >>> asciidoc.execute(infile, outfile, backend='html4')
 >>> print outfile.getvalue()
 <p>Hello <strong>Joe Bloggs</strong></p>
 
->>>
+>>> import StringIO
+>>> asciidoc = AsciiDoc()
+>>> infile = StringIO.StringIO('---------')
+>>> outfile = StringIO.StringIO()
+>>> asciidoc.execute(infile, outfile)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "asciidocapi.py", line 189, in execute
+    raise AsciiDocError(self.messages[-1])
+AsciiDocError: ERROR: <stdin>: line 1: [blockdef-listing] missing closing delimiter
+
 
 Copyright (C) 2009 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
@@ -82,10 +92,12 @@ class Options(object):
     """
     def __init__(self, values=[]):
         self.values = values[:]
-    def append(self, name, value=None):
-        self.values.append((name,value))
     def __call__(self, name, value=None):
-        """Shortcut for append()."""
+        """Shortcut for append method."""
+        self.append(name, value)
+    def append(self, name, value=None):
+        if type(value) in (int,float):
+            value = str(value)
         self.values.append((name,value))
 
 
@@ -186,7 +198,8 @@ class AsciiDoc(object):
             if e.code:
                 raise AsciiDocError(self.messages[-1])
 
+
 if __name__ == "__main__":
     import doctest
-    options = doctest.ELLIPSIS
+    options = doctest.NORMALIZE_WHITESPACE + doctest.ELLIPSIS
     doctest.testmod(optionflags=options)

@@ -28,16 +28,17 @@ AsciiDocError: TODO
 
 Doctests
 --------
->>> import asciidocapi
 >>> import StringIO
 >>> infile = StringIO.StringIO('Hello *{author}*')
 >>> outfile = StringIO.StringIO()
->>> asciidoc = asciidocapi.AsciiDoc()
+>>> asciidoc = AsciiDoc()
 >>> asciidoc.options.append('--no-header-footer')
 >>> asciidoc.attributes['author'] = 'Joe Bloggs'
 >>> asciidoc.execute(infile, outfile, backend='html4')
 >>> print outfile.getvalue()
 <p>Hello <strong>Joe Bloggs</strong></p>
+
+>>>
 
 Copyright (C) 2009 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
@@ -184,3 +185,8 @@ class AsciiDoc(object):
         except SystemExit, e:
             if e.code:
                 raise AsciiDocError(self.messages[-1])
+
+if __name__ == "__main__":
+    import doctest
+    options = doctest.ELLIPSIS
+    doctest.testmod(optionflags=options)

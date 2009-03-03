@@ -2,52 +2,42 @@
 """
 asciidocapi - AsciiDoc API wrapper class.
 
-The AsciiDoc class provides an API for executing asciidoc. Minimal example:
+The AsciiDoc class provides an API for executing asciidoc. Minimal example
+compiles `mydoc.txt` to `mydoc.html`:
 
   import asciidocapi
   asciidoc = asciidocapi.AsciiDoc()
   asciidoc.execute('mydoc.txt')
 
-See the doctests below for more examples.
+- Full documentation in asciidocapi.txt.
+- See the doctests below for more examples.
 
-AsciiDoc instance attributes
-----------------------------
-options: TODO
-attributes: TODO
-messages: TODO
-cmd: TODO
-asciidoc: TODO
+== Doctests ==
 
-AsciiDoc instance methods
--------------------------
-execute(self, infile, outfile=None, backend=None): TODO
+1. Check execution:
 
-Asciidoc exceptions
--------------------
-AsciiDocError: TODO
+   >>> import StringIO
+   >>> infile = StringIO.StringIO('Hello *{author}*')
+   >>> outfile = StringIO.StringIO()
+   >>> asciidoc = AsciiDoc()
+   >>> asciidoc.options('--no-header-footer')
+   >>> asciidoc.attributes['author'] = 'Joe Bloggs'
+   >>> asciidoc.execute(infile, outfile, backend='html4')
+   >>> print outfile.getvalue()
+   <p>Hello <strong>Joe Bloggs</strong></p>
 
-Doctests
---------
->>> import StringIO
->>> infile = StringIO.StringIO('Hello *{author}*')
->>> outfile = StringIO.StringIO()
->>> asciidoc = AsciiDoc()
->>> asciidoc.options('--no-header-footer')
->>> asciidoc.attributes['author'] = 'Joe Bloggs'
->>> asciidoc.execute(infile, outfile, backend='html4')
->>> print outfile.getvalue()
-<p>Hello <strong>Joe Bloggs</strong></p>
+2. Check error handling:
 
->>> import StringIO
->>> asciidoc = AsciiDoc()
->>> infile = StringIO.StringIO('---------')
->>> outfile = StringIO.StringIO()
->>> asciidoc.execute(infile, outfile)
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "asciidocapi.py", line 189, in execute
-    raise AsciiDocError(self.messages[-1])
-AsciiDocError: ERROR: <stdin>: line 1: [blockdef-listing] missing closing delimiter
+   >>> import StringIO
+   >>> asciidoc = AsciiDoc()
+   >>> infile = StringIO.StringIO('---------')
+   >>> outfile = StringIO.StringIO()
+   >>> asciidoc.execute(infile, outfile)
+   Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+     File "asciidocapi.py", line 189, in execute
+       raise AsciiDocError(self.messages[-1])
+   AsciiDocError: ERROR: <stdin>: line 1: [blockdef-listing] missing closing delimiter
 
 
 Copyright (C) 2009 Stuart Rackham. Free use of this software is granted
@@ -63,7 +53,7 @@ import sys,os,re
 
 def find_in_path(fname, path=None):
     """
-    Find file fname in shell PATH. Return None if not found.
+    Find file fname in paths. Return None if not found.
     """
     if path is None:
         path = os.environ.get('PATH', '')
@@ -165,8 +155,9 @@ class AsciiDoc(object):
         finally:
             del sys.path[0]
         if Version(asciidoc.VERSION) < Version(MIN_ASCIIDOC_VERSION):
-            raise AsciiDocError('requires asciidoc version %s or better'
-                                % MIN_ASCIIDOC_VERSION)
+            raise AsciiDocError(
+                'asciidocapi %s requires asciidoc %s or better'
+                % (API_VERSION, MIN_ASCIIDOC_VERSION))
         self.asciidoc = asciidoc
         self.cmd = cmd
 

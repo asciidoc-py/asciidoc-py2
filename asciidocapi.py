@@ -93,28 +93,52 @@ class Options(object):
 
 class Version(object):
     """
-    Compare AsciiDoc version numbers. Example:
+    Parse and compare AsciiDoc version numbers. Instance attributes:
 
-    >>> Version('8.2.5') < Version('8.3')
+    string: String version number '<major>.<minor>[.<micro>][suffix]'.
+    major:  Integer major version number.
+    minor:  Integer minor version number.
+    micro:  Integer micro version number.
+    suffix: Suffix (begins with non-numeric character) is ignored when
+            comparing.
+
+    Doctest examples:
+
+    >>> Version('8.2.5') < Version('8.3 beta 1')
     True
+    >>> Version('8.3.0') == Version('8.3. beta 1')
+    True
+    >>> Version('8.2.0') < Version('8.20')
+    True
+    >>> Version('8.20').major
+    8
+    >>> Version('8.20').minor
+    20
+    >>> Version('8.20').micro
+    0
+    >>> Version('8.20').suffix
+    ''
+    >>> Version('8.20 beta 1').suffix
+    'beta 1'
 
-    string: String version number '<major>.<minor>[.<micro>]'.
-    major: Integer major version number.
-    minor: Integer minor version number.
-    micro: Integer micro version number.
     """
     def __init__(self, version):
         self.string = version
-        reo = re.match(r'^(\d+)\.(\d+)(\.(\d+))?.*$', self.string)
+        reo = re.match(r'^(\d+)\.(\d+)(\.(\d+))?\s*(.*?)\s*$', self.string)
         if not reo:
-            raise AsciiDocError('invalid version number: %s' % self.string)
+            raise ValueError('invalid version number: %s' % self.string)
         groups = reo.groups()
         self.major = int(groups[0])
         self.minor = int(groups[1])
         self.micro = int(groups[3] or '0')
+        self.suffix = groups[4] or ''
     def __cmp__(self, other):
-        return cmp(self.major*10000 + self.minor*100 + self.micro,
-                   other.major*10000 + other.minor*100 + other.micro)
+        result = cmp(self.major, other.major)
+        if result == 0:
+            result = cmp(self.minor, other.minor)
+            if result == 0:
+                result = cmp(self.micro, other.micro)
+        return result
 
 class AsciiDoc(object):
     """

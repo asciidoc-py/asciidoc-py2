@@ -204,12 +204,12 @@ toc::
     'scriptsdir' attributes):
 
     $ asciidoc -a toc -a numbered mydoc.txt
-+
-NOTE: The `toc` attribute must be specified using the
-`--attribute=toc` command-line option. If you define the `toc`
-attribute in a custom configuration file it won't be recognized
-because the conditionally included header code will have already been
-processed.
+
+  - The `toc` attribute must be specified using the `--attribute`
+    command-line option. If you define the `toc` attribute in a custom
+    configuration file it won't be recognized because the
+    conditionally included header code will have already been
+    processed.
 
 toclevels::
   Sets the number of title levels (1..4) reported in the table of

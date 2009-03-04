@@ -1,5 +1,6 @@
 a2x
 asciidoc.py
+asciidocapi.py
 BUGS
 BUGS.txt
 common.aap
@@ -36,6 +37,7 @@ doc/music-filter.pdf
 doc/source-highlight-filter.pdf
 doc/*.txt
 doc/asciidoc.dict
+doc/asciidocapi.txt
 examples/website/ASCIIMathML.js
 examples/website/LaTeXMathML.js
 examples/website/build-website.sh

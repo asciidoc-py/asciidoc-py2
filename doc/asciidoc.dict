@@ -1,19 +1,21 @@
-personal_ws-1.1 en 742 
+personal_ws-1.1 en 760 
 Sturmer
-Kléber
 Kleber
+Kléber
 quis
 auctor
+tuples
 linkcss
 multi
 CommentBlock
 AsciiDoc's
 BOLID
 callouts
+API
 bulleted
 starttags
-ListingBlock
 listingblock
+ListingBlock
 eval
 ListLabel
 asc
@@ -38,6 +40,7 @@ programlisting
 xhtml
 Windtrainer
 des
+cmd
 specialwords
 muellner
 Miklos
@@ -96,8 +99,8 @@ pageunits
 LaTeX
 citetitle
 emphasizedwords
-blocktitle
 BlockTitle
+blocktitle
 DTD
 CVS
 valign
@@ -126,8 +129,8 @@ luptatum
 TitleBlock
 fmt
 subscripted
-middlename
 MiddleName
+middlename
 subdirectories
 footnoteref
 passtext
@@ -148,8 +151,8 @@ entrytbl
 Ghostscript
 verear
 Buenos
-LinuxDoc
 linuxdoc
+LinuxDoc
 PostScript
 hhp
 Vijay
@@ -164,8 +167,9 @@ ListingBlocks
 GPL
 hsides
 upperalpha
-Bólido
+docfile
 Bolido
+Bólido
 footrow
 misspelt
 WINNT
@@ -177,8 +181,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-verbatimblock
 VerbatimBlock
+verbatimblock
 corpname
 shiftwidth
 misevaluations
@@ -187,6 +191,7 @@ mattis
 Chai
 headrow
 Efros
+setuptools
 gui
 Blondel
 ile
@@ -220,6 +225,7 @@ SimpleList
 apos
 MSHR
 unescaped
+IRC
 toclevel
 runtime
 CalloutList
@@ -229,6 +235,7 @@ ctags
 sudo
 Helvetica
 SectionClose
+blog
 termtag
 OpenBlock
 joe
@@ -353,6 +360,7 @@ Bouchers
 JavaScript
 newlists
 guimenu
+init
 ListParagraphs
 bodydata
 MEPIS
@@ -373,6 +381,7 @@ mantitle
 RCS
 indentsize
 outfilesuffix
+doctime
 Berglunds
 syntaxes
 manvolnum
@@ -388,8 +397,8 @@ pre
 coid
 params
 mediaobjects
-JavaScripts
 javascripts
+JavaScripts
 sgmlfmt
 subsnormal
 unchunked
@@ -400,6 +409,7 @@ RevisionLine
 refname
 listelement
 PRS
+config
 CONFIG
 sem
 gzip
@@ -422,6 +432,7 @@ fileextension
 filetype
 URIs
 Blackdown
+pyc
 lang
 filesystem
 taoup
@@ -460,14 +471,17 @@ arabic
 fringilla
 retab
 BackendBlocks
-ChangeLog
 changelog
+ChangeLog
 tis
 Ubuntu
 sectids
+AsciiDocAPI
+asciidocapi
 Sommer
 LabeledList
 ZapfDingbats
+Julien
 hyperlinks
 EmailAddress
 Cheatsheet
@@ -480,8 +494,8 @@ crlf
 vel
 Iisaka's
 localtime
-BlockMacro
 blockmacro
+BlockMacro
 Xandros
 groff
 POSIX
@@ -507,7 +521,9 @@ configfile
 Donec
 colpcwidth
 uri
+AsciiDocError
 monospaced
+docdate
 llevar
 utf
 subdirectory
@@ -524,8 +540,8 @@ dbtimestamp
 txt
 BlockId
 passthrough
-Berguvsvägen
 Berguvsvagen
+Berguvsvägen
 noincsearch
 TableRow
 inlinemediaobject
@@ -537,6 +553,7 @@ xsltproc
 coids
 resx
 NumberedList
+getvalue
 colstop
 undefine
 tagname
@@ -573,9 +590,9 @@ Redhat
 cb
 tuple
 cd
-asciimathml
-AsciiMathML
 ASCIIMathML
+AsciiMathML
+asciimathml
 arounds
 filename
 mansource
@@ -591,8 +608,8 @@ scaledwidth
 cp
 xsl
 fb
-DocBook
 docbook
+DocBook
 stylesheet
 pagefile
 superscripted
@@ -604,6 +621,7 @@ Klum
 fo
 sgmlformat
 et
+StringIO
 eu
 showcomments
 gq
@@ -612,8 +630,8 @@ fprintf
 colabswidth
 tabsize
 smallnew
-BlockTitles
 blocktitles
+BlockTitles
 localdate
 bodyrow
 hs
@@ -663,8 +681,8 @@ permalink
 td
 py
 AROUT
-literalblock
 LiteralBlock
+literalblock
 sgml
 biggy
 softtabstop
@@ -680,8 +698,8 @@ tt
 blandit
 inline
 Martín
-SectionBody
 sectionbody
+SectionBody
 VM
 conformant
 listchars
@@ -726,8 +744,8 @@ nbsp
 qanda
 noout
 massa
-AsciiDoc
 asciidoc
+AsciiDoc
 manmanual
 TableBody
 realpath

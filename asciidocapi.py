@@ -2,11 +2,11 @@
 """
 asciidocapi - AsciiDoc API wrapper class.
 
-The AsciiDoc class provides an API for executing asciidoc. Minimal example
+The AsciiDocAPI class provides an API for executing asciidoc. Minimal example
 compiles `mydoc.txt` to `mydoc.html`:
 
   import asciidocapi
-  asciidoc = asciidocapi.AsciiDoc()
+  asciidoc = asciidocapi.AsciiDocAPI()
   asciidoc.execute('mydoc.txt')
 
 - Full documentation in asciidocapi.txt.
@@ -19,7 +19,7 @@ compiles `mydoc.txt` to `mydoc.html`:
    >>> import StringIO
    >>> infile = StringIO.StringIO('Hello *{author}*')
    >>> outfile = StringIO.StringIO()
-   >>> asciidoc = AsciiDoc()
+   >>> asciidoc = AsciiDocAPI()
    >>> asciidoc.options('--no-header-footer')
    >>> asciidoc.attributes['author'] = 'Joe Bloggs'
    >>> asciidoc.execute(infile, outfile, backend='html4')
@@ -29,7 +29,7 @@ compiles `mydoc.txt` to `mydoc.html`:
 2. Check error handling:
 
    >>> import StringIO
-   >>> asciidoc = AsciiDoc()
+   >>> asciidoc = AsciiDocAPI()
    >>> infile = StringIO.StringIO('---------')
    >>> outfile = StringIO.StringIO()
    >>> asciidoc.execute(infile, outfile)
@@ -45,10 +45,10 @@ under the terms of the GNU General Public License (GPL).
 
 """
 
+import sys,os,re
+
 API_VERSION = '0.1.0'
 MIN_ASCIIDOC_VERSION = '8.3.6'  # Minimum acceptable AsciiDoc version.
-
-import sys,os,re
 
 
 def find_in_path(fname, path=None):
@@ -71,14 +71,7 @@ class AsciiDocError(Exception):
 
 class Options(object):
     """
-    List of (key,value) command option tuples.
-
-    The following examples append ('--verbose',None) and
-    ('--conf-file','blog.conf') to the options.values list (you can
-    optionally omit append):
-
-    options.append('--verbose')
-    options.append('--conf-file', 'blog.conf')
+    Stores asciidoc(1) command options.
     """
     def __init__(self, values=[]):
         self.values = values[:]
@@ -140,11 +133,15 @@ class Version(object):
                 result = cmp(self.micro, other.micro)
         return result
 
-class AsciiDoc(object):
+class AsciiDocAPI(object):
     """
-    The following options are invalid in API context: help,  version.
+    AsciiDoc API class.
     """
     def __init__(self, asciidoc_py=None):
+        """
+        Locate and import asciidoc.py.
+        Initialize instance attributes.
+        """
         self.options = Options()
         self.attributes = {}
         self.messages = []
@@ -186,6 +183,10 @@ class AsciiDoc(object):
         self.cmd = cmd
 
     def execute(self, infile, outfile=None, backend=None):
+        """
+        Compile infile to outfile using backend format.
+        infile can outfile can be file path strings or file like objects.
+        """
         self.messages = []
         opts = Options(self.options.values)
         if outfile is not None:
@@ -215,6 +216,9 @@ class AsciiDoc(object):
 
 
 if __name__ == "__main__":
+    """
+    Run module doctests.
+    """
     import doctest
     options = doctest.NORMALIZE_WHITESPACE + doctest.ELLIPSIS
     doctest.testmod(optionflags=options)

@@ -12,7 +12,7 @@ compiles `mydoc.txt` to `mydoc.html`:
 - Full documentation in asciidocapi.txt.
 - See the doctests below for more examples.
 
-== Doctests ==
+Doctests:
 
 1. Check execution:
 

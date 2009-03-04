@@ -34,6 +34,12 @@ only requirement is that a compatible version of 'AsciiDoc' is already
 installed -- simple, no setuptools to run, no Eggs to install, no
 non-standard library dependencies.
 
+Verify everything is working by running the module doctests:
+
+  python asciidocapi.py
+
+If there are no messages then all is well.
+
 The following minimal example compiles `mydoc.txt` to `mydoc.html`:
 
 [source,python]

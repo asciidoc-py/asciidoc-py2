@@ -41,6 +41,9 @@ OPTIONS
     in command-line order (after implicit configuration files).  This
     option may be specified more than once.
 
+*--doctest*::
+    Run Python doctests in 'asciidoc' module.
+
 *-d, --doctype*='DOCTYPE'::
     Document type: 'article', 'manpage' or 'book'. The 'book' document
     type is only supported by the 'docbook' backend.  Default document

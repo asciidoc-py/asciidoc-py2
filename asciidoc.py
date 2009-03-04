@@ -4907,6 +4907,25 @@ def execute(cmd,opts,args):
     cmd is asciidoc command or asciidoc.py path.
     opts and args conform to values returned by getopt.getopt().
     Raises SystemExit if an error occurs.
+
+    Doctests:
+
+    1. Check execution:
+
+       >>> import StringIO
+       >>> infile = StringIO.StringIO('Hello *{author}*')
+       >>> outfile = StringIO.StringIO()
+       >>> opts = []
+       >>> opts.append(('--backend','html4'))
+       >>> opts.append(('--no-header-footer',None))
+       >>> opts.append(('--attribute','author=Joe Bloggs'))
+       >>> opts.append(('--out-file',outfile))
+       >>> execute(__file__, opts, [infile])
+       >>> print outfile.getvalue()
+       <p>Hello <strong>Joe Bloggs</strong></p>
+
+       >>>
+
     """
     if float(sys.version[:3]) < MIN_PYTHON_VERSION:
         print_stderr('FAILED: Python 2.3 or better required')
@@ -5023,10 +5042,21 @@ if __name__ == '__main__':
             'a:b:cd:ef:hno:svw:',
             ['attribute=','backend=','conf-file=','doctype=','dump-conf',
             'help','no-conf','no-header-footer','out-file=',
-            'section-numbers','verbose','version','safe','unsafe'])
+            'section-numbers','verbose','version','safe','unsafe',
+            'doctest'])
     except getopt.GetoptError:
         usage('illegal command options')
         sys.exit(1)
+    if '--doctest' in [opt[0] for opt in opts]:
+        # Run module doctests.
+        import doctest
+        options = doctest.NORMALIZE_WHITESPACE + doctest.ELLIPSIS
+        failures,tries = doctest.testmod(optionflags=options)
+        if failures == 0:
+            print_stderr('All doctests passed')
+            exit(0)
+        else:
+            exit(1)
     try:
         execute(sys.argv[0],opts,args)
     except KeyboardInterrupt:

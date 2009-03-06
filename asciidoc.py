@@ -407,14 +407,14 @@ def subs_quotes(text):
         if tag[0] == '#':
             tag = tag[1:]
             # Unconstrained quotes can appear anywhere.
-            reo = re.compile(r'(?msu)(^|.)(\[(?P<attrlist>[^[]+?)\])?' \
+            reo = re.compile(r'(?msu)(^|[^[])(\[(?P<attrlist>[^[]+?)\])?' \
                     + r'(?:' + re.escape(lq) + r')' \
                     + r'(?P<content>.+?)(?:'+re.escape(rq)+r')')
         else:
             # The text within constrained quotes must be bounded by white space.
             # Non-word (\W) characters are allowed at boundaries to accomodate
             # enveloping quotes.
-            reo = re.compile(r'(?msu)(^|\W)(\[(?P<attrlist>[^[]+?)\])?' \
+            reo = re.compile(r'(?msu)(^|[^\w[])(\[(?P<attrlist>[^[]+?)\])?' \
                 + r'(?:' + re.escape(lq) + r')' \
                 + r'(?P<content>.*?\S)(?:'+re.escape(rq)+r')(?=\W|$)')
         pos = 0
@@ -2929,26 +2929,26 @@ class Table(AbstractBlock):
         headrows = footrows = bodyrows = None
         if self.rows and 'header' in self.parameters.options:
             headrows = self.subs_rows(self.rows[0:1],'header')
-            self.attributes['headrows'] = '\theadrows\t'
+            self.attributes['headrows'] = '\x07headrows\x07'
             self.rows = self.rows[1:]
         if self.rows and 'footer' in self.parameters.options:
             footrows = self.subs_rows( self.rows[-1:], 'footer')
-            self.attributes['footrows'] = '\tfootrows\t'
+            self.attributes['footrows'] = '\x07footrows\x07'
             self.rows = self.rows[:-1]
         if self.rows:
             bodyrows = self.subs_rows(self.rows)
-            self.attributes['bodyrows'] = '\tbodyrows\t'
+            self.attributes['bodyrows'] = '\x07bodyrows\x07'
         table = subs_attrs(config.sections[self.parameters.template],
                            self.attributes)
         table = writer.newline.join(table)
         # Before we finish replace the table head, foot and body place holders
         # with the real data.
         if headrows:
-            table = table.replace('\theadrows\t', headrows, 1)
+            table = table.replace('\x07headrows\x07', headrows, 1)
         if footrows:
-            table = table.replace('\tfootrows\t', footrows, 1)
+            table = table.replace('\x07footrows\x07', footrows, 1)
         if bodyrows:
-            table = table.replace('\tbodyrows\t', bodyrows, 1)
+            table = table.replace('\x07bodyrows\x07', bodyrows, 1)
         writer.write(table)
 
 class Tables(AbstractBlocks):
@@ -3119,7 +3119,7 @@ class Macros:
         """ Replace passthough placeholders with the original passthrough
         text."""
         for i,v in enumerate(self.passthroughs):
-            text = text.replace('\t'+str(i)+'\t', self.passthroughs[i], 1)
+            text = text.replace('\x07'+str(i)+'\x07', self.passthroughs[i], 1)
         return text
 
 class Macro:
@@ -3307,7 +3307,7 @@ class Macro:
             # Tabs guarantee the placeholders are unambiguous.
             result = (
                 text[mo.start():mo.start('passtext')] +
-                '\t' + str(len(passthroughs)-1) + '\t' +
+                '\x07' + str(len(passthroughs)-1) + '\x07' +
                 text[mo.end('passtext'):mo.end()]
             )
             return result
@@ -4651,23 +4651,23 @@ class Table_OLD(AbstractBlock):
         if headrows:
             headrows = self.parse_rows(headrows, self.headrow, self.headdata)
             headrows = writer.newline.join(headrows)
-            self.attributes['headrows'] = '\theadrows\t'
+            self.attributes['headrows'] = '\x07headrows\x07'
         if footrows:
             footrows = self.parse_rows(footrows, self.footrow, self.footdata)
             footrows = writer.newline.join(footrows)
-            self.attributes['footrows'] = '\tfootrows\t'
+            self.attributes['footrows'] = '\x07footrows\x07'
         bodyrows = self.parse_rows(bodyrows, self.bodyrow, self.bodydata)
         bodyrows = writer.newline.join(bodyrows)
-        self.attributes['bodyrows'] = '\tbodyrows\t'
+        self.attributes['bodyrows'] = '\x07bodyrows\x07'
         table = subs_attrs(config.sections[self.template],self.attributes)
         table = writer.newline.join(table)
         # Before we finish replace the table head, foot and body place holders
         # with the real data.
         if headrows:
-            table = table.replace('\theadrows\t', headrows, 1)
+            table = table.replace('\x07headrows\x07', headrows, 1)
         if footrows:
-            table = table.replace('\tfootrows\t', footrows, 1)
-        table = table.replace('\tbodyrows\t', bodyrows, 1)
+            table = table.replace('\x07footrows\x07', footrows, 1)
+        table = table.replace('\x07bodyrows\x07', bodyrows, 1)
         writer.write(table)
 
 class Tables_OLD(AbstractBlocks):

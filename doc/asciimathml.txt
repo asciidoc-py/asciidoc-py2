@@ -21,7 +21,7 @@ Here's the link:asciimathml.txt[AsciiDoc source] that generated this
 page.
 
 .NOTE
-- When you use the `\asciimath:[]` inline macro you need to escape `]`
+- When you use the `asciimath:[]` inline macro you need to escape `]`
   characters in the formulas with a backslash, escaping is unnecessary
   if you use the double-dollar macro (for examples see the first two
   formulas below).

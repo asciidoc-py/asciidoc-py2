@@ -1,7 +1,13 @@
 AsciiDoc Frequently Asked Questions
 ===================================
 
-An embryonic AsciiDoc FAQ.
+
+== Some of my inline passthroughs are not passed through, why?
+
+Most likely the passthrough encloses another passthrough with a higher
+precedence, for example:
+
+  `pass[]`
 
 
 == How can I place an anchor (link target) on a list item?
@@ -9,16 +15,20 @@ An embryonic AsciiDoc FAQ.
 You can't use a 'BlockId' block element inside a list but you can use
 the syntactically identical 'anchor' inline macro. For example:
 
-  one:: Item one.
-  [[X2]]two:: Item two.
-  three:: Item three.
+---------------------
+one:: Item one.
+[[X2]]two:: Item two.
+three:: Item three.
+---------------------
 
 This *will not* work:
 
-  one:: Item one.
-  [[X2]]
-  two:: Item two.
-  three:: Item three.
+---------------------
+one:: Item one.
+[[X2]]
+two:: Item two.
+three:: Item three.
+---------------------
 
 
 == How can I stop lists from nesting?
@@ -152,8 +162,8 @@ image:images/tiger.png[]
 
 == How can I place a backslash character in front of an attribute reference without escaping the reference?
 
-Use the predefined `\{backslash}` attribute reference instead of an
-actual backslash, for example if the `\{projectname}` attribute has
+Use the predefined `{backslash}` attribute reference instead of an
+actual backslash, for example if the `{projectname}` attribute has
 the value `foobar` then:
 
   d:\data{backslash}{projectname}
@@ -206,7 +216,10 @@ A C+\+ Library for C+\+ \+++
 The source of this problem is ambiguity across substitution types --
 the first match unescapes allowing the second to substitute. A
 work-around for difficult cases is to side-step the problem using the
-`\pass:[]` passthrough inline macro.
++\pass:[]+ passthrough inline macro.
+
+NOTE: Escaping is unnecessary inside 'inline literal passthroughs'
+(backtick quoted text).
 
 
 == How can I set default list and tables styles?
@@ -297,7 +310,7 @@ This tip was contributed by Bernard Amade.
 
 == How can I supress cell separators in included table data files?
 
-Use the `\{include:}` system attribute instead of the `include::[]`
+Use the `{include:}` system attribute instead of the `include::[]`
 macro (the former is not expanded until after the table data has been
 parsed into cells, whereas the latter is included before the table is
 processed.
@@ -327,14 +340,14 @@ homero verear ea mea, qui.
 
 == How can I include non-breaking space characters?
 
-Use the non-breaking space character entity reference `\&#160;` (see
-the next question). You could also use the predefined `\{nbsp}`
+Use the non-breaking space character entity reference `&#160;` (see
+the next question). You could also use the predefined `{nbsp}`
 attribute reference.
 
 
 == Can I include HTML and XML character entity references in my document?
 
-Yes, just enter the reference in your document. For example `\&#946;`
+Yes, just enter the reference in your document. For example `&#946;`
 will print a Greek small beta character &#946;
 
 
@@ -411,7 +424,7 @@ related markup:
 == How can I escape a labeled list entry?
 
 Two colons or semicolons in a paragraph may be confused with a labeled
-list entry. Use the predefined `\{two_colons}` and `\{two_semicolons}`
+list entry. Use the predefined `{two_colons}` and `{two_semicolons}`
 to suppress this behavior, for example:
 
   Qui in magna commodo{two_colons} est labitur dolorum an. Est ne
@@ -447,9 +460,9 @@ document, the above examples are equivalent to:
 
 == How can I customize the \{localdate} format?
 
-The default format for the `\{localdate}` attribute is the ISO 8601
+The default format for the `{localdate}` attribute is the ISO 8601
 `yyyy-mm-dd` format. You can change this format by explicitly setting
-the `\{localdate}` attribute. For example by setting it using the
+the `{localdate}` attribute. For example by setting it using the
 asciidoc(1) `-a` command-line option:
 
   $ asciidoc -a localdate=`date +%d-%d-%Y` mydoc.txt

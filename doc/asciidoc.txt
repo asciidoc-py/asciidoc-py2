@@ -601,10 +601,13 @@ _Emphasized text_::
         Word phrases \*enclosed in asterisk characters* are rendered
         in a strong font (usually bold).
 
-+Monospaced text+::
-        Word phrases \`enclosed in backtick characters` (grave
-        accents) or \+plus characters+ are rendered in a monospaced
-        font.
+[[X81]]+Monospaced text+::
+        Word phrases \+enclosed in plus characters+ are rendered in a
+        monospaced font.  Word phrases \`enclosed in backtick
+        characters` (grave accents) are also rendered in a monospaced
+        font but in this case the enclosed text is rendered literally
+        and is not subject to further expansion (see <<X80,inline
+        literal>>).
 
 `Single quoted text'::
         Phrases enclosed with a \`single grave accent to the left and
@@ -620,11 +623,6 @@ _Emphasized text_::
         Placing \#hashes around text# does nothing, it is a mechanism
         to allow inline attributes to be applied to otherwise
         unformatted text (see example below).
-
-The alternative underline and plus characters, while marginally less
-readable, are arguably a better choice than the backtick and
-apostrophe characters as they are not normally used for, and so not
-confused with, punctuation.
 
 Quoted text can be prefixed with an <<X21,attribute list>>. Currently
 the only use made of this feature is to allow the font color,
@@ -886,13 +884,13 @@ For example:
 
 The preceding example identifies the following paragraph so it can be
 linked from other location, for example with
-`\<<chapter-titles,chapter titles>>`.
+`<<chapter-titles,chapter titles>>`.
 
 'BlockId' elements can be applied to Title, Paragraph, List,
 DelimitedBlock, Table and BlockMacro elements.  The BlockId element
-sets the `\{id}` attribute for substitution in the subsequent block's
+sets the `{id}` attribute for substitution in the subsequent block's
 markup template. If a second argument is supplied it sets the
-`\{label}` attribute which is used to set the DocBook `xreflabel`
+`{label}` attribute which is used to set the DocBook `xreflabel`
 attribute.
 
 The 'BlockId' element has the same syntax and serves a similar
@@ -1678,7 +1676,7 @@ generates an anchor named `<reference>` and additionally displays
 `[<reference>]` at the anchor position. For example `[\[[taoup]]]`
 generates an anchor named `taoup` that displays `[taoup]` at the
 anchor position. Cite the reference from elsewhere your document using
-`\<<taoup>>`, this displays a hyperlink (`[taoup]`) to the
+`<<taoup>>`, this displays a hyperlink (`[taoup]`) to the
 corresponding bibliography entry anchor.
 
 For working examples see the `article.txt` and `book.txt` documents in
@@ -1761,8 +1759,8 @@ This paragraph belongs to item one of the outer list.
 
 Footnotes
 ---------
-The shipped AsciiDoc configuration includes the `\footnote:[<text>]`
-and `\footnoteref:[<id>,<text>]` inline macros for generating
+The shipped AsciiDoc configuration includes the `footnote:[<text>]`
+and `footnoteref:[<id>,<text>]` inline macros for generating
 footnotes:
 
 - The `footnote` macro generates a footnote.
@@ -1793,18 +1791,18 @@ Indexes
 The shipped AsciiDoc configuration includes the inline macros for
 generating document index entries.
 
-`\indexterm:[<primary>,<secondary>,<tertiary>]`::
-`\(((<primary>,<secondary>,<tertiary>)))`::
+`indexterm:[<primary>,<secondary>,<tertiary>]`::
+`(((<primary>,<secondary>,<tertiary>)))`::
     This inline macro generates an index term (the <secondary> and
     <tertiary> attributes are optional). For example
-    `\indexterm:[Tigers,Big cats]` (or, using the alternative syntax
-    `\(((Tigers,Big cats)))`.  Index terms that have secondary and
+    `indexterm:[Tigers,Big cats]` (or, using the alternative syntax
+    `(((Tigers,Big cats)))`.  Index terms that have secondary and
     tertiary entries also generate separate index terms for the
     secondary and tertiary entries. The index terms appear in the
     index, not the primary text flow.
 
-`\indexterm2:[<primary>]`::
-`\((<primary>))`::
+`indexterm2:[<primary>]`::
+`((<primary>))`::
     This inline macro generates an index term that appears in both the
     index and the primary text flow.  The `<primary>` should not be
     padded to the left or right with white space characters.
@@ -1898,15 +1896,15 @@ substitution option.
 The following attributes are available during inline callout macro
 substitution:
 
-`\{index}`::
+`{index}`::
     The callout list item index inside the angle brackets.
-`\{coid}`::
+`{coid}`::
     An identifier formatted like `CO<listnumber>-<index>` that
     uniquely identifies the callout mark. For example `CO2-4`
     identifies the fourth callout mark in the second set of callout
     marks.
 
-The `\{coids}` attribute can be used during callout list item
+The `{coids}` attribute can be used during callout list item
 substitution -- it is a space delimited list of callout IDs that refer
 to the explanatory list item.
 
@@ -2206,7 +2204,7 @@ documents with embedded images and CSS, for example:
   $ asciidoc --unsafe -a data-uri mydocument.txt
 
 You will need to specify the `--unsafe` option because the AsciiDoc
-`data-uri` is implemented using the `\{sys}` attribute.
+`data-uri` is implemented using the `{sys}` attribute.
 
 NOTE: Internet Explorer up to version 7 does not support 'data: URIs',
 but it is supported by Internet Explorer 8 Beta 1.
@@ -2341,7 +2339,7 @@ load time while the second is evaluated when the output is written:
 
   {world#}Hello World!
 
-In this example when the `\{world#}` conditional attribute reference
+In this example when the `{world#}` conditional attribute reference
 is evaluates to a zero length string if `world` is defined; if `world`
 is not defined the whole line is dropped.
 
@@ -2429,6 +2427,12 @@ $$::
   Example:
 
   $$`[[a,b],[c,d]]((n),(k))`$$
+
+[[X80]]`::
+  Text quoted with single backtick characters constitutes an 'inline
+  literal' passthrough. The enclosed text is rendered in a monospaced
+  font and is only subject to special character substitution (see also
+  <<X81,quoted monospaced text>>).
 
 Macro Definitions
 ~~~~~~~~~~~~~~~~~
@@ -2903,7 +2907,7 @@ In addition to the automatically created man page <<X60,intrinsic
 attributes>> you can assign DocBook
 http://www.docbook.org/tdg5/en/html/refmiscinfo.html[refmiscinfo]
 element 'source', 'version' and 'manual' values using AsciiDoc
-`\{mansource}`, `\{manversion}` and `\{manmanual}` attributes
+`{mansource}`, `{manversion}` and `{manmanual}` attributes
 respectively. This example is from the AsciiDoc header of a man page
 source file:
 
@@ -3157,7 +3161,7 @@ In this example asciidoc(1) replaces the | character with the
 emphasized text from the AsciiDoc input file and writes the result to
 the output file.
 
-Use the `\{brvbar}` attribute reference if you need to include a | pipe
+Use the `{brvbar}` attribute reference if you need to include a | pipe
 character inside tag text.
 
 Attributes section
@@ -3183,7 +3187,7 @@ single line formatted like:
 Special characters are normally confined to those that resolve
 markup ambiguity (in the case of SGML/XML markups the ampersand, less
 than and greater than characters).  The following example causes all
-occurrences of the `<` character to be replaced by `\&lt;`.
+occurrences of the `<` character to be replaced by `&lt;`.
 
   <=&lt;
 
@@ -3258,7 +3262,7 @@ ones.
 - Word list entries with embedded spaces should be enclosed in quotation (")
   characters.
 - A `[specialwords]` section entry of the form
-  `name=word1{nbsp}[word2...]` adds words to existing `name` entries.
+  +name=word1{nbsp}[word2...]+ adds words to existing `name` entries.
 - A `[specialwords]` section entry of the form `name` undefines
   (deletes) all existing `name` words.
 - Since word list entries are processed as Python regular expressions
@@ -3267,7 +3271,7 @@ ones.
 - By default Special Words are substituted before Inline Macros, this
   may lead to undesirable consequences. For example the special word
   `foobar` would be expanded inside the macro call
-  `\http://www.foobar.com[]`.  A possible solution is to emphasize
+  `http://www.foobar.com[]`.  A possible solution is to emphasize
   whole words only by defining the word using regular expression
   characters, for example `\bfoobar\b`.
 - If the first matched character of a special word is a backslash then
@@ -3317,7 +3321,7 @@ entries. A markup template section body can contain:
 - A document content placeholder
 
 The document content placeholder is a single | character and is
-replaced by text from the source element.  Use the `\{brvbar}`
+replaced by text from the source element.  Use the `{brvbar}`
 attribute reference if you need a literal | character in the template.
 
 [[X27]]
@@ -3443,7 +3447,7 @@ For example:
 
   :Author Initials: JB
 
-This will set an attribute reference `\{authorinitials}` to the value
+This will set an attribute reference `{authorinitials}` to the value
 'JB' in the current document.
 
 To delete (undefine) an attribute use the following syntax:
@@ -3461,7 +3465,7 @@ To delete (undefine) an attribute use the following syntax:
   set to an empty string.
 - Special characters in the entry `<value>` are substituted. You can
   enter special characters using character entity values, for example
-  `\&amp;`.
+  `&amp;`.
 - Attribute references contained in the entry `<value>` will be
   expanded.
 - By default AttributeEntry values are substituted for
@@ -3492,10 +3496,10 @@ Which creates these attributes:
 
 The preceding example is equivalent to the standard AsciiDoc two line
 document header.  Actually it's a little bit different with the
-addition of the `\{keywords}` and `\{revisionhistory}` attributes
-footnote:[The existence of a `\{revisionhistory}` attribute causes a
+addition of the `{keywords}` and `{revisionhistory}` attributes
+footnote:[The existence of a `{revisionhistory}` attribute causes a
 revision history file (if it exists) to be included in DocBook
-outputs. If a file named like `\{docname}-revhistory.xml` exists in
+outputs. If a file named like `{docname}-revhistory.xml` exists in
 the document's directory then it will be added verbatim to the DocBook
 header (see the `./doc/asciidoc-revhistory.xml` example that comes
 with the AsciiDoc distribution).].
@@ -3580,8 +3584,8 @@ named attributes):
 - Attribute references are allowed inside attribute lists -- this is
   the only substitution performed on attribute lists.
 - Setting a named attribute to `None` undefines the attribute.
-- Positional attributes are referred to as `\{1}`,`\{2}`,`\{3}`,...
-- Attribute `\{0}` refers to the entire list (excluding the enclosing
+- Positional attributes are referred to as `{1}`,`{2}`,`{3}`,...
+- Attribute `{0}` refers to the entire list (excluding the enclosing
   square brackets).
 - Attribute lists are evaluated as a list of Python function
   arguments.  If this fails or any of the items do not evaluate to a
@@ -3632,7 +3636,7 @@ and 'System'.
 
 Simple Attributes References
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Simple attribute references take the form `\{<name>}`. If the
+Simple attribute references take the form `{<name>}`. If the
 attribute name is defined its text value is substituted otherwise the
 line containing the reference is dropped from the output.
 
@@ -3642,33 +3646,33 @@ Additional parameters are used in conjunction with the attribute name
 to calculate a substitution value. Conditional attribute references
 take the following forms:
 
-`\{<name>=<value>}`::
+`{<name>=<value>}`::
         `<value>` is substituted if the attribute `<name>` is
         undefined otherwise its value is substituted. `<value>` can
         contain simple attribute references.
 
-`\{<name>?<value>}`::
+`{<name>?<value>}`::
         `<value>` is substituted if the attribute `<name>` is defined
         otherwise an empty string is substituted.  `<value>` can
         contain simple attribute references.
 
-`\{<name>!<value>}`::
+`{<name>!<value>}`::
         `<value>` is substituted if the attribute `<name>` is
         undefined otherwise an empty string is substituted.  `<value>`
         can contain simple attribute references.
 
-`\{<name>#<value>}`::
+`{<name>#<value>}`::
         `<value>` is substituted if the attribute `<name>` is defined
         otherwise the undefined attribute entry causes the containing
         line to be dropped.  `<value>` can contain simple attribute
         references.
 
-`\{<name>%<value>}`::
+`{<name>%<value>}`::
         `<value>` is substituted if the attribute `<name>` is not
         defined otherwise the containing line is dropped.  `<value>`
         can contain simple attribute references.
 
-`\{<name>@<regexp>:<value1>[:<value2>]}`::
+`{<name>@<regexp>:<value1>[:<value2>]}`::
         `<value1>` is substituted if the value of attribute `<name>`
         matches the regular expression `<regexp>` otherwise `<value2>`
         is substituted. If attribute `<name>` is not defined the
@@ -3677,16 +3681,16 @@ take the following forms:
         contain simple attribute references.  To embed colons in the
         values or the regular expression escape them with backslashes.
 
-`\{<name>$<regexp>:<value1>[:<value2>]}`::
+`{<name>$<regexp>:<value1>[:<value2>]}`::
         Same behavior as the previous ternary attribute except for
         the following cases:
 
-        `\{<name>$<regexp>:<value>}`;;
+        `{<name>$<regexp>:<value>}`;;
                 Substitutes `<value>` if `<name>` matches `<regexp>`
                 otherwise the result is undefined and the containing
                 line is dropped.
 
-        `\{<name>$<regexp>::<value>}`;;
+        `{<name>$<regexp>::<value>}`;;
                 Substitutes `<value>` if `<name>` does not match
                 `<regexp>` otherwise the result is undefined and the
                 containing line is dropped.
@@ -3697,7 +3701,7 @@ Conditional attributes are mainly used in AsciiDoc configuration
 files -- see the distribution `.conf` files for examples.
 
 Attribute equality test::
-  If `\{backend}` is `docbook` or `xhtml11` the example evaluates to
+  If `{backend}` is `docbook` or `xhtml11` the example evaluates to
   ``DocBook or XHTML backend'' otherwise it evaluates to ``some other
   backend'':
 
@@ -3717,7 +3721,7 @@ System attribute references generate the attribute text value by
 executing a predefined action that is parametrized by a single
 argument. The syntax is `{<action>:<argument>}`.
 
-`\{eval:<expression>}`::
+`{eval:<expression>}`::
         Substitutes the result of the Python `<expression>`. If
         `<expression>` evaluates to `None` or `False` the reference is
         deemed undefined and the line containing the reference is
@@ -3726,7 +3730,7 @@ argument. The syntax is `{<action>:<argument>}`.
         remaining cases the attribute evaluates to a string
         representation of the `<expression>` result.
 
-`\{include:<filename>}`::
+`{include:<filename>}`::
         Substitutes contents of the file named `<filename>`.
         - The included file is read at the time of attribute
           substitution.
@@ -3735,11 +3739,11 @@ argument. The syntax is `{<action>:<argument>}`.
         - Tabs are expanded based on the current 'tabsize' attribute
           value.
 
-`\{sys:<command>}`::
+`{sys:<command>}`::
         Substitutes the stdout generated by the execution of the shell
         `<command>`.
 
-`\{sys2:<command>}`::
+`{sys2:<command>}`::
         Substitutes the stdout and stderr generated by the execution
         of the shell `<command>`.
 
@@ -3819,7 +3823,7 @@ predefined intrinsic attributes:
 1. Intrinsic attributes are global so avoid defining custom attributes
    with the same names.
 
-2. `\{outfile}`, `\{outdir}`, `\{infile}`, `\{indir}` attributes are
+2. `{outfile}`, `{outdir}`, `{infile}`, `{indir}` attributes are
    effectively read-only (you can set them but it won't affect the
    input or output file paths).
 
@@ -3834,8 +3838,8 @@ predefined intrinsic attributes:
    occurs when the file is read while the latter occurs when the
    contents are written.]
 
-5. `\{docfile}` and `\{docdir}` refer to root document specified on
-   the asciidoc(1) command-line; `\{infile}` and `\{indir}` refer to
+5. `{docfile}` and `{docdir}` refer to root document specified on
+   the asciidoc(1) command-line; `{infile}` and `{indir}` refer to
    the current input file which may be the root document or an
    included file. While the input is being read from the standard
    input (`stdin`) these attributes are undefined.
@@ -4422,8 +4426,8 @@ composing your own configuration file `[header]` section).
 TIP: If you get an 'undefined entity' error when processing DocBook
 files you'll may find that you've used an undefined HTML character
 entity.  An easy (although inelegant) fix is to use the character's
-character code instead of its symbolic name (for example use `\&#160;`
-instead of `\&nbsp;`).
+character code instead of its symbolic name (for example use `&#160;`
+instead of `&nbsp;`).
 
 If your system has been configured with an XML catalog you may find a
 number of entity sets are already automatically included.
@@ -4510,7 +4514,7 @@ Execute `:help gq` command to read about the vim gq command.
 [TIP]
 =====================================================================
 - Assign the `gq}` command to the Q key with the `nnoremap Q gq}`
-  command or put it in your `\~/.vimrc` file to so it's always
+  command or put it in your `~/.vimrc` file to so it's always
   available (see the <<X61, Example `~/.vimrc` file>>).
 - Put `set` commands in your `~/.vimrc` file so you don't have to
   enter them manually.
@@ -4576,7 +4580,7 @@ Troubleshooting
 Gotchas
 ~~~~~~~
 Incorrect character encoding::
-    If you get an error message like `\'UTF-8' codec can't decode ...`
+    If you get an error message like `'UTF-8' codec can't decode ...`
     then you source file contains invalid UTF-8 characters -- set the
     AsciiDoc <<X54,encoding attribute>> for the correct character set
     (typically ISO-8859-1 (Latin-1) for European languages).
@@ -4589,7 +4593,7 @@ Misinterpreted text formatting::
     between the two asterisks from being output in a strong (bold)
     font:
 
-    Add `\*.cs` files and `*.resx` files.
+    Add `*.cs` files and `*.resx` files.
 
 Overlapping text formatting::
     Overlapping text formatting will generate illegal overlapping
@@ -4711,7 +4715,7 @@ If the indentation and layout of the asciidoc(1) output is not to your
 liking you can:
 
 1. Change the indentation and layout of configuration file markup
-   template sections. The `\{empty}` glossary entry is useful for
+   template sections. The `{empty}` glossary entry is useful for
    outputting trailing blank lines in markup templates.
 
 2. Use Dave Raggett's http://tidy.sourceforge.net/[HTML Tidy] program
@@ -4760,7 +4764,7 @@ Inserting blank space
 ~~~~~~~~~~~~~~~~~~~~~
 Adjust your style sheets to add the correct separation between block
 elements. Inserting blank paragraphs containing a single non-breaking
-space character `\{nbsp}` works but is an ad hoc solution compared
+space character `{nbsp}` works but is an ad hoc solution compared
 to using style sheets.
 
 Closing open sections
@@ -4870,9 +4874,9 @@ asciidoc(1) `--unsafe` command-line option.
 .Safe mode constraints
 - `eval`, `sys` and `sys2` executable attributes and block macros are
   not executed.
-- `include::<filename>[]` and `\include1::<filename>[]` block macro
+- `include::<filename>[]` and `include1::<filename>[]` block macro
   files must reside inside the parent file's directory.
-- `\{include:<filename>}` executable attribute files must reside
+- `{include:<filename>}` executable attribute files must reside
   inside the source document directory.
 - Passthrough Blocks are dropped.
 

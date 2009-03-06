@@ -103,7 +103,8 @@ latex-indent-paragraphs::
 If 'latex-indent-paragraphs' is defined, the first line of paragraphs will be indented. By default LaTeX backend prevents paragraph indentation and prints paragraphs with preceding vertical space.
 
 [[latex-recognize-escaped-unicode]] latex-recognize-escaped-unicode::
-If 'latex-recognize-escaped-unicode' is defined, escaped unicode characters (e.g. `$${amp}#960;$$` or `$${amp}#x3C0;$$`) will be recognized. This can lead to LaTeX compilation errors since LaTeX unicode support is only rudimentary. For more information see <<unicodeSupport, Unicode support>>.
+If 'latex-recognize-escaped-unicode' is defined, escaped unicode
+characters (e.g. `\$${amp}#960;$$` or `\$${amp}#x3C0;$$`) will be recognized. This can lead to LaTeX compilation errors since LaTeX unicode support is only rudimentary. For more information see <<unicodeSupport, Unicode support>>.
 
 latex-use-custom-list-items::
 If 'latex-use-custom-list-items' is defined, lists will be bulleted or enumerated the way you have typed them in the original Asciidoc document. That means, `*` turns into a circle bullet, `-` turns into a dash, `.` turns into a number and `..` turns into a letter. Otherwise LaTeX will use different bullets and enumeration characters depending on the level of nesting.
@@ -142,7 +143,7 @@ LaTeX backend makes use of some LaTeX specialities which don't belong to a minim
 [cols="4*,4",options="header"]
 |====================================================================
 |Speciality | MiKTeX package name | teTeX package name | TeX Live package name | Description
-|KOMA-Script | koma-script | | | LaTeX backend uses the document classes 'scrartcl' and 'scrbook' as well as some other specialities defined in the 'KOMA-Script' package, e.g. the commands `\\addmargin{}` and `\minisec{}`.
+|KOMA-Script | koma-script | | | LaTeX backend uses the document classes 'scrartcl' and 'scrbook' as well as some other specialities defined in the 'KOMA-Script' package, e.g. the commands `\addmargin{}` and `\minisec{}`.
 |xcolor.sty | xcolor | | | Used to produce colored boxes and tables.
 |colortbl.sty | colortbl | | | Used to produce colored tables.
 |type1ec.sty | cm-super | | | Enables high quality fonts for PDF output.
@@ -160,11 +161,11 @@ LaTeX backend makes use of some LaTeX specialities which don't belong to a minim
 == About the LaTeX backend configuration file
 An important note for people who want to adapt the LaTeX backend configuration file to their own needs:
 
-LaTeX markup has a lot of special characters, most importantly `\`, `{`, `}`. In order to make things less complicated, I changed the default substitution order (see entry 'subsnormal' in the `[miscellaneous]` section). In contrast to the backends 'docbook' and 'xhtml11', the 'specialcharacters' substitution is applied very late. As a result all special characters produced by 'quotes', 'specialwords', 'replacements', 'attributes' and 'macros' become escaped at the end. If you don't want special characters in the corresponding sections to get escaped, you've to use following symbols instead of the special characters.
+LaTeX markup has a lot of special characters, most importantly ``, `{`, `}`. In order to make things less complicated, I changed the default substitution order (see entry 'subsnormal' in the `[miscellaneous]` section). In contrast to the backends 'docbook' and 'xhtml11', the 'specialcharacters' substitution is applied very late. As a result all special characters produced by 'quotes', 'specialwords', 'replacements', 'attributes' and 'macros' become escaped at the end. If you don't want special characters in the corresponding sections to get escaped, you've to use following symbols instead of the special characters.
 
-- `$$!..backslash..!$$` instead of `\`
-- `$$!..braceleft..!$$` instead of `{`
-- `$$!..braceright..!$$` instead of `}`
+- `\$$!..backslash..!$$` instead of ``
+- `\$$!..braceleft..!$$` instead of `{`
+- `\$$!..braceright..!$$` instead of `}`
 
  
 For more special characters take a look in the `[replacements2]` sections. `[replacements2]` section is responsible for replacing the symbols with their corresponding special characters.

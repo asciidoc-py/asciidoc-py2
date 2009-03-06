@@ -1,11 +1,6 @@
 AsciiDoc API
 ============
 
-// Disable underscore quotes so they don't have to be escaped.
-:quotes._:
-:quotes.__:
-
-
 'asciidocapi' -- a Python API module for 'AsciiDoc'.
 
 

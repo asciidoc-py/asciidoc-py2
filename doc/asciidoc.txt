@@ -1123,22 +1123,24 @@ Literal Blocks
 'LiteralBlocks' behave just like LiteralParagraphs except you don't
 have to indent the contents.
 
-LiteralBlocks can be used to resolve list ambiguity. If the following
-list was just indented it would be processed as an ordered list (not
-an indented paragraph):
+If the 'listing' style is applied to a LiteralBlock it will be
+rendered as a ListingBlock (this is handy if you have a listing
+containing a ListingBlock).
 
 ---------------------------------------------------------------------
-....................
-1. Item 1
-2. Item 2
-....................
+...................................
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+...................................
 ---------------------------------------------------------------------
 
 Renders:
-....................
-1. Item 1
-2. Item 2
-....................
+...................................
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+...................................
 
 Sidebar Blocks
 ~~~~~~~~~~~~~~
@@ -4585,15 +4587,23 @@ Incorrect character encoding::
     AsciiDoc <<X54,encoding attribute>> for the correct character set
     (typically ISO-8859-1 (Latin-1) for European languages).
 
-Misinterpreted text formatting::
-    If text in your document is incorrectly interpreted as formatting
-    instructions you can suppress formatting by placing a backslash
-    character immediately in front of the leading quote character(s).
-    For example in the following line the backslash prevents text
-    between the two asterisks from being output in a strong (bold)
-    font:
+Invalid output::
+    AsciiDoc attempts to validate the input AsciiDoc source but makes
+    no attempt to validate the output markup, it leaves that to
+    external tools such as `xmllint(1)` (integrated into `a2x(1)`).
+    Backend validation cannot be hardcoded into AsciiDoc because
+    backends are dynamically configured. The following example
+    generates valid HTML but invalid DocBook (the DocBook `literal`
+    element cannot contain an `emphasis` element):
 
-    Add `*.cs` files and `*.resx` files.
+    +monospaced text with an _emphasized_ word+
+
+Misinterpreted text formatting::
+    You can suppress markup expansion by placing a backslash character
+    immediately in front of the element. The following example
+    supresses inline monospaced formatting:
+
+    \+1 for C++.
 
 Overlapping text formatting::
     Overlapping text formatting will generate illegal overlapping

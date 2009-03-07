@@ -407,14 +407,14 @@ def subs_quotes(text):
         if tag[0] == '#':
             tag = tag[1:]
             # Unconstrained quotes can appear anywhere.
-            reo = re.compile(r'(?msu)(^|[^[])(\[(?P<attrlist>[^[]+?)\])?' \
+            reo = re.compile(r'(?msu)(^|.)(\[(?P<attrlist>[^[\]]+?)\])?' \
                     + r'(?:' + re.escape(lq) + r')' \
                     + r'(?P<content>.+?)(?:'+re.escape(rq)+r')')
         else:
             # The text within constrained quotes must be bounded by white space.
             # Non-word (\W) characters are allowed at boundaries to accomodate
             # enveloping quotes.
-            reo = re.compile(r'(?msu)(^|[^\w[])(\[(?P<attrlist>[^[]+?)\])?' \
+            reo = re.compile(r'(?msu)(^|\W)(\[(?P<attrlist>[^[\]]+?)\])?' \
                 + r'(?:' + re.escape(lq) + r')' \
                 + r'(?P<content>.*?\S)(?:'+re.escape(rq)+r')(?=\W|$)')
         pos = 0

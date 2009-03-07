@@ -39,13 +39,13 @@ syn match asciidocAdmonition /^\u\{3,15}:\(\s\+.*\)\@=/
 " line (see 'Limitations' above).
 syn match asciidocQuotedSubscript /\\\@<!\~\S\_.\{-}\(\~\|\n\s*\n\)/
 syn match asciidocQuotedSuperscript /\\\@<!\^\S\_.\{-}\(\^\|\n\s*\n\)/
-syn match asciidocQuotedMonospaced /\(^\|[| \t([.,=]\)\@<=+\([ )\n]\)\@!\_.\{-}\S\(+\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedMonospaced /\(^\|[| \t([.,=\]]\)\@<=+\([ )\n]\)\@!\_.\{-}\S\(+\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 syn match asciidocQuotedMonospaced2 /\(^\|[| \t([.,=]\)\@<=`\([ )\n]\)\@!\_.\{-}\S\(`\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 syn match asciidocQuotedUnconstrainedMonospaced /\\\@<!++\S\_.\{-}\(++\|\n\s*\n\)/
-syn match asciidocQuotedEmphasized /\(^\|[| \t([.,=]\)\@<=_\([ )\n]\)\@!\_.\{-}\S\(_\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
-syn match asciidocQuotedEmphasized2 /\(^\|[| \t([.,=]\)\@<='\([ )\n]\)\@!\_.\{-}\S\('\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedEmphasized /\(^\|[| \t([.,=\]]\)\@<=_\([ )\n]\)\@!\_.\{-}\S\(_\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedEmphasized2 /\(^\|[| \t([.,=\]]\)\@<='\([ )\n]\)\@!\_.\{-}\S\('\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 syn match asciidocQuotedUnconstrainedEmphasized /\\\@<!__\S\_.\{-}\(__\|\n\s*\n\)/
-syn match asciidocQuotedBold /\(^\|[| \t([.,=]\)\@<=\*\([ )\n]\)\@!\_.\{-}\S\(\*\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
+syn match asciidocQuotedBold /\(^\|[| \t([.,=\]]\)\@<=\*\([ )\n]\)\@!\_.\{-}\S\(\*\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 syn match asciidocQuotedUnconstrainedBold /\\\@<!\*\*\S\_.\{-}\(\*\*\|\n\s*\n\)/
 "syn match asciidocQuotedSingleQuoted /\(^\|[| \t([.,=]\)\@<=`\([ )\n]\)\@!\_.\{-}\S\('\([| \t)[\],.?!;:=]\|$\)\@=\|\n\s*\n\)/
 " Don't allow ` in single quoted (a kludge to stop confusion with `monospaced`).

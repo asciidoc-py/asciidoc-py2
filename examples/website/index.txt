@@ -5,22 +5,16 @@ AsciiDoc Home Page
 ************************************************************************
 Additions and change in this release include:
 
-- Up to 250% faster than previous release (precompiled regular
-  expression optimization).
-- Bulleted lists can now be nested up to six deep with the addition of
-  two, three, four and five asterisk bullet syntaxes.
-- Implicitly numbered lists can now be nested up to six deep with the
-  addition of two, three, four and five period character syntaxes.
-- Labeled lists can now be nested up to four deep with the addition of
-  three and four colon syntaxes.
+- AsciiDoc now has a link:asciidocapi.html[Python API].
+- Backtick quoting for monospaced text is now implemented as an
+  'inline literal' passthrough.  This makes more sense since monospace
+  text is usually intended to be rendered literally.  This change may
+  raise link:CHANGELOG.html#X2[regression issues] in existing
+  documents.
 
-Plus a number of smaller additions along with the usual documentation
-polishing.  Read the link:CHANGELOG.html[CHANGELOG] for a full list of
-all additions and changes.
-
-One final note: if you are upgrading from version 8.2.7 or less please
-read about possible link:CHANGELOG.html#X1[compatibility issues]
-first.
+Plus there are a number of smaller additions along with the usual
+documentation polishing.  Read the link:CHANGELOG.html[CHANGELOG] for
+a full list of all additions and changes.
 
 mailto:srackham@gmail.com['Stuart Rackham']
 ************************************************************************

@@ -3,6 +3,75 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.4.1 (2009-03-??)
+--------------------------
+.Additions and changes
+- AsciiDoc now has a web:asciidocapi.html[Python API].  The following
+  minimal example compiles `mydoc.txt` to `mydoc.html`:
++
+[source,python]
+-------------------------------------------------------------------------------
+from asciidocapi import AsciiDocAPI
+asciidoc = AsciiDocAPI()
+asciidoc.execute('mydoc.txt')
+-------------------------------------------------------------------------------
+
+- Backtick quoting for monospaced text is now implemented as an
+  'inline literal' passthrough.  This makes more sense since monospace
+  text is usually intended to be rendered literally. See
+  <<X2,Regression issues>> below for the impact this may have on
+  existing documents.  Here are some examples that would previously
+  have had to be escaped:
+
+  The `++i` and `++j` auto-increments.
+  Paths `~/.vim` and `~/docs`.
+  The `__init__` method.
+  The `{id}` attribute.
+
+- Added `--doctest` option to `asciidoc(1)` command.
+- Added an optional second argument to 'BlockId' element, this sets
+  the `{label}` attribute which in turn is used to set the `xreflabel`
+  attribute in DocBook outputs.
+- Added lists to `--help` syntax summary.
+- `{infile}` and `{indir}` attributes reflect the current input file
+  (previously always refered to the root document).
+- `{docfile}` (new) and `{docdir}` (previously deprecated) attributes
+  refer to the root document specified on the `asciidoc(1)`
+  command-line.
+- Vim syntax highlighter improvements.
+- Admonition icons now have transparent backgrounds.
+
+.Bug fixes
+- Dropped `asciidoc(1)` broken undocumented `--profile` option.
+- Changed yellow W3C badges to blue ones in page footers.
+- Emdash replacement now recognized at start of block.
+
+
+[[X2]]
+Regression issues
+~~~~~~~~~~~~~~~~~
+Replacing backtick quoting with the 'inline literal' passthrough
+raises two regression scenarios for existing documents:
+
+1. You have escaped the expansion of enclosed inline elements, for
+   example: `\{id}`.  You would need to delete the backslashes: `{id}`
+   (if you don't the backslashes will be printed). Mostly it's just a
+   case of interactively finding and replacing of all occurences of
+   `\.
+
+2. There are enclosed inline elements, for example: `some *bold*
+   monospaced`.  You would need to switch to plus character monospace
+   quoting: `+some *bold* monospaced+` (if you don't the enclosed
+   elements won't be expanded).
+
+If your existing documents include these cases and you don't want to
+upgrade then use the `-a no-inline-literal` command-line option,
+alterantively put this in `~/.asciidoc/asciidoc.conf`:
+
+  [attributes]
+  no-inline-literal=
+
+
 Version 8.3.5 (2009-02-02)
 --------------------------
 .Additions and changes

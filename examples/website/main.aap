@@ -17,6 +17,7 @@ WEB_ROOT =
     asciidoc-docbook-xsl
     asciidoc-graphviz-sample
     asciimathml
+    asciidocapi
     CHANGELOG
     downloads
     faq

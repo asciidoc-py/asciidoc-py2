@@ -490,9 +490,9 @@ special section titles and the corresponding backend markup templates.
 a configuration file markup template section. If the `<pattern>`
 matches an AsciiDoc document section title then the backend output is
 marked up using the `<name>` markup template (instead of the default
-`sect<level>` section template). The \{title} attribute value is set
+`sect<level>` section template). The `{title}` attribute value is set
 to the value of the matched regular expression group named 'title', if
-there is no 'title' group \{title} defaults to the whole of the
+there is no 'title' group `{title}` defaults to the whole of the
 AsciiDoc section title.
 
 AsciiDoc comes preconfigured with the following special section
@@ -2433,8 +2433,10 @@ $$::
 [[X80]]`::
   Text quoted with single backtick characters constitutes an 'inline
   literal' passthrough. The enclosed text is rendered in a monospaced
-  font and is only subject to special character substitution (see also
-  <<X81,quoted monospaced text>>).
+  font and is only subject to special character substitution.  This
+  makes sense since monospace text is usually intended to be rendered
+  literally and often contains characters that would otherwise have to
+  be escaped.  See also <<X81,quoted monospaced text>>.
 
 Macro Definitions
 ~~~~~~~~~~~~~~~~~

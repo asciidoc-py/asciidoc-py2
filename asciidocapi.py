@@ -26,6 +26,13 @@ Doctests:
    >>> print outfile.getvalue()
    <p>Hello <strong>Joe Bloggs</strong></p>
 
+   >>> asciidoc.attributes['author'] = 'Bill Smith'
+   >>> infile = StringIO.StringIO('Hello _{author}_')
+   >>> outfile = StringIO.StringIO()
+   >>> asciidoc.execute(infile, outfile, backend='docbook')
+   >>> print outfile.getvalue()
+   <simpara>Hello <emphasis>Bill Smith</emphasis></simpara>
+
 2. Check error handling:
 
    >>> import StringIO
@@ -133,6 +140,7 @@ class Version(object):
                 result = cmp(self.micro, other.micro)
         return result
 
+
 class AsciiDocAPI(object):
     """
     AsciiDoc API class.
@@ -202,7 +210,10 @@ class AsciiDocAPI(object):
         args = [infile]
         sys.path.insert(0, os.path.dirname(self.cmd))
         try:
-            reload(self.asciidoc)   # Reinitialize globals and class attributes.
+            # The AsciiDoc command was designed to process source text then
+            # exit, there are globals and statics in asciidoc.py that have
+            # to be reinitialized before each run -- hence the reload.
+            reload(self.asciidoc)
         finally:
             del sys.path[0]
         try:

@@ -55,7 +55,7 @@ under the terms of the GNU General Public License (GPL).
 import sys,os,re
 
 API_VERSION = '0.1.0'
-MIN_ASCIIDOC_VERSION = '8.3.6'  # Minimum acceptable AsciiDoc version.
+MIN_ASCIIDOC_VERSION = '8.4.1'  # Minimum acceptable AsciiDoc version.
 
 
 def find_in_path(fname, path=None):
@@ -66,7 +66,7 @@ def find_in_path(fname, path=None):
         path = os.environ.get('PATH', '')
     for dir in path.split(os.pathsep):
         fpath = os.path.join(dir, fname)
-        if os.path.exists(fpath):
+        if os.path.isfile(fpath):
             return fpath
     else:
         return None
@@ -157,24 +157,27 @@ class AsciiDocAPI(object):
         # Try ASCIIDOC_PY environment variable first.
         cmd = os.environ.get('ASCIIDOC_PY')
         if cmd:
-            if not os.path.exists(cmd):
+            if not os.path.isfile(cmd):
                 raise AsciiDocError('missing ASCIIDOC_PY file: %s' % cmd)
         elif asciidoc_py:
             # Next try path specified by caller.
             cmd = asciidoc_py
-            if not os.path.exists(cmd):
+            if not os.path.isfile(cmd):
                 raise AsciiDocError('missing file: %s' % cmd)
         else:
             # Try shell search paths.
-            for fname in ['asciidoc', 'asciidoc.py', 'asciidoc.pyc']:
+            for fname in ['asciidoc.py','asciidoc.pyc','asciidoc']:
                 cmd = find_in_path(fname)
                 if cmd: break
             else:
                 # Finally try current working directory.
-                cmd = 'asciidoc.py'
-                if not os.path.exists(cmd):
-                    raise AsciiDocError('failed to locate asciidoc')
+                for cmd in ['asciidoc.py','asciidoc.pyc','asciidoc']:
+                    if os.path.isfile(cmd): break
+                else:
+                    raise AsciiDocError('failed to locate asciidoc.py[c]')
         cmd = os.path.realpath(cmd)
+        if os.path.splitext(cmd)[1] not in ['.py','.pyc']:
+            raise AsciiDocError('invalid Python module name: %s' % cmd)
         sys.path.insert(0, os.path.dirname(cmd))
         try:
             try:

@@ -139,9 +139,9 @@ made in the following order:
 
 . Use the `ASCIIDOC_PY` environment variable if it is set.
 . Use the `asciidoc_py` argument if it is set.
-. Search the environment 'PATH' for `asciidoc`, `asciidoc.py` and
-  `asciidoc.pyc` (in that order).
-. Finally look for `asciidoc.py` in the current working directory.
+. Search the environment 'PATH' for `asciidoc.py`, `asciidoc.pyc` and
+  `asciidoc` (in that order).
+. Finally repeat the previous search in the current working directory.
 
 `execute(self, infile, outfile=None, backend=None)`::
 Compile `infile` to `outfile` using `backend` format.  `infile` and

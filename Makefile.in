@@ -116,8 +116,8 @@ docs:
 	( cd examples/website && \
 		cp -R * $(DESTDIR)/$(docdir)/examples/website )
 
-renameprog:
-	(cd $(DESTDIR)/$(progdir); mv asciidoc.py asciidoc)
+progsymlink:
+	(cd $(DESTDIR)/$(progdir); ln -sf asciidoc.py asciidoc)
 
 fixconfpath:
 	@for f in $(prog); do \
@@ -147,10 +147,11 @@ uninstall-vim:
 
 build: fixconfpath
 
-install: $(PROGTARGETS) $(DATATARGETS) renameprog install-vim
+install: $(PROGTARGETS) $(DATATARGETS) progsymlink install-vim
 
 uninstall: uninstall-vim
 	rm -f $(DESTDIR)/$(progdir)/asciidoc
+	rm -f $(DESTDIR)/$(progdir)/asciidoc.py
 	rm -f $(DESTDIR)/$(progdir)/a2x
 	rm -f $(DESTDIR)/$(mandir)/asciidoc.1
 	rm -f $(DESTDIR)/$(mandir)/a2x.1

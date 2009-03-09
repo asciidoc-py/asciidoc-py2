@@ -1752,7 +1752,7 @@ This paragraph is part of the preceding list item.
 
 b. List item b.
 
-This paragraph belongs to item one of the outer list.
+This paragraph belongs to item two of the outer list.
 --
 
 

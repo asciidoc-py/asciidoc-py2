@@ -8,11 +8,11 @@ notation in the form of a trimmed PNG image which is automatically
 inserted into the AsciiDoc output document (see the <<X1,examples
 below>>).
 
-Actually the filter (`./filters/music2png.py`) can be used outside
+Actually the filter (`./filters/music/music2png.py`) can be used outside
 AsciiDoc to convert LilyPond or ABC music files to PNG images.
 Execute the following command to see how to use it:
 
-  $ ./filters/music2png.py --help
+  $ ./filters/music/music2png.py --help
 
 The Music Filter can be used as a model for filters that convert a
 block of text into a file that is linked or embedded into the AsciiDoc
@@ -147,8 +147,8 @@ In addition to AsciiDoc you will need to have installed:
 
 Test the music filter it by converting the test file to HTML with AsciiDoc:
 
-   $ asciidoc -v ./filters/music-filter-test.txt
-   $ firefox ./filters/music-filter-test.html &
+   $ asciidoc -v ./filters/music/music-filter-test.txt
+   $ firefox ./filters/music/music-filter-test.html &
 
 The filter was developed and tested on Xubuntu Linux using LilyPond
 2.10.5 and ImageMagick 6.2.4.

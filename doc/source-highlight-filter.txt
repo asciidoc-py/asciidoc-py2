@@ -199,5 +199,5 @@ Testing
 ~~~~~~~
 Test the filter by converting the test file to HTML with AsciiDoc:
 
-   $ asciidoc -v ./filters/source-highlight-filter-test.txt
-   $ firefox ./filters/source-highlight-filter-test.html &
+  $ asciidoc -v ./filters/source/source-highlight-filter-test.txt
+  $ firefox ./filters/source/source-highlight-filter-test.html &

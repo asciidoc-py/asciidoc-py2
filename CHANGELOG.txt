@@ -3,7 +3,7 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
-Version 8.4.1 (2009-03-??)
+Version 8.4.1 (2009-03-10)
 --------------------------
 .Additions and changes
 - AsciiDoc now has a web:asciidocapi.html[Python API].  The following
@@ -30,21 +30,22 @@ asciidoc.execute('mydoc.txt')
 
 - Added `--doctest` option to `asciidoc(1)` command.
 - Added an optional second argument to 'BlockId' element, this sets
-  the `{label}` attribute which in turn is used to set the `xreflabel`
-  attribute in DocBook outputs.
+  the `{reftext}` attribute which in turn is used to set the `xreflabel`
+  attribute in DocBook elements.
 - Added lists to `--help` syntax summary.
 - `{infile}` and `{indir}` attributes reflect the current input file
-  (previously always refered to the root document).
+  (previously always referred to the root document).
 - `{docfile}` (new) and `{docdir}` (previously deprecated) attributes
   refer to the root document specified on the `asciidoc(1)`
   command-line.
 - Vim syntax highlighter improvements.
+- Syntax summary command (`asciidoc -h syntax`) additions.
 - Admonition icons now have transparent backgrounds.
+- Changed yellow W3C badges to blue ones in page footers.
 
 .Bug fixes
 - Dropped `asciidoc(1)` broken undocumented `--profile` option.
-- Changed yellow W3C badges to blue ones in page footers.
-- Emdash replacement now recognized at start of block.
+- Em dash replacement now recognized at start of block.
 
 
 [[X2]]
@@ -56,7 +57,7 @@ raises two regression scenarios for existing documents:
 1. You have escaped the expansion of enclosed inline elements, for
    example: `\{id}`.  You would need to delete the backslashes: `{id}`
    (if you don't the backslashes will be printed). Mostly it's just a
-   case of interactively finding and replacing of all occurences of
+   case of interactively finding and replacing of all occurrences of
    `\.
 
 2. There are enclosed inline elements, for example: `some *bold*
@@ -66,7 +67,7 @@ raises two regression scenarios for existing documents:
 
 If your existing documents include these cases and you don't want to
 upgrade then use the `-a no-inline-literal` command-line option,
-alterantively put this in `~/.asciidoc/asciidoc.conf`:
+alternatively put this in `~/.asciidoc/asciidoc.conf`:
 
   [attributes]
   no-inline-literal=

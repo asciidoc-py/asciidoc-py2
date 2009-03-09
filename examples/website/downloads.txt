@@ -44,21 +44,19 @@ trunk:
 
 - Go to the directory you want to install AsciiDoc into and download
   the repository.  This example gets the {revision} tagged release:
-+
---
+
 [subs="attributes"]
   $ cd ~/bin
-  $ hg clone -r {revision} http://hg.sharesource.org/asciidoc asciidoc.hg
---
+  $ hg clone -r {revision} http://hg.sharesource.org/asciidoc asciidoc-{revision}
 
 - Create a symlink to the AsciiDoc script in a search `PATH` directory
   so it's easy to execute `asciidoc` from the command-line, for
   example:
 
-  $ ln -s ~/bin/asciidoc.hg/asciidoc.py ~/bin/asciidoc
+[subs="attributes"]
+  $ ln -s ~/bin/asciidoc-{revision}/asciidoc.py ~/bin/asciidoc
 
-You can now use the Mercurial `pull` command to update your AsciiDoc
-repository.
+Use the Mercurial `pull` command to update your AsciiDoc repository.
 
 
 [[X1]]

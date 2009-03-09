@@ -5,14 +5,15 @@ AsciiDoc Home Page
 ************************************************************************
 Additions and change in this release include:
 
-- AsciiDoc now has a link:asciidocapi.html[Python API].
+- AsciiDoc now has a link:asciidocapi.html[Python API], use it to
+  process AsciiDoc source directly from your Python applications.
 - Backtick quoting for monospaced text is now implemented as an
   'inline literal' passthrough.  This makes more sense since monospace
   text is usually intended to be rendered literally.  This change may
   raise link:CHANGELOG.html#X2[regression issues] in existing
   documents.
 
-Plus there are a number of smaller additions along with the usual
+There are a number of smaller additions along with the usual
 documentation polishing.  Read the link:CHANGELOG.html[CHANGELOG] for
 a full list of all additions and changes.
 
@@ -103,8 +104,16 @@ built using AsciiDoc.  See `./examples/website/README-website.txt`.
 
 More examples
 ~~~~~~~~~~~~~
-- link:newtables.html[Tables].
-//- link:newlists.html[Lists].
+- Henrik Maier produced this professional User manual using AsciiDoc:
+  http://www.proconx.com/gcpmg/UMGCPMG-0801.pdf.
+- Henrik also produced this folded single page brochure format
+  example: http://www.proconx.com/gcpmg/IGGCPMG-0801-up.pdf.
++
+See this
+http://groups.google.com/group/asciidoc/browse_thread/thread/16ab5a06864b934f[AsciiDoc
+discussion group thread] for details.
+
+- Example link:newtables.html[Tables].
 
 
 Music Filter
@@ -202,21 +211,6 @@ http://wordpress.org/[WordPress] blog hosts. It creates and updates
 weblog posts and pages directly from AsciiDoc source documents.
 
 
-[[X1]]
-LaTeX Backend
--------------
-An experimental LaTeX backend has been written for AsciiDoc by
-Benjamin Klum.  Benjamin has done a superhuman job (I admit it, I
-didn't think this was doable due to AsciiDoc's SGML/XML bias).
-
-Here's link:latex-backend.html[Benjamin's documentation].
-
-NOTE: Owning to to other commitments, Benjamin is unable to maintain
-this backend. I don't have the expertise or time to take this on
-consequently the LaTeX backend has not been tested or updated since
-AsciiDoc version 8.2.7 and is currently unsupported.
-
-
 Projects using AsciiDoc
 -----------------------
 Here are some projects I know of, if you know of more drop me a line
@@ -252,7 +246,16 @@ and I'll add them to the list.
   simple configuration files.
 
 
-AsciiDoc version 9
------------------
-The next version of AsciiDoc is underway -- details
-link:version9.html[here].
+[[X1]]
+LaTeX Backend
+-------------
+An experimental LaTeX backend has been written for AsciiDoc by
+Benjamin Klum.  Benjamin has done a superhuman job (I admit it, I
+didn't think this was doable due to AsciiDoc's SGML/XML bias).
+
+Here's link:latex-backend.html[Benjamin's documentation].
+
+NOTE: Owning to to other commitments, Benjamin is unable to maintain
+this backend. I don't have the expertise or time to take this on
+consequently the LaTeX backend has not been tested or updated since
+AsciiDoc version 8.2.7 and is currently unsupported.

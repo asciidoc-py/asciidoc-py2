@@ -29,7 +29,12 @@ only requirement is that a compatible version of 'AsciiDoc' is already
 installed -- simple, no setuptools to run, no Eggs to install, no
 non-standard library dependencies.
 
-Verify everything is working by running the module doctests:
+You can find `asciidocapi.py` in the AsciiDoc
+link:downloads.html#X2[distribution archives] (version 8.4.1 or
+better).
+
+Once you have `asciidocapi.py` Verify everything is working by running
+the module doctests:
 
   python asciidocapi.py
 
@@ -47,6 +52,10 @@ asciidoc.execute('mydoc.txt')
 The next interactive example uses file-like objects for input and output:
 
 -------------------------------------------------------------------------------
+$ python
+Python 2.5.2 (r252:60911, Jul 31 2008, 17:28:52) 
+[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
 >>> from asciidocapi import AsciiDocAPI
 >>> import StringIO
 >>> infile = StringIO.StringIO('Hello *{author}*')
@@ -62,8 +71,8 @@ The next interactive example uses file-like objects for input and output:
 -------------------------------------------------------------------------------
 
 
-Implementation Goals
---------------------
+Implementation Rationale
+------------------------
 .Leverage existing knowledge
 The API maps directly onto the `asciidoc(1)` command -- this is
 deliberate -- if you know the `asciidoc(1)` command learning the API
@@ -72,8 +81,11 @@ command-line modes share the same code -- virtually no `asciidoc(1)`
 code is specific to API usage.
 
 .Simplicity
-The 'AsciiDocAPI' class contains just one method plus a few attributes
-for options and result messages.
+Implemented with a single Python module file (`asciidocapi.py`)
+containing the 'AsciiDocAPI' API class. 'AsciiDocAPI'  contains just
+one method plus a few attributes for processing options and result
+messages.  No external setup tools and no non-standard library
+dependencies are used or required.
 
 .Loose coupling
 The dependency between `asciidocapi.py` and `asciidoc.py` is minimal
@@ -81,10 +93,13 @@ The dependency between `asciidocapi.py` and `asciidoc.py` is minimal
 one function from the `asciidoc.py` module.
 
 .Why isn't the API baked right into the asciidoc.py command script?
-You can't just drop `asciidoc.py` into your application because it
-requires all the related config files and filters -- complex and
-unnecessary since all this was already done when you installed
-AsciiDoc.
+1. You can't just drop `asciidoc.py` into your application because it
+   requires all the related config files and filters -- complex and
+   unnecessary since all this was already done when you installed
+   AsciiDoc.
+2. This scheme separates the API from the AsciiDoc application -- the
+   API implementation can be extended or replaced independently of
+   AsciiDoc.
 
 
 API reference
@@ -129,7 +144,7 @@ made in the following order:
 . Finally look for `asciidoc.py` in the current working directory.
 
 `execute(self, infile, outfile=None, backend=None)`::
-Compile `infile` to `outfile` using backend format.  `infile` and
+Compile `infile` to `outfile` using `backend` format.  `infile` and
 `outfile` can be file path strings or file-like objects. `backend` is
 name of 'AsciiDoc' backend (takes same values as `asciidoc(1)` command
 `--backend` option). If `outfile` or `backend` are `None` then their

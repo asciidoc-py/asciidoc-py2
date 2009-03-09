@@ -5,7 +5,7 @@
 " URL:          http://www.methods.co.nz/asciidoc/
 " Licence:      GPL (http://www.gnu.org)
 " Remarks:      Vim 6 or greater
-" Limitations:  See 'Appendix J: Vim Syntax Highlighter' in the AsciiDoc 'User
+" Limitations:  See 'Appendix E: Vim Syntax Highlighter' in the AsciiDoc 'User
 "               Guide'.
 
 if exists("b:current_syntax")

@@ -9,7 +9,7 @@ under the terms of the GNU General Public License (GPL).
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
 ### Used by asciidocapi.py ###
-VERSION = '8.4.1 beta 1'   # See CHANGLOG file for version history.
+VERSION = '8.4.1'   # See CHANGLOG file for version history.
 
 MIN_PYTHON_VERSION = 2.4   # Require this version of Python or better.
 
@@ -513,7 +513,7 @@ def parse_entries(entries, dict, unquote=False, unique_values=False,
                 allow_name_only, escape_delimiter):
             raise EAsciiDoc,'malformed section entry: %s' % entry
 
-def load_sections(sections, fname, dir=None, namepat=NAME_RE):
+def load_conf_file(sections, fname, dir, namepat=NAME_RE):
     """Loads sections dictionary with sections from file fname.
     Existing sections are overlaid. Silently skips missing configuration
     files."""
@@ -4873,15 +4873,15 @@ def show_help(topic, f=None):
         help_file = HELP_FILE
     # Print [topic] section from help file.
     topics = OrderedDict()
-    load_sections(topics, help_file, CONF_DIR)
-    load_sections(topics, help_file, APP_DIR)
+    load_conf_file(topics, help_file, CONF_DIR)
+    load_conf_file(topics, help_file, APP_DIR)
     if USER_DIR is not None:
-        load_sections(topics, help_file, USER_DIR)
+        load_conf_file(topics, help_file, USER_DIR)
     if len(topics) == 0:
         # Default to English if specified language help files not found.
         help_file = HELP_FILE
-        load_sections(topics, help_file, CONF_DIR)
-        load_sections(topics, help_file, APP_DIR)
+        load_conf_file(topics, help_file, CONF_DIR)
+        load_conf_file(topics, help_file, APP_DIR)
     if len(topics) == 0:
         print_stderr('no help topics found')
         sys.exit(1)

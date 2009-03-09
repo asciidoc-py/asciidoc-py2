@@ -1,10 +1,10 @@
-personal_ws-1.1 en 760 
+personal_ws-1.1 en 764 
 Sturmer
 Kleber
 Kléber
 quis
-auctor
 tuples
+auctor
 linkcss
 multi
 CommentBlock
@@ -76,6 +76,7 @@ ListBlock
 CALS
 XSLT
 tyger
+hardcoded
 outdir
 rewritePrefix
 Sakellariou
@@ -93,6 +94,7 @@ amet
 tabstop
 csv
 Yakshin's
+GCC
 ListTerm
 stylesheets
 pageunits
@@ -190,8 +192,8 @@ asciidocEmphasized
 mattis
 Chai
 headrow
-Efros
 setuptools
+Efros
 gui
 Blondel
 ile
@@ -243,6 +245,7 @@ indir
 Comidas
 Kumar
 JPG
+doctests
 listnumber
 Tiago
 texttag
@@ -341,6 +344,7 @@ ItemContinuation
 Lorum
 Fusce
 PassthroughBlocks
+doctest
 testblock
 infty
 Woodall
@@ -359,8 +363,8 @@ Cerrito
 Bouchers
 JavaScript
 newlists
-guimenu
 init
+guimenu
 ListParagraphs
 bodydata
 MEPIS
@@ -410,7 +414,6 @@ refname
 listelement
 PRS
 config
-CONFIG
 sem
 gzip
 precompiled
@@ -558,6 +561,7 @@ colstop
 undefine
 tagname
 ungenerated
+reftext
 homero
 IndentedParagraph
 IndentedParagraphs

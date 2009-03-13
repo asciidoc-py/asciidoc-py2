@@ -207,6 +207,8 @@ class AsciiDocAPI(object):
         for k,v in self.attributes.items():
             if v == '' or k[-1] in '!@':
                 s = k
+            elif v is None: # A None value undefines the attribute.
+                s = k + '!'
             else:
                 s = '%s=%s' % (k,v)
             opts('--attribute', s)

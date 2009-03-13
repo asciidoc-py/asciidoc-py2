@@ -30,8 +30,8 @@ installed -- simple, no setuptools to run, no Eggs to install, no
 non-standard library dependencies.
 
 You can find `asciidocapi.py` in the AsciiDoc
-link:downloads.html#X2[distribution archives] (version 8.4.1 or
-better).
+http://www.methods.co.nz/asciidoc/downloads.html#X2[distribution
+archives] (version 8.4.1 or better).
 
 Once you have `asciidocapi.py` Verify everything is working by running
 the module doctests:
@@ -53,7 +53,7 @@ The next interactive example uses file-like objects for input and output:
 
 -------------------------------------------------------------------------------
 $ python
-Python 2.5.2 (r252:60911, Jul 31 2008, 17:28:52) 
+Python 2.5.2 (r252:60911, Jul 31 2008, 17:28:52)
 [GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)] on linux2
 Type "help", "copyright", "credits" or "license" for more information.
 >>> from asciidocapi import AsciiDocAPI
@@ -116,7 +116,7 @@ Instance attributes
 The imported `asciidoc.py` module.
 
 `attributes`::
-A dictionary of AsciiDoc attribute values.
+A dictionary of AsciiDoc attribute values passed to AsciiDoc.
 
 `cmd`::
 The file path of the `asciidoc.py` script. Set by the `__init__`
@@ -127,8 +127,8 @@ A chronologically ordered list of message strings generated during
 AsciiDoc execution (last message at the end of the list).
 
 `options`::
-An instance of the <<X1,Options class>>. Contains a list of
-AsciiDoc command options.
+An instance of the <<X1,Options class>>. Contains a list of command
+options passed to AsciiDoc.
 
 Instance methods
 ^^^^^^^^^^^^^^^^
@@ -166,12 +166,14 @@ Instance methods
 `__call__(self, name, value=None)`::
 A shortcut for the `append` method. Example:
 
-  options('--verbose')  
+  opts = Options()
+  opts('--verbose')
 
 `append(self, name, value=None)`::
 Append `(name,value)` to the options list. Example:
 
-  options.append('--conf-file', 'blog.conf')
+  opts = Options()
+  opts.append('--conf-file', 'blog.conf')
 
 
 Class `AsciiDocError(Exception)`

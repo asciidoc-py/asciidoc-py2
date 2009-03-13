@@ -5,7 +5,7 @@ Stuart Rackham <srackham@gmail.com>
 
 NAME
 ----
-asciidoc - converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
+asciidoc - converts an AsciiDoc text file to HTML or DocBook
 
 
 SYNOPSIS

@@ -59,6 +59,7 @@ class AsciiDocTest(object):
         self.description = []   # List of lines followoing title.
         self.options = []
         self.attributes = {}
+        self.backends = BACKENDS
         self.asciidoc = None    # AsciiDoc input (list of strings or file name).
         self.inline = True  # True if asciidoc input is not in external file.
         self.header = []    # List of lines from conf file test (excludes inline outputs).
@@ -120,6 +121,9 @@ class AsciiDocTest(object):
                 elif directive == 'attributes':
                     self.header += l
                     self.attributes = eval(' '.join(data))
+                elif directive == 'backends':
+                    self.header += l
+                    self.backends = eval(' '.join(data))
                 elif directive in BACKENDS:
                     assert self.inline
                     self.expected[directive] = data
@@ -209,7 +213,7 @@ class AsciiDocTest(object):
         Returns list of strings containing test configuration file section.
         """
         if backend is None:
-            backends = BACKENDS
+            backends = self.backends
         else:
             backends = [backend]
         for backend in backends:
@@ -231,7 +235,7 @@ class AsciiDocTest(object):
             else:
                 message('MISSING: %s' % self.asciidoc)
         if backend is None:
-            backends = BACKENDS
+            backends = self.backends
         else:
             backends = [backend]
         for backend in backends:

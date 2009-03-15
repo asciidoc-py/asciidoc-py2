@@ -29,11 +29,13 @@ Currently 'testasciidoc' has the following commands:
   specifies AsciiDoc source and command options and expected outputs.
   When the test is run the generated output is compared to the
   expected output and any differences displayed as a diff.  You can
-  run a single test by specifying the test number after the `run`
-  command. Examples:
+  run a single test by specifying the test number and/or backend after
+  the `run` command. Examples:
 
   python testasciidoc.py run
-  python testasciidoc.py run 4
+  python testasciidoc.py run 3
+  python testasciidoc.py run html4
+  python testasciidoc.py run 3 html4
 
 'list'::
   List test numbers and titles.
@@ -65,6 +67,9 @@ Optional dictionary of attribute values.
 
 % asciidoc[: filename]
 AsciiDoc inline input (if no filename is specified).
+
+% backends
+Optional list of backends (default is all backends).
 
 % <backend>
 Optional expected inline output from <backend> backend.
@@ -108,5 +113,7 @@ files (defaults to configuration file directory). For example:
   `(name,None)` tuple.
 - `attributes` specify a Python dictionary for AsciiDoc attributes to
   be passed to AsciiDoc.
+- `backends` specifies a Python list of backend strings. If this
+  directive is ommitted it defaults to all backends.
 
 See `./tests/testasciidoc.conf` for examples.

@@ -1,0 +1,33 @@
+//
+// A collection of AsciiDoc test cases.
+//
+
+Test Cases
+==========
+:author: Joe Blogs
+
+
+== Author attributes ==
+Hello *{author}* ({firstname} {lastname}, {authorinitials}).
+
+
+== Quoted text attributes ==
+[green,yellow,2]##fun with text##.
+More [red,black,4]*fun with text*.
+Yet more [red,,1.5]**fun with text**.
+Yet more [red,,1.5]+fun with text+.
+Yet more [red,,1.5]`fun with text`.
+
+Yet more [red,,1.5]'fun with text'.
+Yet more [red,,1.5]_fun with text_.
+Yet more [orange]'fun with text'.
+
+
+== Break list nesting ==
+1. List 1.
+2. List 1.
+
+// New list.
+a. List 2.
+b. List 2.
+

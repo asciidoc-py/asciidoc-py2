@@ -1,7 +1,7 @@
 AsciiDoc Tests
 ==============
 
-WARNING: 'asciidoctest' is experimental and is alpha quality. It's in
+WARNING: 'testasciidoc' is experimental and is alpha quality. It's in
 the AsciiDoc trunk.
 
 I very nearly made a couple of serious regression bloppers with the
@@ -15,14 +15,14 @@ extensible set of test cases.
 I added a rather lame doctest feature to 8.4.1 but it's just too
 fiddley and inflexible. Using the Python `unittest` module would also
 be tedious for large numbers of test cases so I wrote a
-`asciidoctest.py` script.
+`testasciidoc.py` script.
 
-- Run `python asciidoctest.py` to view the command usage.
-- Run `python asciidoctest.py list` to list tests.
-- Run `python asciidoctest.py update` to regenerate test data.
-- Run `python asciidoctest.py run` to run tests.
+- Run `python testasciidoc.py` to view the command usage.
+- Run `python testasciidoc.py list` to list tests.
+- Run `python testasciidoc.py update` to regenerate test data.
+- Run `python testasciidoc.py run` to run tests.
 
-Currently 'asciidoctest' has the following commands:
+Currently 'testasciidoc' has the following commands:
 
 'run'::
   Read a and execute tests from a test configuration file. A test
@@ -32,8 +32,8 @@ Currently 'asciidoctest' has the following commands:
   run a single test by specifying the test number after the `run`
   command. Examples:
 
-  python asciidoctest.py run
-  python asciidoctest.py run 4
+  python testasciidoc.py run
+  python testasciidoc.py run 4
 
 'list'::
   List test numbers and titles.
@@ -45,8 +45,8 @@ Currently 'asciidoctest' has the following commands:
   name extension. Use the `--force` option to regenerate all outputs.
   Examples:
 
-  python asciidoctest.py update
-  python asciidoctest.py --force update
+  python testasciidoc.py update
+  python testasciidoc.py --force update
 
 The tests configuration file format consists of test specs separated
 by a line of one or more percent characters. Each test spec consists
@@ -109,4 +109,4 @@ files (defaults to configuration file directory). For example:
 - `attributes` specify a Python dictionary for AsciiDoc attributes to
   be passed to AsciiDoc.
 
-See `./tests/asciidoctest.conf` for examples.
+See `./tests/testasciidoc.conf` for examples.

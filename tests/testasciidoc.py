@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-USAGE = '''Usage: asciidoctest.py [OPTIONS] COMMAND
+USAGE = '''Usage: testasciidoc.py [OPTIONS] COMMAND
 
 Run AsciiDoc conformance tests specified in configuration FILE.
 
@@ -12,7 +12,7 @@ Commands:
 Options:
   -f, --conf-file=CONF_FILE
         Use configuration file CONF_FILE (default configuration file is
-        asciidoctest.conf in asciidoctest.py directory)
+        testasciidoc.conf in testasciidoc.py directory)
   --force
         Update all test data overwriting existing data'''
 
@@ -400,7 +400,7 @@ if __name__ == '__main__':
     if len(args) == 0:
         usage()
         sys.exit(1)
-    conffile = os.path.join(os.path.dirname(sys.argv[0]), 'asciidoctest.conf')
+    conffile = os.path.join(os.path.dirname(sys.argv[0]), 'testasciidoc.conf')
     force = False
     for o,v in opts:
         if o == '--force':

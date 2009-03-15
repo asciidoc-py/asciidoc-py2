@@ -5,9 +5,9 @@ USAGE = '''Usage: asciidoctest.py [OPTIONS] COMMAND
 Run AsciiDoc conformance tests specified in configuration FILE.
 
 Commands:
-  run [N]   Execute all tests or test N (1..)
-  list      List tests
-  update    Regenerate and update test data
+  list                          List tests
+  run [NUMBER] [BACKEND]        Execute tests
+  update [NUMBER] [BACKEND]     Regenerate and update test data
 
 Options:
   -f, --conf-file=CONF_FILE
@@ -191,14 +191,10 @@ class AsciiDocTest(object):
             finally:
                 f.close()
 
-    def update(self, force=False):
+    def spec(self):
         """
-        Regenerate and update expected test data outputs.
-        Returns list of strings containing test configuration file section.
+        Return test specification.
         """
-        for backend in BACKENDS:
-            if force or not self.has_expected(backend):
-                self.update_expected(backend)
         result = self.header
         if self.inline:
             for backend in self.expected.keys():
@@ -207,7 +203,21 @@ class AsciiDocTest(object):
                 result.append('')
         return result
 
-    def run(self):
+    def update(self, backend=None, force=False):
+        """
+        Regenerate and update expected test data outputs.
+        Returns list of strings containing test configuration file section.
+        """
+        if backend is None:
+            backends = BACKENDS
+        else:
+            backends = [backend]
+        for backend in backends:
+            if force or not self.has_expected(backend):
+                self.update_expected(backend)
+        return self.spec()
+
+    def run(self, backend=None):
         """
         Execute test.
         Return True if test passes.
@@ -220,7 +230,11 @@ class AsciiDocTest(object):
                 message(self.asciidoc)
             else:
                 message('MISSING: %s' % self.asciidoc)
-        for backend in BACKENDS:
+        if backend is None:
+            backends = BACKENDS
+        else:
+            backends = [backend]
+        for backend in backends:
             if not self.inline:
                 fromfile = self.backend_filename(backend)
             if self.has_expected(backend):
@@ -291,7 +305,7 @@ class AsciiDocTests(object):
                     test.number = len(self.tests)
                 first = False
 
-    def run(self, number=None):
+    def run(self, number=None, backend=None):
         """
         Run all tests.
         If number is specified run test number (1..).
@@ -299,7 +313,7 @@ class AsciiDocTests(object):
         self.passed = self.failed = self.skipped = 0
         for test in self.tests:
             if not number or number == test.number:
-                test.run()
+                test.run(backend)
                 self.passed += test.passed
                 self.failed += test.failed
                 self.skipped += test.skipped
@@ -310,14 +324,17 @@ class AsciiDocTests(object):
         if self.skipped > 0:
             message('TOTAL SKIPPED: %s' % self.skipped)
 
-    def update(self, force=False):
+    def update(self, number=None, backend=None, force=False):
         """
         Regenerate expected test data and update configuratio file.
         """
         result = self.header
         for test in self.tests:
             result.append('%' * 72)
-            result.extend(test.update(force=force))
+            if not number or number == test.number:
+                result.extend(test.update(backend, force=force))
+            else:
+                result.extend(test.spec())
         os.rename(self.conffile, self.conffile + '.orig')
         message('WRITING: %s' % self.conffile)
         f = open(self.conffile, 'w')
@@ -391,17 +408,20 @@ if __name__ == '__main__':
         if o in ('-f','--conf-file'):
             conffile = v
     cmd = args[0]
+    number = None
+    backend = None
+    for arg in args[1:3]:
+        try:
+            number = int(arg)
+        except ValueError:
+            backend = arg
     tests = AsciiDocTests(conffile)
     if cmd == 'run':
-        if len(args) == 2:
-            number = int(args[1])
-        else:
-            number = None
-        tests.run(number)
+        tests.run(number, backend)
         if tests.failed:
             exit(1)
     elif cmd == 'update':
-        tests.update(force=force)
+        tests.update(number, backend, force=force)
     elif cmd == 'list':
         tests.list()
     else:

@@ -79,5 +79,9 @@ javascripts/toc.js
 README
 README.txt
 stylesheets/*.css
+tests/testasciidoc.py
+tests/testasciidoc.conf
+tests/asciidocapi.py
+tests/data/testcases.txt
 vim/syntax/asciidoc.vim
 vim/ftdetect/asciidoc_filetype.vim

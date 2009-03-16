@@ -297,5 +297,8 @@ doctest:
     :sys python ../asciidoc.py --doctest
     :sys python ../asciidocapi.py
 
-test: doctest clean_testfiles $TEST_FILES
+testasciidoc:
+    :sys python ../tests/testasciidoc.py run
+
+test: doctest clean_testfiles $TEST_FILES testasciidoc
     # Force generation and validation of .html and Docbook (.xml) files.

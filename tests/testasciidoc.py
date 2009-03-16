@@ -209,7 +209,7 @@ class AsciiDocTest(object):
                     result = False
                     self.failed +=1
                     lines = lines[3:]
-                    message('FAILED: %s' % backend)
+                    message('FAILED: %s: %s' % (backend, fromfile))
                     message('+++ %s' % fromfile)
                     message('--- got')
                     for line in lines:
@@ -217,10 +217,10 @@ class AsciiDocTest(object):
                     message()
                 else:
                     self.passed += 1
-                    message('PASSED: %s' % backend)
+                    message('PASSED: %s: %s' % (backend, fromfile))
             else:
                 self.skipped += 1
-                message('SKIPPED: %s' % backend)
+                message('SKIPPED: %s: %s' % (backend, fromfile))
         message()
         return result
 

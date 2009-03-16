@@ -31,3 +31,89 @@ Yet more [orange]'fun with text'.
 a. List 2.
 b. List 2.
 
+
+== Listing Blocks ==
+[subs="quotes"]
+------------------------------------------
+$ ls *-al*
+------------------------------------------
+
+[listing]
+..........................................
+[subs="quotes"]
+------------------------------------------
+$ ls *-al*
+------------------------------------------
+..........................................
+
+
+[[X1,anchor reftext]]
+== Links ==
+An [[X2]] inline anchor.
+An [[X3, anchor reftext]] inline anchor with reftext.
+
+<<X1>>; captioned link to <<X1,this test case>>.
+
+<<X2>> link to inline anchor; captioned link to <<X2,inline anchor>>.
+
+Link to <<X3>> anchor.
+
+
+== Titles ==
+
+[float]
+===== Level 4 =====
+[float]
+==== Level 3 ====
+[float]
+=== Level 2 ===
+[float]
+== Level 1 ==
+[float]
+Level 4
++++++++
+[float]
+Level 3
+^^^^^^^
+[float]
+Level 2
+~~~~~~~
+[float]
+Level 1
+-------
+
+.Block title
+Lorum ipsum.
+
+
+== Lists ==
+
+Bulleted:
+
+- item text
+* item text
+** item text
+*** item text
+**** item text
+***** item text
+
+Numbered:
+
+1. arabic (decimal) numbering
+a. loweralpha numbering
+A. upperalpha numbering
+i) lowerroman numbering
+I) upperroman numbering
+. arabic (decimal) numbering
+.. loweralpha numbering
+... lowerroman numbering
+.... upperalpha numbering
+..... upperroman numbering
+
+Labeled:
+
+label;; item text
+label:: item text
+label::: item text
+label:::: item text
+

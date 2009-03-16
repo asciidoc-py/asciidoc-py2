@@ -113,7 +113,7 @@ class AsciiDocTest(object):
                     continue
                 reo = re.match(r'^%\s*(?P<directive>[\w_-]+)', l[0])
                 if not reo:
-                    raise Exception
+                    raise (ValueError, 'illegal directive: %s' % l[0])
                 directive = reo.groupdict()['directive']
                 data = normalize_data(l[1:])
                 if directive == 'asciidoc':
@@ -130,8 +130,7 @@ class AsciiDocTest(object):
                 elif directive == 'backends':
                     self.backends = eval(' '.join(data))
                 else:
-                    raise (ValueError,
-                           'illegal configuration directive: %s' % directive)
+                    raise (ValueError, 'illegal directive: %s' % l[0])
         if not self.title:
             self.title = self.filename
 
@@ -214,7 +213,7 @@ class AsciiDocTest(object):
         self.passed = self.failed = self.skipped = 0
         message('%d: %s' % (self.number, self.title))
         if self.filename and os.path.isfile(self.filename):
-            message('asciidoc: %s' % self.filename)
+            message('SOURCE: asciidoc: %s' % self.filename)
             for backend in backends:
                 fromfile = self.backend_filename(backend)
                 if not self.is_missing(backend):

@@ -50,11 +50,12 @@ Currently 'testasciidoc' has the following commands:
 
 The tests configuration file format consists of test specs separated
 by a line of one or more percent characters. Each test spec consists
-of a title/description followed by one or more directives (a directive
-starts with a percent character) and are formatted like:
+of an optional title and description followed by one or more
+directives (a directive starts with a percent character) and are
+formatted like:
 
 -------------------------------------------------------
-Test title
+Optional test title
 Optional test description...
 
 % options
@@ -89,6 +90,8 @@ corresponding backend output files will be `article-html4.html`,
 'datadir' directory).
 
 .Notes
+- Tests can be disabled by prefixing the test title with an
+  exclaimation '!' character.
 - All relative file names are relative to the configuration file
   directory.
 - Multiple tests must by separated by a `%` separator line (one or

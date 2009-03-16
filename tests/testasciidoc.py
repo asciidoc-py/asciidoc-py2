@@ -29,6 +29,22 @@ BACKENDS = ('html4','xhtml11','docbook')
 BACKEND_EXT = {'html4':'.html', 'xhtml11':'.html', 'docbook':'.xml'}
 
 
+def iif(condition, iftrue, iffalse=None):
+    """
+    Immediate if c.f. ternary ?: operator.
+    False value defaults to '' if the true value is a string.
+    False value defaults to 0 if the true value is a number.
+    """
+    if iffalse is None:
+        if isinstance(iftrue, basestring):
+            iffalse = ''
+        if type(iftrue) in (int, float):
+            iffalse = 0
+    if condition:
+        return iftrue
+    else:
+        return iffalse
+
 def message(msg=''):
     print >>sys.stderr, msg
 
@@ -62,6 +78,7 @@ class AsciiDocTest(object):
         self.attributes = {}
         self.backends = BACKENDS
         self.datadir = None     # Where output files are stored.
+        self.disabled = False
 
     def backend_filename(self, backend):
         """
@@ -87,8 +104,12 @@ class AsciiDocTest(object):
             l = lines.read_until(r'^%')
             if l:
                 if not l[0].startswith('%'):
-                    self.description = l
-                    self.title = l[0]
+                    if l[0][0] == '!':
+                        self.disabled = True
+                        self.title = l[0][1:]
+                    else:
+                        self.title = l[0]
+                    self.description = l[1:]
                     continue
                 reo = re.match(r'^%\s*(?P<directive>[\w_-]+)', l[0])
                 if not reo:
@@ -96,8 +117,9 @@ class AsciiDocTest(object):
                 directive = reo.groupdict()['directive']
                 data = normalize_data(l[1:])
                 if directive == 'asciidoc':
-                    self.filename = os.path.normpath(os.path.join(
-                            self.confdir, os.path.normpath(l[1])))
+                    if data:
+                        self.filename = os.path.normpath(os.path.join(
+                                self.confdir, os.path.normpath(data[0])))
                 elif directive == 'options':
                     self.options = eval(' '.join(data))
                     for i,v in enumerate(self.options):
@@ -184,43 +206,48 @@ class AsciiDocTest(object):
         Execute test.
         Return True if test passes.
         """
-        result = True   # Assume success.
-        self.passed = self.failed = self.skipped = 0
-        message('%d: %s' % (self.number, self.title))
-        if os.path.isfile(self.filename):
-            message(self.filename)
-        else:
-            message('MISSING: %s' % self.filename)
         if backend is None:
             backends = self.backends
         else:
             backends = [backend]
-        for backend in backends:
-            fromfile = self.backend_filename(backend)
-            if not self.is_missing(backend):
-                expected = self.get_expected(backend)
-                strip_end(expected)
-                got = self.generate_expected(backend)
-                strip_end(got)
-                lines = []
-                for line in difflib.unified_diff(got, expected, n=0):
-                    lines.append(line)
-                if lines:
-                    result = False
-                    self.failed +=1
-                    lines = lines[3:]
-                    message('FAILED: %s: %s' % (backend, fromfile))
-                    message('+++ %s' % fromfile)
-                    message('--- got')
-                    for line in lines:
-                        message(line)
-                    message()
+        result = True   # Assume success.
+        self.passed = self.failed = self.skipped = 0
+        message('%d: %s' % (self.number, self.title))
+        if self.filename and os.path.isfile(self.filename):
+            message('asciidoc: %s' % self.filename)
+            for backend in backends:
+                fromfile = self.backend_filename(backend)
+                if not self.is_missing(backend):
+                    expected = self.get_expected(backend)
+                    strip_end(expected)
+                    got = self.generate_expected(backend)
+                    strip_end(got)
+                    lines = []
+                    for line in difflib.unified_diff(got, expected, n=0):
+                        lines.append(line)
+                    if lines:
+                        result = False
+                        self.failed +=1
+                        lines = lines[3:]
+                        message('FAILED: %s: %s' % (backend, fromfile))
+                        message('+++ %s' % fromfile)
+                        message('--- got')
+                        for line in lines:
+                            message(line)
+                        message()
+                    else:
+                        self.passed += 1
+                        message('PASSED: %s: %s' % (backend, fromfile))
                 else:
-                    self.passed += 1
-                    message('PASSED: %s: %s' % (backend, fromfile))
+                    self.skipped += 1
+                    message('SKIPPED: %s: %s' % (backend, fromfile))
+        else:
+            self.skipped += len(backends)
+            if self.filename:
+                msg = 'MISSING: %s' % self.filename
             else:
-                self.skipped += 1
-                message('SKIPPED: %s: %s' % (backend, fromfile))
+                msg = 'NO ASCIIDOC SOURCE FILE SPECIFIED'
+            message(msg)
         message()
         return result
 
@@ -267,7 +294,7 @@ class AsciiDocTests(object):
         """
         self.passed = self.failed = self.skipped = 0
         for test in self.tests:
-            if not number or number == test.number:
+            if not test.disabled and (not number or number == test.number):
                 test.run(backend)
                 self.passed += test.passed
                 self.failed += test.failed
@@ -284,7 +311,7 @@ class AsciiDocTests(object):
         Regenerate expected test data and update configuratio file.
         """
         for test in self.tests:
-            if not number or number == test.number:
+            if not test.disabled and (not number or number == test.number):
                 test.update(backend, force=force)
 
     def list(self):
@@ -292,7 +319,7 @@ class AsciiDocTests(object):
         Lists tests to stdout.
         """
         for test in self.tests:
-            print '%d: %s' % (test.number, test.title)
+            print '%d: %s%s' % (test.number, iif(test.disabled,'!'), test.title)
 
 
 class Lines(list):

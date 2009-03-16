@@ -113,11 +113,19 @@ class AsciiDocTest(object):
         if not self.title:
             self.title = self.filename
 
-    def has_expected(self, backend):
+    def is_missing(self, backend):
         """
-        Returns True if there is output test data for backend.
+        Returns True if there is not output test data file for backend.
         """
-        return os.path.isfile(self.backend_filename(backend))
+        return not os.path.isfile(self.backend_filename(backend))
+
+    def is_missing_or_outdated(self, backend):
+        """
+        Returns True if the output test data file is missing or out of date.
+        """
+        return self.is_missing(backend) or (
+               os.path.getmtime(self.filename)
+               > os.path.getmtime(self.backend_filename(backend)))
 
     def get_expected(self, backend):
         """
@@ -168,7 +176,7 @@ class AsciiDocTest(object):
         else:
             backends = [backend]
         for backend in backends:
-            if force or not self.has_expected(backend):
+            if force or self.is_missing_or_outdated(backend):
                 self.update_expected(backend)
 
     def run(self, backend=None):
@@ -189,7 +197,7 @@ class AsciiDocTest(object):
             backends = [backend]
         for backend in backends:
             fromfile = self.backend_filename(backend)
-            if self.has_expected(backend):
+            if not self.is_missing(backend):
                 expected = self.get_expected(backend)
                 strip_end(expected)
                 got = self.generate_expected(backend)

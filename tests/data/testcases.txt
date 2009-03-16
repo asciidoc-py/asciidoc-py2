@@ -4,7 +4,7 @@
 
 Test Cases
 ==========
-:author: Joe Blogs
+:author: Joe Bloggs
 
 
 == Author attributes ==

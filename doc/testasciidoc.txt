@@ -41,9 +41,9 @@ Currently 'testasciidoc' has the following commands:
   python testasciidoc.py run 3 html4
 
 'update'::
-  Generates and updates missing test output data files, this
+  Generates and updates missing and out of date test output data files, this
   eliminates one of the most time consuming aspect of test management.
-  Use the `--force` option to regenerate all outputs.  Examples:
+  Use the `--force` option to force updates.  Examples:
 
   python testasciidoc.py update
   python testasciidoc.py --force update 4

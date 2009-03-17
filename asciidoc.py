@@ -1196,6 +1196,7 @@ class Document:
                     Section.translate_body()
                     writer.write(etag)
         else:
+            document.process_author_names()
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr)

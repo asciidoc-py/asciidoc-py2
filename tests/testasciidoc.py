@@ -73,7 +73,7 @@ class AsciiDocTest(object):
         self.number = None      # Test number (1..).
         self.title = ''         # Optional title.
         self.description = []   # List of lines followoing title.
-        self.source = None      # AsciiDoc test source file.
+        self.source = None      # AsciiDoc test source file name.
         self.options = []
         self.attributes = {}
         self.backends = BACKENDS

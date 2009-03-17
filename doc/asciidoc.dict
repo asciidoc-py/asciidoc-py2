@@ -1,7 +1,7 @@
-personal_ws-1.1 en 764 
+personal_ws-1.1 en 768 
 Sturmer
-Kleber
 Kléber
+Kleber
 quis
 tuples
 auctor
@@ -14,8 +14,8 @@ callouts
 API
 bulleted
 starttags
-listingblock
 ListingBlock
+listingblock
 eval
 ListLabel
 asc
@@ -101,8 +101,8 @@ pageunits
 LaTeX
 citetitle
 emphasizedwords
-BlockTitle
 blocktitle
+BlockTitle
 DTD
 CVS
 valign
@@ -125,14 +125,15 @@ gif
 Builtin
 optionname
 tabledef
+datadir
 manpurpose
 dignissim
 luptatum
 TitleBlock
 fmt
 subscripted
-MiddleName
 middlename
+MiddleName
 subdirectories
 footnoteref
 passtext
@@ -153,8 +154,8 @@ entrytbl
 Ghostscript
 verear
 Buenos
-linuxdoc
 LinuxDoc
+linuxdoc
 PostScript
 hhp
 Vijay
@@ -170,8 +171,8 @@ GPL
 hsides
 upperalpha
 docfile
-Bolido
 Bólido
+Bolido
 footrow
 misspelt
 WINNT
@@ -183,8 +184,8 @@ bloggs
 hoc
 LiteralParagraphs
 primis
-VerbatimBlock
 verbatimblock
+VerbatimBlock
 corpname
 shiftwidth
 misevaluations
@@ -401,8 +402,8 @@ pre
 coid
 params
 mediaobjects
-javascripts
 JavaScripts
+javascripts
 sgmlfmt
 subsnormal
 unchunked
@@ -474,13 +475,13 @@ arabic
 fringilla
 retab
 BackendBlocks
-changelog
 ChangeLog
+changelog
 tis
 Ubuntu
 sectids
-AsciiDocAPI
 asciidocapi
+AsciiDocAPI
 Sommer
 LabeledList
 ZapfDingbats
@@ -489,6 +490,7 @@ hyperlinks
 EmailAddress
 Cheatsheet
 toc
+testcases
 tbody
 tmp
 endtag
@@ -497,8 +499,8 @@ crlf
 vel
 Iisaka's
 localtime
-blockmacro
 BlockMacro
+blockmacro
 Xandros
 groff
 POSIX
@@ -543,8 +545,8 @@ dbtimestamp
 txt
 BlockId
 passthrough
-Berguvsvagen
 Berguvsvägen
+Berguvsvagen
 noincsearch
 TableRow
 inlinemediaobject
@@ -594,9 +596,9 @@ Redhat
 cb
 tuple
 cd
-ASCIIMathML
-AsciiMathML
 asciimathml
+AsciiMathML
+ASCIIMathML
 arounds
 filename
 mansource
@@ -612,8 +614,8 @@ scaledwidth
 cp
 xsl
 fb
-docbook
 DocBook
+docbook
 stylesheet
 pagefile
 superscripted
@@ -634,8 +636,8 @@ fprintf
 colabswidth
 tabsize
 smallnew
-blocktitles
 BlockTitles
+blocktitles
 localdate
 bodyrow
 hs
@@ -664,6 +666,7 @@ toolchains
 xyz
 fillchar
 BulletedList
+globals
 lt
 Delikatessen
 ly
@@ -685,8 +688,8 @@ permalink
 td
 py
 AROUT
-LiteralBlock
 literalblock
+LiteralBlock
 sgml
 biggy
 softtabstop
@@ -702,8 +705,8 @@ tt
 blandit
 inline
 Martín
-sectionbody
 SectionBody
+sectionbody
 VM
 conformant
 listchars
@@ -723,6 +726,7 @@ autowidth
 listtags
 aap
 bibendum
+testasciidoc
 necessitatibus
 roff
 inlinemacro
@@ -748,8 +752,8 @@ nbsp
 qanda
 noout
 massa
-asciidoc
 AsciiDoc
+asciidoc
 manmanual
 TableBody
 realpath

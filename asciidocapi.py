@@ -54,7 +54,7 @@ under the terms of the GNU General Public License (GPL).
 
 import sys,os,re
 
-API_VERSION = '0.1.0'
+API_VERSION = '0.1.1'
 MIN_ASCIIDOC_VERSION = '8.4.1'  # Minimum acceptable AsciiDoc version.
 
 

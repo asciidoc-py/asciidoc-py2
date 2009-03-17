@@ -211,10 +211,10 @@ values.  Currently the only global is 'datadir', the directory
 containing expected output files (defaults to configuration file
 directory). For example:
 
--------------------------------------------------------
+---------------------------------------------------------------------
 % globals
 {'datadir': 'data'}
--------------------------------------------------------
+---------------------------------------------------------------------
 
 Expected output test data files are stored in the 'datadir' and are
 named after the corresponding AsciiDoc input source file.  For example

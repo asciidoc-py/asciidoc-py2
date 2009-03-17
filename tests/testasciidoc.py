@@ -73,7 +73,7 @@ class AsciiDocTest(object):
         self.number = None      # Test number (1..).
         self.title = ''         # Optional title.
         self.description = []   # List of lines followoing title.
-        self.filename = None    # AsciiDoc test source file.
+        self.source = None      # AsciiDoc test source file.
         self.options = []
         self.attributes = {}
         self.backends = BACKENDS
@@ -88,7 +88,7 @@ class AsciiDocTest(object):
         return '%s-%s%s' % (
                 os.path.normpath(
                     os.path.join(self.datadir,
-                        os.path.basename(os.path.splitext(self.filename)[0]))),
+                        os.path.basename(os.path.splitext(self.source)[0]))),
                 backend,
                 BACKEND_EXT[backend])
 
@@ -116,9 +116,9 @@ class AsciiDocTest(object):
                     raise (ValueError, 'illegal directive: %s' % l[0])
                 directive = reo.groupdict()['directive']
                 data = normalize_data(l[1:])
-                if directive == 'asciidoc':
+                if directive == 'source':
                     if data:
-                        self.filename = os.path.normpath(os.path.join(
+                        self.source = os.path.normpath(os.path.join(
                                 self.confdir, os.path.normpath(data[0])))
                 elif directive == 'options':
                     self.options = eval(' '.join(data))
@@ -132,7 +132,7 @@ class AsciiDocTest(object):
                 else:
                     raise (ValueError, 'illegal directive: %s' % l[0])
         if not self.title:
-            self.title = self.filename
+            self.title = self.source
 
     def is_missing(self, backend):
         """
@@ -145,7 +145,7 @@ class AsciiDocTest(object):
         Returns True if the output test data file is missing or out of date.
         """
         return self.is_missing(backend) or (
-               os.path.getmtime(self.filename)
+               os.path.getmtime(self.source)
                > os.path.getmtime(self.backend_filename(backend)))
 
     def get_expected(self, backend):
@@ -168,7 +168,7 @@ class AsciiDocTest(object):
         asciidoc = asciidocapi.AsciiDocAPI()
         asciidoc.options.values = self.options
         asciidoc.attributes = self.attributes
-        infile = self.filename
+        infile = self.source
         outfile = StringIO.StringIO()
         asciidoc.execute(infile, outfile, backend)
         return outfile.getvalue().splitlines()
@@ -212,8 +212,8 @@ class AsciiDocTest(object):
         result = True   # Assume success.
         self.passed = self.failed = self.skipped = 0
         message('%d: %s' % (self.number, self.title))
-        if self.filename and os.path.isfile(self.filename):
-            message('SOURCE: asciidoc: %s' % self.filename)
+        if self.source and os.path.isfile(self.source):
+            message('SOURCE: asciidoc: %s' % self.source)
             for backend in backends:
                 fromfile = self.backend_filename(backend)
                 if not self.is_missing(backend):
@@ -242,8 +242,8 @@ class AsciiDocTest(object):
                     message('SKIPPED: %s: %s' % (backend, fromfile))
         else:
             self.skipped += len(backends)
-            if self.filename:
-                msg = 'MISSING: %s' % self.filename
+            if self.source:
+                msg = 'MISSING: %s' % self.source
             else:
                 msg = 'NO ASCIIDOC SOURCE FILE SPECIFIED'
             message(msg)

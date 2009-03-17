@@ -149,7 +149,7 @@ of directive data.
 
 Test spec format
 ~~~~~~~~~~~~~~~~
--------------------------------------------------------
+---------------------------------------------------------------------
 Optional test title
 Optional test description...
 
@@ -159,16 +159,16 @@ Optional list of command-line option tuples.
 % attributes
 Optional dictionary of attribute values.
 
-% asciidoc
+% source
 AsciiDoc source file name.
 
 % backends
-Optional list of backends (default is all backends).
--------------------------------------------------------
+Optional list of backends to be tested(default is all backends).
+---------------------------------------------------------------------
 
 Example test spec:
 
--------------------------------------------------------
+---------------------------------------------------------------------
 Example book
 
 % options
@@ -178,9 +178,9 @@ Example book
 # Exclude date from document footer.
 {'docdate':None}
 
-% asciidoc
+% source
 ../doc/book.txt
--------------------------------------------------------
+---------------------------------------------------------------------
 
 TIP: Take a look at the default `tests/testasciidoc.conf`
 configuration file that comes with AsciiDoc.
@@ -195,7 +195,7 @@ configuration file that comes with AsciiDoc.
   and may be followed by zero or more lines of directive data.
 - Directive data lines cannot start with a percent character.
 - Lines starting with a `#` hash character are ignored.
-- The 'asciidoc' directive data is a single line containing the
+- The 'source' directive data is a single line containing the
   AsciiDoc source file name.
 - The 'options' directive data is a Python list of `(name,value)`
   tuples specifying AsciiDoc command-line options. A string item is

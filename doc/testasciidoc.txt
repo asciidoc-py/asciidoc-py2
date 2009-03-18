@@ -138,6 +138,9 @@ testasciidoc commands
   python tests/testasciidoc.py update
   python tests/testasciidoc.py --force update 4
 
+NOTE: You can run or update disabled tests by explicitly specifying
+the test number.
+
 
 Test configuration file
 -----------------------

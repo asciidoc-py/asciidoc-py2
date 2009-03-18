@@ -298,7 +298,7 @@ class AsciiDocTests(object):
         """
         self.passed = self.failed = self.skipped = 0
         for test in self.tests:
-            if not test.disabled and (not number or number == test.number):
+            if (not test.disabled or number) and (not number or number == test.number):
                 test.run(backend)
                 self.passed += test.passed
                 self.failed += test.failed
@@ -315,7 +315,7 @@ class AsciiDocTests(object):
         Regenerate expected test data and update configuratio file.
         """
         for test in self.tests:
-            if not test.disabled and (not number or number == test.number):
+            if (not test.disabled or number) and (not number or number == test.number):
                 test.update(backend, force=force)
 
     def list(self):

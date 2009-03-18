@@ -117,3 +117,11 @@ label:: item text
 label::: item text
 label:::: item text
 
+
+== Inline passthroughs ==
+- Test `pass:[ABC]`.
+- The `++i` and `++j` auto-increments.
+- Paths `~/.vim` and `~/docs`.
+- The `__init__` method.
+- The `{id}` attribute.
+

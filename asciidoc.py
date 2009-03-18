@@ -3291,6 +3291,9 @@ class Macro:
                         d.get('name',''))
                 return mo.group()
             passtext = d['passtext']
+            if re.search('\x07\\d+\x07', passtext):
+                warning('nested inline passthrough')
+                return mo.group()
             if d.get('subslist'):
                 if d['subslist'].startswith(':'):
                     error('block macro cannot occur here: %s' % mo.group(),

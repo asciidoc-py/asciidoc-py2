@@ -129,9 +129,11 @@ testasciidoc commands
   python tests/testasciidoc.py run 3 html4
 
 'update'::
-  Generates and updates missing and out of date test output data files, this
-  eliminates one of the most time consuming aspect of test management.
-  Use the `--force` option to force updates.  Examples:
+  Generates and updates missing and out of date test output data
+  files, this eliminates one of the most time consuming aspect of test
+  management.  Use the `--force` option to force updates. The
+  `--force` option also removes unused backend output files.
+  Examples:
 
   python tests/testasciidoc.py update
   python tests/testasciidoc.py --force update 4

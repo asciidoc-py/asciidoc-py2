@@ -136,7 +136,7 @@ class AsciiDocTest(object):
 
     def is_missing(self, backend):
         """
-        Returns True if there is not output test data file for backend.
+        Returns True if there is no output test data file for backend.
         """
         return not os.path.isfile(self.backend_filename(backend))
 
@@ -196,6 +196,11 @@ class AsciiDocTest(object):
             backends = self.backends
         else:
             backends = [backend]
+        if force:
+            # Remove all existing output files.
+            for backend in BACKENDS:
+                if not self.is_missing(backend):
+                    os.remove(self.backend_filename(backend))
         for backend in backends:
             if force or self.is_missing_or_outdated(backend):
                 self.update_expected(backend)

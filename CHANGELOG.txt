@@ -3,6 +3,19 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.4.2 (2009-03-19)
+--------------------------
+.Additions and changes
+- Added web:testasciidoc.html[testasciidoc], a tool to verify AsciiDoc
+  conformance.
+- A warning is issued if nested inline passthroughs are encountered.
+- 'asciidocapi': setting an attribute value to `None` will undefine
+  (delete) the attribute (this in addition to the `name!` attribute
+  name format that the `asciidoc(1)` command uses).
+
+.Bug fixes
+
+
 Version 8.4.1 (2009-03-10)
 --------------------------
 .Additions and changes

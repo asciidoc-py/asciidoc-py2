@@ -48,6 +48,34 @@ configuration file directory (`asciidoc.vim` in the `syntax` directory
 and `asciidoc_filetype.vim` in the `ftdetect` directory).
 
 
+Installing from the Mercurial repository
+----------------------------------------
+This is an easy way to install AsciiDoc if you don't have an up to
+date packaged version or want to get the latest version from the
+trunk:
+
+- Make sure you have http://www.selenic.com/mercurial/[Mercurial]
+  installed, you can check with:
+
+  $ hg --version
+
+- Go to the directory you want to install AsciiDoc into and download
+  the repository.  This example gets the {revision} tagged release:
+
+[subs="attributes"]
+  $ cd ~/bin
+  $ hg clone -r {revision} http://hg.sharesource.org/asciidoc asciidoc-{revision}
+
+- Create a symlink to the AsciiDoc script in a search `PATH` directory
+  so it's easy to execute `asciidoc` from the command-line, for
+  example:
+
+[subs="attributes"]
+  $ ln -s ~/bin/asciidoc-{revision}/asciidoc.py ~/bin/asciidoc
+
+Use the Mercurial `pull` command to update your AsciiDoc repository.
+
+
 Microsoft Windows installation
 ------------------------------
 To install the zip formatted distribution just unzip the contents to a
@@ -65,7 +93,7 @@ Test out asciidoc by changing to the AsciiDoc application directory
 and convert the User Guide document (`./doc/asciidoc.txt`) to XHTML
 (`./doc/asciidoc.html`):
 
-  $ asciidoc doc/asciidoc.txt
+  $ python asciidoc.py doc/asciidoc.txt
 
-NOTE: Windows users will need to execute the `asciidoc.py` script
-directly or create a suitable `asciidoc.bat` file.
+link:testasciidoc.html[testasciidoc] offers a more extensive set of
+conformance tests.

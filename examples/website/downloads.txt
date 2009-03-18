@@ -31,33 +31,6 @@ Mercurial friendly website for hosting Open Source projects.
 
 To browse the repo go to http://hg.sharesource.org/asciidoc/.
 
-Installing from the repository
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This is an easy way to install AsciiDoc if you don't have an up to
-date packaged version or want to get the latest version from the
-trunk:
-
-- Make sure you have http://www.selenic.com/mercurial/[Mercurial]
-  installed, you can check with:
-
-  $ hg --version
-
-- Go to the directory you want to install AsciiDoc into and download
-  the repository.  This example gets the {revision} tagged release:
-
-[subs="attributes"]
-  $ cd ~/bin
-  $ hg clone -r {revision} http://hg.sharesource.org/asciidoc asciidoc-{revision}
-
-- Create a symlink to the AsciiDoc script in a search `PATH` directory
-  so it's easy to execute `asciidoc` from the command-line, for
-  example:
-
-[subs="attributes"]
-  $ ln -s ~/bin/asciidoc-{revision}/asciidoc.py ~/bin/asciidoc
-
-Use the Mercurial `pull` command to update your AsciiDoc repository.
-
 
 [[X1]]
 Prepackaged Versions

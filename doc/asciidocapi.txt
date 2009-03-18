@@ -116,10 +116,13 @@ Instance attributes
 The imported `asciidoc.py` module.
 
 `attributes`::
-A dictionary of AsciiDoc attribute values passed to AsciiDoc. Setting
-an attribute value to `None` will undefine (delete) the attribute
-(this in addition to the `name!` attribute name format that the
-`asciidoc(1)` command uses).
+A dictionary of AsciiDoc attribute values passed to AsciiDoc.
+
+- Setting an attribute value to `None` (`name: None`) will undefine
+  (delete) the attribute (this in addition to the `name!` attribute
+  name format that the `asciidoc(1)` command uses).
+- To simply define an attribute set the attribute value to a blank
+  string (`name: ''`) 
 
 `cmd`::
 The file path of the `asciidoc.py` script. Set by the `__init__`

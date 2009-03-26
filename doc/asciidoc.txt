@@ -2706,7 +2706,7 @@ omitted.
 cols::
 The 'cols' attribute is a comma separated list of <<X70,column
 specifiers>>. For example `cols="2<p,2*,4p,>"`.
-+
+
 - If 'cols' is present it must specify all columns.
 - If the 'cols' attribute is not specified the number of columns is
   calculated as the number of data items in the *first line* of the

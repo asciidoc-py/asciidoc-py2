@@ -147,7 +147,7 @@ uninstall-vim:
 
 build: fixconfpath
 
-install: $(PROGTARGETS) $(DATATARGETS) progsymlink install-vim
+install: all $(PROGTARGETS) $(DATATARGETS) progsymlink install-vim
 
 uninstall: uninstall-vim
 	rm -f $(DESTDIR)/$(progdir)/asciidoc

@@ -488,8 +488,9 @@ matches an AsciiDoc document section title then the backend output is
 marked up using the `<name>` markup template (instead of the default
 `sect<level>` section template). The `{title}` attribute value is set
 to the value of the matched regular expression group named 'title', if
-there is no 'title' group `{title}` defaults to the whole of the
-AsciiDoc section title.
+there is no 'title' group `{title}` defaults to the whole of the AsciiDoc
+section title. If `<name>` is blank then any existing entry with the same
+`<pattern>` will be deleted.
 
 AsciiDoc comes preconfigured with the following special section
 titles:

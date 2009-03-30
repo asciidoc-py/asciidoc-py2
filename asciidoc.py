@@ -1406,7 +1406,7 @@ class AttributeEntry:
         reader.read()   # Discard attribute entry from reader.
         if AttributeEntry.name2: # The entry is a conf file entry.
             section = {}
-            # [attributes] and [miscellaneous] entries can have name! syntax.
+            # Some sections can have name! syntax.
             if attr.name in ('attributes','miscellaneous') and attr.name2[-1] == '!':
                 section[attr.name] = [attr.name2]
             else:
@@ -3961,7 +3961,9 @@ class Config:
                     warning('[quotes] %s missing tag definition: %s' % (q,tag))
         # Check all specialsections section names exist.
         for k,v in self.specialsections.items():
-            if not v in self.sections:
+            if not v:
+                del self.specialsections[k]
+            elif not v in self.sections:
                 warning('[%s] missing specialsections section' % v)
         paragraphs.validate()
         lists.validate()

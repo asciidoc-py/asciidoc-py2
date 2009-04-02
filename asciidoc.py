@@ -3845,9 +3845,9 @@ class Config:
             else:
                 sections[section] = contents
         rdr.close()
-        document.update_attributes() # So they are available immediately.
         self.load_sections(sections)
         self.loaded.append(os.path.realpath(fname))
+        document.update_attributes() # So they are available immediately.
 
     def load_sections(self,sections):
         '''Loads sections dictionary. Each dictionary entry contains a

@@ -184,7 +184,6 @@ Resources
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] has
   released an http://xpt.sourceforge.net/tools/doc-mode/[AsciiDoc
   syntax highlighter for Emacs].
-
 - Franck Pommereau has written
   http://www.univ-paris12.fr/lacl/pommereau/soft/asciidoctest.html[Asciidoctest],
   a program that doctests snippets of Python code within your Asciidoc
@@ -199,6 +198,13 @@ Resources
   http://www.mowson.org/karl/colophon/[here] and there is some
   discussion of the ikiwiki integration
   http://ikiwiki.info/users/KarlMW/discussion/[here].
+- David Hajage has written an AsciiDoc package for the
+  http://www.r-project.org/[R Project] (R is a free software
+  environment for statistical computing).  'ascii' is available on
+  'CRAN' (just run `install.package("ascii")` from R).  Briefly,
+  'ascii' replaces R results in AsciiDoc document with AsciiDoc
+  markup.  More information and examples here:
+  http://eusebe.github.com/ascii/.
 
 
 Blogpost weblog client

@@ -15,7 +15,7 @@ vers:
 
 tags:
     :sys rm -f tags
-    :sys ctags asciidoc.py asciidocapi.py
+    :sys ctags asciidoc.py asciidocapi.py tests/testasciidoc.py
 
 docs:
     :execute ./doc/main.aap

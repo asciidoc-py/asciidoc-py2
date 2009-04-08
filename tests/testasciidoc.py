@@ -17,7 +17,7 @@ Options:
         Update all test data overwriting existing data'''
 
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __copyright__ = 'Copyright (C) 2009 Stuart Rackham'
 
 
@@ -196,11 +196,6 @@ class AsciiDocTest(object):
             backends = self.backends
         else:
             backends = [backend]
-        if force:
-            # Remove all existing output files.
-            for backend in BACKENDS:
-                if not self.is_missing(backend):
-                    os.remove(self.backend_filename(backend))
         for backend in backends:
             if force or self.is_missing_or_outdated(backend):
                 self.update_expected(backend)
@@ -382,6 +377,10 @@ if __name__ == '__main__':
             force = True
         if o in ('-f','--conf-file'):
             conffile = v
+    if not os.path.isfile(conffile):
+        message('missing CONF_FILE: %s' % conffile)
+        sys.exit(1)
+    tests = AsciiDocTests(conffile)
     cmd = args[0]
     number = None
     backend = None
@@ -390,7 +389,12 @@ if __name__ == '__main__':
             number = int(arg)
         except ValueError:
             backend = arg
-    tests = AsciiDocTests(conffile)
+    if backend and backend not in BACKENDS:
+        message('illegal BACKEND: %s' % backend)
+        sys.exit(1)
+    if number is not None and  number not in range(1, len(tests.tests)+1):
+        message('illegal test NUMBER: %d' % number)
+        sys.exit(1)
     if cmd == 'run':
         tests.run(number, backend)
         if tests.failed:

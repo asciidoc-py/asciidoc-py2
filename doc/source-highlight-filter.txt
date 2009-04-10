@@ -188,13 +188,6 @@ DocBook programlisting element is assigned two attributes:
 . The 'linenumbering' attribute is set to the AsciiDoc 'src_numbered'
   attribute ('numbered' or 'unnumbered').
 
-If you use `a2x(1)` to generate PDF you need to include the
-`--no-xmllint` option to suppress `xmllint(1)` checking -- the
-programlisting 'language' attribute (required by the dblatex source
-highlighter) is not part of the DocBook 4 specification (but it is in
-the newer DocBook 5 specification).
-
-
 Testing
 ~~~~~~~
 Test the filter by converting the test file to HTML with AsciiDoc:

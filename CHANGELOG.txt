@@ -8,22 +8,20 @@ Version 8.4.3 (2009-04-??)
 .Additions and changes
 - DocBook outputs default to DocBook version 4.5 doctype (previously
   4.2).
-- 'testasciidoc.py': User friendly message if configuration file is
-  missing.
-- 'testasciidoc.py': User friendly message if illegal backend
-  specified.
-- 'testasciidoc.py': User friendly message if illegal test number
-  specified.
 - Configuration file `[specialsections]` definitions can be undefined
   by setting their configuration entry values blank.
 - The Makefile 'install' target depends on the 'all' target to ensure
   pre-install patches are applied.
+- 'testasciidoc.py': User friendly message if:
+  * The configuration file is missing.
+  * If am illegal backend is specified.
+  * If an illegal test number is specified.
 
 .Bug fixes
-- 'testasciidoc.py': `--force` option no longer deletes test data
-  files that were not specified.
 - Fixed 'missing template section' error (see
   http://groups.google.com/group/asciidoc/browse_thread/thread/fd27add515597c06).
+- 'testasciidoc.py': `--force` option no longer deletes test data
+  files that were not specified.
 
 
 Version 8.4.2 (2009-03-19)

@@ -2,12 +2,109 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== ifdef::[]'s are to verbose can they shortened?
+
+This is the response to a question posted on the AsciiDoc discussion
+list, it illustrates a number of conditional techniques. The question
+arose because the source highlight filter language identifier for the
+C++ language is `c++` when generating PDF's via dblatex (LaTeX
+listings package) or `cpp` when generating HTML (GNU
+source-highlight).
+
+Using straight `ifdef::[]` block macros we have:
+
+[listing]
+.........................................
+\ifdef::basebackend-docbook[]
+[source,c++]
+\endif::basebackend-docbook[]
+\ifdef::basebackend-html[]
+[source,cpp]
+\endif::basebackend-html[]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------
+.........................................
+
+
+This can be shortened using the short form of the `ifdef::[]` macro:
+
+[listing]
+.........................................
+\ifdef::basebackend-docbook[[source,c++]]
+\ifdef::basebackend-html[[source,cpp]]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------
+.........................................
+
+
+Using a conditional attribute instead of the `ifdef::[]` macro is even
+shorter:
+
+[listing]
+.........................................
+[source,{basebackend@docbook:c++:cpp}]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------
+.........................................
+
+
+If you have a number of listings it makes sense to factor the
+conditional attribute to a normal attribute:
+
+[listing]
+.........................................
+:cpp: {basebackend@docbook:c++:cpp}
+
+[source,{cpp}]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------
+.........................................
+
+
+Even shorter, set the default source highlight filter `language`
+attribute so you don't have to specify it every time:
+
+[listing]
+.........................................
+:language: {basebackend@docbook:c++:cpp}
+
+[source]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------
+.........................................
+
+
 == Some of my inline passthroughs are not passed through, why?
 
 Most likely the passthrough encloses another passthrough with a higher
-precedence, for example:
-
-  `pass[]`
+precedence. For example this, +\`pass[]`+ will evaulate to a blank
+string because the +pass[]+ passthrough evaluates first, use
+`+pass[]+` instead.
 
 
 == How can I place an anchor (link target) on a list item?

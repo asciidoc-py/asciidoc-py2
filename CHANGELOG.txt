@@ -24,7 +24,7 @@ Version 8.4.3 (2009-04-13)
 - The 'testasciidoc.py' `--force` option no longer deletes test data
   files that were not specified.
 - Dropped second quotes substitution in table cells -- it had
-  effectively disabled quote escaping in table cells..
+  effectively disabled quote escaping in table cells.
 
 
 Version 8.4.2 (2009-03-19)

@@ -1,6 +1,5 @@
 ASCIIDOC(1)
 ===========
-Stuart Rackham <srackham@gmail.com>
 
 
 NAME

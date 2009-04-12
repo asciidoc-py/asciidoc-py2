@@ -1,6 +1,5 @@
 A2X(1)
 ======
-Stuart Rackham <srackham@gmail.com>
 
 
 NAME

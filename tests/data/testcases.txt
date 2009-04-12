@@ -117,6 +117,12 @@ label;; item text
 label::: item text
 label:::: item text
 
+With item anchor:
+
+one:: Item one.
+[[item_two]]two:: Item two.
+three:: Item three.
+
 
 == Inline passthroughs ==
 
@@ -127,3 +133,44 @@ label:::: item text
 - The `__init__` method.
 - The `{id}` attribute.
 
+
+== Images
+
+=== Block images
+
+[[tiger_image]]
+.Tyger tyger
+image::../../images/tiger.png[]
+
+:height: 250
+:width: 350
+
+.Tyger tyger two
+image::../../images/tiger.png[caption="Figure 2: "]
+
+
+== Backslash escapes (from FAQ)
+
+There are a number of  exceptions to the usual single backslash rule
+-- mostly relating to URL macros that  have two syntaxes or quoting
+ambiguity.  Here are some non-standard escape examples:
+
+[cols="l,v",width="40%",options="header"]
+|========================================
+|AsciiDoc | Renders
+
+2*|
+\srackham@methods.co.nz
+<\srackham@methods.co.nz>
+\mailto:[\srackham@methods.co.nz]
+
+2*|
+\http://www.foo1.co.nz
+\\http://www.foobar.com[]
+\\http://www.foobar.com[Foobar Limited]
+
+2*|
+A C+\+ Library for C++
+\\``double-quotes''
+\*\*F**ile Open\...
+|========================================

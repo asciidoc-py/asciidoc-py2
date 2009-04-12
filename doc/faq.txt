@@ -101,9 +101,10 @@ public:
 == Some of my inline passthroughs are not passed through, why?
 
 Most likely the passthrough encloses another passthrough with a higher
-precedence. For example this, +\`\pass:[]`+ will evaulate to a blank
-string because the +\pass:[]+ passthrough evaluates first, use
-monspaced quoting ++ \+\pass:[]+ ++ instead.
+precedence. For example trying to render this +\pass:[]+ with this
++\`\pass:[]`+ results in a blank string because the +\pass:[]+
+passthrough evaluates first, instead use monspaced quoting  and escape
+the passthrough i.e. ++ \+\\pass:[]+ ++
 
 
 == How can I place an anchor (link target) on a list item?
@@ -290,24 +291,25 @@ There are a number of  exceptions to the usual single backslash rule
 -- mostly relating to URL macros that  have two syntaxes or quoting
 ambiguity.  Here are some non-standard escape examples:
 
-[cols="1default,4literal",width="70%",grid="none",frame="none"]
-|====================================================================
-|Mailto URLs |
+[cols="l,v",width="40%",options="header"]
+|========================================
+|AsciiDoc | Renders
+
+2*|
 \srackham@methods.co.nz
 <\srackham@methods.co.nz>
 \mailto:[\srackham@methods.co.nz]
 
-|Web URLs |
+2*|
 \http://www.foo1.co.nz
 \\http://www.foobar.com[]
 \\http://www.foobar.com[Foobar Limited]
 
-|Other |
+2*|
 A C+\+ Library for C++
-A C+\+ Library for C+\+ \+++
 \\``double-quotes''
-\*\*F**ile Open...
-|====================================================================
+\*\*F**ile Open\...
+|========================================
 
 The source of this problem is ambiguity across substitution types --
 the first match unescapes allowing the second to substitute. A

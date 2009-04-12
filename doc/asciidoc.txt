@@ -2188,7 +2188,7 @@ A title prefix that can be inserted with the `caption` attribute
 (`xhtml11` and `html4` backends). For example:
 
   .Main circuit board
-  [caption="Figure 2:"]
+  [caption="Figure 2: "]
   image::images/layout.png[J14P main circuit board]
 
 [[X66]]

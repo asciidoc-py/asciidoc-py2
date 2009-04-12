@@ -2,14 +2,13 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
-== ifdef::[]'s are to verbose can they shortened?
+== One-liner ifdef::[]'s are disproportionately verbose can they shortened?
 
 This is the response to a question posted on the AsciiDoc discussion
-list, it illustrates a number of conditional techniques. The question
-arose because the source highlight filter language identifier for the
-C++ language is `c++` when generating PDF's via dblatex (LaTeX
-listings package) or `cpp` when generating HTML (GNU
-source-highlight).
+list, it illustrates a number of useful techniques. The question arose
+because the source highlight filter language identifier for the C++
+language is `c++` when generating PDF's via dblatex (LaTeX listings
+package) or `cpp` when generating HTML (GNU source-highlight).
 
 Using straight `ifdef::[]` block macros we have:
 
@@ -102,9 +101,9 @@ public:
 == Some of my inline passthroughs are not passed through, why?
 
 Most likely the passthrough encloses another passthrough with a higher
-precedence. For example this, +\`pass[]`+ will evaulate to a blank
-string because the +pass[]+ passthrough evaluates first, use
-`+pass[]+` instead.
+precedence. For example this, +\`\pass:[]`+ will evaulate to a blank
+string because the +\pass:[]+ passthrough evaluates first, use
+monspaced quoting ++ \+\pass:[]+ ++ instead.
 
 
 == How can I place an anchor (link target) on a list item?

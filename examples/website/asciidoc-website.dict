@@ -1,4 +1,4 @@
-personal_ws-1.1 en 172 
+personal_ws-1.1 en 175 
 backends
 Backtick
 AsciiDoc's
@@ -129,6 +129,7 @@ xmllint
 ShareSource
 Schottelius
 sqrt
+ascii
 toolchain
 precompiled
 scaledwidth
@@ -166,8 +167,10 @@ upperalpha
 Wiese
 chunked
 AttributeList
+doctype
 Gouichi
 Jipsen
+CRAN
 Iisaka's
 Wiki
 dBA

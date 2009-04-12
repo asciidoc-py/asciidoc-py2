@@ -3,7 +3,7 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
-Version 8.4.3 (2009-04-??)
+Version 8.4.3 (2009-04-13)
 --------------------------
 .Additions and changes
 - DocBook outputs default to DocBook version 4.5 doctype (previously
@@ -12,15 +12,16 @@ Version 8.4.3 (2009-04-??)
   by setting their configuration entry values blank.
 - The Makefile 'install' target depends on the 'all' target to ensure
   pre-install patches are applied.
-- 'testasciidoc.py': User friendly message if:
-  * The configuration file is missing.
-  * If am illegal backend is specified.
-  * If an illegal test number is specified.
+- 'testasciidoc.py' now emits user friendly messages if:
+  . the configuration file is missing.
+  . an illegal backend is specified.
+  . an illegal test number is specified.
 
 .Bug fixes
-- Fixed 'missing template section' error (see
-  http://groups.google.com/group/asciidoc/browse_thread/thread/fd27add515597c06).
-- 'testasciidoc.py': `--force` option no longer deletes test data
+- Fixed
+  http://groups.google.com/group/asciidoc/browse_thread/thread/fd27add515597c06[missing
+  template section] error.
+- The 'testasciidoc.py' `--force` option no longer deletes test data
   files that were not specified.
 
 

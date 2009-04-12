@@ -3,16 +3,13 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-When modifying AsciiDoc configuration files or source code it's very
-easy to introduce regression errors.  This release includes
-link:testasciidoc.html[testasciidoc], a tool for writing many and
-varied test cases that can be run after changes have been made in
-order to verify that existing behavior has not been broken.  I wrote
-'testasciidoc' after very nearly making a couple of serious regression
-bloopers with the last release.
+This is a minor release mainly to get out a fix for the
+http://groups.google.com/group/asciidoc/browse_thread/thread/fd27add515597c06)[missing
+template section] error, in addition DocBook outputs now declare the
+DocBook version 4.5 document type (previously defaulted to DocBook
+version 4.2).
 
-There's nothing much else in this release apart from a couple of minor
-additions, read the link:CHANGELOG.html[CHANGELOG] for a full list of
+Read the link:CHANGELOG.html[CHANGELOG] for a full list of
 all additions and changes.
 
 mailto:srackham@gmail.com['Stuart Rackham']

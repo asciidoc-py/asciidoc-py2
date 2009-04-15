@@ -4,7 +4,7 @@ AsciiDoc Home Page
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
 This is a minor release mainly to get out a fix for the
-http://groups.google.com/group/asciidoc/browse_thread/thread/fd27add515597c06)[missing
+http://groups.google.com/group/asciidoc/browse_thread/thread/fd27add515597c06[missing
 template section] error, in addition DocBook outputs now declare the
 DocBook version 4.5 document type (previously defaulted to DocBook
 version 4.2).

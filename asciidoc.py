@@ -105,6 +105,77 @@ class AttrDict(dict):
     def __setstate__(self,value):
         for k,v in value.items(): self[k]=v
 
+class Trace(object):
+    """
+    Used in conjuntion with the 'trace' attribute to generate debug output.
+    There is a single global instance of this class named trace.
+
+    From the command-line use --attribute option to control tracing. Examples:
+
+        asciidoc -a trace mydoc.txt
+        asciidoc -a trace=quotes,macros  mydoc.txt
+
+    Set the trace attribute inside the document to trace selected block
+    elements. Examples:
+
+        :trace:                         -- trace on
+        :trace!:                        -- trace off
+        :trace: on                      -- trace on
+        :trace: off                     -- trace off
+        :trace: quotes,macros           -- trace on for quotes and macros
+
+    Command-line example:
+
+    $ echo 'Hello *World!*'|asciidoc -a trace - >/dev/null
+    TRACE: <stdin>: line 1: quotes
+    <<< Hello *World!*
+    >>> Hello <strong>World!</strong>
+
+    """
+    ALLOWED_OPTIONS = ('on','off',
+                       'specialcharacters','quotes','specialwords',
+                       'replacements', 'attributes','macros','callouts',
+                       'replacements2')
+    def __init__(self):
+        self.is_on = False      # True if traces are printed.
+        self.options = set()    # Options excluding 'on' and 'off'.
+        self.linenos = True
+        self.offset = 0
+    def __call__(self, option, before=None, after=None):
+        """
+        Print trace message if tracing is on.  The 'before' and 'after'
+        messages are only printed if they differ and 'option' is either in
+        self.options or self.options is empty.
+        If 'before' is None 'option' is the trace message and is printed
+        unconditionally.
+        """
+        self.parse_trace_attribute()
+        if self.is_on:
+            msg = message(option, 'TRACE: ', self.linenos, offset=self.offset)
+            if before is not None:
+                option = option.strip()
+                if before != after and (option in self.options or not self.options):
+                    msg += '\n<<< %s\n>>> %s\n' % (before,after)
+                    print_stderr(msg)
+            else:
+                print_stderr(option)
+    def parse_trace_attribute(self):
+        """
+        Parse trace attribute to self.options.
+        """
+        trace_attr = document.attributes.get('trace')
+        if trace_attr is not None:
+            opts = set([s.strip() for s in trace_attr.split(',')])
+            opts.discard('')
+            illegal_opts = opts.difference(self.ALLOWED_OPTIONS)
+            if illegal_opts:
+                error('illegal trace options: %s' % ','.join(list(illegal_opts)), halt=True)
+            self.is_on = 'off' not in opts
+            self.options = opts.difference(['on','off'])
+        else:
+            # Clear all options if trace is undefined.
+            self.__init__()
+
 ### Used by asciidocapi.py ###
 # List of message strings written to stderr.
 messages = []
@@ -1035,6 +1106,7 @@ class Lex:
                 result = macros.subs(result,callouts=True)
             else:
                 raise EAsciiDoc,'illegal substitution option: %s' % o
+            trace(o, s, result)
             if not result:
                 break
         return result
@@ -1420,8 +1492,9 @@ class AttributeEntry:
                 attr.value = None
             # Strip white space and illegal name chars.
             attr.name = re.sub(r'(?u)[^\w\-_]', '', attr.name).lower()
-            # Don't override command-line attributes.
-            if attr.name in config.cmd_attrs:
+            # Don't override command-line attributes (the exception is the
+            # system 'trace' attribute).
+            if attr.name in config.cmd_attrs and attr.name != 'trace':
                 return
             # Update document.attributes from previously parsed attribute.
             if attr.name == 'attributeentry-subs':
@@ -4767,6 +4840,8 @@ tables_OLD = Tables_OLD()   # Table_OLD definitions.
 tables = Tables()           # Table definitions.
 macros = Macros()           # Macro definitions.
 calloutmap = CalloutMap()   # Coordinates callouts and callout list.
+trace = Trace()             # Implements trace attribute processing.
+
 
 def asciidoc(backend, doctype, confiles, infile, outfile, options):
     """Convert AsciiDoc document to DocBook document of type doctype

@@ -5033,3 +5033,61 @@ Specifies that the element should be rendered across the full text
 width of the page irrespective of the current indentation.
 
 |====================================================================
+
+
+[[X82]]
+Appendix G: Diagnostics
+-----------------------
+The `asciidoc(1)` `--verbose` command-line option prints additional
+information to stderr: files processed, filters processed, warnings,
+system attribute evaluation.
+
+A special attribute named 'trace' controls the output of diagnostic
+information. If the 'trace' attribute is defined then
+element-by-element diagnostic messages detailing output markup
+generation are printed to stdout.  The 'trace' attribute can be set on
+the command-line or from within the document using <<X18,Attribute
+Entries>> (the latter allows tracing to be confined to specific
+portions of the document).
+
+- Trace messages consist of a descriptive name followed by the related
+  markup.
+- The trace message is only printed if the 'trace' attribute value
+  matches the start of the trace name. The 'trace' attribute value can
+  be any Python regular expression.
+- A blank trace value matches all trace names and all trace messages
+  will be printed (this can result in large amounts of output if
+  applied to the whole document).
+- In the case of inline substitutions:
+  * The text before and after the substitution are printed delineated
+    by `<<<` and `>>>` delimiters.
+  * The message is only printed if a substitution is made.
+  * The 'subs' trace value is an alias for all inline substitutions.
+
+Command-line examples:
+
+. Trace the entire document.
+
+  $ asciidoc -a trace mydoc.txt
+
+. Trace messages whose names start with `quotes` or `macros`:
+
+  $ asciidoc -a 'trace=quotes|macros'  mydoc.txt
+
+. Print the first line of all trace messages:
+
+  $ asciidoc -a trace mydoc.txt | grep ^TRACE:
+
+Attribute Entry examples:
+
+. Begin printing all trace messages:
+
+  :trace:
+
+. Print only matched trace messages:
+
+  :trace: quotes|macros
+
+. Turn trace messages off:
+
+  :trace!:

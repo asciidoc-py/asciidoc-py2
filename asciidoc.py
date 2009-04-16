@@ -107,71 +107,39 @@ class AttrDict(dict):
 
 class Trace(object):
     """
-    Used in conjunction with the 'trace' attribute to generate debug output.
-    There is a single global instance of this class named trace.
-
-    From the command-line set the trace to control tracing. The 'trace'
-    attribute is treated as a regular expression and is matched against trace
-    names.
-
-    Examples:
-
-        asciidoc -a trace mydoc.txt
-        asciidoc -a 'trace=quotes|macros'  mydoc.txt
-
-    Set the trace attribute inside the document to trace selected block
-    elements. Examples:
-
-        :trace:                         -- trace all elements
-        :trace: <filter>                -- trace selected elements
-        :trace!:                        -- trace off
-
-    Command-line example:
-
-        $ echo 'Hello *World!*'|asciidoc -a trace=quotes - >/dev/null                   TRACE: <stdin>: line 1: quotes
-        <<<
-        Hello *World!*
-        >>>
-        Hello <strong>World!</strong>
-
-    Inline substitution text is printed twice (before and after). The filter
-    name 'subs' can be used to specify all inline substitutions.
+    Used in conjunction with the 'trace' attribute to generate diagnostic
+    output. There is a single global instance of this class named trace.
     """
     SUBS_NAMES = ('specialcharacters','quotes','specialwords',
                   'replacements', 'attributes','macros','callouts',
                   'replacements2')
     def __init__(self):
-        self.filter = ''        # Regexp pattern to match trace names.
+        self.name_re = ''        # Regexp pattern to match trace names.
         self.linenos = True
         self.offset = 0
-    def __call__(self, name, before=None, after=None):
+    def __call__(self, name, before, after=None):
         """
         Print trace message if tracing is on and the trace 'name' matches the
         document 'trace' attribute (treated as a regexp).
         The 'before' and 'after' messages are only printed if they differ.
-        If 'before' is None 'name' is the trace message and is printed
-        unconditionally.
         """
         self.__init__()
-        filter = document.attributes.get('trace')
-        if filter == 'subs':
-            filter = '|'.join(self.SUBS_NAMES)
-        self.filter = filter
-        if self.filter is not None:
+        name_re = document.attributes.get('trace')
+        if name_re == 'subs':    # Alias for all the inline substitutions.
+            name_re = '|'.join(self.SUBS_NAMES)
+        self.name_re = name_re
+        if self.name_re is not None:
             msg = message(name, 'TRACE: ', self.linenos, offset=self.offset)
-            if before is not None:
-                if before != after and re.match(self.filter,name):
-                    if is_array(before):
-                        before = '\n'.join(before)
+            if before != after and re.match(self.name_re,name):
+                if is_array(before):
+                    before = '\n'.join(before)
+                if after is None:
+                    msg += '\n%s\n' % before
+                else:
                     if is_array(after):
                         after = '\n'.join(after)
-                    if after is None:
-                        msg += '\n%s\n' % before
-                    else:
-                        msg += '\n<<<\n%s\n>>>\n%s\n' % (before,after)
-                    print_stderr(msg)
-            else:
-                print_stderr(name)
+                    msg += '\n<<<\n%s\n>>>\n%s\n' % (before,after)
+                print(msg)
 
 ### Used by asciidocapi.py ###
 # List of message strings written to stderr.
@@ -1868,7 +1836,7 @@ class Section:
                     Section.set_id()
                     AttributeList.consume(Title.attributes)
                     stag,etag = config.section2tags(template,Title.attributes)
-                    writer.write(stag,trace='title')
+                    writer.write(stag,trace='floating title')
                     next = Lex.next()
                 else:
                     warning('missing template section: [%s]' % template)
@@ -2242,9 +2210,7 @@ class Paragraph(AbstractBlock):
         template = self.parameters.template
         stag,etag = config.section2tags(template, self.attributes)
         # Write start tag, content, end tag.
-        trace('paragraph open',stag)
-        writer.write(dovetail_tags(stag,body,etag))
-        trace('paragraph close',etag)
+        writer.write(dovetail_tags(stag,body,etag),trace='paragraph')
 
 class Paragraphs(AbstractBlocks):
     """List of paragraph definitions."""
@@ -2319,29 +2285,29 @@ class List(AbstractBlock):
         assert self.type == 'labeled'
         entrytag = subs_tag(self.tag.entry, self.attributes)
         labeltag = subs_tag(self.tag.label, self.attributes)
-        writer.write(entrytag[0])
-        writer.write(labeltag[0])
+        writer.write(entrytag[0],trace='list entry open')
+        writer.write(labeltag[0],trace='list label open')
         # Write labels.
         while Lex.next() is self:
             reader.read()   # Discard (already parsed item first line).
             writer.write_tag(self.tag.term, [self.label],
-                             self.presubs, self.attributes)
+                             self.presubs, self.attributes,trace='list term')
             if self.text: break
-        writer.write(labeltag[1])
+        writer.write(labeltag[1],trace='list label close')
         # Write item text.
         self.translate_item()
-        writer.write(entrytag[1])
+        writer.write(entrytag[1],trace='list entry close')
     def translate_item(self):
         if self.type == 'callout':
             self.attributes['coids'] = calloutmap.calloutids(self.ordinal)
         itemtag = subs_tag(self.tag.item, self.attributes)
-        writer.write(itemtag[0])
+        writer.write(itemtag[0],trace='list item open')
         # Write ItemText.
         text = reader.read_until(lists.terminators)
         if self.text:
             text = [self.text] + list(text)
         if text:
-            writer.write_tag(self.tag.text, text, self.presubs, self.attributes)
+            writer.write_tag(self.tag.text, text, self.presubs, self.attributes,trace='list text')
         # Process explicit and implicit list item continuations.
         while True:
             continuation = reader.read_next() == '+'
@@ -2366,7 +2332,7 @@ class List(AbstractBlock):
                 next.translate()
             else:
                 break
-        writer.write(itemtag[1])
+        writer.write(itemtag[1],trace='list item close')
 
     @staticmethod
     def calc_style(index):
@@ -2474,7 +2440,7 @@ class List(AbstractBlock):
                 self.error('illegal attribute value: width="%s"' % v)
         stag,etag = subs_tag(self.tag.list, self.attributes)
         if stag:
-            writer.write(stag)
+            writer.write(stag,trace='list open')
         self.ordinal = 0
         # Process list till list syntax changes or there is a new title.
         while Lex.next() is self and not BlockTitle.title:
@@ -2490,7 +2456,7 @@ class List(AbstractBlock):
             else:
                 raise AssertionError,'illegal [%s] list type' % self.name
         if etag:
-            writer.write(etag)
+            writer.write(etag,trace='list close')
         if self.type == 'callout':
             calloutmap.validate(self.ordinal)
             calloutmap.listclose()
@@ -2579,12 +2545,12 @@ class DelimitedBlock(AbstractBlock):
         else:
             template = self.parameters.template
             stag,etag = config.section2tags(template,self.attributes)
-            trace(self.short_name()+' block open',stag)
+            name = self.short_name()+' block'
             if 'sectionbody' in options:
                 # The body is treated like a section body.
-                writer.write(stag)
+                writer.write(stag,trace=name+' open')
                 Section.translate_body(self)
-                writer.write(etag)
+                writer.write(etag,trace=name+' close')
             else:
                 body = reader.read_until(self.delimiter,same_file=True)
                 presubs = self.parameters.presubs
@@ -2594,7 +2560,7 @@ class DelimitedBlock(AbstractBlock):
                     body = filter_lines(self.parameters.filter,body,self.attributes)
                 body = Lex.subs(body,postsubs)
                 # Write start tag, content, end tag.
-                writer.write(dovetail_tags(stag,body,etag))
+                writer.write(dovetail_tags(stag,body,etag),trace=name)
             trace(self.short_name()+' block close',etag)
         if reader.eof():
             self.error('missing closing delimiter',self.start)
@@ -3024,7 +2990,7 @@ class Table(AbstractBlock):
             table = table.replace('\x07footrows\x07', footrows, 1)
         if bodyrows:
             table = table.replace('\x07bodyrows\x07', bodyrows, 1)
-        writer.write(table)
+        writer.write(table,trace='table')
 
 class Tables(AbstractBlocks):
     """List of tables."""
@@ -3338,6 +3304,7 @@ class Macro:
         """ Block macro translation."""
         assert self.prefix == '#'
         s = reader.read()
+        before = s
         if self.has_passthrough():
             s = macros.extract_passthroughs(s,'#')
         s = subs_attrs(s)
@@ -3346,6 +3313,7 @@ class Macro:
             if self.has_passthrough():
                 s = macros.restore_passthroughs(s)
             if s:
+                trace('macro',before,s)
                 writer.write(s)
 
     def subs_passthroughs(self, text, passthroughs):
@@ -3787,17 +3755,20 @@ class Writer:
                         self.write_line(s)
                 elif arg is not None:
                     self.write_line(arg)
-    def write_tag(self,tag,content,subs=None,d=None):
+    def write_tag(self,tag,content,subs=None,d=None,**kwargs):
         """Write content enveloped by tag.
         Substitutions specified in the 'subs' list are perform on the
         'content'."""
         if subs is None:
             subs = config.subsnormal
         stag,etag = subs_tag(tag,d)
+        content = Lex.subs(content,subs)
+        if 'trace' in kwargs:
+            trace(kwargs['trace'],[stag]+content+[etag])
         if stag:
             self.write(stag)
         if content:
-            self.write(Lex.subs(content,subs))
+            self.write(content)
         if etag:
             self.write(etag)
 
@@ -4750,7 +4721,7 @@ class Table_OLD(AbstractBlock):
         if footrows:
             table = table.replace('\x07footrows\x07', footrows, 1)
         table = table.replace('\x07bodyrows\x07', bodyrows, 1)
-        writer.write(table)
+        writer.write(table,trace='table')
 
 class Tables_OLD(AbstractBlocks):
     """List of tables."""

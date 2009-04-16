@@ -29,7 +29,8 @@ OPTIONS
     'NAME!' (delete the 'NAME' attribute); 'NAME@' (do not override
     document or configuration file attributes).  Values containing
     spaces should be enclosed in double-quote characters. This option
-    may be specified more than once.
+    may be specified more than once.  A special attribute named
+    'trace' controls the output of diagnostic information.
 
 *-b, --backend*='BACKEND'::
     Backend output file format: 'docbook', 'xhtml11' or 'html4'.

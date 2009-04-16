@@ -107,74 +107,71 @@ class AttrDict(dict):
 
 class Trace(object):
     """
-    Used in conjuntion with the 'trace' attribute to generate debug output.
+    Used in conjunction with the 'trace' attribute to generate debug output.
     There is a single global instance of this class named trace.
 
-    From the command-line use --attribute option to control tracing. Examples:
+    From the command-line set the trace to control tracing. The 'trace'
+    attribute is treated as a regular expression and is matched against trace
+    names.
+
+    Examples:
 
         asciidoc -a trace mydoc.txt
-        asciidoc -a trace=quotes,macros  mydoc.txt
+        asciidoc -a 'trace=quotes|macros'  mydoc.txt
 
     Set the trace attribute inside the document to trace selected block
     elements. Examples:
 
-        :trace:                         -- trace on
+        :trace:                         -- trace all elements
+        :trace: <filter>                -- trace selected elements
         :trace!:                        -- trace off
-        :trace: on                      -- trace on
-        :trace: off                     -- trace off
-        :trace: quotes,macros           -- trace on for quotes and macros
 
     Command-line example:
 
-    $ echo 'Hello *World!*'|asciidoc -a trace - >/dev/null
-    TRACE: <stdin>: line 1: quotes
-    <<< Hello *World!*
-    >>> Hello <strong>World!</strong>
+        $ echo 'Hello *World!*'|asciidoc -a trace=quotes - >/dev/null                   TRACE: <stdin>: line 1: quotes
+        <<<
+        Hello *World!*
+        >>>
+        Hello <strong>World!</strong>
 
+    Inline substitution text is printed twice (before and after). The filter
+    name 'subs' can be used to specify all inline substitutions.
     """
-    ALLOWED_OPTIONS = ('on','off',
-                       'specialcharacters','quotes','specialwords',
-                       'replacements', 'attributes','macros','callouts',
-                       'replacements2')
+    SUBS_NAMES = ('specialcharacters','quotes','specialwords',
+                  'replacements', 'attributes','macros','callouts',
+                  'replacements2')
     def __init__(self):
-        self.is_on = False      # True if traces are printed.
-        self.options = set()    # Options excluding 'on' and 'off'.
+        self.filter = ''        # Regexp pattern to match trace names.
         self.linenos = True
         self.offset = 0
-    def __call__(self, option, before=None, after=None):
+    def __call__(self, name, before=None, after=None):
         """
-        Print trace message if tracing is on.  The 'before' and 'after'
-        messages are only printed if they differ and 'option' is either in
-        self.options or self.options is empty.
-        If 'before' is None 'option' is the trace message and is printed
+        Print trace message if tracing is on and the trace 'name' matches the
+        document 'trace' attribute (treated as a regexp).
+        The 'before' and 'after' messages are only printed if they differ.
+        If 'before' is None 'name' is the trace message and is printed
         unconditionally.
         """
-        self.parse_trace_attribute()
-        if self.is_on:
-            msg = message(option, 'TRACE: ', self.linenos, offset=self.offset)
+        self.__init__()
+        filter = document.attributes.get('trace')
+        if filter == 'subs':
+            filter = '|'.join(self.SUBS_NAMES)
+        self.filter = filter
+        if self.filter is not None:
+            msg = message(name, 'TRACE: ', self.linenos, offset=self.offset)
             if before is not None:
-                option = option.strip()
-                if before != after and (option in self.options or not self.options):
-                    msg += '\n<<< %s\n>>> %s\n' % (before,after)
+                if before != after and re.match(self.filter,name):
+                    if is_array(before):
+                        before = '\n'.join(before)
+                    if is_array(after):
+                        after = '\n'.join(after)
+                    if after is None:
+                        msg += '\n%s\n' % before
+                    else:
+                        msg += '\n<<<\n%s\n>>>\n%s\n' % (before,after)
                     print_stderr(msg)
             else:
-                print_stderr(option)
-    def parse_trace_attribute(self):
-        """
-        Parse trace attribute to self.options.
-        """
-        trace_attr = document.attributes.get('trace')
-        if trace_attr is not None:
-            opts = set([s.strip() for s in trace_attr.split(',')])
-            opts.discard('')
-            illegal_opts = opts.difference(self.ALLOWED_OPTIONS)
-            if illegal_opts:
-                error('illegal trace options: %s' % ','.join(list(illegal_opts)), halt=True)
-            self.is_on = 'off' not in opts
-            self.options = opts.difference(['on','off'])
-        else:
-            # Clear all options if trace is undefined.
-            self.__init__()
+                print_stderr(name)
 
 ### Used by asciidocapi.py ###
 # List of message strings written to stderr.
@@ -1241,15 +1238,15 @@ class Document:
             self.attributes.update(config.cmd_attrs)
             if config.header_footer:
                 hdr = config.subs_section('header',{})
-                writer.write(hdr)
+                writer.write(hdr,trace='header')
             if self.doctype in ('article','book'):
                 # Translate 'preamble' (untitled elements between header
                 # and first section title).
                 if Lex.next() is not Title:
                     stag,etag = config.section2tags('preamble')
-                    writer.write(stag)
+                    writer.write(stag,trace='preamble open')
                     Section.translate_body()
-                    writer.write(etag)
+                    writer.write(etag,trace='preamble close')
             else:
                 # Translate manpage SYNOPSIS.
                 if Lex.next() is not Title:
@@ -1264,14 +1261,14 @@ class Document:
                     d.update(Title.attributes)
                     AttributeList.consume(d)
                     stag,etag = config.section2tags('sect-synopsis',d)
-                    writer.write(stag)
+                    writer.write(stag,trace='synopsis open')
                     Section.translate_body()
-                    writer.write(etag)
+                    writer.write(etag,trace='synopsis close')
         else:
             document.process_author_names()
             if config.header_footer:
                 hdr = config.subs_section('header',{})
-                writer.write(hdr)
+                writer.write(hdr,trace='header')
             if Lex.next() is not Title:
                 Section.translate_body()
         # Process remaining sections.
@@ -1283,7 +1280,7 @@ class Document:
         # Substitute document parameters and write document footer.
         if config.header_footer:
             ftr = config.subs_section('footer',{})
-            writer.write(ftr)
+            writer.write(ftr,trace='footer')
     def parse_author(self,s):
         """ Return False if the author is malformed."""
         attrs = self.attributes # Alias for readability.
@@ -1786,7 +1783,7 @@ class Section:
     def setlevel(level):
         """Set document level and write open section close tags up to level."""
         while Section.endtags and Section.endtags[-1][0] >= level:
-            writer.write(Section.endtags.pop()[1])
+            writer.write(Section.endtags.pop()[1],trace='section close')
         document.level = level
     @staticmethod
     def gen_id(title):
@@ -1851,7 +1848,7 @@ class Section:
         AttributeList.consume(Title.attributes)
         stag,etag = config.section2tags(Title.sectname,Title.attributes)
         Section.savetag(Title.level,etag)
-        writer.write(stag)
+        writer.write(stag,trace='section open')
         Section.translate_body()
     @staticmethod
     def translate_body(terminator=Title):
@@ -1871,7 +1868,7 @@ class Section:
                     Section.set_id()
                     AttributeList.consume(Title.attributes)
                     stag,etag = config.section2tags(template,Title.attributes)
-                    writer.write(stag)
+                    writer.write(stag,trace='title')
                     next = Lex.next()
                 else:
                     warning('missing template section: [%s]' % template)
@@ -2245,7 +2242,9 @@ class Paragraph(AbstractBlock):
         template = self.parameters.template
         stag,etag = config.section2tags(template, self.attributes)
         # Write start tag, content, end tag.
+        trace('paragraph open',stag)
         writer.write(dovetail_tags(stag,body,etag))
+        trace('paragraph close',etag)
 
 class Paragraphs(AbstractBlocks):
     """List of paragraph definitions."""
@@ -2580,6 +2579,7 @@ class DelimitedBlock(AbstractBlock):
         else:
             template = self.parameters.template
             stag,etag = config.section2tags(template,self.attributes)
+            trace(self.short_name()+' block open',stag)
             if 'sectionbody' in options:
                 # The body is treated like a section body.
                 writer.write(stag)
@@ -2595,6 +2595,7 @@ class DelimitedBlock(AbstractBlock):
                 body = Lex.subs(body,postsubs)
                 # Write start tag, content, end tag.
                 writer.write(dovetail_tags(stag,body,etag))
+            trace(self.short_name()+' block close',etag)
         if reader.eof():
             self.error('missing closing delimiter',self.start)
         else:
@@ -3769,11 +3770,13 @@ class Writer:
         if not (self.skip_blank_lines and (not line or not line.strip())):
             self.f.write((line or '') + self.newline)
             self.lines_out = self.lines_out + 1
-    def write(self,*args):
+    def write(self,*args,**kwargs):
         """Iterates arguments, writes tuple and list arguments one line per
         element, else writes argument as single line. If no arguments writes
         blank line. If argument is None nothing is written. self.newline is
         appended to each line."""
+        if 'trace' in kwargs and len(args) > 0:
+            trace(kwargs['trace'],args[0])
         if len(args) == 0:
             self.write_line()
             self.lines_out = self.lines_out + 1

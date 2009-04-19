@@ -2,6 +2,15 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== Are there any tools to help me understand what's going on inside AsciiDoc?
+
+AsciiDoc has a built-in trace mechanism which is controlled by the
+'trace' attribute; there is also the `--verbose` command-line option.
+These features are detailed in
+http://www.methods.co.nz/asciidoc/userguide.html#X82[Appendix G of the
+User Guide].
+
+
 == One-liner ifdef::[]'s are disproportionately verbose can they shortened?
 
 This is the response to a question posted on the AsciiDoc discussion

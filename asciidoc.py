@@ -25,7 +25,7 @@ SUBS_OPTIONS = ('specialcharacters','quotes','specialwords',
     'none','replacements2')
 # Default value for unspecified subs and presubs configuration file entries.
 SUBS_NORMAL = ('specialcharacters','quotes','attributes',
-    'specialwords','replacements','macros')
+    'specialwords','replacements','macros','replacements2')
 SUBS_VERBATIM = ('specialcharacters','callouts')
 
 NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attrbibute name.
@@ -123,7 +123,6 @@ class Trace(object):
         document 'trace' attribute (treated as a regexp).
         The 'before' and 'after' messages are only printed if they differ.
         """
-        self.__init__()
         name_re = document.attributes.get('trace')
         if name_re == 'subs':    # Alias for all the inline substitutions.
             name_re = '|'.join(self.SUBS_NAMES)

@@ -2590,13 +2590,20 @@ class Column:
         self.abswidth=None    # 1..   (page units).
         self.pcwidth=None     # 1..99 (percentage).
 
+class Cell:
+    def __init__(self, data, span=1):
+        self.data = data
+        self.span = span
+    def __repr__(self):
+        return '<Cell: %d+|%s>' % (self.span, self.data)
+
 class Table(AbstractBlock):
     ALIGNMENTS = {'<':'left', '>':'right', '^':'center'}
     FORMATS = ('psv','csv','dsv')
     SEPARATORS = dict(
                     csv=',',
                     dsv=r':|\n',
-                    psv=r'((?P<cellcount>\d+)\*)?\|',
+                    psv=r'((?P<cellcount>\d+)(?P<cellop>[*+]))?\|',
                 )
     def __init__(self):
         AbstractBlock.__init__(self)
@@ -2608,7 +2615,7 @@ class Table(AbstractBlock):
         # Calculated parameters.
         self.abswidth=None      # 1..   (page units).
         self.pcwidth = None     # 1..99 (percentage).
-        self.rows=[]            # Parsed rows, each row is a list of cell data.
+        self.rows=[]            # Parsed rows, each row is a list of Cells.
         self.columns=[]         # List of Columns.
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
@@ -2770,40 +2777,62 @@ class Table(AbstractBlock):
         Generate column related substitution attributes.
         """
         cols = []
-        i = 0
+        i = 1
         for col in self.columns:
-            i += 1
             colspec = self.get_tags(col.style).colspec
             if colspec:
                 self.attributes['colalign'] = col.colalign
                 self.attributes['colabswidth'] = col.abswidth
                 self.attributes['colpcwidth'] = col.pcwidth
-                self.attributes['colnumber'] = str(i+1)
+                self.attributes['colnumber'] = str(i)
                 s = subs_attrs(colspec, self.attributes)
                 if not s:
                     warning('colspec dropped: contains undefined attribute')
                 else:
                     cols.append(s)
+            i += 1
         if cols:
             self.attributes['colspecs'] = writer.newline.join(cols)
     def parse_rows(self, text):
         """
         Parse the table source text into self.rows (a list of rows, each row
-        is a list of raw cell text.
+        is a list of Cells.
         """
         if self.parameters.format in ('psv','dsv'):
             cells = self.parse_psv_dsv(text)
             colcount = len(self.columns)
-            for i in range(0, len(cells), colcount):
-                self.rows.append(cells[i:i+colcount])
+            row = []
+            i = 0
+            for cell in cells:
+                i += cell.span
+                if i <= colcount:
+                    row.append(cell)
+                if i >= colcount:
+                    self.rows.append(row)
+                    row = []
+                    i = 0
+                if i > colcount:
+                    warning('table row %d: span exceeds number of columns'
+                            % len(self.rows))
         elif self.parameters.format == 'csv':
-            self.parse_csv(text)
+            self.rows = self.parse_csv(text)
         else:
             assert True,'illegal table format'
+        # Check that all row spans match.
+        for i,row in enumerate(self.rows):
+            row_span = 0
+            for cell in row:
+                row_span += cell.span
+            if i == 0:
+                header_span = row_span
+            if row_span < header_span:
+                warning('table row %d: does not span all columns' % (i+1))
+            if row_span > header_span:
+                warning('table row %d: exceeds columns span' % (i+1))
     def subs_rows(self, rows, rowtype='body'):
         """
         Return a string of output markup from a list of rows, each row
-        is a list of raw cell text.
+        is a list of raw data text.
         """
         tags = tables.tags[self.parameters.tags]
         if rowtype == 'header':
@@ -2821,21 +2850,21 @@ class Table(AbstractBlock):
         return writer.newline.join(result)
     def subs_row(self, row, rowtype):
         """
-        Substitute the list of cells using the cell data tag.
+        Substitute the list of Cells using the data tag.
         Returns a list of marked up table cell elements.
         """
-        if len(row) < len(self.columns):
-            warning('fewer row data items than table columns')
-        if len(row) > len(self.columns):
-            warning('more row data items than table columns')
         result = []
-        for i in range(len(self.columns)):
+        i = 0
+        for cell in row:
             col = self.columns[i]
             tags = self.get_tags(col.style)
             self.attributes['colalign'] = col.colalign
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
             self.attributes['colnumber'] = str(i+1)
+            self.attributes['colspan'] = str(cell.span)
+            self.attributes['colstart'] = self.attributes['colnumber']
+            self.attributes['colend'] = str(i+cell.span)
             if rowtype == 'header':
                 dtag = tags.headdata
             elif rowtype == 'footer':
@@ -2843,10 +2872,10 @@ class Table(AbstractBlock):
             else:
                 dtag = tags.bodydata
             # Fill missing column data with blanks.
-            if i > len(row) - 1:
+            if i > len(self.columns) - 1:
                 data = ''
             else:
-                data = row[i]
+                data = cell.data
             # Format header cells with the table style not column style.
             if rowtype == 'header':
                 colstyle = None
@@ -2868,51 +2897,61 @@ class Table(AbstractBlock):
                         data += dovetail_tags([stag],para.split('\n'),[etag])
             stag,etag = subs_tag(dtag,self.attributes)
             result = result + dovetail_tags([stag],data,[etag])
+            i += cell.span
         return result
     def parse_csv(self,text):
         """
         Parse the table source text and return a list of rows, each row
-        is a list of raw cell text.
+        is a list of Cells.
         """
         import StringIO
         import csv
-        self.rows = []
+        rows = []
         rdr = csv.reader(StringIO.StringIO('\r\n'.join(text)),
                      delimiter=self.parameters.separator, skipinitialspace=True)
         try:
             for row in rdr:
-                self.rows.append(row)
+                rows.append([Cell(data) for data in row])
         except Exception:
             self.error('csv parse error: %s' % row)
+        return rows
     def parse_psv_dsv(self,text):
         """
         Parse list of PSV or DSV table source text lines and return a list of
-        cells.
+        Cells.
         """
+        def append_cell(data, cellcount, cellop):
+            if cellop == '*':   # Cell multiplier.
+                for i in range(cellcount):
+                    cells.append(Cell(data))
+            elif cellop == '+': # Cell spanner.
+                cells.append(Cell(data, cellcount))
+            else:
+                self.error('illegal table cell operator')
         text = '\n'.join(text)
         separator = '(?msu)'+self.parameters.separator
         format = self.parameters.format
         start = 0
         cellcount = 1
+        cellop = '*'
         cells = []
-        cell = ''
+        data = ''
         for mo in re.finditer(separator,text):
-            cell += text[start:mo.start()]
-            if cell.endswith('\\'):
-                cell = cell[:-1]+mo.group() # Reinstate escaped separators.
+            data += text[start:mo.start()]
+            if data.endswith('\\'):
+                data = data[:-1]+mo.group() # Reinstate escaped separators.
             else:
-                for i in range(cellcount):
-                    cells.append(cell)
+                append_cell(data, cellcount, cellop)
                 cellcount = int(mo.groupdict().get('cellcount') or '1')
-                cell = ''
+                cellop = mo.groupdict().get('cellop') or '*'
+                data = ''
             start = mo.end()
         # Last cell follows final separator.
-        cell += text[start:]
-        for i in range(cellcount):
-            cells.append(cell)
+        data += text[start:]
+        append_cell(data, cellcount, cellop)
         # We expect a dummy blank item preceeding first PSV cell.
         if format == 'psv':
-            if cells[0] != '':
+            if cells[0].data != '':
                 self.error('missing leading separator: %s' % separator,
                         self.start)
             else:
@@ -2951,7 +2990,9 @@ class Table(AbstractBlock):
             if self.parameters.format == 'csv':
                 cols = text[0].count(self.parameters.separator)
             else:
-                cols = len(self.parse_psv_dsv(text[:1]))
+                cols = 0
+                for cell in self.parse_psv_dsv(text[:1]):
+                    cols += cell.span
         self.parse_cols(cols)
         # Set calculated attributes.
         self.attributes['colcount'] = len(self.columns)

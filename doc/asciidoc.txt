@@ -2656,7 +2656,7 @@ as a sequence of cells -- there are no mandatory row separators.
   cells with a separator, that really the only difference (apart from
   different default separators).
 - 'psv' and 'dsv' separators are Python regular expressions.
-- The default 'psv' separator is `((?P<cellcount>\d+)\*)?\|` (a pipe
+- The default 'psv' separator is `((?P<cellcount>\d+)[*+])?\|` (a pipe
   character with optional cell multiplier prefix); the default 'dsv'
   separator is `:|\n` (a colon or a line break).
 - 'psv' and 'dsv' cell separators can be escaped by preceding them

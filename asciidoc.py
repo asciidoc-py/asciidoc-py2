@@ -2591,11 +2591,13 @@ class Column:
         self.pcwidth=None     # 1..99 (percentage).
 
 class Cell:
-    def __init__(self, data, span=1):
+    def __init__(self, data, span=1, align=None, style=None):
         self.data = data
         self.span = span
+        self.align = align
+        self.style = style
     def __repr__(self):
-        return '<Cell: %d+|%s>' % (self.span, self.data)
+        return '<Cell: %d+%s%s|%s>' % (self.span, self.align, self.style, self.data)
 
 class Table(AbstractBlock):
     ALIGNMENTS = {'<':'left', '>':'right', '^':'center'}
@@ -2603,7 +2605,7 @@ class Table(AbstractBlock):
     SEPARATORS = dict(
                     csv=',',
                     dsv=r':|\n',
-                    psv=r'((?P<cellcount>\d+)(?P<cellop>[*+]))?\|',
+                    psv=r'((?<!\S)((?P<count>\d+)(?P<op>[*+]))?(?P<align>[<\^>])?(?P<style>[a-z])?)?\|'
                 )
     def __init__(self):
         AbstractBlock.__init__(self)
@@ -2709,9 +2711,9 @@ class Table(AbstractBlock):
         Build list of column objects from table 'cols' attribute.
         """
         # [<multiplier>*][<align>][<width>][<style>]
-        COLS_RE1 = r'^((?P<count>\d+)\*)?(?P<align>[<\^>])?(?P<width>\d+%?)?(?P<style>[a-zA-Z]\w*)?$'
+        COLS_RE1 = r'^((?P<count>\d+)\*)?(?P<align>[<\^>])?(?P<width>\d+%?)?(?P<style>[a-z]\w*)?$'
         # [<multiplier>*][<width>][<align>][<style>]
-        COLS_RE2 = r'^((?P<count>\d+)\*)?(?P<width>\d+%?)?(?P<align>[<\^>])?(?P<style>[a-zA-Z]\w*)?$'
+        COLS_RE2 = r'^((?P<count>\d+)\*)?(?P<width>\d+%?)?(?P<align>[<\^>])?(?P<style>[a-z]\w*)?$'
         reo1 = re.compile(COLS_RE1)
         reo2 = re.compile(COLS_RE2)
         cols = str(cols)
@@ -2857,30 +2859,25 @@ class Table(AbstractBlock):
         i = 0
         for cell in row:
             col = self.columns[i]
-            tags = self.get_tags(col.style)
-            self.attributes['colalign'] = col.colalign
+            self.attributes['colalign'] = cell.align or col.colalign
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
             self.attributes['colnumber'] = str(i+1)
             self.attributes['colspan'] = str(cell.span)
             self.attributes['colstart'] = self.attributes['colnumber']
             self.attributes['colend'] = str(i+cell.span)
-            if rowtype == 'header':
-                dtag = tags.headdata
-            elif rowtype == 'footer':
-                dtag = tags.footdata
-            else:
-                dtag = tags.bodydata
             # Fill missing column data with blanks.
             if i > len(self.columns) - 1:
                 data = ''
             else:
                 data = cell.data
-            # Format header cells with the table style not column style.
             if rowtype == 'header':
-                colstyle = None
+                # Use table style unless overriden by cell style.
+                colstyle = cell.style
             else:
-                colstyle = col.style
+                # If the cell style is not defined use the column style.
+                colstyle = cell.style or col.style
+            tags = self.get_tags(colstyle)
             presubs,postsubs = self.get_subs(colstyle)
             data = [data]
             data = Lex.subs(data, presubs)
@@ -2895,6 +2892,12 @@ class Table(AbstractBlock):
                     data = []
                     for para in re.split(r'\n{2,}',text):
                         data += dovetail_tags([stag],para.split('\n'),[etag])
+            if rowtype == 'header':
+                dtag = tags.headdata
+            elif rowtype == 'footer':
+                dtag = tags.footdata
+            else:
+                dtag = tags.bodydata
             stag,etag = subs_tag(dtag,self.attributes)
             result = result + dovetail_tags([stag],data,[etag])
             i += cell.span
@@ -2920,20 +2923,22 @@ class Table(AbstractBlock):
         Parse list of PSV or DSV table source text lines and return a list of
         Cells.
         """
-        def append_cell(data, cellcount, cellop):
-            if cellop == '*':   # Cell multiplier.
-                for i in range(cellcount):
-                    cells.append(Cell(data))
-            elif cellop == '+': # Cell spanner.
-                cells.append(Cell(data, cellcount))
+        def append_cell(data, count, op, align, style):
+            if op == '*':   # Cell multiplier.
+                for i in range(count):
+                    cells.append(Cell(data, 1, align, style))
+            elif op == '+': # Cell spanner.
+                cells.append(Cell(data, count, align, style))
             else:
                 self.error('illegal table cell operator')
         text = '\n'.join(text)
         separator = '(?msu)'+self.parameters.separator
         format = self.parameters.format
         start = 0
-        cellcount = 1
-        cellop = '*'
+        count = 1
+        op = '*'
+        align = None
+        style = None
         cells = []
         data = ''
         for mo in re.finditer(separator,text):
@@ -2941,17 +2946,23 @@ class Table(AbstractBlock):
             if data.endswith('\\'):
                 data = data[:-1]+mo.group() # Reinstate escaped separators.
             else:
-                append_cell(data, cellcount, cellop)
-                cellcount = int(mo.groupdict().get('cellcount') or '1')
-                cellop = mo.groupdict().get('cellop') or '*'
+                append_cell(data, count, op, align, style)
+                count = int(mo.groupdict().get('count') or '1')
+                op = mo.groupdict().get('op') or '*'
+                align = mo.groupdict().get('align')
+                if align:
+                    align = Table.ALIGNMENTS[align]
+                style = mo.groupdict().get('style')
+                if style:
+                    style = self.get_style(style)
                 data = ''
             start = mo.end()
         # Last cell follows final separator.
         data += text[start:]
-        append_cell(data, cellcount, cellop)
+        append_cell(data, count, op, align, style)
         # We expect a dummy blank item preceeding first PSV cell.
         if format == 'psv':
-            if cells[0].data != '':
+            if cells[0].data.strip() != '':
                 self.error('missing leading separator: %s' % separator,
                         self.start)
             else:

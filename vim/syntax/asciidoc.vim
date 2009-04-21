@@ -72,9 +72,9 @@ syn match asciidocSidebarDelimiter /^*\{4,}$/
 
 "See http://vimdoc.sourceforge.net/htmldoc/usr_44.html for excluding region
 "contents from highlighting.
-syn match asciidocTablePrefix /\(\d\+[*+]\)\?|/ containedin=asciidocTableBlock contained
+syn match asciidocTablePrefix /\(\S\@<!\(\([0-9]\+\)\([*+]\)\)\?\([<\^>]\)\?\([a-z]\)\?\)\?|/ containedin=asciidocTableBlock contained
 syn region asciidocTableBlock matchgroup=asciidocTableDelimiter start=/^|=\{3,}$/ end=/^|=\{3,}$/ keepend contains=ALL
-syn match asciidocTablePrefix2 /\(\d\+\*\)\?!/ containedin=asciidocTableBlock2 contained
+syn match asciidocTablePrefix /\(\S\@<!\(\([0-9]\+\)\([*+]\)\)\?\([<\^>]\)\?\([a-z]\)\?\)\?!/ containedin=asciidocTableBlock contained
 syn region asciidocTableBlock2 matchgroup=asciidocTableDelimiter2 start=/^!=\{3,}$/ end=/^!=\{3,}$/ keepend contains=ALL
 
 syn match asciidocListContinuation /^+$/
@@ -113,7 +113,7 @@ highlight link asciidocRefMacro Macro
 highlight link asciidocIndexTerm Macro
 highlight link asciidocMacro Macro
 highlight link asciidocAttributeMacro Macro
-highlight link asciidocAnchorMacro Macro 
+highlight link asciidocAnchorMacro Macro
 highlight link asciidocEmail Macro
 highlight link asciidocListBullet Label
 highlight link asciidocListNumber Label

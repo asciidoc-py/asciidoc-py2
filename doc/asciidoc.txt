@@ -2547,9 +2547,9 @@ Columns formatted with strong, monospaced and emphasis styles
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .An example table
-[width="50%",cols=">s,^m,e",frame="none",options="header,footer"]
+[width="50%",cols=">s,^m,e",frame="topbot",options="header,footer"]
 |==========================
-|        |Column 2|Column 3
+|      2+|Columns 2 and 3
 |1       |Item 1  |Item 1
 |2       |Item 2  |Item 2
 |3       |Item 3  |Item 3
@@ -2561,9 +2561,9 @@ AsciiDoc source:
 
 ---------------------------------------------------------------------
 .An example table
-[width="50%",cols=">s,^m,e",frame="none",options="header,footer"]
+[width="50%",cols=">s,^m,e",frame="topbot",options="header,footer"]
 |==========================
-|        |Column 2|Column 3
+|      2+|Columns 2 and 3
 |1       |Item 1  |Item 1
 |2       |Item 2  |Item 2
 |3       |Item 3  |Item 3
@@ -2656,19 +2656,19 @@ as a sequence of cells -- there are no mandatory row separators.
   cells with a separator, that really the only difference (apart from
   different default separators).
 - 'psv' and 'dsv' separators are Python regular expressions.
-- The default 'psv' separator is `((?P<cellcount>\d+)[*+])?\|` (a pipe
-  character with optional cell multiplier prefix); the default 'dsv'
-  separator is `:|\n` (a colon or a line break).
+- The default 'psv' separator contains <<X84, cell specifier>> related
+  named regular expression groups.
+- The default 'dsv' separator is `:|\n` (a colon or a line break).
 - 'psv' and 'dsv' cell separators can be escaped by preceding them
   with a backslash character.
 - The 'psv' format allows cells to be stacked vertically, this makes
   it easy to enter large amounts of text per cell while still
   retaining readability.
 
-Here are four 'psv' cells (the second item is multiplied by two; the
+Here are four 'psv' cells (the second item spans two columns; the
 last contains an escaped separator):
 
-  |One 2*|Two and three |A \| separator character
+  |One 2+|Two and three |A \| separator character
 
 [[X69]]
 Table attributes
@@ -2731,7 +2731,7 @@ implemented using a filter.
 [[X70]]
 Column Specifiers
 ~~~~~~~~~~~~~~~~~
-Column specifiers define how columns are presented and are used in the
+Column specifiers define how columns are rendered and appear in the
 table <<X69,cols attribute>>.  A column specifier consists of an
 optional column multiplier followed by optional alignment, width and
 style values and is formatted like:
@@ -2755,6 +2755,23 @@ style values and is formatted like:
   first letter is normally sufficient).
 - Column specific styles are not applied to 'header' row formatting.
 
+[[X84]]
+Cell Specifiers
+~~~~~~~~~~~~~~~
+Cell specifiers allow individual cells in 'psv' formatted tables to be
+spanned, multiplied, aligned and styled.  Cell specifiers prefix 'psv'
+`|` delimiters and are formatted like:
+
+  [<count>*|+][<align>][<style>]
+
+- '<count>' is the number of columns the cell spans ('+' operator)
+  or the number of times the cell is replicated ('*' operator).
+- '<align>' values are the same as in <<X70,column specifiers>>.
+- A '<style>' value is the first letter of <<X71,table style>> name.
+
+For example, the following 'psv' formatted cell will span two columns
+and the text will be centered and emphasized: `2+^e| Cell text`
+
 [[X71]]
 Table styles
 ~~~~~~~~~~~~
@@ -2772,6 +2789,7 @@ Like default but all text is emphasised.
 
 monospaced::
 Like default but all text is in a monospaced font.
+TODO: This doesn't work in DocBook.
 
 strong::
 Like default but all text is bold.
@@ -2779,7 +2797,8 @@ Like default but all text is bold.
 asciidoc::
 With this style table cells can contain any of the AsciiDoc elements
 that are allowed inside document sections. This style runs asciidoc(1)
-as a filter to process cell contents.
+as a filter to process cell contents. See also <<X83,Docbook table
+limitations>>.
 
 literal::
 No text formatting; monospaced font; all line breaks are retained
@@ -2833,12 +2852,34 @@ character is provided to allow a single level of table nesting.
 Columns containing nested tables must use the 'asciidoc' style. An
 example can be found in `./examples/website/newtables.txt`.
 
-NOTE: When generating PDF nested tables using `a2x(1)` you will need
-to use the `--no-xmllint` option. This is because the nested tables
-are not legal in DocBook (you have to use the DocBook 4 'entrytbl'
-element). But both 'dblatex' (as of version 0.28) and 'FOP' (as of
-version 0.95beta) will process nested DocBook tables, but not
-'entrytbl' elements.
+[[X83]]
+DocBook table limitations
+~~~~~~~~~~~~~~~~~~~~~~~~~
+AsciiDoc HTML table outputs obey all the table formatting directives
+but there are some limitations when it comes to DocBook:
+
+- Although nested tables are not legal in DocBook 4 the FOP and
+  dblatex toolchains will process them correctly.  If you use `a2x(1)`
+  you will need to include the `--no-xmllint` option to suppress
+  DocBook validation errors.
++
+NOTE: Technically you can nest DocBook 4 tables one level using the
+'entrytbl' element, but not all toolchains process 'entrytbl'.
+
+- DocBook only allows a subset of block elements inside table cells so
+  not all AsciiDoc elements produce valid DocBook inside table cells.
+  If you get validation errors running `a2x(1)` try the `--no-xmllint`
+  option, toolchains will often process nested block elements such as
+  sidebard blocks correctly.
+
+- Text formatting in cells using the 'monospaced' table style will
+  raise validation errors because the DocBook 'literal' element was
+  not designed to support formatted text (using the 'literal' element
+  is a kludge on the part of AsciiDoc as there is no easy way to set
+  the font style in DocBook.
+
+- Cell alignment is ignored for 'verse', 'literal' or 'asciidoc'
+   table styles.
 
 
 [[X1]]

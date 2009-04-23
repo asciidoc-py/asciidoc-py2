@@ -1187,14 +1187,19 @@ class Document:
             'illegal document type'
         assert self.level == 0
         config.expand_all_templates()
-        # Skip leading comment block.
-        if blocks.isnext() and 'skip' in blocks.current.options:
-            blocks.current.translate()
-        # Skip leading comment lines.
-        while macros.isnext() and macros.current.name == 'comment':
-            macros.current.translate()
-        # Skip leading attribute entries.
-        AttributeEntry.translate_all()
+        # Skip leading comments and attribute entries.
+        finished = False
+        while not finished:
+            finished = True
+            if blocks.isnext() and 'skip' in blocks.current.options:
+                finished = False
+                blocks.current.translate()
+            if macros.isnext() and macros.current.name == 'comment':
+                finished = False
+                macros.current.translate()
+            if AttributeEntry.isnext():
+                finished = False
+                AttributeEntry.translate()
         # Process document header.
         has_header =  Lex.next() is Title and Title.level == 0
         if self.doctype == 'manpage' and not has_header:

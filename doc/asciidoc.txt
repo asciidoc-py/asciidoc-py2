@@ -2497,11 +2497,11 @@ Tables
 The AsciiDoc table syntax looks and behaves like other delimited block
 types and supports standard <<X73,block configuration entries>>.
 Formatting is easy to read and, just as importantly, easy to enter.
-There are a wide variety of built-in customizable styles.
 
-- All table meta-data is contained specified in the table's attribute
-  list, not in the the table data.
-- There is no provision for cells to span multiple columns.
+- Cells and columns can be formatted using built-in customizable styles.
+- Horizontal and vertical cell alignment can be set on columns and
+  cell.
+- Horizontal and vertical cell spanning is supported.
 
 .Use tables sparingly
 *********************************************************************
@@ -2522,9 +2522,8 @@ displaying column oriented tabular data.
 
 Example tables
 ~~~~~~~~~~~~~~
-Simple table
-^^^^^^^^^^^^
 
+.Simple table
 [width="15%"]
 |=======
 |1 |2 |A
@@ -2532,8 +2531,7 @@ Simple table
 |5 |6 |C
 |=======
 
-AsciiDoc source:
-
+.AsciiDoc source
 ---------------------------------------------------------------------
 [width="15%"]
 |=======
@@ -2543,10 +2541,7 @@ AsciiDoc source:
 |=======
 ---------------------------------------------------------------------
 
-Columns formatted with strong, monospaced and emphasis styles
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.An example table
+.Columns formatted with strong, monospaced and emphasis styles
 [width="50%",cols=">s,^m,e",frame="topbot",options="header,footer"]
 |==========================
 |      2+|Columns 2 and 3
@@ -2557,8 +2552,7 @@ Columns formatted with strong, monospaced and emphasis styles
 |footer 1|footer 2|footer 3
 |==========================
 
-AsciiDoc source:
-
+.AsciiDoc source
 ---------------------------------------------------------------------
 .An example table
 [width="50%",cols=">s,^m,e",frame="topbot",options="header,footer"]
@@ -2572,32 +2566,29 @@ AsciiDoc source:
 |==========================
 ---------------------------------------------------------------------
 
-Horizontal and vertical source data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.Horizontal and vertical source data
+[width="80%",cols="3,^2,^2,10",options="header"]
+|=========================================================
+|Date |Duration |Avg HR |Notes
+
+|22-Aug-08 |10:24 | 157 |
+Worked out MSHR (max sustainable heart rate) by going hard
+for this interval.
+
+|22-Aug-08 |23:03 | 152 |
+Back-to-back with previous interval.
+
+|24-Aug-08 |40:00 | 145 |
+Moderately hard interspersed with 3x 3min intervals (2min
+hard + 1min really hard taking the HR up to 160).
+
+|=========================================================
+
 Short cells can be entered horizontally, longer cells vertically.  The
 default behavior is to strip leading and trailing blank lines within a
 cell. These characteristics aid readability and data entry.
 
-.Windtrainer workouts
-[width="80%",cols="3,^2,^2,10",options="header"]
-|=========================================================
-|Date |Duration |Avg HR |Notes
-
-|22-Aug-08 |10:24 | 157 |
-Worked out MSHR (max sustainable heart rate) by going hard
-for this interval.
-
-|22-Aug-08 |23:03 | 152 |
-Back-to-back with previous interval.
-
-|24-Aug-08 |40:00 | 145 |
-Moderately hard interspersed with 3x 3min intervals (2min
-hard + 1min really hard taking the HR up to 160).
-
-|=========================================================
-
-AsciiDoc source:
-
+.AsciiDoc source
 ---------------------------------------------------------------------
 .Windtrainer workouts
 [width="80%",cols="3,^2,^2,10",options="header"]
@@ -2618,17 +2609,14 @@ hard + 1min really hard taking the HR up to 160).
 |=========================================================
 ---------------------------------------------------------------------
 
-A table with externally sourced CSV data
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+.A table with externally sourced CSV data
 [format="csv",cols="^1,4*2",options="header"]
 |===================================================
 ID,Customer Name,Contact Name,Customer Address,Phone
 include::customers.csv[]
 |===================================================
 
-AsciiDoc source:
-
+.AsciiDoc source
 ---------------------------------------------------------------------
 [format="csv",cols="^1,4*2",options="header"]
 |===================================================
@@ -2638,19 +2626,35 @@ ID,Customer Name,Contact Name,Customer Address,Phone
 ---------------------------------------------------------------------
 
 
+.Cell spans, alignments and styles
+[cols="e,m,^,>s",width="25%"]
+|============================
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|============================
+
+.AsciiDoc source
+---------------------------------------------------------------------
+[cols="e,m,^,>s",width="25%"]
+|============================
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|============================
+---------------------------------------------------------------------
+
 [[X68]]
 Table input data formats
 ~~~~~~~~~~~~~~~~~~~~~~~~
 AsciiDoc table data can be 'psv', 'dsv' or 'csv' formatted.  The
-default AsciiDoc table format is 'psv'.
-
-'csv'  is the quasi-standard row oriented 'Comma Separated Values
-(CSV)' format commonly used to import and export spreadsheet and
-database data.
+default table format is 'psv'.
 
 AsciiDoc 'psv' ('Prefix Separated Values') and 'dsv' ('Delimiter
 Separated Values') formats are cell oriented -- the table is treated
-as a sequence of cells -- there are no mandatory row separators.
+as a sequence of cells -- there are no explicit row separators.
 
 - 'psv' prefixes each cell with a separator whereas 'dsv' delimits
   cells with a separator, that really the only difference (apart from
@@ -2661,14 +2665,15 @@ as a sequence of cells -- there are no mandatory row separators.
 - The default 'dsv' separator is `:|\n` (a colon or a line break).
 - 'psv' and 'dsv' cell separators can be escaped by preceding them
   with a backslash character.
-- The 'psv' format allows cells to be stacked vertically, this makes
-  it easy to enter large amounts of text per cell while still
-  retaining readability.
 
 Here are four 'psv' cells (the second item spans two columns; the
 last contains an escaped separator):
 
   |One 2+|Two and three |A \| separator character
+
+'csv'  is the quasi-standard row oriented 'Comma Separated Values
+(CSV)' format commonly used to import and export spreadsheet and
+database data.
 
 [[X69]]
 Table attributes
@@ -2697,7 +2702,8 @@ The 'grid' attribute value can be any of the following values: 'none',
 valign::
 Use the 'valign' attribute to vertically align all cells in a table.
 The following values are valid: 'top', 'bottom', and 'middle'
-(defaults to 'top').
+(defaults to 'top'). Overriden by <<X70,Column specifiers>>  and
+<<X84,Cell specifiers>>.
 
 options::
 The 'options' attribute can contain the following comma separated
@@ -2746,8 +2752,15 @@ style values and is formatted like:
   absolute column widths (not to be confused with output column width
   <<X72,markup attributes>> which are available in both percentage and
   absolute units).
-- The column '<align>' character can be '<' (left), '^' (center) or
-  '>' (right). Cells are left aligned by default.
+- The '<align>' column alignment specifier is formatted like:
+
+  [<horizontal>][.<vertical>]
++
+Where '<horizontal>' and '<vertical>' are one of the following
+characters: '<', '^' or '>' which represent 'left', 'center' and
+'right' horizontal alignment or 'top', 'middle' and 'bottom' vertical
+alignment respectively.
+
 - A '<multiplier>' can be used to specify repeated columns e.g.
   `cols="4*<"` specifies four left-justified columns. Default value 1.
 - The '<style>' name specifies a <<X71,table style>> to used to markup
@@ -2762,15 +2775,25 @@ Cell specifiers allow individual cells in 'psv' formatted tables to be
 spanned, multiplied, aligned and styled.  Cell specifiers prefix 'psv'
 `|` delimiters and are formatted like:
 
-  [<count>*|+][<align>][<style>]
+  [<span>*|+][<align>][<style>]
 
-- '<count>' is the number of columns the cell spans ('+' operator)
-  or the number of times the cell is replicated ('*' operator).
-- '<align>' values are the same as in <<X70,column specifiers>>.
+- '<span>' specifies horizontal and vertical cell spans ('+' operator) or
+  the number of times the cell is replicated ('*' operator). '<span>'
+  is formatted like:
+
+  [<colspan>][.<rowspan>]
++
+Where '<colspan>' and '<rowspan>' are integers specifying the number of
+columns and rows to span.
+
+- '<align>' specifies horizontal and vertical cell alignment an is the
+  same as in <<X70,column specifiers>>.
 - A '<style>' value is the first letter of <<X71,table style>> name.
 
 For example, the following 'psv' formatted cell will span two columns
-and the text will be centered and emphasized: `2+^e| Cell text`
+and the text will be centered and emphasized:
+
+  `2+^e| Cell text`
 
 [[X71]]
 Table styles
@@ -2831,9 +2854,6 @@ tablepcwidth::
 Table width expressed as a percentage of the available width. Integer
 value (0..100).
 
-colalign::
-'left', 'right' or 'center'.
-
 colabswidth::
 Integer value calculated from 'cols' column width, 'width' and
 'pagewidth' attributes.  In 'pageunit' units.
@@ -2842,8 +2862,32 @@ colpcwidth::
 Column width expressed as a percentage of the table width. Integer
 value (0..100).
 
-colnumber::
-Integer value: '1' for column 1, '2' for column 2 ...
+colcount::
+Total number of table columns.
+
+rowcount::
+Total number of table rows.
+
+align::
+'left', 'right' or 'center'.
+
+valign::
+'top', 'bottom' or 'middle'.
+
+colnumber, colstart::
+The number of the leftmost column occupied by the cell (1...).
+
+colend::
+The number of the rightmost column occupied by the cell (1...).
+
+colspan::
+Number of columns the cell should span.
+
+rowspan::
+Number of rows the cell should span (1...).
+
+morerows::
+Number of additional rows the cell should span (0...).
 
 Nested tables
 ~~~~~~~~~~~~~
@@ -2855,8 +2899,12 @@ example can be found in `./examples/website/newtables.txt`.
 [[X83]]
 DocBook table limitations
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-AsciiDoc HTML table outputs obey all the table formatting directives
-but there are some limitations when it comes to DocBook:
+Fully implementing tables is not trivial, some DocBook toolchains do
+better than others.  AsciiDoc HTML table outputs are rendered
+correctly in all the popular browsers -- if your DocBook generated
+tables don't look right compare them with the output generated by the
+AsciiDoc 'xhtml11' backend or try a different DocBook toolchain.  Here
+is a list of things to be aware of:
 
 - Although nested tables are not legal in DocBook 4 the FOP and
   dblatex toolchains will process them correctly.  If you use `a2x(1)`
@@ -2870,7 +2918,7 @@ NOTE: Technically you can nest DocBook 4 tables one level using the
   not all AsciiDoc elements produce valid DocBook inside table cells.
   If you get validation errors running `a2x(1)` try the `--no-xmllint`
   option, toolchains will often process nested block elements such as
-  sidebard blocks correctly.
+  sidebar blocks and floating titles correctly.
 
 - Text formatting in cells using the 'monospaced' table style will
   raise validation errors because the DocBook 'literal' element was
@@ -2878,7 +2926,7 @@ NOTE: Technically you can nest DocBook 4 tables one level using the
   is a kludge on the part of AsciiDoc as there is no easy way to set
   the font style in DocBook.
 
-- Cell alignment is ignored for 'verse', 'literal' or 'asciidoc'
+- Cell alignments are ignored for 'verse', 'literal' or 'asciidoc'
    table styles.
 
 
@@ -5086,7 +5134,7 @@ system attribute evaluation.
 A special attribute named 'trace' controls the output of diagnostic
 information. If the 'trace' attribute is defined then
 element-by-element diagnostic messages detailing output markup
-generation are printed to stdout.  The 'trace' attribute can be set on
+generation are printed to stderr. The 'trace' attribute can be set on
 the command-line or from within the document using <<X18,Attribute
 Entries>> (the latter allows tracing to be confined to specific
 portions of the document).

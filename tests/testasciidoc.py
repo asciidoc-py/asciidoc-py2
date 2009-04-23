@@ -179,11 +179,11 @@ class AsciiDocTest(object):
         """
         lines = self.generate_expected(backend)
         if not os.path.isdir(self.datadir):
-            message('CREATING: %s' % self.datadir)
+            print('CREATING: %s' % self.datadir)
             os.mkdir(self.datadir)
         f = open(self.backend_filename(backend),'w+')
         try:
-            message('WRITING: %s' % f.name)
+            print('WRITING: %s' % f.name)
             f.writelines([ s + os.linesep for s in lines])
         finally:
             f.close()
@@ -211,9 +211,9 @@ class AsciiDocTest(object):
             backends = [backend]
         result = True   # Assume success.
         self.passed = self.failed = self.skipped = 0
-        message('%d: %s' % (self.number, self.title))
+        print('%d: %s' % (self.number, self.title))
         if self.source and os.path.isfile(self.source):
-            message('SOURCE: asciidoc: %s' % self.source)
+            print('SOURCE: asciidoc: %s' % self.source)
             for backend in backends:
                 fromfile = self.backend_filename(backend)
                 if not self.is_missing(backend):
@@ -228,7 +228,7 @@ class AsciiDocTest(object):
                         result = False
                         self.failed +=1
                         lines = lines[3:]
-                        message('FAILED: %s: %s' % (backend, fromfile))
+                        print('FAILED: %s: %s' % (backend, fromfile))
                         message('+++ %s' % fromfile)
                         message('--- got')
                         for line in lines:
@@ -236,18 +236,18 @@ class AsciiDocTest(object):
                         message()
                     else:
                         self.passed += 1
-                        message('PASSED: %s: %s' % (backend, fromfile))
+                        print('PASSED: %s: %s' % (backend, fromfile))
                 else:
                     self.skipped += 1
-                    message('SKIPPED: %s: %s' % (backend, fromfile))
+                    print('SKIPPED: %s: %s' % (backend, fromfile))
         else:
             self.skipped += len(backends)
             if self.source:
                 msg = 'MISSING: %s' % self.source
             else:
                 msg = 'NO ASCIIDOC SOURCE FILE SPECIFIED'
-            message(msg)
-        message()
+            print(msg)
+        print('')
         return result
 
 
@@ -299,11 +299,11 @@ class AsciiDocTests(object):
                 self.failed += test.failed
                 self.skipped += test.skipped
         if self.passed > 0:
-            message('TOTAL PASSED:  %s' % self.passed)
+            print('TOTAL PASSED:  %s' % self.passed)
         if self.failed > 0:
-            message('TOTAL FAILED:  %s' % self.failed)
+            print('TOTAL FAILED:  %s' % self.failed)
         if self.skipped > 0:
-            message('TOTAL SKIPPED: %s' % self.skipped)
+            print('TOTAL SKIPPED: %s' % self.skipped)
 
     def update(self, number=None, backend=None, force=False):
         """

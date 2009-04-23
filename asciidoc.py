@@ -9,7 +9,7 @@ under the terms of the GNU General Public License (GPL).
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
 ### Used by asciidocapi.py ###
-VERSION = '8.4.3'   # See CHANGLOG file for version history.
+VERSION = '8.4.4b1'   # See CHANGLOG file for version history.
 
 MIN_PYTHON_VERSION = 2.4   # Require this version of Python or better.
 
@@ -138,7 +138,7 @@ class Trace(object):
                     if is_array(after):
                         after = '\n'.join(after)
                     msg += '\n<<<\n%s\n>>>\n%s\n' % (before,after)
-                print(msg)
+                print_stderr(msg)
 
 ### Used by asciidocapi.py ###
 # List of message strings written to stderr.
@@ -2581,32 +2581,37 @@ class DelimitedBlocks(AbstractBlocks):
 
 class Column:
     """Table column."""
-    def __init__(self, width=None, align=None, style=None):
-        self.width=width or '1'
-        self.align=align or '<'
-        self.style=style      # Style name or None.
+    def __init__(self, width=None, align_spec=None, style=None):
+        self.width = width or '1'
+        self.align, self.valign = Table.parse_align_spec(align_spec)
+        self.style = style      # Style name or None.
         # Calculated attribute values.
-        self.colalign=None    # 'left','center','right'.
-        self.abswidth=None    # 1..   (page units).
-        self.pcwidth=None     # 1..99 (percentage).
+        self.abswidth = None    # 1..   (page units).
+        self.pcwidth = None     # 1..99 (percentage).
 
 class Cell:
-    def __init__(self, data, span=1, align=None, style=None):
+    def __init__(self, data, span_spec=None, align_spec=None, style=None):
         self.data = data
-        self.span = span
-        self.align = align
+        self.span, self.vspan = Table.parse_span_spec(span_spec)
+        self.align, self.valign = Table.parse_align_spec(align_spec)
         self.style = style
     def __repr__(self):
-        return '<Cell: %d+%s%s|%s>' % (self.span, self.align, self.style, self.data)
+        return '<Cell: %d.%d %s.%s %s "%s">' % (
+                self.span, self.vspan,
+                self.align, self.valign,
+                self.style or '',
+                self.data)
 
 class Table(AbstractBlock):
-    ALIGNMENTS = {'<':'left', '>':'right', '^':'center'}
+    ALIGN = {'<':'left', '>':'right', '^':'center'}
+    VALIGN = {'<':'top', '>':'bottom', '^':'middle'}
     FORMATS = ('psv','csv','dsv')
     SEPARATORS = dict(
-                    csv=',',
-                    dsv=r':|\n',
-                    psv=r'((?<!\S)((?P<count>\d+)(?P<op>[*+]))?(?P<align>[<\^>])?(?P<style>[a-z])?)?\|'
-                )
+        csv=',',
+        dsv=r':|\n',
+        # The count and align group matches are not exact.
+        psv=r'((?<!\S)((?P<span>[\d.]+)(?P<op>[*+]))?(?P<align>[<\^>.]{,3})?(?P<style>[a-z])?)?\|'
+    )
     def __init__(self):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('format','tags','separator')
@@ -2619,6 +2624,34 @@ class Table(AbstractBlock):
         self.pcwidth = None     # 1..99 (percentage).
         self.rows=[]            # Parsed rows, each row is a list of Cells.
         self.columns=[]         # List of Columns.
+    @staticmethod
+    def parse_align_spec(align_spec):
+        """
+        Parse AsciiDoc cell alignment specifier and return 2-tuple with
+        horizonatal and vertical alignment names. Unspecified alignments
+        set to None.
+        """
+        result = (None, None)
+        if align_spec:
+            mo = re.match(r'^([<\^>])?(\.([<\^>]))?$', align_spec)
+            if mo:
+                result = (Table.ALIGN.get(mo.group(1)),
+                          Table.VALIGN.get(mo.group(3)))
+        return result
+    @staticmethod
+    def parse_span_spec(span_spec):
+        """
+        Parse AsciiDoc cell span specifier and return 2-tuple with horizonatal
+        and vertical span counts. Set default values (1,1) if not
+        specified.
+        """
+        result = (None, None)
+        if span_spec:
+            mo = re.match(r'^(\d+)?(\.(\d+))?$', span_spec)
+            if mo:
+                result = (mo.group(1) and int(mo.group(1)),
+                          mo.group(3) and int(mo.group(3)))
+        return (result[0] or 1, result[1] or 1)
     def load(self,name,entries):
         AbstractBlock.load(self,name,entries)
     def dump(self):
@@ -2706,14 +2739,14 @@ class Table(AbstractBlock):
         else:
             self.error('missing style: %s*' % prefix)
             return None
-    def parse_cols(self,cols):
+    def parse_cols(self, cols, valign):
         """
-        Build list of column objects from table 'cols' attribute.
+        Build list of column objects from table 'cols' and 'valign' attributes.
         """
         # [<multiplier>*][<align>][<width>][<style>]
-        COLS_RE1 = r'^((?P<count>\d+)\*)?(?P<align>[<\^>])?(?P<width>\d+%?)?(?P<style>[a-z]\w*)?$'
+        COLS_RE1 = r'^((?P<count>\d+)\*)?(?P<align>[<\^>.]{,3})?(?P<width>\d+%?)?(?P<style>[a-z]\w*)?$'
         # [<multiplier>*][<width>][<align>][<style>]
-        COLS_RE2 = r'^((?P<count>\d+)\*)?(?P<width>\d+%?)?(?P<align>[<\^>])?(?P<style>[a-z]\w*)?$'
+        COLS_RE2 = r'^((?P<count>\d+)\*)?(?P<width>\d+%?)?(?P<align>[<\^>.]{,3})?(?P<style>[a-z]\w*)?$'
         reo1 = re.compile(COLS_RE1)
         reo2 = re.compile(COLS_RE2)
         cols = str(cols)
@@ -2734,6 +2767,10 @@ class Table(AbstractBlock):
                         )
                 else:
                     self.error('illegal column spec: %s' % col,self.start)
+        # Set column (and indirectly cell) default alignments.
+        for col in self.columns:
+            col.align = col.align or 'left'
+            col.valign = col.valign or valign or 'top'
         # Validate widths and calculate missing widths.
         n = 0; percents = 0; props = 0
         for col in self.columns:
@@ -2762,7 +2799,6 @@ class Table(AbstractBlock):
         # Calculate column alignment and absolute and percent width values.
         percents = 0
         for col in self.columns:
-            col.colalign = Table.ALIGNMENTS[col.align]
             if pcunits:
                 col.pcwidth = float(col.width[:-1])
             else:
@@ -2783,7 +2819,8 @@ class Table(AbstractBlock):
         for col in self.columns:
             colspec = self.get_tags(col.style).colspec
             if colspec:
-                self.attributes['colalign'] = col.colalign
+                self.attributes['align'] = col.align
+                self.attributes['valign'] = col.valign
                 self.attributes['colabswidth'] = col.abswidth
                 self.attributes['colpcwidth'] = col.pcwidth
                 self.attributes['colnumber'] = str(i)
@@ -2800,37 +2837,48 @@ class Table(AbstractBlock):
         Parse the table source text into self.rows (a list of rows, each row
         is a list of Cells.
         """
+        reserved = {}  # Cols reserved by rowspans (indexed by row number).
         if self.parameters.format in ('psv','dsv'):
+            ri = 0  # Current row index 0..
             cells = self.parse_psv_dsv(text)
-            colcount = len(self.columns)
             row = []
-            i = 0
+            ci = 0  # Column counter 0..colcount
             for cell in cells:
-                i += cell.span
-                if i <= colcount:
+                colcount = len(self.columns) - reserved.get(ri,0)
+                if cell.vspan > 1:
+                    # Reserve spanned columns from ensuing rows.
+                    for i in range(1, cell.vspan):
+                        reserved[ri+i] = reserved.get(ri+i, 0) + cell.span
+                ci += cell.span
+                if ci <= colcount:
                     row.append(cell)
-                if i >= colcount:
+                if ci >= colcount:
                     self.rows.append(row)
+                    ri += 1
                     row = []
-                    i = 0
-                if i > colcount:
+                    ci = 0
+                if ci > colcount:
                     warning('table row %d: span exceeds number of columns'
-                            % len(self.rows))
+                            % ri)
         elif self.parameters.format == 'csv':
             self.rows = self.parse_csv(text)
         else:
             assert True,'illegal table format'
         # Check that all row spans match.
-        for i,row in enumerate(self.rows):
+        for ri,row in enumerate(self.rows):
             row_span = 0
             for cell in row:
                 row_span += cell.span
-            if i == 0:
+            row_span += reserved.get(ri,0)
+            if ri == 0:
                 header_span = row_span
             if row_span < header_span:
-                warning('table row %d: does not span all columns' % (i+1))
+                warning('table row %d: does not span all columns' % (ri+1))
             if row_span > header_span:
-                warning('table row %d: exceeds columns span' % (i+1))
+                warning('table row %d: exceeds columns span' % (ri+1))
+        # Check that now row spans exceed the number of rows.
+        if len([x for x in reserved.keys() if x >= len(self.rows)]) > 0:
+            warning('one or more cell spans exceed the available rows')
     def subs_rows(self, rows, rowtype='body'):
         """
         Return a string of output markup from a list of rows, each row
@@ -2859,13 +2907,16 @@ class Table(AbstractBlock):
         i = 0
         for cell in row:
             col = self.columns[i]
-            self.attributes['colalign'] = cell.align or col.colalign
+            self.attributes['align'] = cell.align or col.align
+            self.attributes['valign'] = cell.valign or  col.valign
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
             self.attributes['colnumber'] = str(i+1)
             self.attributes['colspan'] = str(cell.span)
             self.attributes['colstart'] = self.attributes['colnumber']
             self.attributes['colend'] = str(i+cell.span)
+            self.attributes['rowspan'] = str(cell.vspan)
+            self.attributes['morerows'] = str(cell.vspan-1)
             # Fill missing column data with blanks.
             if i > len(self.columns) - 1:
                 data = ''
@@ -2923,20 +2974,22 @@ class Table(AbstractBlock):
         Parse list of PSV or DSV table source text lines and return a list of
         Cells.
         """
-        def append_cell(data, count, op, align, style):
+        def append_cell(data, span_spec, op, align_spec, style):
+            op = op or '+'
             if op == '*':   # Cell multiplier.
-                for i in range(count):
-                    cells.append(Cell(data, 1, align, style))
-            elif op == '+': # Cell spanner.
-                cells.append(Cell(data, count, align, style))
+                span = Table.parse_span_spec(span_spec)[0]
+                for i in range(span):
+                    cells.append(Cell(data, '1', align_spec, style))
+            elif op == '+': # Column spanner.
+                cells.append(Cell(data, span_spec, align_spec, style))
             else:
                 self.error('illegal table cell operator')
         text = '\n'.join(text)
         separator = '(?msu)'+self.parameters.separator
         format = self.parameters.format
         start = 0
-        count = 1
-        op = '*'
+        span = None
+        op = None
         align = None
         style = None
         cells = []
@@ -2946,12 +2999,10 @@ class Table(AbstractBlock):
             if data.endswith('\\'):
                 data = data[:-1]+mo.group() # Reinstate escaped separators.
             else:
-                append_cell(data, count, op, align, style)
-                count = int(mo.groupdict().get('count') or '1')
-                op = mo.groupdict().get('op') or '*'
+                append_cell(data, span, op, align, style)
+                span = mo.groupdict().get('span')
+                op = mo.groupdict().get('op')
                 align = mo.groupdict().get('align')
-                if align:
-                    align = Table.ALIGNMENTS[align]
                 style = mo.groupdict().get('style')
                 if style:
                     style = self.get_style(style)
@@ -2959,7 +3010,7 @@ class Table(AbstractBlock):
             start = mo.end()
         # Last cell follows final separator.
         data += text[start:]
-        append_cell(data, count, op, align, style)
+        append_cell(data, span, op, align, style)
         # We expect a dummy blank item preceeding first PSV cell.
         if format == 'psv':
             if cells[0].data.strip() != '':
@@ -3004,7 +3055,7 @@ class Table(AbstractBlock):
                 cols = 0
                 for cell in self.parse_psv_dsv(text[:1]):
                     cols += cell.span
-        self.parse_cols(cols)
+        self.parse_cols(cols, attrs.get('valign'))
         # Set calculated attributes.
         self.attributes['colcount'] = len(self.columns)
         self.build_colspecs()

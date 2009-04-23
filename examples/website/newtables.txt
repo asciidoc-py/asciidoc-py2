@@ -9,6 +9,17 @@ current table syntax is overly complicated and unwieldy to edit,
 hopefully a more usable syntax will appear in future versions of
 AsciiDoc.''
 
+.Update
+*********************************************************************
+The following additions were made at AsciiDoc 8.4.4:
+
+- Cell column and row spanning.
+- Styles can be applied per cell.
+- Vertical cell alignment can be applied to columns and cells.
+
+See the examples at the end of this document.
+*********************************************************************
+
 At first glance it doesn't look much different to the old syntax but
 it's a lot more flexible, easier to enter and supports a lot of column
 styles (for example the 'asciidoc' style supports AsciiDoc block and
@@ -59,8 +70,8 @@ tables':
 ---------------------------------------------------------------------
 
 
-.Columns formatted with 'strong', 'monospaced' and 'emphasis' styles
-[width="50%",cols=">s,^2m,^2e",frame="topbot",options="header,footer"]
+.Columns formatted with strong, monospaced and emphasis styles
+[width="75%",cols=">s,^2m,^2e",frame="topbot",options="header,footer"]
 |==========================
 |      2+|Columns 2 and 3
 |1       |Item 1  |Item 1
@@ -249,51 +260,52 @@ def sub_word(mo):
 |==================================
 
 .AsciiDoc source
----------------------------------------------------------------------
- [cols="asciidoc,literal",options="header",grid="cols"]
- |==================================
- |Output markup |AsciiDoc source
- 2*|
- Consul *necessitatibus* per id,
- consetetur, eu pro everti postulant
- homero verear ea mea, qui.
+[listing]
+.....................................................................
+[cols="asciidoc,literal",options="header",grid="cols"]
+|==================================
+|Output markup |AsciiDoc source
+2*|
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
 
- -----------------------------------
- Consul *necessitatibus* per id,
- consetetur, eu pro everti postulant
- homero verear ea mea, qui.
- -----------------------------------
+-----------------------------------
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+-----------------------------------
 
- .Code filter example
- [source,python]
- -----------------------------------
- ''' A multi-line
-     comment.'''
- def sub_word(mo):
-     ''' Single line comment.'''
-     word = mo.group('word')
-     if word in keywords[language]:
-         return quote + word + quote
-     else:
-         return word
- -----------------------------------
+.Code filter example
+[source,python]
+-----------------------------------
+''' A multi-line
+   comment.'''
+def sub_word(mo):
+   ''' Single line comment.'''
+   word = mo.group('word')
+   if word in keywords[language]:
+       return quote + word + quote
+   else:
+       return word
+-----------------------------------
 
- - Lorem ipsum dolor sit amet,
-   consectetuer adipiscing elit.
-   * Fusce euismod commodo velit.
-   * Qui in magna commodo, est labitur
-     dolorum an. Est ne magna primis
-     adolescens. Sit munere ponderum
-     dignissim et. Minim luptatum et vel.
-   * Vivamus fringilla mi eu lacus.
-   * Donec eget arcu bibendum nunc
-     consequat lobortis.
- - Nulla porttitor vulputate libero.
-   . Fusce euismod commodo velit.
-   . Vivamus fringilla mi eu lacus.
+- Lorem ipsum dolor sit amet,
+ consectetuer adipiscing elit.
+ * Fusce euismod commodo velit.
+ * Qui in magna commodo, est labitur
+   dolorum an. Est ne magna primis
+   adolescens. Sit munere ponderum
+   dignissim et. Minim luptatum et vel.
+ * Vivamus fringilla mi eu lacus.
+ * Donec eget arcu bibendum nunc
+   consequat lobortis.
+- Nulla porttitor vulputate libero.
+ . Fusce euismod commodo velit.
+ . Vivamus fringilla mi eu lacus.
 
- |==================================
----------------------------------------------------------------------
+|==================================
+.....................................................................
 
 
 .Cell containing lots of example markup elements
@@ -373,81 +385,197 @@ double arrow, <= left double arrow.
 ---------------------------------------------------------------------
 
 
-.Spanned and styled cells
-[width="75%",cols="1,3*2",options="header"]
-|========================================================
-    |Column 1  2+^|Columns 2 and 3          |Column 4
-   s|One         e|Two     >e|Three       >s|Four
-2+>s|Five                2+<s|Six
-  4+|Seven
-    |Eight       s|Nine  2+^m|Ten
-|========================================================
+.Spans, alignments and styles
+[cols="e,m,^,>s",width="25%"]
+|================
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|================
 
 .AsciiDoc source
 ---------------------------------------------------------------------
-[width="75%",cols="1,3*2",options="header"]
-|========================================================
-    |Column 1  2+^|Columns 2 and 3          |Column 4
-   s|One         e|Two     >e|Three       >s|Four
-2+>s|Five                2+<s|Six
-  4+|Seven
-    |Eight       s|Nine  2+^m|Ten
-|========================================================
+.Spans, alignments and styles
+[cols="e,m,^,>s",width="25%"]
+|================
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|================
 ---------------------------------------------------------------------
 
-.Styled cells
-[width="75%"]
+.Three panes
+[cols="a,2a"]
 |==================================
-^|
+|
+[float]
+Top Left Pane
+~~~~~~~~~~~~~
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
-^e|
+
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
-^v|
+
+.2+|
+[float]
+Right Pane
+~~~~~~~~~~
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
-^l|
-Consul *necessitatibus* per id,
-consetetur, eu pro everti postulant
-homero verear ea mea, qui.
-^a|
+
 -----------------------------------
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 -----------------------------------
+
+.Code filter example
+[source,python]
+-----------------------------------
+''' A multi-line
+    comment.'''
+def sub_word(mo):
+    ''' Single line comment.'''
+    word = mo.group('word')
+    if word in keywords[language]:
+        return quote + word + quote
+    else:
+        return word
+-----------------------------------
+
+- Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit.
+  * Fusce euismod commodo velit.
+  * Qui in magna commodo, est labitur
+    dolorum an. Est ne magna primis
+    adolescens. Sit munere ponderum
+    dignissim et. Minim luptatum et vel.
+  * Vivamus fringilla mi eu lacus.
+  * Donec eget arcu bibendum nunc
+    consequat lobortis.
+- Nulla porttitor vulputate libero.
+  . Fusce euismod commodo velit.
+  . Vivamus fringilla mi eu lacus.
+
+|
+[float]
+Bottom Left Pane
+~~~~~~~~~~~~~~~~
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+
+- Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit.
+  * Fusce euismod commodo velit.
+  * Qui in magna commodo, est labitur
+    dolorum an. Est ne magna primis
+    adolescens. Sit munere ponderum
+    dignissim et. Minim luptatum et vel.
+  * Vivamus fringilla mi eu lacus.
+  * Donec eget arcu bibendum nunc
+    consequat lobortis.
+- Nulla porttitor vulputate libero.
+  . Fusce euismod commodo velit.
+  . Vivamus fringilla mi eu lacus.
+
 |==================================
 
 .AsciiDoc source
 [listing]
 .....................................................................
-[width="75%"]
+.Three panes
+[cols="a,2a"]
 |==================================
-^|
+|
+[float]
+Top Left Pane
+~~~~~~~~~~~~~
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
-^e|
+
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
-^v|
+
+.2+|
+[float]
+Right Pane
+~~~~~~~~~~
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
-^l|
-Consul *necessitatibus* per id,
-consetetur, eu pro everti postulant
-homero verear ea mea, qui.
-^a|
+
 -----------------------------------
 Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 -----------------------------------
+
+.Code filter example
+[source,python]
+-----------------------------------
+''' A multi-line
+    comment.'''
+def sub_word(mo):
+    ''' Single line comment.'''
+    word = mo.group('word')
+    if word in keywords[language]:
+        return quote + word + quote
+    else:
+        return word
+-----------------------------------
+
+- Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit.
+  * Fusce euismod commodo velit.
+  * Qui in magna commodo, est labitur
+    dolorum an. Est ne magna primis
+    adolescens. Sit munere ponderum
+    dignissim et. Minim luptatum et vel.
+  * Vivamus fringilla mi eu lacus.
+  * Donec eget arcu bibendum nunc
+    consequat lobortis.
+- Nulla porttitor vulputate libero.
+  . Fusce euismod commodo velit.
+  . Vivamus fringilla mi eu lacus.
+
+|
+[float]
+Bottom Left Pane
+~~~~~~~~~~~~~~~~
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+
+- Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit.
+  * Fusce euismod commodo velit.
+  * Qui in magna commodo, est labitur
+    dolorum an. Est ne magna primis
+    adolescens. Sit munere ponderum
+    dignissim et. Minim luptatum et vel.
+  * Vivamus fringilla mi eu lacus.
+  * Donec eget arcu bibendum nunc
+    consequat lobortis.
+- Nulla porttitor vulputate libero.
+  . Fusce euismod commodo velit.
+  . Vivamus fringilla mi eu lacus.
+
 |==================================
 .....................................................................

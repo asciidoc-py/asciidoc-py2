@@ -71,7 +71,7 @@ tables':
 
 
 .Columns formatted with strong, monospaced and emphasis styles
-[width="75%",cols=">s,^2m,^2e",frame="topbot",options="header,footer"]
+[width="50%",cols=">s,^2m,^2e",frame="topbot",options="header,footer"]
 |==========================
 |      2+|Columns 2 and 3
 |1       |Item 1  |Item 1

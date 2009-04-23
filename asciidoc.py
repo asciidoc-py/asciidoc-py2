@@ -2744,9 +2744,10 @@ class Table(AbstractBlock):
         else:
             self.error('missing style: %s*' % prefix)
             return None
-    def parse_cols(self, cols, valign):
+    def parse_cols(self, cols, align, valign):
         """
-        Build list of column objects from table 'cols' and 'valign' attributes.
+        Build list of column objects from table 'cols', 'align' and 'valign'
+        attributes.
         """
         # [<multiplier>*][<align>][<width>][<style>]
         COLS_RE1 = r'^((?P<count>\d+)\*)?(?P<align>[<\^>.]{,3})?(?P<width>\d+%?)?(?P<style>[a-z]\w*)?$'
@@ -2774,7 +2775,7 @@ class Table(AbstractBlock):
                     self.error('illegal column spec: %s' % col,self.start)
         # Set column (and indirectly cell) default alignments.
         for col in self.columns:
-            col.align = col.align or 'left'
+            col.align = col.align or align or 'left'
             col.valign = col.valign or valign or 'top'
         # Validate widths and calculate missing widths.
         n = 0; percents = 0; props = 0
@@ -3060,7 +3061,7 @@ class Table(AbstractBlock):
                 cols = 0
                 for cell in self.parse_psv_dsv(text[:1]):
                     cols += cell.span
-        self.parse_cols(cols, attrs.get('valign'))
+        self.parse_cols(cols, attrs.get('align'), attrs.get('valign'))
         # Set calculated attributes.
         self.attributes['colcount'] = len(self.columns)
         self.build_colspecs()

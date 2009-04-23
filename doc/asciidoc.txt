@@ -15,7 +15,7 @@ Introduction
 ------------
 **********************************************************************
 This is an overly large document, it probably needs to be refactored
-into a Tutorial, FAQ, Quick Reference and Formal Reference.
+into a Tutorial, Quick Reference and Formal Reference.
 
 If you're new to AsciiDoc read this section and the <<X6,Getting
 Started>> section and take a look at the example AsciiDoc `.txt`
@@ -2699,6 +2699,12 @@ Defines which ruler lines are drawn between table rows and columns.
 The 'grid' attribute value can be any of the following values: 'none',
 'cols', 'rows' and 'all'. The default value is 'all'.
 
+align::
+Use the 'align' attribute to vertically align all cells in a table.
+The following values are valid: 'left', 'right', and 'center'
+(defaults to 'left'). Overriden by <<X70,Column specifiers>>  and
+<<X84,Cell specifiers>>.
+
 valign::
 Use the 'valign' attribute to vertically align all cells in a table.
 The following values are valid: 'top', 'bottom', and 'middle'
@@ -2745,8 +2751,8 @@ style values and is formatted like:
   [<multiplier>*][<align>][<width>][<style>]
 
 - All components are optional. The multiplier must be first and the
-  style last. The order of 'align' or 'width' is not important.
-- Column '<width>' can be either an integer proportional value (1...)
+  style last. The order of `<align>` or `<width>` is not important.
+- Column `<width>` can be either an integer proportional value (1...)
   or a percentage (1%...100%). The default value is 1. To ensure
   portability across different backends, there is no provision for
   absolute column widths (not to be confused with output column width
@@ -2756,14 +2762,14 @@ style values and is formatted like:
 
   [<horizontal>][.<vertical>]
 +
-Where '<horizontal>' and '<vertical>' are one of the following
-characters: '<', '^' or '>' which represent 'left', 'center' and
-'right' horizontal alignment or 'top', 'middle' and 'bottom' vertical
+Where `<horizontal>` and `<vertical>` are one of the following
+characters: `<`, `^` or `>` which represent `left`, `center` and
+`right` horizontal alignment or `top`, `middle` and `bottom` vertical
 alignment respectively.
 
-- A '<multiplier>' can be used to specify repeated columns e.g.
+- A `<multiplier>` can be used to specify repeated columns e.g.
   `cols="4*<"` specifies four left-justified columns. Default value 1.
-- The '<style>' name specifies a <<X71,table style>> to used to markup
+- The `<style>` name specifies a <<X71,table style>> to used to markup
   column cells (you can use the full style names if you wish but the
   first letter is normally sufficient).
 - Column specific styles are not applied to 'header' row formatting.
@@ -2783,12 +2789,12 @@ spanned, multiplied, aligned and styled.  Cell specifiers prefix 'psv'
 
   [<colspan>][.<rowspan>]
 +
-Where '<colspan>' and '<rowspan>' are integers specifying the number of
+Where `<colspan>` and `<rowspan>` are integers specifying the number of
 columns and rows to span.
 
-- '<align>' specifies horizontal and vertical cell alignment an is the
+- `<align>` specifies horizontal and vertical cell alignment an is the
   same as in <<X70,column specifiers>>.
-- A '<style>' value is the first letter of <<X71,table style>> name.
+- A `<style>` value is the first letter of <<X71,table style>> name.
 
 For example, the following 'psv' formatted cell will span two columns
 and the text will be centered and emphasized:
@@ -5165,7 +5171,7 @@ Command-line examples:
 
 . Print the first line of all trace messages:
 
-  $ asciidoc -a trace mydoc.txt | grep ^TRACE:
+  $ asciidoc -a trace mydoc.txt 2>&1 | grep ^TRACE:
 
 Attribute Entry examples:
 

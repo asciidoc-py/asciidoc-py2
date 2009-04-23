@@ -7,13 +7,14 @@
 INSTALL = @INSTALL@
 INSTALL_PROG = @INSTALL_PROGRAM@
 INSTALL_DATA = @INSTALL_DATA@
-
+PACKAGE_TARNAME = @PACKAGE_TARNAME@
 SED = @SED@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
 bindir = @bindir@
 datadir = @datadir@
+docdir = @docdir@
 sysconfdir = @sysconfdir@
 datarootdir = @datarootdir@
 mandir=@mandir@
@@ -73,7 +74,6 @@ icons = $(wildcard images/icons/*.png) images/icons/README
 iconsdir = $(ASCIIDOCCONF)/images/icons
 
 doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*) $(wildcard CHANGELOG*)
-docdir = $(datadir)/doc/asciidoc
 
 DATATARGETS = manp conf docbook dblatex css js callouts icons codefilterconf musicfilterconf sourcefilterconf graphvizfilterconf
 PROGTARGETS = prog codefilter musicfilter graphvizfilter

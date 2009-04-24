@@ -3,6 +3,31 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.4.4 (2009-04-26)
+--------------------------
+.Additions and changes
+- Added table column and row spanning.
+- Table styles can now be applied per cell.
+- Vertical cell alignment can be applied to columns and individual
+  cells.
+- Added table 'align' attribute to set horizontal alignment for entire
+  table.
+- Included Geoff Eddy's update of the experimental LaTeX backend.
+- A new attribute named 'trace' controls the output of diagnostic
+  information. If the 'trace' attribute is defined then
+  element-by-element diagnostic messages detailing output markup
+  generation are printed to stderr.
+- Deleted unused `replacements2` from `xhtml11.conf`.
+- Added `replacements2` to default substitutions.
+- 'testasciidoc.py': messages to 'stdout', only diffs to 'stderr'.
+
+.Bug fixes
+- All combinations of leading comments and attribute entries at the
+  start of a document are now skipped correctly.
+- FIXED: `./configure` doesn't support `--docdir` as expected (patch
+  submitted by Artem Zolochevskiy)
+
+
 Version 8.4.3 (2009-04-13)
 --------------------------
 .Additions and changes

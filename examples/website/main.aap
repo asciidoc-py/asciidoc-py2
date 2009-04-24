@@ -24,6 +24,7 @@ WEB_ROOT =
     index
     INSTALL
     latex-backend
+    latex-bugs
     latexmathml
     manpage
     music-filter

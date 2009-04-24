@@ -2702,13 +2702,13 @@ The 'grid' attribute value can be any of the following values: 'none',
 align::
 Use the 'align' attribute to vertically align all cells in a table.
 The following values are valid: 'left', 'right', and 'center'
-(defaults to 'left'). Overriden by <<X70,Column specifiers>>  and
+(defaults to 'left'). Overridden by <<X70,Column specifiers>>  and
 <<X84,Cell specifiers>>.
 
 valign::
 Use the 'valign' attribute to vertically align all cells in a table.
 The following values are valid: 'top', 'bottom', and 'middle'
-(defaults to 'top'). Overriden by <<X70,Column specifiers>>  and
+(defaults to 'top'). Overridden by <<X70,Column specifiers>>  and
 <<X84,Cell specifiers>>.
 
 options::

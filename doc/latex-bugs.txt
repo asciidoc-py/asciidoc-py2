@@ -16,9 +16,7 @@ PDF output with `asciidoc`, which is done as follows:
 Many of these were found by processing the `asciidoc.txt` file and
 comparing the HTML output with the PDF.
 
-== asciidoc problems (latex.conf file)
-
-=== Footnotes
+== Footnotes
 
 Priority:: Low.
 
@@ -31,7 +29,7 @@ itself.
 
 Solution:: Unclear. How important or necessary is this, anyway?
 
-=== Spurious text at starts of paragraphs
+== Spurious text at starts of paragraphs
 
 Priority:: Medium
 
@@ -57,7 +55,7 @@ Solution:: Find out a way to generate the correct LaTeX output as
 above. The obvious solution, as explained in `latet.conf`, doesn't
 work.
 
-=== Tables
+== Tables
 
 Priority:: Rather high.
 
@@ -76,9 +74,7 @@ Solution:: Perhaps table processing could be handled by a Python
 plugin, which would read in a table spec and generate the appropriate
 text?
 
-== Not asciidoc problems
-
-=== Unicode escaping (LaTeX)
+== Unicode escaping
 
 Priority:: Rather high, to me at least.
 
@@ -93,20 +89,34 @@ Cause:: The encodings in the LaTeX output are wrong.
 
 Solution:: Correct the encodings.
 
-=== Text colours and sizes (LaTeX)
+== Text colours
 
 Priority:: Probably low
 
-Problem:: The colour and size options are not processed by LaTeX; for
+Problem:: The text colour options are not processed by LaTeX; for
 example `[#ff0000]#Red text#` is not rendered in red.
 
-Cause:: LaTeX and HTML represent RGB triads differently; HTML is happy
+Cause:: LaTeX and HTML represent RGB triads differently: HTML is happy
 with `#ff8000`, but LaTeX needs `[rgb]{1,0.5,0}`.
 
 Solution:: Provide some sort of internal RGB conversion mechanism
 which can convert RGB triads to different representations.
 
-=== Background colour in paragraphs (pdf)
+== Text sizes
+
+Priority:: Probably low
+
+Problem:: The text size options are not processed by LaTeX:
+`[,,1]#text#` is rendered in the same size as normal text.
+
+Cause:: HTML size tags - `h1` through `h7` - are directly derivable
+from the size number, whereas LaTeX has a series of descriptive words
+(`HUGE` through `normalsize` to `scriptsize`).
+
+Solution:: Provide a way to treat the number as an index into an
+array.
+
+== Background colour in paragraphs
 
 Priority:: Medium
 
@@ -118,6 +128,7 @@ backgrounds. The PDF viewers also complain:
 
   Error (NNNN): Unknown operator 'rgb'
 
-Cause:: Apparently a known bug in the output of `pdflatex`.
+Cause:: Apparently a known bug in the output of `pdflatex`. Not a bug
+in `asciidoc`.
 
 Solution:: Wait until this bug is fixed?

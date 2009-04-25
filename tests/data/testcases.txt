@@ -170,7 +170,7 @@ ambiguity.  Here are some non-standard escape examples:
 \\http://www.foobar.com[Foobar Limited]
 
 2*|
-A C+\+ Library for C++
+A C\++ Library for C++
 \\``double-quotes''
 \*\*F**ile Open\...
 |========================================

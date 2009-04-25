@@ -451,7 +451,7 @@ def subs_quotes(text):
             # enveloping quotes.
             reo = re.compile(r'(?msu)(^|\W)(\[(?P<attrlist>[^[\]]+?)\])?' \
                 + r'(?:' + re.escape(lq) + r')' \
-                + r'(?P<content>.*?\S)(?:'+re.escape(rq)+r')(?=\W|$)')
+                + r'(?P<content>\S|\S.*?\S)(?:'+re.escape(rq)+r')(?=\W|$)')
         pos = 0
         while True:
             mo = reo.search(text,pos)

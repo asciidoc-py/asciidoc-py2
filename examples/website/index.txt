@@ -265,7 +265,7 @@ Incompatibilities introduced after AsciiDoc 8.2.7 broke the LaTeX
 backend.
 
 In 2009 Geoff Eddy stepped up and updated the LaTeX backend, thanks to
-Geoff's efforts it now works with the AsciiDoc 8.4.3. Geoff's updated
+Geoff's efforts it now works with AsciiDoc 8.4.3. Geoff's updated
 `latex.conf` file shipped with AsciiDoc version 8.4.4. The backend
 still has limitations and remains experimental (see
 link:latex-bugs.html[Geoff's notes]).

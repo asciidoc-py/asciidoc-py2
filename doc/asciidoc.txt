@@ -922,20 +922,40 @@ _____________________________________________________________________
 
 Paragraphs
 ----------
-Paragraphs are terminated by a blank line, the end of file, or the
-start of a DelimitedBlock.
+Paragraphs are blocks of text terminated by a blank line, the end of
+file, or the start of a DelimitedBlock.  Paragraph markup is specified
+by configuration file `[paradef*]` sections.
 
-Paragraph markup is specified by configuration file `[paradef*]`
-sections.  AsciiDoc ships with the following predefined paragraph
-types:
+Normal paragraphs consist of one or more non-blank lines of text. The
+first line must start hard against the left margin (no intervening
+white space). The default processing expectation is that of a normal
+paragraph of text. 'literal' and 'verse' paragraph styles are
+available (in addition to the 'default' paragraph style).
 
-Default Paragraph
-~~~~~~~~~~~~~~~~~
-A Default paragraph (`[paradef-default]`) consists of one or more
-non-blank lines of text.  The first line must start hard against the
-left margin (no intervening white space). The processing expectation
-of the default paragraph type is that of a normal paragraph of text.
+[[X85]]
+literal paragraph style
+~~~~~~~~~~~~~~~~~~~~~~~~
+Literal paragraphs are rendered verbatim in a monospaced font without
+any distinguishing background or border.  By default there is no text
+formatting or substitutions within Literal paragraphs apart from
+Special Characters and Callouts. For example:
 
+---------------------------------------------------------------------
+[literal]
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+---------------------------------------------------------------------
+
+Renders:
+
+[literal]
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+
+verse paragraph style
+~~~~~~~~~~~~~~~~~~~~~
 The 'verse' paragraph <<X23,style>> preserves line boundaries and is
 useful for lyrics and poems.  For example:
 
@@ -953,14 +973,12 @@ Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 
-Literal Paragraph
-~~~~~~~~~~~~~~~~~
-A Literal paragraph (`[paradef-literal]`) consists of one or more
-lines of text, where the first line is indented by one or more space
-or tab characters. Literal paragraphs are rendered verbatim in a
-monospaced font usually without any distinguishing background or
-border.  There is no text formatting or substitutions within Literal
-paragraphs apart from Special Characters and Callouts.  For example:
+
+Indented paragraphs
+~~~~~~~~~~~~~~~~~~~
+Indented paragraphs (the first line indented by one or more space or
+tab characters) are rendered using the <<X85,literal paragraph
+style>>.  For example:
 
 ---------------------------------------------------------------------
   Consul *necessitatibus* per id,
@@ -975,8 +993,8 @@ Renders:
   homero verear ea mea, qui.
 
 NOTE: Because <<X64,lists>> can be indented it's possible for your
-Literal paragraph to be misinterpreted as a list -- in situations like
-this use a <<X65,LiteralBlock>> in place of a 'LiteralParagraph'.
+indented paragraph to be misinterpreted as a list -- in situations
+like this apply the 'literal' style to a normal paragraph.
 
 [[X28]]
 Admonition Paragraphs

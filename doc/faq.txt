@@ -435,8 +435,8 @@ consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 ---------------------------------------------------------------------
 
-If you are generating PDF files (using FOP) or HTML files then you can
-use line breaks. For example:
+Alternatively, if you are generating PDF files (using FOP) or HTML
+files, you can use line breaks. For example:
 
 ---------------------------------------------------------------------
 Consul *necessitatibus* per id, +

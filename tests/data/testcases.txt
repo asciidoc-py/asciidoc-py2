@@ -174,3 +174,60 @@ A C\++ Library for C++
 \\``double-quotes''
 \*\*F**ile Open\...
 |========================================
+
+
+== Paragraphs
+
+.Normal paragraph
+This is a *bold* a line
+This is a 'strong' line
+This is another _strong_ line
+
+.Literal paragraph
+[literal]
+This is a *bold* a line
+This is a 'strong' line
+This is another _strong_ line
+
+.Verse paragraph
+[verse]
+This is a *bold* a line
+This is a 'strong' line
+This is another _strong_ line
+
+.Indented (literal) paragraph
+  This is a *bold* a line
+  This is a 'strong' line
+  This is another _strong_ line
+
+.Indented with quotes substitution
+[subs="quotes"]
+  This is a *bold* a line
+  This is a 'strong' line
+  This is another _strong_ line
+
+.Literal paragraph with quotes substitution
+["literal",subs="quotes"]
+This is a *bold* a line
+This is a 'strong' line
+This is another _strong_ line
+
+.Monospaced paragraph with line breaks
++This is a *bold* line+ +
++This is a 'strong' line+ +
++This is another _strong_ line+
+
+
+.Another monospaced paragraph with line breaks
++This is a *bold* a line +
+This is a 'strong' line +
+This is another _strong_ line+
+
+
+.Literal block with quotes substitution
+[subs="quotes"]
+.............................
+This is a *bold* a line
+This is a 'strong' line
+This is another _strong_ line
+.............................

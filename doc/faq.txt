@@ -315,7 +315,7 @@ ambiguity.  Here are some non-standard escape examples:
 \\http://www.foobar.com[Foobar Limited]
 
 2*|
-A C+\+ Library for C++
+A C\++ Library for C++
 \\``double-quotes''
 \*\*F**ile Open\...
 |========================================
@@ -401,7 +401,7 @@ This tip was submitted by Lionel Orry.
 
 == Can you create ODF documents using AsciiDoc?
 
-The easiest and highest fidelity methods I've seen is to generate
+The easiest and highest fidelity method I've seen is to generate
 HTML from AsciiDoc then paste it from your browser (we use Firefox)
 into OpenOffice Writer.
 
@@ -655,6 +655,14 @@ The `-al` will rendered bold. Note that:
   source code which confuses the syntax highlighter.
 - This only works if your DocBook processor recognizes DocBook
   `<emphasis>` elements inside `<screen>` elements.
+
+Alternative, if the lines are contiguous, you could use the 'literal'
+paragraph style:
+
+------------------------------------------
+["literal",subs="quotes"]
+$ ls *-al*
+------------------------------------------
 
 
 == Why doesn't the include1::[] macro work?

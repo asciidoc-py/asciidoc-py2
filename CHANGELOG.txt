@@ -17,15 +17,21 @@ Version 8.4.4 (2009-04-26)
   information. If the 'trace' attribute is defined then
   element-by-element diagnostic messages detailing output markup
   generation are printed to stderr.
+- Added 'literal' paragraph style (allows 'literal' style to be
+  applied to normal paragraphs).
 - Deleted unused `replacements2` from `xhtml11.conf`.
 - Added `replacements2` to default substitutions.
 - 'testasciidoc.py': messages to 'stdout', only diffs to 'stderr'.
+- Added transparency to `smallnew.png` image.
 
 .Bug fixes
 - All combinations of leading comments and attribute entries at the
   start of a document are now skipped correctly.
 - FIXED: `./configure` doesn't support `--docdir` as expected (patch
   submitted by Artem Zolochevskiy)
+- FIXED: Constrained quotes were incorrectly matched across line
+  boudaries e.g. the string `+\nabc+` incorrectly matched a monospace
+  quote.
 
 
 Version 8.4.3 (2009-04-13)

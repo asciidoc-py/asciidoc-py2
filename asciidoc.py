@@ -3196,13 +3196,16 @@ class Macros:
             m.load(entry)
             if m.name is None:
                 # Delete undefined macro.
-                for i in range(len(self.macros)-1,-1,-1):
-                    if self.macros[i].pattern == m.pattern:
+                for i,m2 in enumerate(self.macros):
+                    if m2.pattern == m.pattern:
                         del self.macros[i]
+                        break
+                else:
+                    warning('unable to delete missing macro: %s' % m.pattern)
             else:
                 # Check for duplicates.
                 for m2 in self.macros:
-                    if m.equals(m2):
+                    if m2.pattern == m.pattern:
                         verbose('macro redefinition: %s%s' % (m.prefix,m.name))
                         break
                 else:
@@ -3296,18 +3299,13 @@ class Macro:
         else:
             warning('missing macro section: [%s]' % (name+suffix))
             return None
-    def equals(self,m):
-        if self.pattern != m.pattern:
-            return False
-        if self.name != m.name:
-            return False
-        if self.prefix != m.prefix:
-            return False
-        return True
     def load(self,entry):
         e = parse_entry(entry)
-        if not e:
-            raise EAsciiDoc,'malformed macro entry: %s' % entry
+        if e is None:
+            # Only the macro pattern was specified, mark for deletion.
+            self.name = None
+            self.pattern = entry
+            return
         if not is_re(e[0]):
             raise EAsciiDoc,'illegal macro regular expression: %s' % e[0]
         pattern, name = e

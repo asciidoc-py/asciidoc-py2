@@ -231,3 +231,21 @@ This is a *bold* a line
 This is a 'strong' line
 This is another _strong_ line
 .............................
+
+
+URLs
+----
+Mail Addresses
+~~~~~~~~~~~~~~
+joe_bloggs@mail_server.com_
+
+joe-bloggs@mail-server.com.
+
+joe-bloggs@mail-server.com,joe-bloggs@mail-server.com,
+
+mailto:joe-bloggs@mail-server.com[Mail]
+
+mailto:joe_bloggs@mail_server.com[Mail]
+
+mailto:joe.bloggs@mail.server.com[Mail]
+

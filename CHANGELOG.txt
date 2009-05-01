@@ -30,7 +30,7 @@ Version 8.4.4 (2009-04-26)
 - FIXED: `./configure` doesn't support `--docdir` as expected (patch
   submitted by Artem Zolochevskiy)
 - FIXED: Constrained quotes were incorrectly matched across line
-  boudaries e.g. the string `+\nabc+` incorrectly matched a monospace
+  boundaries e.g. the string `+\nabc+` incorrectly matched a monospace
   quote.
 
 

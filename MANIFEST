@@ -10,7 +10,7 @@ asciidoc.conf
 docbook.conf
 help.conf
 html4.conf
-lang-es.conf
+lang-*.conf
 latex.conf
 text.conf
 wordpress.conf

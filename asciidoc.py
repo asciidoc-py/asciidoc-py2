@@ -1206,13 +1206,14 @@ class Document:
                 AttributeEntry.translate()
         # Load language configuration file.
         lang = document.attributes.get('lang')
+        message.linenos = False
         if lang:
             if not config.load_lang(lang):
                 message.error('missing language conf file: lang-%s.conf' % lang)
         else:
             message.error('language attribute (lang) is not defined')
+        message.linenos = None  # Restore default line number behavior.
         message.verbose('writing: '+writer.fname,False)
-        message.linenos = None
         # Process document header.
         has_header =  Lex.next() is Title and Title.level == 0
         if self.doctype == 'manpage' and not has_header:
@@ -4962,7 +4963,6 @@ config = Config()           # Configuration file reader.
 reader = Reader()           # Input stream line reader.
 writer = Writer()           # Output stream line writer.
 message = Message()         # Message functions.
-message.linenos = False
 paragraphs = Paragraphs()   # Paragraph definitions.
 lists = Lists()             # List definitions.
 blocks = DelimitedBlocks()  # DelimitedBlock definitions.

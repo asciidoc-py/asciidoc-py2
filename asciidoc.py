@@ -179,8 +179,8 @@ class Message:
         """
         Report fatal error.
         If halt=True raise EAsciiDoc exception.
-        If halt=False don't exit application, continue in the hope of reporting all
-        fatal errors finishing with a non-zero exit code.
+        If halt=False don't exit application, continue in the hope of reporting
+        all fatal errors finishing with a non-zero exit code.
         """
         if halt:
             raise EAsciiDoc, message.format(msg,linenos=False,cursor=cursor)
@@ -1416,6 +1416,11 @@ class Header:
                     message.error('malformed NAME section body')
                 attrs['manname'] = mo.group('manname').strip()
                 attrs['manpurpose'] = mo.group('manpurpose').strip()
+                names = [s.strip() for s in attrs['manname'].split(',')]
+                if len(names) > 9:
+                    message.warning('to many manpage names')
+                for i,name in enumerate(names):
+                    attrs['manname%d' % (i+1)] = name
         document.process_author_names()
 
 class AttributeEntry:

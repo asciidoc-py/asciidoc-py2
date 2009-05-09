@@ -1200,6 +1200,14 @@ class Document:
             if AttributeEntry.isnext():
                 finished = False
                 AttributeEntry.translate()
+        # Load language configuration file.
+        lang = document.attributes.get('lang')
+        if lang:
+            if not config.load_lang(lang):
+                error('missing language conf file: lang-%s.conf' % lang)
+        else:
+            error('language attribute (lang) is not defined')
+        verbose('writing: '+writer.fname,False)
         # Process document header.
         has_header =  Lex.next() is Title and Title.level == 0
         if self.doctype == 'manpage' and not has_header:
@@ -3830,7 +3838,6 @@ class Writer:
         self.lines_out = 0               # Number of lines written.
         self.skip_blank_lines = False    # If True don't output blank lines.
     def open(self,fname):
-        verbose('writing: '+fname)
         self.fname = fname
         if fname == '<stdout>':
             self.f = sys.stdout
@@ -3946,18 +3953,20 @@ class Config:
         self.dumping = False    # True if asciidoc -c option specified.
 
     def load_file(self,fname,dir=None):
-        """Loads sections dictionary with sections from file fname.
-        Existing sections are overlaid. Silently skips missing configuration
-        files."""
+        """
+        Loads sections dictionary with sections from file fname.
+        Existing sections are overlaid.
+        Return False if no file was found in any of the locations.
+        """
         if dir:
             fname = os.path.join(dir, fname)
         # Sliently skip missing configuration file.
         if not os.path.isfile(fname):
-            return
+            return False
         # Don't load conf files twice (local and application conf files are the
         # same if the source file is in the application directory).
         if os.path.realpath(fname) in self.loaded:
-            return
+            return True
         rdr = Reader()  # Reader processes system macros.
         rdr.open(fname)
         self.fname = fname
@@ -4001,6 +4010,7 @@ class Config:
         self.load_sections(sections)
         self.loaded.append(os.path.realpath(fname))
         document.update_attributes() # So they are available immediately.
+        return True
 
     def load_sections(self,sections):
         '''Loads sections dictionary. Each dictionary entry contains a
@@ -4041,23 +4051,56 @@ class Config:
         tables.load(sections)
         macros.load(sections.get('macros',()))
 
-    def load_all(self,dir):
-        """Load the standard configuration files from directory 'dir'."""
-        self.load_file('asciidoc.conf',dir)
-        conf = document.backend + '.conf'
-        self.load_file(conf,dir)
-        conf = document.backend + '-' + document.doctype + '.conf'
-        self.load_file(conf,dir)
-        lang = document.attributes.get('lang')
-        if lang:
-            conf = 'lang-' + lang + '.conf'
-            self.load_file(conf,dir)
-        # Load filter .conf files.
-        filtersdir = os.path.join(dir,'filters')
-        for dirpath,dirnames,filenames in os.walk(filtersdir):
-            for f in filenames:
-                if re.match(r'^.+\.conf$',f):
-                    self.load_file(f,dirpath)
+    def get_load_dirs(self):
+        """Return list of well known paths to search for conf files."""
+        result = []
+        # Load global configuration from system configuration directory.
+        result.append(CONF_DIR)
+        # Load global configuration files from asciidoc directory.
+        result.append(APP_DIR)
+        # Load configuration files from ~/.asciidoc if it exists.
+        if USER_DIR is not None:
+            result.append(USER_DIR)
+        # Load configuration files from document directory.
+        if document.infile != '<stdin>':
+            result.append(os.path.dirname(document.infile))
+        return result
+
+    def load_lang(self, lang, dirs=None):
+        """
+        Load language conf file from dirs list.
+        If dirs not specified try all the well known locations.
+        Return False if no file was found in any of the locations.
+        """
+        result = False
+        if dirs is None:
+            dirs = self.get_load_dirs()
+        filename = 'lang-' + lang + '.conf'
+        for d in dirs:
+            if self.load_file(filename,d):
+                result = True
+        return result
+
+    def load_all(self, dirs=None):
+        """
+        Load the standard configuration (except the language file)
+        files from dirs list.
+        If dirs not specified try all the well known locations.
+        """
+        if dirs is None:
+            dirs = self.get_load_dirs()
+        for d in dirs:
+            self.load_file('asciidoc.conf',d)
+            conf = document.backend + '.conf'
+            self.load_file(conf,d)
+            conf = document.backend + '-' + document.doctype + '.conf'
+            self.load_file(conf,d)
+            # Load filter .conf files.
+            filtersdir = os.path.join(d,'filters')
+            for dirpath,dirnames,filenames in os.walk(filtersdir):
+                for f in filenames:
+                    if re.match(r'^.+\.conf$',f):
+                        self.load_file(f,dirpath)
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""
@@ -4946,16 +4989,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         if infile != '<stdin>' and not os.path.isfile(infile):
             raise EAsciiDoc,'input file %s missing' % infile
         if '-e' not in options:
-            # Load global configuration from system configuration directory.
-            config.load_all(CONF_DIR)
-            # Load global configuration files from asciidoc directory.
-            config.load_all(APP_DIR)
-            # Load configuration files from ~/.asciidoc if it exists.
-            if USER_DIR is not None:
-                config.load_all(USER_DIR)
-            # Load configuration files from document directory.
-            if infile != '<stdin>':
-                config.load_all(os.path.dirname(infile))
+            config.load_all()
         if infile != '<stdin>':
             # Load implicit document specific configuration files if they exist.
             config.load_file(os.path.splitext(infile)[0] + '.conf')

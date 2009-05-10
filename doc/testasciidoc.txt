@@ -157,17 +157,20 @@ Test spec format
 Optional test title
 Optional test description...
 
-% options
-Optional list of command-line option tuples.
-
-% attributes
-Optional dictionary of attribute values.
+% name
+Optional base output file name. Defaults to base source file name.
 
 % source
 AsciiDoc source file name.
 
 % backends
 Optional list of backends to be tested(default is all backends).
+% options
+Optional list of command-line option tuples.
+
+% attributes
+Optional dictionary of attribute values.
+
 ---------------------------------------------------------------------
 
 Example test spec:

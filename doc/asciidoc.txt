@@ -2230,7 +2230,7 @@ A title prefix that can be inserted with the `caption` attribute
 *********************************************************************
 If you define the `data-uri` attribute then images referenced by
 'image' macros will be embedded in XHTML outputs using the
-http://en.wikipedia.org/wiki/Data:_URI_scheme[data: URI scheme].  You
+http://en.wikipedia.org/wiki/Data:_URI_scheme[data URI scheme].  You
 can use the `data-uri` attribute to produce single-file XHTML
 documents with embedded images and CSS, for example:
 
@@ -2239,8 +2239,9 @@ documents with embedded images and CSS, for example:
 You will need to specify the `--unsafe` option because the AsciiDoc
 `data-uri` is implemented using the `{sys}` attribute.
 
-NOTE: Internet Explorer up to version 7 does not support 'data: URIs',
-but it is supported by Internet Explorer 8 Beta 1.
+NOTE: All current popular browsers support 'data URIs', although
+versions of Internet Explorer prior to version 8 do not support 'data
+URIs'.
 
 *********************************************************************
 

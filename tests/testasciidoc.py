@@ -71,7 +71,8 @@ class AsciiDocTest(object):
 
     def __init__(self):
         self.number = None      # Test number (1..).
-        self.title = ''         # Optional title.
+        self.name = ''          # Optional test name.
+        self.title = ''         # Optional test name.
         self.description = []   # List of lines followoing title.
         self.source = None      # AsciiDoc test source file name.
         self.options = []
@@ -83,12 +84,10 @@ class AsciiDocTest(object):
     def backend_filename(self, backend):
         """
         Return the path name of the backend  output file that is generated from
-        the AsciiDoc sourcefile.
+        the test name and output file type.
         """
         return '%s-%s%s' % (
-                os.path.normpath(
-                    os.path.join(self.datadir,
-                        os.path.basename(os.path.splitext(self.source)[0]))),
+                os.path.normpath(os.path.join(self.datadir, self.name)),
                 backend,
                 BACKEND_EXT[backend])
 
@@ -129,10 +128,14 @@ class AsciiDocTest(object):
                     self.attributes = eval(' '.join(data))
                 elif directive == 'backends':
                     self.backends = eval(' '.join(data))
+                elif directive == 'name':
+                    self.name = data[0].strip()
                 else:
                     raise (ValueError, 'illegal directive: %s' % l[0])
         if not self.title:
             self.title = self.source
+        if not self.name:
+            self.name = os.path.basename(os.path.splitext(self.source)[0])
 
     def is_missing(self, backend):
         """

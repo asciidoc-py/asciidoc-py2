@@ -15,7 +15,11 @@ if [ ! -e "$REALNAME" ]; then
 fi
 REALNAME="$(readlink -f "$REALNAME")"
 CONF_DIR=/etc/asciidoc
-FOP_COMMAND="fop.sh"    # FOP executable.
+# FOP executable is named fop on some systems.
+FOP_COMMAND="fop.sh"
+if ! which "$FOP_COMMAND" >/dev/null 2>&1; then
+    FOP_COMMAND="fop"
+fi
 
 #--------------------------------------------------------------------
 # Constants.

@@ -2,6 +2,12 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== The AsciiDoc --unsafe option is a pain can it be enabled by default?
+Add this alias to your shell's RC file:
+
+  alias asciidoc='asciidoc --unsafe'
+
+
 == Are there any tools to help me understand what's going on inside AsciiDoc?
 
 AsciiDoc has a built-in trace mechanism which is controlled by the

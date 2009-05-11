@@ -212,6 +212,7 @@ options:
   -n, --dry-run                  don't do anything just print the commands
   -s, --skip-asciidoc            skip asciidoc execution
   --stylesheet=PATH              target HTML CSS stylesheet file name
+  --unsafe                       use asciidoc --unsafe option
   --version                      print program version to stdout
   -v, --verbose                  print operational details to stderr
   --dblatex-opts=DBLATEX_OPTS    dblatex options
@@ -249,7 +250,7 @@ function parse_options()
         quit "enhanced getopt(1) required"
     fi
     short_opts="a:d:D:f:hLnsv"
-    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,version,verbose,xsltproc-opts:,dblatex-opts:,fop,fop-opts:,no-xmllint"
+    long_opts="attribute:,asciidoc-opts:,destination-dir:,doctype:,help,icons-dir:,dry-run,format:,copy,icons,skip-asciidoc,stylesheet:,unsafe,version,verbose,xsltproc-opts:,dblatex-opts:,fop,fop-opts:,no-xmllint"
     args=$(getopt -o $short_opts -l $long_opts -n $BASENAME -- "$@" 2>/dev/null)
     if [ $? -ne 0 ]; then
         quit "invalid command options, run: a2x --help"
@@ -292,6 +293,9 @@ function parse_options()
             --stylesheet)
                 STYLESHEET=$2
                 shift 2 ;;
+            --unsafe)
+                ASCIIDOC_OPTS="$ASCIIDOC_OPTS --unsafe";
+                shift ;;
             --version)
                 echo "$BASENAME $VERSION" ; exit 0 ;;
             -v|--verbose)

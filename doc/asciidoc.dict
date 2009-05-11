@@ -1,4 +1,4 @@
-personal_ws-1.1 en 778 
+personal_ws-1.1 en 779 
 mandoc
 colspecs
 API
@@ -25,8 +25,8 @@ CALS
 LiteralParagraph
 Bon
 ungenerated
-cmd
 des
+cmd
 ListItems
 dev
 vulputate
@@ -53,6 +53,7 @@ csv
 Mandelson
 GCC
 Potapov
+Moolenaar
 doctime
 CVS
 DTD
@@ -77,8 +78,8 @@ hhc
 Chai
 strongwords
 setlocal
-listingblock
 ListingBlock
+listingblock
 exe
 vsides
 rewriteSystem
@@ -88,8 +89,8 @@ listelement
 AttributeLists
 magna
 xreflabel
-PDFs
 PDF's
+PDFs
 MSIE
 Daly
 arcu
@@ -100,8 +101,8 @@ listcontinuation
 ListContinuation
 apos
 hoc
-Maier
 ispum
+Maier
 TableFooter
 blog
 passthroughs
@@ -202,9 +203,9 @@ BlockId
 png
 lobortis
 Bowlin
-ASCIIMathML
-AsciiMathML
 asciimathml
+AsciiMathML
+ASCIIMathML
 conf
 RCS
 CalloutList
@@ -247,8 +248,8 @@ biggy
 pgwide
 crlf
 tex
-Bolido
 Bólido
+Bolido
 tabsize
 colpcwidth
 RTF
@@ -259,8 +260,8 @@ tis
 listdef
 Tsawassen
 postsubs
-lastname
 LastName
+lastname
 toc
 tmp
 Knisley
@@ -298,13 +299,13 @@ blandit
 revisionhistory
 params
 undefines
-HTMLHelp
 htmlhelp
+HTMLHelp
 cellspacing
 Citeaux
 srackham
-Lulea
 Luleå
+Lulea
 Ubuntu
 xml
 XSLTLib
@@ -337,8 +338,8 @@ gq
 refactored
 sgml
 backcolor
-asciidoc
 AsciiDoc
+asciidoc
 subslist
 hs
 testblock
@@ -375,8 +376,8 @@ py
 docname
 su
 expandtab
-linuxdoc
 LinuxDoc
+linuxdoc
 tt
 VM
 Frédérique
@@ -774,6 +775,6 @@ Firefox
 JavaHelp
 unescaped
 mydoc
-MiddleName
 middlename
+MiddleName
 Jimmac's

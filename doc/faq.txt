@@ -209,15 +209,21 @@ document add the following lines to the AsciiDoc source:
 
 ---------------------------------------------------------------------
 // Generate chart image file.
-\sys2::[python barchart.py --format=png --output=barchart.png --scale=2]
+\sys2::[python "{indir}/barchart.py" --format=png --output="{outdir}/barchart.png" --scale=2]
 
 // Display chart image file.
 image::barchart.png[]
 ---------------------------------------------------------------------
 
-NOTE: You need to run asciidoc(1) with the `--unsafe` command-line
-option to execute the `sys2` system macro.
-
+[NOTE]
+=====================================================================
+- You need to run asciidoc(1) with the `--unsafe` command-line option
+  to execute the `sys2` system macro.
+- The `barchart.py` script is located in the same directory as the
+  AsciiDoc source file (`{indir}`).
+- The generated chart image file (`barchart.png`) is written to the
+  same directory as the output file (`{outdir}`).
+=====================================================================
 
 == How can I render indented paragraphs?
 

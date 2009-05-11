@@ -687,11 +687,13 @@ def filter_lines(filter_cmd, lines, attrs={}):
     return result
 
 def system(name, args, is_macro=False):
-    """Evaluate a system attribute ({name:args}) or system block macro
+    """
+    Evaluate a system attribute ({name:args}) or system block macro
     (name::[args]). If is_macro is True then we are processing a system
     block macro otherwise it's a system attribute.
     NOTE: The include1 attribute is used internally by the include1::[] macro
-    and is not for public use."""
+    and is not for public use.
+    """
     if is_macro:
         syntax = '%s::[%s]'
         separator = '\n'
@@ -699,13 +701,18 @@ def system(name, args, is_macro=False):
         syntax = '{%s:%s}'
         separator = writer.newline
     if name not in ('eval','sys','sys2','include','include1'):
-        msg = 'illegal '+syntax % (name,args)
         if is_macro:
-            msg += ': macro name'
+            msg = 'illegal system macro name: %s' % name
         else:
-            msg += ': executable attribute name'
+            msg = 'illegal system attribute name: %s' % name
         message.warning(msg)
         return None
+    if is_macro:
+        s = subs_attrs(args)
+        if s is None:
+            message.warning('skipped %s: undefined attribute in: %s' % (name,args))
+            return None
+        args = s
     if name != 'include1':
         message.verbose(('evaluating: '+syntax) % (name,args))
     if safe() and name not in ('include','include1'):

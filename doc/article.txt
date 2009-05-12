@@ -14,8 +14,10 @@ The optional abstract (one or more paragraphs) goes here.
 
 This document is an AsciiDoc article skeleton containing briefly
 annotated element placeholders plus a couple of example index entries
-and footnotes. The preface, appendix, bibliography, glossary and index
-section titles are significant ('specialsections').
+and footnotes.
+
+NOTE: The preface, appendix, bibliography, glossary and index section
+titles are significant ('specialsections').
 
 
 The First Section

@@ -172,8 +172,7 @@ formats such as Postscript, HTML, PDF, DVI, PostScript, LaTeX, roff
 - Use the optional <<X54,`encoding`>> attribute to set the character
   set encoding.
 - Use the optional `imagesdir` attribute to prepend to the target file
-  name paths in image inline and block macros. Defaults to a blank
-  string.
+  name paths in image inline and block macros.
 - The AsciiDoc 'Preamble' element generates a DocBook book 'preface'
   element although it's more usual to use an explicit 'Preface'
   special section (see the `./doc/book.txt` example book).
@@ -260,8 +259,8 @@ badges::
   Link badges ('XHTML 1.1', 'CSS' and 'Get Firefox!') in document
   footers. By default badges are omitted ('badges' is undefined).
 
-NOTE: The path names of images, icons and scripts are relative to the
-output document not the source document.
+NOTE: The path names of images, icons and scripts are relative path
+names to the output document not the source document.
 
 [[X54]]encoding::
   Set the input and output document character set encoding. For

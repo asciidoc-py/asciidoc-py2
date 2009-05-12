@@ -21,7 +21,7 @@ def sub_word(mo):
 == Pychart Chart generations from FAQ
 
 // Generate chart image file.
-sys2::[python "{indir}/barchart.py" --format=png --output="{outdir={indir}}/barchart.png" --scale=2]
+sys2::[python "{indir}/barchart.py" --format=png --output="{outdir={indir}}/{imagesdir=}{imagesdir?/}barchart.png" --scale=2]
 
 // Display chart image file.
 image::barchart.png[]
@@ -72,7 +72,9 @@ vB2(E G2)(E F3)|B2(E G2)(E F)ED|vB2(E G2)(E F3)|(B2d) d2(uB A)FD:|
 |:~B3 (B2A) G2A|~B3 BA(uB d)BA|~B3 (B2A) G2(A|B2d) (g2e) (dBA):|
 ---------------------------------------------------------------------
 
+<<X1,Link to following fragment>>.
 
+[[X1]]
 .A fragment generated from LilyPond source
 ["music", "music2.png", "ly", link="music2.ly"]
 ---------------------------------------------------------------------

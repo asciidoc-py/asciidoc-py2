@@ -171,8 +171,8 @@ formats such as Postscript, HTML, PDF, DVI, PostScript, LaTeX, roff
   `--attribute sgml` command-line option.
 - Use the optional <<X54,`encoding`>> attribute to set the character
   set encoding.
-- Use the optional `imagesdir` attribute to prepend to the target file
-  name paths in image inline and block macros.
+-  If this attribute is defined it is prepended to the target image
+  file name paths in inline and block image macros.
 - The AsciiDoc 'Preamble' element generates a DocBook book 'preface'
   element although it's more usual to use an explicit 'Preface'
   special section (see the `./doc/book.txt` example book).
@@ -249,8 +249,8 @@ stylesheet::
   navigation icons. Defaults to `./images/icons`.
 
 imagesdir::
-  This attribute is prepended to the target image file name paths in
-  image inline and block macros. Defaults to a blank string.
+  If this attribute is defined it is prepended to the target image
+  file name paths in inline and block image macros.
 
 theme::
   Use alternative stylesheets (see <<X35,Stylesheets>>).
@@ -3477,14 +3477,12 @@ locations are loaded in the following order:
 1. `asciidoc.conf`
 2. `<backend>.conf`
 3. `<backend>-<doctype>.conf`
-4. `lang-<lang>.conf`
 
 Where `<backend>` and `<doctype>` are values specified by the
 asciidoc(1) `-b` (`--backend`) and `-d` (`--doctype`) command-line
-options. `<lang>` is the value of the AsciiDoc `lang` attribute
-(defaults to `en` (English)).
+options.
 
-Finally, configuration files named like the source file will be
+Next, configuration files named like the source file will be
 automatically loaded if they are found in the source file directory.
 For example if the source file is `mydoc.txt` and the
 `--backend=html4` option is used then asciidoc(1) will look for
@@ -3501,6 +3499,15 @@ files will be processed in the order they appear on the command-line.
 For example, when we translate our AsciiDoc document `mydoc.txt` with:
 
   $ asciidoc -f extra.conf mydoc.txt
+
+The last configuration file to load is the language configuration file
+`lang-<lang>.conf`. `<lang>` is the value of the AsciiDoc `lang`
+attribute (defaults to `en` (English)). You can set the `lang`
+attribute inside the AsciiDoc source file using an
+<<X18,AttributeEntry>> provided it is the first and entry and provided
+it preceeds the document header, for example:
+
+  :lang: es
 
 Configuration files (if they exist) will be processed in the following
 order:

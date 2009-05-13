@@ -1193,13 +1193,27 @@ class Document:
             if ext:
                 self.attributes['filetype'] = ext
                 self.attributes['filetype-'+ext] = ''
+    def load_lang(self,linenos=False):
+        """
+        Load language configuration file.
+        """
+        lang = self.attributes.get('lang')
+        message.linenos = linenos
+        if lang:
+            if not config.load_lang(lang):
+                message.error('missing language conf file: lang-%s.conf' % lang)
+        else:
+            message.error('language attribute (lang) is not defined')
+        message.linenos = None  # Restore default line number behavior.
     def translate(self):
         assert self.doctype in ('article','manpage','book'), \
             'illegal document type'
         assert self.level == 0
         config.expand_all_templates()
+        self.load_lang()
         # Skip leading comments and attribute entries.
         finished = False
+        attr_count = 0
         while not finished:
             finished = True
             if blocks.isnext() and 'skip' in blocks.current.options:
@@ -1211,15 +1225,11 @@ class Document:
             if AttributeEntry.isnext():
                 finished = False
                 AttributeEntry.translate()
-        # Load language configuration file.
-        lang = document.attributes.get('lang')
-        message.linenos = False
-        if lang:
-            if not config.load_lang(lang):
-                message.error('missing language conf file: lang-%s.conf' % lang)
-        else:
-            message.error('language attribute (lang) is not defined')
-        message.linenos = None  # Restore default line number behavior.
+                if AttributeEntry.name == 'lang':
+                    self.load_lang(linenos=True)
+                    if attr_count > 0:
+                        message.error('lang attribute should be first entry')
+                attr_count += 1
         message.verbose('writing: '+writer.fname,False)
         # Process document header.
         has_header =  Lex.next() is Title and Title.level == 0
@@ -3964,7 +3974,7 @@ class Config:
                                   # is corresponding section name.
         self.quotes = OrderedDict()    # Values contain corresponding tag name.
         self.fname = ''         # Most recently loaded configuration file name.
-        self.conf_attrs = {}    # Glossary entries from conf files.
+        self.conf_attrs = {}    # Attributes entries from conf files.
         self.cmd_attrs = {}     # Attributes from command-line -a options.
         self.loaded = []        # Loaded conf files.
         self.include1 = {}      # Holds include1::[] files for {include1:}.

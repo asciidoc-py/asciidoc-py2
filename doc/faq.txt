@@ -2,6 +2,19 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== How can I generate a single HTML document file containing images and CSS styles?
+With the advent of Internet Explorer 8 all major web browsers now
+support the
+http://en.wikipedia.org/wiki/Data:_URI_scheme[data URI scheme] for
+embedded images. The AsciiDoc 'xhtml11' backend supports the data URI
+scheme for embedded images and by default it embeds the CSS
+stylesheet. For example the following command will generate a single
+`article.html` file containing embedded images, admonition icons and the CSS
+stylesheet:
+
+  $ asciidoc -a data-uri -a icons article.txt
+
+
 == The AsciiDoc --unsafe option is a pain can it be enabled by default?
 Add these aliases to your shell's RC file:
 

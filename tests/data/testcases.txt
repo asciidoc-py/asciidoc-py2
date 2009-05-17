@@ -149,8 +149,12 @@ image::../../images/tiger.png[]
 image::../../images/tiger.png[caption="Figure 2: "]
 
 
-== Backslash escapes (from FAQ)
+== Backslash escapes
 
+.Apostrophe
+Don't vs don\'t.
+
+.Exceptions
 There are a number of  exceptions to the usual single backslash rule
 -- mostly relating to URL macros that  have two syntaxes or quoting
 ambiguity.  Here are some non-standard escape examples:
@@ -249,3 +253,5 @@ mailto:joe_bloggs@mail_server.com[Mail]
 
 mailto:joe.bloggs@mail.server.com[Mail]
 
+joe.bloggs@mail.server.com +
+lorum ipsum.

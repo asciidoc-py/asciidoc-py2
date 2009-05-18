@@ -25,7 +25,7 @@ doc/a2x.1
 doc/article.pdf
 doc/asciidoc.1
 doc/asciidoc.conf
-doc/asciidoc-revhistory.xml
+doc/article-docinfo.xml
 docbook-xsl/*.txt
 docbook-xsl/*.xsl
 doc/*.css

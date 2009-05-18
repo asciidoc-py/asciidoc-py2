@@ -7,6 +7,9 @@ v1.0, Dec 2003
 This is the optional preamble (an untitled section body). Useful for
 writing simple sectionless documents consisting only of a preamble.
 
+NOTE: The abstract, preface, appendix, bibliography, glossary and
+index section titles are significant ('specialsections').
+
 
 Abstract
 --------
@@ -15,9 +18,6 @@ The optional abstract (one or more paragraphs) goes here.
 This document is an AsciiDoc article skeleton containing briefly
 annotated element placeholders plus a couple of example index entries
 and footnotes.
-
-NOTE: The preface, appendix, bibliography, glossary and index section
-titles are significant ('specialsections').
 
 
 The First Section

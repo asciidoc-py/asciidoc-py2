@@ -1,0 +1,26 @@
+<!--
+  Example DocBook document information file.
+-->
+<copyright>
+  <year>2009</year>
+  <holder>Stuart Rackham</holder>
+</copyright>
+
+<revhistory>
+  <revision>
+    <revnumber>1.1</revnumber>
+    <date>May 2009</date>
+    <authorinitials>SJR</authorinitials>
+    <revremark>
+      Updates.
+    </revremark>
+  </revision>
+  <revision>
+    <revnumber>1.0</revnumber>
+    <date>October 2003</date>
+    <authorinitials>SJR</authorinitials>
+    <revremark>
+      First release.
+    </revremark>
+  </revision>
+</revhistory>

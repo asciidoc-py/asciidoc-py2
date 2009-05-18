@@ -424,21 +424,27 @@ The 'revision' attribute can be an RCS/CSV/SVN $Id$ marker.
 Attributes can also be added to the header for substitution in the
 header template with <<X18,Attribute Entry>> elements.
 
-Revision History
-~~~~~~~~~~~~~~~~
-If you are generating DocBook output there is the option to include a
-revision history in the output document:
+Additional document header information
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+DocBook defines numerous elements for document meta-data, for
+example: copyrights, document history and authorship information.  The
+AsciiDoc header syntax provides for basic revision and author
+information -- additional information such as copyrights and document
+history can be optionally included from a separate document
+information file containing any elements that are allowed inside the
+DocBook 'articleinfo' and 'bookinfo' elements:
 
-- The revision history is maintained in a separate file containing a
-  single DocBook `revhistory` element (see the
-  `./doc/asciidoc-revhistory.xml` example that comes with the AsciiDoc
-  distribution).
-- The revision history file must be in the same directory as the
-  source document and must be named like `<docname>-revhistory.xml`.
-  For example, if the source document is called `mydoc.txt` then the
-  revision history file would be `mydoc-revhistory.xml`.
-- The revision history file will be included if the `revisionhistory`
-  attribute is defined.
+- The document information file must be in the same directory as the
+  source document and must be named like `<docname>-docinfo.xml`.  For
+  example, if the source document is called `mydoc.txt` then the
+  document information file would be named `mydoc-docinfo.xml`.
+- The document information file will be included in the DocBook output
+  if the `docinfo` attribute is defined, for example:
+
+  $ asciidoc -a docinfo -b docbook mydoc.txt
+
+See the `./doc/article-docinfo.xml` example that comes with the
+AsciiDoc distribution.
 
 Preamble
 ~~~~~~~~
@@ -3505,7 +3511,7 @@ The last configuration file to load is the language configuration file
 attribute (defaults to `en` (English)). You can set the `lang`
 attribute inside the AsciiDoc source file using an
 <<X18,AttributeEntry>> provided it is the first and entry and provided
-it preceeds the document header, for example:
+it precedes the document header, for example:
 
   :lang: es
 
@@ -3623,17 +3629,16 @@ AsciiDoc User Manual
 :Date:      April 23, 2004
 :Revision:  5.1.1
 :Key words: linux, ralink, debian, wireless
-:Revision history:
 ---------------------------------------------------------------------
 
 Which creates these attributes:
 
   {author}, {firstname}, {lastname}, {authorinitials}, {email},
-  {date}, {revision}, {keywords}, {revisionhistory}
+  {date}, {revision}, {keywords}
 
 The preceding example is equivalent to the standard AsciiDoc two line
 document header (actually it's a little bit different because of the
-addition of the `{keywords}` and `{revisionhistory}` attributes).
+addition of the `{keywords}` and `{docinfo}` attributes).
 
 Setting configuration entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3703,8 +3708,8 @@ named attributes):
   ["22 times", backcolor="#0e0e0e", options="noborders,wide"]
 
 .Attribute list behavior
-- If one or more attribute values contains a comma the all values must
-  be quoted (enclosed in quotation characters).
+- If one or more attribute values contains a comma the all string
+  values must be quoted (enclosed in quotation characters).
 - If the list contains any named or quoted attributes then all string
   attribute values must be quoted.
 - To include a quotation mark (") character in a quoted attribute
@@ -4407,9 +4412,9 @@ route:
   linked HTML pages for each document section.
 - Toolchain processing performs link and document validity checks.
 - If the DocBook 'lang' attribute is set then things like table of
-  contents, revision history, figure and table captions and admonition
-  captions will be output in the specified language (setting the
-  AsciiDoc 'lang' attribute sets the DocBook 'lang' attribute).
+  contents, figure and table captions and admonition captions will be
+  output in the specified language (setting the AsciiDoc 'lang'
+  attribute sets the DocBook 'lang' attribute).
 
 On the other hand, HTML output directly from AsciiDoc is much faster,
 is easily customized and can be used in situations where there is no
@@ -5038,9 +5043,8 @@ you need to be aware of:
 - If you are generating output documents using a DocBook toolchain
   then you should set the AsciiDoc `lang` attribute to the appropriate
   language (it defaults to `en` (English)). This will ensure things
-  like table of contents, revision history, figure and table captions
-  and admonition captions are output in the specified language.
-  For example:
+  like table of contents, figure and table captions and admonition
+  captions are output in the specified language.  For example:
 
   $ a2x -a lang=es doc/article.txt
 

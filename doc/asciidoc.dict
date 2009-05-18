@@ -1,4 +1,4 @@
-personal_ws-1.1 en 779 
+personal_ws-1.1 en 782 
 mandoc
 colspecs
 API
@@ -25,8 +25,8 @@ CALS
 LiteralParagraph
 Bon
 ungenerated
-des
 cmd
+des
 ListItems
 dev
 vulputate
@@ -78,8 +78,8 @@ hhc
 Chai
 strongwords
 setlocal
-ListingBlock
 listingblock
+ListingBlock
 exe
 vsides
 rewriteSystem
@@ -89,8 +89,8 @@ listelement
 AttributeLists
 magna
 xreflabel
-PDF's
 PDFs
+PDF's
 MSIE
 Daly
 arcu
@@ -101,8 +101,8 @@ listcontinuation
 ListContinuation
 apos
 hoc
-ispum
 Maier
+ispum
 TableFooter
 blog
 passthroughs
@@ -153,6 +153,7 @@ companyname
 pageunits
 nec
 latexmath
+articleinfo
 auctor
 refname
 uninstall
@@ -199,13 +200,14 @@ CustomBlocks
 informalfigure
 online
 LIBDIR
+docinfo
 BlockId
 png
 lobortis
 Bowlin
-asciimathml
-AsciiMathML
 ASCIIMathML
+AsciiMathML
+asciimathml
 conf
 RCS
 CalloutList
@@ -248,8 +250,8 @@ biggy
 pgwide
 crlf
 tex
-Bólido
 Bolido
+Bólido
 tabsize
 colpcwidth
 RTF
@@ -260,8 +262,8 @@ tis
 listdef
 Tsawassen
 postsubs
-LastName
 lastname
+LastName
 toc
 tmp
 Knisley
@@ -299,13 +301,13 @@ blandit
 revisionhistory
 params
 undefines
-htmlhelp
 HTMLHelp
+htmlhelp
 cellspacing
 Citeaux
 srackham
-Luleå
 Lulea
+Luleå
 Ubuntu
 xml
 XSLTLib
@@ -338,8 +340,8 @@ gq
 refactored
 sgml
 backcolor
-AsciiDoc
 asciidoc
+AsciiDoc
 subslist
 hs
 testblock
@@ -376,8 +378,8 @@ py
 docname
 su
 expandtab
-LinuxDoc
 linuxdoc
+LinuxDoc
 tt
 VM
 Frédérique
@@ -633,6 +635,7 @@ listtags
 mauris
 ListingBlocks
 TableUnderline
+bookinfo
 Vajna
 upperalpha
 xmldecl
@@ -775,6 +778,6 @@ Firefox
 JavaHelp
 unescaped
 mydoc
-middlename
 MiddleName
+middlename
 Jimmac's

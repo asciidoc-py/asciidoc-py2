@@ -50,15 +50,19 @@ and `asciidoc_filetype.vim` in the `ftdetect` directory).
 *********************************************************************
 The AsciiDoc distribution tarball is built using
 http://www.a-a-p.org/[A-A-P] (a software build system written by Bram
-Moolenaar) and is installed using a separate autoconf make script.
+Moolenaar). The AsciiDoc A-A-P scripts are:
+
+`./common.aap`:: Included in all scripts.
+`./main.aap`:: Builds distribution tarball and zip files.
+`./doc/main.aap`:: Builds distribution documentation.
+`./examples/website/main.aap`:: Builds AsciiDoc website.
+
 It's arguable that build and install should be done with a single tool
 but I wrote the A-A-P build scripts before the installer (because I
-find make/autoconf tedious), the make/autoconf installer was added
-much as the canonical installer for packagers and for users who don't
-have pre-built AsciiDoc packages and/or don't want to install from the
+find make/autoconf tedious). The make/autoconf installer was added as
+the canonical installer for packagers and for users who don't have
+pre-built AsciiDoc packages and/or don't want to install from the
 Mercurial repository.
-
-The A-A-P build procedure has yet to be documented.
 
 *********************************************************************
 

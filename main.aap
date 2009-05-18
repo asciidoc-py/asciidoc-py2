@@ -1,6 +1,6 @@
 #####################################################################
 #
-# A-A-P file for making AsciiDoc.
+# A-A-P file for making AsciiDoc distribution.
 # (you can obtain A-A-P from http://www.a-a-p.org)
 #
 # Stuart Rackham <srackham@gmail.com>
@@ -8,7 +8,7 @@
 
 :execute ./common.aap
 
-all: docs website distribution
+all: distribution
 
 vers:
     :print Version: $VERS (released $DATE)

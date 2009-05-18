@@ -1,4 +1,10 @@
-# A-A-P file for making AsciiDoc Web pages.
+#####################################################################
+#
+# A-A-P file for making AsciiDoc web site.
+# (you can obtain A-A-P from http://www.a-a-p.org)
+#
+# Stuart Rackham <srackham@gmail.com>
+#####################################################################
 
 :execute ../../common.aap
 

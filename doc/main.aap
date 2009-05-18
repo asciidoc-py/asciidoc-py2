@@ -1,6 +1,6 @@
 #####################################################################
 #
-# A-A-P file for making AsciiDoc distribution documents.
+# A-A-P file for making AsciiDoc distribution documentation.
 # (you can obtain A-A-P from http://www.a-a-p.org)
 #
 # Stuart Rackham <srackham@gmail.com>
@@ -12,39 +12,16 @@
 # include PDF_PROCESSOR=dblatex on the command-line.
 #PDF_PROCESSOR = dblatex
 
-#####################################################################
-# Programs used by this script.
-#####################################################################
+ASCIIDOC = python ../asciidoc.py -a revision=$(VERS)@ -a date="$(DATE)@" 
 
-# If python is not in your executable search path you may have to
-# tweak these locations. Note also that this script is in the distribution
-# ./doc directory and a number of paths are relative.
-
-## Older or alternative rules and actions have been commented out but not
-#  deleted.
-
-@if OSTYPE == 'mswin':
-    ASCIIDOC = python ..\asciidoc.py -a revision=$(VERS)@ -a date="$(DATE)@" 
-    HHC = "C:\Program Files\HTML Help Workshop\hhc.exe"
-    FOP = fop.bat
-@else:
-    ASCIIDOC = python ../asciidoc.py -a revision=$(VERS)@ -a date="$(DATE)@" 
-    @if os.uname()[0][:6] == 'CYGWIN':
-        HHC = "c:/Program\ Files/HTML\ Help\ Workshop/hhc.exe"
-        :syseval which fop.bat | :assign FOP
-    @else:
-        HHC =
-        :syseval which fop.sh | :assign FOP
-
-:syseval which jw | :assign JW              # Converts DocBook SGML to PDF.
+:syseval which fop | :assign FOP
+@if not _no.FOP:
+    :syseval which fop.sh | :assign FOP
 :syseval which lynx | :assign LYNX          # Converts HTML to text.
 :syseval which xmllint | :assign XMLLINT    # Validates XML.
 :syseval which dblatex | :assign DBLATEX    # Converts DocBook XML to PDF.
-
-## xsltproc(1) is used instead of xmlto(1).
-#XMLTO = xmlto
-ASPELL = aspell
-XSLTPROC = xsltproc
+:syseval which aspell | :assign ASPELL
+:syseval which xsltproc | :assign XSLTPROC
 
 ROOT = asciidoc asciidoc.1
 INFILES = $*(ROOT).txt
@@ -77,9 +54,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
 
 :rule %.text : %.txt
     # Convert AsciiDoc to HTML then use lynx(1) to convert HTML to text.
-    @if _no.OSTYPE != 'posix':
-        :print WARNING: non-POSIX environment: skipping $target file generation
-    @elif not _no.LYNX:
+    @if not _no.LYNX:
         :print WARNING: lynx(1) unavailable: skipping $target file generation
     @else:
         opt = -f ../text.conf
@@ -89,10 +64,6 @@ TEST_FILES = $*(ROOT).css-embedded.html
             opt += -n
         :sys $ASCIIDOC $opt -b html4 -o - $source | \
             lynx -dump -stdin > $target
-
-## The preceding rule makes a better job of producing plain text.
-#:rule %.text : %.xml 
-#   :sys $XMLTO txt $source
 
 :rule %.css.html : %.txt
     opt =
@@ -126,10 +97,6 @@ TEST_FILES = $*(ROOT).css-embedded.html
         opt += -d manpage
     @else:
         opt += -n
-##
-#    @if source_list[0] == 'asciidoc.txt':
-#        # User Guide is a book.
-#        opt += -d book
     :sys $ASCIIDOC $opt -b docbook $(source[0])
     @if _no.XMLLINT:
         # Don't validate against DTD (using --valid option) because of
@@ -146,26 +113,11 @@ TEST_FILES = $*(ROOT).css-embedded.html
     :sys $ASCIIDOC $opt -b docbook-sgml $(source[0])
 
 :rule %.html: %.xml
-#   :sys $XMLTO xhtml-nochunks $source
     :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 --stringparam html.stylesheet ./docbook-xsl.css ../docbook-xsl/xhtml.xsl $source >$target
-
-## Generate plain HTML from DocBook XML using the preceeding rule.
-#:rule %.html : %.txt
-#   opt =
-#   @if source_list[0] == 'asciidoc.1.txt':
-#       opt += -d manpage
-#   @else:
-#       opt += -n
-#   :sys $ASCIIDOC $opt -b xhtml $(source[0])
 
 :rule %.man : %.xml
     :sys $XSLTPROC --nonet ../docbook-xsl/manpage.xsl $source
     :sys touch $target  # Dummy target.
-
-## Generate manpage from XML using preceeding rule.
-#:rule %.man : %.sgml
-#   :sys $JW -b man $(match).sgml
-#   :sys touch $target  # Dummy target.
 
 :rule %.fo: %.xml
     :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 ../docbook-xsl/fo.xsl $source >$target
@@ -191,16 +143,9 @@ TEST_FILES = $*(ROOT).css-embedded.html
 @elif _no.FOP:
     :rule %.pdf: %.fo
         :sys $FOP $source $target
-@elif _no.JW:
-    :rule %.pdf: %.sgml
-        :sys $JW -b pdf $source
 @else:
     :rule %.pdf:
         :print WARNING: PDF processor  unavailable: skipping $target file generation
-
-## jw(1) renders better PDF than xmlto(1) (see preceeding rule).
-#:rule %.pdf : %.xml 
-#   :sys $XMLTO pdf $source
 
 
 #####################################################################
@@ -225,12 +170,6 @@ $HTMLHELP_DIR/index.html: asciidoc.xml
     :mkdir {f} $HTMLHELP_DIR
     :del {f} {q} $HTMLHELP_DIR/*.html
     :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 --stringparam base.dir $HTMLHELP_DIR/ --stringparam html.stylesheet ../docbook-xsl.css --stringparam htmlhelp.hhp ${HTMLHELP_FILE}.hhp --stringparam htmlhelp.chm ${HTMLHELP_FILE}.chm ../docbook-xsl/htmlhelp.xsl $source
-
-${HTMLHELP_FILE}.chm: $HTMLHELP_DIR/index.html
-    @if _no.HHC:
-        :sys {f} "$HHC" ${HTMLHELP_FILE}.hhp
-    @else:
-        :print WARNING: HTMLHelp compiler unavailable: skipping asciidoc.chm file generation
 
 # Book template.
 book.xml: book.txt

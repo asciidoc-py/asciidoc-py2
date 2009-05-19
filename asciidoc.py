@@ -1239,6 +1239,12 @@ class Document:
             Header.translate()
             # Command-line entries override header derived entries.
             self.attributes.update(config.cmd_attrs)
+            # DEPRECATED: revision renamed to revnumber.
+            if self.attributes.get('revnumber') is None:
+                if self.attributes.get('revision') is not None:
+                    self.attributes['revnumber'] = self.attributes['revision']
+            else:
+                self.attributes['revision'] = self.attributes['revnumber']
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr,trace='header')
@@ -1402,8 +1408,6 @@ class Header:
                             mo = re.match(Header.REV_LINE_RE,s)
             AttributeEntry.translate_all()
         s = attrs.get('revnumber')
-        if s is None:
-            s = attrs.get('revision')   # DEPRECATED: Renamed to revnumber.
         if s:
             mo = re.match(Header.RCS_ID_RE,s)
         if mo:
@@ -1412,7 +1416,6 @@ class Header:
             author = mo.groupdict().get('author')
             if revnumber:
                 attrs['revnumber'] = revnumber.strip()
-                attrs['revision'] = attrs['revnumber']  # DEPRECATED: Renamed to revnumber.
             if date:
                 attrs['date'] = date.strip()
             if author and 'firstname' not in attrs:

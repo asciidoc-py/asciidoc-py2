@@ -6,21 +6,26 @@ AsciiDoc ChangeLog
 Version 8.4.5 (2009-05-24)
 --------------------------
 .Additions and changes
-- Renamed 'revision' attribute to more sensible and consistent 'revnumber' ('revision' is still recognized but is deprecated.
+- A 'role' attribute can now be applied to block elements. This adds
+  the 'role' attribue to DocBook elements. Patch submitted by
+  http://groups.google.com/group/asciidoc/browse_thread/thread/62278a054188a038[Noah
+  Slater]).
+- Renamed 'revision' attribute to more sensible and consistent
+  'revnumber' ('revision' is still recognized but is deprecated.
 - Moved backend specific attributes to Appendix H in User Guide.
 - Removed cruft from A-A-P scripts and documented them.
-- Renamed and generalized the docbook backend revision history inclusion
-  mechanism to 'docinfo' to allow all article or book information elements. The
-  old revision history names still work but have been deprecated.
+- Renamed and generalized the docbook backend revision history
+  inclusion mechanism to 'docinfo' to allow all article or book
+  information elements. The old revision history names still work but
+  have been deprecated.
 - Refactored docbook.conf headers.
 - Moved line break replacement from `[replacements]` to
-  `[replacements2]` so the
-  replacement occurs after the mailto macro.
-  This fixes bug http://groups.google.com/group/asciidoc/browse_thread/thread/4bdcdfb0af773e2
-- The typewriter to punctuation apostrophe replacement can be escaped with a
-  backslash.
+  `[replacements2]` so the replacement occurs after the mailto macro.
+  This fixes bug
+  http://groups.google.com/group/asciidoc/browse_thread/thread/4bdcdfb0af773e2
+- The typewriter to punctuation apostrophe replacement can be escaped
+  with a backslash.
 - Graphviz filter outputs images to imagesdir if it is defined.
-
 - Made the block image macro generic so that it can be used for filter
   outputs. As a result Music and Graphviz filters:
   * Have been greatly simplified.

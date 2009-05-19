@@ -12,7 +12,7 @@
 # include PDF_PROCESSOR=dblatex on the command-line.
 #PDF_PROCESSOR = dblatex
 
-ASCIIDOC = python ../asciidoc.py -a revision=$(VERS)@ -a date="$(DATE)@" 
+ASCIIDOC = python ../asciidoc.py -a revnumber=$(VERS)@ -a date="$(DATE)@" 
 
 :syseval which fop | :assign FOP
 @if not _no.FOP:

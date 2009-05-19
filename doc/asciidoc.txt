@@ -838,6 +838,28 @@ is not done well; but you are surprised to find it done at all.
 _____________________________________________________________________
 ---------------------------------------------------------------------
 
+Common attributes
+~~~~~~~~~~~~~~~~~
+Most block elements support the following attributes:
+
+[cols="1e,1,5a",frame="topbot",options="header"]
+|====================================================================
+|Name |Backends |Description
+
+|id |html4, xhtml11, docbook |
+Unique identifier typically serve as link targets.
+Can also be set by the 'BlockId' element.
+
+|role |docbook |
+Role contains a string used to classify or subclassify an element.
+Used to add the 'role' attribute to DocBook block elements.
+
+|reftext |docbook |
+'reftext' is used to set the DocBook 'xreflabel' attribute.
+Can also be set by the 'BlockId' element.
+
+|====================================================================
+
 
 Paragraphs
 ----------
@@ -1001,7 +1023,7 @@ The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
 detailed in the <<X59,Filters>> section.
 
 .Default DelimitedBlock substitutions
-[cols="2s,7*^",frame="topbot",options="header,autowidth"]
+[cols="2e,7*^",frame="topbot",options="header,autowidth"]
 |=====================================================
 | |Attributes |Callouts |Macros | Quotes |Replacements
 |Special chars |Special words
@@ -5033,7 +5055,7 @@ Appendix F: Attribute Options
 Here is the list of predefined <<X75,attribute list options>>:
 
 
-[cols="2,2,2,5",frame="topbot",options="header"]
+[cols="2e,2,2,5",frame="topbot",options="header"]
 |====================================================================
 |Option|Backends|AsciiDoc Elements|Description
 
@@ -5131,7 +5153,7 @@ Appendix H: Backend Attributes
 This table contains a list of optional attributes that influence the
 generated outputs.
 
-[cols="1,1,5a",frame="topbot",options="header"]
+[cols="1e,1,5a",frame="topbot",options="header"]
 |====================================================================
 |Name |Backends |Description
 

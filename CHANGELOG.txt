@@ -3,6 +3,70 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.4.5 (2009-05-24)
+--------------------------
+.Additions and changes
+- Renamed 'revision' attribute to more sensible and consistent 'revnumber' ('revision' is still recognized but is deprecated.
+- Moved backend specific attributes to Appendix H in User Guide.
+- Removed cruft from A-A-P scripts and documented them.
+- Renamed and generalized the docbook backend revision history inclusion
+  mechanism to 'docinfo' to allow all article or book information elements. The
+  old revision history names still work but have been deprecated.
+- Refactored docbook.conf headers.
+- Moved line break replacement from `[replacements]` to
+  `[replacements2]` so the
+  replacement occurs after the mailto macro.
+  This fixes bug http://groups.google.com/group/asciidoc/browse_thread/thread/4bdcdfb0af773e2
+- The typewriter to punctuation apostrophe replacement can be escaped with a
+  backslash.
+- Graphviz filter outputs images to imagesdir if it is defined.
+
+- Made the block image macro generic so that it can be used for filter
+  outputs. As a result Music and Graphviz filters:
+  * Have been greatly simplified.
+  * Honor the 'data-uri' attribute.
+  * 'html4' outputs no longer generate W3C validation warning.
+- The 'iconsdir' attribute no longer requires a trailing directory
+  separator character.
+- Removed borders around linked html4 images.
+- Added 'html4' specific HTML output for music filter.
+- 'a2x': Added `--unsafe` option (shortcut for
+  `--asciidoc-opts=--unsafe`).
+- 'a2x': The FOP executable can now be named `fop` (this is the
+  default name in some distributions).
+- Attributes are now substituted in the system macro attribute list.
+- If the output is set to stdout (i.e. no output directory is defined)
+  then Music and Graphviz filters will output included images to the
+  source file directory.
+- Added filters test to 'testasciidoc' tests.
+- Added 'name' directive to 'testasciidoc'.
+- Added UTF-8 examples to 'testasciidoc' tests.
+- Added data URI test to 'testasciidoc' tests.
+- Moved language specific configuration parameters into `lang-en.conf`
+  file.
+- 'lang' attribute entry can be specified in the AsciiDoc source file
+  (preceding the header).
+- Documented the A-A-P build.
+- Added German language config file (`lang-de.conf`) contributed by
+  Michael Wild.
+
+.Bug fixes
+- FIXED: Multiple manpage names are now handled correctly when
+  generating DocBook output, each name now generates a separate
+  DocBook `<refname>` element. See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/c93bb4db025225d8
+- FIXED: A problem that caused AttributeEntries preceding the header
+  to be overwritten when the language conf file loaded.
+- FIXED: Possible inline macro name ambiguity e.g. link matches olink.
+- FIXED: The documented macro definition deletion behavior had been
+  broken for a long time.
+- FIXED: Email addresses not recognized when followed by a period
+  character.
+- FIXED: Hyhpens in mailto macros can delimit nested addresses e.g.
+  \bloggs@mail was processed inside
+  \mailto:joe-bloggs@mail-server.com[Mail].
+
+
 Version 8.4.4 (2009-04-26)
 --------------------------
 .Additions and changes

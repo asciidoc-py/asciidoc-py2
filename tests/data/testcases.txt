@@ -144,10 +144,50 @@ image::../../images/tiger.png[]
 
 :height: 250
 :width: 350
-
 .Tyger tyger two
 image::../../images/tiger.png[caption="Figure 2: "]
+:height!:
+:width!:
 
+// Images and icons directories.
+:imagesdir: ../../doc
+image::music2.png[]
+:imagesdir!:
+
+:icons:
+:iconsdir:  ../../images/icons
+NOTE: Lorum ipsum.
+
+:icons!:
+
+
+== Admonishments
+
+NOTE: Lorum ipsum.
+
+TIP: Lorum ipsum.
+
+WARNING: Lorum ipsum.
+
+CAUTION: Lorum ipsum.
+
+IMPORTANT: Lorum ipsum.
+
+// With icon images.
+:icons:
+:iconsdir:  ../../images/icons
+
+NOTE: Lorum ipsum.
+
+TIP: Lorum ipsum.
+
+WARNING: Lorum ipsum.
+
+CAUTION: Lorum ipsum.
+
+IMPORTANT: Lorum ipsum.
+
+:icons!:
 
 == Backslash escapes
 

@@ -5149,13 +5149,13 @@ character set encoding to `ISO-8859-1`.
 
   :encoding: ISO-8859-1
 
-|[[X44]]iconsdir |html4, xhtml11, docbook |
-The name of the directory containing linked admonition and navigation
-icons. Defaults to `./images/icons`.
-
 |imagesdir |html4, xhtml11, docbook |
 If this attribute is defined it is prepended to the target image file
 name paths in inline and block image macros.
+
+|[[X44]]iconsdir |html4, xhtml11, docbook |
+The name of the directory containing linked admonition and navigation
+icons. Defaults to `./images/icons`.
 
 |sgml |docbook |
 The `--backend=docbook` command-line option produces DocBook XML.  You

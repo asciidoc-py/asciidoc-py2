@@ -1360,8 +1360,8 @@ class Document:
 
 class Header:
     """Static methods and attributes only."""
-    REV_LINE_RE = r'^(\D*(?P<revision>.*?),)?(?P<date>.+)$'
-    RCS_ID_RE = r'^\$Id: \S+ (?P<revision>\S+) (?P<date>\S+) \S+ (?P<author>\S+) (\S+ )?\$$'
+    REV_LINE_RE = r'^(\D*(?P<revnumber>.*?),)?(?P<date>.+)$'
+    RCS_ID_RE = r'^\$Id: \S+ (?P<revnumber>\S+) (?P<date>\S+) \S+ (?P<author>\S+) (\S+ )?\$$'
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     @staticmethod
@@ -1401,15 +1401,18 @@ class Header:
                         if not mo:
                             mo = re.match(Header.REV_LINE_RE,s)
             AttributeEntry.translate_all()
-        s = attrs.get('revision')
+        s = attrs.get('revnumber')
+        if s is None:
+            s = attrs.get('revision')   # DEPRECATED: Renamed to revnumber.
         if s:
             mo = re.match(Header.RCS_ID_RE,s)
         if mo:
-            revision = mo.group('revision')
+            revnumber = mo.group('revnumber')
             date = mo.group('date')
             author = mo.groupdict().get('author')
-            if revision:
-                attrs['revision'] = revision.strip()
+            if revnumber:
+                attrs['revnumber'] = revnumber.strip()
+                attrs['revision'] = attrs['revnumber']  # DEPRECATED: Renamed to revnumber.
             if date:
                 attrs['date'] = date.strip()
             if author and 'firstname' not in attrs:

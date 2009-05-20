@@ -8,7 +8,7 @@ ifdef::doctype-article[]
 // Translate title.
 Abstract
 --------
-Special section.
+Abstract special section.
 
 endif::doctype-article[]
 
@@ -17,19 +17,19 @@ ifdef::doctype-book[]
 // Translate title.
 Dedication
 ----------
-Special section.
+Dedication special section.
 
 
 // Translate title.
 Preface
 -------
-Special section.
+Preface special section.
 
 
 // Translate title.
 Colophon
 --------
-Special section.
+Colophon special section.
 
 endif::doctype-book[]
 
@@ -71,13 +71,13 @@ tigers.
 // Translate title.
 Appendix A: Example Appendix
 ----------------------------
-Special section.
+Appendix special section.
 
 
 // Translate title.
 Bibliography
 ------------
-The bibliography list is a style of AsciiDoc bulleted list.
+Bibliography special section.
 
 [bibliography]
 - [[[taoup]]] Eric Steven Raymond. 'The Art of Unix
@@ -90,8 +90,7 @@ The bibliography list is a style of AsciiDoc bulleted list.
 // Translate title.
 Glossary
 --------
-Glossaries are optional. Glossaries entries are an example of a style
-of AsciiDoc labeled lists.
+Glossary special section.
 
 [glossary]
 A glossary term::
@@ -106,6 +105,7 @@ ifdef::backend-docbook[]
 Index
 -----
 ////////////////////////////////////////////////////////////////
+Index special section.
 The index is normally left completely empty, it's contents being
 generated automatically by the DocBook toolchain.
 ////////////////////////////////////////////////////////////////

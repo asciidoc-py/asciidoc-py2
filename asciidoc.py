@@ -1202,6 +1202,7 @@ class Document:
         if lang:
             if not config.load_lang(lang):
                 message.error('missing language conf file: lang-%s.conf' % lang)
+            self.attributes['lang'] = lang  # Reinstate new lang attribute.
         else:
             message.error('language attribute (lang) is not defined')
         message.linenos = None  # Restore default line number behavior.

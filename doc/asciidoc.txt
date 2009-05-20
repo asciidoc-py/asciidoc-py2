@@ -317,7 +317,7 @@ revision line can be one of two formats:
     The revision remark extends from the colon up to the next blank
     line or attribute entry and is subject to normal text
     substitutions.
-  * If a revision number or remark has been set but the revsion date
+  * If a revision number or remark has been set but the revision date
     has not been set then the revision date is set to the value of the
     'docdate' attribute.
 

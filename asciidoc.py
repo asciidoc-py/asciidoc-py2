@@ -1417,7 +1417,7 @@ class Header:
             author = mo.groupdict().get('author')
             if author and 'firstname' not in attrs:
                 document.parse_author(author)
-            revremark = mo.group('revremark')
+            revremark = mo.groupdict().get('revremark')
             if revremark is not None:
                 revremark = [revremark]
                 # Revision remarks can continue on following lines.

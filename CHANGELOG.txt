@@ -9,7 +9,7 @@ Version 8.4.5 (2009-05-24)
 - The article and book document header can now include a revision
   remark.
 - A 'role' attribute can now be applied to block elements. This adds
-  the 'role' attribue to DocBook elements. Patch submitted by
+  the 'role' attribute to DocBook elements. Patch submitted by
   http://groups.google.com/group/asciidoc/browse_thread/thread/62278a054188a038[Noah
   Slater]).
 - Renamed 'revision' attribute to more sensible and consistent
@@ -69,7 +69,7 @@ Version 8.4.5 (2009-05-24)
   broken for a long time.
 - FIXED: Email addresses not recognized when followed by a period
   character.
-- FIXED: Hyhpens in mailto macros can delimit nested addresses e.g.
+- FIXED: Hyphens in mailto macros can delimit nested addresses e.g.
   \bloggs@mail was processed inside
   \mailto:joe-bloggs@mail-server.com[Mail].
 

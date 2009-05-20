@@ -12,15 +12,6 @@ These distribution archives are also available, along with previous
 AsciiDoc versions, at the SourceForge
 http://sourceforge.net/projects/asciidoc/.
 
-link:asciidoc-{revision}.tar.gz[]::
-  A tarball distribution of the latest version of AsciiDoc for *NIX
-  platforms.
-
-link:asciidoc-{revision}.zip[]::
-  A Zip distribution of the latest version of AsciiDoc for Microsoft
-  Windows users (UNIX users should use the tarball since includes
-  symbolic links to eliminate file duplication).
-
 
 [[X3]]
 Mercurial Repository
@@ -86,7 +77,8 @@ The following platform specific packages are available:
 See also link:userguide.html#X38[Packager Notes] in the 'AsciiDoc User
 Guide'.
 
+
 Copying
 -------
-Copyright (C) 2002-2008 Stuart Rackham. Free use of AsciiDoc is
+Copyright (C) 2002-2009 Stuart Rackham. Free use of AsciiDoc is
 granted under the terms of the GNU General Public License (GPL).

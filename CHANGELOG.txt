@@ -6,6 +6,8 @@ AsciiDoc ChangeLog
 Version 8.4.5 (2009-05-24)
 --------------------------
 .Additions and changes
+- The article and book document header can now include a revision
+  remark.
 - A 'role' attribute can now be applied to block elements. This adds
   the 'role' attribue to DocBook elements. Patch submitted by
   http://groups.google.com/group/asciidoc/browse_thread/thread/62278a054188a038[Noah
@@ -70,6 +72,13 @@ Version 8.4.5 (2009-05-24)
 - FIXED: Hyhpens in mailto macros can delimit nested addresses e.g.
   \bloggs@mail was processed inside
   \mailto:joe-bloggs@mail-server.com[Mail].
+
+[[X2]]
+Regression issues
+~~~~~~~~~~~~~~~~~
+. A colon following the date in the AsciiDoc header is treated as a
+  revision remark delimiter -- this could be an issue if you used a
+  colon in the header date.
 
 
 Version 8.4.4 (2009-04-26)
@@ -184,8 +193,6 @@ asciidoc.execute('mydoc.txt')
 - Dropped `asciidoc(1)` broken undocumented `--profile` option.
 - Em dash replacement now recognized at start of block.
 
-
-[[X2]]
 Regression issues
 ~~~~~~~~~~~~~~~~~
 Replacing backtick quoting with the 'inline literal' passthrough

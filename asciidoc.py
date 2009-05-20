@@ -1366,7 +1366,7 @@ class Document:
 
 class Header:
     """Static methods and attributes only."""
-    REV_LINE_RE = r'^(\D*(?P<revnumber>.*?),)?(?P<date>.+)$'
+    REV_LINE_RE = r'^(\D*(?P<revnumber>.*?),)?(?P<date>.*?)(:\s*(?P<revremark>.*))?$'
     RCS_ID_RE = r'^\$Id: \S+ (?P<revnumber>\S+) (?P<date>\S+) \S+ (?P<author>\S+) (\S+ )?\$$'
     def __init__(self):
         raise AssertionError,'no class instances allowed'
@@ -1412,14 +1412,27 @@ class Header:
             mo = re.match(Header.RCS_ID_RE,s)
         if mo:
             revnumber = mo.group('revnumber')
-            date = mo.group('date')
-            author = mo.groupdict().get('author')
             if revnumber:
                 attrs['revnumber'] = revnumber.strip()
-            if date:
-                attrs['date'] = date.strip()
+            author = mo.groupdict().get('author')
             if author and 'firstname' not in attrs:
                 document.parse_author(author)
+            revremark = mo.group('revremark')
+            if revremark is not None:
+                revremark = [revremark]
+                # Revision remarks can continue on following lines.
+                while reader.read_next() and not AttributeEntry.isnext():
+                    revremark.append(reader.read())
+                revremark = Lex.subs(revremark,['normal'])
+                revremark = '\n'.join(revremark).strip()
+                attrs['revremark'] = revremark
+                AttributeEntry.translate_all()
+            date = mo.group('date')
+            if date:
+                attrs['date'] = date.strip()
+            elif revnumber or revremark:
+                # Set revision date to ensure valid DocBook revision.
+                attrs['date'] = attrs['docdate']
         if document.doctype == 'manpage':
             # Translate mandatory NAME section.
             if Lex.next() is not Title:
@@ -1485,8 +1498,8 @@ class AttributeEntry:
     @staticmethod
     def translate():
         assert Lex.next() is AttributeEntry
-        attr = AttributeEntry   # Alias for brevity.
-        reader.read()   # Discard attribute entry from reader.
+        attr = AttributeEntry    # Alias for brevity.
+        reader.read()            # Discard attribute entry from reader.
         if AttributeEntry.name2: # The entry is a conf file entry.
             section = {}
             # Some sections can have name! syntax.

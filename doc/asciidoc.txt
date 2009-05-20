@@ -274,10 +274,20 @@ Where:
 
 Header
 ~~~~~~
-The Header is optional but must start on the first line of the
-document and must begin with a document <<X17,title>>. Optional Author
-and Revision lines immediately follow the title. The header can be
-preceded by a CommentBlock or comment lines.
+The Header contains a document title plus optional authorship and
+revision information. The Header is optional but must begin with a
+document <<X17,title>>.  The header can be preceded by comments and
+<<X18,attribute entries>>.  Optional Author and Revision lines
+immediately follow the Header title. the header can also include
+attribute entry lines.  The document heading is separated from the
+remainder of the document by one or more blank lines.  Here's an
+example AsciiDoc document header:
+
+  Writing Documentation using AsciiDoc
+  ====================================
+  Joe Bloggs <jbloggs@mymail.com>
+  v2.0, February 2003:
+  Rewritten for version 2 release.
 
 The author line contains the author's name optionally followed by the
 author's email address. The author's name consists of a first name
@@ -285,33 +295,48 @@ followed by optional middle and last names separated by white space.
 Multi-word first, middle and last names can be entered in the header
 author line using the underscore as a word separator. The email
 address comes last and must be enclosed in angle <> brackets. Author
-names cannot contain angle <> bracket characters.
+names cannot contain angle <> bracket characters.  Here a some
+examples of author lines:
 
-The optional document header revision line should immediately follow
-the author line. The revision line can be one of two formats:
+  Joe Bloggs <jbloggs@mymail.com>
+  Joe Bloggs
+  Vincent Willem van_Gogh
 
-. An alphanumeric document revision number followed by a date:
-  * The revision number and date must be separated by a comma.
-  * The revision number is optional but must contain at least one
-    numeric character.
+The optional header revision line follows the author line.  The
+revision line can be one of two formats:
+
+. An optional document revision number followed by an optional
+  revision date followed by an optional revision remark:
+
+  * If the revision number is specified it must be followed by a
+    comma.
+  * The revision number must contain at least one numeric character.
   * Any non-numeric characters preceding the first numeric character
     will be dropped.
+  * If a revision remark is specified it must be preceded by a colon.
+    The revision remark extends from the colon up to the next blank
+    line or attribute entry and is subject to normal text
+    substitutions.
+  * If a revision number or remark has been set but the revsion date
+    has not been set then the revision date is set to the value of the
+    'docdate' attribute.
+
 . An RCS/CSV/SVN $Id$ marker (if an $Id$ revision marker is used the
   header author line can be omitted).
 
-The document heading is separated from the remainder of the document
-by one or more blank lines.
+Here a some examples of header revision lines:
 
-Here's an example AsciiDoc document header:
-
-  Writing Documentation using AsciiDoc
-  ====================================
-  Stuart Rackham <srackham@gmail.com>
   v2.0, February 2003
+  February 2003
+  v2.0,
+  v2.0, February 2003: Rewritten for version 2 release.
+  February 2003: Rewritten for version 2 release.
+  v2.0,: Rewritten for version 2 release.
+  :Rewritten for version 2 release.
 
 You can override or set header parameters by passing 'revnumber',
-'date', 'email', 'author', 'authorinitials', 'firstname' and
-'lastname' attributes using the asciidoc(1) `-a` (`--attribute`)
+'revremark', 'date', 'email', 'author', 'authorinitials', 'firstname'
+and 'lastname' attributes using the asciidoc(1) `-a` (`--attribute`)
 command-line option. For example:
 
   $ asciidoc -a date=2004/07/27 article.txt
@@ -328,8 +353,8 @@ example: copyrights, document history and authorship information.  The
 AsciiDoc header syntax provides for basic revision and author
 information -- additional information such as copyrights and document
 history can be optionally included from a separate document
-information file containing any elements that are allowed inside the
-DocBook 'articleinfo' and 'bookinfo' elements:
+information file containing DocBook elements that are allowed inside
+the DocBook 'articleinfo' and 'bookinfo' elements:
 
 - The document information file must be in the same directory as the
   source document and must be named like `<docname>-docinfo.xml`.  For

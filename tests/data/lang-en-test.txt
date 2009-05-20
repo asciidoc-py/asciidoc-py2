@@ -1,0 +1,112 @@
+// Test for lang-en.conf language file.
+:lang: en
+
+Languages Test
+==============
+
+ifdef::doctype-article[]
+// Translate title.
+Abstract
+--------
+Special section.
+
+endif::doctype-article[]
+
+
+ifdef::doctype-book[]
+// Translate title.
+Dedication
+----------
+Special section.
+
+
+// Translate title.
+Preface
+-------
+Special section.
+
+
+// Translate title.
+Colophon
+--------
+Special section.
+
+endif::doctype-book[]
+
+
+The First Section
+-----------------
+// Translate caption.
+NOTE: Lorum ipsum.
+
+// Translate caption.
+TIP: Lorum ipsum.
+
+// Translate caption.
+WARNING: Lorum ipsum.
+
+// Translate caption.
+CAUTION: Lorum ipsum.
+
+// Translate caption.
+IMPORTANT: Lorum ipsum.
+
+.Tiger
+image::../../images/tiger.png[Tiger image]
+
+Followed by an example table:
+
+.Table
+[width="60%",options="header"]
+|==============================================
+| Option          | Description
+| -a 'USER GROUP' | Add 'USER' to 'GROUP'.
+| -R 'GROUP'      | Disables access to 'GROUP'.
+|==============================================
+
+And now for something completely different: ((monkeys)), lions and
+tigers.
+
+
+// Translate title.
+Appendix A: Example Appendix
+----------------------------
+Special section.
+
+
+// Translate title.
+Bibliography
+------------
+The bibliography list is a style of AsciiDoc bulleted list.
+
+[bibliography]
+- [[[taoup]]] Eric Steven Raymond. 'The Art of Unix
+  Programming'. Addison-Wesley. ISBN 0-13-142901-9.
+- [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.
+  'DocBook - The Definitive Guide'. O'Reilly & Associates. 1999.
+  ISBN 1-56592-580-7.
+
+
+// Translate title.
+Glossary
+--------
+Glossaries are optional. Glossaries entries are an example of a style
+of AsciiDoc labeled lists.
+
+[glossary]
+A glossary term::
+  The corresponding (indented) definition.
+
+A second glossary term::
+  The corresponding (indented) definition.
+
+
+ifdef::backend-docbook[]
+// Translate title.
+Index
+-----
+////////////////////////////////////////////////////////////////
+The index is normally left completely empty, it's contents being
+generated automatically by the DocBook toolchain.
+////////////////////////////////////////////////////////////////
+endif::backend-docbook[]

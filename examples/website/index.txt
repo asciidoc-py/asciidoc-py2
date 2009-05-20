@@ -3,17 +3,10 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-This release includes:
+Lots of fairly small stuff in this release:
 
-. Table row and column spans and vertical cell alignment has been
-  implemented (see the examples at the end of the
-  link:newtables.html[new tables page]).
-. Table formatting can now be specified on a per cell basis.
-. It Includes Geoff Eddy's update of the experimental <<X1,LaTeX
-  backend>>.
-. A new attribute named 'trace' controls the output of diagnostic
-  information (see link:userguide.html#X82[Appendix G] in the
-  'AsciiDoc User Guide').
+. Russian and French language file contributions.
+. 
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions and changes.

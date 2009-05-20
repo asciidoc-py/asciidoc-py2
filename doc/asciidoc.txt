@@ -4993,12 +4993,16 @@ you need to be aware of:
 
   $ a2x -a lang=es doc/article.txt
 
-- If you are outputting html or xhtml directly from asciidoc(1) you'll
+- If you are outputting HTML directly from asciidoc(1) you'll
   need to set the various `*_caption` attributes to match your target
   language (see the list of captions and titles in the `[attributes]`
   section of the default `asciidoc.conf` file). The easiest way is to
   create a language `.conf` file (see the AsciiDoc's `lang-en.conf`
   file).
++
+NOTE: You still use the 'NOTE', 'CAUTION', 'TIP', 'WARNING',
+'IMPORTANT' captions in the AsciiDoc source, they get translated in
+the HTML output file.
 
 - asciidoc(1) automatically loads configuration files named like
   `lang-<lang>.conf` where `<lang>` is a two letter language code that

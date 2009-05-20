@@ -36,19 +36,19 @@ endif::doctype-book[]
 
 The First Section
 -----------------
-// Translate caption.
+Admonishments
+~~~~~~~~~~~~~
+Do not translate in the source file -- they are translated to the
+output file
+
 NOTE: Lorum ipsum.
 
-// Translate caption.
 TIP: Lorum ipsum.
 
-// Translate caption.
 WARNING: Lorum ipsum.
 
-// Translate caption.
 CAUTION: Lorum ipsum.
 
-// Translate caption.
 IMPORTANT: Lorum ipsum.
 
 .Tiger

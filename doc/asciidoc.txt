@@ -335,11 +335,11 @@ Here a some examples of header revision lines:
   :Rewritten for version 2 release.
 
 You can override or set header parameters by passing 'revnumber',
-'revremark', 'date', 'email', 'author', 'authorinitials', 'firstname'
-and 'lastname' attributes using the asciidoc(1) `-a` (`--attribute`)
-command-line option. For example:
+'revremark', 'revdate', 'email', 'author', 'authorinitials',
+'firstname' and 'lastname' attributes using the asciidoc(1) `-a`
+(`--attribute`) command-line option. For example:
 
-  $ asciidoc -a date=2004/07/27 article.txt
+  $ asciidoc -a revdate=2004/07/27 article.txt
 
 The 'revnumber' attribute can be an RCS/CSV/SVN $Id$ marker.
 Attributes can also be added to the header for substitution in the
@@ -3569,17 +3569,17 @@ Here are some more attribute entry examples:
 ---------------------------------------------------------------------
 AsciiDoc User Manual
 ====================
-:Author:    Stuart Rackham
-:Email:     srackham@gmail.com
-:Date:      April 23, 2004
-:Revision:  5.1.1
-:Key words: linux, ralink, debian, wireless
+:author:    Stuart Rackham
+:email:     srackham@gmail.com
+:revdate:   April 23, 2004
+:revnumber: 5.1.1
+:keywords: linux, ralink, debian, wireless
 ---------------------------------------------------------------------
 
 Which creates these attributes:
 
   {author}, {firstname}, {lastname}, {authorinitials}, {email},
-  {date}, {revnumber}, {keywords}
+  {revdate}, {revnumber}, {keywords}
 
 The preceding example is equivalent to the standard AsciiDoc two line
 document header (actually it's a little bit different because of the
@@ -3857,7 +3857,7 @@ predefined intrinsic attributes:
   {basebackend-<base>}  empty string ''
   {basebackend}         html or docbook
   {brvbar}              broken vertical bar (|) character
-  {date}                document date (from document header)
+  {revdate}             document revision date (from document header)
   {docdate}             document last modified date
   {doctime}             document last modified time
   {docname}             document file name without extension

@@ -89,7 +89,7 @@ DOCS =
 
 # AsciiDoc options to generate documentation HTML.
 ASCIIDOC_HTML =
-    python ../../asciidoc.py --unsafe -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revision=$(VERS)@ -a date="$(DATE)@"
+    python ../../asciidoc.py --unsafe -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revnumber=$(VERS)@ -a revdate="$(DATE)@"
 @if LAYOUT == 'layout2':
     ASCIIDOC_HTML += -a quirks!
 

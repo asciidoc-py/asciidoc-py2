@@ -1206,6 +1206,16 @@ class Document:
         else:
             message.error('language attribute (lang) is not defined')
         message.linenos = None  # Restore default line number behavior.
+    def set_deprecated_attribute(self,old,new):
+        """
+        Ensures the 'old' name of an attribute that was renamed to 'new' is
+        still honored.
+        """
+        if self.attributes.get(new) is None:
+            if self.attributes.get(old) is not None:
+                self.attributes[new] = self.attributes[old]
+        else:
+            self.attributes[old] = self.attributes[new]
     def translate(self):
         assert self.doctype in ('article','manpage','book'), \
             'illegal document type'
@@ -1241,11 +1251,9 @@ class Document:
             # Command-line entries override header derived entries.
             self.attributes.update(config.cmd_attrs)
             # DEPRECATED: revision renamed to revnumber.
-            if self.attributes.get('revnumber') is None:
-                if self.attributes.get('revision') is not None:
-                    self.attributes['revnumber'] = self.attributes['revision']
-            else:
-                self.attributes['revision'] = self.attributes['revnumber']
+            self.set_deprecated_attribute('revision','revnumber')
+            # DEPRECATED: date renamed to revdate.
+            self.set_deprecated_attribute('date','revdate')
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr,trace='header')
@@ -1367,8 +1375,8 @@ class Document:
 
 class Header:
     """Static methods and attributes only."""
-    REV_LINE_RE = r'^(\D*(?P<revnumber>.*?),)?(?P<date>.*?)(:\s*(?P<revremark>.*))?$'
-    RCS_ID_RE = r'^\$Id: \S+ (?P<revnumber>\S+) (?P<date>\S+) \S+ (?P<author>\S+) (\S+ )?\$$'
+    REV_LINE_RE = r'^(\D*(?P<revnumber>.*?),)?(?P<revdate>.*?)(:\s*(?P<revremark>.*))?$'
+    RCS_ID_RE = r'^\$Id: \S+ (?P<revnumber>\S+) (?P<revdate>\S+) \S+ (?P<author>\S+) (\S+ )?\$$'
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     @staticmethod
@@ -1428,12 +1436,12 @@ class Header:
                 revremark = '\n'.join(revremark).strip()
                 attrs['revremark'] = revremark
                 AttributeEntry.translate_all()
-            date = mo.group('date')
-            if date:
-                attrs['date'] = date.strip()
+            revdate = mo.group('revdate')
+            if revdate:
+                attrs['revdate'] = revdate.strip()
             elif revnumber or revremark:
                 # Set revision date to ensure valid DocBook revision.
-                attrs['date'] = attrs['docdate']
+                attrs['revdate'] = attrs['docdate']
         if document.doctype == 'manpage':
             # Translate mandatory NAME section.
             if Lex.next() is not Title:

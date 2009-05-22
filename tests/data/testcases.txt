@@ -295,3 +295,17 @@ mailto:joe.bloggs@mail.server.com[Mail]
 
 joe.bloggs@mail.server.com +
 lorum ipsum.
+
+
+ifdef::basebackend-docbook[]
+[glossary]
+List of terms
+-------------
+Using positional attribute to specify section template.
+
+[template="glossary"]
+List of terms
+-------------
+Using named 'template' attribute to specify section template.
+
+endif::basebackend-docbook[]

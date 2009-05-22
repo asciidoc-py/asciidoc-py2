@@ -1278,7 +1278,7 @@ class Document:
                     d = {}
                     d.update(Title.attributes)
                     AttributeList.consume(d)
-                    stag,etag = config.section2tags('sect-synopsis',d)
+                    stag,etag = config.section2tags('synopsis',d)
                     writer.write(stag,trace='synopsis open')
                     Section.translate_body()
                     writer.write(etag,trace='synopsis close')
@@ -1873,8 +1873,8 @@ class Section:
             message.error('only book doctypes can contain level 0 sections')
         if Title.level > document.level \
                 and document.backend == 'docbook' \
-                and prev_sectname in ('sect-colophon','sect-abstract', \
-                    'sect-dedication','sect-glossary','sect-bibliography'):
+                and prev_sectname in ('colophon','abstract', \
+                    'dedication','glossary','bibliography'):
             message.error('%s section cannot contain sub-sections' % prev_sectname)
         if Title.level > document.level+1:
             # Sub-sections of multi-part book level zero Preface and Appendices
@@ -1882,7 +1882,7 @@ class Section:
             if document.doctype == 'book' \
                     and document.level == 0 \
                     and Title.level == 2 \
-                    and prev_sectname in ('sect-preface','sect-appendix'):
+                    and prev_sectname in ('preface','appendix'):
                 pass
             else:
                 message.warning('section title out of sequence: '
@@ -1924,7 +1924,7 @@ class Section:
             isempty = False
         # Report empty sections if invalid markup will result.
         if isempty:
-            if document.backend == 'docbook' and Title.sectname != 'sect-index':
+            if document.backend == 'docbook' and Title.sectname != 'index':
                 message.error('empty section is not valid')
 
 class AbstractBlock:

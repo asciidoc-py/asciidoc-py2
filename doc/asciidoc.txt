@@ -380,11 +380,33 @@ AsciiDoc supports five section levels 0 to 4 (although only book
 documents are allowed to contain level 0 sections). Section levels are
 delineated by the section <<X17,titles>>.
 
-Sections are translated using configuration file markup templates. To
-determine which configuration file template to use AsciiDoc first
-searches for special section titles in the <<X16,`[specialsections]`>>
-configuration entries, if not found it uses the `[sect<level>]`
-template.
+Sections are translated using configuration file markup templates.
+The names of section templates are specified in the following ways (in
+order of precedence):
+
+1. By setting the title's first positional attribute or 'template'
+   attribute to the name of a configuration file template. The
+   following three section titles are functionally equivalent:
++
+.....................................................................
+[[X1]]
+[glossary]
+Glossary List
+-------------
+
+["glossary",id="X1"]
+Glossary List
+-------------
+
+[template="glossary",id="X1"]
+Glossary List
+-------------
+.....................................................................
+
+2. When the title matches a configuration file <<X16,specialsections>>
+   entry.
+3. If neither of the above use the default `sect<level>` template
+   name.
 
 The `-n` (`--section-numbers`) command-line option auto-numbers HTML
 outputs (DocBook line numbering is handled automatically by the
@@ -774,19 +796,6 @@ corresponds to the section level minus one).  Here are some examples:
 - The trailing title delimiter is optional.
 - The one-line title syntax can be changed by editing the
   configuration file `[titles]` section `sect0`...`sect4` entries.
-
-Section templates
-~~~~~~~~~~~~~~~~~
-Configuration file markup templates generate backend specific markup
-for titled sections.  The names of section templates are specified in
-the following ways (in order of precedence):
-
-1. By setting the title's first positional attribute or 'template'
-   attribute to the name of a configuration file template.
-2. When the title matches a configuration file <<X16,specialsections>>
-   entry.
-3. If neither of the above use the default `sect<level>` template
-   name.
 
 Floating titles
 ~~~~~~~~~~~~~~~

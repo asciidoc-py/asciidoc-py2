@@ -128,8 +128,6 @@ copy: all
     :sys cp *.js $LOCAL_WEB
     :execute $PROJ_DIR/main.aap distribution    # Make docs and tarball.
     :sys cp $DOCS_DIR/$*DOCS $LOCAL_WEB
-    :sys cp $PROJ_DIR/asciidoc-$(VERS).tar.gz $LOCAL_WEB
-    :sys cp $PROJ_DIR/asciidoc-$(VERS).zip $LOCAL_WEB
     # Copy images.
     :sys cp $DOCS_DIR/images/*.png $LOCAL_WEB/images/
     :sys cp $DOCS_DIR/images/icons/*.png $LOCAL_WEB/images/icons/

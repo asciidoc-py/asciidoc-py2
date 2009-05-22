@@ -389,17 +389,17 @@ order of precedence):
    following three section titles are functionally equivalent:
 +
 .....................................................................
-[[X1]]
+[[terms]]
 [glossary]
-Glossary List
+List of Terms
 -------------
 
-["glossary",id="X1"]
-Glossary List
+["glossary",id="terms"]
+List of Terms
 -------------
 
-[template="glossary",id="X1"]
-Glossary List
+[template="glossary",id="terms"]
+List of Terms
 -------------
 .....................................................................
 
@@ -2518,9 +2518,10 @@ technical documentation.
 
 Try this exercise: thumb through your library of technical books,
 you'll be surprised just how seldom tables are actually used, even
-less seldom are tables containing block elements such as paragraphs or
-lists. This is no accident, like figures, tables are outside the
-normal document flow -- tables are for consulting not for reading.
+less seldom are tables containing block elements (such as paragraphs
+or lists) or spanned cells. This is no accident, like figures, tables
+are outside the normal document flow -- tables are for consulting not
+for reading.
 
 Tables are designed for, and should normally only be used for,
 displaying column oriented tabular data.

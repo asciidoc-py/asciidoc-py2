@@ -3,24 +3,26 @@ AsciiDoc Home Page
 
 .{date}: AsciiDoc {revision} Released
 ************************************************************************
-Lots of fairly small stuff in this release, here are just some points
-of interest:
+Lots of fairly small stuff in this release, but with over thirty items
+in the CHANGELOG it adds up to a fairly substantial release. Here are
+some points of interest:
 
 . Multiple manpage names are now handled correctly when generating
   DocBook output -- each name now generates a separate DocBook
   `<refname>` element. See
-  http://groups.google.com/group/asciidoc/browse_thread/thread/c93bb4db025225d8
+  http://groups.google.com/group/asciidoc/browse_thread/thread/c93bb4db025225d8[the
+  discussion list].
 . The article and book document header can now include a revision
   remark.
-. Russian and French language file contributions.
-
-One other thing, the distribution tarballs are no longer on this
-website, get them from the
-http://sourceforge.net/projects/asciidoc/[SourceForge].
+. French, German, Hungarian and Russian language file contributions.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions and changes. Changes are documented in the updated
 link:userguide.html[User Guide].
+
+NOTE: The distribution tarballs are no longer on this
+website, get them from the
+http://sourceforge.net/projects/asciidoc/[SourceForge].
 
 mailto:srackham@gmail.com['Stuart Rackham']
 ************************************************************************

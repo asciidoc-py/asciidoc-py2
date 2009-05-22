@@ -6,14 +6,17 @@ AsciiDoc ChangeLog
 Version 8.4.5 (2009-05-24)
 --------------------------
 .Additions and changes
+- Section markup templates can be specified by setting the title's
+  first positional attribute or 'template' attribute.
 - The article and book document header can now include a revision
   remark.
 - A 'role' attribute can now be applied to block elements. This adds
   the 'role' attribute to DocBook elements. Patch submitted by
   http://groups.google.com/group/asciidoc/browse_thread/thread/62278a054188a038[Noah
   Slater]).
-- Renamed 'revision' attribute to more sensible and consistent
-  'revnumber' ('revision' is still recognized but is deprecated.
+- Renamed 'revision' and 'date' attributes to more sensible and consistent
+  'revnumber' and 'revdate' (old names deprecated bu still
+  recognized).
 - Moved backend specific attributes to Appendix H in User Guide.
 - Removed cruft from A-A-P scripts and documented them.
 - Renamed and generalized the docbook backend revision history
@@ -45,10 +48,8 @@ Version 8.4.5 (2009-05-24)
 - If the output is set to stdout (i.e. no output directory is defined)
   then Music and Graphviz filters will output included images to the
   source file directory.
-- Added filters test to 'testasciidoc' tests.
 - Added 'name' directive to 'testasciidoc'.
-- Added UTF-8 examples to 'testasciidoc' tests.
-- Added data URI test to 'testasciidoc' tests.
+- Added lots of 'testasciidoc' new tests.
 - Moved language specific configuration parameters into `lang-en.conf`
   file.
 - 'lang' attribute entry can be specified in the AsciiDoc source file
@@ -56,6 +57,12 @@ Version 8.4.5 (2009-05-24)
 - Documented the A-A-P build.
 - Added German language config file (`lang-de.conf`) contributed by
   Michael Wild.
+- Added French language config file (`lang-fr.conf`) contributed by
+  Yves-Alexis Perez.
+- Added Russian language config file (`lang-ru.conf`) contributed by
+  Artem Zolochevskiy.
+- Added Hungarian language config file (`lang-hu.conf`) contributed by
+  Miklos Vajna.
 
 .Bug fixes
 - FIXED: Multiple manpage names are now handled correctly when
@@ -72,13 +79,15 @@ Version 8.4.5 (2009-05-24)
 - FIXED: Hyphens in mailto macros can delimit nested addresses e.g.
   \bloggs@mail was processed inside
   \mailto:joe-bloggs@mail-server.com[Mail].
+- FIXED: User name in FTP URI generated incorrect FTP link. See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/1d796a9c9ddb2855
 
 [[X2]]
 Regression issues
 ~~~~~~~~~~~~~~~~~
 . A colon following the date in the AsciiDoc header is treated as a
-  revision remark delimiter -- this could be an issue if you used a
-  colon in the header date.
+  revision remark delimiter -- this could be an issue if you have used
+  a colon in the header date.
 
 
 Version 8.4.4 (2009-04-26)

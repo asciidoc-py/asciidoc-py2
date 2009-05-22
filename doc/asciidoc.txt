@@ -415,26 +415,25 @@ For example the title 'Jim's House' would generate the ID
 [[X16]]
 Special Sections
 ^^^^^^^^^^^^^^^^
-In addition to normal sections, documents can contain optional
+In addition to normal sections there are DocBook section elements for
 frontmatter and backmatter sections -- for example: preface,
 bibliography, table of contents, index.
 
-The AsciiDoc configuration file `[specialsections]` section specifies
-special section titles and the corresponding backend markup templates.
+`[specialsections]` sections are in AsciiDoc language configuration
+files; they map specific section titles to markup templates.
+Section entries are formatted like:
 
-`[specialsections]` entries are formatted like:
+  <title>=<template>
 
-  <pattern>=<name>
-
-`<pattern>` is a Python regular expression and `<name>` is the name of
-a configuration file markup template section. If the `<pattern>`
+`<title>` is a Python regular expression and `<template>` is the name
+of a configuration file markup template section. If the `<title>`
 matches an AsciiDoc document section title then the backend output is
-marked up using the `<name>` markup template (instead of the default
-`sect<level>` section template). The `{title}` attribute value is set
-to the value of the matched regular expression group named 'title', if
-there is no 'title' group `{title}` defaults to the whole of the AsciiDoc
-section title. If `<name>` is blank then any existing entry with the same
-`<pattern>` will be deleted.
+marked up using the `<template>` markup template (instead of the
+default `sect<level>` section template). The `{title}` attribute value
+is set to the value of the matched regular expression group named
+'title', if there is no 'title' group `{title}` defaults to the whole
+of the AsciiDoc section title. If `<template>` is blank then any
+existing entry with the same `<title>` will be deleted.
 
 AsciiDoc comes preconfigured with the following special section
 titles:
@@ -776,15 +775,28 @@ corresponds to the section level minus one).  Here are some examples:
 - The one-line title syntax can be changed by editing the
   configuration file `[titles]` section `sect0`...`sect4` entries.
 
+Section templates
+~~~~~~~~~~~~~~~~~
+Configuration file markup templates generate backend specific markup
+for titled sections.  The names of section templates are specified in
+the following ways (in order of precedence):
+
+1. By setting the title's first positional attribute or 'template'
+   attribute to the name of a configuration file template.
+2. When the title matches a configuration file <<X16,specialsections>>
+   entry.
+3. If neither of the above use the default `sect<level>` template
+   name.
+
 Floating titles
 ~~~~~~~~~~~~~~~
-Setting the first title attribute to `float` generates a free-floating
-title. A free-floating title is rendered just like a normal section
-title but is not formally associated with a text body and is not part
-of the regular section hierarchy so the normal ordering rules do not
-apply. Floating titles can also be used in contexts where section
-titles are illegal: for example sidebar and admonition blocks.
-Example:
+Setting the title's first positional attribute or 'style' attribute to
+'float' generates a free-floating title. A free-floating title is
+rendered just like a normal section title but is not formally
+associated with a text body and is not part of the regular section
+hierarchy so the normal ordering rules do not apply. Floating titles
+can also be used in contexts where section titles are illegal: for
+example sidebar and admonition blocks.  Example:
 
   [float]
   The second day

@@ -1771,20 +1771,30 @@ class Title:
         dump_section('titles',Title.dump_dict)
     @staticmethod
     def setsectname():
-        """Set Title section name. First search for section title in
-        [specialsections], if not found use default 'sect<level>' name."""
-        for pat,sect in config.specialsections.items():
-            mo = re.match(pat,Title.attributes['title'])
-            if mo:
-                title = mo.groupdict().get('title')
-                if title is not None:
-                    Title.attributes['title'] = title.strip()
-                else:
-                    Title.attributes['title'] = mo.group().strip()
-                Title.sectname = sect
-                break
+        """
+        Set Title section name:
+        If the first positional or 'template' attribute is set use it,
+        next search for section title in [specialsections],
+        if not found use default 'sect<level>' name.
+        """
+        sectname = AttributeList.attrs.get('1')
+        if sectname and sectname != 'float':
+            Title.sectname = sectname
+        elif 'template' in AttributeList.attrs:
+            Title.sectname = AttributeList.attrs['template']
         else:
-            Title.sectname = 'sect%d' % Title.level
+            for pat,sect in config.specialsections.items():
+                mo = re.match(pat,Title.attributes['title'])
+                if mo:
+                    title = mo.groupdict().get('title')
+                    if title is not None:
+                        Title.attributes['title'] = title.strip()
+                    else:
+                        Title.attributes['title'] = mo.group().strip()
+                    Title.sectname = sect
+                    break
+            else:
+                Title.sectname = 'sect%d' % Title.level
     @staticmethod
     def getnumber(level):
         """Return next section number at section 'level' formatted like

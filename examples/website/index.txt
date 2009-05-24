@@ -1,7 +1,7 @@
 AsciiDoc Home Page
 ==================
 
-.{date}: AsciiDoc {revision} Released
+.{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
 Lots of fairly small stuff in this release, but with over thirty items
 in the CHANGELOG it adds up to a fairly substantial release. Here are
@@ -11,7 +11,7 @@ some points of interest:
   DocBook output -- each name now generates a separate DocBook
   `<refname>` element. See
   http://groups.google.com/group/asciidoc/browse_thread/thread/c93bb4db025225d8[the
-  discussion list].
+  discussion list] for details.
 . The article and book document header can now include a revision
   remark.
 . French, German, Hungarian and Russian language file contributions.

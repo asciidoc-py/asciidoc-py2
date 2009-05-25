@@ -175,7 +175,7 @@ http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/.
 [[X2]]
 Resources
 ---------
-- Check the link:downloads.html[Downloads page] for packaged versions
+- Check the link:INSTALL.html#X2[installation page] for packaged versions
   of AsciiDoc.
 - Alex Efros has written an HTML formatted
   http://powerman.name/doc/asciidoc[AsciiDoc Cheatsheet] using

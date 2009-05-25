@@ -25,7 +25,6 @@ WEB_ROOT =
     asciimathml
     asciidocapi
     CHANGELOG
-    downloads
     faq
     index
     INSTALL
@@ -49,7 +48,6 @@ WEB_SOURCE = $*(WEB_ROOT).txt
 # Web site specific pages to spell check.
 SPELL_CHECK =
     index.txt
-    downloads.txt
     README-website.txt
     support.txt
     source-highlight-filter.txt
@@ -108,7 +106,7 @@ ASCIIDOC_HTML =
         opts = -a latexmath
     @else:
         opts =
-    @if target in ('index.html','INSTALL.html','downloads.html','manpage.html','a2x.1.html','asciidocapi.html','testasciidoc.html'):
+    @if target in ('index.html','INSTALL.html','manpage.html','a2x.1.html','asciidocapi.html','testasciidoc.html'):
         opts += -a toc -a toclevels=1
     :sys $ASCIIDOC_HTML $opts $(source[0])
     @if _no.XMLLINT:

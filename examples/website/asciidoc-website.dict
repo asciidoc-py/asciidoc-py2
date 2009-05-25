@@ -1,11 +1,11 @@
-personal_ws-1.1 en 175 
+personal_ws-1.1 en 179 
 backends
 Backtick
 AsciiDoc's
 Rosten
 Wesnoth
-docbook
 DocBook
+docbook
 API
 Slackware
 SCM
@@ -22,6 +22,7 @@ CHANGLOG
 qanda
 Terje
 DelimitedBlocks
+refname
 Potapov
 backmatter
 SourceForge
@@ -95,6 +96,7 @@ ASCIIMathML
 ps
 odf
 filetype
+revnumber
 arabic
 Rosenkraenzer
 py
@@ -111,11 +113,13 @@ autowidth
 Sakellariou
 frontmatter
 dxf
+manpage
 Mowatt
 Maier
 abc
 autoconf
 plugin
+revdate
 Cheatsheet
 pdf
 userguide

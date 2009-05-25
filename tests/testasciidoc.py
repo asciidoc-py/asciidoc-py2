@@ -25,8 +25,9 @@ import os, sys, re, StringIO, difflib
 import asciidocapi
 
 
-BACKENDS = ('html4','xhtml11','docbook')
-BACKEND_EXT = {'html4':'.html', 'xhtml11':'.html', 'docbook':'.xml'}
+BACKENDS = ('html4','xhtml11','docbook','wordpress')
+BACKEND_EXT = {'html4':'.html', 'xhtml11':'.html', 'docbook':'.xml',
+               'wordpress':'.html'}
 
 
 def iif(condition, iftrue, iffalse=None):

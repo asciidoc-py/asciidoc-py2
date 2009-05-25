@@ -1265,23 +1265,6 @@ class Document:
                     writer.write(stag,trace='preamble open')
                     Section.translate_body()
                     writer.write(etag,trace='preamble close')
-            else:
-                # Translate manpage SYNOPSIS.
-                if Lex.next() is not Title:
-                    message.error('SYNOPSIS section expected')
-                else:
-                    Title.translate()
-                    if Title.attributes['title'].upper() != 'SYNOPSIS':
-                        message.error('second section must be named SYNOPSIS')
-                    if Title.level != 1:
-                        message.error('SYNOPSIS section title must be at level 1')
-                    d = {}
-                    d.update(Title.attributes)
-                    AttributeList.consume(d)
-                    stag,etag = config.section2tags('synopsis',d)
-                    writer.write(stag,trace='synopsis open')
-                    Section.translate_body()
-                    writer.write(etag,trace='synopsis close')
         else:
             document.process_author_names()
             if config.header_footer:
@@ -1445,20 +1428,18 @@ class Header:
         if document.doctype == 'manpage':
             # Translate mandatory NAME section.
             if Lex.next() is not Title:
-                message.error('NAME section expected')
+                message.error('name section expected')
             else:
                 Title.translate()
-                if Title.attributes['title'].upper() != 'NAME':
-                    message.error('first section must be named NAME')
                 if Title.level != 1:
-                    message.error('NAME section title must be at level 1')
+                    message.error('name section title must be at level 1')
                 if not isinstance(Lex.next(),Paragraph):
-                    message.error('malformed NAME section body')
+                    message.error('malformed name section body')
                 lines = reader.read_until(r'^$')
                 s = ' '.join(lines)
                 mo = re.match(r'^(?P<manname>.*?)\s+-\s+(?P<manpurpose>.*)$',s)
                 if not mo:
-                    message.error('malformed NAME section body')
+                    message.error('malformed name section body')
                 attrs['manname'] = mo.group('manname').strip()
                 attrs['manpurpose'] = mo.group('manpurpose').strip()
                 names = [s.strip() for s in attrs['manname'].split(',')]
@@ -4167,6 +4148,8 @@ class Config:
                 for f in filenames:
                     if re.match(r'^.+\.conf$',f):
                         self.load_file(f,dirpath)
+            # English defaults.
+            self.load_file('lang-en.conf',d)
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""

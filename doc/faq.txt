@@ -560,11 +560,24 @@ related markup:
 ----------------
 
 
-== How can I escape a labeled list entry?
+== How can I escape a list?
+Here's how to handle situations where the first line of a paragraph is
+mistaken for a list item.
 
+=== Numbered and bulleted lists
+Precede the bullet or index of the first list item with an `{empty}`
+attribute, for example:
+
+  {empty}- Qui in magna commodo{two_colons} est labitur dolorum an.
+  Est ne magna primis adolescens.
+
+The predefined `{empty}` attribute is replaced by an empty string and
+ensures the first line is not mistaken for a bulleted list item.
+
+=== Labeled lists
 Two colons or semicolons in a paragraph may be confused with a labeled
 list entry. Use the predefined `{two_colons}` and `{two_semicolons}`
-to suppress this behavior, for example:
+attributes to suppress this behavior, for example:
 
   Qui in magna commodo{two_colons} est labitur dolorum an. Est ne
   magna primis adolescens.

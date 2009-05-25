@@ -256,6 +256,7 @@ This is a *bold* a line
 This is a 'strong' line
 This is another _strong_ line
 
+ifndef::backend-docbook[]
 .Monospaced paragraph with line breaks
 +This is a *bold* line+ +
 +This is a 'strong' line+ +
@@ -267,6 +268,7 @@ This is another _strong_ line
 This is a 'strong' line +
 This is another _strong_ line+
 
+endif::backend-docbook[]
 
 .Literal block with quotes substitution
 [subs="quotes"]
@@ -297,15 +299,56 @@ joe.bloggs@mail.server.com +
 lorum ipsum.
 
 
+Comments
+--------
+/////////////////////////////////////////////////////////////////////
+A comment
+block.
+/////////////////////////////////////////////////////////////////////
+
+// This is a comment line.
+
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis.
+// Inline comment line.
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et.
+
+:showcomments:
+// This comment line will be displayed in the output.
+
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis.
+// Visible inline comment line.
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et.
+
+/////////////////////////////////////////////////////////////////////
+Comment blocks are never displayed in the output.
+/////////////////////////////////////////////////////////////////////
+
+:showcomments!:
+
+
 ifdef::basebackend-docbook[]
 [glossary]
 List of terms
 -------------
 Using positional attribute to specify section template.
 
+[glossary]
+A glossary term::
+  The corresponding (indented) definition.
+
+A second glossary term::
+  The corresponding (indented) definition.
+
 [template="glossary"]
 List of terms
 -------------
 Using named 'template' attribute to specify section template.
+
+[glossary]
+A glossary term::
+  The corresponding (indented) definition.
+
+A second glossary term::
+  The corresponding (indented) definition.
 
 endif::basebackend-docbook[]

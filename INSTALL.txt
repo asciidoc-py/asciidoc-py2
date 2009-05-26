@@ -17,7 +17,7 @@ Installing from the Mercurial repository
 The AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository
 is hosted by http://sharesource.org[ShareSource].  ShareSource is a
 Mercurial friendly website for hosting Open Source projects.
-To browse the repo go to http://hg.sharesource.org/asciidoc/.
+To browse the repository go to http://hg.sharesource.org/asciidoc/.
 
 Installing from the repository is an easy way to install AsciiDoc if
 you don't have an up to date packaged version or want to get the

@@ -155,21 +155,21 @@ class Message:
 
     def verbose(self, msg,linenos=True):
         if config.verbose:
-            msg = message.format(msg,linenos=linenos)
-            message.stderr(msg)
+            msg = self.format(msg,linenos=linenos)
+            self.stderr(msg)
 
     def warning(self, msg,linenos=True,offset=0):
-        msg = message.format(msg,'WARNING: ',linenos,offset=offset)
+        msg = self.format(msg,'WARNING: ',linenos,offset=offset)
         document.has_warnings = True
-        message.stderr(msg)
+        self.stderr(msg)
 
     def deprecated(self, msg, linenos=True):
-        msg = message.format(msg, 'DEPRECATED: ', linenos)
-        message.stderr(msg)
+        msg = self.format(msg, 'DEPRECATED: ', linenos)
+        self.stderr(msg)
 
     def format(self, msg, prefix='', linenos=True, cursor=None, offset=0):
         """Return formatted message string."""
-        if self.linenos != False and ((linenos or self.linenos) and reader.cursor):
+        if self.linenos is not False and ((linenos or self.linenos) and reader.cursor):
             if cursor is None:
                 cursor = reader.cursor
             prefix += '%s: line %d: ' % (os.path.basename(cursor[0]),cursor[1]+offset)
@@ -183,11 +183,14 @@ class Message:
         all fatal errors finishing with a non-zero exit code.
         """
         if halt:
-            raise EAsciiDoc, message.format(msg,linenos=False,cursor=cursor)
+            raise EAsciiDoc, self.format(msg,linenos=False,cursor=cursor)
         else:
-            msg = message.format(msg,'ERROR: ',cursor=cursor)
-            message.stderr(msg)
+            msg = self.format(msg,'ERROR: ',cursor=cursor)
+            self.stderr(msg)
             document.has_errors = True
+
+    def unsafe(self, msg):
+        self.error('unsafe: '+msg)
 
 
 def file_in(fname, directory):
@@ -229,12 +232,9 @@ def safe_filename(fname, parentdir):
         message.warning('include file not found: %s' % fname)
         return None
     if not is_safe_file(fname, parentdir):
-        unsafe_error('include file: %s' % fname)
+        message.unsafe('include file: %s' % fname)
         return None
     return fname
-
-def unsafe_error(msg):
-    message.error('unsafe: '+msg)
 
 def assign(dst,src):
     """Assign all attributes from 'src' object to 'dst' object."""
@@ -716,7 +716,7 @@ def system(name, args, is_macro=False):
     if name != 'include1':
         message.verbose(('evaluating: '+syntax) % (name,args))
     if safe() and name not in ('include','include1'):
-        unsafe_error(syntax % (name,args))
+        message.unsafe(syntax % (name,args))
         return None
     result = None
     if name == 'eval':
@@ -756,7 +756,7 @@ def system(name, args, is_macro=False):
         if not os.path.exists(args):
             message.warning((syntax+': file does not exist') % (name,args))
         elif not is_safe_file(args):
-            unsafe_error(syntax % (name,args))
+            message.unsafe(syntax % (name,args))
         else:
             result = [s.rstrip() for s in open(args)]
             if result:
@@ -2599,7 +2599,7 @@ class DelimitedBlock(AbstractBlock):
         if 'skip' in options:
             reader.read_until(self.delimiter,same_file=True)
         elif safe() and self.name == 'blockdef-backend':
-            unsafe_error('Backend Block')
+            message.unsafe('Backend Block')
             reader.read_until(self.delimiter,same_file=True)
         else:
             template = self.parameters.template

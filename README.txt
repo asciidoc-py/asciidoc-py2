@@ -11,9 +11,8 @@ official Python website http://www.python.org.
 
 Obtaining AsciiDoc
 ------------------
-The latest AsciiDoc version and online documentation can be found at
-http://www.methods.co.nz/asciidoc/ and at the SourceForge
-http://sourceforge.net/projects/asciidoc/.
+Documentation and installation instructions are on the AsciiDoc
+website http://www.methods.co.nz/asciidoc/
 
 
 Tools

@@ -17,12 +17,9 @@ some points of interest:
 . French, German, Hungarian and Russian language file contributions.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
-additions and changes. Changes are documented in the updated
-link:userguide.html[User Guide].
-
-NOTE: The distribution tarballs are no longer on this
-website, get them from the
-http://sourceforge.net/projects/asciidoc/[SourceForge].
+additions and changes. +
+Changes are documented in the updated link:userguide.html[User Guide]. +
+link:INSTALL.html[Download and installation instructions].
 
 mailto:srackham@gmail.com['Stuart Rackham']
 ************************************************************************

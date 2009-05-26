@@ -6,6 +6,9 @@ AsciiDoc ChangeLog
 Version 8.4.5 (2009-05-24)
 --------------------------
 .Additions and changes
+- Added manpage 'Name' and 'Synopsis' section title customization to languages
+  configuration files.
+- Synopsis manpage section no longer mandatory.
 - Section markup templates can be specified by setting the title's
   first positional attribute or 'template' attribute.
 - The article and book document header can now include a revision
@@ -15,14 +18,13 @@ Version 8.4.5 (2009-05-24)
   http://groups.google.com/group/asciidoc/browse_thread/thread/62278a054188a038[Noah
   Slater]).
 - Renamed 'revision' and 'date' attributes to more sensible and consistent
-  'revnumber' and 'revdate' (old names deprecated bu still
+  'revnumber' and 'revdate' (old names deprecated but still
   recognized).
 - Moved backend specific attributes to Appendix H in User Guide.
-- Removed cruft from A-A-P scripts and documented them.
 - Renamed and generalized the docbook backend revision history
-  inclusion mechanism to 'docinfo' to allow all article or book
-  information elements. The old revision history names still work but
-  have been deprecated.
+  inclusion mechanism to 'docinfo' to reflect the use of all article
+  or book information elements. The old revision history names still
+  work but have been deprecated.
 - Refactored docbook.conf headers.
 - Moved line break replacement from `[replacements]` to
   `[replacements2]` so the replacement occurs after the mailto macro.
@@ -30,7 +32,7 @@ Version 8.4.5 (2009-05-24)
   http://groups.google.com/group/asciidoc/browse_thread/thread/4bdcdfb0af773e2
 - The typewriter to punctuation apostrophe replacement can be escaped
   with a backslash.
-- Graphviz filter outputs images to imagesdir if it is defined.
+- Graphviz filter outputs images to 'imagesdir' if it is defined.
 - Made the block image macro generic so that it can be used for filter
   outputs. As a result Music and Graphviz filters:
   * Have been greatly simplified.
@@ -54,7 +56,7 @@ Version 8.4.5 (2009-05-24)
   file.
 - 'lang' attribute entry can be specified in the AsciiDoc source file
   (preceding the header).
-- Documented the A-A-P build.
+- Removed cruft from A-A-P scripts and documented them.
 - Added German language config file (`lang-de.conf`) contributed by
   Michael Wild.
 - Added French language config file (`lang-fr.conf`) contributed by
@@ -81,6 +83,8 @@ Version 8.4.5 (2009-05-24)
   \mailto:joe-bloggs@mail-server.com[Mail].
 - FIXED: User name in FTP URI generated incorrect FTP link. See
   http://groups.google.com/group/asciidoc/browse_thread/thread/1d796a9c9ddb2855
+- FIXED: Source highlighter now works with Wordpress backend (see
+  http://groups.google.com/group/asciidoc/browse_thread/thread/6d8c716748b109e3).
 
 [[X2]]
 Regression issues

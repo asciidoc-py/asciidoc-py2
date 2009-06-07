@@ -3386,7 +3386,7 @@ class Macro:
 
     def subs(self,text):
         def subs_func(mo):
-            """Function called to perform inline macro substitution.
+            """Function called to perform macro substitution.
             Uses matched macro regular expression object and returns string
             containing the substituted macro body."""
             # Check if macro reference is escaped.
@@ -3429,6 +3429,9 @@ class Macro:
             if name == 'callout':
                 listindex =int(d['index'])
                 d['coid'] = calloutmap.add(listindex)
+            # The alt attribute is the first image macro positional attribute.
+            if name == 'image' and '1' in d:
+                d['alt'] = d['1']
             # Unescape special characters in LaTeX target file names.
             if document.backend == 'latex' and 'target' in d and d['target']:
                 if not '0' in d:

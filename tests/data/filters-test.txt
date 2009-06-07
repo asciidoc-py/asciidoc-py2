@@ -30,7 +30,7 @@ image::barchart.png[]
 == Graphviz Graphs
 
 .Simple graph
-["graphviz", "graphviz1.png"]
+["graphviz", "graphviz1.png", alt="Graphviz->AsciiDoc->HTML"]
 ---------------------------------------------------------------------
 digraph G { rankdir=LR; Graphviz->AsciiDoc->HTML}
 ---------------------------------------------------------------------

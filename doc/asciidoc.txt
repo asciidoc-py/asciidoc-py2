@@ -2135,7 +2135,7 @@ referring document.
   image::images/logo.png["Company Logo",scaledwidth="75%"]
 
 - The optional `align` attribute is used for horizontal image
-  alignment in DocBook block images (specifically for PDF documents).
+  alignment in DocBook block images.
   Allowed values are `center`, `left` and `right`. For example:
 
   image::images/tiger.png["Tiger image",align="left"]

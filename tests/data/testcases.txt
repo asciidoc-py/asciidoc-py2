@@ -140,12 +140,12 @@ three:: Item three.
 
 [[tiger_image]]
 .Tyger tyger
-image::../../images/tiger.png[]
+image::../../images/tiger.png[Tyger tyger]
 
 :height: 250
 :width: 350
 .Tyger tyger two
-image::../../images/tiger.png[caption="Figure 2: "]
+image::../../images/tiger.png[caption="Figure 2: ", alt="Tiger", align="center"]
 :height!:
 :width!:
 

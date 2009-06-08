@@ -2109,9 +2109,9 @@ referring document.
 
 [[X55]]
 .Image macro attributes
-- The optional first positional attribute list entry specifies the
-  alternative text which is displayed if the output application is
-  unable to process the image file. For example:
+- The optional 'alt' attribute is also the first positional attribute,
+  it specifies alternative text which is displayed if the output
+  application is unable to process the image file. For example:
 
   image:images/logo.png[Company Logo]
 
@@ -2132,11 +2132,11 @@ referring document.
   images (specifically for PDF documents). The following example
   scales the images to 75% of the available print width:
 
-  image::images/logo.png["Company Logo",scaledwidth="75%"]
+  image::images/logo.png[scaledwidth="75%",alt="Company Logo"]
 
 - The optional `align` attribute is used for horizontal image
-  alignment in DocBook block images.
-  Allowed values are `center`, `left` and `right`. For example:
+  alignment.  Allowed values are `center`, `left` and `right`. For
+  example:
 
   image::images/tiger.png["Tiger image",align="left"]
 

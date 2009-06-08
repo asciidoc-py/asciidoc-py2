@@ -2428,8 +2428,8 @@ asciimath, latexmath::
 
 $$::
   Inline and block. The double-dollar passthrough is functionally
-  identical with one exception: special characters are escaped.
-  Example:
+  identical to the triple-plus passthrough with one exception: special
+  characters are escaped. Example:
 
   $$`[[a,b],[c,d]]((n),(k))`$$
 

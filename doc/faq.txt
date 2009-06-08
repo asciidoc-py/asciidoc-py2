@@ -2,6 +2,24 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== How do I prevent double-quoted text being mistaken for an inline literal?
+Mixing doubled-quoted text with inline literal passthroughs can
+produce undesired results, for example, all of the following line is
+interpreted as an inline literal passthrough:
+
+  ``XXX'' `YYY`
+
+In this case the solution is to use monospace quoting instead of the
+inline literal:
+
+  ``XXX'' +YYY+
+
+Use the +\pass:[]+ macro if it's necessary to supress
+substitutions in the monospaced text, for example:
+
+  ``XXX'' +pass:[don't `quote` me]+
+
+
 == How can I generate a single HTML document file containing images and CSS styles?
 With the advent of Internet Explorer 8 all major web browsers now
 support the

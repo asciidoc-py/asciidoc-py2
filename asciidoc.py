@@ -217,7 +217,12 @@ def is_safe_file(fname, directory=None):
         directory = os.path.dirname(document.infile)
     elif directory == '':
         directory = '.'
-    return not safe() or file_in(fname, directory)
+    return (
+        not safe()
+        or file_in(fname, directory)
+        or file_in(fname, APP_DIR)
+        or file_in(fname, CONF_DIR)
+    )
 
 def safe_filename(fname, parentdir):
     """
@@ -551,32 +556,6 @@ def parse_entries(entries, dict, unquote=False, unique_values=False,
         if entry and not parse_entry(entry, dict, unquote, unique_values,
                 allow_name_only, escape_delimiter):
             raise EAsciiDoc,'malformed section entry: %s' % entry
-
-def load_conf_file(sections, fname, dir, namepat=NAME_RE):
-    """Loads sections dictionary with sections from file fname.
-    Existing sections are overlaid. Silently skips missing configuration
-    files."""
-    if dir:
-        fname = os.path.join(dir, fname)
-    # Sliently skip missing configuration file.
-    if not os.path.isfile(fname):
-        return
-    reo = re.compile(r'^\[(?P<section>'+namepat+')\]\s*$')
-    section,contents = '',[]
-    for line in open(fname):
-        if line and line[0] == '#': # Skip comment lines.
-            continue
-        line = line.rstrip()
-        found = reo.findall(line)
-        if found:
-            if section:             # Store previous section.
-                sections[section] = contents
-            section = found[0].lower()
-            contents = []
-        else:
-            contents.append(line)
-    if section and contents:        # Store last section.
-        sections[section] = contents
 
 def dump_section(name,dict,f=sys.stdout):
     """Write parameters in 'dict' as in configuration file section format with
@@ -1200,8 +1179,9 @@ class Document:
         lang = self.attributes.get('lang')
         message.linenos = linenos
         if lang:
-            if not config.load_lang(lang):
-                message.warning('missing language conf file: lang-%s.conf' % lang)
+            filename = 'lang-' + lang + '.conf'
+            if not config.load_from_dirs(filename):
+                message.warning('missing language conf file: %s' % filename)
             self.attributes['lang'] = lang  # Reinstate new lang attribute.
         else:
             message.error('language attribute (lang) is not defined')
@@ -4059,7 +4039,8 @@ class Config:
         rdr.close()
         self.load_sections(sections)
         self.loaded.append(os.path.realpath(fname))
-        document.update_attributes() # So they are available immediately.
+        if document.infile is not None:
+            document.update_attributes() # So they are available immediately.
         return True
 
     def load_sections(self,sections):
@@ -4106,30 +4087,42 @@ class Config:
         result = []
         # Load global configuration from system configuration directory.
         result.append(CONF_DIR)
-        # Load global configuration files from asciidoc directory.
+        # Load global configuration files from folders in asciidoc directory.
         result.append(APP_DIR)
         # Load configuration files from ~/.asciidoc if it exists.
         if USER_DIR is not None:
             result.append(USER_DIR)
         # Load configuration files from document directory.
-        if document.infile != '<stdin>':
+        if document.infile not in (None,'<stdin>'):
             result.append(os.path.dirname(document.infile))
         return result
 
-    def load_lang(self, lang, dirs=None):
+    def find_in_dirs(self, filename, dirs=None):
         """
-        Load language conf file from dirs list.
-        If dirs not specified try all the well known locations.
-        Return False if no file was found in any of the locations.
+        Find conf files from dirs list.
+        Return list of found file paths.
+        Return empty list if not found in any of the locations.
         """
-        result = False
+        result = []
         if dirs is None:
             dirs = self.get_load_dirs()
-        filename = 'lang-' + lang + '.conf'
         for d in dirs:
-            if self.load_file(filename,d):
-                result = True
+            f = os.path.join(d,filename)
+            if os.path.isfile(f):
+                result.append(f)
         return result
+
+    def load_from_dirs(self, filename, dirs=None):
+        """
+        Load conf file from dirs list.
+        If dirs not specified try all the well known locations.
+        Return False if no file was sucessfully loaded.
+        """
+        count = 0
+        for f in self.find_in_dirs(filename,dirs):
+            if self.load_file(f):
+                count += 1
+        return count != 0
 
     def load_all(self, dirs=None):
         """
@@ -5031,9 +5024,9 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         if doctype not in ('article','manpage','book'):
             raise EAsciiDoc,'illegal document type'
         document.backend = backend
-        if not os.path.exists(os.path.join(APP_DIR, backend+'.conf')) and not \
-               os.path.exists(os.path.join(CONF_DIR, backend+'.conf')):
-            message.warning('non-standard %s backend' % backend, linenos=False)
+        f = backend+'.conf'
+        if not config.find_in_dirs(f):
+            message.warning('missing backend conf file: %s' % f, linenos=False)
         document.doctype = doctype
         document.infile = infile
         document.update_attributes()
@@ -5124,27 +5117,22 @@ def show_help(topic, f=None):
     else:
         help_file = HELP_FILE
     # Print [topic] section from help file.
-    topics = OrderedDict()
-    load_conf_file(topics, help_file, CONF_DIR)
-    load_conf_file(topics, help_file, APP_DIR)
-    if USER_DIR is not None:
-        load_conf_file(topics, help_file, USER_DIR)
-    if len(topics) == 0:
+    config.load_from_dirs(help_file)
+    if len(config.sections) == 0:
         # Default to English if specified language help files not found.
         help_file = HELP_FILE
-        load_conf_file(topics, help_file, CONF_DIR)
-        load_conf_file(topics, help_file, APP_DIR)
-    if len(topics) == 0:
+        config.load_from_dirs(help_file)
+    if len(config.sections) == 0:
         message.stderr('no help topics found')
         sys.exit(1)
     n = 0
-    for k in topics.keys():
+    for k in config.sections:
         if re.match(re.escape(topic), k):
             n += 1
-            lines = topics[k]
+            lines = config.sections[k]
     if n == 0:
         message.stderr('help topic not found: [%s] in %s' % (topic, help_file))
-        message.stderr('available help topics: %s' % ', '.join(topics.keys()))
+        message.stderr('available help topics: %s' % ', '.join(config.sections.keys()))
         sys.exit(1)
     elif n > 1:
         message.stderr('ambiguous help topic: %s' % topic)
@@ -5297,7 +5285,7 @@ if __name__ == '__main__':
             'section-numbers','verbose','version','safe','unsafe',
             'doctest'])
     except getopt.GetoptError:
-        usage('illegal command options')
+        message.stderr('illegal command options')
         sys.exit(1)
     if '--doctest' in [opt[0] for opt in opts]:
         # Run module doctests.

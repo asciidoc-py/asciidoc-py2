@@ -679,7 +679,7 @@ def system(name, args, is_macro=False):
     else:
         syntax = '{%s:%s}'
         separator = writer.newline
-    if name not in ('eval','sys','sys2','include','include1'):
+    if name not in ('eval','eval3','sys','sys2','sys3','include','include1'):
         if is_macro:
             msg = 'illegal system macro name: %s' % name
         else:
@@ -698,7 +698,7 @@ def system(name, args, is_macro=False):
         message.unsafe(syntax % (name,args))
         return None
     result = None
-    if name == 'eval':
+    if name in ('eval','eval3'):
         try:
             result = eval(args)
             if result is True:
@@ -709,7 +709,7 @@ def system(name, args, is_macro=False):
                 result = str(result)
         except Exception:
             message.warning((syntax+': expression evaluation error') % (name,args))
-    elif name in ('sys','sys2'):
+    elif name in ('sys','sys2','sys3'):
         result = ''
         fd,tmp = tempfile.mkstemp()
         os.close(fd)
@@ -748,6 +748,9 @@ def system(name, args, is_macro=False):
         result = separator.join(config.include1[args])
     else:
         assert False
+    if result and name in ('eval3','sys3'):
+        macros.passthroughs.append(result)
+        result = '\x07' + str(len(macros.passthroughs)-1) + '\x07'
     return result
 
 def subs_attrs(lines, dictionary=None):

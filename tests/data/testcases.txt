@@ -152,7 +152,6 @@ image::../../images/tiger.png[caption="Figure 2: ", alt="Tiger", align="center"]
 // Images and icons directories.
 :imagesdir: ../../doc
 image::music2.png[]
-:imagesdir!:
 
 :icons:
 :iconsdir:  ../../images/icons
@@ -160,6 +159,14 @@ NOTE: Lorum ipsum.
 
 :icons!:
 
+ifdef::backend-xhtml11[]
+:imagesdir: ../../images
+:data-uri:
+image:smallnew.png[NEW] 'testing' `123`.
+
+endif::[]
+
+:data-uri!:
 
 == Admonishments
 

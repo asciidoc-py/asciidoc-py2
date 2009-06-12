@@ -211,6 +211,22 @@ Resources
   'ascii' replaces R results in AsciiDoc document with AsciiDoc
   markup.  More information and examples here:
   http://eusebe.github.com/ascii/.
+- Pascal Rapaz has written a Python script to automate AsciiDoc
+  website generation. You can find it at
+  http://www.rapazp.ch/opensource/tools/asciidoc.html.
+- Jared Henley has written
+  http://jared.henley.id.au/software/awb/documentation.html[AsciiDoc
+  Website Builder]. 'AsciiDoc Website Builder' (awb) is a python
+  program that automates the building of of a website written in
+  AsciiDoc. All you need to write is the AsciiDoc source plus a few
+  simple configuration files.
+- Brad Adkins has written
+  http://dbixjcl.org/jcl/asciidocgen/asciidocgen.html[AsciiDocGen], a
+  web site generation and deployment tool that allows you write your
+  web site content in AsciiDoc. The
+  http://dbixjcl.org/jcl/asciidocgen/asciidocgen.html[AsciiDocGen web
+  site] is managed using 'AsciiDocGen'.
+
 
 
 Blogpost weblog client
@@ -235,9 +251,6 @@ and I'll add them to the list.
   database management system manual.
 - The http://www.selenic.com/mercurial/[Mercurial distributed SCM]
   uses asciidoc for its man pages.
-- Pascal Rapaz has written a Python script to automate AsciiDoc
-  website generation. You can find it at
-  http://www.rapazp.ch/opensource/tools/asciidoc.html.
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] uses
   AsciiDoc for documentation and has released an Emacs syntax
   highlighter (see <<X2,Resources>> above).
@@ -248,12 +261,6 @@ and I'll add them to the list.
   http://tpl.sourceforge.net/[tpl] and
   http://uthash.sourceforge.net/[uthash] projects (the HTML versions
   have a customised contents sidebar).
-- Jared Henley has written
-  http://jared.henley.id.au/software/awb/documentation.html[AsciiDoc
-  Website Builder]. 'AsciiDoc Website Builder' (awb) is a python
-  program that automates the building of of a website written in
-  AsciiDoc. All you need to write is the AsciiDoc source plus a few
-  simple configuration files.
 
 
 [[X1]]

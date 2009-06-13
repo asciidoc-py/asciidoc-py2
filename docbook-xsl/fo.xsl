@@ -147,11 +147,11 @@
 </xsl:attribute-set>
 
 <!--
-  Article table of contents inserted by <?inserttoc?> processing instruction.
+  Article table of contents inserted by <?asciidoc-toc?> processing instruction.
 -->
 <xsl:param name="generate.toc">
   <xsl:choose>
-    <xsl:when test="/article/articleinfo/processing-instruction('inserttoc')">
+    <xsl:when test="/article/articleinfo/processing-instruction('asciidoc-toc')">
 /article  toc,title
       </xsl:when>
     <xsl:otherwise>

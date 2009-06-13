@@ -5261,9 +5261,15 @@ dated to output this attribute.
 |numbered |html4, xhtml11 |
 Adds section numbers to section titles.
 
-|toc |xhtml11 |
-Adds a table of contents to the start of the document.
+|toc |xhtml11, docbook (XSL/FO) |
+Adds a table of contents to the start of an article document.
 
+NOTE: The `toc` attribute must be specified using the `--attribute`
+command-line option. If you define the `toc` attribute in a custom
+configuration file it won't be recognized because the conditionally
+included header code will have already been processed.
+
+.xhtml11 backend
 - JavaScript needs to be enabled in your browser for this to work.
 - By default AsciiDoc automatically embeds the required `toc.js`
   JavaScript in the output document -- use the 'linkcss' attribute to
@@ -5274,11 +5280,6 @@ Adds a table of contents to the start of the document.
   'scriptsdir' attributes):
 
   $ asciidoc -a toc -a numbered mydoc.txt
-
-- The `toc` attribute must be specified using the `--attribute`
-command-line option. If you define the `toc` attribute in a custom
-configuration file it won't be recognized because the conditionally
-included header code will have already been processed.
 
 |toclevels |xhtml11 |
 Sets the number of title levels (1..4) reported in the table of

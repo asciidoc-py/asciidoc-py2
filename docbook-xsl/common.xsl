@@ -69,4 +69,18 @@
 
 <xsl:param name="section.label.includes.component.label" select="1"/>
 
+<!--
+  Article table of contents inserted by <?asciidoc-toc?> processing instruction.
+-->
+<xsl:param name="generate.toc">
+  <xsl:choose>
+    <xsl:when test="/article/articleinfo/processing-instruction('asciidoc-toc') or /book/articleinfo/processing-instruction('asciidoc-toc')">
+/article  toc,title
+      </xsl:when>
+    <xsl:otherwise>
+/article  nop
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:param>
+
 </xsl:stylesheet>

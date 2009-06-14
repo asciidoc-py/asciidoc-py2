@@ -11,7 +11,7 @@
 
 <xsl:param name="section.autolabel">
   <xsl:choose>
-    <xsl:when test="/article/articleinfo/processing-instruction('asciidoc-numbered') or /book/articleinfo/processing-instruction('asciidoc-numbered')">1</xsl:when>
+    <xsl:when test="/processing-instruction('asciidoc-numbered')">1</xsl:when>
     <xsl:otherwise>0</xsl:otherwise>
   </xsl:choose>
 </xsl:param>
@@ -70,16 +70,30 @@
 <xsl:param name="section.label.includes.component.label" select="1"/>
 
 <!--
-  Article table of contents inserted by <?asciidoc-toc?> processing instruction.
+  Table of contents inserted by <?asciidoc-toc?> processing instruction.
 -->
 <xsl:param name="generate.toc">
   <xsl:choose>
-    <xsl:when test="/article/articleinfo/processing-instruction('asciidoc-toc') or /book/articleinfo/processing-instruction('asciidoc-toc')">
+    <xsl:when test="/article">
+      <xsl:choose>
+        <xsl:when test="/processing-instruction('asciidoc-toc')">
 /article  toc,title
-      </xsl:when>
-    <xsl:otherwise>
+        </xsl:when>
+        <xsl:otherwise>
 /article  nop
-    </xsl:otherwise>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="/book">
+      <xsl:choose>
+        <xsl:when test="/processing-instruction('asciidoc-toc')">
+/book  toc,title
+        </xsl:when>
+        <xsl:otherwise>
+/book  nop
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
   </xsl:choose>
 </xsl:param>
 

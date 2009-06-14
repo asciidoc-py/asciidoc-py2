@@ -9,7 +9,12 @@
 <xsl:param name="htmlhelp.chm" select="'htmlhelp.chm'"/>
 <xsl:param name="htmlhelp.hhc.section.depth" select="5"/>
 
-<xsl:param name="section.autolabel" select="1"/>
+<xsl:param name="section.autolabel">
+  <xsl:choose>
+    <xsl:when test="/article/articleinfo/processing-instruction('asciidoc-numbered') or /book/articleinfo/processing-instruction('asciidoc-numbered')">1</xsl:when>
+    <xsl:otherwise>0</xsl:otherwise>
+  </xsl:choose>
+</xsl:param>
 
 <xsl:param name="suppress.navigation" select="0"/>
 <xsl:param name="navig.graphics.extension" select="'.png'"/>

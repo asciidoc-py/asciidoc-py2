@@ -5258,11 +5258,11 @@ A short summary of changes in this document revision. Must be defined
 prior to the first document section. The document also needs to be
 dated to output this attribute.
 
-|numbered |html4, xhtml11 |
+|numbered |html4, xhtml11, docbook (XSL Stylesheets) |
 Adds section numbers to section titles.
 
-|toc |xhtml11, docbook (XSL/FO) |
-Adds a table of contents to the start of an article document.
+|toc |xhtml11, docbook (XSL Stylesheets) |
+Adds a table of contents to the start of an article or book document.
 
 NOTE: The `toc` attribute must be specified using the `--attribute`
 command-line option. If you define the `toc` attribute in a custom

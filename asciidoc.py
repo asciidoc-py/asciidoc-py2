@@ -232,7 +232,7 @@ def safe_filename(fname, parentdir):
     if not os.path.isabs(fname):
         # Include files are relative to parent document
         # directory.
-        fname = os.path.join(parentdir,fname)
+        fname = os.path.normpath(os.path.join(parentdir,fname))
     if not os.path.isfile(fname):
         message.warning('include file not found: %s' % fname)
         return None

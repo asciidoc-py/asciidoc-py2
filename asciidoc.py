@@ -373,7 +373,7 @@ def parse_attributes(attrs,dict):
         # Attributes must evaluate to strings, numbers or None.
         for v in d.values():
             if not (isinstance(v,str) or isinstance(v,int) or isinstance(v,float) or v is None):
-                raise
+                raise Exception
     except Exception:
         s = s.replace('"','\\"')
         s = s.split(',')

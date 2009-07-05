@@ -3590,6 +3590,7 @@ To delete (undefine) an attribute use the following syntax:
   markup template substitution.
 - Attribute elements override configuration file and intrinsic
   attributes but do not override command-line attributes.
+
 Here are some more attribute entry examples:
 
 ---------------------------------------------------------------------

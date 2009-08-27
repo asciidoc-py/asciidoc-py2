@@ -1120,7 +1120,7 @@ class Document:
         self.level = 0          # 0 => front matter. 1,2,3 => sect1,2,3.
         self.has_errors = False # Set true if processing errors were flagged.
         self.has_warnings = False # Set true if warnings were flagged.
-        self.safe = True        # Default safe mode.
+        self.safe = False       # Default safe mode.
     def update_attributes(self):
         # Set implicit attributes.
         if self.infile and os.path.exists(self.infile):
@@ -5199,8 +5199,11 @@ def execute(cmd,opts,args):
     for o,v in opts:
         if o in ('--help','-h'):
             help_option = True
+        #DEPRECATED: --unsafe option.
         if o == '--unsafe':
             document.safe = False
+        if o == '--safe':
+            document.safe = True
         if o == '--version':
             print('asciidoc %s' % VERSION)
             sys.exit(0)
@@ -5280,7 +5283,7 @@ if __name__ == '__main__':
     # Process command line options.
     import getopt
     try:
-        #DEPRECATED: --safe option.
+        #DEPRECATED: --unsafe option.
         opts,args = getopt.getopt(sys.argv[1:],
             'a:b:cd:ef:hno:svw:',
             ['attribute=','backend=','conf-file=','doctype=','dump-conf',

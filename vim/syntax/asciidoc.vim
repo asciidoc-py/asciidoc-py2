@@ -17,7 +17,7 @@ syn sync fromstart
 syn sync linebreaks=1
 
 " Run :help syn-priority to review syntax matching priority.
-syn keyword asciidocToDo TODO FIXME XXX ZZZ
+syn keyword asciidocToDo TODO FIXME CHECK TEST XXX ZZZ
 syn match asciidocBackslash /\\/
 syn region asciidocIdMarker start=/^\$Id:\s/ end=/\s\$$/
 syn match asciidocCallout /\\\@<!<\d\{1,2}>/

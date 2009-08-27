@@ -169,6 +169,16 @@ which can be found here
 http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/.
 
 
+[[X5]]
+matplotlib Filter
+-----------------
+Leonid Volnitsky has written a
+http://volnitsky.com/project/mplw/index.html[matplotlib] filter for
+AsciiDoc.  Graphviz generates diagrams from a textual specification.
+Using this filter you can generate charts from inline matplotlib
+scripts.
+
+
 [[X2]]
 Resources
 ---------
@@ -228,7 +238,6 @@ Resources
   site] is managed using 'AsciiDocGen'.
 
 
-
 Blogpost weblog client
 ----------------------
 http://srackham.wordpress.com/blogpost-readme/[blogpost] is a
@@ -261,6 +270,10 @@ and I'll add them to the list.
   http://tpl.sourceforge.net/[tpl] and
   http://uthash.sourceforge.net/[uthash] projects (the HTML versions
   have a customised contents sidebar).
+- http://volnitsky.com/[Leonid Volnitsky's site] is generated using
+  AsciiDoc and includes Leonid's <<X5,matplotlib filter>>.
+- http://weechat.flashtux.org/[WeeChat] uses AsciiDoc for
+  http://weechat.flashtux.org/doc.php[project documentation].
 
 
 [[X1]]

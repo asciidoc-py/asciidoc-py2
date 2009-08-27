@@ -359,3 +359,11 @@ A second glossary term::
   The corresponding (indented) definition.
 
 endif::basebackend-docbook[]
+
+Index Terms
+-----------
+Multi-passthough substitution (see
+http://groups.google.com/group/asciidoc/browse_frm/thread/1269dc2feb1a482c)
+((`foo`))
+(((foo,`bar`)))
+(((foo,`bar`,`two`)))

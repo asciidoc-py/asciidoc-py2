@@ -3309,7 +3309,7 @@ class Macros:
         """ Replace passthough placeholders with the original passthrough
         text."""
         for i,v in enumerate(self.passthroughs):
-            text = text.replace('\x07'+str(i)+'\x07', self.passthroughs[i], 1)
+            text = text.replace('\x07'+str(i)+'\x07', self.passthroughs[i])
         return text
 
 class Macro:

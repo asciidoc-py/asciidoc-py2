@@ -84,8 +84,8 @@ OPTIONS
   Print operational details to stderr.
   A second *-v* option applies the verbose option to toolchain commands.
 
-*--unsafe*::
-  Use the asciidoc(1) *--unsafe* option.
+*--safe*::
+  Use the asciidoc(1) *--safe* option.
 
 *--version*::
   Print program version to stdout.

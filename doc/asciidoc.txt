@@ -2203,10 +2203,7 @@ http://en.wikipedia.org/wiki/Data:_URI_scheme[data URI scheme].  You
 can use the 'data-uri' attribute with the 'xhtml11' backend to produce
 single-file XHTML documents with embedded images and CSS, for example:
 
-  $ asciidoc --unsafe -a data-uri mydocument.txt
-
-You will need to specify the `--unsafe` option because the AsciiDoc
-`data-uri` is implemented using executable system attributes.
+  $ asciidoc -a data-uri mydocument.txt
 
 NOTE: All current popular browsers support 'data URIs', although
 versions of Internet Explorer prior to version 8 do not support 'data
@@ -2709,7 +2706,7 @@ The 'grid' attribute value can be any of the following values: 'none',
 'cols', 'rows' and 'all'. The default value is 'all'.
 
 align::
-Use the 'align' attribute to vertically align all cells in a table.
+Use the 'align' attribute to horizontally align all cells in a table.
 The following values are valid: 'left', 'right', and 'center'
 (defaults to 'left'). Overridden by <<X70,Column specifiers>>  and
 <<X84,Cell specifiers>>.

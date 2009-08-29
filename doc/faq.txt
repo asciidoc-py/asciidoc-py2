@@ -46,13 +46,6 @@ stylesheet:
   $ asciidoc -a data-uri -a icons article.txt
 
 
-== The AsciiDoc --unsafe option is a pain can it be enabled by default?
-Add these aliases to your shell's RC file:
-
-  alias asciidoc='asciidoc --unsafe'
-  alias a2x='a2x --unsafe'
-
-
 == Are there any tools to help me understand what's going on inside AsciiDoc?
 
 AsciiDoc has a built-in trace mechanism which is controlled by the
@@ -262,8 +255,6 @@ image::barchart.png[]
 
 [NOTE]
 =====================================================================
-- You need to run asciidoc(1) with the `--unsafe` command-line option
-  to execute the `sys2` system macro.
 - The `barchart.py` script is located in the same directory as the
   AsciiDoc source file (`{indir}`).
 - The generated chart image file (`barchart.png`) is written to the
@@ -654,9 +645,6 @@ You could also set it by adding an Attribute Entry to your souce
 document, for example:
 
   :localdate: {sys: date +%Y-%m-%d}
-
-Since it's set using an executable attribute you'll also need to
-include the `--unsafe` option when you run asciidoc).
 
 
 == Why doesn't AsciiDoc support strike through text?

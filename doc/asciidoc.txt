@@ -5265,7 +5265,10 @@ command-line option. If you define the `toc` attribute in a custom
 configuration file it won't be recognized because the conditionally
 included header code will have already been processed.
 
-.xhtml11 backend
+// itemizedlist title generates dblatex 0.2.9 error: Misplaced \noalign.
+//.xhtml11 backend
+*xhtml11 backend*
+
 - JavaScript needs to be enabled in your browser for this to work.
 - By default AsciiDoc automatically embeds the required `toc.js`
   JavaScript in the output document -- use the 'linkcss' attribute to

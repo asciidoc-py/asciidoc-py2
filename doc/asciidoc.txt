@@ -5319,5 +5319,10 @@ incompatibilities (this is the default behavior).
 |data-uri |xhtml11 |
 Embed images using the <<X66,data: uri scheme>>.
 
+|max-width |xhtml11 |
+Set the document maxiumum display width (sets the 'body' element CSS
+'max-width' property). 'max-width' definition must precede the
+document header.
+
 |====================================================================
 

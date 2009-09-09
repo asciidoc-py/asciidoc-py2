@@ -41,6 +41,7 @@ latest version from the trunk:
 
 [subs="attributes"]
   $ ln -s ~/bin/asciidoc-{revnumber}/asciidoc.py ~/bin/asciidoc
+  $ ln -s ~/bin/asciidoc-{revnumber}/a2x.py ~/bin/a2x
 
 Use the Mercurial `pull` command to update your AsciiDoc repository.
 

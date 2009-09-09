@@ -4,8 +4,8 @@ A2X(1)
 
 NAME
 ----
-a2x - convert Asciidoc text file to PDF, EPUB, XHTML, HTML Help,
-manpage or plain text
+a2x - A toolchain manager for AsciiDoc (converts Asciidoc text files to other
+      file formats)
 
 
 SYNOPSIS
@@ -15,14 +15,11 @@ SYNOPSIS
 
 DESCRIPTION
 -----------
-A DocBook toolchain wrapper script that translates an AsciiDoc text
-file 'FILE' to PDF, DVI, PS, LaTeX, XHTML (single page or chunked),
-man page, HTML Help or plain text formats. PDF, XHTML, man page and
-HTML Help formats are are generated using the asciidoc(1),
-xsltproc(1), DocBook XSL Stylesheets, dblatex (or FOP) toolchain.
-Plain text is produced by passing asciidoc(1) generated HTML through
-lynx(1). The htmlhelp format option generates .hhp, .hhc and .html
-files suitable for compilation to an HTML Help .chm file.
+A DocBook toolchain manager that translates an AsciiDoc text file
+'FILE' to PDF, EPUB, DVI, PS, LaTeX, XHTML (single page or chunked),
+man page, HTML Help or plain text formats using 'asciidoc(1)' and
+other applications (see <<REQUISITES>>). 'FILE' can also be a DocBook
+file with an .xml extension.
 
 
 OPTIONS
@@ -32,8 +29,7 @@ OPTIONS
   ATTRIBUTE"' option).  This option may be specified more than once.
 
 *--asciidoc-opts*='ASCIIDOC_OPTS'::
-  Additional asciidoc(1) options.  This option may be specified more
-  than once.
+  Additional 'asciidoc(1)' options.
 
 *-D, --destination-dir*='PATH'::
   Output directory. Defaults to source 'FILE' directory.
@@ -56,7 +52,7 @@ OPTIONS
 
 *--icons-dir*='PATH'::
   A path (relative to output files) containing admonition
-  and navigation icons. Defaults to 'images/icons'.
+  and navigation icons. Defaults to `images/icons`.
   The '--icons' option is implicit if this option is used.
 
 *--lynx*::
@@ -64,22 +60,18 @@ OPTIONS
   behavior is to use 'w3m(1)'.
 
 *-L, --no-xmllint*::
-  Do not check asciidoc output with 'xmllint'.
+  Do not check asciidoc output with 'xmllint(1)'.
 
 *---epubcheck*::
-  Check EPUB output with 'epubcheck'.
+  Check EPUB output with 'epubcheck(1)'.
 
 *-n, --dry-run*::
   Do not do anything just print what would have been done.
 
 *-r, --resource-dir*='PATH'::
   If a relative image or CSS resource is not found relative to the
-  AsciiDoc source 'FILE' then search the 'PATH' recursively. This
-  option may be specified more than once.
-
-*-s, --skip-asciidoc*::
-  Skip asciidoc execution. This is useful for converting DocBook XML
-  files not derived from AsciiDoc sources.
+  source 'FILE' then search the 'PATH' recursively. This option may be
+  specified more than once.
 
 *--stylesheet*='PATH'::
   A path (relative to destination HTML files) specifying the
@@ -98,34 +90,34 @@ OPTIONS
   Print program version to stdout.
 
 *--xsltproc-opts*='XSLTPROC_OPTS'::
-  Additional xsltproc(1) options.  This option may be specified more
-  than once.
+  Additional 'xsltproc(1)' options.
 
 *--fop*::
   Use FOP to generate PDFs. The default behavior is to use
-  'dblatex(1)'.
+  'dblatex(1)'.  The '--fop' option is implicit if this option is
+  used.
 
 *--fop-opts*='FOP_OPTS'::
-  Additional fop options.  This option may be specified more than
-  once. If this option is specified FOP is used to generate PDFs.
+  Additional 'fop(1)' options. If this option is specified FOP is used
+  to generate PDFs.
 
 *--dblatex-opts*='DBLATEX_OPTS'::
-  Additional dblatex options.  This option may be specified more than once.
+  Additional 'dblatex(1)' options.
 
 
 OUTPUT FILES
 ------------
 Output files are written to the directory specified by the
 *--destination-dir* option. If no *--destination-dir* option is set
-output files are written to the source FILE directory.
+output files are written to the source 'FILE' directory.
 
 Output files have the same name as the source 'FILE' but with an
-appropriate file name extension: .html for 'xhtml'; .epub for
-'epub'; .hhp for 'htmlhelp'; .pdf for 'pdf'; .text for 'text', .xml
-for 'docbook'. By convention manpages have no .man extension (man page
-section number only).  Chunked HTML directory names have a .chunked
-extension; chunked HTML Help directory names have a .htmlhelp
-extension.
+appropriate file name extension: `.html` for 'xhtml'; `.epub` for
+'epub'; `.hhp` for 'htmlhelp'; `.pdf` for 'pdf'; `.text` for 'text',
+`.xml` for 'docbook'. By convention manpages have no `.man` extension
+(man page section number only).  Chunked HTML directory names have a
+`.chunked` extension; chunked HTML Help directory names have a
+`.htmlhelp` extension.
 
 Same named existing files are overwritten.
 
@@ -133,47 +125,41 @@ In addition to generating HTML files the 'xhtml', 'epub', 'chunked'
 and 'htmlhelp' formats copy images and CSS stylesheet files referenced
 in the generated HTML outputs from locations relative to the asciidoc
 input 'FILE' to the correct relative destination directory locations
-generating sub-directories if neccessary. See also the
+generating required sub-directories if neccessary. See also the
 '--resource-dir' option.
 
 
 EXAMPLES
 --------
 `a2x -f pdf doc/source-highlight-filter.txt`::
-  Generates doc/source-highlight-filter.pdf file.
+  Generates `doc/source-highlight-filter.pdf` file.
 
 `a2x -f xhtml -D ../doc --icons -r ../images team.txt`::
-  Creates single HTML file `../doc/team.html`, uses admonition icons
+  Creates HTML file `../doc/team.html`, uses admonition icons
   and searches `../images` for any missing resources.
 
 `a2x -f manpage doc/asciidoc.1.txt`::
   Generate `doc/asciidoc.1` manpage.
 
+
+[[REQUISITES]]
 REQUISITES
 ----------
-This script runs under the bash(1) shell and requires the following
-programs (which may or may not be prepackaged with your Linux
-distribution):
+'a2x' uses the following programs:
 
-Asciidoc::
+- *Asciidoc*:
   http://www.methods.co.nz/asciidoc/
-
-xsltproc::
+- *xsltproc*: (all formats except text):
   http://xmlsoft.org/XSLT/
-
-DocBook XSL Stylesheets::
+- *DocBook XSL Stylesheets* (all formats except text):
   http://docbook.sourceforge.net/projects/xsl/
-
-dblatex (for PDF, DVI, PostScript and LaTeX file generation)::
+- *dblatex* (pdf, dvi, ps, tex formats):
   http://dblatex.sourceforge.net/
-
-FOP (alternative PDF file generation)::
+- *FOP* (pdf format -- alternative PDF file generator):
   http://xmlgraphics.apache.org/fop/
-
-w3m (text file generation)::
+- *w3m* (text format):
   http://w3m.sourceforge.net/index.en.html
-
-Lynx (used for text file generation if `w3m(1)` not installed)::
+- *Lynx* (text format -- alternative text file generator):
   http://lynx.isc.org/
 
 See also the latest README file.

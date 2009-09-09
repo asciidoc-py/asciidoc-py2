@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 '''
-a2x - A toolchain manager for AsciiDoc (converts Asciidoc texts file to other
+a2x - A toolchain manager for AsciiDoc (converts Asciidoc text files to other
       file formats)
 
 Copyright: Stuart Rackham (c) 2009
@@ -152,18 +152,6 @@ def shell_rmtree(path):
     if not OPTIONS.dry_run:
         shutil.rmtree(path)
 
-# TODO: unused
-def require_executable(file_name):
-    if not find_executable(file_name):
-        die('cannot find required executable: %s' % file_name, 127)
-
-# TODO: unused
-def require_module(module_name,from_list=[]):
-    try:
-        __import__(module_name, globals(), {}, from_list)
-    except ImportError:
-        die('missing python module: %s' % module_name)
-
 def shell(cmd, raise_error=True):
     '''
     Execute command cmd in shell and return resulting subprocess.Popen object.
@@ -193,19 +181,6 @@ def shell(cmd, raise_error=True):
         die('%s returned non-zero exit status %d' % (cmd, popen.returncode))
 #        raise subprocess.CalledProcessError(popen.returncode, cmd)
     return popen
-
-#TODO: unused
-def shell2(cmd):
-    '''
-    Execute command cmd in shell  and return stdout string.
-    Raise error if process returns non-zero exit code.
-    '''
-    popen = shell(cmd)
-    result = popen.communicate()[0]
-    if popen.returncode != 0:
-        raise subprocess.CalledProcessError(popen.returncode, ' '.join(cmd))
-    verbose('stdout: %s' % result)
-    return result
 
 def find_resources(files, tagname, attrname, filter=None):
     '''
@@ -239,7 +214,7 @@ def find_resources(files, tagname, attrname, filter=None):
     result.sort()
     return result
 
-#TODO: unused
+# Not used.
 def copy_files(files, src_dir, dst_dir):
     '''
     Copy list of relative file names from src_dir to dst_dir.
@@ -293,7 +268,7 @@ class A2X(AttrDict):
         '''
         self.process_options()
         self.__getattribute__('to_'+self.format)()  # Execute to_* functions.
-        if not self.keep_artifacts and self.format != 'docbook':
+        if not (self.keep_artifacts or self.format == 'docbook' or self.skip_asciidoc):
             shell_rm(self.dst_path('.xml'))
 
     def process_options(self):
@@ -350,6 +325,12 @@ class A2X(AttrDict):
             params.append('html.stylesheet "%s"' % self.stylesheet)
         params = ['--stringparam %s' % o for o in params]
         self.xsltproc_opts += ' ' + ' '.join(params)
+        if self.fop_opts:
+            self.fop = True
+        if os.path.splitext(self.asciidoc_file)[1].lower() == '.xml':
+            self.skip_asciidoc = True
+        else:
+            self.skip_asciidoc = False
 
     def dst_path(self, ext):
         '''
@@ -648,9 +629,10 @@ if __name__ == '__main__':
         action='append', dest='resource_dirs', default=[],
         metavar='PATH',
         help='directory containing images and stylesheets')
+    #DEPRECATED
     parser.add_option('-s','--skip-asciidoc',
         action='store_true', dest='skip_asciidoc', default=False,
-        help='skip asciidoc execution')
+        help='DEPRECATED: redundant')
     parser.add_option('--stylesheet',
         action='store', dest='stylesheet', default=None,
         metavar='STYLESHEET',

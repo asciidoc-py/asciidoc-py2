@@ -12,6 +12,7 @@ Email:     srackham@gmail.com
 import os
 import fnmatch
 import HTMLParser
+import re
 import shutil
 import subprocess
 import sys
@@ -168,6 +169,14 @@ def shell(cmd, raise_error=True):
     Execute command cmd in shell and return resulting subprocess.Popen object.
     If raise_error is True then a non-zero return terminates the application.
     '''
+    if os.name == 'nt':
+        # Windows doesn't like running scripts directly so explicitly
+        # specify python interpreter.
+        mo = re.match(r'^"(?P<arg1>[^"]+)"', cmd)
+        assert mo   # The first argument will always be quoted.
+        arg1 = mo.group('arg1').strip()
+        if arg1.endswith('.py'):
+            cmd = 'python ' + cmd
     verbose('executing: %s' % cmd)
     if OPTIONS.dry_run:
         return

@@ -37,7 +37,6 @@ Here's a list of important changes since the Python rewrite:
 - The `--copy` option is no longer necessary, it does nothing.
 
 
-
 Test environment
 ----------------
 Xubuntu:: 8.04
@@ -94,6 +93,20 @@ HTML Help: CHM file won't open::
 
 Limitations and problems
 ------------------------
+Windows
+~~~~~~~
+Unlike the bash script, theoretically the new Python version should
+run under Windows, but beyond just generating DocBook with:
+
+  python a2x.py -f docbook -v -L doc\article.txt
+
+it has not been tested under Windows.
+
+Without a directly executable 'asciidoc' you'll need to set the full
+asciidoc script name in `a2x.py` e.g.
+
+  ASCIIDOC = 'c:\\bin\\asciidoc\\asciidoc.py'
+
 [X1]
 epub
 ~~~~

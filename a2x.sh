@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 #
+# IMPORTANT: Deprecated in favor of a2x.py
+#
 # a2x - convert Asciidoc text file to PDF, XHTML, HTML Help, manpage
 #                  or plain text
 #
@@ -33,12 +35,12 @@ DOCTYPE=
 DRY_RUN=no
 FORMAT=xhtml
 ICONS=no
-ICONS_DIR=./images/icons
+ICONS_DIR=images/icons
 SKIP_ASCIIDOC=no
 SRC_DIR=
 SRC_FILE=
 SRC_NAME=           # Source file name sans path and file name extension.
-STYLESHEET=./docbook-xsl.css
+STYLESHEET=docbook-xsl.css
 VERBOSE_2=no
 VERBOSE=no
 XSLTPROC_OPTS=
@@ -204,7 +206,7 @@ options:
   --copy                         copy icons or HTML stylesheet
   -D, --destination-dir=PATH     output directory (defaults to FILE directory)
   -d, --doctype=DOCTYPE          article, manpage, book
-  -f, --format=FORMAT            chunked,htmlhelp,manpage,pdf,text,xhtml,dvi,ps,tex
+  -f, --format=FORMAT            chunked,epub,htmlhelp,manpage,pdf,text,xhtml,dvi,ps,tex
   -h, --help                     print command syntax summary
   --icons                        use admonition, callout and navigation icons
   --icons-dir=PATH               admonition and navigation icon directory
@@ -363,7 +365,7 @@ function parse_options()
 function validate_options()
 {
     case "$FORMAT" in
-        chunked|dvi|htmlhelp|manpage|odt|pdf|ps|tex|text|xhtml) ;;
+        chunked|epub|dvi|htmlhelp|manpage|odt|pdf|ps|tex|text|xhtml) ;;
         *) quit "illegal format: $FORMAT" ;;
     esac
 
@@ -545,6 +547,21 @@ function to_chunked()
     execute_command_2 "cd - >/dev/null"
 }
 
+function to_epub()
+{
+    require "adb2epub"
+    local xsl xml
+    xsl=$(conf_file docbook-xsl/epub.xsl)
+    xml=$(readlink -f "$SRC_DIR/$SRC_NAME.xml")
+    epub=$(readlink -f "$SRC_DIR/$SRC_NAME.epub")
+    if [ ! -r "$xsl" ]; then
+        quit "file not found: $xsl"
+    fi
+    to_docbook
+    execute_command_2 "adb2epub \"$xsl\" \"$xml\""
+    execute_command_2 "java -jar $HOME/bin/epubcheck/epubcheck-1.0.3.jar \"$epub\""
+}
+
 function to_manpage()
 {
     require "xsltproc"
@@ -650,7 +667,7 @@ if isyes $VERBOSE_2; then
     XSLTPROC_OPTS="$XSLTPROC_OPTS --verbose"
 fi
 case "$FORMAT" in
-    xhtml|chunked|htmlhelp)
+    xhtml|chunked|epub|htmlhelp)
         XSLTPROC_OPTS="$XSLTPROC_OPTS \
             --stringparam html.stylesheet \"$STYLESHEET\""
     ;;
@@ -671,6 +688,7 @@ else
 fi
 case "$FORMAT" in
     chunked|htmlhelp)   to_chunked;;
+    epub)               to_epub;;
     manpage)            to_manpage;;
     odt)                to_odt;;
     pdf)                to_pdf;;

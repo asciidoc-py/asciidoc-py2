@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
 <!--
-  docbook-xsl/text.xsl
   Used by AsciiDoc a2x(1) for w3m(1) based text generation.
+
+  NOTE: The URL reference to the current DocBook XSL stylesheets is
+  rewritten to point to the copy on the local disk drive by the XML catalog
+  rewrite directives so it doesn't need to go out to the Internet for the
+  stylesheets. This means you don't need to edit the <xsl:import> elements on
+  a machine by machine basis.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">

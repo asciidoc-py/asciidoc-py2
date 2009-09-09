@@ -643,16 +643,6 @@ The following example emboldens the letter F:
 
   **F**ile Open...
 
-[TIP]
-=====================================================================
-The `__`, `**`, `++` and `##` unconstrained quotes have to be
-double-escaped (because of their similarity to the single character
-constrained quotes) -- here's how to escape the previous example:
-
-  \*\*F**ile Open...
-
-=====================================================================
-
 Superscripts and Subscripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Put \^carets on either^ side of the text to be superscripted, put
@@ -1992,7 +1982,6 @@ Here are some examples:
   http://www.methods.co.nz/asciidoc/
   mailto:joe.bloggs@foobar.com[email Joe Bloggs]
   joe.bloggs@foobar.com
-  callto:joe.bloggs[]
 
 Which are rendered:
 
@@ -2003,8 +1992,6 @@ http://www.methods.co.nz/asciidoc/
 mailto:joe.bloggs@foobar.com[email Joe Bloggs]
 
 joe.bloggs@foobar.com
-
-callto:joe.bloggs[]
 
 - If the `<target>` necessitates space characters they should be
   replaced by `%20`. For example `large%20image.png`.
@@ -3476,8 +3463,8 @@ The last configuration file to load is the language configuration file
 `lang-<lang>.conf`. `<lang>` is the value of the AsciiDoc `lang`
 attribute (defaults to `en` (English)). You can set the `lang`
 attribute inside the AsciiDoc source file using an
-<<X18,AttributeEntry>> provided it is the first and entry and provided
-it precedes the document header, for example:
+<<X18,AttributeEntry>> provided it is the first entry and provided it
+precedes the document header, for example:
 
   :lang: es
 

@@ -24,7 +24,7 @@ VPATH = @srcdir@
 
 ASCIIDOCCONF = $(sysconfdir)/asciidoc
 
-prog = asciidoc.py a2x
+prog = asciidoc.py a2x.py
 progdir = $(bindir)
 
 vimdir = @sysconfdir@/vim
@@ -118,6 +118,7 @@ docs:
 
 progsymlink:
 	(cd $(DESTDIR)/$(progdir); ln -sf asciidoc.py asciidoc)
+	(cd $(DESTDIR)/$(progdir); ln -sf a2x.py a2x)
 
 fixconfpath:
 	@for f in $(prog); do \
@@ -153,6 +154,7 @@ uninstall: uninstall-vim
 	rm -f $(DESTDIR)/$(progdir)/asciidoc
 	rm -f $(DESTDIR)/$(progdir)/asciidoc.py
 	rm -f $(DESTDIR)/$(progdir)/a2x
+	rm -f $(DESTDIR)/$(progdir)/a2x.py
 	rm -f $(DESTDIR)/$(mandir)/asciidoc.1
 	rm -f $(DESTDIR)/$(mandir)/a2x.1
 	rm -rf $(DESTDIR)/$(confdir)

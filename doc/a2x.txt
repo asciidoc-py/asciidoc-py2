@@ -1,0 +1,113 @@
+a2x Documentation
+=================
+
+
+'a2x' is a toolchain manager for AsciiDoc, it converts Asciidoc text
+files to other file formats.
+
+'a2x.py' is a rewritten and much enhanced drop-in replacement for the
+old a2x bash script. It's still very new so any problem reports and/or
+suggestions would be very welcome (see the 'FAQ', 'Limitations and
+problems' and 'Troubleshooting' sections below).
+
+
+Enhancements and changes
+------------------------
+Here's a list of important changes since the Python rewrite:
+
+- 'a2x' has an 'epub' format option which builds EPUB electronic
+  publication files.
+
+- Local resources (images and CSS stylesheet files) referenced by HTML
+  based outputs are copied form their source location to the
+  corresponding destination location creating destination directories
+  automatically.
+
+- A new `--resource-dir=PATH` option specify additional resouce
+  locations. The 'PATH' is searched recursively. This eliminates the
+  need to include stock resources such as admonition icons and
+  callouts with every source document.
+
+- A new `--epubcheck` option runs validates EPUB documents using the
+  'epubcheck' utility.
+
+- The new `--keep-artifacts` option retains intermediate build files
+  and is useful for debugging.
+
+- The `--copy` option is no longer necessary, it does nothing.
+
+
+
+Test environment
+----------------
+Xubuntu:: 8.04
+DocBook XSL Stylesheets:: 1,75.2
+xsltproc:: Using libxml 20631, libxslt 10122 and libexslt 813
+dblatex:: 0.2.9
+fop:: 0.95
+
+
+[X2]
+Troubleshooting
+---------------
+- If you get and error run the 'a2x' command again with the
+  `--verbose` option to view diagnostic information.
+
+- The `--keep-artifacts` option instructs 'a2x' not to delete
+  intermediate files (DocBook XML, EPUB build directory, FO files) and
+  is handy if you need to examine the intermediate outputs.
+
+- If an error occurs when 'a2x' attempts to runs a external program
+  verify the problem by running the exact same command from the
+  command prompt.  If the program can't be found it's either not
+  installed or not in your system 'PATH', if you know the absolute
+  path name edit the corresponding entry in 'a2x.py' (look for the
+  'External executables' code section). If some other error occurs the
+  probem is not with 'a2x'.
+
+
+FAQ
+---
+Error executing external command::
+  Resolve the problem by running the exact same command from the
+  command prompt (see <<X2, troublshooting>>).
+
+EPUB: `referenced resource missing` validation error::
+  Probably because you used the `--icons` option, see <<X1,epub
+  limitations>>.
+
+EPUB: missing navigation headers and footers::
+  Off by default in EPUB, use `--xsltproc-opts "--stringparam
+  suppress.navigation 0"`.  But see <<X1,epub limitations>>.
+
+I get 'dblatex' `Cannot determine size of (PNG) graphic` errors::
+  Most likely you are generating 'dvi' and 'ps' formats -- dblatex
+  seems to require figures in eps format. I expected 'dblatex' to
+  convert the PNG files automatically and couldn't figure it out (see
+  http://dblatex.sourceforge.net/doc/sec-figinclude.html).
+
+HTML Help: CHM file won't open::
+  You get a `Navigation to the webpage was cancelled` message when
+  opening the CHM file.  This is due to Windows security, you're most
+  likely trying to open the file over a network.
+
+
+Limitations and problems
+------------------------
+[X1]
+epub
+~~~~
+- Table grids not displayed, see
+  https://sourceforge.net/tracker/?func=detail&aid=2849647&group_id=21935&atid=373747
+
+- Admonition graphics (`--icons` option) don't work, see
+  https://sourceforge.net/tracker/?func=detail&aid=2849681&group_id=21935&atid=373747
+
+- Table of contents (`-a toc` option) has been disabled in
+  `docbook-xsl/epub.xsl` because of this problem:
+  https://sourceforge.net/tracker/?func=detail&aid=2849686&group_id=21935&atid=373747
+
+- The navigation headers and footer have been suppressed in
+  `docbook-xsl/epub.xsl` because of this problem:
+  https://sourceforge.net/tracker/?func=detail&aid=2848734&group_id=21935&atid=373747
+

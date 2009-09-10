@@ -1180,14 +1180,19 @@ class Document:
         Load language configuration file.
         """
         lang = self.attributes.get('lang')
-        message.linenos = linenos
-        if lang:
+        if lang is None:
+            filename = 'lang-en.conf'   # Default language file.
+        else:
             filename = 'lang-' + lang + '.conf'
-            if not config.load_from_dirs(filename):
-                message.warning('missing language conf file: %s' % filename)
+        message.linenos = linenos
+        if config.load_from_dirs(filename):
             self.attributes['lang'] = lang  # Reinstate new lang attribute.
         else:
-            message.error('language attribute (lang) is not defined')
+            if lang is None:
+                # The default language file must exist.
+                message.error('missing conf file: %s' % filename, halt=True)
+            else:
+                message.warning('missing language conf file: %s' % filename)
         message.linenos = None  # Restore default line number behavior.
     def set_deprecated_attribute(self,old,new):
         """
@@ -1219,7 +1224,7 @@ class Document:
             if AttributeEntry.isnext():
                 finished = False
                 AttributeEntry.translate()
-                if AttributeEntry.name == 'lang':
+                if AttributeEntry.name == 'lang' and 'lang' not in config.cmd_attrs:
                     self.load_lang(linenos=True)
                     if attr_count > 0:
                         message.error('lang attribute should be first entry')

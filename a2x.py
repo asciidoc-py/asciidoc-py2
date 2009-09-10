@@ -161,7 +161,6 @@ def shell(cmd, raise_error=True):
         # Windows doesn't like running scripts directly so explicitly
         # specify python interpreter.
         mo = re.match(r'^"(?P<arg1>[^"]+)"', cmd)
-        assert mo   # The first argument will always be quoted.
         arg1 = mo.group('arg1').strip()
         if arg1.endswith('.py'):
             cmd = 'python ' + cmd
@@ -207,6 +206,9 @@ def find_resources(files, tagname, attrname, filter=None):
         files = [files]
     result = []
     for f in files:
+        verbose('find resources: %s' % f)
+        if OPTIONS.dry_run:
+            continue
         parser = FindResources()
         parser.feed(open(f).read())
         parser.close()
@@ -525,24 +527,25 @@ class A2X(AttrDict):
         cwd = os.getcwd()
         shell_cd(build_dir)
         try:
-            zip = zipfile.ZipFile(epub_file, 'w')
-            try:
-                # Create and add uncompressed mimetype file.
-                verbose('archiving: mimetype')
-                open('mimetype','w').write('application/epub+zip')
-                zip.write('mimetype', compress_type=zipfile.ZIP_STORED)
-                # Compress all remaining files.
-                for (p,dirs,files) in os.walk('.'):
-                    for f in files:
-                        f = os.path.normpath(os.path.join(p,f))
-                        if f != 'mimetype':
-                            verbose('archiving: %s' % f)
-                            zip.write(f, compress_type=zipfile.ZIP_DEFLATED)
-            finally:
-                zip.close()
+            if not self.dry_run:
+                zip = zipfile.ZipFile(epub_file, 'w')
+                try:
+                    # Create and add uncompressed mimetype file.
+                    verbose('archiving: mimetype')
+                    open('mimetype','w').write('application/epub+zip')
+                    zip.write('mimetype', compress_type=zipfile.ZIP_STORED)
+                    # Compress all remaining files.
+                    for (p,dirs,files) in os.walk('.'):
+                        for f in files:
+                            f = os.path.normpath(os.path.join(p,f))
+                            if f != 'mimetype':
+                                verbose('archiving: %s' % f)
+                                zip.write(f, compress_type=zipfile.ZIP_DEFLATED)
+                finally:
+                    zip.close()
+            verbose('created archive: %s' % epub_file)
         finally:
             shell_cd(cwd)
-        verbose('created epub: %s' % os.path.basename(epub_file))
         if not self.keep_artifacts:
             shell_rmtree(build_dir)
         if self.epubcheck and EPUBCHECK:

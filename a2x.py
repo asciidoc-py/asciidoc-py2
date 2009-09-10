@@ -276,7 +276,7 @@ class A2X(AttrDict):
         Validate and command options and set defaults.
         '''
         if not os.path.isfile(self.asciidoc_file):
-            die('missing asciidoc file: %s' % self.asciidoc_file)
+            die('missing input FILE: %s' % self.asciidoc_file)
         self.asciidoc_file = os.path.abspath(self.asciidoc_file)
         if not self.format:
             die('missing --format option value')

@@ -427,7 +427,7 @@ from the command-line.
 == Are there any DocBook viewers?
 
 http://live.gnome.org/Yelp[Yelp], the GNOME help viewer, does a
-creditable job of displaying DocBook files XML files directly. Just
+creditable job of displaying DocBook XML files directly. Just
 run it from the command-line, for example:
 
   $ yelp file://home/srackham/tmp/book.xml
@@ -483,8 +483,8 @@ consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 ---------------------------------------------------------------------
 
-Alternatively, if you are generating PDF files (using FOP) or HTML
-files, you can use line breaks. For example:
+Alternatively, if you are generating PDF files files, you can use line
+breaks. For example:
 
 ---------------------------------------------------------------------
 Consul *necessitatibus* per id, +

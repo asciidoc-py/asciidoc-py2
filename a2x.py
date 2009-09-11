@@ -160,9 +160,11 @@ def shell(cmd, raise_error=True):
     if os.name == 'nt':
         # Windows doesn't like running scripts directly so explicitly
         # specify python interpreter.
-        mo = re.match(r'^"(?P<arg1>[^"]+)"', cmd)
-        arg1 = mo.group('arg1').strip()
-        if arg1.endswith('.py'):
+        # Extract first (quoted or unquoted) argument.
+        mo = re.match(r'^\s*"\s*(?P<arg0>[^"]+)\s*"', cmd)
+        if not mo:
+            mo = re.match(r'^\s*(?P<arg0>[^ ]+)', cmd)
+        if mo.group('arg0').endswith('.py'):
             cmd = 'python ' + cmd
     verbose('executing: %s' % cmd)
     if OPTIONS.dry_run:

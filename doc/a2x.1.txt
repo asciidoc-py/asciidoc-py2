@@ -41,7 +41,7 @@ OPTIONS
 
 *-f, --format*='FORMAT'::
   Output formats: 'chunked', 'docbook', 'dvi', 'epub', 'htmlhelp',
-  'manpage', 'pdf', 'ps', 'tex', 'text', 'xhtml'.
+  'manpage', 'pdf' (default), 'ps', 'tex', 'text', 'xhtml'.
 
 *-h, --help*::
   Print command-line syntax and program options to stdout.

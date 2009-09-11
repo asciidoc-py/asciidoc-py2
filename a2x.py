@@ -282,8 +282,6 @@ class A2X(AttrDict):
         if not os.path.isfile(self.asciidoc_file):
             die('missing input FILE: %s' % self.asciidoc_file)
         self.asciidoc_file = os.path.abspath(self.asciidoc_file)
-        if not self.format:
-            die('missing --format option value')
         if not self.destination_dir:
             self.destination_dir = os.path.dirname(self.asciidoc_file)
         else:
@@ -607,7 +605,7 @@ if __name__ == '__main__':
         action='store_true', dest='epubcheck', default=False,
         help='check EPUB output with epubcheck')
     parser.add_option('-f','--format',
-        action='store', dest='format', metavar='FORMAT',
+        action='store', dest='format', metavar='FORMAT', default = 'pdf',
         choices=('chunked','epub','htmlhelp','manpage','pdf', 'text',
                  'xhtml','dvi','ps','tex','docbook'),
         help='chunked, epub, htmlhelp, manpage, pdf, text, xhtml, dvi, ps, tex, docbook')

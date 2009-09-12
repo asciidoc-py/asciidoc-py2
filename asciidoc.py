@@ -1502,8 +1502,12 @@ class AttributeEntry:
             if attr.name == 'attributeentry-subs':
                 AttributeEntry.subs = None  # Force update in isnext().
             elif attr.value:
-                attr.value = Lex.subs((attr.value,), attr.subs)
-                attr.value = writer.newline.join(attr.value)
+                mo = re.match(r'^pass:\[(?P<value>.*)\]$', attr.value)
+                if mo:
+                    attr.value = mo.group('value')  # Passthrough.
+                else:
+                    attr.value = Lex.subs((attr.value,), attr.subs)
+                    attr.value = writer.newline.join(attr.value)
             if attr.value is not None:
                 document.attributes[attr.name] = attr.value
             elif attr.name in document.attributes:

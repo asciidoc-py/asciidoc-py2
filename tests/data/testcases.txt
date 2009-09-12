@@ -7,6 +7,11 @@ Test Cases
 :author: Joe Bloggs
 
 
+== Passthrough attributes ==
+:entity: pass:[<!ENTITY chap1 SYSTEM "chap1.sgm">]
+{entity}
+
+
 == Author attributes ==
 Hello *{author}* ({firstname} {lastname}, {authorinitials}).
 

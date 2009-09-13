@@ -1495,12 +1495,15 @@ class AttributeEntry:
                 mo = re.match(r'^pass:(?P<attrs>.*)\[(?P<value>.*)\]$', attr.value)
                 if mo:
                     # Inline passthrough syntax.
-                    attr.subs = parse_options( mo.group('attrs'), SUBS_OPTIONS,
-                                'illegal substitution')
+                    attr.subs = mo.group('attrs')
                     attr.value = mo.group('value')  # Passthrough.
                 else:
                     # Default substitution.
-                    attr.subs = ('specialcharacters','attributes')
+                    # DEPRECATED: attributeentry-subs
+                    attr.subs = document.attributes.get('attributeentry-subs',
+                                'specialcharacters,attributes')
+                attr.subs = parse_options(attr.subs, SUBS_OPTIONS,
+                            'illegal substitution option')
                 attr.value = Lex.subs((attr.value,), attr.subs)
                 attr.value = writer.newline.join(attr.value)
                 document.attributes[attr.name] = attr.value

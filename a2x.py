@@ -22,14 +22,21 @@ import zipfile
 
 PROG = os.path.basename(os.path.splitext(__file__)[0])
 VERSION = '0.1.0'
+
+# AsciiDoc global configuration file directory.
+# NOTE: CONF_DIR is "fixed up" by Makefile -- don't rename or change syntax.
 CONF_DIR = '/etc/asciidoc'
 
 
-#####################################################################
-# External executables.
-# Use full path name if not in system PATH.
-#####################################################################
+######################################################################
+# Default configuration file parameters.
+######################################################################
 
+# Optional environment variable dictionary passed to executing programs.
+# If set to None the existing environment is used.
+ENV = None
+
+# External executables.
 ASCIIDOC = 'asciidoc'
 XSLTPROC = 'xsltproc'
 DBLATEX = 'dblatex'         # pdf generation.
@@ -38,6 +45,10 @@ W3M = 'w3m'                 # text generation.
 LYNX = 'lynx'               # text generation (if no w3m).
 XMLLINT = 'xmllint'         # Set to '' to disable.
 EPUBCHECK = 'epubcheck'     # Set to '' to disable.
+
+######################################################################
+# End of configuration file parameters.
+######################################################################
 
 
 #####################################################################
@@ -166,6 +177,9 @@ def shell(cmd, raise_error=True):
             mo = re.match(r'^\s*(?P<arg0>[^ ]+)', cmd)
         if mo.group('arg0').endswith('.py'):
             cmd = 'python ' + cmd
+    # Remove redundant quoting -- this is not just costmetic, quoting seems to
+    # dramatically decrease the allowed command length in Windows XP.
+    cmd = re.sub(r'"([^ ]+?)"', r'\1', cmd)
     verbose('executing: %s' % cmd)
     if OPTIONS.dry_run:
         return
@@ -174,7 +188,8 @@ def shell(cmd, raise_error=True):
     else:
         stdout = stderr = subprocess.PIPE
     try:
-        popen = subprocess.Popen(cmd, stdout=stdout, stderr=stderr, shell=True)
+        popen = subprocess.Popen(cmd, stdout=stdout, stderr=stderr,
+                shell=True, env=ENV)
     except OSError, e:
         die('failed: %s: %s' % (cmd, e))
     popen.wait()
@@ -208,7 +223,7 @@ def find_resources(files, tagname, attrname, filter=None):
         files = [files]
     result = []
     for f in files:
-        verbose('find resources: %s' % f)
+        verbose('find resources in: %s' % f)
         if OPTIONS.dry_run:
             continue
         parser = FindResources()
@@ -274,6 +289,33 @@ class A2X(AttrDict):
         self.__getattribute__('to_'+self.format)()  # Execute to_* functions.
         if not (self.keep_artifacts or self.format == 'docbook' or self.skip_asciidoc):
             shell_rm(self.dst_path('.xml'))
+
+    def load_conf(self):
+        '''
+        Load a2x configuration file from default locations and --conf-file
+        option.
+        '''
+        CONF_FILE = 'a2x.conf'
+        conf_files = []
+        # From global conf directory.
+        conf_files.append(os.path.join(CONF_DIR, CONF_FILE))
+        # From a2x.py directory.
+        conf_files.append(os.path.join(
+            os.path.dirname(os.path.realpath(__file__)), CONF_FILE))
+        # From $HOME directory.
+        home_dir = os.environ.get('HOME')
+        if home_dir is not None:
+            conf_files.append(os.path.join(home_dir, '.asciidoc', CONF_FILE))
+        # From --conf-file option.
+        if self.conf_file is not None:
+            if not os.path.isfile(self.conf_file):
+                die('missing configuration file: %s' % self.conf_file)
+            conf_files.append(self.conf_file)
+        # Load ordered files.
+        for f in conf_files:
+            if os.path.isfile(f):
+                verbose('loading conf file: %s' % f)
+                execfile(f, globals())
 
     def process_options(self):
         '''
@@ -348,7 +390,7 @@ class A2X(AttrDict):
         '''
         return os.path.basename(os.path.splitext(self.asciidoc_file)[0]) + ext
 
-    def conf_file(self, path):
+    def asciidoc_conf_file(self, path):
         '''
         Return full path name of file in asciidoc configuration files directory.
         Search first the directory containing the asciidoc executable then
@@ -356,7 +398,7 @@ class A2X(AttrDict):
         '''
         asciidoc = find_executable(ASCIIDOC)
         if not asciidoc:
-            die('unable to find executable: %s' % ASCIIDOC)
+            die('unable to find asciidoc: %s' % ASCIIDOC)
         f = os.path.join(os.path.dirname(asciidoc), path)
         if not os.path.isfile(f):
             f = os.path.join(CONF_DIR, path)
@@ -371,7 +413,7 @@ class A2X(AttrDict):
         '''
         if not file_name:
             file_name = self.format + '.xsl'
-        return self.conf_file(os.path.join('docbook-xsl', file_name))
+        return self.asciidoc_conf_file(os.path.join('docbook-xsl', file_name))
 
     def copy_resources(self, html_files, src_dir, dst_dir, resources=[]):
         '''
@@ -465,8 +507,8 @@ class A2X(AttrDict):
     def exec_dblatex(self):
         self.to_docbook()
         docbook_file = self.dst_path('.xml')
-        xsl = self.conf_file(os.path.join('dblatex','asciidoc-dblatex.xsl'))
-        sty = self.conf_file(os.path.join('dblatex','asciidoc-dblatex.sty'))
+        xsl = self.asciidoc_conf_file(os.path.join('dblatex','asciidoc-dblatex.xsl'))
+        sty = self.asciidoc_conf_file(os.path.join('dblatex','asciidoc-dblatex.sty'))
         shell('"%s" %s -t %s -p "%s" -s "%s" "%s"' %
              (DBLATEX, self.dblatex_opts, self.format, xsl, sty, docbook_file))
 
@@ -556,7 +598,7 @@ class A2X(AttrDict):
         html_file = self.dst_path('.text.html')
         if self.lynx:
             shell('"%s" %s --conf-file "%s" -b html4 -o "%s" "%s"' %
-                 (ASCIIDOC, self.asciidoc_opts, self.conf_file('text.conf'),
+                 (ASCIIDOC, self.asciidoc_opts, self.asciidoc_conf_file('text.conf'),
                   html_file, self.asciidoc_file))
             shell('"%s" -dump "%s" > "%s"' %
                  (LYNX, html_file, text_file))
@@ -594,6 +636,9 @@ if __name__ == '__main__':
     parser.add_option('--copy',
         action='store_true', dest='copy', default=False,
         help='DEPRECATED: does nothing')
+    parser.add_option('--conf-file',
+        dest='conf_file', default=None, metavar='CONF_FILE',
+        help='configuration file')
     parser.add_option('-D', '--destination-dir',
         action='store', dest='destination_dir', default=None, metavar='PATH',
         help=' output directory (defaults to FILE directory)')
@@ -668,4 +713,5 @@ if __name__ == '__main__':
     a2x = A2X(opts)
     OPTIONS = a2x           # verbose and dry_run used by utility functions.
     a2x.asciidoc_file = args[0]
+    a2x.load_conf()
     a2x.execute()

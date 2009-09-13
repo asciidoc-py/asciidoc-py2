@@ -18,8 +18,8 @@ DESCRIPTION
 A DocBook toolchain manager that translates an AsciiDoc text file
 'FILE' to PDF, EPUB, DVI, PS, LaTeX, XHTML (single page or chunked),
 man page, HTML Help or plain text formats using 'asciidoc(1)' and
-other applications (see <<REQUISITES>>). 'FILE' can also be a DocBook
-file with an .xml extension.
+other applications (see <<X1,REQUISITES section>>). 'FILE' can also be
+a DocBook file with an .xml extension.
 
 
 OPTIONS
@@ -30,6 +30,9 @@ OPTIONS
 
 *--asciidoc-opts*='ASCIIDOC_OPTS'::
   Additional 'asciidoc(1)' options.
+
+*--conf-file*='CONF_FILE'::
+  Load configuration file. See <<X2,CONF FILES section>>.
 
 *-D, --destination-dir*='PATH'::
   Output directory. Defaults to source 'FILE' directory.
@@ -139,7 +142,7 @@ EXAMPLES
   Generate `doc/asciidoc.1` manpage.
 
 
-[[REQUISITES]]
+[[X1]]
 REQUISITES
 ----------
 'a2x' uses the following programs:
@@ -160,6 +163,20 @@ REQUISITES
   http://lynx.isc.org/
 
 See also the latest README file.
+
+
+[[X2]]
+CONF FILES
+----------
+A configuration file contains executable Python code that overrides
+the global confguration parametes in `a2x.py`.  Optional configuration
+files are loaded in the following order:
+
+. `a2x.conf` from the AsciiDoc global configuration directory.
+. `a2x.conf` from the AsciiDoc `$HOME/.asciidoc` configuration
+  directory.
+. `a2x.conf` from the directory containing 'a2x.py'.
+. The 'CONF_FILE' specified in the '--conf-file' option.
 
 
 BUGS

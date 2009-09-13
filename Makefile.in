@@ -123,7 +123,7 @@ progsymlink:
 fixconfpath:
 	@for f in $(prog); do \
 		echo "Fixing CONF_DIR in $$f"; \
-		$(SED) "s#^CONF_DIR = '.*'#CONF_DIR = '$(ASCIIDOCCONF)'#; s#^CONF_DIR=.*#CONF_DIR=$(ASCIIDOCCONF)#" $$f > $$f.out; \
+		$(SED) "s#^CONF_DIR = '.*'#CONF_DIR = '$(ASCIIDOCCONF)'#" $$f > $$f.out; \
 		mv $$f.out $$f; \
 	done
 

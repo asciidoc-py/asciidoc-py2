@@ -8,8 +8,11 @@ Test Cases
 
 
 == Passthrough attributes ==
-:entity: pass:[<!ENTITY chap1 SYSTEM "chap1.sgm">]
-{entity}
+:passtest: pass:[<&> *lorum ipsum*]
+{passtest}
+
+:passtest: pass:specialcharacters,quotes[<&> *lorum ipsum*]
+{passtest}
 
 
 == Author attributes ==

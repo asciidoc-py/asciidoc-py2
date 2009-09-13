@@ -1454,14 +1454,6 @@ class AttributeEntry:
             if not pat:
                 message.error("[attributes] missing 'attributeentry-pattern' entry")
             AttributeEntry.pattern = pat
-        if not AttributeEntry.subs:
-            subs = document.attributes.get('attributeentry-subs')
-            if subs:
-                subs = parse_options(subs,SUBS_OPTIONS,
-                    'illegal [%s] %s: %s' % ('attributes','attributeentry-subs',subs))
-            else:
-                subs = ('specialcharacters','attributes')
-            AttributeEntry.subs = subs
         line = reader.read_next()
         if line:
             # Attribute entry formatted like :<name>[.<name2>]:[ <value>]
@@ -1498,17 +1490,19 @@ class AttributeEntry:
             # system 'trace' attribute).
             if attr.name in config.cmd_attrs and attr.name != 'trace':
                 return
-            # Update document.attributes from previously parsed attribute.
-            if attr.name == 'attributeentry-subs':
-                AttributeEntry.subs = None  # Force update in isnext().
-            elif attr.value:
-                mo = re.match(r'^pass:\[(?P<value>.*)\]$', attr.value)
+            # Update document attributes with attribute value.
+            if attr.value is not None:
+                mo = re.match(r'^pass:(?P<attrs>.*)\[(?P<value>.*)\]$', attr.value)
                 if mo:
+                    # Inline passthrough syntax.
+                    attr.subs = parse_options( mo.group('attrs'), SUBS_OPTIONS,
+                                'illegal substitution')
                     attr.value = mo.group('value')  # Passthrough.
                 else:
-                    attr.value = Lex.subs((attr.value,), attr.subs)
-                    attr.value = writer.newline.join(attr.value)
-            if attr.value is not None:
+                    # Default substitution.
+                    attr.subs = ('specialcharacters','attributes')
+                attr.value = Lex.subs((attr.value,), attr.subs)
+                attr.value = writer.newline.join(attr.value)
                 document.attributes[attr.name] = attr.value
             elif attr.name in document.attributes:
                 del document.attributes[attr.name]

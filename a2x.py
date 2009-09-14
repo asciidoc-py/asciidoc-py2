@@ -169,6 +169,8 @@ def shell(cmd, raise_error=True):
     If raise_error is True then a non-zero return terminates the application.
     '''
     if os.name == 'nt':
+        # TODO: this is probably unnecessary, see:
+        # http://groups.google.com/group/asciidoc/browse_frm/thread/9442ee0c419f1242
         # Windows doesn't like running scripts directly so explicitly
         # specify python interpreter.
         # Extract first (quoted or unquoted) argument.

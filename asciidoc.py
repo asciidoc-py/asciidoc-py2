@@ -144,6 +144,8 @@ class Message:
     """
     Message functions.
     """
+    PROG = os.path.basename(os.path.splitext(__file__)[0])
+
     def __init__(self):
         self.linenos = None     # Used to globally override line numbers.
         self.messages = []
@@ -151,7 +153,7 @@ class Message:
     def stderr(self,line=''):
         self.messages.append(line)
         if __name__ == '__main__':
-            sys.stderr.write(line+os.linesep)
+            sys.stderr.write('%s: %s%s' % (self.PROG, line, os.linesep))
 
     def verbose(self, msg,linenos=True):
         if config.verbose:

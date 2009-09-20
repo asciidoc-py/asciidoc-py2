@@ -681,7 +681,7 @@ def system(name, args, is_macro=False):
     else:
         syntax = '{%s:%s}'
         separator = writer.newline
-    if name not in ('eval','eval3','sys','sys2','sys3','include','include1'):
+    if name not in ('eval','eval3','sys','sys2','sys3','include','include1','counter'):
         if is_macro:
             msg = 'illegal system macro name: %s' % name
         else:
@@ -710,7 +710,7 @@ def system(name, args, is_macro=False):
             elif result is not None:
                 result = str(result)
         except Exception:
-            message.warning((syntax+': expression evaluation error') % (name,args))
+            message.warning((syntax+': evaluation error') % (name,args))
     elif name in ('sys','sys2','sys3'):
         result = ''
         fd,tmp = tempfile.mkstemp()
@@ -733,6 +733,21 @@ def system(name, args, is_macro=False):
         finally:
             if os.path.isfile(tmp):
                 os.remove(tmp)
+    elif name == 'counter':
+        if not is_name(args):
+            message.warning((syntax+': illegal attribute name') % (name,args))
+        else:
+            attr = document.attributes.get(args)
+            if attr:
+                expr = attr + '+1'
+                try:
+                    result = str(eval(expr))
+                except Exception:
+                    message.warning((syntax+': evaluation error: %s')
+                            % (name, args, expr))
+            else:
+                result = '1'
+            document.attributes[args] = result
     elif name == 'include':
         if not os.path.exists(args):
             message.warning((syntax+': file does not exist') % (name,args))

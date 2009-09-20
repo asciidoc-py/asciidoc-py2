@@ -3810,6 +3810,10 @@ System attribute references generate the attribute text value by
 executing a predefined action that is parametrized by a single
 argument. The syntax is `{<action>:<argument>}`.
 
+`{counter:<attrname>}`::
+        Increments the document attribute (if the attribute is
+        undefined it is set to `1`). Returns the new attribute value.
+
 `{eval:<expression>}`::
         Substitutes the result of the Python `<expression>`. If
         `<expression>` evaluates to `None` or `False` the reference is

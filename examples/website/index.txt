@@ -108,8 +108,12 @@ built using AsciiDoc.  See `./examples/website/README-website.txt`.
 
 More examples
 ~~~~~~~~~~~~~
+Here are some more documents generated using AsciiDoc, if you know of
+others drop me a line and I'll add them to the list.
+
 - Henrik Maier produced this professional User manual using AsciiDoc:
   http://www.proconx.com/gcpmg/UMGCPMG-0801.pdf.
+
 - Henrik also produced this folded single page brochure format
   example: http://www.proconx.com/gcpmg/IGGCPMG-0801-up.pdf.
 +
@@ -118,6 +122,18 @@ http://groups.google.com/group/asciidoc/browse_thread/thread/16ab5a06864b934f[As
 discussion group thread] for details.
 
 - Example link:newtables.html[Tables].
+
+- 'Git Magic' +
+  http://www-cs-students.stanford.edu/~blynn/gitmagic/ +
+  http://github.com/blynn/gitmagic/tree/1e5780f658962f8f9b01638059b27275cfda095c
+
+- 'CouchDB: The Definitive Guide' +
+  http://books.couchdb.org/relax/ +
+  http://groups.google.com/group/asciidoc/browse_thread/thread/a60f67cbbaf862aa/d214bf7fa2d538c4?lnk=gst&q=book#d214bf7fa2d538c4
+
+- 'Ramaze Manual' +
+  http://book.ramaze.net/ +
+  http://github.com/manveru/ramaze-book/tree/master
 
 
 Music Filter
@@ -174,14 +190,23 @@ matplotlib Filter
 -----------------
 Leonid Volnitsky has written a
 http://volnitsky.com/project/mplw/index.html[matplotlib] filter for
-AsciiDoc.  Graphviz generates diagrams from a textual specification.
-Using this filter you can generate charts from inline matplotlib
-scripts.
+AsciiDoc.  Using this filter you can generate charts from inline
+matplotlib scripts.
+
+
+Try AsciiDoc on the Web
+-----------------------
+Andrew Koster has written a Web based application to interactively
+convert and display AsciiDoc source:
+http://andrewk.webfactional.com/asciidoc.php
 
 
 [[X2]]
 Resources
 ---------
+Here are resources that I know of, if you know of more drop me a line
+and I'll add them to the list.
+
 - Check the link:INSTALL.html#X2[installation page] for packaged versions
   of AsciiDoc.
 - Alex Efros has written an HTML formatted
@@ -237,6 +262,8 @@ Resources
   http://dbixjcl.org/jcl/asciidocgen/asciidocgen.html[AsciiDocGen web
   site] is managed using 'AsciiDocGen'.
 
+Please let me know if any of these links need updating.
+
 
 Blogpost weblog client
 ----------------------
@@ -274,6 +301,8 @@ and I'll add them to the list.
   AsciiDoc and includes Leonid's <<X5,matplotlib filter>>.
 - http://weechat.flashtux.org/[WeeChat] uses AsciiDoc for
   http://weechat.flashtux.org/doc.php[project documentation].
+
+Please let me know if any of these links need updating.
 
 
 [[X1]]

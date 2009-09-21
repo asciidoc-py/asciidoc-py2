@@ -3814,9 +3814,10 @@ argument. The syntax is `{<action>:<argument>}`.
         Increments the document attribute (if the attribute is
         undefined it is set to `1`). Returns the new attribute value.
 
+        - Counters generate global (document wide) attributes.
         - The 'counter' system attribute will not be executed if the
-          containing line is dropped by the prior evaluation of a
-          simple or conditional attribute.
+          containing line is dropped by the prior evaluation of an
+          undefined simple or conditional attribute.
         - Attribute substition procedes in reverse line order, this
           needs to be taken into account if the containing
           configuration template or text block also includes attribute

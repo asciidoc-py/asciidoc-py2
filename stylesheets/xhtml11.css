@@ -110,7 +110,7 @@ div#preamble {
 div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
 div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
 div.admonitionblock {
-  margin-top: 1.5em;
+  margin-top: 0.25em;
   margin-bottom: 1.5em;
 }
 div.admonitionblock {

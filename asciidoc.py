@@ -925,12 +925,15 @@ def subs_attrs(lines, dictionary=None):
             mo = reo.search(text,pos)
             if not mo: break
             expr = mo.group('expr')
+            action = mo.group('action')
             expr = expr.replace('{\\','{')
             expr = expr.replace('}\\','}')
-            s = system(mo.group('action'),expr)
+            s = system(action, expr)
             if s is None:
                 skipped = True
                 break
+            if action == 'counter':
+                attrs[expr] = s
             text = text[:mo.start()] + s + text[mo.end():]
             pos = mo.start() + len(s)
         # Drop line if the action returns None.

@@ -435,7 +435,6 @@ consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 -----------------------------------
 
-.Code filter example
 [source,python]
 -----------------------------------
 ''' A multi-line

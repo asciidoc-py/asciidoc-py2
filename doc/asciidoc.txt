@@ -623,9 +623,9 @@ There are actually two types of quotes:
 
 Constrained quotes
 ++++++++++++++++++
-Quote text that must be bounded by white space, for example a phrase
-or a word. These are the most common type of quote and are the ones
-discussed previously.
+Quote text that must be bounded by white space or commonly adjoining
+punctuation characters. These are the most commonly used type of
+quote.
 
 Unconstrained quotes
 ++++++++++++++++++++

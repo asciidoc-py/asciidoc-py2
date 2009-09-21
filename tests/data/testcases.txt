@@ -20,6 +20,16 @@ Hello *{author}* ({firstname} {lastname}, {authorinitials}).
 
 
 == Quoted text attributes ==
+
+A=_X_, (_X_), _X_, [_X_] _X_
+
+A=*_X_*, (`_X_`), _`X`_, [*_X_*] +_X_+ _X_
+
+// These two illustrate that nesting doesn't always work.
+[_*X*_] _+X+_
+
+<<_intro>> <<_intro,intro>> xref:_intro[] _intro_
+
 [green,yellow,2]##fun with text##.
 More [red,black,4]*fun with text*.
 Yet more [red,,1.5]**fun with text**.

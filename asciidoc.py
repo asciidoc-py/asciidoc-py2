@@ -734,20 +734,29 @@ def system(name, args, is_macro=False):
             if os.path.isfile(tmp):
                 os.remove(tmp)
     elif name == 'counter':
-        if not is_name(args):
-            message.warning((syntax+': illegal attribute name') % (name,args))
+        mo = re.match(r'^(?P<attr>[^:]*?)(:(?P<seed>.*))?$', args)
+        attr = mo.group('attr')
+        seed = mo.group('seed')
+        if not is_name(attr):
+            message.warning((syntax+': illegal attribute name') % (name,attr))
         else:
-            attr = document.attributes.get(args)
-            if attr:
-                expr = attr + '+1'
+            value = document.attributes.get(attr)
+            if value:
+                if re.match(r'^\d+$', value):
+                    expr = value + '+1'
+                else:
+                    expr = 'chr(ord("%s")+1)' % value
                 try:
                     result = str(eval(expr))
                 except Exception:
                     message.warning((syntax+': evaluation error: %s')
                             % (name, args, expr))
             else:
-                result = '1'
-            document.attributes[args] = result
+                if seed:
+                    result = seed
+                else:
+                    result = '1'
+            document.attributes[attr] = result
     elif name == 'include':
         if not os.path.exists(args):
             message.warning((syntax+': file does not exist') % (name,args))

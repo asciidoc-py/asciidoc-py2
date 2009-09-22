@@ -3810,11 +3810,13 @@ System attribute references generate the attribute text value by
 executing a predefined action that is parametrized by a single
 argument. The syntax is `{<action>:<argument>}`.
 
-`{counter:<attrname>}`::
+`{counter:<attrname>[:<seed>]}`::
         Increments the document attribute (if the attribute is
         undefined it is set to `1`). Returns the new attribute value.
 
         - Counters generate global (document wide) attributes.
+        - The optional `<seed>` specifies the counter's initial value;
+          it can be a number or a letter; defaults to '1'.
         - The 'counter' system attribute will not be executed if the
           containing line is dropped by the prior evaluation of an
           undefined simple or conditional attribute.

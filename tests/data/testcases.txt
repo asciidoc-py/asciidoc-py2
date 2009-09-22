@@ -19,6 +19,16 @@ Test Cases
 Hello *{author}* ({firstname} {lastname}, {authorinitials}).
 
 
+== System attributes ==
+{counter:c1} {counter:c2:99} {counter:c3:A}
+
+{c1} = 1, {c2} = 99, {c3} = A
+
+{counter:c1} {counter:c2:99} {counter:c3:A}
+
+{c1} = 2, {c2} = 100, {c3} = B
+
+
 == Quoted text attributes ==
 
 A=_X_, (_X_), _X_, [_X_] _X_

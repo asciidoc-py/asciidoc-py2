@@ -299,8 +299,8 @@ and I'll add them to the list.
   have a customised contents sidebar).
 - http://volnitsky.com/[Leonid Volnitsky's site] is generated using
   AsciiDoc and includes Leonid's <<X5,matplotlib filter>>.
-- http://weechat.flashtux.org/[WeeChat] uses AsciiDoc for
-  http://weechat.flashtux.org/doc.php[project documentation].
+- http://www.weechat.org/[WeeChat] uses AsciiDoc for
+  http://www.weechat.org/doc[project documentation].
 
 Please let me know if any of these links need updating.
 

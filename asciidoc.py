@@ -667,11 +667,13 @@ def filter_lines(filter_cmd, lines, attrs={}):
         message.warning('no output from filter: %s' % filter_cmd)
     return result
 
-def system(name, args, is_macro=False):
+def system(name, args, is_macro=False, attrs={}):
     """
     Evaluate a system attribute ({name:args}) or system block macro
-    (name::[args]). If is_macro is True then we are processing a system
-    block macro otherwise it's a system attribute.
+    (name::[args]).
+    If is_macro is True then we are processing a system block macro otherwise
+    it's a system attribute.
+    The attrs dictionary is updated by the counter system attribute.
     NOTE: The include1 attribute is used internally by the include1::[] macro
     and is not for public use.
     """
@@ -756,7 +758,7 @@ def system(name, args, is_macro=False):
                     result = seed
                 else:
                     result = '1'
-            document.attributes[attr] = result
+            document.attributes[attr] = attrs[attr] = result
     elif name == 'include':
         if not os.path.exists(args):
             message.warning((syntax+': file does not exist') % (name,args))
@@ -937,12 +939,10 @@ def subs_attrs(lines, dictionary=None):
             action = mo.group('action')
             expr = expr.replace('{\\','{')
             expr = expr.replace('}\\','}')
-            s = system(action, expr)
+            s = system(action, expr, attrs=attrs)
             if s is None:
                 skipped = True
                 break
-            if action == 'counter':
-                attrs[expr] = s
             text = text[:mo.start()] + s + text[mo.end():]
             pos = mo.start() + len(s)
         # Drop line if the action returns None.

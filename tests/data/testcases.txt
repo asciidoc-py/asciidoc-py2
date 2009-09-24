@@ -29,6 +29,13 @@ Hello *{author}* ({firstname} {lastname}, {authorinitials}).
 
 {c1} = 2, {c2} = 100, {c3} = B
 
+y: {y}
+{set:y:Foobar}
+
+{set:y!}
+
+y: {y}
+
 
 == Quoted text attributes ==
 

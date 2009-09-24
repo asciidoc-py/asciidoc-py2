@@ -678,12 +678,12 @@ def system(name, args, is_macro=False, attrs={}):
     and is not for public use.
     """
     if is_macro:
-        syntax = '%s::[%s]'
+        syntax = '%s::[%s]' % (name,args)
         separator = '\n'
     else:
-        syntax = '{%s:%s}'
+        syntax = '{%s:%s}' % (name,args)
         separator = writer.newline
-    if name not in ('eval','eval3','sys','sys2','sys3','include','include1','counter'):
+    if name not in ('eval','eval3','sys','sys2','sys3','include','include1','counter','set'):
         if is_macro:
             msg = 'illegal system macro name: %s' % name
         else:
@@ -697,9 +697,9 @@ def system(name, args, is_macro=False, attrs={}):
             return None
         args = s
     if name != 'include1':
-        message.verbose(('evaluating: '+syntax) % (name,args))
+        message.verbose('evaluating: %s' % syntax)
     if safe() and name not in ('include','include1'):
-        message.unsafe(syntax % (name,args))
+        message.unsafe(syntax)
         return None
     result = None
     if name in ('eval','eval3'):
@@ -712,7 +712,7 @@ def system(name, args, is_macro=False, attrs={}):
             elif result is not None:
                 result = str(result)
         except Exception:
-            message.warning((syntax+': evaluation error') % (name,args))
+            message.warning('%s: evaluation error' % syntax)
     elif name in ('sys','sys2','sys3'):
         result = ''
         fd,tmp = tempfile.mkstemp()
@@ -723,14 +723,14 @@ def system(name, args, is_macro=False, attrs={}):
             if name == 'sys2':
                 cmd = cmd + ' 2>&1'
             if os.system(cmd):
-                message.warning((syntax+': non-zero exit status') % (name,args))
+                message.warning('%s: non-zero exit status' % syntax)
             try:
                 if os.path.isfile(tmp):
                     lines = [s.rstrip() for s in open(tmp)]
                 else:
                     lines = []
             except Exception:
-                raise EAsciiDoc,(syntax+': temp file read error') % (name,args)
+                raise EAsciiDoc,'%s: temp file read error' % syntax
             result = separator.join(lines)
         finally:
             if os.path.isfile(tmp):
@@ -739,31 +739,54 @@ def system(name, args, is_macro=False, attrs={}):
         mo = re.match(r'^(?P<attr>[^:]*?)(:(?P<seed>.*))?$', args)
         attr = mo.group('attr')
         seed = mo.group('seed')
+        if seed and (not re.match(r'^\d+$', seed) and len(seed) > 1):
+            message.warning('%s: illegal counter seed: %s' % (syntax,seed))
+            return None
         if not is_name(attr):
-            message.warning((syntax+': illegal attribute name') % (name,attr))
-        else:
-            value = document.attributes.get(attr)
-            if value:
-                if re.match(r'^\d+$', value):
-                    expr = value + '+1'
-                else:
-                    expr = 'chr(ord("%s")+1)' % value
-                try:
-                    result = str(eval(expr))
-                except Exception:
-                    message.warning((syntax+': evaluation error: %s')
-                            % (name, args, expr))
+            message.warning('%s: illegal attribute name' % syntax)
+            return None
+        value = document.attributes.get(attr)
+        if value:
+            if not re.match(r'^\d+$', value) and len(value) > 1:
+                message.warning('%s: illegal counter value: %s'
+                                % (syntax,value))
+                return None
+            if re.match(r'^\d+$', value):
+                expr = value + '+1'
             else:
-                if seed:
-                    result = seed
-                else:
-                    result = '1'
-            document.attributes[attr] = attrs[attr] = result
+                expr = 'chr(ord("%s")+1)' % value
+            try:
+                result = str(eval(expr))
+            except Exception:
+                message.warning('%s: evaluation error: %s' % (syntax, expr))
+        else:
+            if seed:
+                result = seed
+            else:
+                result = '1'
+        document.attributes[attr] = attrs[attr] = result
+    elif name == 'set':
+        mo = re.match(r'^(?P<attr>[^:]*?)(:(?P<value>.*))?$', args)
+        attr = mo.group('attr')
+        value = mo.group('value')
+        if value is None:
+            value = ''
+        if attr.endswith('!'):
+            attr = attr[:-1]
+            value = None
+        if not is_name(attr):
+            message.warning('%s: illegal attribute name' % syntax)
+        else:
+            document.attributes[attr] = attrs[attr] = value
+        if value is None:
+            result = None
+        else:
+            result = ''
     elif name == 'include':
         if not os.path.exists(args):
-            message.warning((syntax+': file does not exist') % (name,args))
+            message.warning('%s: file does not exist' % syntax)
         elif not is_safe_file(args):
-            message.unsafe(syntax % (name,args))
+            message.unsafe(syntax)
         else:
             result = [s.rstrip() for s in open(args)]
             if result:

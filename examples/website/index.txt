@@ -278,9 +278,10 @@ Projects using AsciiDoc
 Here are some projects I know of, if you know of more drop me a line
 and I'll add them to the list.
 
-- The Linux kernel
-  http://www.kernel.org/pub/software/scm/git/docs/git.html[git source
-  code management system].
+- http://www.cherokee-project.com/doc/[Cherokee documentation].
+- The
+  http://www.kernel.org/pub/software/scm/git/docs/user-manual.html[Git
+  User's Manual].
 - Some documentation about git by Nico Schottelius (in German)
   http://nico.schotteli.us/papers/linux/git-firmen/.
 - The http://www.netpromi.com/kirbybase_ruby.html[KirbyBase for Ruby]

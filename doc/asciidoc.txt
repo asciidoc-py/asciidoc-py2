@@ -3820,18 +3820,22 @@ argument. The syntax is `{<action>:<argument>}`.
         - Counters generate global (document wide) attributes.
         - The optional `<seed>` specifies the counter's initial value;
           it can be a number or a single letter; defaults to '1'.
+        - `<seed>` can contain simple and conditional attribute
+          references.
         - The 'counter' system attribute will not be executed if the
           containing line is dropped by the prior evaluation of an
           undefined attribute.
 
 `{eval:<expression>}`::
-        Substitutes the result of the Python `<expression>`. If
-        `<expression>` evaluates to `None` or `False` the reference is
-        deemed undefined and the line containing the reference is
-        dropped from the output.  If the expression evaluates to
-        `True` the attribute evaluates to an empty string. In all
-        remaining cases the attribute evaluates to a string
-        representation of the `<expression>` result.
+        Substitutes the result of the Python `<expression>`.
+
+        - If `<expression>` evaluates to `None` or `False` the
+          reference is deemed undefined and the line containing the
+          reference is dropped from the output.
+        - If the expression evaluates to `True` the attribute
+          evaluates to an empty string.
+        - `<expression>` can contain simple and conditional attribute
+          references.
 
 `{eval3:<command>}`::
         Passthrough version of `{eval:<expression>}` -- the generated
@@ -3840,6 +3844,7 @@ argument. The syntax is `{<action>:<argument>}`.
 
 `{include:<filename>}`::
         Substitutes contents of the file named `<filename>`.
+
         - The included file is read at the time of attribute
           substitution.
         - If the file does not exist a warning is emitted and the line
@@ -3854,8 +3859,10 @@ argument. The syntax is `{<action>:<argument>}`.
 
         - If the attribute name is followed by an exclaimation mark
           the attribute becomes undefined.
-        - If `value` is omitted the attribute is set to a blank
+        - If `<value>` is omitted the attribute is set to a blank
           string.
+        - `<value>` can contain simple and conditional attribute
+          references.
         - Returns a blank string unless the attribute is undefined in
           which case the return value is undefined and the enclosing
           line will be dropped.

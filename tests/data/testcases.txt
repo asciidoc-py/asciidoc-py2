@@ -36,6 +36,15 @@ y: {y}
 
 y: {y}
 
+:x: 3
+:y: {eval:{x}+4}
+
+{x}, {y}
+
+{set:y:{x}}
+
+{x}, {y}
+
 
 == Quoted text attributes ==
 

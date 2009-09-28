@@ -5140,18 +5140,6 @@ Here is the list of predefined <<X75,attribute list options>>:
 |====================================================================
 |Option|Backends|AsciiDoc Elements|Description
 
-|compact |docbook, xhtml11 |bulleted list, numbered list|
-Minimizes vertical space in the list
-
-|strong |xhtml11,html4 |labeled lists|
-Emboldens label text.
-
-|footer |docbook, xhtml11, html4 |table|
-The last row of the table is rendered as a footer.
-
-|header |docbook, xhtml11, html4 |table|
-The first row of the table is rendered as a header.
-
 |autowidth |xhtml11,html4 |table|
 The column widths are determined by the browser, not the AsciiDoc
 'cols' attribute. If there is no 'width' attribute the table width is
@@ -5163,9 +5151,21 @@ boundaries (the default behavior); 'unbreakable' attempts to keep the
 table together on a single page. If neither option is specified the
 default XSL stylesheet behavior prevails.
 
+|compact |docbook, xhtml11 |bulleted list, numbered list|
+Minimizes vertical space in the list
+
+|footer |docbook, xhtml11, html4 |table|
+The last row of the table is rendered as a footer.
+
+|header |docbook, xhtml11, html4 |table|
+The first row of the table is rendered as a header.
+
 |pgwide |docbook (XSL/FO) |table, block image, horizontal labeled list|
 Specifies that the element should be rendered across the full text
 width of the page irrespective of the current indentation.
+
+|strong |xhtml11,html4 |labeled lists|
+Emboldens label text.
 
 |====================================================================
 
@@ -5238,6 +5238,20 @@ generated outputs.
 |====================================================================
 |Name |Backends |Description
 
+|badges |xhtml11 |
+Link badges ('XHTML 1.1', 'CSS' and 'Get Firefox!') in document
+footers. By default badges are omitted ('badges' is undefined).
+
+NOTE: The path names of images, icons and scripts are relative path
+names to the output document not the source document.
+
+|data-uri |xhtml11 |
+Embed images using the <<X66,data: uri scheme>>.
+
+|docinfo |docbook |
+The <<X87,document information file>> will be included in the DocBook
+output if the `docinfo` attribute is defined.
+
 |[[X54]]encoding |html4, xhtml11, docbook |
 Set the input and output document character set encoding. For example
 the `--attribute encoding=ISO-8859-1` command-line option will set the
@@ -5252,30 +5266,63 @@ character set encoding to `ISO-8859-1`.
 
   :encoding: ISO-8859-1
 
-|imagesdir |html4, xhtml11, docbook |
-If this attribute is defined it is prepended to the target image file
-name paths in inline and block image macros.
+|[[X45]]icons |xhtml11 |
+Link admonition paragraph and admonition block icon images and badge
+images. By default 'icons' is undefined and text is used in place of
+icon images.
 
 |[[X44]]iconsdir |html4, xhtml11, docbook |
 The name of the directory containing linked admonition and navigation
 icons. Defaults to `./images/icons`.
 
-|sgml |docbook |
-The `--backend=docbook` command-line option produces DocBook XML.  You
-can produce the older DocBook SGML format using the `--attribute sgml`
-command-line option.
+|imagesdir |html4, xhtml11, docbook |
+If this attribute is defined it is prepended to the target image file
+name paths in inline and block image macros.
 
-|docinfo |docbook |
-The <<X87,document information file>> will be included in the DocBook
-output if the `docinfo` attribute is defined.
+|linkcss |xhtml11 |
+Link CSS stylesheets and JavaScripts (see the 'stylesdir' and
+'scriptsdir' attributes below). By default 'linkcss' is undefined in
+which case stylesheets and scripts are automatically embedded in the
+output document.
+
+|max-width |xhtml11 |
+Set the document maxiumum display width (sets the 'body' element CSS
+'max-width' property). 'max-width' definition must precede the
+document header.
+
+|numbered |html4, xhtml11, docbook (XSL Stylesheets) |
+Adds section numbers to section titles.
+
+|quirks |xhtml11 |
+Use the `xhtml11-quirks.css` stylesheet to work around IE6 browser
+incompatibilities (this is the default behavior).
 
 |revremark |docbook |
 A short summary of changes in this document revision. Must be defined
 prior to the first document section. The document also needs to be
 dated to output this attribute.
 
-|numbered |html4, xhtml11, docbook (XSL Stylesheets) |
-Adds section numbers to section titles.
+|scriptsdir |xhtml11 |
+The name of the directory containing linked JavaScripts. Defaults to
+`.` (the same directory as the linking document).
+
+|sgml |docbook |
+The `--backend=docbook` command-line option produces DocBook XML.  You
+can produce the older DocBook SGML format using the `--attribute sgml`
+command-line option.
+
+|stylesdir |xhtml11 |
+The name of the directory containing linked stylesheets. Defaults to
+`.` (the same directory as the linking document).
+
+|stylesheet |xhtml11 |
+The file name of an optional additional CSS stylesheet. If you are
+embedding the stylesheet specify the actual file name; if you are
+linking CSS specify the file name relative to the directory specified
+by the 'stylesdir' attribute.
+
+|theme |xhtml11 |
+Use alternative stylesheets (see <<X35,Stylesheets>>).
 
 |toc |xhtml11, docbook (XSL Stylesheets) |
 Adds a table of contents to the start of an article or book document.
@@ -5300,62 +5347,15 @@ included header code will have already been processed.
 
   $ asciidoc -a toc -a numbered mydoc.txt
 
+|toc_title |xhtml11 |
+Sets the table of contents title (defaults to 'Table of Contents').
+
 |toclevels |xhtml11 |
 Sets the number of title levels (1..4) reported in the table of
 contents (see the 'toc' attribute above). Defaults to 2 and must be
 used with the 'toc' attribute. Example usage:
 
   $ asciidoc -a toc -a toclevels=3 doc/asciidoc.txt
-
-|toc_title |xhtml11 |
-Sets the table of contents title (defaults to 'Table of Contents').
-
-|linkcss |xhtml11 |
-Link CSS stylesheets and JavaScripts (see the 'stylesdir' and
-'scriptsdir' attributes below). By default 'linkcss' is undefined in
-which case stylesheets and scripts are automatically embedded in the
-output document.
-
-|scriptsdir |xhtml11 |
-The name of the directory containing linked JavaScripts. Defaults to
-`.` (the same directory as the linking document).
-
-|stylesdir |xhtml11 |
-The name of the directory containing linked stylesheets. Defaults to
-`.` (the same directory as the linking document).
-
-|stylesheet |xhtml11 |
-The file name of an optional additional CSS stylesheet. If you are
-embedding the stylesheet specify the actual file name; if you are
-linking CSS specify the file name relative to the directory specified
-by the 'stylesdir' attribute.
-
-|[[X45]]icons |xhtml11 |
-Link admonition paragraph and admonition block icon images and badge
-images. By default 'icons' is undefined and text is used in place of
-icon images.
-
-|theme |xhtml11 |
-Use alternative stylesheets (see <<X35,Stylesheets>>).
-
-|badges |xhtml11 |
-Link badges ('XHTML 1.1', 'CSS' and 'Get Firefox!') in document
-footers. By default badges are omitted ('badges' is undefined).
-
-NOTE: The path names of images, icons and scripts are relative path
-names to the output document not the source document.
-
-|quirks |xhtml11 |
-Use the `xhtml11-quirks.css` stylesheet to work around IE6 browser
-incompatibilities (this is the default behavior).
-
-|data-uri |xhtml11 |
-Embed images using the <<X66,data: uri scheme>>.
-
-|max-width |xhtml11 |
-Set the document maxiumum display width (sets the 'body' element CSS
-'max-width' property). 'max-width' definition must precede the
-document header.
 
 |====================================================================
 

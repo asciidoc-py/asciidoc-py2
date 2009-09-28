@@ -8,10 +8,10 @@ Test Cases
 
 
 == Passthrough attributes ==
-:passtest: pass:[<&> *lorum ipsum*]
+:passtest: pass:[<b>*lorum ipsum*</b>]
 {passtest}
 
-:passtest: pass:specialcharacters,quotes[<&> *lorum ipsum*]
+:passtest: pass:specialcharacters,quotes[<b>*lorum ipsum*</b>]
 {passtest}
 
 
@@ -90,6 +90,36 @@ $ ls *-al*
 $ ls *-al*
 ------------------------------------------
 ..........................................
+
+.Listing
+------------------------------------------
+$ ls -al
+------------------------------------------
+
+.Listing example
+==========================================
+------------------------------------------
+$ ls -al
+------------------------------------------
+==========================================
+
+.Python paragraph
+[source,python]
+if n < 0: print 'Hello World!'
+
+.Titled Python listing
+[source,python]
+------------------------------------------
+if n < 0: print 'Hello World!'
+------------------------------------------
+
+.Python listing example
+==========================================
+[source,python]
+------------------------------------------
+if n < 0: print 'Hello World!'
+------------------------------------------
+==========================================
 
 
 [[X1,anchor reftext]]

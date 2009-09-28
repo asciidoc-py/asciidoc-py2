@@ -5149,9 +5149,9 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # Build and print error description.
         msg = 'FAILED: '
         if reader.cursor:
-            msg = msg + message.format('')
+            msg = message.format('', msg)
         if isinstance(e,EAsciiDoc):
-            message.stderr(msg+str(e))
+            message.stderr(str(e), msg)
         else:
             if __name__ == '__main__':
                 message.stderr(msg+'unexpected error:')

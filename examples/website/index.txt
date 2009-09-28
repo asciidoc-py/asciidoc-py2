@@ -278,6 +278,8 @@ Projects using AsciiDoc
 Here are some projects I know of, if you know of more drop me a line
 and I'll add them to the list.
 
+- http://frugalware.org/[Frugalware Linux] uses AsciiDoc for
+  http://frugalware.org/docs[documentation].
 - http://www.cherokee-project.com/doc/[Cherokee documentation].
 - The
   http://www.kernel.org/pub/software/scm/git/docs/user-manual.html[Git

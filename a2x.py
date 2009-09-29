@@ -318,6 +318,13 @@ class A2X(AttrDict):
             if os.path.isfile(f):
                 verbose('loading conf file: %s' % f)
                 execfile(f, globals())
+        # If asciidoc can't be found anywhere else look in the a2x directory.
+        if not find_executable(ASCIIDOC):
+            a2xdir = os.path.dirname(os.path.realpath(__file__))
+            asciidoc = os.path.join(a2xdir, 'asciidoc.py')
+            if os.path.isfile(asciidoc):
+                global ASCIIDOC
+                ASCIIDOC = asciidoc
 
     def process_options(self):
         '''

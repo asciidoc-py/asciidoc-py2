@@ -297,6 +297,7 @@ class A2X(AttrDict):
         Load a2x configuration file from default locations and --conf-file
         option.
         '''
+        global ASCIIDOC
         CONF_FILE = 'a2x.conf'
         conf_files = []
         # From global conf directory.
@@ -323,7 +324,6 @@ class A2X(AttrDict):
             a2xdir = os.path.dirname(os.path.realpath(__file__))
             asciidoc = os.path.join(a2xdir, 'asciidoc.py')
             if os.path.isfile(asciidoc):
-                global ASCIIDOC
                 ASCIIDOC = asciidoc
 
     def process_options(self):

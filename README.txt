@@ -20,8 +20,7 @@ Tools
 Current AsciiDoc version tested on Xubuntu Linux 8.04 with:
 
 - Python 2.5.2
-- bash 3.2.39
-- DocBook XSL Stylesheets 1.73.2
+- DocBook XSL Stylesheets 1.75.2
 - xsltproc (libxml 20631, libxslt 10122 and libexslt 813).
 - w3m 0.5.1
 - dblatex 0.2.9

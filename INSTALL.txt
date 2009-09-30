@@ -35,6 +35,12 @@ latest version from the trunk:
   $ cd ~/bin
   $ hg clone -r {revnumber} http://hg.sharesource.org/asciidoc asciidoc-{revnumber}
 
+You now have two choices, you can run asciidoc directly from you local
+repository or you can use 'autoconf(1)' and 'make(1)' to perform a
+normal install from the repository.
+
+Running asciidoc from your local repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Create a symlink to the AsciiDoc script in a search `PATH` directory
   so it's easy to execute `asciidoc` from the command-line, for
   example:
@@ -43,7 +49,27 @@ latest version from the trunk:
   $ ln -s ~/bin/asciidoc-{revnumber}/asciidoc.py ~/bin/asciidoc
   $ ln -s ~/bin/asciidoc-{revnumber}/a2x.py ~/bin/a2x
 
-Use the Mercurial `pull` command to update your AsciiDoc repository.
+Use the Mercurial `pull` command to update your local AsciiDoc repository.
+
+Installing asciidoc for all users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Create `configure` using 'autoconf(1)'; use `configure` to create the
+`Makefile`; run 'make(1)'; build the man pages; install:
+
+---------------------------------------------
+$ autoconf
+$ ./configure
+$ make
+$ python a2x.py -f manpage doc/asciidoc.1.txt
+$ python a2x.py -f manpage doc/a2x.1.txt
+$ sudo make install
+---------------------------------------------
+
+To uninstall:
+
+---------------------------------------------
+$ sudo make uninstall
+---------------------------------------------
 
 
 [[X1]]

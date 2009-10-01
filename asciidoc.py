@@ -150,10 +150,10 @@ class Message:
         self.linenos = None     # Used to globally override line numbers.
         self.messages = []
 
-    def stderr(self,line=''):
-        self.messages.append(line)
+    def stderr(self,msg=''):
+        self.messages.append(msg)
         if __name__ == '__main__':
-            sys.stderr.write('%s: %s%s' % (self.PROG, line, os.linesep))
+            sys.stderr.write('%s: %s%s' % (self.PROG, msg, os.linesep))
 
     def verbose(self, msg,linenos=True):
         if config.verbose:
@@ -5150,8 +5150,8 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         msg = 'FAILED: '
         if reader.cursor:
             msg = message.format('', msg)
-        if isinstance(e,EAsciiDoc):
-            message.stderr(str(e), msg)
+        if isinstance(e, EAsciiDoc):
+            message.stderr('%s%s' % (msg,str(e)))
         else:
             if __name__ == '__main__':
                 message.stderr(msg+'unexpected error:')
@@ -5364,4 +5364,4 @@ if __name__ == '__main__':
     try:
         execute(sys.argv[0],opts,args)
     except KeyboardInterrupt:
-        message.stderr()
+        exit(1)

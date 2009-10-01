@@ -722,5 +722,8 @@ if __name__ == '__main__':
     a2x = A2X(opts)
     OPTIONS = a2x           # verbose and dry_run used by utility functions.
     a2x.asciidoc_file = args[0]
-    a2x.load_conf()
-    a2x.execute()
+    try:
+        a2x.load_conf()
+        a2x.execute()
+    except KeyboardInterrupt:
+        exit(1)

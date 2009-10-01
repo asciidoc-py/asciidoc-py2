@@ -2723,15 +2723,39 @@ specifiers>>. For example `cols="2<p,2*,4p,>"`.
 width::
 The 'width' attribute is expressed as a percentage value
 ('"1%"'...'"99%"'). The width specifies the table width relative to
-the available width. HTML outputs use this value directly. If width is
-specified DocBook uses the absolute widths (see calculated
-<<X72,markup attributes>> ), if no width is specified all of the
-available width is used.
+the available width. HTML backends use this value to set the table
+width attribute. It's a bit more complicated with DocBook, see the
+<<X89,DocBook table widths>> sidebar.
 
 filter::
 The 'filter' attribute defines an external shell command that is
 invoked for each cell. The built-in 'asciidoc' table style is
 implemented using a filter.
+
+[[X89]]
+.DocBook table widths
+*********************************************************************
+The AsciiDoc docbook backend generates CALS tables. CALS tables do not
+support a table width attribute -- table width can only be controlled
+using absolute column widths. If the AsciiDoc table width attribute is
+specified the docbook backend emits absolute column widths (see
+calculated <<X72,markup attributes>> ); if no table width is specified
+proportional column widths are used and the table occupies all of the
+available width.
+
+Specifying fixed column widths not media independent because different
+presentation media have different physical characteristics e.g.
+printed paper vs. web browsers.  To get round this limitation 'DocBook
+XSL Stylesheets' have implemented
+http://www.sagehill.net/docbookxsl/Tables.html#TableWidth[processing
+instructions] for setting the table width as a percentage of the
+available width. AsciiDoc emits these processing instructions and, to
+facilitate their use, uses proportional column widths (by defaulting
+the AsciiDoc 'pageunits' attribute to '*'). To generate DocBook tables
+with fixed  widths set 'pageunits' to a CALS absolute unit such as
+'pt'.
+
+*********************************************************************
 
 [[X70]]
 Column Specifiers
@@ -2839,11 +2863,13 @@ available. Column specific attributes are available when substituting
 the 'colspec' cell data tags.
 
 pageunits::
-Only used by DocBook, defaults to 'pt'.
+DocBook backend only. Specifies table column absolute width units.
+Defaults to '*'.
 
 pagewidth::
-The nominal output page width in 'pageunit' units. Used to calculate
-table and column widths.  Only used by DocBook, defaults to '425'.
+DocBook backend only. The nominal output page width in 'pageunit'
+units. Used to calculate CALS tables absolute column and table
+widths. Defaults to '425'.
 
 tableabswidth::
 Integer value calculated from 'width' and 'pagewidth' attributes.

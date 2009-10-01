@@ -122,8 +122,10 @@ TEST_FILES = $*(ROOT).css-embedded.html
 # This kludge forces the User Guide and LaTeX Math PDFs to be generated using
 # dblatex so we include a dblatex example in the distribution.
 @if _no.DBLATEX:
-    asciidoc.pdf: asciidoc.xml
-        :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source
+    asciidoc.pdf: asciidoc.txt
+        # dblatex table widths can only be set via absolute column widths.
+        :sys $ASCIIDOC -a pageunits=pt -b docbook $(source[0])
+        :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target asciidoc.xml
     latexmath.pdf: latexmath.xml
         :sys $DBLATEX -p ../dblatex/asciidoc-dblatex.xsl -s ../dblatex/asciidoc-dblatex.sty -o $target $source
 

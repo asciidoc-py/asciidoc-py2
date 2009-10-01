@@ -1530,6 +1530,7 @@ class AttributeEntry:
             else:
                section[attr.name] = ['%s=%s' % (attr.name2,attr.value)]
             config.load_sections(section)
+            config.load_miscellaneous(config.conf_attrs)
             config.validate()
         else: # The entry is an attribute.
             if attr.name[-1] == '!':
@@ -2905,7 +2906,11 @@ class Table(AbstractBlock):
                 col.pcwidth = float(col.width[:-1])
             else:
                 col.pcwidth = (float(col.width)/props)*100
-            col.abswidth = int(self.abswidth * (col.pcwidth/100))
+            col.abswidth = self.abswidth * (col.pcwidth/100)
+            if config.pageunits in ('cm','mm','in','em'):
+                col.abswidth = '%.2f' % round(col.abswidth,2)
+            else:
+                col.abswidth = '%d' % round(col.abswidth)
             percents += col.pcwidth
             col.pcwidth = int(col.pcwidth)
         if round(percents) > 100:
@@ -4219,7 +4224,9 @@ class Config:
                     setattr(self, name, validate(d[name],rule,errmsg))
         set_misc('tabsize','int($)>0',intval=True)
         set_misc('textwidth','int($)>0',intval=True) # DEPRECATED: Old tables only.
-        set_misc('pagewidth','int($)>0',intval=True)
+        set_misc('pagewidth','"%f" % $')
+        if 'pagewidth' in d:
+            self.pagewidth = float(self.pagewidth)
         set_misc('pageunits')
         set_misc('outfilesuffix')
         if 'newline' in d:

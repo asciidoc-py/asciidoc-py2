@@ -597,8 +597,8 @@ mistaken for a list item.
 Precede the bullet or index of the first list item with an `{empty}`
 attribute, for example:
 
-  {empty}- Qui in magna commodo{two_colons} est labitur dolorum an.
-  Est ne magna primis adolescens.
+  {empty}- Qui in magna commodo est labitur dolorum an.  Est ne magna
+  primis adolescens.
 
 The predefined `{empty}` attribute is replaced by an empty string and
 ensures the first line is not mistaken for a bulleted list item.

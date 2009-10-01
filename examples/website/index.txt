@@ -273,11 +273,16 @@ http://wordpress.org/[WordPress] blog hosts. It creates and updates
 weblog posts and pages directly from AsciiDoc source documents.
 
 
-Projects using AsciiDoc
------------------------
-Here are some projects I know of, if you know of more drop me a line
+Documents written using AsciiDoc
+--------------------------------
+Here are some documents I know of, if you know of more drop me a line
 and I'll add them to the list.
 
+- The book
+  http://oreilly.com/catalog/9780596155957/index.html[Programming
+  Scala] by Dean Wampler and Alex Payne (O'Reilly) was
+  http://groups.google.com/group/asciidoc/browse_frm/thread/449f1199343f0e27[written
+  using Asciidoc].
 - http://frugalware.org/[Frugalware Linux] uses AsciiDoc for
   http://frugalware.org/docs[documentation].
 - http://www.cherokee-project.com/doc/[Cherokee documentation].

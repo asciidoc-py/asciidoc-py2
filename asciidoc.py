@@ -2634,8 +2634,9 @@ class DelimitedBlock(AbstractBlock):
         AbstractBlock.translate(self)
         reader.read()   # Discard delimiter.
         attrs = {}
-        BlockTitle.consume(attrs)
-        AttributeList.consume(attrs)
+        if self.short_name() != 'comment':
+            BlockTitle.consume(attrs)
+            AttributeList.consume(attrs)
         self.merge_attributes(attrs)
         options = self.parameters.options
         if 'skip' in options:
@@ -3454,7 +3455,7 @@ class Macro:
                 return ''
             # If we're dealing with a block macro get optional block ID and
             # block title.
-            if self.prefix == '#':
+            if self.prefix == '#' and self.name != 'comment':
                 AttributeList.consume(d)
                 BlockTitle.consume(d)
             # Parse macro attributes.

@@ -407,6 +407,18 @@ Comment blocks are never displayed in the output.
 
 :showcomments!:
 
+[[comment_macro]]
+.Block title
+// Block macro comment does not consume titles or attributes.
+Lorum ipsum.
+
+[[comment_block]]
+.Block title
+/////////////////////////////////////////////////////////////////////
+Delimited comment block does not consume titles or attributes.
+/////////////////////////////////////////////////////////////////////
+Lorum ipsum.
+
 
 ifdef::basebackend-docbook[]
 [glossary]

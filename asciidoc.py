@@ -2024,6 +2024,8 @@ class AbstractBlock:
             elif k == 'options':
                 if isinstance(v,str):
                     v = parse_options(v, (), msg % (k,v))
+                    # Merge with existing options.
+                    v = tuple(set(dst.options).union(set(v)))
                 copy(dst,k,v)
             elif k in ('subs','presubs','postsubs'):
                 # Subs is an alias for presubs.

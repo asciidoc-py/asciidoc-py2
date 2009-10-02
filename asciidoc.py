@@ -2688,7 +2688,7 @@ class Column:
     """Table column."""
     def __init__(self, width=None, align_spec=None, style=None):
         self.width = width or '1'
-        self.align, self.valign = Table.parse_align_spec(align_spec)
+        self.halign, self.valign = Table.parse_align_spec(align_spec)
         self.style = style      # Style name or None.
         # Calculated attribute values.
         self.abswidth = None    # 1..   (page units).
@@ -2698,12 +2698,12 @@ class Cell:
     def __init__(self, data, span_spec=None, align_spec=None, style=None):
         self.data = data
         self.span, self.vspan = Table.parse_span_spec(span_spec)
-        self.align, self.valign = Table.parse_align_spec(align_spec)
+        self.halign, self.valign = Table.parse_align_spec(align_spec)
         self.style = style
     def __repr__(self):
         return '<Cell: %d.%d %s.%s %s "%s">' % (
                 self.span, self.vspan,
-                self.align, self.valign,
+                self.halign, self.valign,
                 self.style or '',
                 self.data)
 
@@ -2844,9 +2844,9 @@ class Table(AbstractBlock):
         else:
             self.error('missing style: %s*' % prefix)
             return None
-    def parse_cols(self, cols, align, valign):
+    def parse_cols(self, cols, halign, valign):
         """
-        Build list of column objects from table 'cols', 'align' and 'valign'
+        Build list of column objects from table 'cols', 'halign' and 'valign'
         attributes.
         """
         # [<multiplier>*][<align>][<width>][<style>]
@@ -2875,7 +2875,7 @@ class Table(AbstractBlock):
                     self.error('illegal column spec: %s' % col,self.start)
         # Set column (and indirectly cell) default alignments.
         for col in self.columns:
-            col.align = col.align or align or 'left'
+            col.halign = col.halign or halign or 'left'
             col.valign = col.valign or valign or 'top'
         # Validate widths and calculate missing widths.
         n = 0; percents = 0; props = 0
@@ -2929,7 +2929,7 @@ class Table(AbstractBlock):
         for col in self.columns:
             colspec = self.get_tags(col.style).colspec
             if colspec:
-                self.attributes['align'] = col.align
+                self.attributes['halign'] = col.halign
                 self.attributes['valign'] = col.valign
                 self.attributes['colabswidth'] = col.abswidth
                 self.attributes['colpcwidth'] = col.pcwidth
@@ -3017,7 +3017,7 @@ class Table(AbstractBlock):
         i = 0
         for cell in row:
             col = self.columns[i]
-            self.attributes['align'] = cell.align or col.align
+            self.attributes['halign'] = cell.halign or col.halign
             self.attributes['valign'] = cell.valign or  col.valign
             self.attributes['colabswidth'] = col.abswidth
             self.attributes['colpcwidth'] = col.pcwidth
@@ -3165,7 +3165,7 @@ class Table(AbstractBlock):
                 cols = 0
                 for cell in self.parse_psv_dsv(text[:1]):
                     cols += cell.span
-        self.parse_cols(cols, attrs.get('align'), attrs.get('valign'))
+        self.parse_cols(cols, attrs.get('halign'), attrs.get('valign'))
         # Set calculated attributes.
         self.attributes['colcount'] = len(self.columns)
         self.build_colspecs()

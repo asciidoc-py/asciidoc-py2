@@ -2693,7 +2693,12 @@ The 'grid' attribute value can be any of the following values: 'none',
 'cols', 'rows' and 'all'. The default value is 'all'.
 
 align::
-Use the 'align' attribute to horizontally align all cells in a table.
+Use the 'align' attribute to horizontally align the table on the
+page (works with HTML outputs only, has no effect on DocBook outputs).
+The following values are valid: 'left', 'right', and 'center'.
+
+halign::
+Use the 'halign' attribute to horizontally align all cells in a table.
 The following values are valid: 'left', 'right', and 'center'
 (defaults to 'left'). Overridden by <<X70,Column specifiers>>  and
 <<X84,Cell specifiers>>.
@@ -2893,11 +2898,11 @@ Total number of table columns.
 rowcount::
 Total number of table rows.
 
-align::
-'left', 'right' or 'center'.
+halign::
+Horizontal cell content alignment: 'left', 'right' or 'center'.
 
 valign::
-'top', 'bottom' or 'middle'.
+Vertical cell content alignment: 'top', 'bottom' or 'middle'.
 
 colnumber, colstart::
 The number of the leftmost column occupied by the cell (1...).

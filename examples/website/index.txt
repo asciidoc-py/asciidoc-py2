@@ -3,15 +3,17 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-There are lots of minor enchancements and a few changes, but the big
-news is that 'a2x' has been rewritten in Python and now supports the
-http://en.wikipedia.org/wiki/EPUB[EPUB] e-book standard. The new 'a2x'
-is pretty much a drop-in replacement for the old bash version.
+This release includes lots of enhancements (plus a few changes and
+bug fixes), but the big news is that link:a2x.1.html['a2x'] has been
+rewritten in Python and now supports the
+http://en.wikipedia.org/wiki/EPUB[EPUB] e-book standard.  The new
+'a2x' is pretty much a drop-in replacement for the old bash version.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
-additions, changes and bug fixes. +
-Changes are documented in the updated link:userguide.html[User Guide]. +
-link:INSTALL.html[Download and installation instructions].
+additions, changes and bug fixes. Changes are documented in the
+updated link:userguide.html[User Guide]. See the
+link:INSTALL.html[Installation page] for downloads and and
+installation instructions.
 
 mailto:srackham@gmail.com['Stuart Rackham']
 ************************************************************************
@@ -100,32 +102,8 @@ built using AsciiDoc.  See `./examples/website/README-website.txt`.
 
 More examples
 ~~~~~~~~~~~~~
-Here are some more documents generated using AsciiDoc, if you know of
-others drop me a line and I'll add them to the list.
-
-- Henrik Maier produced this professional User manual using AsciiDoc:
-  http://www.proconx.com/gcpmg/UMGCPMG-0801.pdf.
-
-- Henrik also produced this folded single page brochure format
-  example: http://www.proconx.com/gcpmg/IGGCPMG-0801-up.pdf.
-+
-See this
-http://groups.google.com/group/asciidoc/browse_thread/thread/16ab5a06864b934f[AsciiDoc
-discussion group thread] for details.
-
+- See below: <<X6,'Documents written using AsciiDoc'>>.
 - Example link:newtables.html[Tables].
-
-- 'Git Magic' +
-  http://www-cs-students.stanford.edu/~blynn/gitmagic/ +
-  http://github.com/blynn/gitmagic/tree/1e5780f658962f8f9b01638059b27275cfda095c
-
-- 'CouchDB: The Definitive Guide' +
-  http://books.couchdb.org/relax/ +
-  http://groups.google.com/group/asciidoc/browse_thread/thread/a60f67cbbaf862aa/d214bf7fa2d538c4?lnk=gst&q=book#d214bf7fa2d538c4
-
-- 'Ramaze Manual' +
-  http://book.ramaze.net/ +
-  http://github.com/manveru/ramaze-book/tree/master
 
 
 Music Filter
@@ -265,6 +243,7 @@ http://wordpress.org/[WordPress] blog hosts. It creates and updates
 weblog posts and pages directly from AsciiDoc source documents.
 
 
+[[X6]]
 Documents written using AsciiDoc
 --------------------------------
 Here are some documents I know of, if you know of more drop me a line
@@ -275,12 +254,33 @@ and I'll add them to the list.
   Scala] by Dean Wampler and Alex Payne (O'Reilly) was
   http://groups.google.com/group/asciidoc/browse_frm/thread/449f1199343f0e27[written
   using Asciidoc].
+
 - http://frugalware.org/[Frugalware Linux] uses AsciiDoc for
   http://frugalware.org/docs[documentation].
 - http://www.cherokee-project.com/doc/[Cherokee documentation].
+
+- Henrik Maier produced this professional User manual using AsciiDoc:
+  http://www.proconx.com/gcpmg/UMGCPMG-0801.pdf.
+
+- Henrik also produced this folded single page brochure format
+  example: http://www.proconx.com/gcpmg/IGGCPMG-0801-up.pdf.
++
+See this
+http://groups.google.com/group/asciidoc/browse_thread/thread/16ab5a06864b934f[AsciiDoc
+discussion group thread] for details.
+
 - The
   http://www.kernel.org/pub/software/scm/git/docs/user-manual.html[Git
   User's Manual].
+- 'Git Magic' +
+  http://www-cs-students.stanford.edu/~blynn/gitmagic/ +
+  http://github.com/blynn/gitmagic/tree/1e5780f658962f8f9b01638059b27275cfda095c
+- 'CouchDB: The Definitive Guide' +
+  http://books.couchdb.org/relax/ +
+  http://groups.google.com/group/asciidoc/browse_thread/thread/a60f67cbbaf862aa/d214bf7fa2d538c4?lnk=gst&q=book#d214bf7fa2d538c4
+- 'Ramaze Manual' +
+  http://book.ramaze.net/ +
+  http://github.com/manveru/ramaze-book/tree/master
 - Some documentation about git by Nico Schottelius (in German)
   http://nico.schotteli.us/papers/linux/git-firmen/.
 - The http://www.netpromi.com/kirbybase_ruby.html[KirbyBase for Ruby]

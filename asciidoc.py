@@ -9,9 +9,9 @@ under the terms of the GNU General Public License (GPL).
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
 ### Used by asciidocapi.py ###
-VERSION = '8.4.5'   # See CHANGLOG file for version history.
+VERSION = '8.5.0'           # See CHANGLOG file for version history.
 
-MIN_PYTHON_VERSION = 2.4   # Require this version of Python or better.
+MIN_PYTHON_VERSION = 2.4    # Require this version of Python or better.
 
 #---------------------------------------------------------------------------
 # Program constants.
@@ -4946,7 +4946,6 @@ class Table_OLD(AbstractBlock):
             table.append(reader.read())
         # EXPERIMENTAL: The number of lines in the table, requested by Benjamin Klum.
         self.attributes['rows'] = str(len(table))
-        #TODO: Inherited validate() doesn't set check_msg, needs checking.
         if self.check_msg:  # Skip if table definition was marked invalid.
             message.warning('skipping %s table: %s' % (self.name,self.check_msg))
             return

@@ -13,6 +13,7 @@
 #PDF_PROCESSOR = dblatex
 
 ASCIIDOC = python ../asciidoc.py -a revnumber=$(VERS)@ -a revdate="$(DATE)@"
+A2X = python ../a2x.py
 
 :syseval which fop | :assign FOP
 @if not _no.FOP:
@@ -45,12 +46,16 @@ TEST_FILES = $*(ROOT).css-embedded.html
         article.css-embedded.html book.css-embedded.html \
         article.xml book.xml book-multi.xml asciidoc.xml asciidoc.1.xml \
         asciidoc.1.html a2x.1.xml music-filter.xml \
+        article.epub asciidoc.epub \
         ../examples/oldtables.xml ../examples/oldtables.html
 
 
 #####################################################################
 # Filetype build rules.
 #####################################################################
+
+:rule %.epub : %.txt
+    :sys $A2X -vf epub --epubcheck $source
 
 :rule %.text : %.txt
     # Convert AsciiDoc to HTML then use lynx(1) to convert HTML to text.

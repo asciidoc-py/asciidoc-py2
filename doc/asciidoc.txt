@@ -2853,7 +2853,6 @@ Like default but all text is emphasised.
 
 monospaced::
 Like default but all text is in a monospaced font.
-TODO: This doesn't work in DocBook.
 
 strong::
 Like default but all text is bold.

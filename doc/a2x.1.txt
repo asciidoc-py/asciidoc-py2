@@ -125,7 +125,7 @@ In addition to generating HTML files the 'xhtml', 'epub', 'chunked'
 and 'htmlhelp' formats copy images and CSS stylesheet files referenced
 in the generated HTML outputs from locations relative to the asciidoc
 input 'FILE' to the correct relative destination directory locations
-generating required sub-directories if neccessary. See also the
+generating required sub-directories if necessary. See also the
 '--resource-dir' option.
 
 
@@ -169,7 +169,7 @@ See also the latest README file.
 CONF FILES
 ----------
 A configuration file contains executable Python code that overrides
-the global confguration parametes in `a2x.py`.  Optional configuration
+the global configuration parameters in `a2x.py`.  Optional configuration
 files are loaded in the following order:
 
 . `a2x.conf` from the AsciiDoc global configuration directory.

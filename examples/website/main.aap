@@ -106,7 +106,7 @@ ASCIIDOC_HTML =
         opts = -a latexmath
     @else:
         opts =
-    @if target in ('index.html','INSTALL.html','manpage.html','a2x.1.html','asciidocapi.html','testasciidoc.html'):
+    @if target in ('index.html','INSTALL.html','manpage.html','asciidocapi.html','testasciidoc.html'):
         opts += -a toc -a toclevels=1
     :sys $ASCIIDOC_HTML $opts $(source[0])
     @if _no.XMLLINT:

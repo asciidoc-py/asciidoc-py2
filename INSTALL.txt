@@ -41,9 +41,8 @@ normal install from the repository.
 
 Running asciidoc from your local repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Create a symlink to the AsciiDoc script in a search `PATH` directory
-  so it's easy to execute `asciidoc` from the command-line, for
-  example:
+Create a symlink to the AsciiDoc script in a search `PATH` directory
+so it's easy to execute `asciidoc` from the command-line, for example:
 
 [subs="attributes"]
   $ ln -s ~/bin/asciidoc-{revnumber}/asciidoc.py ~/bin/asciidoc
@@ -202,7 +201,8 @@ and convert the User Guide document (`./doc/asciidoc.txt`) to XHTML
   $ python asciidoc.py doc/asciidoc.txt
 
 link:testasciidoc.html[testasciidoc] offers a more extensive set of
-conformance tests:
+conformance tests, though you do need to create the test data before
+running the tests (this in itself is a good post-install test):
 
   $ python ./tests/testasciidoc.py update
 

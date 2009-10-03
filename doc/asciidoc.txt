@@ -34,8 +34,8 @@ AsciiDoc is a plain text human readable/writable document format that
 can be translated to DocBook or HTML using the asciidoc(1) command.
 You can then either use asciidoc(1) generated HTML directly or run
 asciidoc(1) DocBook output through your favorite DocBook toolchain or
-use the AsciiDoc a2x(1) toolchain wrapper to produce PDF, DVI, LaTeX,
-PostScript, man page, HTML and text formats.
+use the AsciiDoc a2x(1) toolchain wrapper to produce PDF, EPUB, DVI,
+LaTeX, PostScript, man page, HTML and text formats.
 
 The AsciiDoc format is a useful presentation format in its own right:
 AsciiDoc files are unencumbered by markup and are easily viewed,
@@ -3753,7 +3753,7 @@ and 'System'.
   character.
 - By default attribute references are not expanded in
   'LiteralParagraphs', 'ListingBlocks' or 'LiteralBlocks'.
-- Attribute substition procedes line by line in reverse line order.
+- Attribute substitution proceeds line by line in reverse line order.
 - Attribute reference evaluation is performed in the following order:
   'Simple' then 'Conditional' and finally 'System'.
 
@@ -3888,7 +3888,7 @@ argument. The syntax is `{<action>:<argument>}`.
         configuration file markup templates (use
         <<X18,AttributeEntries>> in AsciiDoc documents).
 
-        - If the attribute name is followed by an exclaimation mark
+        - If the attribute name is followed by an exclamation mark
           the attribute becomes undefined.
         - If `<value>` is omitted the attribute is set to a blank
           string.
@@ -5317,7 +5317,7 @@ which case stylesheets and scripts are automatically embedded in the
 output document.
 
 |max-width |xhtml11 |
-Set the document maxiumum display width (sets the 'body' element CSS
+Set the document maximum display width (sets the 'body' element CSS
 'max-width' property). 'max-width' definition must precede the
 document header.
 
@@ -5363,8 +5363,6 @@ command-line option. If you define the `toc` attribute in a custom
 configuration file it won't be recognized because the conditionally
 included header code will have already been processed.
 
-// itemizedlist title generates dblatex 0.2.9 error: Misplaced \noalign.
-//.xhtml11 backend
 *xhtml11 backend*
 
 - JavaScript needs to be enabled in your browser for this to work.

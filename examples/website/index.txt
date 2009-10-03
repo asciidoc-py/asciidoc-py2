@@ -3,21 +3,13 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-Lots of fairly small stuff in this release, but with over thirty items
-in the CHANGELOG it adds up to a fairly substantial release. Here are
-some points of interest:
-
-. Multiple manpage names are now handled correctly when generating
-  DocBook output -- each name now generates a separate DocBook
-  `<refname>` element. See
-  http://groups.google.com/group/asciidoc/browse_thread/thread/c93bb4db025225d8[the
-  discussion list] for details.
-. The article and book document header can now include a revision
-  remark.
-. French, German, Hungarian and Russian language file contributions.
+There are lots of minor enchancements and a few changes, but the big
+news is that 'a2x' has been rewritten in Python and now supports the
+http://en.wikipedia.org/wiki/EPUB[EPUB] e-book standard. The new 'a2x'
+is pretty much a drop-in replacement for the old bash version.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
-additions and changes. +
+additions, changes and bug fixes. +
 Changes are documented in the updated link:userguide.html[User Guide]. +
 link:INSTALL.html[Download and installation instructions].
 
@@ -49,8 +41,8 @@ the asciidoc(1) command.
 
 The asciidoc(1) command translates AsciiDoc files to HTML, XHTML and
 DocBook markups.  DocBook can be post-processed to presentation
-formats such as HTML, PDF, DVI, LaTeX, roff, and Postscript using
-readily available Open Source tools.
+formats such as HTML, PDF, EPUB, DVI, LaTeX, roff, and Postscript
+using readily available Open Source tools.
 
 Example Articles
 ~~~~~~~~~~~~~~~~

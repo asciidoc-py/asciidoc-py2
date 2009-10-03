@@ -480,3 +480,19 @@ hard + 1min really hard taking the HR up to 160).
 
 |=========================================================
 
+Floating tables and images
+--------------------------
+.Simple table
+[float="left",width="15%"]
+|=======
+|1 |2 |A
+|3 |4 |B
+|5 |6 |C
+|=======
+
+.Tiger
+[float="right"]
+image::images/tiger.png["Tiger image"]
+
+unfloat::[]
+

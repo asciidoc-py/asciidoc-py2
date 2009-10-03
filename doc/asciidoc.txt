@@ -2125,6 +2125,11 @@ referring document.
 
   image::images/tiger.png["Tiger image",align="left"]
 
+- The optional `float` attribute floats the image `left` or `right` on
+  the page (works with HTML outputs only, has no effect on DocBook
+  outputs). `float` and `align` attributes are mutually exclusive.
+  Use the `unfloat::[]` block macro to stop floating.
+
 Comment Lines
 ^^^^^^^^^^^^^
 See <<X25,comment block macro>>.
@@ -2696,6 +2701,14 @@ align::
 Use the 'align' attribute to horizontally align the table on the
 page (works with HTML outputs only, has no effect on DocBook outputs).
 The following values are valid: 'left', 'right', and 'center'.
+
+float::
+Use the 'float' attribute to float the table 'left' or 'right' on the
+page (works with HTML outputs only, has no effect on DocBook outputs).
+Floating only makes sense in conjunction with the table 'width'
+attribute set to less than 100% (otherwise the table will take up all
+the available space).  'float' and 'align' attributes are mutually
+exclusive.  Use the `unfloat::[]` block macro to stop floating.
 
 halign::
 Use the 'halign' attribute to horizontally align all cells in a table.

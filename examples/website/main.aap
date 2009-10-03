@@ -68,6 +68,7 @@ DOCS =
     book.txt book.html
     book-multi.txt book-multi.html
     docbook-xsl.css
+    article.epub
     article.pdf
     latexmath.pdf
 

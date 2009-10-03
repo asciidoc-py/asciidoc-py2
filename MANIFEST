@@ -22,6 +22,7 @@ dblatex/asciidoc-dblatex.sty
 dblatex/asciidoc-dblatex.xsl
 dblatex/dblatex-readme.txt
 doc/a2x.1
+doc/article.epub
 doc/article.pdf
 doc/asciidoc.1
 doc/asciidoc.conf

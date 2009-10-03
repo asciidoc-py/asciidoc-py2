@@ -67,6 +67,9 @@ Example Articles
 - This link:asciidoc.pdf[PDF formatted User Guide] was generated from
   asciidoc(1) DocBook output.
 
+- This link:article.epub[EPUB formatted article] was generated using
+  link:a2x.1.html[a2x].
+
 Example Books
 ~~~~~~~~~~~~~
 AsciiDoc markup supports all the standard DocBook frontmatter and

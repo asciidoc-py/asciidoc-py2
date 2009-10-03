@@ -40,7 +40,8 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         article.pdf \
         latexmath.pdf \
         source-highlight-filter.pdf \
-        music-filter.pdf
+        music-filter.pdf \
+        article.epub
 
 TEST_FILES = $*(ROOT).css-embedded.html 
         article.css-embedded.html book.css-embedded.html \

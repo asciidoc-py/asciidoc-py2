@@ -164,8 +164,8 @@ and refentry (corresponding to the AsciiDoc 'article', 'book' and
 DocBook documents are not designed to be viewed directly.  Most Linux
 distributions come with conversion tools (collectively called a
 toolchain) for <<X12,converting DocBook files>> to presentation
-formats such as Postscript, HTML, PDF, DVI, PostScript, LaTeX, roff
-(the native man page format), HTMLHelp, JavaHelp and text.
+formats such as Postscript, HTML, PDF, EPUB, DVI, PostScript, LaTeX,
+roff (the native man page format), HTMLHelp, JavaHelp and text.
 
 The AsciiDoc <<X86,Preamble>> element generates a DocBook book
 'preface' element although it's more usual to use an explicit
@@ -4405,7 +4405,7 @@ DocBook files are validated, parsed and translated by a combination of
 applications collectively called a DocBook 'tool chain'. The function
 of a tool chain is to read the DocBook markup (produced by AsciiDoc)
 and transform it to a presentation format (for example HTML, PDF, HTML
-Help, DVI, PostScript, LaTeX).
+Help, EPUB, DVI, PostScript, LaTeX).
 
 A wide range of user output format requirements coupled with a choice
 of available tools and stylesheets results in many valid tool chain
@@ -4417,15 +4417,15 @@ a2x Toolchain Wrapper
 One of the biggest hurdles for new users is installing, configuring
 and using a DocBook XML toolchain. `a2x(1)` can help -- it's a
 toolchain wrapper command that will generate XHTML (chunked and
-unchunked), PDF, DVI, PS, LaTeX, man page, HTML Help and text file
-outputs from an AsciiDoc text file.  a2x(1) does all the grunt work
-associated with generating and sequencing the toolchain commands and
-managing intermediate and output files.  a2x(1) also optionally
+unchunked), PDF, EPUB, DVI, PS, LaTeX, man page, HTML Help and text
+file outputs from an AsciiDoc text file.  `a2x(1)` does all the grunt
+work associated with generating and sequencing the toolchain commands
+and managing intermediate and output files.  `a2x(1)` also optionally
 deploys admonition and navigation icons and a CSS stylesheet. See the
-`a2x(1)` man page for more details. All you need is
-<<X40,xsltproc(1)>>, <<X13,DocBook XSL Stylesheets>> and optionally:
-<<X31,dblatex>> or <<X14,FOP>> (if you want PDF); `w3m(1)` or
-`lynx(1)` (if you want text).
+`a2x(1)` man page for more details. In addition to `asciidoc(1)` you
+also need <<X40,xsltproc(1)>>, <<X13,DocBook XSL Stylesheets>> and
+optionally: <<X31,dblatex>> or <<X14,FOP>> (if to generate PDF);
+`w3m(1)` or `lynx(1)` (if to generate text).
 
 The following examples generate `doc/source-highlight-filter.pdf` from
 the AsciiDoc `doc/source-highlight-filter.txt` source file. The first
@@ -4536,7 +4536,7 @@ outputs) the custom `./stylesheets/docbook.css` CSS stylesheet.
 You'll find the customized DocBook XSL drivers along with additional
 documentation in the distribution `./docbook-xsl` directory. The
 examples that follow are executed from the distribution documentation
-(`./doc`) directory.
+(`./doc`) directory. These drivers are required by <<X43,a2x(1)>>.
 
 `common.xsl`::
     Shared driver parameters.  This file is not used directly but is
@@ -4549,13 +4549,16 @@ examples that follow are executed from the distribution documentation
     $ python ../asciidoc.py -b docbook asciidoc.txt
     $ xsltproc --nonet ../docbook-xsl/chunked.xsl asciidoc.xml
 
+`epub.xsl`::
+    Used by <<X43,a2x(1)>> to generate EPUB formatted documents.
+
 `fo.xsl`::
     Generate XSL Formatting Object (`.fo`) files for subsequent PDF
     file generation using FOP. For example:
 
     $ python ../asciidoc.py -b docbook article.txt
     $ xsltproc --nonet ../docbook-xsl/fo.xsl article.xml > article.fo
-    $ fop.sh article.fo article.pdf
+    $ fop article.fo article.pdf
 
 `htmlhelp.xsl`::
     Generate Microsoft HTML Help source files for the MS HTML Help

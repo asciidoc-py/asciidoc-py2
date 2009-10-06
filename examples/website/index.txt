@@ -258,6 +258,11 @@ and I'll add them to the list.
   http://groups.google.com/group/asciidoc/browse_frm/thread/449f1199343f0e27[written
   using Asciidoc].
 
+- The http://www.ncfaculty.net/dogle/fishR/index.html[fishR] website
+  has a number of
+  http://www.ncfaculty.net/dogle/fishR/bookex/AIFFD/AIFFD.html[book
+  examples] written using AsciiDoc.
+
 - http://frugalware.org/[Frugalware Linux] uses AsciiDoc for
   http://frugalware.org/docs[documentation].
 - http://www.cherokee-project.com/doc/[Cherokee documentation].

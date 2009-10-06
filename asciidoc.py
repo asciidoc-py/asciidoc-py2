@@ -1745,6 +1745,10 @@ class Title:
                 Title.attributes['title'] = lines[0]
             for k,v in Title.attributes.items():
                 if v is None: del Title.attributes[k]
+        try:
+            Title.level += int(document.attributes.get('leveloffset','0'))
+        except:
+            pass
         Title.attributes['level'] = str(Title.level)
         return result
     @staticmethod

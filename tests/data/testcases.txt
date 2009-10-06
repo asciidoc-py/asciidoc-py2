@@ -496,3 +496,28 @@ image::images/tiger.png["Tiger image"]
 
 unfloat::[]
 
+Section level offsets
+---------------------
+At level 1
+
+:leveloffset: -1
+Section title
+^^^^^^^^^^^^^
+At level 2
+
+:leveloffset: 0
+Section title
+~~~~~~~~~~~~~
+At level 2
+
+:leveloffset: 2
+Section title
+-------------
+At level 3
+
+:leveloffset!:
+:numbered!:
+
+Section level offsets
+---------------------
+At level 1

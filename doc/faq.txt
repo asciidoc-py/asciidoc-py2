@@ -618,15 +618,15 @@ ensures the first line is not mistaken for a bulleted list item.
 
 === Labeled lists
 Two colons or semicolons in a paragraph may be confused with a labeled
-list entry. Use the predefined `{two_colons}` and `{two_semicolons}`
+list entry. Use the predefined `{two-colons}` and `{two-semicolons}`
 attributes to suppress this behavior, for example:
 
-  Qui in magna commodo{two_colons} est labitur dolorum an. Est ne
+  Qui in magna commodo{two-colons} est labitur dolorum an. Est ne
   magna primis adolescens.
 
 Will be rendered as:
 
-Qui in magna commodo{two_colons} est labitur dolorum an. Est ne
+Qui in magna commodo{two-colons} est labitur dolorum an. Est ne
 magna primis adolescens.
 
 

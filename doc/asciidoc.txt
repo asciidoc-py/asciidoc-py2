@@ -3324,7 +3324,7 @@ The `[specialcharacters]` section specifies how to escape characters
 reserved by the backend markup. Each translation is specified on a
 single line formatted like:
 
-  special_character=translated_characters
+  <special_character>=<translated_characters>
 
 Special characters are normally confined to those that resolve
 markup ambiguity (in the case of SGML/XML markups the ampersand, less
@@ -3428,7 +3428,7 @@ Replacements section
 `[replacements]` and `[replacements2]` configuration file entries
 specify find and replace text and are formatted like:
 
-  find_pattern=replacement_text
+  <find_pattern>=<replacement_text>
 
 The find text can be a Python regular expression; the replace text can
 contain Python regular expression group references.
@@ -4000,8 +4000,8 @@ predefined intrinsic attributes:
   {sectnum}             formatted section number (in section titles)
   {showcomments}        send comment lines to the output
   {title}               section title (in titled elements)
-  {two_colons}          Two colon characters
-  {two_semicolons}      Two semicolon characters
+  {two-colons}          Two colon characters
+  {two-semicolons}      Two semicolon characters
   {user-dir}            the ~/.asciidoc directory (if it exists)
   {verbose}             defined as '' if --verbose command option specified
 
@@ -5403,7 +5403,7 @@ included header code will have already been processed.
 
   $ asciidoc -a toc -a numbered mydoc.txt
 
-|toc_title |xhtml11 |
+|toc-title |xhtml11 |
 Sets the table of contents title (defaults to 'Table of Contents').
 
 |toclevels |xhtml11 |

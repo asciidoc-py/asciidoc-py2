@@ -521,3 +521,18 @@ At level 3
 Section level offsets
 ---------------------
 At level 1
+
+Single-quoted attributes
+------------------------
+[quote,'http://en.wikipedia.org/wiki/Samuel_Johnson[Samuel Johnson]']
+_____________________________________________________________________
+Sir, a woman's preaching is like a dog's walking on his hind legs. It
+is not done well; but you are surprised to find it done at all.
+_____________________________________________________________________
+
+["quote","'http://en.wikipedia.org/wiki/Samuel_Johnson[Samuel Johnson]'"]
+_____________________________________________________________________
+Sir, a woman's preaching is like a dog's walking on his hind legs. It
+is not done well; but you are surprised to find it done at all.
+_____________________________________________________________________
+

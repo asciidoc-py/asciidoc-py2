@@ -861,10 +861,12 @@ AttributeList Element
 ---------------------
 An 'AttributeList' block element is an <<X21,attribute list>> on a
 line by itself.  'AttributeList' attributes are only applied to the
-following block element -- the attributes are available for markup
-template substitution. Often the first attribute in the list is used
-to specify the following element's <<X23,style>>.
+immediately following block element -- the attributes are available
+for markup template substitution. Often the first attribute in the
+list is used to specify the following element's <<X23,style>>.
 
+Attribute value substitution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 By default only attribute references are substituted within attribute
 values, this is because not all attributes are destined to be marked
 up and rendered as text (for example the table 'cols' attribute). To
@@ -3695,19 +3697,15 @@ and write, here are some examples:
 [[X21]]
 Attribute Lists
 ---------------
-An attribute list is a comma separated list of attribute values. The
-entire list is enclosed in square brackets.  Attribute lists are used
-to pass parameters to macros, blocks and inline quotes:
+- An attribute list is a comma separated list of attribute values.
+- The entire list is enclosed in square brackets.
+- Attribute lists are used to pass parameters to macros, blocks (using
+  the <<X79,AttributeList element>>) and inline quotes.
 
-- The list consists of zero or more positional attribute values
-  followed by zero or more named attribute values.
-- Attribute values are enclosed in quotation mark (") characters.
-- If the attribute list only contains positional attribute values and
-  the values contain no commas then quoting is unnecessary.
-
-Here are three examples (a single unquoted positional attribute; three
-unquoted attribute values; one positional attribute followed by two
-named attributes):
+The list consists of zero or more positional attribute values followed
+by zero or more named attribute values.  Here are three examples: a
+single unquoted positional attribute; three unquoted attribute values;
+one positional attribute followed by two named attributes:
 
   [Hello]
   [quote, Bertrand Russell, The World of Mathematics (1956)]
@@ -3715,24 +3713,21 @@ named attributes):
 
 .Attribute list behavior
 - If one or more attribute values contains a comma the all string
-  values must be quoted (enclosed in quotation characters).
+  values must be quoted (enclosed in quotation mark characters).
 - If the list contains any named or quoted attributes then all string
   attribute values must be quoted.
 - To include a quotation mark (") character in a quoted attribute
   value the the quotation mark must be escaped with a backslash.
 - List attributes take precedence over existing attributes.
 - List attributes can only be referenced in configuration file markup
-  templates and tags, they are not available inside the document.
-- Attribute references are allowed inside attribute lists -- this is
-  the only substitution performed on attribute lists.
+  templates and tags, they are not available elsewhere in the
+  document.
 - Setting a named attribute to `None` undefines the attribute.
 - Positional attributes are referred to as `{1}`,`{2}`,`{3}`,...
 - Attribute `{0}` refers to the entire list (excluding the enclosing
   square brackets).
-- Attribute lists are evaluated as a list of Python function
-  arguments.  If this fails or any of the items do not evaluate to a
-  string, a number or None then all list items are treated as string
-  literals.
+- Named attribute names cannot contain dash characters (as they can
+  elsewhere).
 
 [[X75]]
 Options attribute

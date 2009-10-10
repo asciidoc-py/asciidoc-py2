@@ -1092,8 +1092,7 @@ class Lex:
 
     @staticmethod
     def subs_1(s,options):
-        """Perform substitution specified in 'options' (in 'options' order) on
-        Does not process 'attributes' substitutions."""
+        """Perform substitution specified in 'options' (in 'options' order)."""
         if not s:
             return s
         result = s
@@ -1594,22 +1593,25 @@ class AttributeList:
     def translate():
         assert Lex.next() is AttributeList
         reader.read()   # Discard attribute list from reader.
-        attrlist = {}
+        attrs = {}
         d = AttributeList.match.groupdict()
         for k,v in d.items():
             if v is not None:
                 if k == 'attrlist':
                     v = subs_attrs(v)
                     if v:
-                        parse_attributes(v, attrlist)
+                        parse_attributes(v, attrs)
                 else:
                     AttributeList.attrs[k] = v
-        # Substitute single quoted attribute values.
+        AttributeList.subs(attrs)
+        AttributeList.attrs.update(attrs)
+    @staticmethod
+    def subs(attrs):
+        '''Substitute single quoted attribute values normally.'''
         reo = re.compile(r"^'.*'$")
-        for k,v in attrlist.items():
+        for k,v in attrs.items():
             if reo.match(str(v)):
-                attrlist[k] = Lex.subs_1(v[1:-1],SUBS_NORMAL)
-        AttributeList.attrs.update(attrlist)
+                attrs[k] = Lex.subs_1(v[1:-1],SUBS_NORMAL)
     @staticmethod
     def style():
         return AttributeList.attrs.get('style') or AttributeList.attrs.get('1')
@@ -3479,6 +3481,9 @@ class Macro:
                                 '%s: illegal option name' % name)
                         for option in options:
                             d[option+'-option'] = ''
+                    # Substitute single quoted attribute values in block macros.
+                    if self.prefix == '#':
+                        AttributeList.subs(d)
             if name == 'callout':
                 listindex =int(d['index'])
                 d['coid'] = calloutmap.add(listindex)

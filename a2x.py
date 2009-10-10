@@ -518,8 +518,8 @@ class A2X(AttrDict):
         docbook_file = self.dst_path('.xml')
         xsl = self.asciidoc_conf_file(os.path.join('dblatex','asciidoc-dblatex.xsl'))
         sty = self.asciidoc_conf_file(os.path.join('dblatex','asciidoc-dblatex.sty'))
-        shell('"%s" %s -t %s -p "%s" -s "%s" "%s"' %
-             (DBLATEX, self.dblatex_opts, self.format, xsl, sty, docbook_file))
+        shell('"%s" -t %s -p "%s" -s "%s" %s "%s"' %
+             (DBLATEX, self.format, xsl, sty, self.dblatex_opts, docbook_file))
 
     def to_dvi(self):
         self.exec_dblatex()

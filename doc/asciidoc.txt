@@ -1921,12 +1921,12 @@ the `test.py` source file (containing a single callout) using the
 
 .AsciiDoc source
 ---------------------------------------------------------------------
-[source,python]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-\include::test.py[]
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ [source,python]
+ -------------------------------------------
+ \include::test.py[]
+ -------------------------------------------
 
-\<1> Print statement.
+ \<1> Print statement.
 ---------------------------------------------------------------------
 
 .Included `test.py` source

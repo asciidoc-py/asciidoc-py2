@@ -2108,9 +2108,16 @@ referring document.
 .Image macro attributes
 - The optional 'alt' attribute is also the first positional attribute,
   it specifies alternative text which is displayed if the output
-  application is unable to process the image file. For example:
+  application is unable to display the image file (see also
+  http://htmlhelp.com/feature/art3.htm[Use of ALT texts in IMGs]). For
+  example:
 
   image:images/logo.png[Company Logo]
+
+- The optional 'title' attribute provides a title for the image. The
+  <<X49,block image macro>> renders the title alongside the image.
+  The inline image macro displays the title as a popup ``tooltip'' in
+  visual browsers (AsciiDoc HTML outputs only).
 
 - The optional `width` and `height` attributes scale the image size
   and can be used in any combination. The units are pixels.  The
@@ -2179,17 +2186,22 @@ Formal titled images are inserted into the output document using the
 
   image::<target>[<attributes>]
 
-The block `image` macro has the same <<X55,macro attributes>> as its
-<<X9,inline counterpart>>.
+The block `image` macro has the same <<X55,macro attributes>> as it's
+<<X9,inline image macro>> counterpart.
 
-Images can be titled by preceding the `image` macro with a
+Block images can be titled by preceding the 'image' macro with a
 'BlockTitle'.  DocBook toolchains normally number examples and
 generate a 'List of Figures' backmatter section.
 
-For example:
+This example:
 
   .Main circuit board
   image::images/layout.png[J14P main circuit board]
+
+is equivalent to:
+
+  image::images/layout.png["J14P main circuit board",
+                            title="Main circuit board"]
 
 A title prefix that can be inserted with the `caption` attribute
 (`xhtml11` and `html4` backends). For example:

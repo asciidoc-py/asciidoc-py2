@@ -243,6 +243,17 @@ endif::[]
 
 :data-uri!:
 
+=== Inline images
+
+:imagesdir: ../../images
+
+Inline image image:smallnew.png[]
+
+Inline image image:smallnew.png[NEW!]
+
+Inline image image:smallnew.png["NEW!",title="Small new"]
+
+
 == Admonishments
 
 NOTE: Lorum ipsum.

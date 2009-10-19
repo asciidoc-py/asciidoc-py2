@@ -302,6 +302,10 @@ div.hdlist.compact tr {
   background: yellow;
 }
 
+span.footnote, span.footnoteref {
+  font-style: italic;
+}
+
 @media print {
   div#footer-badges { display: none; }
 }

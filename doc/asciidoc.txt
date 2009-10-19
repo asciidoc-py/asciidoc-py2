@@ -1768,8 +1768,8 @@ and `footnoteref:[<id>,<text>]` inline macros for generating
 footnotes:
 
 - The `footnote` macro generates a footnote.
-- The `footnoteref` macro has two forms: if the text is supplied a
-  foot note with an ID is generated; if the text is omitted a
+- The `footnoteref` macro has two forms: if the `<text>` is supplied a
+  foot note with an ID `<id>` is generated; if the text is omitted a
   reference to the footnote with the specified ID is generated.
 - The footnote text can span multiple lines.
 

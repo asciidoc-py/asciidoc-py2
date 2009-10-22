@@ -64,7 +64,7 @@ DOCS =
     $*(DOCS_ROOT).xml
     asciidoc.pdf
     asciidoc.1
-    article.txt article.html
+    article.txt article.html article-standalone.html
     book.txt book.html
     book-multi.txt book-multi.html
     docbook-xsl.css

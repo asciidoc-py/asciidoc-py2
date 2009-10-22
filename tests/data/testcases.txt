@@ -547,3 +547,37 @@ Sir, a woman's preaching is like a dog's walking on his hind legs. It
 is not done well; but you are surprised to find it done at all.
 _____________________________________________________________________
 
+Footnotes
+---------
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+footnote:[footnote one.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.]
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+footnoteref:["F2","footnote two.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel."]
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel
+footnoteref:[F2].
+

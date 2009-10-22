@@ -41,7 +41,8 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         latexmath.pdf \
         source-highlight-filter.pdf \
         music-filter.pdf \
-        article.epub
+        article.epub \
+        article-standalone.html
 
 TEST_FILES = $*(ROOT).css-embedded.html 
         article.css-embedded.html book.css-embedded.html \
@@ -156,6 +157,9 @@ TEST_FILES = $*(ROOT).css-embedded.html
 #####################################################################
 # Explicit file generation (cases that don't fit the rules).
 #####################################################################
+
+article-standalone.html: article.txt
+    :sys $ASCIIDOC -a data-uri -a icons -a toc -a max-width=55em -o $target $source
 
 asciidoc.1.html: asciidoc.1.txt
     :sys $ASCIIDOC -d manpage -b html4 $source

@@ -237,9 +237,9 @@ Block Elements
 Block elements consist of one or more lines of text and may contain
 other block elements.
 
-The AsciiDoc block structure can be informally summarized
+The AsciiDoc block structure can be informally summarized as follows
 footnote:[This is a rough structural guide, not a rigorous syntax
-definition] as follows:
+definition]:
 
   Document      ::= (Header?,Preamble?,Section*)
   Header        ::= (Title,(AuthorLine,RevisionLine?)?)
@@ -1761,33 +1761,38 @@ This paragraph belongs to item two of the outer list.
 --
 
 
+[[X92]]
 Footnotes
 ---------
-The shipped AsciiDoc configuration includes the `footnote:[<text>]`
-and `footnoteref:[<id>,<text>]` inline macros for generating
-footnotes:
+The shipped AsciiDoc configuration includes three footnote inline
+macros:
 
-- The `footnote` macro generates a footnote.
-- The `footnoteref` macro has two forms: if the `<text>` is supplied a
-  foot note with an ID `<id>` is generated; if the text is omitted a
-  reference to the footnote with the specified ID is generated.
-- The footnote text can span multiple lines.
+`footnote:[<text>]`::
+  Generates a footnote with text `<text>`.
 
-Example footnote:
+`footnoteref:[<id>,<text>]`::
+  Generates a footnote with a reference ID `<id>` and text `<text>`.
+
+`footnoteref:[<id>]`::
+  Generates a reference to the footnote with ID `<id>`.
+
+The footnote text can span multiple lines.
+
+The 'xhtml11' backend renders footnotes dynamically using JavaScript;
+'html4' outputs do not use JavaScript and leave the footnotes inline;
+'docbook' footnotes are processed by the downstream DocBook toolchain.
+
+Example footnotes:
 
   A footnote footnote:[An example footnote.];
   a second footnote with a reference ID footnoteref:[note2,Second footnote.];
   finally a reference to the second footnote footnoteref:[note2].
 
-Which renders:
+Renders:
 
 A footnote footnote:[An example footnote.];
-a second footnote with a reference ID footnoteref:[note2,Second footnote];
+a second footnote with a reference ID footnoteref:[note2,Second footnote.];
 finally a reference to the second footnote footnoteref:[note2].
-
-Footnotes are primarily useful when generating DocBook output --
-DocBook conversion programs render footnote outside the primary text
-flow.
 
 
 Indexes
@@ -5313,6 +5318,13 @@ names to the output document not the source document.
 |data-uri |xhtml11 |
 Embed images using the <<X66,data: uri scheme>>.
 
+|disable-javascript |xhtml11 |
+If the `disable-javascript` attribute is defined the `asciidoc.js`
+JavaScript is not embedded or linked to the output document.  By
+default AsciiDoc automatically embeds or links the `asciidoc.js`
+JavaScript to the 'xhtml11' output document. The script dynamically
+generates <<X91,table of contents>> and <<X92,footnotes>>.
+
 |docinfo |docbook |
 The <<X87,document information file>> will be included in the DocBook
 output if the `docinfo` attribute is defined.
@@ -5389,7 +5401,7 @@ by the 'stylesdir' attribute.
 |theme |xhtml11 |
 Use alternative stylesheets (see <<X35,Stylesheets>>).
 
-|toc |xhtml11, docbook (XSL Stylesheets) |
+|[[X91]]toc |xhtml11, docbook (XSL Stylesheets) |
 Adds a table of contents to the start of an article or book document.
 
 NOTE: The `toc` attribute must be specified using the `--attribute`
@@ -5399,14 +5411,11 @@ included header code will have already been processed.
 
 *xhtml11 backend*
 
-- JavaScript needs to be enabled in your browser for this to work.
-- By default AsciiDoc automatically embeds the required `toc.js`
-  JavaScript in the output document -- use the 'linkcss' attribute to
-  link the script.
-- The following example generates a numbered table of contents by
-  embedding the `toc.js` script in the `mydoc.html` output document
-  (to link the script to the output document use the 'linkcss' and
-  'scriptsdir' attributes):
+- JavaScript needs to be enabled in your browser.
+- The following example generates a numbered table of contents using a
+  JavaScript embedded in the `mydoc.html` output document (to link the
+  script to the output document use the 'linkcss' and 'scriptsdir'
+  attributes):
 
   $ asciidoc -a toc -a numbered mydoc.txt
 

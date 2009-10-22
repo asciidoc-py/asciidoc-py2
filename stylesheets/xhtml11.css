@@ -302,9 +302,33 @@ div.hdlist.compact tr {
   background: yellow;
 }
 
-span.footnote, span.footnoteref {
-  font-style: italic;
+.footnote, .footnoteref {
+  font-size: 0.8em;
 }
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
 
 @media print {
   div#footer-badges { display: none; }

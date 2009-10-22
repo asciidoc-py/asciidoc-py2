@@ -1,1 +1,0 @@
-../../javascripts/toc.js

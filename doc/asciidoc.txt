@@ -3799,58 +3799,69 @@ line containing the reference is dropped from the output.
 
 Conditional Attribute References
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Additional parameters are used in conjunction with the attribute name
-to calculate a substitution value. Conditional attribute references
-take the following forms:
+Additional parameters are used in conjunction with attribute names to
+calculate a substitution value. Conditional attribute references take
+the following forms:
 
-`{<name>=<value>}`::
-        `<value>` is substituted if the attribute `<name>` is
+`{<names>=<value>}`::
+        `<value>` is substituted if the attribute `<names>` is
         undefined otherwise its value is substituted. `<value>` can
         contain simple attribute references.
 
-`{<name>?<value>}`::
-        `<value>` is substituted if the attribute `<name>` is defined
+`{<names>?<value>}`::
+        `<value>` is substituted if the attribute `<names>` is defined
         otherwise an empty string is substituted.  `<value>` can
         contain simple attribute references.
 
-`{<name>!<value>}`::
-        `<value>` is substituted if the attribute `<name>` is
+`{<names>!<value>}`::
+        `<value>` is substituted if the attribute `<names>` is
         undefined otherwise an empty string is substituted.  `<value>`
         can contain simple attribute references.
 
-`{<name>#<value>}`::
-        `<value>` is substituted if the attribute `<name>` is defined
+`{<names>#<value>}`::
+        `<value>` is substituted if the attribute `<names>` is defined
         otherwise the undefined attribute entry causes the containing
         line to be dropped.  `<value>` can contain simple attribute
         references.
 
-`{<name>%<value>}`::
-        `<value>` is substituted if the attribute `<name>` is not
+`{<names>%<value>}`::
+        `<value>` is substituted if the attribute `<names>` is not
         defined otherwise the containing line is dropped.  `<value>`
         can contain simple attribute references.
 
-`{<name>@<regexp>:<value1>[:<value2>]}`::
-        `<value1>` is substituted if the value of attribute `<name>`
+`{<names>@<regexp>:<value1>[:<value2>]}`::
+        `<value1>` is substituted if the value of attribute `<names>`
         matches the regular expression `<regexp>` otherwise `<value2>`
-        is substituted. If attribute `<name>` is not defined the
+        is substituted. If attribute `<names>` is not defined the
         containing line is dropped. If `<value2>` is omitted an empty
         string is assumed. The values and the regular expression can
         contain simple attribute references.  To embed colons in the
         values or the regular expression escape them with backslashes.
 
-`{<name>$<regexp>:<value1>[:<value2>]}`::
+`{<names>$<regexp>:<value1>[:<value2>]}`::
         Same behavior as the previous ternary attribute except for
         the following cases:
 
-        `{<name>$<regexp>:<value>}`;;
-                Substitutes `<value>` if `<name>` matches `<regexp>`
+        `{<names>$<regexp>:<value>}`;;
+                Substitutes `<value>` if `<names>` matches `<regexp>`
                 otherwise the result is undefined and the containing
                 line is dropped.
 
-        `{<name>$<regexp>::<value>}`;;
-                Substitutes `<value>` if `<name>` does not match
+        `{<names>$<regexp>::<value>}`;;
+                Substitutes `<value>` if `<names>` does not match
                 `<regexp>` otherwise the result is undefined and the
                 containing line is dropped.
+
+The attribute `<names>` parameter normally consists of a single
+attribute name but it can be any one of the following:
+
+- A single attribute name which evaluates to the attributes value.
+- Multiple '|' separated attribute names which evaluates to an empty
+  string if one or more of the attributes is defined, otherwise it's
+  value is undefined.
+- Multiple '+' separated attribute names which evaluates to an empty
+  string if all of the attributes is defined, otherwise it's value is
+  undefined.
 
 Conditional attribute examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

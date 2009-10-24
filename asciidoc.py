@@ -879,8 +879,8 @@ def subs_attrs(lines, dictionary=None):
                 text = text[:mo.start()] + s + text[mo.end():]
                 pos = mo.start() + len(s)
         # Expand conditional attributes.
-        reo = re.compile(r'(?su)\{(?P<name>[^\\\W][-\w]*?)' \
-                         r'(?P<op>\=|\?|!|#|%|@|\$)'        \
+        reo = re.compile(r'(?su)\{(?P<name>[^\\\W][-\w|+]*?)' \
+                         r'(?P<op>\=|\?|!|#|%|@|\$)'          \
                          r'(?P<value>.*?)\}(?!\\)')
         pos = 0
         while True:
@@ -888,7 +888,32 @@ def subs_attrs(lines, dictionary=None):
             if not mo: break
             attr = mo.group()
             name =  mo.group('name')
-            lval =  attrs.get(name)
+            if   '|' in name: expr = '|'
+            elif '+' in name: expr = '+'
+            else:             expr = None
+            if expr:
+                names = [s.strip() for s in name.split(expr) if s.strip() ]
+                for n in names:
+                    if not is_name(n):
+                        message.error('illegal attribute syntax: %s' % attr)
+                if expr == '|':
+                    # Process or name expression: n1|n2|...
+                    for n in names:
+                        if attrs.get(n) is not None:
+                            lval = ''
+                            break
+                    else:
+                        lval = None
+                else:
+                    # Process and name expression: n1+n2+...
+                    for n in names:
+                        if attrs.get(n) is None:
+                            lval = None
+                            break
+                    else:
+                        lval = ''
+            else:
+                lval =  attrs.get(name)
             op = mo.group('op')
             # mo.end() is not good enough because '{x={y}}' matches '{x={y}'.
             end = end_brace(text,mo.start())

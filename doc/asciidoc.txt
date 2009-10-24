@@ -3856,12 +3856,15 @@ The attribute `<names>` parameter normally consists of a single
 attribute name but it can be any one of the following:
 
 - A single attribute name which evaluates to the attributes value.
-- Multiple '|' separated attribute names which evaluates to an empty
+- Multiple ',' separated attribute names which evaluates to an empty
   string if one or more of the attributes is defined, otherwise it's
   value is undefined.
 - Multiple '+' separated attribute names which evaluates to an empty
-  string if all of the attributes is defined, otherwise it's value is
+  string if all of the attributes are defined, otherwise it's value is
   undefined.
+
+Conditional attributes with single attribute names are evaluated first
+so they can be used inside the multi-attribute conditional `<value>`.
 
 Conditional attribute examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

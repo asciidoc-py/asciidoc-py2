@@ -28,7 +28,7 @@ SUBS_NORMAL = ('specialcharacters','quotes','attributes',
     'specialwords','replacements','macros','replacements2')
 SUBS_VERBATIM = ('specialcharacters','callouts')
 
-NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attrbibute name.
+NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attribute name.
 
 
 #---------------------------------------------------------------------------
@@ -879,98 +879,106 @@ def subs_attrs(lines, dictionary=None):
                 text = text[:mo.start()] + s + text[mo.end():]
                 pos = mo.start() + len(s)
         # Expand conditional attributes.
-        reo = re.compile(r'(?su)\{(?P<name>[^\\\W][-\w|+]*?)' \
-                         r'(?P<op>\=|\?|!|#|%|@|\$)'          \
-                         r'(?P<value>.*?)\}(?!\\)')
-        pos = 0
-        while True:
-            mo = reo.search(text,pos)
-            if not mo: break
-            attr = mo.group()
-            name =  mo.group('name')
-            if   '|' in name: expr = '|'
-            elif '+' in name: expr = '+'
-            else:             expr = None
-            if expr:
-                names = [s.strip() for s in name.split(expr) if s.strip() ]
-                for n in names:
-                    if not is_name(n):
-                        message.error('illegal attribute syntax: %s' % attr)
-                if expr == '|':
-                    # Process or name expression: n1|n2|...
+        # Single name -- higher precedence.
+        reo1 = re.compile(r'(?su)\{(?P<name>[^\\\W][-\w]*?)' \
+                          r'(?P<op>\=|\?|!|#|%|@|\$)' \
+                          r'(?P<value>.*?)\}(?!\\)')
+        # Multiple names (n1,n2,... or n1+n2+...) -- lower precedence.
+        OR,AND = ',','+'    # Attribute separators.
+        reo2 = re.compile(r'(?su)\{(?P<name>[^\\\W][-\w'+OR+AND+r']*?)' \
+                          r'(?P<op>\=|\?|!|#|%|@|\$)' \
+                          r'(?P<value>.*?)\}(?!\\)')
+        for reo in [reo1,reo2]:
+            pos = 0
+            while True:
+                mo = reo.search(text,pos)
+                if not mo: break
+                attr = mo.group()
+                name =  mo.group('name')
+                if reo == reo2:
+                    if OR in name:
+                        sep = OR
+                    else:
+                        sep = AND
+                    names = [s.strip() for s in name.split(sep) if s.strip() ]
                     for n in names:
-                        if attrs.get(n) is not None:
-                            lval = ''
-                            break
-                    else:
-                        lval = None
-                else:
-                    # Process and name expression: n1+n2+...
-                    for n in names:
-                        if attrs.get(n) is None:
-                            lval = None
-                            break
-                    else:
-                        lval = ''
-            else:
-                lval =  attrs.get(name)
-            op = mo.group('op')
-            # mo.end() is not good enough because '{x={y}}' matches '{x={y}'.
-            end = end_brace(text,mo.start())
-            rval = text[mo.start('value'):end-1]
-            if lval is None:
-                if op == '=': s = rval
-                elif op == '?': s = ''
-                elif op == '!': s = rval
-                elif op == '#': s = '{'+name+'}'    # So the line is dropped.
-                elif op == '%': s = rval
-                elif op in ('@','$'):
-                    s = '{'+name+'}'                # So the line is dropped.
-                else:
-                    assert False, 'illegal attribute: %s' % attr
-            else:
-                if op == '=': s = lval
-                elif op == '?': s = rval
-                elif op == '!': s = ''
-                elif op == '#': s = rval
-                elif op == '%': s = '{zzzzz}'       # So the line is dropped.
-                elif op in ('@','$'):
-                    v = re.split(r'(?<!\\):',rval)
-                    if len(v) not in (2,3):
-                        message.error('illegal attribute syntax: %s' % attr)
-                        s = ''
-                    elif not is_re('^'+v[0]+'$'):
-                        message.error('illegal attribute regexp: %s' % attr)
-                        s = ''
-                    else:
-                        v = [s.replace('\\:',':') for s in v]
-                        re_mo = re.match('^'+v[0]+'$',lval)
-                        if op == '@':
-                            if re_mo:
-                                s = v[1]            # {<name>@<re>:<v1>[:<v2>]}
-                            else:
-                                if len(v) == 3:     # {<name>@<re>:<v1>:<v2>}
-                                    s = v[2]
-                                else:               # {<name>@<re>:<v1>}
-                                    s = ''
+                        if not re.match(r'^[^\\\W][-\w]*$',n):
+                            message.error('illegal attribute syntax: %s' % attr)
+                    if sep == OR:
+                        # Process OR name expression: n1,n2,...
+                        for n in names:
+                            if attrs.get(n) is not None:
+                                lval = ''
+                                break
                         else:
-                            if re_mo:
-                                if len(v) == 2:     # {<name>$<re>:<v1>}
-                                    s = v[1]
-                                elif v[1] == '':    # {<name>$<re>::<v2>}
-                                    s = '{zzzzz}'   # So the line is dropped.
-                                else:               # {<name>$<re>:<v1>:<v2>}
-                                    s = v[1]
-                            else:
-                                if len(v) == 2:     # {<name>$<re>:<v1>}
-                                    s = '{zzzzz}'   # So the line is dropped.
-                                else:               # {<name>$<re>:<v1>:<v2>}
-                                    s = v[2]
+                            lval = None
+                    else:
+                        # Process AND name expression: n1+n2+...
+                        for n in names:
+                            if attrs.get(n) is None:
+                                lval = None
+                                break
+                        else:
+                            lval = ''
                 else:
-                    assert False, 'illegal attribute: %s' % attr
-            s = str(s)
-            text = text[:mo.start()] + s + text[end:]
-            pos = mo.start() + len(s)
+                    lval =  attrs.get(name)
+                op = mo.group('op')
+                # mo.end() not good enough because '{x={y}}' matches '{x={y}'.
+                end = end_brace(text,mo.start())
+                rval = text[mo.start('value'):end-1]
+                if lval is None:
+                    if op == '=': s = rval
+                    elif op == '?': s = ''
+                    elif op == '!': s = rval
+                    elif op == '#': s = '{'+name+'}'  # So the line is dropped.
+                    elif op == '%': s = rval
+                    elif op in ('@','$'):
+                        s = '{'+name+'}'              # So the line is dropped.
+                    else:
+                        assert False, 'illegal attribute: %s' % attr
+                else:
+                    if op == '=': s = lval
+                    elif op == '?': s = rval
+                    elif op == '!': s = ''
+                    elif op == '#': s = rval
+                    elif op == '%': s = '{zzzzz}'     # So the line is dropped.
+                    elif op in ('@','$'):
+                        v = re.split(r'(?<!\\):',rval)
+                        if len(v) not in (2,3):
+                            message.error('illegal attribute syntax: %s' % attr)
+                            s = ''
+                        elif not is_re('^'+v[0]+'$'):
+                            message.error('illegal attribute regexp: %s' % attr)
+                            s = ''
+                        else:
+                            v = [s.replace('\\:',':') for s in v]
+                            re_mo = re.match('^'+v[0]+'$',lval)
+                            if op == '@':
+                                if re_mo:
+                                    s = v[1]         # {<name>@<re>:<v1>[:<v2>]}
+                                else:
+                                    if len(v) == 3:   # {<name>@<re>:<v1>:<v2>}
+                                        s = v[2]
+                                    else:             # {<name>@<re>:<v1>}
+                                        s = ''
+                            else:
+                                if re_mo:
+                                    if len(v) == 2:   # {<name>$<re>:<v1>}
+                                        s = v[1]
+                                    elif v[1] == '':  # {<name>$<re>::<v2>}
+                                        s = '{zzzzz}' # So the line is dropped.
+                                    else:             # {<name>$<re>:<v1>:<v2>}
+                                        s = v[1]
+                                else:
+                                    if len(v) == 2:   # {<name>$<re>:<v1>}
+                                        s = '{zzzzz}' # So the line is dropped.
+                                    else:             # {<name>$<re>:<v1>:<v2>}
+                                        s = v[2]
+                    else:
+                        assert False, 'illegal attribute: %s' % attr
+                s = str(s)
+                text = text[:mo.start()] + s + text[end:]
+                pos = mo.start() + len(s)
         # Drop line if it contains  unsubstituted {name} references.
         skipped = re.search(r'(?su)\{[^\\\W][-\w]*?\}(?!\\)', text)
         if skipped:

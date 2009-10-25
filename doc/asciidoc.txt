@@ -596,24 +596,6 @@ _Emphasized text_::
         to allow inline attributes to be applied to otherwise
         unformatted text (see example below).
 
-Quoted text can be prefixed with an <<X21,attribute list>>. Currently
-the only use made of this feature is to allow the font color,
-background color and size to be specified (XHTML/HTML only, not
-DocBook) using the first three positional attribute arguments. The
-first argument is the text color; the second the background color; the
-third is the font size. Colors are valid CSS colors and the font size
-is a number which treated as em units. Here are some examples:
-
----------------------------------------------------------------------
-[red]#Red text#.
-[,yellow]*bold text on a yellow background*.
-[blue,#b0e0e6]+Monospaced blue text on a light blue background+
-[,,2]#Double sized text#.
----------------------------------------------------------------------
-
-New quotes can be defined by editing asciidoc(1) configuration files.
-See the <<X7,Configuration Files>> section for details.
-
 .Quoted text behavior
 - Quoting cannot be overlapped.
 - Different quoting types can be nested.
@@ -623,8 +605,28 @@ See the <<X7,Configuration Files>> section for details.
   escape both leading and trailing quotes, in the case of
   multi-character quotes you may even need to escape individual
   characters.
-- A configuration file `[quotes]` entry can be subsequently undefined
-  by setting it to a blank value.
+
+Quoted text can be prefixed with an <<X21,attribute list>>:
+
+. Setting the AsciiDoc 'role' attribute will enclose DocBook markup in
+  a 'phrase' element and HTML markup in a 'span' element. For example
+  this AsciiDoc: `[role="foo"]'Hello World'` generates this DocBook:
+  `<phrase role="foo"><emphasis>Hello World</emphasis></phrase>` and
+  this HTML: `<span class="foo"><em>Hello World</em></span>`
+
+. You can set the font color, background color and size using the
+  first three positional attribute arguments (HTML outputs only). The
+  first argument is the text color; the second the background color;
+  the third is the font size. Colors are valid CSS colors and the font
+  size is a number which treated as em units. Here are some examples:
+
+  [red]#Red text#.
+  [,yellow]*bold text on a yellow background*.
+  [blue,#b0e0e6]+Monospaced blue text on a light blue background+
+  [,,2]#Double sized text#.
+
+New quotes can be defined by editing asciidoc(1) configuration files.
+See the <<X7,Configuration Files>> section for details.
 
 [[X52]]
 Constrained and Unconstrained Quotes

@@ -21,7 +21,7 @@ import urlparse
 import zipfile
 
 PROG = os.path.basename(os.path.splitext(__file__)[0])
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 # AsciiDoc global configuration file directory.
 # NOTE: CONF_DIR is "fixed up" by Makefile -- don't rename or change syntax.

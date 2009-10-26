@@ -3,10 +3,39 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.5.1 (2009-10-30)
+--------------------------
+
+
+.Bug fixes
+- *FIXED:*
+
+Regression issues
+~~~~~~~~~~~~~~~~~
+There's been quite a bit of tiding up to the xhtml11 JavaScript. The
+most obvious change is that the toc.js script has been superceded by
+asciidoc-xhtml11.js so if you're linking you'll need get a copy of
+the new file from the distribution javascripts directory.
+
+If you use customised xhtml11 configuration file `[header]` and
+`[footer]` sections and you want them to use the new footnotes feature
+then you've got a bit more work to do:
+
+. The onload event expression changed.
+. The new `<div id="content">...</div>` div envelopes document
+  content.
+. You need to add `<div id="footnotes">...</div>` div to the
+  `[footnotes]` section for footnotes to work.
+. Drop the `ifdef::toc[]` macro that surround JavaScript inclusion.
+
+Take a look at the [header] and [footer] changes in the xhtml11.conf
+diff to see what's going on:
+http://hg.sharesource.org/asciidoc/diff/55a5999bfd04/xhtml11.conf
+
+
 Version 8.5.0 (2009-10-04)
 --------------------------
 .Additions and changes
-
 - Implemented a 'float' attribute for tables and block images (HTML
   outputs only).
 - Added `unfloat::[]` block macro to cancel floating.

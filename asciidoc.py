@@ -3659,6 +3659,8 @@ class CalloutMap:
 # Input stream Reader and output stream writer classes.
 #---------------------------------------------------------------------------
 
+UTF8_BOM = '\xef\xbb\xbf'
+
 class Reader1:
     """Line oriented AsciiDoc input file reader. Processes include and
     conditional inclusion system macros. Tabs are expanded and lines are right
@@ -3676,6 +3678,7 @@ class Reader1:
         self._lineno = 0        # The last line read from file object f.
         self.current_depth = 0  # Current include depth.
         self.max_depth = 5      # Initial maxiumum allowed include depth.
+        self.bom = None         # Byte order mark (BOM).
     def open(self,fname):
         self.fname = fname
         message.verbose('reading: '+fname)
@@ -3691,6 +3694,9 @@ class Reader1:
         self.next = []
         # Prefill buffer by reading the first line and then pushing it back.
         if Reader1.read(self):
+            if self.cursor[2].startswith(UTF8_BOM):
+                self.cursor[2] = self.cursor[2][len(UTF8_BOM):]
+                self.bom = UTF8_BOM
             self.unread(self.cursor)
             self.cursor = None
     def closefile(self):
@@ -3978,12 +3984,18 @@ class Writer:
         self.fname = None                # Output file name.
         self.lines_out = 0               # Number of lines written.
         self.skip_blank_lines = False    # If True don't output blank lines.
-    def open(self,fname):
+    def open(self,fname,bom=None):
+        '''
+        bom is optional byte order mark.
+        http://en.wikipedia.org/wiki/Byte-order_mark
+        '''
         self.fname = fname
         if fname == '<stdout>':
             self.f = sys.stdout
         else:
             self.f = open(fname,'wb+')
+        if bom:
+            self.f.write(bom)
         self.lines_out = 0
     def close(self):
         if self.fname != '<stdout>':
@@ -5180,7 +5192,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             reader.open(infile)
             try:
                 writer.newline = config.newline
-                writer.open(outfile)
+                writer.open(outfile, reader.bom)
                 try:
                     AttributeList.initialize()
                     paragraphs.initialize()

@@ -2299,7 +2299,7 @@ headers.  Example:
   `include1` macro).
 - The 'depth' macro attribute sets the maximum permitted number of
   subsequent nested includes (not applicable to `include1` macro which
-  does not process nested includes). Setting 'depth' to one disables
+  does not process nested includes). Setting 'depth' to '1' disables
   nesting inside the included file. By default, nesting is limited to
   a depth of five.
 - Internally the `include1` macro is translated to the `include1`

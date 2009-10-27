@@ -567,26 +567,20 @@ Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.]
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
 footnoteref:["F2","footnote two.
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel."]
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel
 footnoteref:[F2].
-
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+footnote:[http://www.methods.co.nz/asciidoc/ Qui in magna commodo,
+est labitur dolorum an. Est ne magna primis adolescens. Sit munere
+ponderum dignissim et. Minim luptatum et vel.]
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
+footnote:[http://www.methods.co.nz/asciidoc/]
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et
+vel footnote:[http://www.methods.co.nz/asciidoc/[AsciiDoc website].].

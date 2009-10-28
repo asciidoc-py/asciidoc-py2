@@ -5,10 +5,40 @@ AsciiDoc ChangeLog
 
 Version 8.5.1 (2009-10-30)
 --------------------------
-
+.Additions and changes
+- If an AsciiDoc document file begins with a UTF-8 BOM (byte order
+  mark) then it is passed transparently through to the output file.
+  The BOM is stripped from included files.  See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/e5e61823ff4203cd
+- Added AsciiDoc 'role' attribute to quoted text. Sets 'class'
+  attribute in HTML outputs; 'role' attribute in DocBook outputs. See:
+  http://groups.google.com/group/asciidoc/browse_frm/thread/2aa3e5711d243045
+- Conditional attribute syntax extended: they now accept multiple ORed
+  or ANDed attribute names.
+- The 'xhtml11' backend dynamically processes footnotes using
+  JavaScript.
+- Tidied up and namespaced 'xhtml11' JavaScript.
+- Superceded `javascripts/toc.js` with `javascripts/asciidoc-xhtml11.js`.
+- Added 'disable-javascript' attribute ('xhtml11' backend).
+- Styled HTML footnotes.
+- Added links to HTML footnote refs.
+- Added title attribute to inline image macros to display popup
+  ``tooltip'' (HTML outputs only).
+- Single-quoted attribute values are substituted in block macros (just
+  like the AttributeList element).
+- For consistency changed underscores to dashes in attribute names.
+  Public attributes with underscores retained for compatibility.
+- Added Brazilian Portuguese language configuration file (contributed
+  by Thiago Farina).
+- Added 'leveloffset' attribute to make it easier to combine
+  documents.
 
 .Bug fixes
-- *FIXED:*
+- *FIXED:* a2x: `--dblatex-opts` is now processed last so
+  `asciidoc-dblatex.xsl` params can be overridden. Patch submitted by
+  Mark Fernandes (see
+  http://groups.google.com/group/asciidoc/browse_frm/thread/5215c99dcc865e7d).
+
 
 Regression issues
 ~~~~~~~~~~~~~~~~~

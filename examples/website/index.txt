@@ -3,12 +3,9 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-This release includes lots of enhancements (plus a few changes and bug
-fixes), but the big news is that link:a2x.1.html['a2x'] has been
-rewritten in Python and now supports the
-http://en.wikipedia.org/wiki/EPUB[EPUB] e-book standard (EPUB support
-requires DocBook XSL 1.75 or better).  The new 'a2x' is pretty much a
-drop-in replacement for the old bash version.
+This release follows hard on the heals of 8.5.0, the most obvious
+addition is JavaScript based footnotes processing for 'xhtml11'
+outputs.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the

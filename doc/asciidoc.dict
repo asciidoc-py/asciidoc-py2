@@ -1,4 +1,4 @@
-personal_ws-1.1 en 821 
+personal_ws-1.1 en 835 
 mandoc
 colspecs
 API
@@ -23,6 +23,7 @@ passtext
 ZapfDingbats
 CALS
 LiteralParagraph
+BOM
 Bon
 ungenerated
 cmd
@@ -37,6 +38,7 @@ ExampleBlock
 luptatum
 dir
 Lorum
+superceded
 inlinegraphic
 specialcharacters
 RevisionLine
@@ -93,6 +95,7 @@ xreflabel
 PDFs
 PDF's
 MSIE
+permalinks
 Daly
 arcu
 GPL
@@ -148,6 +151,7 @@ verear
 mea
 PassthroughBlocks
 blockdef
+javascript
 JavaScript
 symlinks
 optionname
@@ -193,6 +197,7 @@ ItemText
 dignissim
 cdata
 autoconf
+ANDed
 autocmd
 readlines
 pageunit
@@ -203,6 +208,7 @@ ListParagraphs
 nunc
 CustomBlocks
 informalfigure
+ORed
 online
 LIBDIR
 docinfo
@@ -260,6 +266,7 @@ Bolido
 Bólido
 tabsize
 colpcwidth
+onload
 RTF
 quickstart
 fillchar
@@ -380,6 +387,7 @@ regex
 config
 tabstop
 indentsize
+sb
 ps
 runtime
 tcqn
@@ -406,6 +414,7 @@ debian
 quis
 eval's
 stylename
+tooltip
 Tiago
 BLAUS
 endtag
@@ -462,6 +471,7 @@ chapt
 necessitatibus
 unformatted
 revremark
+Thiago
 listtag
 docdir
 Gogh
@@ -531,6 +541,7 @@ symlink
 ListLabel
 Kleber
 Kléber
+popup
 Cerrito
 DocBook's
 fprintf
@@ -573,6 +584,7 @@ BLONP
 asciimath
 interesset
 formatlistpat
+IMGs
 attributeentry
 AttributeEntry
 autoindent
@@ -748,6 +760,7 @@ authorinitials
 javascripts
 JavaScripts
 undefining
+leveloffset
 CustomBlock
 BufRead
 specialwords
@@ -761,6 +774,7 @@ subclassify
 stylesdir
 unsets
 ipsum
+namespaced
 FilterBlocks
 Julien
 WINNT

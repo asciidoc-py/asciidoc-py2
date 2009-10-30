@@ -1518,7 +1518,7 @@ Labeled list items consist of one or more text labels followed the
 text of the list item.
 
 An item label begins a line with an alphanumeric character hard
-against the left margin and ends with one to four colons or two
+against the left margin and ends with two, three or four colons or two
 semi-colons. A list item can have multiple labels, one per line.
 
 The list item text consists of one or more lines of text starting
@@ -2241,7 +2241,7 @@ Single lines starting with two forward slashes hard up against the
 left margin are treated as comments. Comment lines do not appear in
 the output unless the 'showcomments' attribute is defined.  Comment
 lines have been implemented as both block and inline macros so a
-comment line can appear as a standalone block or within block elements
+comment line can appear as a stand-alone block or within block elements
 that support inline macro expansion. Example comment line:
 
   // This is a comment.
@@ -4960,6 +4960,21 @@ The conditional inclusion of DocBook SGML markup at the end of the
 distribution `docbook.conf` file illustrates how to support minor DTD
 variations. The included sections override corresponding entries from
 preceding sections.
+
+Creating stand-alone HTML documents
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you've ever tried to send someone an HTML document that includes
+stylesheets and images you'll know that it's not as straight-forward
+as exchanging a single file.  AsciiDoc has options to create
+stand-alone documents containing embedded images, stylesheets and
+scripts.  The following AsciiDoc command creates a single file
+containing <<X66,embedded images>>, CSS stylesheets, and JavaScript
+(for table of contents and footnotes):
+
+  $ asciidoc -a data-uri -a icons -a toc -a max-width=55em article.txt
+
+You can view the HTML file here:
+http://www.methods.co.nz/asciidoc/article-standalone.html
 
 Shipping stand-alone AsciiDoc source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

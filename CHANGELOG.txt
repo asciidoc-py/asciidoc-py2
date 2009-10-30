@@ -3,7 +3,7 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
-Version 8.5.1 (2009-10-30)
+Version 8.5.1 (2009-10-31)
 --------------------------
 .Additions and changes
 - If an AsciiDoc document file begins with a UTF-8 BOM (byte order
@@ -38,7 +38,8 @@ Version 8.5.1 (2009-10-30)
   `asciidoc-dblatex.xsl` params can be overridden. Patch submitted by
   Mark Fernandes (see
   http://groups.google.com/group/asciidoc/browse_frm/thread/5215c99dcc865e7d).
-
+- *FIXED:* An error occured if a directory in current path with same
+  name as executable.
 
 Regression issues
 ~~~~~~~~~~~~~~~~~

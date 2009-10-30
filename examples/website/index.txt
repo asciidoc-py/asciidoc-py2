@@ -3,9 +3,9 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-This release follows hard on the heals of 8.5.0, the most obvious
-addition is JavaScript based footnotes processing for 'xhtml11'
-outputs.
+This release rounds out the recent 8.5.0 release and fixes a couple of
+bugs in a2x, the most obvious addition is JavaScript based footnotes
+processing for 'xhtml11' outputs.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the

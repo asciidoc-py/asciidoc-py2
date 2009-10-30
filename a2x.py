@@ -107,6 +107,9 @@ class AttrDict(dict):
     def __setstate__(self,value):
         for k,v in value.items(): self[k]=v
 
+def isexecutable(file_name):
+    return os.path.isfile(file_name) and os.access(file_name, os.X_OK)
+
 def find_executable(file_name):
     '''
     Search for executable file_name in the system PATH.
@@ -115,13 +118,13 @@ def find_executable(file_name):
     def _find_executable(file_name):
         if os.path.split(file_name)[0] != '':
             # file_name includes directory so don't search path.
-            if not os.access(file_name, os.X_OK):
+            if not isexecutable(file_name):
                 return None
             else:
                 return file_name
         for p in os.environ.get('PATH', os.defpath).split(os.pathsep):
             f = os.path.join(p, file_name)
-            if os.access(f, os.X_OK):
+            if isexecutable(f):
                 return os.path.realpath(f)
         return None
     if os.name == 'nt' and os.path.splitext(file_name)[1] == '':

@@ -275,13 +275,19 @@ Where:
 Header
 ~~~~~~
 The Header contains a document title plus optional authorship and
-revision information. The Header is optional but must begin with a
-document <<X17,title>>.  The header can be preceded by comments and
-<<X18,attribute entries>>.  Optional Author and Revision lines
-immediately follow the Header title. the header can also include
-attribute entry lines.  The document heading is separated from the
-remainder of the document by one or more blank lines.  Here's an
-example AsciiDoc document header:
+revision information:
+
+- The Header is optional, but if it is used it must start with a
+  document <<X17,title>>.
+- The header can be preceded by comments and <<X18,attribute
+  entries>>.
+- Optional Author and Revision lines immediately follow the header
+  title.
+- The header can include attribute entries.
+- The document header must be separated from the remainder of the
+  document by one or more blank lines.
+
+Here's an example AsciiDoc document header:
 
   Writing Documentation using AsciiDoc
   ====================================

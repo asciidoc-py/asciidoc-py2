@@ -3056,7 +3056,7 @@ class Table(AbstractBlock):
         i = 0
         for cell in row:
             if i >= len(self.columns):
-                continue    # Skip cells outside the header width.
+                break   # Skip cells outside the header width.
             col = self.columns[i]
             self.attributes['halign'] = cell.halign or col.halign
             self.attributes['valign'] = cell.valign or  col.valign

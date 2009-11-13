@@ -572,9 +572,26 @@ explicit attribute entries:
 ----------------------
 
 
+== How can I turn off table and image title numbering?
+For HTML outputs set the 'caption' attribute to an empty string,
+either globally:
+
+-------------------------
+:caption:
+-------------------------
+
+or on an element by element basis, for example:
+
+-------------------------
+.Tiger
+[caption=""]
+image::images/tiger.png[]
+-------------------------
+
+
 == How can I assign multiple author names?
 
-A quick way to do this is put both authors in a single first name, for 
+A quick way to do this is put both authors in a single first name, for
 example:
 
 ---------------------------------------
@@ -586,20 +603,9 @@ My Document
 
 asciidoc(1) replaces the underscores with spaces.
 
-The longer, semantically correct, way is to override the
-`[header]` configuration file section in a document specific `.conf`
-file. For example if your document is `mydoc.txt` then a file called
-`mydoc.conf` in the document directory would be picked up
-automatically by asciidoc(1).  Copy and paste the default
-`docbook.conf` file `[header]` to `mydoc.conf` and modify the author
-related markup:
-
-----------------
-[header]
-  :
-<authorgroup>...
-  :
-----------------
+If you are generating DocBook then a  more flexible approach is to
+create a 'docinfo' file containing a DocBook 'authorgroup' element
+(search the 'User Guide' for 'docinfo' for more details).
 
 
 == How can I escape a list?

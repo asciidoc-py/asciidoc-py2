@@ -354,13 +354,14 @@ header template with <<X18,Attribute Entry>> elements.
 [[X87]]
 Additional document header information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-DocBook defines numerous elements for document meta-data, for
-example: copyrights, document history and authorship information.  The
-AsciiDoc header syntax provides for basic revision and author
-information -- additional information such as copyrights and document
-history can be optionally included from a separate document
-information file containing DocBook elements that are allowed inside
-the DocBook 'articleinfo' and 'bookinfo' elements:
+DocBook defines numerous elements for document meta-data, for example:
+copyrights, document history and authorship information.  The AsciiDoc
+header syntax provides for basic revision and author information --
+additional information such as copyrights, document history authorship
+details can be optionally included from a separate document
+information. The document information file can contain any DocBook
+elements that are allowed inside the DocBook 'articleinfo' and
+'bookinfo' elements:
 
 - The document information file must be in the same directory as the
   source document and must be named like `<docname>-docinfo.xml`.  For
@@ -371,8 +372,15 @@ the DocBook 'articleinfo' and 'bookinfo' elements:
 
   $ asciidoc -a docinfo -b docbook mydoc.txt
 
-See the `./doc/article-docinfo.xml` example that comes with the
-AsciiDoc distribution.
+- See the `./doc/article-docinfo.xml` example that comes with the
+  AsciiDoc distribution.
+- Similarly AsciiDoc will include a docinfo file named like
+  `<docname>-docinfo.html` (if it exists) into HTML backend outputs.
+  In the case of HTML outputs however it's usually easier to put
+  AsciiDoc markup in your source file directly after the header.
+
+NOTE: DocBook has a rich set of meta data elements, just how many of
+these elements are rendered is DocBook processor dependent.
 
 [[X86]]
 Preamble
@@ -1996,9 +2004,9 @@ URLs
 'http', 'https', 'ftp', 'file', 'mailto' and 'callto' URLs are
 rendered using predefined inline macros.
 
-- If you don't need a customized the link caption you can enter the
-  'http', 'https', 'ftp', 'file' URLs and email addresses without any
-  special macro syntax.
+- If you don't need a custom link caption you can enter the 'http',
+  'https', 'ftp', 'file' URLs and email addresses without any special
+  macro syntax.
 - If the `<attrlist>` is empty the URL is displayed.
 
 Here are some examples:
@@ -5177,6 +5185,10 @@ the HTML output file.
 
 Appendix E: Vim Syntax Highlighter
 ----------------------------------
+Syntax highlighting is incredibly useful, in addition to making
+reading AsciiDoc documents much easier syntax highlighting also helps
+you catch AsciiDoc syntax errors as you write your documents.
+
 The AsciiDoc `./vim/` distribution directory contains Vim syntax
 highlighter and filetype detection scripts for AsciiDoc.  Syntax
 highlighting makes it much easier to spot AsciiDoc syntax errors.

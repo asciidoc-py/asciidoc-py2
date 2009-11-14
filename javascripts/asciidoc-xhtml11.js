@@ -47,8 +47,9 @@ toc: function (toclevels) {
       for (var i = el.firstChild; i != null; i = i.nextSibling) {
         if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
           var mo = re.exec(i.tagName);
-          if (mo)
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
             result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
           iterate(i);
         }
       }

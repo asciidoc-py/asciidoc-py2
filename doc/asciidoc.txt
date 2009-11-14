@@ -825,6 +825,8 @@ example sidebar and admonition blocks.  Example:
   The second day
   ~~~~~~~~~~~~~~
 
+Floating titles do note appear in a document's table of contents.
+
 
 [[X42]]
 Block Titles

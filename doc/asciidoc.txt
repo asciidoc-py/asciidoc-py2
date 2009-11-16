@@ -805,11 +805,13 @@ corresponds to the section level minus one).  Here are some examples:
   ==== Section title (level 3) ====
   ===== Section title (level 4) =====
 
-.Note
+[NOTE]
+=====================================================================
 - One or more spaces must fall between the title and the delimiters.
 - The trailing title delimiter is optional.
 - The one-line title syntax can be changed by editing the
   configuration file `[titles]` section `sect0`...`sect4` entries.
+=====================================================================
 
 Floating titles
 ~~~~~~~~~~~~~~~

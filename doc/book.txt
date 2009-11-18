@@ -4,8 +4,9 @@ Author's Name
 v1.0, Dec 2003
 
 
-Dedication
-----------
+[dedication]
+Example Dedication
+------------------
 Optional dedication.
 
 This document is an AsciiDoc book skeleton containing briefly
@@ -17,8 +18,9 @@ the preface, appendix, bibliography, glossary and index sections are
 significant ('specialsections').
 
 
-Preface
--------
+[preface]
+Example Preface
+---------------
 Optional preface.
 
 Preface Sub-section
@@ -89,8 +91,11 @@ The Third Chapter
 Book chapters are at level 1 and can contain sub-sections.
 
 
-Appendix A: Example Appendix
-----------------------------
+:numbered!:
+
+[appendix]
+Example Appendix
+----------------
 One or more optional appendixes go here at section level 1.
 
 Appendix Sub-section
@@ -98,8 +103,9 @@ Appendix Sub-section
 Sub-section body.
 
 
-Bibliography
-------------
+[bibliography]
+Example Bibliography
+--------------------
 The bibliography list is a style of AsciiDoc bulleted list.
 
 [bibliography]
@@ -110,8 +116,9 @@ The bibliography list is a style of AsciiDoc bulleted list.
   ISBN 1-56592-580-7.
 
 
-Glossary
---------
+[glossary]
+Example Glossary
+----------------
 Glossaries are optional. Glossaries entries are an example of a style
 of AsciiDoc labeled lists.
 
@@ -123,8 +130,15 @@ A second glossary term::
   The corresponding (indented) definition.
 
 
-Index
------
+[colophon]
+Example Colophon
+----------------
+Text at the end of a book describing facts about its production.
+
+
+[index]
+Example Index
+-------------
 ////////////////////////////////////////////////////////////////
 The index is normally left completely empty, it's contents being
 generated automatically by the DocBook toolchain.

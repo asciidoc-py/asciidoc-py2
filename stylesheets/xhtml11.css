@@ -336,6 +336,10 @@ span.footnote, span.footnoteref {
   div#footer-badges { display: none; }
 }
 
+div#toc {
+  margin-bottom: 2.5em;
+}
+
 div#toctitle {
   color: #527bbd;
   font-family: sans-serif;

@@ -1089,7 +1089,10 @@ class Lex:
         elif AttributeList.isnext():
             result = AttributeList
         elif Title.isnext():
-            result = Title
+            if AttributeList.style() == 'float':
+                result = FloatingTitle
+            else:
+                result = Title
         elif macros.isnext():
             result = macros.current
         elif lists.isnext():
@@ -1288,13 +1291,7 @@ class Document:
                 self.attributes[new] = self.attributes[old]
         else:
             self.attributes[old] = self.attributes[new]
-    def translate(self):
-        assert self.doctype in ('article','manpage','book'), \
-            'illegal document type'
-        assert self.level == 0
-        config.expand_all_templates()
-        self.load_lang()
-        # Skip leading comments and attribute entries.
+    def consume_attributes_and_comments(self):
         finished = False
         attr_count = 0
         while not finished:
@@ -1313,7 +1310,18 @@ class Document:
                     if attr_count > 0:
                         message.error('lang attribute should be first entry')
                 attr_count += 1
+            if AttributeList.isnext():
+                finished = False
+                AttributeList.translate()
+    def translate(self):
+        assert self.doctype in ('article','manpage','book'), \
+            'illegal document type'
+        assert self.level == 0
+        config.expand_all_templates()
+        self.load_lang()
         message.verbose('writing: '+writer.fname,False)
+        # Skip leading comments and attribute entries.
+        self.consume_attributes_and_comments()
         # Process document header.
         has_header =  Lex.next() is Title and Title.level == 0
         if self.doctype == 'manpage' and not has_header:
@@ -1329,6 +1337,7 @@ class Document:
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr,trace='header')
+            self.consume_attributes_and_comments()
             if self.doctype in ('article','book'):
                 # Translate 'preamble' (untitled elements between header
                 # and first section title).
@@ -1573,7 +1582,8 @@ class AttributeEntry:
             attr.name = re.sub(r'(?u)[^\w\-_]', '', attr.name).lower()
             # Don't override command-line attributes (the exception is the
             # system 'trace' attribute).
-            if attr.name in config.cmd_attrs and attr.name != 'trace':
+            if attr.name in config.cmd_attrs \
+                    and attr.name not in ('trace','numbered'):
                 return
             # Update document attributes with attribute value.
             if attr.value is not None:
@@ -1715,7 +1725,7 @@ class Title:
     def translate():
         """Parse the Title.attributes and Title.level from the reader. The
         real work has already been done by parse()."""
-        assert Lex.next() is Title
+        assert Lex.next() in (Title,FloatingTitle)
         # Discard title from reader.
         for i in range(Title.linecount):
             reader.read()
@@ -1877,6 +1887,25 @@ class Title:
         return number
 
 
+class FloatingTitle(Title):
+    '''Floated titles are translated differently.'''
+    @staticmethod
+    def isnext():
+        return Title.isnext() and AttributeList.style() == 'float'
+    @staticmethod
+    def translate():
+        assert Lex.next() is FloatingTitle
+        Title.translate()
+        Section.set_id()
+        AttributeList.consume(Title.attributes)
+        template = 'floatingtitle'
+        if template in config.sections:
+            stag,etag = config.section2tags(template,Title.attributes)
+            writer.write(stag,trace='floating title')
+        else:
+            message.warning('missing template section: [%s]' % template)
+
+
 class Section:
     """Static methods and attributes only."""
     endtags = []  # Stack of currently open section (level,endtag) tuples.
@@ -1963,23 +1992,10 @@ class Section:
         isempty = True
         next = Lex.next()
         while next and next is not terminator:
-            if (isinstance(terminator,DelimitedBlock)
-                and next is Title and AttributeList.style() != 'float'):
+            if isinstance(terminator,DelimitedBlock) and next is Title:
                 message.error('section title not permitted in delimited block')
             next.translate()
             next = Lex.next()
-            if next is Title and AttributeList.style() == 'float':
-                # Process floating titles.
-                template = 'floatingtitle'
-                if template in config.sections:
-                    Title.translate()
-                    Section.set_id()
-                    AttributeList.consume(Title.attributes)
-                    stag,etag = config.section2tags(template,Title.attributes)
-                    writer.write(stag,trace='floating title')
-                    next = Lex.next()
-                else:
-                    message.warning('missing template section: [%s]' % template)
             isempty = False
         # The section is not empty if contains a subsection.
         if next and isempty and Title.level > document.level:
@@ -2019,7 +2035,7 @@ class AbstractBlock:
         # Leading delimiter match object.
         self.mo=None
     def short_name(self):
-        """ Return the text following the last dash in the section namem """
+        """ Return the text following the last dash in the section name."""
         i = self.name.rfind('-')
         if i == -1:
             return self.name
@@ -2165,7 +2181,7 @@ class AbstractBlock:
         for k,v in self.styles.items():
             t = v.get('template')
             if t and not t in config.sections:
-                message.warning('[%s] missing template section' % t)
+                message.warning('missing template section: [%s]' % t)
             if not t:
                 all_styles_have_template = False
         # Check we have a valid template entry or alternatively that all the
@@ -2173,10 +2189,10 @@ class AbstractBlock:
         if self.is_conf_entry('template') and not 'skip' in self.options:
             if self.template:
                 if not self.template in config.sections:
-                    message.warning('[%s] missing template section' % self.template)
+                    message.warning('missing template section: [%s]' % self.template)
             elif not all_styles_have_template:
                 if not isinstance(self,List): # Lists don't have templates.
-                    message.warning('[%s] styles missing templates' % self.name)
+                    message.warning('missing styles templates: [%s]' % self.name)
     def isnext(self):
         """Check if this block is next in document reader."""
         result = False
@@ -2204,7 +2220,7 @@ class AbstractBlock:
 
         1. Copy the default parameters (self.*) to self.parameters.
         self.parameters are used internally to render the current block.
-        Optional params array of addtional parameters.
+        Optional params array of additional parameters.
 
         2. Copy attrs to self.attributes. self.attributes are used for template
         and tag substitution in the current block.
@@ -2244,14 +2260,21 @@ class AbstractBlock:
         # Load the selected style attributes.
         posattrs = self.posattrs
         if posattrs and posattrs[0] == 'style':
+            # Positional attribute style has highest precedence.
             style = self.attributes.get('1')
         else:
             style = None
         if not style:
+            # Use explicit style attribute, fall back to default style.
             style = self.attributes.get('style',self.style)
         if style:
             if not is_name(style):
-                raise EAsciiDoc, 'illegal style name: %s' % style
+                message.error('illegal style name: %s' % style)
+                style = self.style
+            # Lists have implicit styles and do their own style checks.
+            elif style not in self.styles and not isinstance(self,List):
+                message.warning('missing style: [%s]: %s' % (self.name,style))
+                style = self.style
             if style in self.styles:
                 self.attributes['style'] = style
                 for k,v in self.styles[style].items():
@@ -2381,7 +2404,7 @@ class Paragraphs(AbstractBlocks):
                 self.blocks.remove(b)
                 break
         else:
-            raise EAsciiDoc,'missing [paradef-default] section'
+            raise EAsciiDoc,'missing section: [paradef-default]'
 
 class List(AbstractBlock):
     NUMBER_STYLES= ('arabic','loweralpha','upperalpha','lowerroman',
@@ -3284,7 +3307,7 @@ class Tables(AbstractBlocks):
                 default = self.blocks[i]
                 break
         else:
-            raise EAsciiDoc,'missing [tabledef-default] section'
+            raise EAsciiDoc,'missing section: [tabledef-default]'
         # Propagate defaults to unspecified table parameters.
         for b in self.blocks:
             if b is not default:
@@ -3292,7 +3315,7 @@ class Tables(AbstractBlocks):
                 if b.template is None: b.template = default.template
         # Check tags and propagate default tags.
         if not 'default' in self.tags:
-            raise EAsciiDoc,'missing [tabletags-default] section'
+            raise EAsciiDoc,'missing section: [tabletags-default]'
         default = self.tags['default']
         for tag in ('bodyrow','bodydata','paragraph'): # Mandatory default tags.
             if tag not in default:
@@ -4332,7 +4355,7 @@ class Config:
             if not v:
                 del self.specialsections[k]
             elif not v in self.sections:
-                message.warning('[%s] missing specialsections section' % v)
+                message.warning('missing specialsections section: [%s]' % v)
         paragraphs.validate()
         lists.validate()
         blocks.validate()
@@ -4406,7 +4429,7 @@ class Config:
         if section in self.sections:
             return subs_attrs(self.sections[section],d)
         else:
-            message.warning('missing [%s] section' % section)
+            message.warning('missing section: [%s]' % section)
             return ()
 
     def parse_tags(self):
@@ -4561,7 +4584,7 @@ class Config:
                 if s in self.sections:
                     result += self.expand_templates(self.sections[s])
                 else:
-                    message.warning('missing [%s] section' % s)
+                    message.warning('missing section: [%s]' % s)
             else:
                 result.append(line)
         return result
@@ -4578,7 +4601,7 @@ class Config:
         if section in self.sections:
             body = self.sections[section]
         else:
-            message.warning('missing [%s] section' % section)
+            message.warning('missing section: [%s]' % section)
             body = ()
         # Split macro body into start and end tag lists.
         stag = []
@@ -5059,7 +5082,7 @@ class Tables_OLD(AbstractBlocks):
                 default = self.blocks[i]
                 break
         else:
-            raise EAsciiDoc,'missing [OLD_tabledef-default] section'
+            raise EAsciiDoc,'missing section: [OLD_tabledef-default]'
         # Set default table defaults.
         if default.format is None: default.subs = 'fixed'
         # Propagate defaults to unspecified table parameters.

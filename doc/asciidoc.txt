@@ -112,6 +112,10 @@ article
 Used for short documents, articles and general documentation.  See the
 AsciiDoc distribution `./doc/article.txt` example.
 
+AsciiDoc defines standard DocBook article frontmatter and backmatter
+<<X93,section markup templates>> (appendix, abstract, bibliography,
+glossary, index).
+
 book
 ~~~~
 Books share the same format as articles; in addition there is the
@@ -122,9 +126,9 @@ DocBook processors can automatically generate footnotes, table of
 contents, list of tables, list of figures, list of examples and
 indexes.
 
-AsciiDoc markup supports standard DocBook frontmatter and backmatter
-<<X16,special sections>> (dedication, preface, bibliography, glossary,
-index, colophon) plus footnotes and index entries.
+AsciiDoc defines standard DocBook book frontmatter and backmatter
+<<X93,section markup templates>> (appendix, dedication, preface,
+bibliography, glossary, index, colophon).
 
 .Example book documents
 Book::
@@ -138,6 +142,9 @@ manpage
 Used to generate UNIX manual pages.  AsciiDoc manpage documents
 observe special header title and section naming conventions -- see the
 <<X1,Manpage Documents>> section for details.
+
+AsciiDoc defines the 'synopsis' <<X93,section markup template>> to
+generate the DocBook `refsynopsisdiv` section.
 
 See also the asciidoc(1) man page source (`./doc/asciidoc.1.txt`) from
 the AsciiDoc distribution.
@@ -168,8 +175,7 @@ formats such as Postscript, HTML, PDF, EPUB, DVI, PostScript, LaTeX,
 roff (the native man page format), HTMLHelp, JavaHelp and text.
 
 The AsciiDoc <<X86,Preamble>> element generates a DocBook book
-'preface' element although it's more usual to use an explicit
-'Preface' special section (see the `./doc/book.txt` example book).
+'preface'.
 
 [[X33]]
 xhtml11
@@ -399,7 +405,7 @@ templates:
 
 level::
 The `level` attribute is the section level number, it is normally just
-the <<X17,title>> level number. However, if the `leveloffset`
+the <<X17,title>> level number (1..4). However, if the `leveloffset`
 attribute is defined it will be added to the `level` attribute. The
 `leveloffset` attribute is useful for <<X90,combining documents>>.
 
@@ -409,12 +415,17 @@ The `-n` (`--section-numbers`) command-line option generates the
 for section numbers in HTML outputs (DocBook section numbering are
 handled automatically by the DocBook toolchain commands).
 
-Section markup template names are specified in the following ways (in
-order of precedence):
+[[X93]]
+Section markup templates
+^^^^^^^^^^^^^^^^^^^^^^^^
+Section markup templates specify output markup and are defined in
+AsciiDoc configuration files.  Section markup template names are
+derived as follows (in order of precedence):
 
-1. By setting the title's first positional attribute or 'template'
-   attribute to the name of a configuration file template. The
-   following three section titles are functionally equivalent:
+1. From the title's first positional attribute or 'template'
+   attribute to the name of a configuration file template. For
+   example, the following three section titles are functionally
+   equivalent:
 +
 .....................................................................
 [[terms]]
@@ -431,11 +442,21 @@ List of Terms
 -------------
 .....................................................................
 
-2. When the title matches a configuration file <<X16,specialsections>>
-   entry.
-3. If neither of the above use the default `sect<level>` template
-   name.
+2. When the title text matches a configuration file
+   <<X16,`[specialsections]`>> entry.
+3. If neither of the above the default `sect<level>` template is used
+   (where `<level>` is a number from 1 to 4).
 
+In addition to the normal section template names ('sect1', 'sect2',
+'sect3', 'sect4') AsciiDoc has the following templates for
+frontmatter, backmatter and other special sections: 'abstract',
+'preface', 'colophon', 'dedication', 'glossary', 'bibliography',
+'synopsis', 'appendix', 'index'.  These special section templates
+generate the corresponding Docbook elements; for HTML outputs they
+default to the 'sect1' section template.
+
+Section IDs
+^^^^^^^^^^^
 Section IDs are auto-generated from section titles if the `sectids`
 attribute is defined (the default behavior). The primary purpose of
 this feature is to ensure persistence of table of contents links
@@ -459,15 +480,15 @@ For example the title 'Jim's House' would generate the ID
 `_jim_s_house`.
 
 [[X16]]
-Special Sections
-^^^^^^^^^^^^^^^^
-In addition to normal sections there are DocBook section elements for
-frontmatter and backmatter sections -- for example: preface,
-bibliography, table of contents, index.
-
-`[specialsections]` sections are in AsciiDoc language configuration
-files; they map specific section titles to markup templates.
-Section entries are formatted like:
+Special Section Titles
+^^^^^^^^^^^^^^^^^^^^^^
+AsciiDoc has a mechanism for mapping predefined section titles
+auto-magically to specific markup templates. For example a title
+'Appendix A: Code Reference' will automatically use the 'appendix'
+<<X93,section markup template>>. The mappings from title to template
+name are specified in `[specialsections]` sections in the Asciidoc
+language configuration files (`lang-*.conf`).  Section entries are
+formatted like:
 
   <title>=<template>
 
@@ -481,17 +502,32 @@ is set to the value of the matched regular expression group named
 of the AsciiDoc section title. If `<template>` is blank then any
 existing entry with the same `<title>` will be deleted.
 
-AsciiDoc comes preconfigured with the following special section
-titles:
+.Special section titles vs. explicit template names
+*********************************************************************
+AsciiDoc has two mechanisms for specifying non-default section markup
+templates: you can specify the template name explicity (using the
+'template' attribute) or indirectly (using 'special section titles').
+Specifying a <<X93,section template>> attribute explicitly is
+preferred.  Auto-magical 'special section titles' have the following
+drawbacks:
 
-  Preface                    (book documents only)
-  Abstract                   (article documents only)
-  Dedication                 (book documents only)
-  Glossary
-  Bibliography|References
-  Colophon                   (book documents only)
-  Index
-  Appendix [A-Z][:.] <title>
+- They are non-obvious, you have to know the exact matching
+  title for each special section on a language by language basis.
+- Section titles are predefined and can only be customised with a
+  configuration change.
+- The implementation is complicated by multiple languages: every
+  special section title has to be defined for each language (in each
+  of the `lang-*.conf` files).
+
+Specifying special section template names explicitly does add more
+noise to the source document (the 'template' attribute declaration),
+but the intention is obvious and the syntax is consistent with other
+AsciiDoc elements c.f.  bibliographic, Q&A and glossary lists.
+
+Special section titles have been deprecated but are retained for
+backward compatibility.
+
+*********************************************************************
 
 Inline Elements
 ~~~~~~~~~~~~~~~
@@ -916,9 +952,12 @@ Most block elements support the following attributes:
 Unique identifier typically serve as link targets.
 Can also be set by the 'BlockId' element.
 
-|role |docbook |
-Role contains a string used to classify or subclassify an element.
-Used to add the 'role' attribute to DocBook block elements.
+|role |html4, xhtml11, docbook |
+Role contains a string used to classify or subclassify an element:
+
+- Adds 'role' attribute to DocBook block elements.
+- Adds 'role' attribute to DocBook and HTML <<X51,quoted inline
+  elements>>.
 
 |reftext |docbook |
 'reftext' is used to set the DocBook 'xreflabel' attribute.
@@ -1679,7 +1718,7 @@ For working examples see the `article.txt` and `book.txt` documents in
 the AsciiDoc `./doc` distribution directory.
 
 NOTE: To generate valid DocBook output glossary lists must be located
-in a glossary section.
+in a section that uses the 'glossary' <<X93,section markup template>>.
 
 Bibliography Lists
 ~~~~~~~~~~~~~~~~~~
@@ -4050,6 +4089,7 @@ predefined intrinsic attributes:
   {two-semicolons}      Two semicolon characters
   {user-dir}            the ~/.asciidoc directory (if it exists)
   {verbose}             defined as '' if --verbose command option specified
+  {zwsp}                Zero-width space.
 
 .NOTES
 1. Intrinsic attributes are global so avoid defining custom attributes
@@ -5067,6 +5107,8 @@ it will be fetched from its Internet location. If you omit the
 formed.
 
 
+:numbered!:
+
 Glossary
 --------
 [glossary]
@@ -5088,8 +5130,9 @@ Verbatim element::
     the source document are to be preserved in the output document.
 
 
-Appendix A: Migration Notes
----------------------------
+[appendix]
+Migration Notes
+---------------
 [[X53]]
 Version 7 to version 8
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -5113,8 +5156,9 @@ define the attribute `asciidoc7compatible` (for example by using the
 `-a asciidoc7compatible` command-line option).
 
 [[X38]]
-Appendix B: Packager Notes
----------------------------
+[appendix]
+Packager Notes
+--------------
 Read the `README` and `INSTALL` files (in the distribution root
 directory) for install prerequisites and procedures.  The distribution
 `Makefile.in` (used by `configure` to generate the `Makefile`) is the
@@ -5122,8 +5166,9 @@ canonical installation procedure.
 
 
 [[X39]]
-Appendix C: AsciiDoc Safe Mode
-------------------------------
+[appendix]
+AsciiDoc Safe Mode
+-------------------
 AsciiDoc 'safe mode' skips potentially dangerous scripted sections in
 AsciiDoc source files by inhibiting the execution of arbitrary code or
 the inclusion of arbitrary files.
@@ -5151,8 +5196,9 @@ configuration files. Be especially careful when:
 =====================================================================
 
 
-Appendix D: Using AsciiDoc with non-English Languages
------------------------------------------------------
+[appendix]
+Using AsciiDoc with non-English Languages
+-----------------------------------------
 AsciiDoc can process UTF-8 character sets but there are some things
 you need to be aware of:
 
@@ -5187,8 +5233,9 @@ the HTML output file.
   format.
 
 
-Appendix E: Vim Syntax Highlighter
-----------------------------------
+[appendix]
+Vim Syntax Highlighter
+----------------------
 Syntax highlighting is incredibly useful, in addition to making
 reading AsciiDoc documents much easier syntax highlighting also helps
 you catch AsciiDoc syntax errors as you write your documents.
@@ -5254,8 +5301,9 @@ idea.
 
 
 [[X74]]
-Appendix F: Attribute Options
------------------------------
+[appendix]
+Attribute Options
+-----------------
 Here is the list of predefined <<X75,attribute list options>>:
 
 
@@ -5294,8 +5342,9 @@ Emboldens label text.
 
 
 [[X82]]
-Appendix G: Diagnostics
------------------------
+[appendix]
+Diagnostics
+-----------
 The `asciidoc(1)` `--verbose` command-line option prints additional
 information to stderr: files processed, filters processed, warnings,
 system attribute evaluation.
@@ -5352,8 +5401,9 @@ Attribute Entry examples:
 
 
 [[X88]]
-Appendix H: Backend Attributes
-------------------------------
+[appendix]
+Backend Attributes
+------------------
 This table contains a list of optional attributes that influence the
 generated outputs.
 
@@ -5421,7 +5471,8 @@ Set the document maximum display width (sets the 'body' element CSS
 document header.
 
 |numbered |html4, xhtml11, docbook (XSL Stylesheets) |
-Adds section numbers to section titles.
+Adds section numbers to section titles. The 'dobook' backend ignores
+'numbered' attribute entries after the document header.
 
 |quirks |xhtml11 |
 Use the `xhtml11-quirks.css` stylesheet to work around IE6 browser

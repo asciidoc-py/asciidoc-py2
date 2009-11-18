@@ -11,8 +11,9 @@ NOTE: The abstract, preface, appendix, bibliography, glossary and
 index section titles are significant ('specialsections').
 
 
-Abstract
---------
+[abstract]
+Example Abstract
+----------------
 The optional abstract (one or more paragraphs) goes here.
 
 This document is an AsciiDoc article skeleton containing briefly
@@ -79,8 +80,12 @@ indexterm:[Second example index entry]
 
 An example link to a bibliography entry <<taoup>>.
 
-Appendix A: Example Appendix
-----------------------------
+
+:numbered!:
+
+[appendix]
+Example Appendix
+----------------
 AsciiDoc article appendices are just just article sections with
 'specialsection' titles.
 
@@ -89,8 +94,9 @@ Appendix Sub-section
 Appendix sub-section at level 2.
 
 
-Bibliography
-------------
+[bibliography]
+Example Bibliography
+--------------------
 The bibliography list is a style of AsciiDoc bulleted list.
 
 [bibliography]
@@ -101,8 +107,9 @@ The bibliography list is a style of AsciiDoc bulleted list.
   ISBN 1-56592-580-7.
 
 
-Glossary
---------
+[glossary]
+Example Glossary
+----------------
 Glossaries are optional. Glossaries entries are an example of a style
 of AsciiDoc labeled lists.
 
@@ -115,8 +122,9 @@ A second glossary term::
 
 
 ifdef::backend-docbook[]
-Index
------
+[index]
+Example Index
+-------------
 ////////////////////////////////////////////////////////////////
 The index is normally left completely empty, it's contents being
 generated automatically by the DocBook toolchain.

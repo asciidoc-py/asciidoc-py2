@@ -809,7 +809,7 @@ Two line titles
 A two line title consists of a title line, starting hard against the
 left margin, and an underline. Section underlines consist a repeated
 character pairs spanning the width of the preceding title (give or
-take up to three characters):
+take up to two characters):
 
 The default title underlines for each of the document levels are:
 

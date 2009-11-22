@@ -3,11 +3,11 @@ AsciiDoc Frequently Asked Questions
 
 
 == Why am I getting DocBook validation errors?
-Not all valid AsciiDoc source generates in valid DocBook, for example
+Not all valid AsciiDoc source generates valid DocBook, for example
 'special sections' (abstract, preface, colophon, dedication,
 bibliography, glossary, appendix, index, synopsis) have different
-DocBook schemas compared to normal document sections. For example, a
-paragraph is illegal in a bibliography.
+DocBook schemas to normal document sections. For example, a paragraph
+is illegal in a bibliography.
 
 Don't forget if your document is a book you need to specify the `-d
 book`, if you don't an article DocBook document will be generated,

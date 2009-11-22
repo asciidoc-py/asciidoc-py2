@@ -1088,6 +1088,8 @@ class Lex:
             result = AttributeEntry
         elif AttributeList.isnext():
             result = AttributeList
+        elif BlockTitle.isnext() and not tables_OLD.isnext():
+            result = BlockTitle
         elif Title.isnext():
             if AttributeList.style() == 'float':
                 result = FloatingTitle
@@ -1103,8 +1105,6 @@ class Lex:
             result = tables_OLD.current
         elif tables.isnext():
             result = tables.current
-        elif BlockTitle.isnext():
-            result = BlockTitle
         else:
             if not paragraphs.isnext():
                 raise EAsciiDoc,'paragraph expected'
@@ -1985,7 +1985,8 @@ class Section:
         AttributeList.consume(Title.attributes)
         stag,etag = config.section2tags(Title.sectname,Title.attributes)
         Section.savetag(Title.level,etag)
-        writer.write(stag,trace='section open')
+        writer.write(stag,trace='section open: level %d: %s' %
+                (Title.level, Title.attributes['title']))
         Section.translate_body()
     @staticmethod
     def translate_body(terminator=Title):

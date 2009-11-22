@@ -247,8 +247,8 @@ div.informaltable tfoot,
 div.informaltable tbody
 {
     /* No effect in IE6. */
-    border-top: 2px solid #527bbd;
-    border-bottom: 2px solid #527bbd;
+    border-top: 3px solid #527bbd;
+    border-bottom: 3px solid #527bbd;
 }
 div.table thead, div.table tfoot,
 div.informaltable thead, div.informaltable tfoot

@@ -37,6 +37,9 @@
 <xsl:param name="body.margin.top" select="'0.5in'"/>
 <xsl:param name="bridgehead.in.toc" select="0"/>
 
+<!-- overide setting in common.xsl -->
+<xsl:param name="table.frame.border.thickness" select="'2px'"/>
+
 <!-- Default fetches image from Internet (long timeouts) -->
 <xsl:param name="draft.watermark.image" select="''"/>
 

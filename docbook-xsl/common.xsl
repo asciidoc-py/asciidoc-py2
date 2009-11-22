@@ -53,7 +53,7 @@
 <xsl:param name="html.cellspacing" select="''"/>
 
 <xsl:param name="table.borders.with.css" select="1"/>
-<xsl:param name="table.cell.border.color" select="''"/>
+<xsl:param name="table.cell.border.color" select="'#527bbd'"/>
 
 <xsl:param name="table.cell.border.style" select="'solid'"/>
 <xsl:param name="table.cell.border.thickness" select="'1px'"/>
@@ -61,7 +61,7 @@
 <xsl:param name="table.footnote.number.symbols" select="''"/>
 <xsl:param name="table.frame.border.color" select="'#527bbd'"/>
 <xsl:param name="table.frame.border.style" select="'solid'"/>
-<xsl:param name="table.frame.border.thickness" select="'2px'"/>
+<xsl:param name="table.frame.border.thickness" select="'3px'"/>
 <xsl:param name="tablecolumns.extension" select="'1'"/>
 
 <xsl:param name="highlight.source" select="1"/>

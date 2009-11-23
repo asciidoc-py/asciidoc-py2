@@ -18,10 +18,8 @@ The AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository
 is hosted by http://sharesource.org[ShareSource].  ShareSource is a
 Mercurial friendly website for hosting Open Source projects.
 To browse the repository go to http://hg.sharesource.org/asciidoc/.
-
-Installing from the repository is an easy way to install AsciiDoc if
-you don't have an up to date packaged version or want to get the
-latest version from the trunk:
+You can install AsciiDoc from the repository if you don't have an up to
+date packaged version or want to get the latest version from the trunk:
 
 - Make sure you have http://www.selenic.com/mercurial/[Mercurial]
   installed, you can check with:
@@ -35,12 +33,28 @@ latest version from the trunk:
   $ cd ~/bin
   $ hg clone -r {revnumber} http://hg.sharesource.org/asciidoc asciidoc-{revnumber}
 
-You now have two choices, you can run asciidoc directly from you local
+.Repository source archives
+*********************************************************************
+Another way to get the latest asciidoc sources without installing
+Mercurial is to download and extract a Zip or Tar formatted archive:
+
+http://hg.sharesource.org/asciidoc/archive/tip.tar.bz2
+
+or:
+
+http://hg.sharesource.org/asciidoc/archive/tip.zip
+
+Archives of all revisions (not just the tip) are available at the
+repostiory website.
+
+*********************************************************************
+
+You now have two choices: you can run asciidoc directly from you local
 repository or you can use 'autoconf(1)' and 'make(1)' to perform a
 normal install from the repository.
 
-Running asciidoc from your local repository
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running asciidoc from your local copy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Create a symlink to the AsciiDoc script in a search `PATH` directory
 so it's easy to execute `asciidoc` from the command-line, for example:
 

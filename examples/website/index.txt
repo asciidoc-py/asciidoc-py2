@@ -239,7 +239,7 @@ and I'll add them to the list.
   http://dbixjcl.org/jcl/asciidocgen/asciidocgen.html[AsciiDocGen web
   site] is managed using 'AsciiDocGen'.
 - Filippo Negroni has developed a set of tools to facilitate 'literate
-  programming' using AsciiDoc.  The toolset is called
+  programming' using AsciiDoc.  The set of tools is called
   http://eweb.sourceforge.net/[eWEB].
 
 Please let me know if any of these links need updating.

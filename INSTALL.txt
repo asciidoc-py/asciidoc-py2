@@ -45,7 +45,7 @@ or:
 http://hg.sharesource.org/asciidoc/archive/tip.zip
 
 Archives of all revisions (not just the tip) are available at the
-repostiory website.
+repository website.
 
 *********************************************************************
 

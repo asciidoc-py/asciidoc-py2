@@ -505,7 +505,7 @@ existing entry with the same `<title>` will be deleted.
 .Special section titles vs. explicit template names
 *********************************************************************
 AsciiDoc has two mechanisms for specifying non-default section markup
-templates: you can specify the template name explicity (using the
+templates: you can specify the template name explicitly (using the
 'template' attribute) or indirectly (using 'special section titles').
 Specifying a <<X93,section template>> attribute explicitly is
 preferred.  Auto-magical 'special section titles' have the following
@@ -5471,7 +5471,7 @@ Set the document maximum display width (sets the 'body' element CSS
 document header.
 
 |numbered |html4, xhtml11, docbook (XSL Stylesheets) |
-Adds section numbers to section titles. The 'dobook' backend ignores
+Adds section numbers to section titles. The 'docbook' backend ignores
 'numbered' attribute entries after the document header.
 
 |quirks |xhtml11 |

@@ -316,6 +316,8 @@ discussion group thread] for details.
   AsciiDoc and includes Leonid's <<X5,matplotlib filter>>.
 - http://www.weechat.org/[WeeChat] uses AsciiDoc for
   http://www.weechat.org/doc[project documentation].
+- http://www.clansuite.com/[Clansuite] uses AsciiDoc for
+  http://www.clansuite.com/documentation/[project documentation].
 
 Please let me know if any of these links need updating.
 

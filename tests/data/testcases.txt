@@ -577,7 +577,8 @@ Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
 footnote:[http://www.methods.co.nz/asciidoc/ Qui in magna commodo,
 est labitur dolorum an. Est ne magna primis adolescens. Sit munere
-ponderum dignissim et. Minim luptatum et vel.]
+ponderum dignissim et. Minim luptatum et vel
+image:images/smallnew.png[]]
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
 footnote:[http://www.methods.co.nz/asciidoc/]

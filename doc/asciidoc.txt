@@ -916,10 +916,15 @@ function to the <<X30,anchor inline macro>>.
 AttributeList Element
 ---------------------
 An 'AttributeList' block element is an <<X21,attribute list>> on a
-line by itself.  'AttributeList' attributes are only applied to the
-immediately following block element -- the attributes are available
-for markup template substitution. Often the first attribute in the
-list is used to specify the following element's <<X23,style>>.
+line by itself:
+
+- 'AttributeList' attributes are only applied to the immediately
+  following block element -- the attributes are available for markup
+  template substitution.
+- A block element can be preceded by multiple 'AttributeList'
+  elements.
+- Often the first attribute in the list is used to specify the
+  following element's <<X23,style>>.
 
 Attribute value substitution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3780,12 +3785,15 @@ Attribute Lists
 
 The list consists of zero or more positional attribute values followed
 by zero or more named attribute values.  Here are three examples: a
-single unquoted positional attribute; three unquoted attribute values;
-one positional attribute followed by two named attributes:
+single unquoted positional attribute; three unquoted positional
+attribute values; one positional attribute followed by two named
+attributes; the unquoted attribute value in the final example contains
+comma (`&#44;`) and double-quote (`&#34;`) character entities:
 
   [Hello]
   [quote, Bertrand Russell, The World of Mathematics (1956)]
   ["22 times", backcolor="#0e0e0e", options="noborders,wide"]
+  [A footnote&#44; &#34;with an image&#34; image:smallnew.png[]]
 
 .Attribute list behavior
 - If one or more attribute values contains a comma the all string

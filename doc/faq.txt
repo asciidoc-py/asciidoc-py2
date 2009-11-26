@@ -2,6 +2,22 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== Why am I having trouble getting nested macros to work?
+The following example expands the 'image' inline macro, but the
+expansion contains double-quote characters which confuses the ensuing
+'footnoteref' macro epansion:
+
+  footnoteref:["F1","A footnote, with an image image:smallnew.png[]"]
+
+The solution is to use unquoted attribute values, replacing embedded
+commas with the comma character entity (`&#44;`):
+
+  footnoteref:[F1,A footnote&#44; with an image image:smallnew.png[]]
+
+Similarly, you can embed double-quote characters in unquoted attribute
+values using the `&#34;` character entity.
+
+
 == Why am I getting DocBook validation errors?
 Not all valid AsciiDoc source generates valid DocBook, for example
 'special sections' (abstract, preface, colophon, dedication,

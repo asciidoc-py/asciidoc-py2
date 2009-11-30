@@ -184,6 +184,11 @@ Resources
 Here are resources that I know of, if you know of more drop me a line
 and I'll add them to the list.
 
+- David Avsajanishvili has written a source highlighter for AsciiDoc
+  files for http://projects.gnome.org/gtksourceview/[GtkSourceView]
+  (used by http://projects.gnome.org/gedit/[gedit] and a number of
+  other applications). The project is hosted here:
+  https://launchpad.net/asciidoc-gtk-highlight
 - Check the link:INSTALL.html#X2[installation page] for packaged versions
   of AsciiDoc.
 - Alex Efros has written an HTML formatted
@@ -318,6 +323,10 @@ discussion group thread] for details.
   http://www.weechat.org/doc[project documentation].
 - http://www.clansuite.com/[Clansuite] uses AsciiDoc for
   http://www.clansuite.com/documentation/[project documentation].
+- The http://fc-solve.berlios.de/[Freecell Solver program] uses
+  AsciiDoc for its
+  http://fc-solve.berlios.de/docs/#distributed-docs[distributed
+  documentation].
 
 Please let me know if any of these links need updating.
 

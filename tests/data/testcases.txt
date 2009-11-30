@@ -8,10 +8,20 @@ Test Cases
 
 
 == Passthrough attributes ==
+ifdef::basebackend-docbook[]
+:passtest: pass:[<emphasis>*lorum ipsum*</emphasis>]
+endif::basebackend-docbook[]
+ifdef::basebackend-html[]
 :passtest: pass:[<b>*lorum ipsum*</b>]
+endif::basebackend-html[]
 {passtest}
 
+ifdef::basebackend-docbook[]
+:passtest: pass:specialcharacters,quotes[<emphasis>*lorum ipsum*</emphasis>]
+endif::basebackend-docbook[]
+ifdef::basebackend-html[]
 :passtest: pass:specialcharacters,quotes[<b>*lorum ipsum*</b>]
+endif::basebackend-html[]
 {passtest}
 
 
@@ -55,6 +65,7 @@ A=*_X_*, (`_X_`), _`X`_, [*_X_*] +_X_+ _X_
 // These two illustrate that nesting doesn't always work.
 [_*X*_] _+X+_
 
+[[_intro]]
 <<_intro>> <<_intro,intro>> xref:_intro[] _intro_
 
 [green,yellow,2]##fun with text##.
@@ -585,6 +596,11 @@ footnote:[http://www.methods.co.nz/asciidoc/]
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et
 vel footnote:[http://www.methods.co.nz/asciidoc/[AsciiDoc website].].
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens. Sit munere ponderum dignissim et. Minim luptatum et
+footnoteref:[F3,A footnote&#44; &#34;with an image&#34;
+image:images/smallnew.png[]].
+
 
 Rulers and page breaks
 ----------------------

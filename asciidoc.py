@@ -984,31 +984,37 @@ def subs_attrs(lines, dictionary=None):
         if skipped:
             del lines[i]
             continue;
-        # Expand system attributes.
-        reo = re.compile(r'(?su)\{(?P<action>[^\\\W][-\w]*?):(?P<expr>.*?)\}(?!\\)')
+        # Expand system attributes (eval has precedence).
+        reos = [
+            re.compile(r'(?su)\{(?P<action>eval):(?P<expr>.*?)\}(?!\\)'),
+            re.compile(r'(?su)\{(?P<action>[^\\\W][-\w]*?):(?P<expr>.*?)\}(?!\\)'),
+        ]
         skipped = False
-        pos = 0
-        while True:
-            mo = reo.search(text,pos)
-            if not mo: break
-            expr = mo.group('expr')
-            action = mo.group('action')
-            expr = expr.replace('{\\','{')
-            expr = expr.replace('}\\','}')
-            s = system(action, expr, attrs=attrs)
-            if s is None:
-                skipped = True
-                break
-            text = text[:mo.start()] + s + text[mo.end():]
-            pos = mo.start() + len(s)
-        # Drop line if the action returns None.
-        if skipped:
-            del lines[i]
-            continue;
-        # Remove backslash from escaped entries.
-        text = text.replace('{\\','{')
-        text = text.replace('}\\','}')
-        lines[i] = text
+        for reo in reos:
+            if skipped:
+                continue;
+            pos = 0
+            while True:
+                mo = reo.search(text,pos)
+                if not mo: break
+                expr = mo.group('expr')
+                action = mo.group('action')
+                expr = expr.replace('{\\','{')
+                expr = expr.replace('}\\','}')
+                s = system(action, expr, attrs=attrs)
+                if s is None:
+                    skipped = True
+                    break
+                text = text[:mo.start()] + s + text[mo.end():]
+                pos = mo.start() + len(s)
+            # Drop line if the action returns None.
+            if skipped:
+                del lines[i]
+                continue;
+            # Remove backslash from escaped entries.
+            text = text.replace('{\\','{')
+            text = text.replace('}\\','}')
+            lines[i] = text
     if string_result:
         if lines:
             return '\n'.join(lines)

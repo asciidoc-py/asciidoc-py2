@@ -3982,6 +3982,8 @@ argument. The syntax is `{<action>:<argument>}`.
           evaluates to an empty string.
         - `<expression>` can contain simple and conditional attribute
           references.
+        - The 'eval' system attribute can be nested inside other
+          system attributes.
 
 `{eval3:<command>}`::
         Passthrough version of `{eval:<expression>}` -- the generated

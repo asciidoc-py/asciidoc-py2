@@ -327,6 +327,10 @@ discussion group thread] for details.
   AsciiDoc for its
   http://fc-solve.berlios.de/docs/#distributed-docs[distributed
   documentation].
+- Eric Raymond's http://gpsd.berlios.de/AIVDM.html[AIVDM/AIVDO
+  protocol decoding] documentation is written using AsciiDoc.
+- Dwight Schauer has written an http://lxc.teegra.net/[LXC HOWTO] in
+  AsciiDoc.
 
 Please let me know if any of these links need updating.
 

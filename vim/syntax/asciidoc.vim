@@ -26,10 +26,11 @@ syn match asciidocLineBreak /[ \t]+$/
 syn match asciidocRuler /^'\{3,}$/
 syn match asciidocPagebreak /^<\{3,}$/
 syn match asciidocEntityRef /\\\@<!&[#a-zA-Z]\S\{-};/
-" The tricky part is not triggering on indented list items that are also
-" preceeded by blank line, handles only bulleted items (see 'Limitations' above
-" for workarounds).
-syn region asciidocLiteralParagraph start=/^\n[ \t]\+\(\([^-*. \t] \)\|\(\S\S\)\)/ end=/\(^+\?\s*$\)\@=/
+" asciidocLiteralParagraph is broken by:
+" - Preceding attribute lists.
+" - Indented lists (accept those with single '-', '*' or '.' bullet
+"   characters).
+syn region asciidocLiteralParagraph start=/^\n[ \t]\+\(\([^-*.] \)\|\(\S\S\)\)/ end=/\(^+\?\s*$\)\@=/
 syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\|irc\):\/\/[^| \t]*\(\w\|\/\)/
 syn match asciidocEmail /\\\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_]\@!/
 syn match asciidocAttributeRef /\\\@<!{\w\(\w\|-\)*\([=!@#$%?:].*\)\?}/
@@ -99,7 +100,8 @@ syn region asciidocMacroAttributes matchgroup=asciidocAttributeMacro start=/\({\
 
 syn match asciidocCommentLine "^//\([^/].*\|\)$" contains=asciidocToDo
 
-syn region asciidocVLabel start=/^\s*/ end=/\(::\|;;\)$/ oneline contains=asciidocQuoted.*,asciidocMacroAttributes keepend
+syn region asciidocLabel start=/^\s*/ end=/\(:\{2,4}\|;;\)$/ oneline contains=asciidocQuoted.*,asciidocMacroAttributes keepend
+"DEPRECATED: Horizontal label.
 syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline contains=asciidocQuoted.*,asciidocMacroAttributes keepend
 
 syn region asciidocAttributeEntry start=/^:\w/ end=/:\(\s\|$\)/ oneline
@@ -121,7 +123,7 @@ highlight link asciidocAnchorMacro Macro
 highlight link asciidocEmail Macro
 highlight link asciidocListBullet Label
 highlight link asciidocListNumber Label
-highlight link asciidocVLabel Label
+highlight link asciidocLabel Label
 highlight link asciidocHLabel Label
 highlight link asciidocTable_OLD Type
 highlight link asciidocTableDelimiter Label

@@ -3983,30 +3983,6 @@ class Reader(Reader1):
                         return tuple(result)
             result.append(s)
         return tuple(result)
-    # NOT USED -- part of unimplemented attempt a generalised line continuation.
-    def read_continuation(self):
-        """Like read() but treats trailing backslash as line continuation
-        character."""
-        s = self.read()
-        if s is None:
-            return None
-        result = ''
-        while s is not None and len(s) > 0 and s[-1] == '\\':
-            result = result + s[:-1]
-            s = self.read()
-        if s is not None:
-            result = result + s
-        return result
-    # NOT USED -- part of unimplemented attempt a generalised line continuation.
-    def read_next_continuation(self):
-        """Like read_next() but treats trailing backslash as line continuation
-        character."""
-        save_cursor = self.cursor
-        result = self.read_continuation()
-        if result is not None:
-            self.unread(self.cursor)
-            self.cursor = save_cursor
-        return result
 
 class Writer:
     """Writes lines to output file."""

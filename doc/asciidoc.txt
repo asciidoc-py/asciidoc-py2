@@ -1682,7 +1682,6 @@ labitur dolorum an. Est ne magna primis adolescens.
   Stylesheets>> and <<X31,dblatex>> process them correctly).
 - The label width can be set as a percentage of the total width by
   setting the 'width' attribute e.g. `width="10%"`
-
 =====================================================================
 
 Question and Answer Lists
@@ -2293,7 +2292,6 @@ single-file XHTML documents with embedded images and CSS, for example:
 NOTE: All current popular browsers support 'data URIs', although
 versions of Internet Explorer prior to version 8 do not support 'data
 URIs'.
-
 *********************************************************************
 
 [[X25]]
@@ -2442,7 +2440,6 @@ header you need to use attribute references to control inclusion
 instead of conditional inclusion macros (attribute references are
 substituted at the time the output is written rather than at program
 startup).
-
 *********************************************************************
 
 Executable system macros
@@ -2865,7 +2862,6 @@ facilitate their use, uses proportional column widths (by defaulting
 the AsciiDoc 'pageunits' attribute to '*'). To generate DocBook tables
 with fixed  widths set 'pageunits' to a CALS absolute unit such as
 'pt'.
-
 *********************************************************************
 
 [[X70]]
@@ -3097,7 +3093,6 @@ PostScript to PDF using `ps2pdf(1)`:
   $ man -l -Tps asciidoc.1 | ps2pdf - asciidoc.1.pdf
 
 The `ps2pdf(1)` command is included in the Ghostscript distribution.
-
 **********************************************************************
 
 To find out more about man pages view the `man(7)` manpage
@@ -3771,7 +3766,6 @@ and write, here are some examples:
   arbitrary lines of text can be abbreviated.
 - Shared attributes entries could be grouped into a separate file and
   <<X63,included>> in multiple documents.
-
 *********************************************************************
 
 
@@ -4806,7 +4800,6 @@ Execute `:help gq` command to read about the vim gq command.
 - The Vim website (http://www.vim.org) has a wealth of resources,
   including scripts for automated spell checking and ASCII Art
   drawing.
-
 =====================================================================
 
 Format Lists
@@ -5119,6 +5112,7 @@ formed.
 
 :numbered!:
 
+[glossary]
 Glossary
 --------
 [glossary]
@@ -5275,39 +5269,17 @@ for emacs].
 Limitations
 ~~~~~~~~~~~
 The current implementation does a reasonable job but on occasions gets
-things wrong. This list of limitations also discusses how to work
-around the problems:
-
-- Indented lists with preceding blank lines are sometimes mistaken
-  for literal (indented) paragraphs. You can work around this by
-  deleting the preceding blank line, or inserting a space in the
-  preceding blank lines, or putting a list continuation character
-  (`+`) in the preceding blank line.
+things wrong:
 
 - Nested quoted text formatting is highlighted according to the outer
   format.
-
-- If a closing block delimiter is not preceded by a blank line it is
-  sometimes mistaken for a title underline. A workaround is to insert
-  a blank line before the closing delimiter.
-
-- If a list block delimiter is mistaken for a title underline precede
-  it with a blank line.
-
-- Lines within a paragraph beginning with a period will be highlighted
-  as block titles. For example:
-
-  .chm file.
-+
-To work around this restriction move the last word of the previous
-line to the start of the current (although words starting with a
-period should probably be quoted monospace which would also get around
-the problem).
-
-TIP: Sometimes incorrect highlighting is caused by preceding lines
-that appear blank but contain white space characters -- setting your
-editor options so that white space characters are visible is a good
-idea.
+- If a closing Example Block delimiter is sometimes mistaken for a
+  title underline. A workaround is to insert a blank line before the
+  closing delimiter.
+- Lines within a paragraph starting with equals characters may be
+  highlighted as single-line titles.
+- Lines within a paragraph beginning with a period may be highlighted
+  as block titles.
 
 
 [[X74]]
@@ -5347,7 +5319,6 @@ width of the page irrespective of the current indentation.
 
 |strong |xhtml11,html4 |labeled lists|
 Emboldens label text.
-
 |====================================================================
 
 

@@ -2946,6 +2946,10 @@ Like default but all text is in a monospaced font.
 strong::
 Like default but all text is bold.
 
+header::
+Apply the same style as the table header. Normally used to create a
+vertical header in the first column.
+
 asciidoc::
 With this style table cells can contain any of the AsciiDoc elements
 that are allowed inside document sections. This style runs asciidoc(1)

@@ -3,6 +3,60 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.5.2 (2009-12-09)
+--------------------------
+.Additions and changes
+- Added Italian language configuration file (contributed by Fabio
+  Inguaggiato).
+- Added 'header' table style. See:
+  http://groups.google.com/group/asciidoc/browse_frm/thread/a23fea28394c8ca9
+- Pass 'icons', 'data-uri', 'imagesdir', 'iconsdir' attributes to
+  'asciidoc' table style filter so that images are rendered in table
+  cells.
+- Pass 'trace' and 'verbose' attributes to 'asciidoc' table style
+  filter so diagnostic information is printed from table cell source.
+- The 'eval' system attribute can be nested inside other system
+  attributes.
+- HTML outputs: Table and figure caption punctuation set to more usual
+  syntax.
+- docbook backend: footnotes can now contain embedded images.  See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/50b28f6941de111a
+- CSS tweaks so that tables processed by DocBook XSL Stylesheets have
+  the default asciidoc xhtml11 backend styling.  See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/dfe5204d5b2c9685
+- Block titles take precedence over section titles to avoid titled
+  delimited blocks being mistaken for two line section titles (see
+  http://groups.google.com/group/asciidoc/browse_frm/thread/f0b6f9989f828c3).
+- Section title trace displays level and title text.
+- FAQ additions.
+- Added `{zwsp}` (zero width space) attribute.
+- Undefined paragraph styles are reported (previously threw a runtime
+  error).
+- Eliminated empty preamble generation.
+- Floating titles now processed in all contexts.
+- Implemented auto-lettered appendix names and updated example
+  documents.
+- Section numbering can be disabled in HTML outputs with a
+  ':numbered!:' AttributeEntry.
+- xhtml11: Nicer default quote block styling.
+- Exclude floating titles from xhtml11 table of contents. Patch
+  submitted by Mark Burton (see
+  http://groups.google.com/group/asciidoc/browse_frm/thread/14aefc1cb6bd85f5).
+- Enhanced `doc/article-docinfo.xml` example docinfo file.
+- Vim syntax highlighter improvements.
+
+.Bug fixes
+- *FIXED*: Absolute 'imagesdir' and 'iconsdir' attribute  path names
+  do not work with the xhtml11 data-uri encoding. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/cb8b7694bbc82a6
+- *FIXED*: Regression issue with inline data-uri images. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/cb8b7694bbc82a6
+- *FIXED*: An unexpected error occurred when processing a table
+  containing CSV data if the 'cols' attribute was not explicitly
+  specified. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/4b0f364b477ec165
+
+
 Version 8.5.1 (2009-10-31)
 --------------------------
 .Additions and changes

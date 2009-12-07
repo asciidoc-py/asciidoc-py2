@@ -3,9 +3,8 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-This release rounds out the recent 8.5.0 release and fixes a couple of
-bugs in a2x, the most obvious addition is JavaScript based footnotes
-processing for 'xhtml11' outputs.
+In addition to Vim syntax highlighter improvements this release
+contains quite a few (fairly minor) improvements plus a few bug fixes.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the
@@ -311,7 +310,7 @@ discussion group thread] for details.
   AsciiDoc for documentation and has released an Emacs syntax
   highlighter (see <<X2,Resources>> above).
 - The http://www.wesnoth.org/[Battle for Wesnoth] project uses
-  AsciiDoc for it's http://www.wesnoth.org/wiki/WesnothManual[Manual]
+  AsciiDoc for its http://www.wesnoth.org/wiki/WesnothManual[Manual]
   in a number of different languages.
 - Troy Hanson uses AsciiDoc to generate user guides for the
   http://tpl.sourceforge.net/[tpl] and

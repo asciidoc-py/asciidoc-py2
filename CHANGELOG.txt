@@ -3,7 +3,7 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
-Version 8.5.2 (2009-12-09)
+Version 8.5.2 (2009-12-07)
 --------------------------
 .Additions and changes
 - Added Italian language configuration file (contributed by Fabio

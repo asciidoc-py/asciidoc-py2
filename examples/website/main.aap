@@ -135,6 +135,7 @@ copy: all
     :sys rm -rf $LOCAL_WEB/chunked/
     :sys mkdir -p $LOCAL_WEB/chunked/
     :sys cp $DOCS_DIR/asciidoc.chunked/*.html $LOCAL_WEB/chunked/
+    :sys cp -R $DOCS_DIR/asciidoc.chunked/images $LOCAL_WEB/chunked/
     :sys cp music?.* $LOCAL_WEB
     :sys cp sample?.png $LOCAL_WEB
 

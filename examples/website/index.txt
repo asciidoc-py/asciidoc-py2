@@ -6,6 +6,11 @@ AsciiDoc Home Page
 In addition to Vim syntax highlighter improvements this release
 contains quite a few (fairly minor) improvements plus a few bug fixes.
 
+Although it does not involve anything new, it is now recommended that
+special sections be specified using the explicit section name syntax
+rather than special section titles (see  the 'Special section titles
+vs. explicit template names' sidebar in the AsciiDoc 'User Guide').
+
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the
 updated link:userguide.html[User Guide]. See the

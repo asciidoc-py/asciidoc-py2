@@ -6,6 +6,9 @@ AsciiDoc ChangeLog
 Version 8.5.2 (2009-12-07)
 --------------------------
 .Additions and changes
+- Updated example article and book documents with the recommended
+  explicit section name syntax (see  the 'Special section titles
+  vs. explicit template names' sidebar in the AsciiDoc 'User Guide').
 - Added Italian language configuration file (contributed by Fabio
   Inguaggiato).
 - Added 'header' table style. See:

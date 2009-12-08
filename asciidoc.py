@@ -991,8 +991,6 @@ def subs_attrs(lines, dictionary=None):
         ]
         skipped = False
         for reo in reos:
-            if skipped:
-                continue;
             pos = 0
             while True:
                 mo = reo.search(text,pos)
@@ -1003,14 +1001,15 @@ def subs_attrs(lines, dictionary=None):
                 expr = expr.replace('}\\','}')
                 s = system(action, expr, attrs=attrs)
                 if s is None:
+                    # Drop line if the action returns None.
                     skipped = True
+                    del lines[i]
                     break
                 text = text[:mo.start()] + s + text[mo.end():]
                 pos = mo.start() + len(s)
-            # Drop line if the action returns None.
             if skipped:
-                del lines[i]
-                continue;
+                break
+        if not skipped:
             # Remove backslash from escaped entries.
             text = text.replace('{\\','{')
             text = text.replace('}\\','}')

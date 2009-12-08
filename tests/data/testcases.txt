@@ -26,6 +26,8 @@ endif::basebackend-html[]
 
 
 == Author attributes ==
+\{eval:expression}, \{sys:command} and \{sys2:command}, \{counter:c1}
+
 Hello *{author}* ({firstname} {lastname}, {authorinitials}).
 
 

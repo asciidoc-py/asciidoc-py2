@@ -2,6 +2,17 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== How can I stop the document title being displayed?
+You could simply omit the document title, but this will result in a
+blank 'title' element in HTML outputs. If you want the HTML 'title'
+element to contain the document title then define the 'notitle'
+attribute (this will just suppress displaying the title), for example:
+
+  My document title
+  =================
+  :no title:
+
+
 == Why am I having trouble getting nested macros to work?
 The following example expands the 'image' inline macro, but the
 expansion contains double-quote characters which confuses the ensuing

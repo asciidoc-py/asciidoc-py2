@@ -2,6 +2,18 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== How can I include lines of dashes inside a listing block?
+A line of four or more dashes will be mistaken for the ListingBlock
+terminator, one way round this problem is to use a LiteralBlock styled
+as a listing block. For example:
+
+  [listing]
+  ...........................
+  Lorum ipsum
+  -----------
+  ...........................
+
+
 == How can I add lists of figures and tables to PDFs created by dblatex?
 Set the
 http://dblatex.sourceforge.net/doc/sec-custom.html[doc.lot.show XSL

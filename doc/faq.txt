@@ -104,7 +104,7 @@ inline literal:
 
   ``XXX'' +YYY+
 
-Use the +\pass:[]+ macro if it's necessary to supress
+Use the +\pass:[]+ macro if it's necessary to suppress
 substitutions in the monospaced text, for example:
 
   ``XXX'' +pass:[don't `quote` me]+
@@ -456,6 +456,34 @@ NOTE: Escaping is unnecessary inside 'inline literal passthroughs'
 (backtick quoted text).
 
 
+== How can I escape a list?
+Here's how to handle situations where the first line of a paragraph is
+mistaken for a list item.
+
+=== Numbered and bulleted lists
+Precede the bullet or index of the first list item with an `{empty}`
+attribute, for example:
+
+  {empty}- Qui in magna commodo est labitur dolorum an.  Est ne magna
+  primis adolescens.
+
+The predefined `{empty}` attribute is replaced by an empty string and
+ensures the first line is not mistaken for a bulleted list item.
+
+=== Labeled lists
+Two colons or semicolons in a paragraph may be confused with a labeled
+list entry. Use the predefined `{two-colons}` and `{two-semicolons}`
+attributes to suppress this behavior, for example:
+
+  Qui in magna commodo{two-colons} est labitur dolorum an. Est ne
+  magna primis adolescens.
+
+Will be rendered as:
+
+Qui in magna commodo{two-colons} est labitur dolorum an. Est ne
+magna primis adolescens.
+
+
 == How can I set default list and tables styles?
 
 You can set the element's 'style' entry in a global or custom
@@ -562,7 +590,7 @@ consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 ---------------------------------------------------------------------
 
-Alternatively, if you are generating PDF files files, you can use line
+Alternatively, if you are generating PDF files, you can use line
 breaks. For example:
 
 ---------------------------------------------------------------------
@@ -665,34 +693,6 @@ asciidoc(1) replaces the underscores with spaces.
 If you are generating DocBook then a  more flexible approach is to
 create a 'docinfo' file containing a DocBook 'authorgroup' element
 (search the 'User Guide' for 'docinfo' for more details).
-
-
-== How can I escape a list?
-Here's how to handle situations where the first line of a paragraph is
-mistaken for a list item.
-
-=== Numbered and bulleted lists
-Precede the bullet or index of the first list item with an `{empty}`
-attribute, for example:
-
-  {empty}- Qui in magna commodo est labitur dolorum an.  Est ne magna
-  primis adolescens.
-
-The predefined `{empty}` attribute is replaced by an empty string and
-ensures the first line is not mistaken for a bulleted list item.
-
-=== Labeled lists
-Two colons or semicolons in a paragraph may be confused with a labeled
-list entry. Use the predefined `{two-colons}` and `{two-semicolons}`
-attributes to suppress this behavior, for example:
-
-  Qui in magna commodo{two-colons} est labitur dolorum an. Est ne
-  magna primis adolescens.
-
-Will be rendered as:
-
-Qui in magna commodo{two-colons} est labitur dolorum an. Est ne
-magna primis adolescens.
 
 
 == How can I selectively disable a quoted text substitution?

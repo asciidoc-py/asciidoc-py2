@@ -18,17 +18,17 @@ This is an overly large document, it probably needs to be refactored
 into a Tutorial, Quick Reference and Formal Reference.
 
 If you're new to AsciiDoc read this section and the <<X6,Getting
-Started>> section and take a look at the example AsciiDoc `.txt`
+Started>> section and take a look at the example AsciiDoc (`*.txt`)
 source files in the distribution `doc` directory.
 **********************************************************************
 
-Plain text is the most universal electronic document format, no matter
-what computing environment you use, you can always read and write
+Plain text is the most universal electronic document format,
+regardless of your computing environment you can always read and write
 plain text documentation. But for many applications plain text is not
-a viable presentation format.  HTML, PDF and roff (roff is used for
-man pages) are the most widely used UNIX presentation formats.
-DocBook is a popular UNIX documentation markup format which can be
-translated to HTML, PDF and other presentation formats.
+the prefered presentation format -- HTML and PDF formats are widely
+used as is the roff man page format.  DocBook is a popular
+documentation markup format which can be translated to HTML, PDF and
+other presentation formats.
 
 AsciiDoc is a plain text human readable/writable document format that
 can be translated to DocBook or HTML using the asciidoc(1) command.
@@ -38,8 +38,8 @@ use the AsciiDoc a2x(1) toolchain wrapper to produce PDF, EPUB, DVI,
 LaTeX, PostScript, man page, HTML and text formats.
 
 The AsciiDoc format is a useful presentation format in its own right:
-AsciiDoc files are unencumbered by markup and are easily viewed,
-proofed and edited.
+AsciiDoc markup is simple, intuitive and as such is easily proofed and
+edited.
 
 AsciiDoc is light weight: it consists of a single Python script and a
 bunch of configuration files. Apart from asciidoc(1) and a Python
@@ -47,29 +47,23 @@ interpreter, no other programs are required to convert AsciiDoc text
 files to DocBook or HTML. See <<X11,Example AsciiDoc Documents>>
 below.
 
-You write an AsciiDoc document the same way you would write a normal
-text document, there are no markup tags or arcane notations. Built-in
-AsciiDoc formatting rules have been kept to a minimum and are
-reasonably obvious.
-
 Text markup conventions tend to be a matter of (often strong) personal
 preference: if the default syntax is not to your liking you can define
 your own by editing the text based asciidoc(1) configuration files.
-You can create your own configuration files to translate AsciiDoc
+You can also create configuration files to translate AsciiDoc
 documents to almost any SGML/XML markup.
 
 asciidoc(1) comes with a set of configuration files to translate
-AsciiDoc articles, books or man pages to HTML or DocBook backend
+AsciiDoc articles, books and man pages to HTML or DocBook backend
 formats.
 
 .My AsciiDoc Itch
 **********************************************************************
 DocBook has emerged as the de facto standard Open Source documentation
-format. But DocBook is a complex language, the marked up text is
-difficult to read and even more difficult to write directly -- I found
-I was spending more time typing markup tags, consulting reference
-manuals and fixing syntax errors, than I was writing the
-documentation.
+format. But DocBook is a complex language, the markup is difficult to
+read and even more difficult to write directly -- I found I was
+spending more time typing markup tags, consulting reference manuals
+and fixing syntax errors, than I was writing the documentation.
 **********************************************************************
 
 
@@ -79,8 +73,7 @@ Getting Started
 Installing AsciiDoc
 ~~~~~~~~~~~~~~~~~~~
 See the `README` and `INSTALL` files for install prerequisites and
-procedures. Packagers take a look at <<X38,Appendix B: Packager
-Notes>>.
+procedures. Packagers take a look at <<X38,Packager Notes>>.
 
 [[X11]]
 Example AsciiDoc Documents
@@ -91,15 +84,17 @@ AsciiDoc web site and/or distributed examples:
 - Take a look at the linked examples on the AsciiDoc web site home
   page http://www.methods.co.nz/asciidoc/.  Press the 'Page Source'
   sidebar menu item to view corresponding AsciiDoc source.
-- Read the `.txt` source files in the distribution `./doc` directory
-  in conjunction with the corresponding HTML and DocBook XML files.
+- Read the `*.txt` source files in the distribution `./doc` directory
+  along with the corresponding HTML and DocBook XML files.
 
 
 AsciiDoc Document Types
 -----------------------
 There are three types of AsciiDoc documents: article, book and
 manpage. All document types share the same AsciiDoc format with some
-minor variations.
+minor variations. If you are familar with DocBook you will have
+noticed that AsciiDoc document types correspond to the same-named
+DocBook document types).
 
 Use the asciidoc(1) `-d` (`--doctype`) option to specify the AsciiDoc
 document type -- the default document type is 'article'.
@@ -139,9 +134,9 @@ Multi-part book::
 
 manpage
 ~~~~~~~
-Used to generate UNIX manual pages.  AsciiDoc manpage documents
-observe special header title and section naming conventions -- see the
-<<X1,Manpage Documents>> section for details.
+Used to generate roff format UNIX manual pages.  AsciiDoc manpage
+documents observe special header title and section naming conventions
+-- see the <<X1,Manpage Documents>> section for details.
 
 AsciiDoc defines the 'synopsis' <<X93,section markup template>> to
 generate the DocBook `refsynopsisdiv` section.
@@ -157,8 +152,8 @@ The asciidoc(1) command translates an AsciiDoc formatted file to the
 backend format specified by the `-b` (`--backend`) command-line
 option. asciidoc(1) itself has little intrinsic knowledge of backend
 formats, all translation rules are contained in customizable cascading
-configuration files. Backend specific attributes are listed in
-<<X88,Appendix H>>.
+configuration files. Backend specific attributes are listed in the
+<<X88,Backend Attributes>> section.
 
 AsciiDoc ships with the following predefined backend output formats:
 
@@ -180,11 +175,11 @@ The AsciiDoc <<X86,Preamble>> element generates a DocBook book
 [[X33]]
 xhtml11
 ~~~~~~~
-The default asciidoc(1) backend is `xhtml11` which generates XHTML 1.1
-markup styled with CSS2. Default output file have a `.html` extension.
-'xhtml11' document generation is influenced by the following
-optional attributes (the default behavior is to generate XHTML with no
-section numbers, embedded CSS and no linked admonition icon images):
+The default asciidoc(1) backend is `xhtml11` -- XHTML 1.1 markup
+styled with CSS2. Output files have a `.html` extension.  'xhtml11'
+document generation is influenced by the following optional attributes
+(the default behavior is to generate XHTML with no section numbers,
+embedded CSS and no linked admonition icon images):
 
 [[X35]]
 Stylesheets
@@ -248,9 +243,9 @@ footnote:[This is a rough structural guide, not a rigorous syntax
 definition]:
 
   Document      ::= (Header?,Preamble?,Section*)
-  Header        ::= (Title,(AuthorLine,RevisionLine?)?)
-  AuthorLine    ::= (FirstName,(MiddleName?,LastName)?,EmailAddress?)
-  RevisionLine  ::= (Revision?,Date)
+  Header        ::= (Title,(AuthorInfo,RevisionInfo?)?)
+  AuthorInfo    ::= (FirstName,(MiddleName?,LastName)?,EmailAddress?)
+  RevisionInfo  ::= (RevisionNumber?,RevisionDate,RevisionRemark?)
   Preamble      ::= (SectionBody)
   Section       ::= (Title,SectionBody?,(Section)*)
   SectionBody   ::= ((BlockTitle?,Block)|BlockMacro)+
@@ -278,6 +273,7 @@ Where:
 - A ListParagraph is a Paragraph with its 'listelement' option set.
 - A ListContinuation is a <<X15,list continuation element>>.
 
+[[X95]]
 Header
 ~~~~~~
 The Header contains a document title plus optional authorship and
@@ -287,8 +283,8 @@ revision information:
   document <<X17,title>>.
 - The header can be preceded by comments and <<X18,attribute
   entries>>.
-- Optional Author and Revision lines immediately follow the header
-  title.
+- Optional Author and Revision information immediately follows the
+  header title.
 - The header can include attribute entries.
 - The document header must be separated from the remainder of the
   document by one or more blank lines.
@@ -301,21 +297,21 @@ Here's an example AsciiDoc document header:
   v2.0, February 2003:
   Rewritten for version 2 release.
 
-The author line contains the author's name optionally followed by the
-author's email address. The author's name consists of a first name
-followed by optional middle and last names separated by white space.
-Multi-word first, middle and last names can be entered in the header
-author line using the underscore as a word separator. The email
-address comes last and must be enclosed in angle <> brackets. Author
-names cannot contain angle <> bracket characters.  Here a some
-examples of author lines:
+The author information line contains the author's name optionally
+followed by the author's email address. The author's name consists of
+a first name followed by optional middle and last names separated by
+white space.  Multi-word first, middle and last names can be entered
+in the header author line using the underscore as a word separator.
+The email address comes last and must be enclosed in angle <>
+brackets. Author names cannot contain angle <> bracket characters.
+Here a some examples of author information lines:
 
   Joe Bloggs <jbloggs@mymail.com>
   Joe Bloggs
   Vincent Willem van_Gogh
 
-The optional header revision line follows the author line.  The
-revision line can be one of two formats:
+The optional revision information line follows the author information
+line. The revision information can be one of two formats:
 
 . An optional document revision number followed by an optional
   revision date followed by an optional revision remark:
@@ -364,17 +360,17 @@ DocBook defines numerous elements for document meta-data, for example:
 copyrights, document history and authorship information.  The AsciiDoc
 header syntax provides for basic revision and author information --
 additional information such as copyrights, document history authorship
-details can be optionally included from a separate document
-information. The document information file can contain any DocBook
-elements that are allowed inside the DocBook 'articleinfo' and
+details can be optionally included from a separate 'document
+information file'. The document information file can contain any
+DocBook elements that are allowed inside the DocBook 'articleinfo' and
 'bookinfo' elements:
 
 - The document information file must be in the same directory as the
   source document and must be named like `<docname>-docinfo.xml`.  For
   example, if the source document is called `mydoc.txt` then the
   document information file would be named `mydoc-docinfo.xml`.
-- The document information file will be included in the DocBook output
-  if the `docinfo` attribute is defined, for example:
+- The document information file will only be included in the DocBook
+  output if the `docinfo` attribute is defined, for example:
 
   $ asciidoc -a docinfo -b docbook mydoc.txt
 
@@ -385,7 +381,7 @@ elements that are allowed inside the DocBook 'articleinfo' and
   In the case of HTML outputs however it's usually easier to put
   AsciiDoc markup in your source file directly after the header.
 
-NOTE: DocBook has a rich set of meta data elements, just how many of
+NOTE: DocBook has a rich set of meta data elements, just which of
 these elements are rendered is DocBook processor dependent.
 
 [[X86]]
@@ -399,9 +395,9 @@ Sections
 In addition to the document title (level 0), AsciiDoc supports four
 section levels: 1 (top) to 4 (bottom).  Section levels are delimited
 by section <<X17,titles>>.  Sections are translated using
-configuration file markup templates. AsciiDoc generates the following
-<<X60,intrinsic attributes>> specifically for use in section markup
-templates:
+configuration file <<X93,section markup templates>>. AsciiDoc
+generates the following <<X60,intrinsic attributes>> specifically for
+use in section markup templates:
 
 level::
 The `level` attribute is the section level number, it is normally just
@@ -423,9 +419,8 @@ AsciiDoc configuration files.  Section markup template names are
 derived as follows (in order of precedence):
 
 1. From the title's first positional attribute or 'template'
-   attribute to the name of a configuration file template. For
-   example, the following three section titles are functionally
-   equivalent:
+   attribute. For example, the following three section titles are
+   functionally equivalent:
 +
 .....................................................................
 [[terms]]
@@ -457,13 +452,13 @@ default to the 'sect1' section template.
 
 Section IDs
 ^^^^^^^^^^^
-Section IDs are auto-generated from section titles if the `sectids`
-attribute is defined (the default behavior). The primary purpose of
-this feature is to ensure persistence of table of contents links
-(permalinks): missing section IDs are generated dynamically by the
-JavaScript TOC generator *after* the page is loaded. If you link to a
-dynamically generated TOC address the page will load but the browser
-will ignore the (as yet ungenerated) section ID.
+If no explicit section ID is specified an ID will be synthesised from
+the section title.  The primary purpose of this feature is to ensure
+persistence of table of contents links (permalinks): the missing
+section IDs are generated dynamically by the JavaScript TOC generator
+*after* the page is loaded. If you link to a dynamically generated TOC
+address the page will load but the browser will ignore the (as yet
+ungenerated) section ID.
 
 The IDs are generated by the following algorithm:
 
@@ -478,6 +473,9 @@ The IDs are generated by the following algorithm:
 
 For example the title 'Jim's House' would generate the ID
 `_jim_s_house`.
+
+Section ID synthesis can be disabled by undefining the `sectids`
+attribute.
 
 [[X16]]
 Special Section Titles
@@ -531,23 +529,21 @@ backward compatibility.
 
 Inline Elements
 ~~~~~~~~~~~~~~~
-<<X34,Inline document elements>> are used to markup character
-formatting and various types of text substitution. Inline elements and
-inline element syntax is defined in the asciidoc(1) configuration
-files.
+<<X34,Inline document elements>> are used to format text and to
+perform various types of text substitution. Inline elements and inline
+element syntax is defined in the asciidoc(1) configuration files.
 
 Here is a list of AsciiDoc inline elements in the (default) order in
 which they are processed:
 
 Special characters::
         These character sequences escape special characters used by
-        the backend markup (typically "<", ">", and "&"). See
-        `[specialcharacters]` configuration file sections.
+        the backend markup (typically `<`, `>`, and `&` characters).
+        See `[specialcharacters]` configuration file sections.
 
 Quotes::
-        Characters that markup words and phrases; usually for
-        character formatting. See `[quotes]` configuration file
-        sections.
+        Elements that markup words and phrases; usually for character
+        formatting. See `[quotes]` configuration file sections.
 
 Special Words::
         Word or word phrase patterns singled out for markup without
@@ -555,13 +551,13 @@ Special Words::
         configuration file sections.
 
 Replacements::
-        Each Replacement defines a word or word phrase pattern to
+        Each replacement defines a word or word phrase pattern to
         search for along with corresponding replacement text. See
         `[replacements]` configuration file sections.
 
-Attributes::
-        Document attribute names enclosed in braces (attribute
-        references) are replaced by the corresponding attribute value.
+Attribute references::
+        Document attribute names enclosed in braces are replaced by
+        the corresponding attribute value.
 
 Inline Macros::
         Inline macros are replaced by the contents of parametrized
@@ -685,7 +681,7 @@ There are actually two types of quotes:
 
 Constrained quotes
 ++++++++++++++++++
-Quote text that must be bounded by white space or commonly adjoining
+Quoted must be bounded by white space or commonly adjoining
 punctuation characters. These are the most commonly used type of
 quote.
 
@@ -720,7 +716,7 @@ e^&#960;i^+1 = 0. H~2~O and x^10^. Some ^super text^
 and ~some sub text~
 
 Superscripts and subscripts are implemented as <<X52,unconstrained
-quotes>> so they can be escaped with a leading backslash and prefixed
+quotes>> and they can be escaped with a leading backslash and prefixed
 with with an attribute list.
 
 Line Breaks
@@ -863,7 +859,7 @@ example sidebar and admonition blocks.  Example:
   The second day
   ~~~~~~~~~~~~~~
 
-Floating titles do note appear in a document's table of contents.
+Floating titles do not appear in a document's table of contents.
 
 
 [[X42]]
@@ -892,25 +888,24 @@ BlockId Element
 ---------------
 A 'BlockId' is a single line block element containing a unique
 identifier enclosed in double square brackets. It is used to assign an
-identifier to the ensuing block element for use by referring links.
-For example:
+identifier to the ensuing block element. For example:
 
   [[chapter-titles]]
   Chapter titles can be ...
 
-The preceding example identifies the following paragraph so it can be
-linked from other location, for example with
+The preceding example identifies the ensuing paragraph so it can be
+referenced from other locations, for example with
 `<<chapter-titles,chapter titles>>`.
 
 'BlockId' elements can be applied to Title, Paragraph, List,
 DelimitedBlock, Table and BlockMacro elements.  The BlockId element
 sets the `{id}` attribute for substitution in the subsequent block's
-markup template. If a second argument is supplied it sets the
-`{reftext}` attribute which is used to set the DocBook `xreflabel`
+markup template. If a second positional argument is supplied it sets
+the `{reftext}` attribute which is used to set the DocBook `xreflabel`
 attribute.
 
-The 'BlockId' element has the same syntax and serves a similar
-function to the <<X30,anchor inline macro>>.
+The 'BlockId' element has the same syntax and serves the same function
+to the <<X30,anchor inline macro>>.
 
 [[X79]]
 AttributeList Element
@@ -919,23 +914,23 @@ An 'AttributeList' block element is an <<X21,attribute list>> on a
 line by itself:
 
 - 'AttributeList' attributes are only applied to the immediately
-  following block element -- the attributes are available for markup
-  template substitution.
-- A block element can be preceded by multiple 'AttributeList'
-  elements.
-- Often the first attribute in the list is used to specify the
-  following element's <<X23,style>>.
+  following block element -- the attributes are made available to the
+  block's markup template.
+- Multiple contiguous 'AttributeList' elements are additively combined
+  in the order they appear..
+- The first positional attribute in the list is often used to specify
+  the ensuing element's <<X23,style>>.
 
 Attribute value substitution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-By default only attribute references are substituted within attribute
-values, this is because not all attributes are destined to be marked
-up and rendered as text (for example the table 'cols' attribute). To
-perform normal inline text substitutions (special characters, quotes,
-macros, replacements) on an attribute value you need to enclose it in
-single quotes. In the following quote block the second attribute value
-in the AttributeList is quoted to ensure the 'http' macro is expanded
-to a hyperlink.
+By default, only substitutions that take place inside attribute list
+values are attribute references, this is because not all attributes
+are destined to be marked up and rendered as text (for example the
+table 'cols' attribute). To perform normal inline text substitutions
+(special characters, quotes, macros, replacements) on an attribute
+value you need to enclose it in single quotes. In the following quote
+block the second attribute value in the AttributeList is quoted to
+ensure the 'http' macro is expanded to a hyperlink.
 
 ---------------------------------------------------------------------
 [quote,'http://en.wikipedia.org/wiki/Samuel_Johnson[Samuel Johnson]']
@@ -966,7 +961,7 @@ Role contains a string used to classify or subclassify an element:
 
 |reftext |docbook |
 'reftext' is used to set the DocBook 'xreflabel' attribute.
-Can also be set by the 'BlockId' element.
+The 'reftext' attribute can an also be set by the 'BlockId' element.
 
 |====================================================================
 
@@ -975,7 +970,7 @@ Paragraphs
 ----------
 Paragraphs are blocks of text terminated by a blank line, the end of
 file, or the start of a DelimitedBlock.  Paragraph markup is specified
-by configuration file `[paradef*]` sections.
+by configuration file `[paradef-*]` sections.
 
 Normal paragraphs consist of one or more non-blank lines of text. The
 first line must start hard against the left margin (no intervening
@@ -989,7 +984,30 @@ literal paragraph style
 Literal paragraphs are rendered verbatim in a monospaced font without
 any distinguishing background or border.  By default there is no text
 formatting or substitutions within Literal paragraphs apart from
-Special Characters and Callouts. For example:
+Special Characters and Callouts.
+
+The 'literal' style is applied to indented paragraphs i.e. where the
+first line of the paragraph is indented by one or more space or tab
+characters.  For example:
+
+---------------------------------------------------------------------
+  Consul *necessitatibus* per id,
+  consetetur, eu pro everti postulant
+  homero verear ea mea, qui.
+---------------------------------------------------------------------
+
+Renders:
+
+  Consul *necessitatibus* per id,
+  consetetur, eu pro everti postulant
+  homero verear ea mea, qui.
+
+NOTE: Because <<X64,lists>> can be indented it's possible for your
+indented paragraph to be misinterpreted as a list -- in situations
+like this apply the 'literal' style to a normal paragraph.
+
+Instead of using a paragraph indent you could applie the 'literal'
+style explicitly, for example:
 
 ---------------------------------------------------------------------
 [literal]
@@ -1005,6 +1023,7 @@ Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 
+[[X94]]
 verse paragraph style
 ~~~~~~~~~~~~~~~~~~~~~
 The 'verse' paragraph <<X23,style>> preserves line boundaries and is
@@ -1024,41 +1043,18 @@ Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 
-
-Indented paragraphs
-~~~~~~~~~~~~~~~~~~~
-Indented paragraphs (the first line indented by one or more space or
-tab characters) are rendered using the <<X85,literal paragraph
-style>>.  For example:
-
----------------------------------------------------------------------
-  Consul *necessitatibus* per id,
-  consetetur, eu pro everti postulant
-  homero verear ea mea, qui.
----------------------------------------------------------------------
-
-Renders:
-
-  Consul *necessitatibus* per id,
-  consetetur, eu pro everti postulant
-  homero verear ea mea, qui.
-
-NOTE: Because <<X64,lists>> can be indented it's possible for your
-indented paragraph to be misinterpreted as a list -- in situations
-like this apply the 'literal' style to a normal paragraph.
-
 [[X28]]
 Admonition Paragraphs
 ~~~~~~~~~~~~~~~~~~~~~
-'Tip', 'Note', 'Important', 'Warning' and 'Caution' paragraph
-definitions support the corresponding DocBook admonishment elements --
-just write a normal paragraph but place `NOTE:`, `TIP:`, `IMPORTANT:`,
-`WARNING:` or `CAUTION:` as the first word of the paragraph. For
-example:
+'TIP', 'NOTE', 'IMPORTANT', 'WARNING' and 'CAUTION' admonishment
+paragraph styles are generated by placing `NOTE:`, `TIP:`,
+`IMPORTANT:`, `WARNING:` or `CAUTION:` as the first word of the
+paragraph. For example:
 
   NOTE: This is an example note.
 
-or the alternative syntax:
+Alternatively, you can specify the paragraph admonition style
+explicity using an <<X79,AttributeList element>>. For example:
 
   [NOTE]
   This is an example note.
@@ -1067,7 +1063,7 @@ Renders:
 
 NOTE: This is an example note.
 
-TIP: If your admonition is more than a single paragraph use an
+TIP: If your admonition requires more than a single paragraph use an
 <<X22,admonition block>> instead.
 
 [[X47]]
@@ -1080,9 +1076,9 @@ and `--icons-dir` options can be used to set the appropriate XSL
 Stylesheets parameters.
 
 By default the asciidoc(1) `xhtml11` and `html4` backends generate
-text captions instead of icon image links. To generate links to icon
-images define the <<X45,`icons`>> attribute, for example using the `-a
-icons` command-line option.
+text captions instead of admonition icon image links. To generate
+links to icon images define the <<X45,`icons`>> attribute, for example
+using the `-a icons` command-line option.
 
 The <<X44,`iconsdir`>> attribute sets the location of linked icon
 images.
@@ -1095,9 +1091,9 @@ specify the path of the linked image. For example:
 
 Use the `caption` attribute to customize the admonition captions (not
 applicable to `docbook` backend). The following example suppresses the
-icon image and customizes the caption of a NOTE admonition (undefining
-the `icons` attribute with `icons=None` is only necessary if
-<<X45,admonition icons>> have been enabled):
+icon image and customizes the caption of a 'NOTE' admonition
+(undefining the `icons` attribute with `icons=None` is only necessary
+if <<X45,admonition icons>> have been enabled):
 
   [icons=None, caption="My Special Note"]
   NOTE: This is my special note.
@@ -1110,7 +1106,7 @@ Delimited Blocks
 Delimited blocks are blocks of text enveloped by leading and trailing
 delimiter lines (normally a series of four or more repeated
 characters). The behavior of Delimited Blocks is specified by entries
-in configuration file `[blockdef*]` sections.
+in configuration file `[blockdef-*]` sections.
 
 Predefined Delimited Blocks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1181,17 +1177,13 @@ int main() {
 --------------------------------------
 
 By convention <<X59,filter blocks>> use the listing block syntax and
-are implemented as listing block styles.
+are implemented as distinct listing block styles.
 
 [[X65]]
 Literal Blocks
 ~~~~~~~~~~~~~~
-'LiteralBlocks' behave just like LiteralParagraphs except you don't
-have to indent the contents.
-
-If the 'listing' style is applied to a LiteralBlock it will be
-rendered as a ListingBlock (this is handy if you have a listing
-containing a ListingBlock).
+'LiteralBlocks' are rendered just like <<X85,literal paragraphs>>.
+Example:
 
 ---------------------------------------------------------------------
 ...................................
@@ -1207,6 +1199,10 @@ Consul *necessitatibus* per id,
 consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 ...................................
+
+If the 'listing' style is applied to a LiteralBlock it will be
+rendered as a ListingBlock (this is handy if you have a listing
+containing a ListingBlock).
 
 Sidebar Blocks
 ~~~~~~~~~~~~~~
@@ -1239,14 +1235,14 @@ Apply the 'abstract' style to generate an abstract, for example:
 ---------------------------------------------------------------------
 [abstract]
 ************************************************
-In this paper we will attempt to...
+In this paper we will ...
 ************************************************
 ---------------------------------------------------------------------
 
 [[X26]]
 Comment Blocks
 ~~~~~~~~~~~~~~
-The contents of CommentBlocks are not processed; they are useful for
+The contents of 'CommentBlocks' are not processed; they are useful for
 annotations and for excluding new or outdated content that you don't
 want displayed. CommentBlocks are never written to output files.
 Example:
@@ -1342,12 +1338,12 @@ Example Blocks
 ~~~~~~~~~~~~~~
 'ExampleBlocks' encapsulate the DocBook Example element and are used
 for, well, examples.  Example blocks can be titled by preceding them
-with a 'BlockTitle'.  DocBook toolchains normally number examples and
-generate a 'List of Examples' backmatter section.
+with a 'BlockTitle'.  DocBook toolchains will normally automatically
+number examples and generate a 'List of Examples' backmatter section.
 
-Example blocks are delimited by lines of equals characters and you can
-put any block elements apart from Titles, BlockTitles and Sidebars)
-inside an example block. For example:
+Example blocks are delimited by lines of equals characters and can
+contain any block elements apart from Titles, BlockTitles and
+Sidebars) inside an example block. For example:
 
 ---------------------------------------------------------------------
 .An example
@@ -1381,14 +1377,14 @@ adolescens.
 Admonition Blocks
 ~~~~~~~~~~~~~~~~~
 The 'ExampleBlock' definition includes a set of admonition
-<<X23,styles>> (NOTE, TIP, IMPORTANT, WARNING, CAUTION) for generating
-admonition blocks (admonitions containing more than just a
-<<X28,simple paragraph>>).  Just precede the ExampleBlock with an
-attribute list containing the admonition style name. For example:
+<<X23,styles>> ('NOTE', 'TIP', 'IMPORTANT', 'WARNING', 'CAUTION') for
+generating admonition blocks (admonitions containing more than a
+<<X28,single paragraph>>).  Just precede the 'ExampleBlock' with an
+attribute list specifying the admonition style name. For example:
 
 ---------------------------------------------------------------------
 [NOTE]
-.A NOTE block
+.A NOTE admonition block
 =====================================================================
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens.
@@ -1405,7 +1401,7 @@ adolescens.
 Renders:
 
 [NOTE]
-.A NOTE block
+.A NOTE admonition block
 =====================================================================
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens.
@@ -1449,7 +1445,7 @@ Lists
 - A comment block or a comment line block macro element will terminate
   a list -- use inline comment lines to put comments inside lists.
 - The `listindex` <<X60,intrinsic attribute>> is the current list item
-  index (1..). If this attribute is not inside a list then it's value
+  index (1..). If this attribute is used outside a list then it's value
   is the number of items in the most recently closed list. Useful for
   displaying the number of items in a list.
 
@@ -1501,9 +1497,10 @@ space then the item text. Examples:
 ..... Upper case roman numbered list item.
 .....................................................................
 
-You can use the 'style' attribute to specify an alternative numbering
-style.  The numbered list style can be one of the following values:
-'arabic', 'loweralpha', 'upperalpha', 'lowerroman', 'upperroman'.
+You can use the 'style' attribute (also the first positional
+attribute) to specify an alternative numbering style.  The numbered
+list style can be one of the following values: 'arabic', 'loweralpha',
+'upperalpha', 'lowerroman', 'upperroman'.
 
 Here are some examples of bulleted and numbered lists:
 
@@ -1636,8 +1633,9 @@ Dolor::
 
 Horizontal labeled list style
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-The 'horizontal' labeled list style places the list text side-by-side
-with the label instead of under the label. Here is an example:
+The 'horizontal' labeled list style (also the first positional
+attribute) places the list text side-by-side with the label instead of
+under the label. Here is an example:
 
 ---------------------------------------------------------------------
 [horizontal]
@@ -1676,10 +1674,10 @@ labitur dolorum an. Est ne magna primis adolescens.
 =====================================================================
 - Current PDF toolchains do not make a good job of determining
   the relative column widths for horizontal labeled lists.
-- If you are generating DocBook markup then horizontal labeled lists
-  should not be nested because the 'DocBook XML V4.2' DTD does not
-  permit nested informal tables (although <<X13,DocBook XSL
-  Stylesheets>> and <<X31,dblatex>> process them correctly).
+- Nested horizontal labeled lists will generate DocBook validation
+  errors because the 'DocBook XML V4.2' DTD does not permit nested
+  informal tables (although <<X13,DocBook XSL Stylesheets>> and
+  <<X31,dblatex>> process them correctly).
 - The label width can be set as a percentage of the total width by
   setting the 'width' attribute e.g. `width="10%"`
 =====================================================================
@@ -1750,7 +1748,7 @@ For working examples see the `article.txt` and `book.txt` documents in
 the AsciiDoc `./doc` distribution directory.
 
 NOTE: To generate valid DocBook output bibliography lists must be
-located in a bibliography section.
+located in a <<X93,bibliography section>>.
 
 [[X15]]
 List Item Continuation
@@ -1861,12 +1859,12 @@ finally a reference to the second footnote footnoteref:[note2].
 Indexes
 -------
 The shipped AsciiDoc configuration includes the inline macros for
-generating document index entries.
+generating DocBook index entries.
 
 `indexterm:[<primary>,<secondary>,<tertiary>]`::
 `(((<primary>,<secondary>,<tertiary>)))`::
-    This inline macro generates an index term (the <secondary> and
-    <tertiary> attributes are optional). For example
+    This inline macro generates an index term (the `<secondary>` and
+    `<tertiary>` positional attributes are optional). Example:
     `indexterm:[Tigers,Big cats]` (or, using the alternative syntax
     `(((Tigers,Big cats)))`.  Index terms that have secondary and
     tertiary entries also generate separate index terms for the
@@ -1889,8 +1887,8 @@ an index at the point an 'Index' section appears in source document.
 
 Callouts
 --------
-Callouts are a mechanism for annotating verbatim text (source code,
-computer output and user input for example). Callout markers are
+Callouts are a mechanism for annotating verbatim text (for example:
+source code, computer output and user input). Callout markers are
 placed inside the annotated text while the actual annotations are
 presented in a callout list after the annotated text. Here's an
 example:
@@ -1938,17 +1936,18 @@ Which renders:
 <3> Some sort of Windows 3.1 hack.
 
 .Explanation
-- The callout marks are whole numbers enclosed in angle brackets that
-  refer to an item index in the following callout list.
-- By default callout marks are confined to LiteralParagraphs,
-  LiteralBlocks and ListingBlocks (although this is a configuration
-  file option and can be changed).
+- The callout marks are whole numbers enclosed in angle brackets --
+  they refer to the correspondingly numbered item in the following
+  callout list.
+- By default callout marks are confined to 'LiteralParagraphs',
+  'LiteralBlocks' and 'ListingBlocks' (although this is a
+  configuration file option and can be changed).
 - Callout list item numbering is fairly relaxed -- list items can
   start with `<n>`, `n>` or `>` where `n` is the optional list item
   number (in the latter case list items starting with a single `>`
   character are implicitly numbered starting at one).
-- Callout lists should not be nested -- start list items hard against
-  the left margin.
+- Callout lists should not be nested.
+- Callout lists start list items hard against the left margin.
 - If you want to present a number inside angle brackets you'll need to
   escape it with a backslash to prevent it being interpreted as a
   callout mark.
@@ -2023,12 +2022,11 @@ macros).  Here are some examples:
 - The optional `<target>` cannot contain white space characters.
 - `<attrlist>` is a <<X21,list of attributes>> enclosed in square
   brackets.
-- `]` characters in attribute lists that are enclosed in `[]` brackets
-  must be escaped with a backslash.
-- Expansion of non-system macro references can normally be escaped by
-  prefixing a backslash character (see the AsciiDoc 'FAQ' for examples
-  of exceptions to this rule).
-- System macros cannot be escaped.
+- `]` characters inside attribute lists must be escaped with a
+  backslash.
+- Expansion of macro references can normally be escaped by prefixing a
+  backslash character (see the AsciiDoc 'FAQ' for examples of
+  exceptions to this rule).
 - Attribute references in block macros are expanded.
 - The substitutions performed prior to Inline macro macro expansion
   are determined by the inline context.
@@ -2073,11 +2071,8 @@ mailto:joe.bloggs@foobar.com[email Joe Bloggs]
 
 joe.bloggs@foobar.com
 
-- If the `<target>` necessitates space characters they should be
-  replaced by `%20`. For example `large%20image.png`.
-- Define an attribute entry if you refer to the same URL more than
-  once, this will make your document <<X62,easier to maintain and
-  easier to read>>.
+If the `<target>` necessitates space characters use `%20`, for example
+`large%20image.png`.
 
 Internal Cross References
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2111,8 +2106,8 @@ Creates a hypertext link to a document anchor.
   <<<id>,<caption>>>
   xref:<id>[<caption>]
 
-The `<id>` refers to an existing anchor `<id>`. The optional
-`<caption>` is the link's displayed text. Example:
+The `<id>` refers to an anchor ID. The optional `<caption>` is the
+link's displayed text. Example:
 
   <<X21,attribute lists>>
 
@@ -2153,8 +2148,6 @@ Example:
 You can use the `<filename>#<id>` syntax to refer to an anchor within
 a target document but this usually only makes sense when targeting
 HTML documents.
-
-Images can serve as hyperlinks using the <<X9,`image` macro>>.
 
 [[X9]]
 Images
@@ -2239,18 +2232,18 @@ Block Identifier
 ^^^^^^^^^^^^^^^^
 The Block Identifier macro sets the `id` attribute and has the same
 syntax as the <<X30,anchor inline macro>> since it performs
-essentially the same function -- block templates employ the `id`
-attribute as a block link target. For example:
+essentially the same function -- block templates use the `id`
+attribute as a block element ID. For example:
 
   [[X30]]
 
-This is equivalent to the `[id="X30"]` block attribute list.
+This is equivalent to the `[id="X30"]` <<X79,AttributeList element>>).
 
 [[X49]]
 Images
 ^^^^^^
-Formal titled images are inserted into the output document using the
-'image' macro. The syntax is:
+The 'image' block macro is used to display images in a block context.
+The syntax is:
 
   image::<target>[<attributes>]
 
@@ -2258,8 +2251,9 @@ The block `image` macro has the same <<X55,macro attributes>> as it's
 <<X9,inline image macro>> counterpart.
 
 Block images can be titled by preceding the 'image' macro with a
-'BlockTitle'.  DocBook toolchains normally number examples and
-generate a 'List of Figures' backmatter section.
+'BlockTitle'.  DocBook toolchains normally number titled block images
+and optionally list them in an automatically gnerated 'List of
+Figures' backmatter section.
 
 This example:
 
@@ -2447,7 +2441,7 @@ Executable system macros
 The 'eval', 'sys' and 'sys2' block macros exhibit the same behavior as
 their same named <<X24, system attribute references>>. The difference
 is that system macros occur in a block macro context whereas system
-attributes are confined to an inline context where attribute
+attributes are confined to inline contexts where attribute
 substitution is enabled.
 
 The following example displays a long directory listing inside a
@@ -2528,14 +2522,10 @@ Macro Definitions
 Each entry in the configuration `[macros]` section is a macro
 definition which can take one of the following forms:
 
-`<pattern>=<name>[<subslist]`::
-        Inline macro definition.
-`<pattern>=#<name>[<subslist]`::
-        Block macro definition.
-`<pattern>=+<name>[<subslist]`::
-        System macro definition.
-`<pattern>`::
-        Delete the existing macro with this `<pattern>`.
+`<pattern>=<name>[<subslist]`:: Inline macro definition.
+`<pattern>=#<name>[<subslist]`:: Block macro definition.
+`<pattern>=+<name>[<subslist]`:: System macro definition.
+`<pattern>`:: Delete the existing macro with this `<pattern>`.
 
 `<pattern>` is a Python regular expression and `<name>` is the name of
 a markup template. If `<name>` is omitted then it is the value of the
@@ -2745,12 +2735,12 @@ Separated Values') formats are cell oriented -- the table is treated
 as a sequence of cells -- there are no explicit row separators.
 
 - 'psv' prefixes each cell with a separator whereas 'dsv' delimits
-  cells with a separator, that really the only difference (apart from
-  different default separators).
+  cells with a separator.
 - 'psv' and 'dsv' separators are Python regular expressions.
 - The default 'psv' separator contains <<X84, cell specifier>> related
   named regular expression groups.
-- The default 'dsv' separator is `:|\n` (a colon or a line break).
+- The default 'dsv' separator is `:|\n` (a colon or a new line
+  character).
 - 'psv' and 'dsv' cell separators can be escaped by preceding them
   with a backslash character.
 
@@ -2766,9 +2756,7 @@ database data.
 [[X69]]
 Table attributes
 ~~~~~~~~~~~~~~~~
-Individual tables are customized by an optional <<X79,AttributeList>>
-preceding the table. Specify attributes when you want to change the
-default table format:
+Tables can be customized by the following attributes:
 
 format::
 'psv' (default), 'dsv' or 'csv' (See <<X68, Table Data Formats>>).
@@ -2795,9 +2783,9 @@ The following values are valid: 'left', 'right', and 'center'.
 float::
 Use the 'float' attribute to float the table 'left' or 'right' on the
 page (works with HTML outputs only, has no effect on DocBook outputs).
-Floating only makes sense in conjunction with the table 'width'
-attribute set to less than 100% (otherwise the table will take up all
-the available space).  'float' and 'align' attributes are mutually
+Floating only makes sense in conjunction with a table 'width'
+attribute value of less than 100% (otherwise the table will take up
+all the available space).  'float' and 'align' attributes are mutually
 exclusive.  Use the `unfloat::[]` block macro to stop floating.
 
 halign::
@@ -2813,9 +2801,10 @@ The following values are valid: 'top', 'bottom', and 'middle'
 <<X84,Cell specifiers>>.
 
 options::
-The 'options' attribute can contain the following comma separated
-values: 'header', 'footer'. By default header and footer rows are
-omitted.
+The 'options' attribute can contain comma separated values, for
+example: 'header', 'footer'. By default header and footer rows are
+omitted.  See <<X74,attribute options>> for a complete list of
+available table options.
 
 cols::
 The 'cols' attribute is a comma separated list of <<X70,column
@@ -2842,27 +2831,24 @@ implemented using a filter.
 
 [[X89]]
 .DocBook table widths
-*********************************************************************
+**********************************************************************
 The AsciiDoc docbook backend generates CALS tables. CALS tables do not
 support a table width attribute -- table width can only be controlled
-using absolute column widths. If the AsciiDoc table width attribute is
-specified the docbook backend emits absolute column widths (see
-calculated <<X72,markup attributes>> ); if no table width is specified
-proportional column widths are used and the table occupies all of the
-available width.
+by specifying absolute column widths.
 
-Specifying fixed column widths not media independent because different
-presentation media have different physical characteristics e.g.
-printed paper vs. web browsers.  To get round this limitation 'DocBook
-XSL Stylesheets' have implemented
-http://www.sagehill.net/docbookxsl/Tables.html#TableWidth[processing
-instructions] for setting the table width as a percentage of the
-available width. AsciiDoc emits these processing instructions and, to
-facilitate their use, uses proportional column widths (by defaulting
-the AsciiDoc 'pageunits' attribute to '*'). To generate DocBook tables
-with fixed  widths set 'pageunits' to a CALS absolute unit such as
-'pt'.
-*********************************************************************
+Specifying absolute column widths is not media independent because
+different presentation media have different physical dimensions. To
+get round this limitation 'DocBook XSL Stylesheets' have implemented
+http://www.sagehill.net/docbookxsl/Tables.html#TableWidth[table width
+processing instructions] for setting the table width as a percentage
+of the available width. AsciiDoc emits these processing instructions
+if the 'width' attribute is set along with proportional column widths
+(the AsciiDoc docbook backend 'pageunits' attribute defaults to '*').
+
+To generate DocBook tables with absolute column widths set the
+'pageunits' attribute to a CALS absolute unit such as 'pt' and set the
+'pagewidth' attribute to match the width of the presentation media.
+**********************************************************************
 
 [[X70]]
 Column Specifiers
@@ -2887,16 +2873,17 @@ style values and is formatted like:
   [<horizontal>][.<vertical>]
 +
 Where `<horizontal>` and `<vertical>` are one of the following
-characters: `<`, `^` or `>` which represent `left`, `center` and
-`right` horizontal alignment or `top`, `middle` and `bottom` vertical
+characters: `<`, `^` or `>` which represent 'left', 'center' and
+'right' horizontal alignment or 'top', 'middle' and 'bottom' vertical
 alignment respectively.
 
 - A `<multiplier>` can be used to specify repeated columns e.g.
-  `cols="4*<"` specifies four left-justified columns. Default value 1.
+  `cols="4*<"` specifies four left-justified columns. The default
+  multiplier value is 1.
 - The `<style>` name specifies a <<X71,table style>> to used to markup
   column cells (you can use the full style names if you wish but the
   first letter is normally sufficient).
-- Column specific styles are not applied to 'header' row formatting.
+- Column specific styles are not applied to header rows.
 
 [[X84]]
 Cell Specifiers
@@ -2931,7 +2918,7 @@ Table styles
 Table styles can be applied to the entire table (by setting the
 'style' attribute in the table's attribute list) or on a per column
 basis (by specifying the style in the table's <<X69,cols attribute>>).
-Tables come with the following predefined styles:
+Table data can be formatted using the following predefined styles:
 
 default::
 The default style: AsciiDoc inline text formatting; blank lines are
@@ -2958,19 +2945,18 @@ limitations>>.
 
 literal::
 No text formatting; monospaced font; all line breaks are retained
-(like AsciiDoc 'LiteralBlock').
+(the same as the AsciiDoc <<X65,LiteralBlock>> element).
 
 verse::
-Text formatting; all line breaks are retained (c.f. AsciiDoc delimited
-block 'verse' style).
+All line breaks are retained (the same as the AsciiDoc <<X94,verse
+paragraph style>>).
 
 [[X72]]
 Markup attributes
 ~~~~~~~~~~~~~~~~~
 AsciiDoc makes a number of attributes available to table markup
-templates and tags. Both absolute and percentage width values are
-available. Column specific attributes are available when substituting
-the 'colspec' cell data tags.
+templates and tags. Column specific attributes are available when
+substituting the 'colspec' cell data tags.
 
 pageunits::
 DocBook backend only. Specifies table column absolute width units.
@@ -3026,8 +3012,8 @@ Number of additional rows the cell should span (0...).
 
 Nested tables
 ~~~~~~~~~~~~~
-An alternative table syntax using a '!' character instead of a '|'
-character is provided to allow a single level of table nesting.
+An alternative 'psv' separator character '!' can be used (instead of
+'|') in nested tables. This allows a single level of table nesting.
 Columns containing nested tables must use the 'asciidoc' style. An
 example can be found in `./examples/website/newtables.txt`.
 
@@ -3053,7 +3039,8 @@ NOTE: Technically you can nest DocBook 4 tables one level using the
   not all AsciiDoc elements produce valid DocBook inside table cells.
   If you get validation errors running `a2x(1)` try the `--no-xmllint`
   option, toolchains will often process nested block elements such as
-  sidebar blocks and floating titles correctly.
+  sidebar blocks and floating titles correctly even though, strictly
+  speaking, they are not legal.
 
 - Text formatting in cells using the 'monospaced' table style will
   raise validation errors because the DocBook 'literal' element was
@@ -3062,18 +3049,18 @@ NOTE: Technically you can nest DocBook 4 tables one level using the
   the font style in DocBook.
 
 - Cell alignments are ignored for 'verse', 'literal' or 'asciidoc'
-   table styles.
+  table styles.
 
 
 [[X1]]
 Manpage Documents
 -----------------
-Sooner or later, if you program for a UNIX environment, you're going
+Sooner or later, if you program in a UNIX environment, you're going
 to have to write a man page.
 
 By observing a couple of additional conventions you can compose
-AsciiDoc files that will translate to a DocBook refentry (man page)
-document.  The resulting DocBook file can then be translated to the
+AsciiDoc files that will generate DocBook refentry (man page)
+documents.  The resulting DocBook file can then be translated to the
 native roff man page format (or other formats).
 
 For example, the `asciidoc.1.txt` file in the AsciiDoc distribution
@@ -3105,10 +3092,10 @@ To find out more about man pages view the `man(7)` manpage
 
 Document Header
 ~~~~~~~~~~~~~~~
-A document Header is mandatory. The title line contains the man page
-name followed immediately by the manual section number in brackets,
-for example 'ASCIIDOC(1)'. The title name should not contain white
-space and the manual section number is a single digit optionally
+A manpage document Header is mandatory. The title line contains the
+man page name followed immediately by the manual section number in
+brackets, for example 'ASCIIDOC(1)'. The title name should not contain
+white space and the manual section number is a single digit optionally
 followed by a single character.
 
 The NAME Section
@@ -3443,8 +3430,8 @@ file or edit the global `asciidoc.conf` configuration file:
   ^=
   ~=
 
-<<X52,Unconstrained quotes>> are differentiated by prefixing the tag
-name with a hash character, for example:
+<<X52,Unconstrained quotes>> are differentiated from constrained
+quotes by prefixing the tag name with a hash character, for example:
 
   __=#emphasis
 
@@ -3463,16 +3450,16 @@ value consists of a list of words and phrases to be marked up. For
 example:
 
   [specialwords]
-  strongwords=NOTE: IMPORTANT:
+  strongwords=NOTE IMPORTANT
 
   [strongwords]
   <strong>{words}</strong>
 
-The examples specifies that any occurrence of `NOTE:` or `IMPORTANT:`
+The examples specifies that any occurrence of `NOTE` or `IMPORTANT`
 should appear in a bold font.
 
 Words and word phrases are treated as Python regular expressions: for
-example, the word `^NOTE:` would only match `NOTE:` if appeared at
+example, the word `^NOTE` would only match `NOTE` if appeared at
 the start of a line.
 
 AsciiDoc comes with three built-in Special Word types:
@@ -3603,37 +3590,6 @@ precedes the document header, for example:
 
   :lang: es
 
-Configuration files (if they exist) will be processed in the following
-order:
-
-1. First default global configuration files from the asciidoc program
-   directory are loaded:
-
-   asciidoc.conf
-   xhtml11.conf
-
-2. Then, from the users home `~/.asciidoc` directory.  This is were
-   you put customization specific to  your own asciidoc documents:
-
-   asciidoc.conf
-   xhtml11.conf
-   xhtml11-article.conf
-
-3. Next from the source document project directory (the first three
-   apply to all documents in the directory, the last two are specific
-   to the mydoc.txt document):
-
-   asciidoc.conf
-   xhtml11.conf
-   xhtml11-article.conf
-   mydoc.conf
-   mydoc-xhtml11.conf
-
-4. Finally the file specified by the `-f` command-line option is
-   loaded:
-
-   extra.conf
-
 TIP: Use the asciidoc(1) `-v` (`--verbose`) command-line option to see
 which configuration files are loaded and the order in which they are
 loaded.
@@ -3644,7 +3600,7 @@ Document Attributes
 A document attribute is comprised of a 'name' and a textual 'value'
 and is used for textual substitution in AsciiDoc documents and
 configuration files. An attribute reference (an attribute name
-enclosed in braces) is replaced by its corresponding attribute
+enclosed in braces) is replaced by the corresponding attribute
 value.
 
 There are four sources of document attributes (from highest to lowest
@@ -3658,7 +3614,7 @@ precedence):
 Within each of these divisions the last processed entry takes
 precedence.
 
-IMPORTANT: If an attribute is not defined then the line containing the
+NOTE: If an attribute is not defined then the line containing the
 attribute reference is dropped. This property is used extensively in
 AsciiDoc configuration files to facilitate conditional markup
 generation.
@@ -3714,7 +3670,6 @@ AsciiDoc User Manual
 :email:     srackham@gmail.com
 :revdate:   April 23, 2004
 :revnumber: 5.1.1
-:keywords: linux, ralink, debian, wireless
 ---------------------------------------------------------------------
 
 Which creates these attributes:
@@ -3722,9 +3677,14 @@ Which creates these attributes:
   {author}, {firstname}, {lastname}, {authorinitials}, {email},
   {revdate}, {revnumber}, {keywords}
 
-The preceding example is equivalent to the standard AsciiDoc two line
-document header (actually it's a little bit different because of the
-addition of the `{keywords}` attribute).
+The previous example is equivalent to this <<X95,document header>>:
+
+---------------------------------------------------------------------
+AsciiDoc User Manual
+====================
+Stuart Rackham <srackham@gmail.com>
+5.1.1, April 23, 2004
+---------------------------------------------------------------------
 
 Setting configuration entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3795,11 +3755,13 @@ comma (`&#44;`) and double-quote (`&#34;`) character entities:
 
 .Attribute list behavior
 - If one or more attribute values contains a comma the all string
-  values must be quoted (enclosed in quotation mark characters).
+  values must be quoted (enclosed in double quotation mark
+  characters).
 - If the list contains any named or quoted attributes then all string
   attribute values must be quoted.
-- To include a quotation mark (") character in a quoted attribute
-  value the the quotation mark must be escaped with a backslash.
+- To include a double quotation mark (") character in a quoted
+  attribute value the the quotation mark must be escaped with a
+  backslash.
 - List attributes take precedence over existing attributes.
 - List attributes can only be referenced in configuration file markup
   templates and tags, they are not available elsewhere in the
@@ -3837,8 +3799,8 @@ attribute values to macro markup templates.
 
 Attribute References
 --------------------
-An attribute references is an attribute name (possibly followed by an
-additional parameters) enclosed in braces.  When an attribute
+An attribute reference is an attribute name (possibly followed by an
+additional parameters) enclosed in curly braces.  When an attribute
 reference is encountered it is evaluated and replaced by its
 corresponding text value.  If the attribute is undefined the line
 containing the attribute is dropped.
@@ -3954,8 +3916,8 @@ Attribute value map::
 System Attribute References
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 System attribute references generate the attribute text value by
-executing a predefined action that is parametrized by a single
-argument. The syntax is `{<action>:<argument>}`.
+executing a predefined action that is parametrized by one or more
+arguments. The syntax is `{<action>:<arguments>}`.
 
 `{counter:<attrname>[:<seed>]}`::
         Increments the document attribute (if the attribute is
@@ -4030,18 +3992,18 @@ argument. The syntax is `{<action>:<argument>}`.
 - System attribute arguments can contain non-system attribute
   references.
 - Closing brace characters inside system attribute arguments must be
-  escaped them with a backslash.
+  escaped with a backslash.
 
 [[X60]]
 Intrinsic Attributes
 --------------------
 Intrinsic attributes are simple attributes that are created
-automatically from AsciiDoc document header parameters, asciidoc(1)
-command-line arguments, execution parameters along with attributes
-defined in the default configuration files.  Here's the list of
+automatically from: AsciiDoc document header parameters; asciidoc(1)
+command-line arguments; attributes defined in the default
+configuration files; the execution context.  Here's the list of
 predefined intrinsic attributes:
 
-  {amp}                 ampersand (&) character
+  {amp}                 ampersand (&) character entity
   {asciidoc-dir}        the asciidoc(1) application directory
   {asciidoc-file}       the full path name of the asciidoc(1) script
   {asciidoc-version}    the version of asciidoc(1)
@@ -4070,7 +4032,7 @@ predefined intrinsic attributes:
   {filetype-<fileext>}  empty string ''
   {filetype}            output file name file extension
   {firstname}           author first name (from document header)
-  {gt}                  greater than (>) character
+  {gt}                  greater than (>) character entity
   {id}                  running block id generated by BlockId elements
   {indir}               input file directory name (note 2,5)
   {infile}              input file name (note 2,5)
@@ -4079,13 +4041,13 @@ predefined intrinsic attributes:
   {listindex}           the list index (1..) of the most recent list item
   {localdate}           the current date
   {localtime}           the current time
-  {lt}                  less than (<) character
+  {lt}                  less than (<) character entity
   {manname}             manpage name (defined in NAME section)
   {manpurpose}          manpage (defined in NAME section)
   {mantitle}            document title minus the manpage volume number
   {manvolnum}           manpage volume number (1..8) (from document header)
   {middlename}          author middle name (from document header)
-  {nbsp}                non-breaking space entity
+  {nbsp}                non-breaking space character entity
   {notitle}             do not display the document title
   {outdir}              document output directory name (note 2)
   {outfile}             output file name (note 2)
@@ -4098,7 +4060,7 @@ predefined intrinsic attributes:
   {two-semicolons}      Two semicolon characters
   {user-dir}            the ~/.asciidoc directory (if it exists)
   {verbose}             defined as '' if --verbose command option specified
-  {zwsp}                Zero-width space.
+  {zwsp}                Zero-width space character entity
 
 .NOTES
 1. Intrinsic attributes are global so avoid defining custom attributes
@@ -4122,7 +4084,7 @@ predefined intrinsic attributes:
 5. `{docfile}` and `{docdir}` refer to root document specified on
    the asciidoc(1) command-line; `{infile}` and `{indir}` refer to
    the current input file which may be the root document or an
-   included file. While the input is being read from the standard
+   included file. When the input is being read from the standard
    input (`stdin`) these attributes are undefined.
 
 [[X73]]
@@ -4148,21 +4110,22 @@ share a common subset of configuration file parameters:
 
 delimiter::
   A Python regular expression that matches the first line of a block
-  element -- in the case of DelimitedBlocks it also matches the last
-  line. Table elements don't have an explicit delimiter -- they
-  synthesize their delimiters at runtime.
+  element -- in the case of DelimitedBlocks and Tables it also matches
+  the last line.
 
 template::
   The name of the configuration file markup template section that will
-  envelope the block contents. The pipe | character is substituted for
-  the block contents. List elements use a set of (list specific) tag
-  parameters instead of a single template.
+  envelope the block contents. The pipe ('|') character is substituted
+  for the block contents. List elements use a set of (list specific)
+  tag parameters instead of a single template.
 
 options::
   A comma delimited list of element specific option names. In addition
   to being used internally, options are available during markup tag
   and template substitution as attributes with an empty string value
   named like `<option>-option` (where `<option>` is the option name).
+  See <<X74,attribute options>> for a complete list of available
+  options.
 
 subs, presubs, postsubs::
   * 'presubs' and 'postsubs' are lists of comma separated substitutions that are
@@ -4239,10 +4202,10 @@ attribute. The following example defines a style named 'verbatim':
 
 Paragraphs
 ~~~~~~~~~~
-Paragraph translation is controlled by `[paradef*]` configuration file
-section entries. Users can define new types of paragraphs and modify
-the behavior of existing types by editing AsciiDoc configuration
-files.
+Paragraph translation is controlled by `[paradef-*]` configuration
+file section entries. Users can define new types of paragraphs and
+modify the behavior of existing types by editing AsciiDoc
+configuration files.
 
 Here is the shipped Default paragraph definition:
 
@@ -4294,7 +4257,7 @@ sectionbody::
 skip::
     The block is treated as a comment (see <<X26,CommentBlocks>>).
 
-'presubs', 'postsubs' and 'filter' entries are meaningless when
+'presubs', 'postsubs' and 'filter' entries are ignored when
 'sectionbody' or 'skip' options are set.
 
 DelimitedBlock processing proceeds as follows:
@@ -4315,7 +4278,7 @@ filter.
 
 Lists
 ~~~~~
-List behavior and syntax is determined by `[listdef*]` configuration
+List behavior and syntax is determined by `[listdef-*]` configuration
 file sections. The user can change existing list behavior and add new
 list types by editing configuration files.
 
@@ -4339,14 +4302,14 @@ tags::
 
 Tables
 ~~~~~~
-Table behavior and syntax is determined by `[tabledef*]` and
-`[tabletags*]` configuration file sections. The user can change
+Table behavior and syntax is determined by `[tabledef-*]` and
+`[tabletags-*]` configuration file sections. The user can change
 existing table behavior and add new table types by editing
-configuration files.  The following `[tabledef*]` section entries
+configuration files.  The following `[tabledef-*]` section entries
 generate table output markup elements:
 
-comspec::
-  The table 'comspec' tag definition.
+colspec::
+  The table 'colspec' tag definition.
 
 headrow, footrow, bodyrow::
   Table header, footer and body row tag definitions. 'headrow' and
@@ -4389,9 +4352,9 @@ pageunits::
 [[X59]]
 Filters
 -------
-Filters are external shell commands used to process Paragraph and
-DelimitedBlock content; they are specified in configuration file
-Paragraph and DelimitedBlock definitions.
+Filters are external shell commands used to process Paragraph,
+DelimitedBlock and Table content and are specified in the
+corresponding configuration file definitions.
 
 There's nothing special about the filters, they're just standard UNIX
 filters: they read text from the standard input, process it, and write
@@ -4402,8 +4365,8 @@ execution -- attributes can be used to pass parameters from the
 AsciiDoc source document to the filter.
 
 WARNING: Filters can potentially generate unsafe output. Before
-installing a filter you should verify that it can't be coerced into
-generating malicious output or exposing sensitive information.
+installing a filter you should verify that it is from a trusted
+source.
 
 Filter Search Paths
 ~~~~~~~~~~~~~~~~~~~
@@ -4411,7 +4374,8 @@ If the filter command does not specify a directory path then
 asciidoc(1) searches for the command:
 
 - First it looks in the user's `$HOME/.asciidoc/filters` directory.
-- Next the `/etc/asciidoc/filters` directory is searched.
+- Next the global filters directory (ususally `/etc/asciidoc/filters`
+  or `/usr/local/etc/asciidoc`) directory is searched.
 - Then it looks in the asciidoc(1) `./filters` directory.
 - Finally it relies on the executing shell to search the environment
   search path (`$PATH`).
@@ -4506,10 +4470,11 @@ inserted into the output document.
 [[X12]]
 Converting DocBook to other file formats
 ----------------------------------------
-DocBook files are validated, parsed and translated by a combination of
-applications collectively called a DocBook 'tool chain'. The function
-of a tool chain is to read the DocBook markup (produced by AsciiDoc)
-and transform it to a presentation format (for example HTML, PDF, HTML
+DocBook files are validated, parsed and translated various
+presentation file formats using a combination of applications
+collectively called a DocBook 'tool chain'. The function of a tool
+chain is to read the DocBook markup (produced by AsciiDoc) and
+transform it to a presentation format (for example HTML, PDF, HTML
 Help, EPUB, DVI, PostScript, LaTeX).
 
 A wide range of user output format requirements coupled with a choice
@@ -4551,8 +4516,8 @@ AsciiDoc produces nicely styled HTML directly without requiring a
 DocBook toolchain but there are also advantages in going the DocBook
 route:
 
-- HTML from DocBook includes automatically generated indexes, tables
-  of contents, footnotes, lists of figures and tables.
+- HTML from DocBook can optionally include automatically generated
+  indexes, tables of contents, footnotes, lists of figures and tables.
 - DocBook toolchains can also (optionally) generate separate (chunked)
   linked HTML pages for each document section.
 - Toolchain processing performs link and document validity checks.
@@ -4563,8 +4528,8 @@ route:
 
 On the other hand, HTML output directly from AsciiDoc is much faster,
 is easily customized and can be used in situations where there is no
-suitable DocBook toolchain (see the
-http://www.methods.co.nz/asciidoc/[AsciiDoc website] for example).
+suitable DocBook toolchain (for example, see the
+http://www.methods.co.nz/asciidoc/[AsciiDoc website]).
 
 PDF generation
 ~~~~~~~~~~~~~~
@@ -4641,7 +4606,7 @@ outputs) the custom `./stylesheets/docbook.css` CSS stylesheet.
 You'll find the customized DocBook XSL drivers along with additional
 documentation in the distribution `./docbook-xsl` directory. The
 examples that follow are executed from the distribution documentation
-(`./doc`) directory. These drivers are required by <<X43,a2x(1)>>.
+(`./doc`) directory. These drivers are also used by <<X43,a2x(1)>>.
 
 `common.xsl`::
     Shared driver parameters.  This file is not used directly but is
@@ -4698,31 +4663,6 @@ AsciiDoc does not have a text backend (for most purposes AsciiDoc
 source text is fine), however you can convert AsciiDoc text files to
 formatted text using the AsciiDoc <<X43,a2x(1)>> toolchain wrapper
 utility.
-
-
-XML and Character Sets
-----------------------
-The default XML character set `UTF-8` is used when AsciiDoc generates
-DocBook files but this can be changed by setting the `xmldecl` entry
-in the `[attributes]` section of the `docbook.conf` file or by
-composing your own configuration file `[header]` section).
-
-TIP: If you get an 'undefined entity' error when processing DocBook
-files you'll may find that you've used an undefined HTML character
-entity.  An easy (although inelegant) fix is to use the character's
-character code instead of its symbolic name (for example use `&#160;`
-instead of `&nbsp;`).
-
-If your system has been configured with an XML catalog you may find a
-number of entity sets are already automatically included.
-
-PDF Fonts
-~~~~~~~~~
-The Adobe PDF Specification states that the following 14 fonts should
-be available to every PDF reader: Helvetica (normal, bold, italic,
-bold italic), Times (normal, bold, italic, bold italic), Courier
-(normal, bold, italic, bold italic), Symbol and ZapfDingbats.
-Non-standard fonts should be embedded in the distributed document.
 
 
 [[X36]]
@@ -4853,12 +4793,8 @@ autocmd BufRead,BufNewFile *.txt,README,TODO,CHANGELOG,NOTES
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
-- The asciidoc(1) `-v` (`--verbose`) command-line option displays the
-  order of configuration file loading and warns of potential
-  configuration file problems.
-- Not all valid AsciiDoc documents produce valid backend markup. Read
-  the <<X5,AsciiDoc Backends>> section if AsciiDoc output is rejected
-  as non-conformant by a backend processor.
+AsciiDoc diagnostic features are detailed in the <<X82,Diagnostics
+appendix>>.
 
 Gotchas
 ~~~~~~~
@@ -4894,7 +4830,7 @@ Overlapping text formatting::
     Some *strong markup _that overlaps* emphasized markup_.
 
 Ambiguous underlines::
-    A DelimitedBlock can immediately follow paragraph without an
+    A DelimitedBlock can immediately follow a paragraph without an
     intervening blank line, but be careful, a single line paragraph
     underline may be misinterpreted as a section title underline
     resulting in a ``closing block delimiter expected'' error.
@@ -4918,8 +4854,8 @@ Special characters in attribute values::
 
     $ asciidoc -a 'corpname=Bill &amp; Ben Inc.' mydoc.txt
 
-Macro attribute lists::
-    If named attribute list entries are present then all string
+Attribute lists::
+    If any named attribute entries are present then all string
     attribute values must be quoted.  For example:
 
     ["Desktop screenshot",width=32]
@@ -4954,9 +4890,9 @@ on.
 - Put a blank line between the `include` macro lines to ensure the
   title of the included document is not seen as part of the last
   paragraph of the previous document.
-- You won't want document Headers (Author and Revision lines) in the
-  included files -- conditionally exclude them if they are necessary
-  for stand-alone processing.
+- You won't want non-title document header lines (for example, Author
+  and Revision lines) in the included files -- conditionally exclude
+  them if they are necessary for stand-alone processing.
 
 Processing document sections separately
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5052,9 +4988,8 @@ The solution is to create a single backend specific configuration file
 using the asciidoc(1) `-c` (`--dump-conf`) command-line option. You
 then ship this file along with the AsciiDoc source document plus the
 `asciidoc.py` script. The only end user requirement is that they have
-Python installed (and of course that they consider you a trusted
-source). This example creates a composite HTML configuration
-file for `mydoc.txt`:
+Python installed (and that they consider you a trusted source). This
+example creates a composite HTML configuration file for `mydoc.txt`:
 
   $ asciidoc -cb xhtml11 mydoc.txt > mydoc-xhtml11.conf
 

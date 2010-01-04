@@ -15,6 +15,30 @@ See dblatex(1) -p option.
   <xsl:param name="table.in.float">0</xsl:param>
   <xsl:param name="monoseq.hyphenation">0</xsl:param>
   <xsl:param name="latex.output.revhistory">1</xsl:param>
+
+  <!-- This doesn't work, don't know why, see:
+  http://dblatex.sourceforge.net/html/manual/apas03.html
+  ./docbook-xsl/common.xsl
+  -->
+  <!--
+  <xsl:param name="doc.toc.show">
+    <xsl:choose>
+      <xsl:when test="/processing-instruction('asciidoc-toc')">
+1
+      </xsl:when>
+      <xsl:otherwise>
+0
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:param>
+  <xsl:param name="doc.lot.show">
+    <xsl:choose>
+      <xsl:when test="/book">
+figure,table,equation,example
+      </xsl:when>
+    </xsl:choose>
+  </xsl:param>
+  -->
   <xsl:param name="doc.toc.show">1</xsl:param>
 
   <!--

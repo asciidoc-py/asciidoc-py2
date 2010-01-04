@@ -73,26 +73,14 @@
 -->
 <xsl:param name="generate.toc">
   <xsl:choose>
-    <xsl:when test="/article">
-      <xsl:choose>
-        <xsl:when test="/processing-instruction('asciidoc-toc')">
-/article  toc,title
-        </xsl:when>
-        <xsl:otherwise>
-/article  nop
-        </xsl:otherwise>
-      </xsl:choose>
+    <xsl:when test="/processing-instruction('asciidoc-toc')">
+article toc,title
+book    toc,title,figure,table,example,equation
     </xsl:when>
-    <xsl:when test="/book">
-      <xsl:choose>
-        <xsl:when test="/processing-instruction('asciidoc-toc')">
-/book  toc,title
-        </xsl:when>
-        <xsl:otherwise>
-/book  nop
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:when>
+    <xsl:otherwise>
+article nop
+book    nop
+    </xsl:otherwise>
   </xsl:choose>
 </xsl:param>
 

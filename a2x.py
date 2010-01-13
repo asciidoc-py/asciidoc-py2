@@ -45,6 +45,10 @@ W3M = 'w3m'                 # text generation.
 LYNX = 'lynx'               # text generation (if no w3m).
 XMLLINT = 'xmllint'         # Set to '' to disable.
 EPUBCHECK = 'epubcheck'     # Set to '' to disable.
+ASCIIDOC_OPTS = ''
+DBLATEX_OPTS = ''
+FOP_OPTS = ''
+XSLTPROC_OPTS = ''
 
 ######################################################################
 # End of configuration file parameters.
@@ -291,7 +295,13 @@ class A2X(AttrDict):
         Process a2x command.
         '''
         self.process_options()
-        self.__getattribute__('to_'+self.format)()  # Execute to_* functions.
+        # Append configuration file options.
+        self.asciidoc_opts += ' ' + ASCIIDOC_OPTS
+        self.dblatex_opts  += ' ' + DBLATEX_OPTS
+        self.fop_opts      += ' ' + FOP_OPTS
+        self.xsltproc_opts += ' ' + XSLTPROC_OPTS
+        # Execute to_* functions.
+        self.__getattribute__('to_'+self.format)()
         if not (self.keep_artifacts or self.format == 'docbook' or self.skip_asciidoc):
             shell_rm(self.dst_path('.xml'))
 

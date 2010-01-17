@@ -32,8 +32,9 @@ CONF_DIR = '/etc/asciidoc'
 # Default configuration file parameters.
 ######################################################################
 
-# Optional environment variable dictionary passed to executing programs.
-# If set to None the existing environment is used.
+# Optional environment variable dictionary passed to
+# executing programs. If set to None the existing
+# environment is used.
 ENV = None
 
 # External executables.
@@ -45,6 +46,7 @@ W3M = 'w3m'                 # text generation.
 LYNX = 'lynx'               # text generation (if no w3m).
 XMLLINT = 'xmllint'         # Set to '' to disable.
 EPUBCHECK = 'epubcheck'     # Set to '' to disable.
+# External executable default options.
 ASCIIDOC_OPTS = ''
 DBLATEX_OPTS = ''
 FOP_OPTS = ''

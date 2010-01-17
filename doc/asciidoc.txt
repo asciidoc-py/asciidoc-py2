@@ -25,7 +25,7 @@ source files in the distribution `doc` directory.
 Plain text is the most universal electronic document format,
 regardless of your computing environment you can always read and write
 plain text documentation. But for many applications plain text is not
-the prefered presentation format -- HTML and PDF formats are widely
+the preferred presentation format -- HTML and PDF formats are widely
 used as is the roff man page format.  DocBook is a popular
 documentation markup format which can be translated to HTML, PDF and
 other presentation formats.
@@ -92,7 +92,7 @@ AsciiDoc Document Types
 -----------------------
 There are three types of AsciiDoc documents: article, book and
 manpage. All document types share the same AsciiDoc format with some
-minor variations. If you are familar with DocBook you will have
+minor variations. If you are familiar with DocBook you will have
 noticed that AsciiDoc document types correspond to the same-named
 DocBook document types).
 
@@ -1006,7 +1006,7 @@ NOTE: Because <<X64,lists>> can be indented it's possible for your
 indented paragraph to be misinterpreted as a list -- in situations
 like this apply the 'literal' style to a normal paragraph.
 
-Instead of using a paragraph indent you could applie the 'literal'
+Instead of using a paragraph indent you could apply the 'literal'
 style explicitly, for example:
 
 ---------------------------------------------------------------------
@@ -1054,7 +1054,7 @@ paragraph. For example:
   NOTE: This is an example note.
 
 Alternatively, you can specify the paragraph admonition style
-explicity using an <<X79,AttributeList element>>. For example:
+explicitly using an <<X79,AttributeList element>>. For example:
 
   [NOTE]
   This is an example note.
@@ -2253,7 +2253,7 @@ The block `image` macro has the same <<X55,macro attributes>> as it's
 
 Block images can be titled by preceding the 'image' macro with a
 'BlockTitle'.  DocBook toolchains normally number titled block images
-and optionally list them in an automatically gnerated 'List of
+and optionally list them in an automatically generated 'List of
 Figures' backmatter section.
 
 This example:
@@ -4375,7 +4375,7 @@ If the filter command does not specify a directory path then
 asciidoc(1) searches for the command:
 
 - First it looks in the user's `$HOME/.asciidoc/filters` directory.
-- Next the global filters directory (ususally `/etc/asciidoc/filters`
+- Next the global filters directory (usually `/etc/asciidoc/filters`
   or `/usr/local/etc/asciidoc`) directory is searched.
 - Then it looks in the asciidoc(1) `./filters` directory.
 - Finally it relies on the executing shell to search the environment

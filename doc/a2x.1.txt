@@ -178,6 +178,30 @@ files are loaded in the following order:
 . `a2x.conf` from the directory containing 'a2x.py'.
 . The 'CONF_FILE' specified in the '--conf-file' option.
 
+Here are the default configuration file option values:
+
+---------------------------------------------------------------------
+# Optional environment variable dictionary passed to
+# executing programs. If set to None the existing
+# environment is used.
+ENV = None
+
+# External executables.
+ASCIIDOC = 'asciidoc'
+XSLTPROC = 'xsltproc'
+DBLATEX = 'dblatex'         # pdf generation.
+FOP = 'fop'                 # pdf generation (--fop option).
+W3M = 'w3m'                 # text generation.
+LYNX = 'lynx'               # text generation (if no w3m).
+XMLLINT = 'xmllint'         # Set to '' to disable.
+EPUBCHECK = 'epubcheck'     # Set to '' to disable.
+# External executable default options.
+ASCIIDOC_OPTS = ''
+DBLATEX_OPTS = ''
+FOP_OPTS = ''
+XSLTPROC_OPTS = ''
+---------------------------------------------------------------------
+
 
 BUGS
 ----
@@ -198,6 +222,6 @@ Main web site: http://www.methods.co.nz/asciidoc/
 
 COPYING
 -------
-Copyright \(C) 2002-2009 Stuart Rackham. Free use of this software is
+Copyright \(C) 2002-2010 Stuart Rackham. Free use of this software is
 granted under the terms of the MIT license.
 

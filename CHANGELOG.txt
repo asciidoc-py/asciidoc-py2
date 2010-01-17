@@ -3,6 +3,41 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.5.3 (2010-01-18)
+--------------------------
+.Additions and changes
+- a2x: Added a2x configuration file options ASCIIDOC_OPTS,
+  DBLATEX_OPTS, FOP_OPTS, XSLTPROC_OPTS (appended to same-named
+  command-line options). See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/ac4b9bfa2116db28
+- Dropped `.hgignore` from the repository. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/c17abd175778f5ea
+- Don't pass verbose options to asciidoc table filter so that
+  asciidocapi messages are not discarded. See:
+  http://groups.google.com/group/asciidoc/browse_frm/thread/c17abd175778f5ea
+- Added `./tests/data/lang-pt-BR-test.txt` file to the repository.
+- xhtml11: Verse block and verse paragraph content enveloped in a
+  'pre' tag (instead of a 'div') so it renders better in text-only
+  browsers. See:
+  http://groups.google.com/group/asciidoc/browse_frm/thread/1b6b66adb24e710
+- User Guide: Clarified Passthrough Blocks (suggested by Simon
+  Ruderich).
+- FAQ: 'How can I include lines of dashes inside a listing block?'
+- FAQ errata and updates (submitted by Simon Ruderich).
+- User Guide errata.
+- Simplified 'asciidoc-toc' processing instruction and included lists
+  of figures, tables, examples and equations in books (i.e. revert to
+  pre-8.5.0 behavior).
+- Attempted to have dblatex recognise the 'asciidoc-toc' processing
+  instruction but couldn't get it to work.
+- Added 'notitle' attribute to allow the document title to be hidden.
+
+
+.Bug fixes
+- *FIXED*: Regression: system attribute escaping did not work.
+- *FIXED*: Website: broken image links in chunked User Guide.
+
+
 Version 8.5.2 (2009-12-07)
 --------------------------
 .Additions and changes

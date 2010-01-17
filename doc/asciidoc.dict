@@ -1,4 +1,4 @@
-personal_ws-1.1 en 838 
+personal_ws-1.1 en 847 
 mandoc
 colspecs
 API
@@ -26,8 +26,8 @@ LiteralParagraph
 BOM
 Bon
 ungenerated
-cmd
 des
+cmd
 ListItems
 dev
 vulputate
@@ -64,11 +64,13 @@ Graphviz
 toclevel
 hyperlinks
 dsv
+ENV
 dvi
 stderr
 SimpleSection
 gif
 prepend
+RevisionNumber
 CommentBlocks
 consequat
 fmt
@@ -81,9 +83,10 @@ hhc
 Chai
 strongwords
 setlocal
-listingblock
 ListingBlock
+listingblock
 exe
+AuthorInfo
 vsides
 rewriteSystem
 taoup
@@ -92,8 +95,8 @@ listelement
 AttributeLists
 magna
 xreflabel
-PDFs
 PDF's
+PDFs
 MSIE
 permalinks
 Daly
@@ -106,8 +109,8 @@ ListContinuation
 apos
 ShareSource
 hoc
-Maier
 ispum
+Maier
 TableFooter
 blog
 passthroughs
@@ -216,9 +219,9 @@ BlockId
 png
 lobortis
 Bowlin
-ASCIIMathML
-AsciiMathML
 asciimathml
+AsciiMathML
+ASCIIMathML
 conf
 RCS
 CalloutList
@@ -232,6 +235,7 @@ pre
 tzname
 ListParagraph
 Windtrainer
+hgignore
 eget
 sed
 userguide
@@ -261,10 +265,11 @@ qui
 SJR
 biggy
 pgwide
+RevisionDate
 crlf
 tex
-Bolido
 Bólido
+Bolido
 tabsize
 colpcwidth
 onload
@@ -277,8 +282,8 @@ listdef
 Tsawassen
 postsubs
 src
-lastname
 LastName
+lastname
 toc
 tmp
 Knisley
@@ -318,13 +323,13 @@ revisionhistory
 params
 undefines
 Andrés
-HTMLHelp
 htmlhelp
+HTMLHelp
 cellspacing
 Citeaux
 srackham
-Lulea
 Luleå
+Lulea
 Ubuntu
 xml
 XSLTLib
@@ -357,8 +362,8 @@ gq
 refactored
 sgml
 backcolor
-asciidoc
 AsciiDoc
+asciidoc
 subslist
 hs
 hu
@@ -447,6 +452,7 @@ linux
 commodo
 Fernandes
 Pretium
+notitle
 manvolnum
 homero
 listindex
@@ -516,6 +522,7 @@ smallnew
 linkcss
 colspan
 localtime
+Ruderich
 noincsearch
 Stas
 colspec
@@ -620,6 +627,7 @@ QuoteBlock
 chmod
 posattrs
 subdirectories
+RevisionRemark
 TableHeader
 Mihai
 KeyboardInterrupt
@@ -728,6 +736,7 @@ BONAP
 ItemContinuation
 tyger
 upperroman
+RevisionInfo
 Berglunds
 nabc
 symlinked
@@ -815,8 +824,8 @@ Redhat
 datadir
 Kumar
 IndentedParagraphs
-Berguvsvägen
 Berguvsvagen
+Berguvsvägen
 executables
 tabledef
 ftdetect
@@ -834,6 +843,6 @@ Firefox
 JavaHelp
 unescaped
 mydoc
-MiddleName
 middlename
+MiddleName
 Jimmac's

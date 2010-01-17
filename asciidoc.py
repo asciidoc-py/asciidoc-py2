@@ -2,14 +2,14 @@
 """
 asciidoc - converts an AsciiDoc text file to DocBook, HTML or LinuxDoc
 
-Copyright (C) 2002-2009 Stuart Rackham. Free use of this software is granted
+Copyright (C) 2002-2010 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
 """
 
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
 ### Used by asciidocapi.py ###
-VERSION = '8.5.2'           # See CHANGLOG file for version history.
+VERSION = '8.5.3'           # See CHANGLOG file for version history.
 
 MIN_PYTHON_VERSION = 2.4    # Require this version of Python or better.
 

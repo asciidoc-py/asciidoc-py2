@@ -26,6 +26,7 @@ h1, h2, h3, h4, h5, h6,
 div.toc p b,
 div.list-of-figures p b,
 div.list-of-tables p b,
+div.list-of-examples p b,
 div.abstract p.title
 {
   color: #527bbd;

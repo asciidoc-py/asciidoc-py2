@@ -60,6 +60,11 @@ Followed by an example table:
 | -R 'GROUP'      | Disables access to 'GROUP'.
 |==============================================
 
+.An example example
+===============================================
+Lorum ipum...
+===============================================
+
 [[X1]]
 Sub-section with Anchor
 ~~~~~~~~~~~~~~~~~~~~~~~

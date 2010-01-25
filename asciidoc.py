@@ -1296,9 +1296,8 @@ class Document:
                 self.attributes[new] = self.attributes[old]
         else:
             self.attributes[old] = self.attributes[new]
-    def consume_attributes_and_comments(self):
+    def consume_attributes_and_comments(self,comments_only=False):
         finished = False
-        attr_count = 0
         while not finished:
             finished = True
             if blocks.isnext() and 'skip' in blocks.current.options:
@@ -1307,25 +1306,37 @@ class Document:
             if macros.isnext() and macros.current.name == 'comment':
                 finished = False
                 macros.current.translate()
-            if AttributeEntry.isnext():
-                finished = False
-                AttributeEntry.translate()
-                if AttributeEntry.name == 'lang' and 'lang' not in config.cmd_attrs:
-                    self.load_lang(linenos=True)
-                    if attr_count > 0:
-                        message.error('lang attribute should be first entry')
-                attr_count += 1
-            if AttributeList.isnext():
-                finished = False
-                AttributeList.translate()
+            if not comments_only:
+                if AttributeEntry.isnext():
+                    finished = False
+                    AttributeEntry.translate()
+                    if AttributeEntry.name == 'lang':
+                        message.error('lang attribute must be first entry')
+                if AttributeList.isnext():
+                    finished = False
+                    AttributeList.translate()
+    def consume_comments(self):
+        self.consume_attributes_and_comments(comments_only=True)
     def translate(self):
         assert self.doctype in ('article','manpage','book'), \
             'illegal document type'
         assert self.level == 0
-        config.expand_all_templates()
-        self.load_lang()
         message.verbose('writing: '+writer.fname,False)
-        # Skip leading comments and attribute entries.
+        # Skip leading comments.
+        self.consume_comments()
+        # Load language configuration file.
+        loaded = False
+        if AttributeEntry.isnext() and AttributeEntry.name == 'lang':
+            # The first non-comment in the document can be 'lang' attribute.
+            AttributeEntry.translate()
+            if 'lang' not in config.cmd_attrs:
+                self.load_lang(linenos=True)
+                loaded = True
+        if not loaded:
+            self.load_lang()
+        # All configuration files have been loaded so can expand templates.
+        config.expand_all_templates()
+        # Skip comments and attribute entries that preceed the header.
         self.consume_attributes_and_comments()
         # Process document header.
         has_header =  Lex.next() is Title and Title.level == 0
@@ -4274,8 +4285,6 @@ class Config:
                 for f in filenames:
                     if re.match(r'^.+\.conf$',f):
                         self.load_file(f,dirpath)
-            # English defaults.
-            self.load_file('lang-en.conf',d)
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""
@@ -4567,6 +4576,7 @@ class Config:
                     result += self.expand_templates(self.sections[s])
                 else:
                     message.warning('missing section: [%s]' % s)
+                    result.append(line)
             else:
                 result.append(line)
         return result

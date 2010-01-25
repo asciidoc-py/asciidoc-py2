@@ -329,7 +329,7 @@ line. The revision information can be one of two formats:
     has not been set then the revision date is set to the value of the
     'docdate' attribute.
 
-. An RCS/CSV/SVN $Id$ marker (if an $Id$ revision marker is used the
+. An RCS/CVS/SVN $Id$ marker (if an $Id$ revision marker is used the
   header author line can be omitted).
 
 Here a some examples of header revision lines:
@@ -349,7 +349,7 @@ You can override or set header parameters by passing 'revnumber',
 
   $ asciidoc -a revdate=2004/07/27 article.txt
 
-The 'revnumber' attribute can be an RCS/CSV/SVN $Id$ marker.
+The 'revnumber' attribute can be an RCS/CVS/SVN $Id$ marker.
 Attributes can also be added to the header for substitution in the
 header template with <<X18,Attribute Entry>> elements.
 

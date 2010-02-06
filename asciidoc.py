@@ -1054,7 +1054,7 @@ def time_str(t):
     """Convert seconds since the Epoch to formatted local time string."""
     t = time.localtime(t)
     s = time.strftime('%H:%M:%S',t)
-    if time.daylight:
+    if time.daylight and t.tm_isdst == 1:
         result = s + ' ' + time.tzname[1]
     else:
         result = s + ' ' + time.tzname[0]

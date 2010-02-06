@@ -52,9 +52,9 @@ under the terms of the GNU General Public License (GPL).
 
 """
 
-import sys,os,re
+import sys,os,re,imp
 
-API_VERSION = '0.1.1'
+API_VERSION = '0.1.2'
 MIN_ASCIIDOC_VERSION = '8.4.1'  # Minimum acceptable AsciiDoc version.
 
 
@@ -174,24 +174,45 @@ class AsciiDocAPI(object):
                 for cmd in ['asciidoc.py','asciidoc.pyc','asciidoc']:
                     if os.path.isfile(cmd): break
                 else:
-                    raise AsciiDocError('failed to locate asciidoc.py[c]')
-        cmd = os.path.realpath(cmd)
-        if os.path.splitext(cmd)[1] not in ['.py','.pyc']:
-            raise AsciiDocError('invalid Python module name: %s' % cmd)
-        sys.path.insert(0, os.path.dirname(cmd))
-        try:
+                    raise AsciiDocError('failed to locate asciidoc')
+        self.cmd = os.path.realpath(cmd)
+        self.__import_asciidoc()
+
+    def __import_asciidoc(self, reload=False):
+        '''
+        Import asciidoc module (script or compiled .pyc).
+        See
+        http://groups.google.com/group/asciidoc/browse_frm/thread/66e7b59d12cd2f91
+        for an explanation of why a seemingly straight-forward job turned out
+        quite complicated.
+        '''
+        if os.path.splitext(self.cmd)[1] in ['.py','.pyc']:
+            sys.path.insert(0, os.path.dirname(self.cmd))
             try:
+                try:
+                    if reload:
+                        import __builtin__  # Because reload() is shadowed.
+                        __builtin__.reload(self.asciidoc)
+                    else:
+                        import asciidoc
+                        self.asciidoc = asciidoc
+                except ImportError:
+                    raise AsciiDocError('failed to import ' + self.cmd)
+            finally:
+                del sys.path[0]
+        else:
+            # The import statement can only handle .py or .pyc files, have to
+            # use imp.load_source() for scripts with other names.
+            try:
+                imp.load_source('asciidoc', self.cmd)
                 import asciidoc
+                self.asciidoc = asciidoc
             except ImportError:
-                raise AsciiDocError('failed to import asciidoc')
-        finally:
-            del sys.path[0]
-        if Version(asciidoc.VERSION) < Version(MIN_ASCIIDOC_VERSION):
+                raise AsciiDocError('failed to import ' + self.cmd)
+        if Version(self.asciidoc.VERSION) < Version(MIN_ASCIIDOC_VERSION):
             raise AsciiDocError(
                 'asciidocapi %s requires asciidoc %s or better'
                 % (API_VERSION, MIN_ASCIIDOC_VERSION))
-        self.asciidoc = asciidoc
-        self.cmd = cmd
 
     def execute(self, infile, outfile=None, backend=None):
         """
@@ -213,14 +234,10 @@ class AsciiDocAPI(object):
                 s = '%s=%s' % (k,v)
             opts('--attribute', s)
         args = [infile]
-        sys.path.insert(0, os.path.dirname(self.cmd))
-        try:
-            # The AsciiDoc command was designed to process source text then
-            # exit, there are globals and statics in asciidoc.py that have
-            # to be reinitialized before each run -- hence the reload.
-            reload(self.asciidoc)
-        finally:
-            del sys.path[0]
+        # The AsciiDoc command was designed to process source text then
+        # exit, there are globals and statics in asciidoc.py that have
+        # to be reinitialized before each run -- hence the reload.
+        self.__import_asciidoc(reload=True)
         try:
             try:
                 self.asciidoc.execute(self.cmd, opts.values, args)

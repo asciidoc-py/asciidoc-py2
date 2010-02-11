@@ -105,6 +105,26 @@ class AttrDict(dict):
     def __setstate__(self,value):
         for k,v in value.items(): self[k]=v
 
+class InsensitiveDict(dict):
+    """
+    Like a dictionary except key access is case insensitive.
+    Keys are stored in lower case.
+    """
+    def __getitem__(self, key):
+        return dict.__getitem__(self, key.lower())
+    def __setitem__(self, key, value):
+        dict.__setitem__(self, key.lower(), value)
+    def has_key(self, key):
+        return dict.has_key(self,key.lower())
+    def get(self, key, default=None):
+        return dict.get(self, key.lower(), default)
+    def update(self, dict):
+        for k,v in dict.items():
+            self[k] = v
+    def setdefault(self, key, default = None):
+        return dict.setdefault(self, key.lower(), default)
+
+
 class Trace(object):
     """
     Used in conjunction with the 'trace' attribute to generate diagnostic
@@ -1208,7 +1228,7 @@ class Document:
         self.backend = None     # -b option argument.
         self.infile = None      # Source file name.
         self.outfile = None     # Output file name.
-        self.attributes = {}
+        self.attributes = InsensitiveDict()
         self.level = 0          # 0 => front matter. 1,2,3 => sect1,2,3.
         self.has_errors = False # Set true if processing errors were flagged.
         self.has_warnings = False # Set true if warnings were flagged.

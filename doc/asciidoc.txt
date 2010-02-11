@@ -3602,7 +3602,8 @@ A document attribute is comprised of a 'name' and a textual 'value'
 and is used for textual substitution in AsciiDoc documents and
 configuration files. An attribute reference (an attribute name
 enclosed in braces) is replaced by the corresponding attribute
-value.
+value. Attribute names are case insensitive and can only contain
+alphanumeric, dash and underscore characters.
 
 There are four sources of document attributes (from highest to lowest
 precedence):
@@ -3646,8 +3647,9 @@ To delete (undefine) an attribute use the following syntax:
 - The attribute entry line begins with colon -- no white space allowed
   in left margin.
 - AsciiDoc converts the `<name>` to a legal attribute name (lower
-  case, alphanumeric and dash characters only -- all other characters
-  deleted). This allows more reader friendly text to be used.
+  case, alphanumeric, dash and underscore characters only -- all other
+  characters deleted). This allows more human friendly text to be
+  used.
 - Leading and trailing white space is stripped from the `<value>`.
 - If the `<value>` is blank then the corresponding attribute value is
   set to an empty string.

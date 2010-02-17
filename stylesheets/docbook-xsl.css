@@ -268,6 +268,12 @@ div.table p.title
   margin-bottom: 0.4em;
 }
 
+div.calloutlist p
+{
+  margin-top: 0em;
+  margin-bottom: 0.4em;
+}
+
 @media print {
   div.navheader, div.navfooter { display: none; }
 }

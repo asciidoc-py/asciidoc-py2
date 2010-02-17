@@ -304,8 +304,6 @@ discussion group thread] for details.
   http://nico.schotteli.us/papers/linux/git-firmen/.
 - The http://www.netpromi.com/kirbybase_ruby.html[KirbyBase for Ruby]
   database management system manual.
-- The http://www.selenic.com/mercurial/[Mercurial distributed SCM]
-  uses asciidoc for its man pages.
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] uses
   AsciiDoc for documentation and has released an Emacs syntax
   highlighter (see <<X2,Resources>> above).

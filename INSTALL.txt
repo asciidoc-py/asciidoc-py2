@@ -15,9 +15,9 @@ See the link:README.html[README] page.
 Installing from the Mercurial repository
 ----------------------------------------
 The AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository
-is hosted by http://sharesource.org[ShareSource].  ShareSource is a
-Mercurial friendly website for hosting Open Source projects.
-To browse the repository go to http://hg.sharesource.org/asciidoc/.
+is hosted by http://code.google.com/[Google Code].
+To browse the repository go to
+http://code.google.com/p/asciidoc/source/browse/.
 You can install AsciiDoc from the repository if you don't have an up to
 date packaged version or want to get the latest version from the trunk:
 
@@ -31,23 +31,7 @@ date packaged version or want to get the latest version from the trunk:
 
 [subs="attributes"]
   $ cd ~/bin
-  $ hg clone -r {revnumber} http://hg.sharesource.org/asciidoc asciidoc-{revnumber}
-
-.Repository source archives
-*********************************************************************
-Another way to get the latest asciidoc sources without installing
-Mercurial is to download and extract a Zip or Tar formatted archive:
-
-http://hg.sharesource.org/asciidoc/archive/tip.tar.bz2
-
-or:
-
-http://hg.sharesource.org/asciidoc/archive/tip.zip
-
-Archives of all revisions (not just the tip) are available at the
-repository website.
-
-*********************************************************************
+  $ hg clone -r {revnumber} https://asciidoc.googlecode.com/hg/ asciidoc-{revnumber}
 
 You now have two choices: you can run asciidoc directly from you local
 repository or you can use 'autoconf(1)' and 'make(1)' to perform a

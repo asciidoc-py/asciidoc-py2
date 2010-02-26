@@ -2218,7 +2218,9 @@ class AbstractBlock:
         for k,v in self.styles.items():
             t = v.get('template')
             if t and not t in config.sections:
-                message.warning('missing template section: [%s]' % t)
+                # Defer check if template name contains attributes.
+                if not re.search(r'{.+}',t):
+                    message.warning('missing template section: [%s]' % t)
             if not t:
                 all_styles_have_template = False
         # Check we have a valid template entry or alternatively that all the
@@ -2226,7 +2228,10 @@ class AbstractBlock:
         if self.is_conf_entry('template') and not 'skip' in self.options:
             if self.template:
                 if not self.template in config.sections:
-                    message.warning('missing template section: [%s]' % self.template)
+                    # Defer check if template name contains attributes.
+                    if not re.search(r'{.+}',self.template):
+                        message.warning('missing template section: [%s]'
+                                        % self.template)
             elif not all_styles_have_template:
                 if not isinstance(self,List): # Lists don't have templates.
                     message.warning('missing styles templates: [%s]' % self.name)
@@ -2747,6 +2752,7 @@ class DelimitedBlock(AbstractBlock):
             reader.read_until(self.delimiter,same_file=True)
         else:
             template = self.parameters.template
+            template = subs_attrs(template,attrs)
             stag,etag = config.section2tags(template,self.attributes)
             name = self.short_name()+' block'
             if 'sectionbody' in options:

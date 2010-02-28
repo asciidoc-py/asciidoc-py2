@@ -4120,7 +4120,9 @@ template::
   The name of the configuration file markup template section that will
   envelope the block contents. The pipe ('|') character is substituted
   for the block contents. List elements use a set of (list specific)
-  tag parameters instead of a single template.
+  tag parameters instead of a single template. The template name can
+  contain attribute references allowing dynamic template selection a
+  the time of template substitution.
 
 options::
   A comma delimited list of element specific option names. In addition

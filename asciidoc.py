@@ -631,7 +631,8 @@ def filter_lines(filter_cmd, lines, attrs={}):
     # Perform attributes substitution on the filter command.
     s = subs_attrs(filter_cmd, attrs)
     if not s:
-        raise EAsciiDoc,'undefined filter attribute in command: %s' % filter_cmd
+        message.error('undefined filter attribute in command: %s' % filter_cmd)
+        return []
     filter_cmd = s.strip()
     # Parse for quoted and unquoted command and command tail.
     # Double quoted.
@@ -687,13 +688,13 @@ def filter_lines(filter_cmd, lines, attrs={}):
         message.warning('no output from filter: %s' % filter_cmd)
     return result
 
-def system(name, args, is_macro=False, attrs={}):
+def system(name, args, is_macro=False, attrs=None):
     """
     Evaluate a system attribute ({name:args}) or system block macro
     (name::[args]).
     If is_macro is True then we are processing a system block macro otherwise
     it's a system attribute.
-    The attrs dictionary is updated by the counter system attribute.
+    The attrs dictionary is updated by the counter and set system attributes.
     NOTE: The include1 attribute is used internally by the include1::[] macro
     and is not for public use.
     """
@@ -703,7 +704,7 @@ def system(name, args, is_macro=False, attrs={}):
     else:
         syntax = '{%s:%s}' % (name,args)
         separator = writer.newline
-    if name not in ('eval','eval3','sys','sys2','sys3','include','include1','counter','set'):
+    if name not in ('eval','eval3','sys','sys2','sys3','include','include1','counter','counter2','set','set2'):
         if is_macro:
             msg = 'illegal system macro name: %s' % name
         else:
@@ -755,7 +756,7 @@ def system(name, args, is_macro=False, attrs={}):
         finally:
             if os.path.isfile(tmp):
                 os.remove(tmp)
-    elif name == 'counter':
+    elif name in ('counter','counter2'):
         mo = re.match(r'^(?P<attr>[^:]*?)(:(?P<seed>.*))?$', args)
         attr = mo.group('attr')
         seed = mo.group('seed')
@@ -784,8 +785,12 @@ def system(name, args, is_macro=False, attrs={}):
                 result = seed
             else:
                 result = '1'
-        document.attributes[attr] = attrs[attr] = result
-    elif name == 'set':
+        document.attributes[attr] = result
+        if attrs is not None:
+            attrs[attr] = result
+        if name == 'counter2':
+            result = ''
+    elif name in ('set','set2'):
         mo = re.match(r'^(?P<attr>[^:]*?)(:(?P<value>.*))?$', args)
         attr = mo.group('attr')
         value = mo.group('value')
@@ -797,7 +802,10 @@ def system(name, args, is_macro=False, attrs={}):
         if not is_name(attr):
             message.warning('%s: illegal attribute name' % syntax)
         else:
-            document.attributes[attr] = attrs[attr] = value
+            if attrs is not None:
+                attrs[attr] = value
+            if name != 'set2':  # set2 only updates local attributes.
+                document.attributes[attr] = value
         if value is None:
             result = None
         else:
@@ -856,7 +864,6 @@ def subs_attrs(lines, dictionary=None):
         lines = [lines]
     else:
         string_result = False
-        lines = list(lines)
     if dictionary is None:
         attrs = document.attributes
     else:
@@ -867,7 +874,6 @@ def subs_attrs(lines, dictionary=None):
             if not re.match(r'^\d+$', k):
                 attrs[k] = v
         # Substitute attribute references inside dictionary values.
-        dictionary = dictionary.copy()
         for k,v in dictionary.items():
             if v is None:
                 del dictionary[k]
@@ -879,24 +885,24 @@ def subs_attrs(lines, dictionary=None):
                     dictionary[k] = v
         attrs.update(dictionary)
     # Substitute all attributes in all lines.
-    for i in range(len(lines)-1,-1,-1): # Reverse iterate lines.
-        text = lines[i]
+    result = []
+    for line in lines:
         # Make it easier for regular expressions.
-        text = text.replace('\\{','{\\')
-        text = text.replace('\\}','}\\')
+        line = line.replace('\\{','{\\')
+        line = line.replace('\\}','}\\')
         # Expand simple attributes ({name}).
         # Nested attributes not allowed.
         reo = re.compile(r'(?su)\{(?P<name>[^\\\W][-\w]*?)\}(?!\\)')
         pos = 0
         while True:
-            mo = reo.search(text,pos)
+            mo = reo.search(line,pos)
             if not mo: break
             s =  attrs.get(mo.group('name'))
             if s is None:
                 pos = mo.end()
             else:
                 s = str(s)
-                text = text[:mo.start()] + s + text[mo.end():]
+                line = line[:mo.start()] + s + line[mo.end():]
                 pos = mo.start() + len(s)
         # Expand conditional attributes.
         # Single name -- higher precedence.
@@ -911,7 +917,7 @@ def subs_attrs(lines, dictionary=None):
         for reo in [reo1,reo2]:
             pos = 0
             while True:
-                mo = reo.search(text,pos)
+                mo = reo.search(line,pos)
                 if not mo: break
                 attr = mo.group()
                 name =  mo.group('name')
@@ -944,8 +950,8 @@ def subs_attrs(lines, dictionary=None):
                     lval =  attrs.get(name)
                 op = mo.group('op')
                 # mo.end() not good enough because '{x={y}}' matches '{x={y}'.
-                end = end_brace(text,mo.start())
-                rval = text[mo.start('value'):end-1]
+                end = end_brace(line,mo.start())
+                rval = line[mo.start('value'):end-1]
                 if lval is None:
                     if op == '=': s = rval
                     elif op == '?': s = ''
@@ -997,12 +1003,11 @@ def subs_attrs(lines, dictionary=None):
                     else:
                         assert False, 'illegal attribute: %s' % attr
                 s = str(s)
-                text = text[:mo.start()] + s + text[end:]
+                line = line[:mo.start()] + s + line[end:]
                 pos = mo.start() + len(s)
         # Drop line if it contains  unsubstituted {name} references.
-        skipped = re.search(r'(?su)\{[^\\\W][-\w]*?\}(?!\\)', text)
+        skipped = re.search(r'(?su)\{[^\\\W][-\w]*?\}(?!\\)', line)
         if skipped:
-            del lines[i]
             continue;
         # Expand system attributes (eval has precedence).
         reos = [
@@ -1013,34 +1018,36 @@ def subs_attrs(lines, dictionary=None):
         for reo in reos:
             pos = 0
             while True:
-                mo = reo.search(text,pos)
+                mo = reo.search(line,pos)
                 if not mo: break
                 expr = mo.group('expr')
                 action = mo.group('action')
                 expr = expr.replace('{\\','{')
                 expr = expr.replace('}\\','}')
-                s = system(action, expr, attrs=attrs)
+                s = system(action, expr, attrs=dictionary)
+                if dictionary is not None and action in ('counter','counter2','set','set2'):
+                    # These actions create and update attributes.
+                    attrs.update(dictionary)
                 if s is None:
                     # Drop line if the action returns None.
                     skipped = True
-                    del lines[i]
                     break
-                text = text[:mo.start()] + s + text[mo.end():]
+                line = line[:mo.start()] + s + line[mo.end():]
                 pos = mo.start() + len(s)
             if skipped:
                 break
         if not skipped:
             # Remove backslash from escaped entries.
-            text = text.replace('{\\','{')
-            text = text.replace('}\\','}')
-            lines[i] = text
+            line = line.replace('{\\','{')
+            line = line.replace('}\\','}')
+            result.append(line)
     if string_result:
-        if lines:
-            return '\n'.join(lines)
+        if result:
+            return '\n'.join(result)
         else:
             return None
     else:
-        return tuple(lines)
+        return tuple(result)
 
 def char_encoding():
     encoding = document.attributes.get('encoding')
@@ -2411,11 +2418,12 @@ class Paragraph(AbstractBlock):
         postsubs = self.parameters.postsubs
         body = Lex.set_margin(body) # Move body to left margin.
         body = Lex.subs(body,presubs)
+        template = self.parameters.template
+        template = subs_attrs(template,attrs)
+        stag,etag = config.section2tags(template, self.attributes)
         if self.parameters.filter:
             body = filter_lines(self.parameters.filter,body,self.attributes)
         body = Lex.subs(body,postsubs)
-        template = self.parameters.template
-        stag,etag = config.section2tags(template, self.attributes)
         # Write start tag, content, end tag.
         writer.write(dovetail_tags(stag,body,etag),trace='paragraph')
 

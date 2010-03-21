@@ -33,6 +33,7 @@ WEB_ROOT =
     latexmathml
     manpage
     music-filter
+    latex-filter
     README
     README-website
     source-highlight-filter
@@ -138,6 +139,7 @@ copy: all
     :sys cp -R $DOCS_DIR/asciidoc.chunked/images $LOCAL_WEB/chunked/
     :sys cp music?.* $LOCAL_WEB
     :sys cp sample?.png $LOCAL_WEB
+    :sys cp latex?.png $LOCAL_WEB
 
 clean:
     :del {f} $WEB_PAGES

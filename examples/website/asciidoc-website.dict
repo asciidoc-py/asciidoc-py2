@@ -1,4 +1,4 @@
-personal_ws-1.1 en 196 
+personal_ws-1.1 en 198 
 O'Reilly
 awb
 Blogpost
@@ -21,6 +21,7 @@ asciimathml
 faq
 Efros
 LinuxDoc
+stdin
 Klum
 CentOS
 src
@@ -138,6 +139,7 @@ monospace
 monospaced
 Negroni
 ly
+docname
 Schottelius
 ps
 dblatex

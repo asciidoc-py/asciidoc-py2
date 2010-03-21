@@ -36,13 +36,13 @@ Hello *{author}* ({firstname} {lastname}, {authorinitials}).
 
 {c1} = 1, {c2} = 99, {c3} = A
 
-{c1} {c2} {c3}
 {counter:c1} {counter:c2:99} {counter:c3:A}
+{c1} {c2} {c3}
 
 {c1} = 2, {c2} = 100, {c3} = B
 
-y: {y}
 {set:y:Foobar}
+y: {y}
 
 {set:y!}
 

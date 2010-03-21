@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 '''
 NAME
-    music2png - Converts textual music notation to classically notated PNG file
+    latex2png - Converts LaTeX source to PNG file
 
 SYNOPSIS
-    music2png [options] INFILE
+    latex2png [options] INFILE
 
 DESCRIPTION
-    This filter reads LilyPond or ABC music notation text from the input file
-    INFILE (or stdin if INFILE is -), converts it to classical music notation
-    and writes it to a trimmed PNG image file.
+    This filter reads LaTeX source text from the input file
+    INFILE (or stdin if INFILE is -) and renders it to PNG image file.
+    Typically used to render math equations.
 
-    This script is a wrapper for LilyPond and ImageMagick commands.
+    Requires latex(1), dvipng(1) commands and LaTeX math packages.
 
 OPTIONS
-    -f FORMAT
-        The INFILE music format. 'abc' for ABC notation, 'ly' for LilyPond
-        notation. Defaults to 'abc' unless source starts with backslash.
+    -D DPI
+        Set the output resolution to DPI dots per inch. Use this option to
+        scale the output image size.
 
     -o OUTFILE
         The file name of the output file. If not specified the output file is
@@ -36,19 +36,39 @@ OPTIONS
         Print program version number.
 
 SEE ALSO
-    lilypond(1), abc2ly(1), convert(1)
+    latex(1), dvipng(1)
 
 AUTHOR
     Written by Stuart Rackham, <srackham@gmail.com>
+    The code was inspired by Kjell Magne Fauske's code:
+    http://fauskes.net/nb/htmleqII/
+
+    See also:
+    http://www.amk.ca/python/code/mt-math
+    http://code.google.com/p/latexmath2png/
 
 COPYING
-    Copyright (C) 2006 Stuart Rackham. Free use of this software is
-    granted under the terms of the GNU General Public License (GPL).
+    Copyright (C) 2010 Stuart Rackham. Free use of this software is
+    granted under the terms of the MIT License.
 '''
 
 import os, sys, tempfile
 
 VERSION = '0.1.0'
+
+# Include LaTeX packages and commands here.
+TEX_HEADER = r'''\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{bm}
+\newcommand{\mx}[1]{\mathbf{\bm{#1}}} % Matrix command
+\newcommand{\vc}[1]{\mathbf{\bm{#1}}} % Vector command
+\newcommand{\T}{\text{T}}             % Transpose
+\pagestyle{empty}
+\begin{document}'''
+
+TEX_FOOTER = r'''\end{document}'''
 
 # Globals.
 verbose = False
@@ -64,52 +84,51 @@ def print_verbose(line):
 
 def run(cmd):
     global verbose
-    if not verbose:
-        cmd += ' 2>/dev/null'
+    if verbose:
+        cmd += ' 1>&2'
+    else:
+        cmd += ' >/dev/null 2>&1'
     print_verbose('executing: %s' % cmd)
     if os.system(cmd):
         raise EApp, 'failed command: %s' % cmd
 
-def music2png(format, infile, outfile, modified):
-    '''Convert ABC notation in file infile to cropped PNG file named outfile.'''
+def latex2png(infile, outfile, dpi, modified):
+    '''Convert LaTeX input file infile to PNG file named outfile.'''
     outfile = os.path.abspath(outfile)
     outdir = os.path.dirname(outfile)
     if not os.path.isdir(outdir):
         raise EApp, 'directory does not exist: %s' % outdir
-    basefile = tempfile.mktemp(dir=os.path.dirname(outfile))
-    temps = [basefile + ext for ext in ('.abc', '.ly', '.ps', '.midi')]
+    texfile = tempfile.mktemp(suffix='.tex', dir=os.path.dirname(outfile))
+    basefile = os.path.splitext(texfile)[0]
+    dvifile = basefile + '.dvi'
+    temps = [basefile + ext for ext in ('.tex','.dvi', '.aux', '.log')]
     if infile == '-':
-        lines = sys.stdin.readlines()
+        tex = sys.stdin.read()
     else:
         if not os.path.isfile(infile):
             raise EApp, 'input file does not exist: %s' % infile
+        tex = open(infile).read()
         if modified and os.path.isfile(outfile) and \
                 os.path.getmtime(infile) <= os.path.getmtime(outfile):
             print_verbose('skipped: no change: %s' % outfile)
             return
-        lines = open(infile).readlines()
-    if format is None:
-        if lines[0] and lines[0].startswith('\\'):  # Guess input format.
-            format = 'ly'
-        else:
-            format = 'abc'
-    open('%s.%s' % (basefile,format), 'w').writelines(lines) # Temp source file.
-    abc = basefile + '.abc'
-    ly = basefile + '.ly'
-    png = basefile + '.png'
+    tex = '%s\n%s\n%s\n' % (TEX_HEADER, tex.strip(), TEX_FOOTER)
+    print_verbose('tex:\n%s' % tex)
+    open(texfile, 'w').write(tex)
     saved_pwd = os.getcwd()
     os.chdir(outdir)
     try:
-        if format == 'abc':
-            run('abc2ly --beams=None -o "%s" "%s"' % (ly,abc))
-        run('lilypond --png -o "%s" "%s"' % (basefile,ly))
-        os.rename(png, outfile)
+        # Compile LaTeX document to DVI file.
+        run('latex %s' % texfile)
+        # Convert DVI file to PNG.
+        cmd = 'dvipng'
+        if dpi:
+            cmd += ' -D %s' % dpi
+        cmd += ' -T tight -x 1200 -z 9 -bg Transparent -o "%s" "%s"' \
+               % (outfile,dvifile)
+        run(cmd)
     finally:
         os.chdir(saved_pwd)
-    # Chop the bottom 75 pixels off to get rid of the page footer.
-    run('convert "%s" -gravity South -crop 1000x10000+0+75 "%s"' % (outfile, outfile))
-    # Trim all blank areas from sides, top and bottom.
-    run('convert "%s" -trim "%s"' % (outfile, outfile))
     for f in temps:
         if os.path.isfile(f):
             print_verbose('deleting: %s' % f)
@@ -120,10 +139,10 @@ def usage(msg=''):
         print_stderr(msg)
     print_stderr('\n'
                  'usage:\n'
-                 '    music2png [options] INFILE\n'
+                 '    latex2png [options] INFILE\n'
                  '\n'
                  'options:\n'
-                 '    -f FORMAT\n'
+                 '    -D DPI\n'
                  '    -o OUTFILE\n'
                  '    -m\n'
                  '    -v\n'
@@ -133,19 +152,19 @@ def usage(msg=''):
 def main():
     # Process command line options.
     global verbose
-    format = None
+    dpi = None
     outfile = None
     modified = False
     import getopt
-    opts,args = getopt.getopt(sys.argv[1:], 'f:o:mhv', ['help','version'])
+    opts,args = getopt.getopt(sys.argv[1:], 'D:o:mhv', ['help','version'])
     for o,v in opts:
         if o in ('--help','-h'):
             print __doc__
             sys.exit(0)
         if o =='--version':
-            print('music2png version %s' % (VERSION,))
+            print('latex2png version %s' % (VERSION,))
             sys.exit(0)
-        if o == '-f': format = v
+        if o == '-D': dpi = v
         if o == '-o': outfile = v
         if o == '-m': modified = True
         if o == '-v': verbose = True
@@ -153,8 +172,8 @@ def main():
         usage()
         sys.exit(1)
     infile = args[0]
-    if format not in (None, 'abc', 'ly'):
-        usage('invalid FORMAT')
+    if dpi and not dpi.isdigit():
+        usage('invalid DPI')
         sys.exit(1)
     if outfile is None:
         if infile == '-':
@@ -162,7 +181,7 @@ def main():
             sys.exit(1)
         outfile = os.path.splitext(infile)[0] + '.png'
     # Do the work.
-    music2png(format, infile, outfile, modified)
+    latex2png(infile, outfile, dpi, modified)
     # Print something to suppress asciidoc 'no output from filter' warnings.
     if infile == '-':
         sys.stdout.write(' ')

@@ -205,6 +205,7 @@ div.exampleblock > div.content {
 div.imageblock div.content { padding-left: 0; }
 span.image img { border-style: none; }
 a.image:visited { color: white; }
+div.imageblock.latex div.image-title { margin-top: 0.5em; }
 
 dl {
   margin-top: 0.8em;

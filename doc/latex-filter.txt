@@ -1,6 +1,10 @@
 LaTeX Filter
 ============
 
+:blogpost-status: published
+:blogpost-doctype: article
+:blogpost-posttype: page
+
 The AsciiDoc distribution includes a LaTeX filter that translates
 LaTeX source to PNG image which is automatically inserted into the
 AsciiDoc output document. Although it can accept any LaTeX source, the
@@ -61,7 +65,7 @@ This LaTeX block:
 \begin{equation}\label{first}
 a=b+c
 \end{equation}
-some intervening text
+
 \begin{subequations}\label{grp}
 \begin{align}
 a&=b+c\label{second}\\

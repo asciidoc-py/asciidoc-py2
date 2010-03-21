@@ -24,7 +24,11 @@ OPTIONS
 
     -m
         Skip if the PNG output file is newer that than the INFILE.
-        Has no effect if INFILE is - (stdin).
+        Compares timestamps on INFILE and OUTFILE. If
+        INFILE is - (stdin) then compares MD5 checksum stored in file
+        named like OUTFILE but with a .md5 file name extension.
+        The .md5 file is created if the -m option is used and the
+        INFILE is - (stdin).
 
     -v
         Verbosely print processing information to stderr.
@@ -46,9 +50,9 @@ COPYING
     granted under the terms of the GNU General Public License (GPL).
 '''
 
-import os, sys, tempfile
+import os, sys, tempfile, md5
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 
 # Globals.
 verbose = False
@@ -78,22 +82,32 @@ def music2png(format, infile, outfile, modified):
         raise EApp, 'directory does not exist: %s' % outdir
     basefile = tempfile.mktemp(dir=os.path.dirname(outfile))
     temps = [basefile + ext for ext in ('.abc', '.ly', '.ps', '.midi')]
+    skip = False
     if infile == '-':
-        lines = sys.stdin.readlines()
+        source = sys.stdin.read()
+        checksum = md5.new(source).digest()
+        f = os.path.splitext(outfile)[0] + '.md5'
+        if modified:
+            if os.path.isfile(f) and os.path.isfile(outfile) and \
+                    checksum == open(f,'rb').read():
+                skip = True
+            open(f,'wb').write(checksum)
     else:
         if not os.path.isfile(infile):
             raise EApp, 'input file does not exist: %s' % infile
         if modified and os.path.isfile(outfile) and \
                 os.path.getmtime(infile) <= os.path.getmtime(outfile):
-            print_verbose('skipped: no change: %s' % outfile)
-            return
-        lines = open(infile).readlines()
+            skip = True
+        source = open(infile).read()
+    if skip:
+        print_verbose('skipped: no change: %s' % outfile)
+        return
     if format is None:
-        if lines[0] and lines[0].startswith('\\'):  # Guess input format.
+        if source and source.startswith('\\'):  # Guess input format.
             format = 'ly'
         else:
             format = 'abc'
-    open('%s.%s' % (basefile,format), 'w').writelines(lines) # Temp source file.
+    open('%s.%s' % (basefile,format), 'w').write(source) # Temp source file.
     abc = basefile + '.abc'
     ly = basefile + '.ly'
     png = basefile + '.png'

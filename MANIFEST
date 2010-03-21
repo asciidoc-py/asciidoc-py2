@@ -34,6 +34,7 @@ doc/customers.csv
 doc/*.html
 doc/images/
 doc/main.aap
+doc/latex-filter.pdf
 doc/music-filter.pdf
 doc/source-highlight-filter.pdf
 doc/*.txt
@@ -52,6 +53,8 @@ filters/code/code-filter.conf
 filters/code/code-filter.py
 filters/code/code-filter-readme.txt
 filters/code/code-filter-test.txt
+filters/latex/latex2png.py
+filters/latex/latex-filter.conf
 filters/music/music-filter.conf
 filters/music/music2png.py
 filters/music/music-filter-test.txt

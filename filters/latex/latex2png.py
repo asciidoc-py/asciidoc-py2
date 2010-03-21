@@ -24,7 +24,11 @@ OPTIONS
 
     -m
         Skip if the PNG output file is newer that than the INFILE.
-        Has no effect if INFILE is - (stdin).
+        Compares timestamps on INFILE and OUTFILE. If
+        INFILE is - (stdin) then compares MD5 checksum stored in file
+        named like OUTFILE but with a .md5 file name extension.
+        The .md5 file is created if the -m option is used and the
+        INFILE is - (stdin).
 
     -v
         Verbosely print processing information to stderr.
@@ -52,7 +56,7 @@ COPYING
     granted under the terms of the MIT License.
 '''
 
-import os, sys, tempfile
+import os, sys, tempfile, md5
 
 VERSION = '0.1.0'
 
@@ -102,16 +106,26 @@ def latex2png(infile, outfile, dpi, modified):
     basefile = os.path.splitext(texfile)[0]
     dvifile = basefile + '.dvi'
     temps = [basefile + ext for ext in ('.tex','.dvi', '.aux', '.log')]
+    skip = False
     if infile == '-':
         tex = sys.stdin.read()
+        checksum = md5.new(tex).digest()
+        f = os.path.splitext(outfile)[0] + '.md5'
+        if modified:
+            if os.path.isfile(f) and os.path.isfile(outfile) and \
+                    checksum == open(f,'rb').read():
+                skip = True
+            open(f,'wb').write(checksum)
     else:
         if not os.path.isfile(infile):
             raise EApp, 'input file does not exist: %s' % infile
         tex = open(infile).read()
         if modified and os.path.isfile(outfile) and \
                 os.path.getmtime(infile) <= os.path.getmtime(outfile):
-            print_verbose('skipped: no change: %s' % outfile)
-            return
+            skip = True
+    if skip:
+        print_verbose('skipped: no change: %s' % outfile)
+        return
     tex = '%s\n%s\n%s\n' % (TEX_HEADER, tex.strip(), TEX_FOOTER)
     print_verbose('tex:\n%s' % tex)
     open(texfile, 'w').write(tex)
@@ -124,7 +138,7 @@ def latex2png(infile, outfile, dpi, modified):
         cmd = 'dvipng'
         if dpi:
             cmd += ' -D %s' % dpi
-        cmd += ' -T tight -x 1200 -z 9 -bg Transparent -o "%s" "%s"' \
+        cmd += ' -T tight -x 1000 -z 9 -bg Transparent -o "%s" "%s"' \
                % (outfile,dvifile)
         run(cmd)
     finally:

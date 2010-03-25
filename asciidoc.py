@@ -704,7 +704,7 @@ def system(name, args, is_macro=False, attrs=None):
     else:
         syntax = '{%s:%s}' % (name,args)
         separator = writer.newline
-    if name not in ('eval','eval3','sys','sys2','sys3','include','include1','counter','counter2','set','set2'):
+    if name not in ('eval','eval3','sys','sys2','sys3','include','include1','counter','counter2','set','set2','template'):
         if is_macro:
             msg = 'illegal system macro name: %s' % name
         else:
@@ -825,6 +825,16 @@ def system(name, args, is_macro=False, attrs=None):
                 result = ''
     elif name == 'include1':
         result = separator.join(config.include1[args])
+    elif name == 'template':
+        if not args in config.sections:
+            message.warning('%s: template does not exist' % syntax)
+        else:
+            result = []
+            for line in  config.sections[args]:
+                line = subs_attrs(line)
+                if line is not None:
+                    result.append(line)
+            result = '\n'.join(result)
     else:
         assert False
     if result and name in ('eval3','sys3'):

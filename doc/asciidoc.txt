@@ -3998,6 +3998,11 @@ arguments. The syntax is `{<action>:<arguments>}`.
         output is written directly to the output without any further
         substitutions.
 
+`{template:<template>}`::
+        Substitutes the contents of the configuration file section
+        named `<template>`. Attribute references contained in the
+        template are substituted.
+
 .System reference behavior
 - System attribute arguments can contain non-system attribute
   references.
@@ -5440,11 +5445,12 @@ Use alternative stylesheets (see <<X35,Stylesheets>>).
 
 |[[X91]]toc |xhtml11, docbook (XSL Stylesheets) |
 Adds a table of contents to the start of an article or book document.
-
-NOTE: The `toc` attribute must be specified using the `--attribute`
-command-line option. If you define the `toc` attribute in a custom
-configuration file it won't be recognized because the conditionally
-included header code will have already been processed.
+The `toc` attribute can be specified using the `--attribute toc`
+command-line option or a `:toc:` attribute entry in the document
+header. The 'toc' attribute is defined by default when the 'docbook'
+backend is used. To disable table of contents generation undefine the
+'toc' attribute by putting a `:toc!:` attribute entry in the document
+header or from the command-line with an `--attribute toc!` option.
 
 *xhtml11 backend*
 

@@ -4,6 +4,7 @@ LaTeX Filter
 :blogpost-status: published
 :blogpost-doctype: article
 :blogpost-posttype: page
+:blogpost-categories: AsciiDoc,LaTeX,python
 
 The AsciiDoc distribution includes a LaTeX filter that translates
 LaTeX source to PNG image which is automatically inserted into the

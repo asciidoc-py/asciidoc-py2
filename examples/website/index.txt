@@ -328,6 +328,8 @@ discussion group thread] for details.
   protocol decoding] documentation is written using AsciiDoc.
 - Dwight Schauer has written an http://lxc.teegra.net/[LXC HOWTO] in
   AsciiDoc.
+- The http://www.rowetel.com/ucasterisk/[Free Telephony Project]
+  website is generated using AsciiDoc.
 
 Please let me know if any of these links need updating.
 

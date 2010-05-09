@@ -2484,7 +2484,7 @@ by the `<subslist>`.  The usual syntax is
 `<name>::<subslist>[<passtext>]` (for block macros).
 
 pass::
-  Inline and block. Passes text unmodified apart from explicitly
+  Inline and block. Passes text unmodified (apart from explicitly
   specified substitutions). Examples:
 
   pass:[<q>To be or not to be</q>]

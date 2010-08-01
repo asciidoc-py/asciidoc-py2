@@ -3981,7 +3981,7 @@ arguments. The syntax is `{<action>:<arguments>}`.
           which case the return value is undefined and the enclosing
           line will be dropped.
 
-`{set:<attrname>[!][:<value>]}`::
+`{set2:<attrname>[!][:<value>]}`::
         Same as `set` except that the attribute scope is local to the
         template.
 

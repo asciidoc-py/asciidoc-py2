@@ -2,6 +2,18 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
+== How can I generate numbered bibliographic entries?
+If your outputs are DocBook generated then adding the following inline
+macro to a custom configuration file will result in auto-incrementing
+bibliography entry numbers (instead of displaying the bibliographic
+identifiers):
+
+  [anchor3-inlinemacro]
+  <anchor id="{1}" xreflabel="[{counter:bibliography1}]"/>[{counter:bibliography2}]
+
+This FAQ submitted by Bela Hausmann.
+
+
 == How can I include lines of dashes inside a listing block?
 A line of four or more dashes will be mistaken for the ListingBlock
 terminator, one way round this problem is to use a LiteralBlock styled

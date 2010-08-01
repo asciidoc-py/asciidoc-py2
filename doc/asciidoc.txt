@@ -1739,7 +1739,7 @@ generating DocBook bibliography entries. Example:
 
 The `[[[<reference>]]]` syntax is a bibliography entry anchor, it
 generates an anchor named `<reference>` and additionally displays
-`[<reference>]` at the anchor position. For example `[\[[taoup]]]`
+`[<reference>]` at the anchor position. For example `[[[taoup]]]`
 generates an anchor named `taoup` that displays `[taoup]` at the
 anchor position. Cite the reference from elsewhere your document using
 `<<taoup>>`, this displays a hyperlink (`[taoup]`) to the

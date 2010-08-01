@@ -201,8 +201,14 @@ and I'll add them to the list.
   various Wiki markup syntaxes. An interesting attempt at Wiki markup
   standardization is http://www.wikicreole.org/[CREOLE].
 - Terrence Brannon has written
-  http://static.livingcosmos.org/domains/com/metaperl/www/asciidoc-el/[AsciiDoc
-  functions for Emacs].
+  http://github.com/metaperl/asciidoc-el[AsciiDoc functions for
+  Emacs].
+- Florian Kaufman has written
+  http://code.google.com/p/sensorflo-emacs/source/browse/trunk/adoc-mode.el[adoc-mode.el]
+  -- a major-mode for editing asciidoc files in Emacs.
+- Sun Tong has written an
+  http://xpt.sourceforge.net/tools/doc-mode/[Emacs mode for AsciiDoc
+  fontlocking].
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] has
   released an http://xpt.sourceforge.net/tools/doc-mode/[AsciiDoc
   syntax highlighter for Emacs].

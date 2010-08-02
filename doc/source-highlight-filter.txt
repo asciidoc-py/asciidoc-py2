@@ -4,9 +4,15 @@ Source Code Highlight Filter
 The AsciiDoc distribution includes a source code syntax highlight
 filter (`source-highlight-filter.conf`). It uses
 http://www.gnu.org/software/src-highlite/[GNU source-highlight] to
-highlight HTML outputs; DocBook outputs are highlighted by toolchains
-that have `programlisting` element highlight support, for example
-'dblatex'.
+highlight HTML outputs. You also have the option of using the
+http://pygments.org/[Pygments] syntax highlighter for 'xhtm11' outputs
+-- define an AsciiDoc attribute named 'pygments' to switch to Pygments
+(you will also need to have Pygments installed and the 'pygmentize'
+command in your PATH.  You can customize Pygments CSS styles by
+editing `./stylesheets/pygments.css`.
+
+DocBook outputs are highlighted by toolchains that have
+`programlisting` element highlight support, for example 'dblatex'.
 
 TIP: If the source 'language' attribute has been set (using an
 'AttributeEntry' or from the command-line) you don't have to specify

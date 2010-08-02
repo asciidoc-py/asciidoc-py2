@@ -1574,7 +1574,7 @@ command-line option.
 
 Labeled Lists
 ~~~~~~~~~~~~~
-Labeled list items consist of one or more text labels followed the
+Labeled list items consist of one or more text labels followed by the
 text of the list item.
 
 An item label begins a line with an alphanumeric character hard

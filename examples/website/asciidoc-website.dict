@@ -1,9 +1,10 @@
-personal_ws-1.1 en 198 
+personal_ws-1.1 en 201 
 O'Reilly
 awb
 Blogpost
 Bulleted
 Iisaka
+pygmentize
 callouts
 JavaScript
 asciimath
@@ -20,8 +21,8 @@ AsciiMathML
 asciimathml
 faq
 Efros
-LinuxDoc
 stdin
+LinuxDoc
 Klum
 CentOS
 src
@@ -133,6 +134,7 @@ AsciiDocGen
 CRAN
 jw
 ln
+pygments
 odf
 lt
 monospace
@@ -164,6 +166,7 @@ Obenhuber's
 CHANGLOG
 docbook
 DocBook
+fontlocking
 Rosenkraenzer
 toolchain
 ebuild

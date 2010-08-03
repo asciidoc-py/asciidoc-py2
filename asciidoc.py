@@ -2034,7 +2034,10 @@ class Section:
                     % (document.level+1, Title.level))
         Section.set_id()
         Section.setlevel(Title.level)
-        Title.attributes['sectnum'] = Title.getnumber(document.level)
+        if 'numbered' in document.attributes:
+            Title.attributes['sectnum'] = Title.getnumber(document.level)
+        else:
+            Title.attributes['sectnum'] = ''
         AttributeList.consume(Title.attributes)
         stag,etag = config.section2tags(Title.sectname,Title.attributes)
         Section.savetag(Title.level,etag)

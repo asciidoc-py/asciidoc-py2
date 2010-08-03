@@ -11,6 +11,7 @@ NOTE: The abstract, preface, appendix, bibliography, glossary and
 index section titles are significant ('specialsections').
 
 
+:numbered!:
 [abstract]
 Example Abstract
 ----------------
@@ -20,6 +21,7 @@ This document is an AsciiDoc article skeleton containing briefly
 annotated element placeholders plus a couple of example index entries
 and footnotes.
 
+:numbered:
 
 The First Section
 -----------------

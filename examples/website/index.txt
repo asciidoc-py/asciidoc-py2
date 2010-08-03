@@ -340,6 +340,8 @@ discussion group thread] for details.
   AsciiDoc.
 - The http://www.rowetel.com/ucasterisk/[Free Telephony Project]
   website is generated using AsciiDoc.
+- Warren Block has http://www.wonkity.com/~wblock/docs/[posted a
+  number of articles written using AsciiDoc].
 
 Please let me know if any of these links need updating.
 

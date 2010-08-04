@@ -2433,10 +2433,11 @@ class Paragraph(AbstractBlock):
         body = Lex.subs(body,presubs)
         template = self.parameters.template
         template = subs_attrs(template,attrs)
-        stag,etag = config.section2tags(template, self.attributes)
+        stag = config.section2tags(template, self.attributes,skipend=True)[0]
         if self.parameters.filter:
             body = filter_lines(self.parameters.filter,body,self.attributes)
         body = Lex.subs(body,postsubs)
+        etag = config.section2tags(template, self.attributes,skipstart=True)[1]
         # Write start tag, content, end tag.
         writer.write(dovetail_tags(stag,body,etag),trace='paragraph')
 
@@ -2774,14 +2775,15 @@ class DelimitedBlock(AbstractBlock):
         else:
             template = self.parameters.template
             template = subs_attrs(template,attrs)
-            stag,etag = config.section2tags(template,self.attributes)
             name = self.short_name()+' block'
             if 'sectionbody' in options:
                 # The body is treated like a section body.
+                stag,etag = config.section2tags(template,self.attributes)
                 writer.write(stag,trace=name+' open')
                 Section.translate_body(self)
                 writer.write(etag,trace=name+' close')
             else:
+                stag = config.section2tags(template,self.attributes,skipend=True)[0]
                 body = reader.read_until(self.delimiter,same_file=True)
                 presubs = self.parameters.presubs
                 postsubs = self.parameters.postsubs
@@ -2790,6 +2792,7 @@ class DelimitedBlock(AbstractBlock):
                     body = filter_lines(self.parameters.filter,body,self.attributes)
                 body = Lex.subs(body,postsubs)
                 # Write start tag, content, end tag.
+                etag = config.section2tags(template,self.attributes,skipstart=True)[1]
                 writer.write(dovetail_tags(stag,body,etag),trace=name)
             trace(self.short_name()+' block close',etag)
         if reader.eof():
@@ -4632,10 +4635,11 @@ class Config:
         for k,v in self.sections.items():
             self.sections[k] = self.expand_templates(v)
 
-    def section2tags(self, section, d={}):
+    def section2tags(self, section, d={}, skipstart=False, skipend=False):
         """Perform attribute substitution on 'section' using document
         attributes plus 'd' attributes. Return tuple (stag,etag) containing
-        pre and post | placeholder tags."""
+        pre and post | placeholder tags. 'skipstart' and 'skipend' are
+        used to suppress substitution."""
         assert section is not None
         if section in self.sections:
             body = self.sections[section]
@@ -4664,8 +4668,10 @@ class Config:
         title = d.get('title')
         if title:
             d['title'] = chr(0)  # Replace with unused character.
-        stag = subs_attrs(stag, d)
-        etag = subs_attrs(etag, d)
+        if not skipstart:
+            stag = subs_attrs(stag, d)
+        if not skipend:
+            etag = subs_attrs(etag, d)
         # Put the {title} back.
         if title:
             stag = map(lambda x: x.replace(chr(0), title), stag)

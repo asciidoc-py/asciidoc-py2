@@ -50,6 +50,10 @@ COPYING
     granted under the terms of the GNU General Public License (GPL).
 '''
 
+# Suppress warning: "the md5 module is deprecated; use hashlib instead"
+import warnings
+warnings.simplefilter('ignore',DeprecationWarning)
+
 import os, sys, tempfile, md5
 
 VERSION = '0.1.1'

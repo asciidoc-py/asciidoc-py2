@@ -5,19 +5,28 @@ The AsciiDoc distribution includes a source code syntax highlight
 filter (`source-highlight-filter.conf`). It uses
 http://www.gnu.org/software/src-highlite/[GNU source-highlight] to
 highlight HTML outputs. You also have the option of using the
-http://pygments.org/[Pygments] syntax highlighter for 'xhtm11' outputs
--- define an AsciiDoc attribute named 'pygments' to switch to Pygments
-(you will also need to have Pygments installed and the 'pygmentize'
-command in your PATH).  You can customize Pygments CSS styles by
-editing `./stylesheets/pygments.css`.
+http://pygments.org/[Pygments] syntax highlighter for 'xhtm11'
+outputs.
+
+To use Pygments you need to define an AsciiDoc attribute named
+'pygments' (either from the command-line or in the global
+`asciidoc.conf` configuration file) and you will also need to have
+Pygments installed and the 'pygmentize' command in your PATH.  You can
+customize Pygments CSS styles by editing `./stylesheets/pygments.css`.
+To make Pygments your default highlighter put the following line your
+`~/.asciidoc/asciidoc.conf` file:
 
 DocBook outputs are highlighted by toolchains that have
 `programlisting` element highlight support, for example 'dblatex'.
 
-TIP: If the source 'language' attribute has been set (using an
-'AttributeEntry' or from the command-line) you don't have to specify
-it in each source code block.
-
+[TIP]
+=====
+- If the source 'language' attribute has been set (using an
+  'AttributeEntry' or from the command-line) you don't have to specify
+  it in each source code block.
+- You may need to place callout markers inside source code comments to
+  ensure they are not misinterpereted and mangled by the hightlighter.
+=====
 
 Examples
 --------
@@ -178,9 +187,10 @@ Installation
 HTML
 ~~~~
 If you want to syntax highlight AsciiDoc HTML outputs (`html4` and
-`xhtml11` backends) you need to
-install http://www.gnu.org/software/src-highlite/[GNU
-source-highlight] (most distributions have this package).
+`xhtml11` backends) you need to install
+http://www.gnu.org/software/src-highlite/[GNU source-highlight] or
+http://pygments.org/[Pygments] (most distributions have these
+packages).
 
 DocBook
 ~~~~~~~

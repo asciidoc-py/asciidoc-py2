@@ -9,6 +9,70 @@ AsciiDoc Frequently Asked Questions
   newer FAQs may apply to the trunk and not the current release.
 ======
 
+== DocBook has many elements for document meta-data -- how can I use them from AsciiDoc?
+If the 'docinfo' attribute is defined then AsciiDoc looks for a file
+named like the source file but ending in `-docinfo.xml` and includes
+it in the output document. See the link:userguide.html#X87[Additional
+document header information] section in the AsciiDoc User Guide for
+details.
+
+
+== Do element titles automatically generate link captions?
+If you go the DocBook route then yes -- just omit the caption from the
+AsciiDoc 'xref' (`<<...>>`) macro. Both dblatex and DocBook XSL will
+use the target element's title text. Examples:
+
+[listing]
+..................................................................
+[[X1]]
+Section One
+-----------
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
+ultrices justo porttitor augue. Vestibulum pretium. Donec porta
+
+See also <<X3>> (this link displays the text 'A titled paragraph').
+
+[id="X2",reftext="2nd section"]
+Section Two
+-----------
+See also <<X1>> (this link displays the text 'Section One').
+
+[[X3]]
+.A titled paragraph
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+
+See also <<X2>> (this link displays the text '2nd section').
+..................................................................
+
+The AsciiDoc 'reftext' attribute has been used to explicitly set the
+link text to '2nd section' for 'Section Two'.
+
+
+== Can I define my own table styles?
+In addition to the built-in styles you can define your own. This
+example (for the 'xhtml11' backend) defines a table style called 'red'
+which sets the background cell color to red. First put the definition
+in a configuration file:
+
+[listing]
+.........................................
+[tabledef-default]
+red-style=tags="red"
+
+[tabletags-red]
+bodydata=<td style="background-color:red;">|</td>
+.........................................
+
+Now you can use the style name to style cells or columns (in this
+example we use an unambiguous shortened abbreviation 'r'):
+
+[listing]
+.........................................
+|==================================
+|Normal cell      r|Red cell
+|==================================
+.........................................
+
 
 == How can I add highlighted editorial comments to an AsciiDoc document?
 Both block and inline link:userguide.html#X25[comment lines] are

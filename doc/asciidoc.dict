@@ -1,4 +1,4 @@
-personal_ws-1.1 en 892 
+personal_ws-1.1 en 893 
 mandoc
 colspecs
 API
@@ -406,6 +406,7 @@ blogpost
 xsltproc
 jw
 ln
+nd
 ne
 Terje
 lt

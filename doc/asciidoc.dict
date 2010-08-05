@@ -1,4 +1,4 @@
-personal_ws-1.1 en 847 
+personal_ws-1.1 en 892 
 mandoc
 colspecs
 API
@@ -9,6 +9,7 @@ attributelist
 AttributeList
 Blondel
 permalink
+unescapes
 frontmatter
 libxslt
 asc
@@ -23,6 +24,7 @@ passtext
 ZapfDingbats
 CALS
 LiteralParagraph
+del
 BOM
 Bon
 ungenerated
@@ -41,11 +43,13 @@ Lorum
 superceded
 inlinegraphic
 specialcharacters
+cpp
 RevisionLine
 TitleName
 Fusce
 ralink
 scaledwidth
+FooParser
 VMiklos
 DelimitedBlocks
 css
@@ -74,6 +78,7 @@ RevisionNumber
 CommentBlocks
 consequat
 fmt
+Amade
 inline
 monospacedwords
 informaltable
@@ -98,6 +103,7 @@ xreflabel
 PDF's
 PDFs
 MSIE
+pede
 permalinks
 Daly
 arcu
@@ -108,6 +114,7 @@ listcontinuation
 ListContinuation
 apos
 ShareSource
+projectname
 hoc
 ispum
 Maier
@@ -118,6 +125,7 @@ gui
 ile
 sgmlfmt
 formulae
+dbkview
 AsciiDoc's
 BackendBlock
 tbody
@@ -134,6 +142,7 @@ starttags
 tgroup
 Miklos
 porttitor
+Maecenas
 systemIdStartString
 footnoteref
 joe
@@ -161,6 +170,7 @@ optionname
 companyname
 pageunits
 nec
+loc
 latexmath
 articleinfo
 auctor
@@ -183,8 +193,11 @@ ListItem
 coids
 shiftwidth
 nulla
+endDocument
 odt
 Cygwin
+ultrices
+indentedparagraph
 IndentedParagraph
 ltr
 doctests
@@ -195,6 +208,7 @@ Dvips
 Jython
 Solaris
 pdf
+authorgroup
 manpages
 ItemText
 dignissim
@@ -212,6 +226,7 @@ nunc
 CustomBlocks
 informalfigure
 ORed
+yyyy
 online
 LIBDIR
 docinfo
@@ -272,6 +287,7 @@ Bólido
 Bolido
 tabsize
 colpcwidth
+Orry
 onload
 RTF
 quickstart
@@ -280,6 +296,7 @@ bloggs
 tis
 listdef
 Tsawassen
+Aenean
 postsubs
 src
 LastName
@@ -298,24 +315,29 @@ prepended
 resx
 startup
 admonitionblock
+coord
 Blackdown
+mainmatter
 Slackware
 tableabswidth
 BackendBlocks
 VMiklos's
 sys
 doctype
+retrive
 uri
 wnone
 xhtml
 utf
 footrow
 usr
+Hausmann
 TitleBlock
 txt
 elit
 Efros's
 sectiontitle
+CommentLines
 subprocess
 outfile
 blandit
@@ -338,9 +360,12 @@ Morbi
 Blauer
 footdata
 cb
+bg
+al
 cd
 xsl
 backmatter
+ar
 fils
 de
 backends
@@ -349,6 +374,7 @@ br
 cp
 fb
 fermentum
+fi
 cellcount
 et
 fo
@@ -376,6 +402,7 @@ defacto
 mb
 IndentedBlocks
 js
+blogpost
 xsltproc
 jw
 ln
@@ -389,6 +416,7 @@ ly
 mv
 stylesheets
 roff
+YYY
 regex
 config
 tabstop
@@ -401,6 +429,7 @@ epub
 td
 Vivamus
 py
+th
 ru
 docname
 su
@@ -413,7 +442,9 @@ Frédérique
 SidebarBlock
 wj
 Efros
+param
 Movet
+hcol
 manpurpose
 colalign
 debian
@@ -451,7 +482,7 @@ ExampleBlocks
 linux
 commodo
 Fernandes
-Pretium
+pretium
 notitle
 manvolnum
 homero
@@ -465,14 +496,17 @@ doctitle
 Dmitry
 backtick
 Bouchers
+strikethrough
 indexterm
 Daitx
+vestibulum
 quote's
 noteblock
 refentry
 Xubuntu
 captionless
 orgname
+OpenOffice
 asciidocEmphasized
 chapt
 necessitatibus
@@ -537,11 +571,14 @@ java
 Sakellariou
 postulant
 Vasilev
+barchart
 Calixto
 sudo
+coverpage
 starttag
 whitespace
 DelimitedBlock
+foofoo
 retab
 changelog
 ChangeLog
@@ -567,6 +604,7 @@ POSIX
 builtins
 bulleted
 globals
+porta
 OpenBlock
 colabswidth
 Bushuev
@@ -631,6 +669,7 @@ RevisionRemark
 TableHeader
 Mihai
 KeyboardInterrupt
+justo
 sectionbody
 SectionBody
 nnoremap
@@ -664,7 +703,7 @@ blockmacro
 BlockMacro
 mailto
 http
-Pychart
+pychart
 Wiki
 euismod
 arounds
@@ -696,6 +735,7 @@ screenshot
 noout
 Wieers
 Artem
+startDocument
 ifdef
 manmanual
 Konqueror
@@ -705,6 +745,7 @@ LaTeXMathML
 latexmathml
 sectnum
 BlockMacros
+cceeff
 unfloat
 snabbköp
 snabbkop
@@ -747,6 +788,7 @@ revdate
 stylesheet
 eleifend
 ListTerm
+augue
 loweralpha
 subdirectory
 consectetuer
@@ -758,6 +800,7 @@ FreeBSD
 Araquil
 setuptools
 bfoobar
+lacinia
 entrytag
 muellner
 ifndef
@@ -832,6 +875,7 @@ ftdetect
 Greaves
 SimpleList
 superscripting
+baz
 lorem
 Comidas
 bodyrows
@@ -840,6 +884,7 @@ greek
 comspec
 refmiscinfo
 Firefox
+lectus
 JavaHelp
 unescaped
 mydoc

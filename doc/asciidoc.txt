@@ -2284,9 +2284,12 @@ single-file XHTML documents with embedded images and CSS, for example:
 
   $ asciidoc -a data-uri mydocument.txt
 
-NOTE: All current popular browsers support 'data URIs', although
-versions of Internet Explorer prior to version 8 do not support 'data
-URIs'.
+[NOTE]
+======
+- All current popular browsers support data URIs, although versions
+  of Internet Explorer prior to version 8 do not.
+- Some browsers limit the size of data URIs.
+======
 *********************************************************************
 
 [[X25]]
@@ -4961,8 +4964,8 @@ If the indentation and layout of the asciidoc(1) output is not to your
 liking you can:
 
 1. Change the indentation and layout of configuration file markup
-   template sections. The `{empty}` glossary entry is useful for
-   outputting trailing blank lines in markup templates.
+   template sections. The `{empty}` attribute is useful for outputting
+   trailing blank lines in markup templates.
 
 2. Use Dave Raggett's http://tidy.sourceforge.net/[HTML Tidy] program
    to tidy asciidoc(1) output. Example:

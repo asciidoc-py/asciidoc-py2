@@ -640,7 +640,7 @@ _Emphasized text_::
 #Unquoted text#::
         Placing \#hashes around text# does nothing, it is a mechanism
         to allow inline attributes to be applied to otherwise
-        unformatted text (see example below).
+        unformatted text (see examples below).
 
 .Quoted text behavior
 - Quoting cannot be overlapped.
@@ -955,9 +955,12 @@ Can also be set by the 'BlockId' element.
 |role |html4, xhtml11, docbook |
 Role contains a string used to classify or subclassify an element:
 
-- Adds 'role' attribute to DocBook block elements.
-- Adds 'role' attribute to DocBook and HTML <<X51,quoted inline
-  elements>>.
+- Adds 'role' attribute to block elements ('docbook' and 'xhtml11'
+  backends).
+- Adds 'role' attribute to <<X51,quoted inline elements>> ('docbook',
+  'xhtml11' and 'html4' backends).
+- The AsciiDoc 'role' attribute is sets the 'role' attribute in
+  DocBook elements and sets the 'class' attribute in HTML elements.
 
 |reftext |docbook |
 'reftext' is used to set the DocBook 'xreflabel' attribute.

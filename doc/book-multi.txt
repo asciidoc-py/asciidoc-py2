@@ -1,7 +1,7 @@
 Multi-Part Book Title Goes Here
 ===============================
 Author's Name
-v1.0, Dec 2003
+v1.0, 2003-12
 
 
 [dedication]

@@ -12,6 +12,12 @@
   <xsl:import href="http://docbook.sourceforge.net/release/xsl/current/epub/docbook.xsl"/>
 <xsl:import href="common.xsl"/>
 
+<!-- Separate the first chapter from preceding content. -->
+<xsl:param name="chunk.first.sections" select="1"/>
+
+<!-- Chunk on a chapter by chapter basis (no sub-section chunks. -->
+<xsl:param name="chunk.section.depth" select="0"/>
+
 <!--
 DocBook XSL 1.75.2: Nav headers are invalid XHTML (table width element)
 -->

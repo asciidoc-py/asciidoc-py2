@@ -10,9 +10,7 @@ AsciiDoc is highly configurable: both the AsciiDoc source file syntax
 and the backend output markups (which can be almost any type of
 SGML/XML markup) can be customized and extended by the user.
 
-
-Introduction
-------------
+.This document
 **********************************************************************
 This is an overly large document, it probably needs to be refactored
 into a Tutorial, Quick Reference and Formal Reference.
@@ -22,14 +20,9 @@ Started>> section and take a look at the example AsciiDoc (`*.txt`)
 source files in the distribution `doc` directory.
 **********************************************************************
 
-Plain text is the most universal electronic document format,
-regardless of your computing environment you can always read and write
-plain text documentation. But for many applications plain text is not
-the preferred presentation format -- HTML and PDF formats are widely
-used as is the roff man page format.  DocBook is a popular
-documentation markup format which can be translated to HTML, PDF and
-other presentation formats.
 
+Introduction
+------------
 AsciiDoc is a plain text human readable/writable document format that
 can be translated to DocBook or HTML using the asciidoc(1) command.
 You can then either use asciidoc(1) generated HTML directly or run

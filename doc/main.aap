@@ -41,14 +41,14 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         latexmath.pdf \
         source-highlight-filter.pdf \
         music-filter.pdf \
-        article.epub \
+        book.epub \
         article-standalone.html
 
 TEST_FILES = $*(ROOT).css-embedded.html 
         article.css-embedded.html book.css-embedded.html \
         article.xml book.xml book-multi.xml asciidoc.xml asciidoc.1.xml \
         asciidoc.1.html a2x.1.xml music-filter.xml \
-        article.epub asciidoc.epub \
+        book.epub asciidoc.epub \
         ../examples/oldtables.xml ../examples/oldtables.html
 
 
@@ -57,7 +57,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
 #####################################################################
 
 :rule %.epub : %.txt
-    :sys $A2X -vf epub --epubcheck $source
+    :sys $A2X -f epub -d book --epubcheck $source
 
 :rule %.text : %.txt
     # Convert AsciiDoc to HTML then use lynx(1) to convert HTML to text.
@@ -104,6 +104,8 @@ TEST_FILES = $*(ROOT).css-embedded.html
         opt += -d manpage
     @else:
         opt += -n
+    @if source_list[0] == 'asciidoc.txt' or source_list[0].startswith('book'):
+        opt += -d book
     :sys $ASCIIDOC $opt -b docbook $(source[0])
     @if _no.XMLLINT:
         :sys $XMLLINT --nonet --noout --valid $target
@@ -114,6 +116,8 @@ TEST_FILES = $*(ROOT).css-embedded.html
     opt =
     @if source_list[0] in ('asciidoc.1.txt','a2x.1.txt'):
         opt += -d manpage
+    @if source_list[0] == 'asciidoc.txt' or source_list[0].startswith('book'):
+        opt += -d book
     :sys $ASCIIDOC $opt -b docbook-sgml $(source[0])
 
 :rule %.html: %.xml
@@ -169,32 +173,12 @@ asciidoc.1.html: asciidoc.1.txt
         :print WARNING: xmllint(1) unavailable: skipping validation
 
 # User Guide 'chunked' into linked HTML pages.
-$CHUNK_DIR/index.html: asciidoc.xml
-    :mkdir {f} $CHUNK_DIR
-    :del {f} {q} $CHUNK_DIR/*.html
-    :sys $XSLTPROC --nonet --stringparam base.dir $CHUNK_DIR/ --stringparam html.stylesheet ../docbook-xsl.css ../docbook-xsl/chunked.xsl $source
+$CHUNK_DIR/index.html: asciidoc.txt
+    :sys $A2X -fchunked -dbook --icons -D $CHUNK_DIR asciidoc.txt
 
 # HTML Help formatted User Guide.
 $HTMLHELP_DIR/index.html: asciidoc.xml
-    :mkdir {f} $HTMLHELP_DIR
-    :del {f} {q} $HTMLHELP_DIR/*.html
-    :sys $XSLTPROC --nonet --stringparam admon.textlabel 0 --stringparam base.dir $HTMLHELP_DIR/ --stringparam html.stylesheet ../docbook-xsl.css --stringparam htmlhelp.hhp ${HTMLHELP_FILE}.hhp --stringparam htmlhelp.chm ${HTMLHELP_FILE}.chm ../docbook-xsl/htmlhelp.xsl $source
-
-# Book template.
-book.xml: book.txt
-    :sys $ASCIIDOC -d book -b docbook $source
-    @if _no.XMLLINT:
-        :sys $XMLLINT --nonet --noout --valid $target
-    @else:
-        :print WARNING: xmllint(1) unavailable: skipping validation
-
-# Multi-part book template.
-book-multi.xml: book-multi.txt
-    :sys $ASCIIDOC -d book -b docbook $source
-    @if _no.XMLLINT:
-        :sys $XMLLINT --nonet --noout --valid $target
-    @else:
-        :print WARNING: xmllint(1) unavailable: skipping validation
+    :sys $A2X -fhtmlhelp -dbook --icons -D $HTMLHELP_DIR asciidoc.txt
 
 ../BUGS: ../BUGS.text
     # Make BUGS.text and copy to BUGS.
@@ -232,7 +216,7 @@ clean:
     :del {f} *.bak          # Remove aspell backups.
 
 spell: $INFILES ../CHANGELOG.txt ../README.txt ../BUGS.txt ../INSTALL.txt \
-        a2x.1.txt faq.txt asciidocapi.txt testasciidoc.txt
+        a2x.1.txt faq.txt asciidocapi.txt testasciidoc.txt epub.txt
     # Interactively spell check all files.
     @for s in source_list:
         :sys {i} $ASPELL check -p ./asciidoc.dict $s

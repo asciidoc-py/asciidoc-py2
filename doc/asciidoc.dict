@@ -1,4 +1,4 @@
-personal_ws-1.1 en 893 
+personal_ws-1.1 en 908 
 mandoc
 colspecs
 API
@@ -28,8 +28,9 @@ del
 BOM
 Bon
 ungenerated
-des
+zipP
 cmd
+des
 ListItems
 dev
 vulputate
@@ -83,13 +84,14 @@ inline
 monospacedwords
 informaltable
 realpath
+validator
 colwidth
 hhc
 Chai
 strongwords
 setlocal
-ListingBlock
 listingblock
+ListingBlock
 exe
 AuthorInfo
 vsides
@@ -102,8 +104,8 @@ magna
 xreflabel
 PDF's
 PDFs
-MSIE
 pede
+MSIE
 permalinks
 Daly
 arcu
@@ -116,8 +118,8 @@ apos
 ShareSource
 projectname
 hoc
-ispum
 Maier
+ispum
 TableFooter
 blog
 passthroughs
@@ -165,16 +167,18 @@ PassthroughBlocks
 blockdef
 javascript
 JavaScript
+OEBPS
 symlinks
 optionname
 companyname
 pageunits
-nec
 loc
+nec
 latexmath
 articleinfo
 auctor
 refname
+mim
 Farhat
 uninstall
 localdate
@@ -197,12 +201,12 @@ endDocument
 odt
 Cygwin
 ultrices
-indentedparagraph
 IndentedParagraph
+indentedparagraph
 ltr
 doctests
-AsciiDocAPI
 asciidocapi
+AsciiDocAPI
 itemtag
 Dvips
 Jython
@@ -223,6 +227,8 @@ noborders
 facto
 ListParagraphs
 nunc
+opf
+OPF
 CustomBlocks
 informalfigure
 ORed
@@ -234,9 +240,9 @@ BlockId
 png
 lobortis
 Bowlin
-asciimathml
-AsciiMathML
 ASCIIMathML
+AsciiMathML
+asciimathml
 conf
 RCS
 CalloutList
@@ -277,14 +283,15 @@ specialsections
 subsverbatim
 adolescens
 qui
+htmltoc
 SJR
 biggy
 pgwide
 RevisionDate
 crlf
 tex
-Bólido
 Bolido
+Bólido
 tabsize
 colpcwidth
 Orry
@@ -299,8 +306,8 @@ Tsawassen
 Aenean
 postsubs
 src
-LastName
 lastname
+LastName
 toc
 tmp
 Knisley
@@ -345,13 +352,13 @@ revisionhistory
 params
 undefines
 Andrés
-htmlhelp
 HTMLHelp
+htmlhelp
 cellspacing
 Citeaux
 srackham
-Luleå
 Lulea
+Luleå
 Ubuntu
 xml
 XSLTLib
@@ -405,9 +412,10 @@ js
 blogpost
 xsltproc
 jw
-ln
 nd
+ln
 ne
+oa
 Terje
 lt
 Helvetica
@@ -429,6 +437,7 @@ tcqn
 epub
 td
 Vivamus
+px
 py
 th
 ru
@@ -459,6 +468,7 @@ endtag
 glossdiv
 Lebihan
 ListTerms
+colsep
 indir
 texttag
 ctags
@@ -488,6 +498,7 @@ notitle
 manvolnum
 homero
 listindex
+validators
 testasciidoc
 HotSpot
 vimrc
@@ -565,6 +576,7 @@ uriStartString
 infile
 Suspendisse
 todo
+mimetype
 setlevel
 Rosenkraenzer
 bodydata
@@ -604,6 +616,7 @@ Skype
 POSIX
 builtins
 bulleted
+Google
 globals
 porta
 OpenBlock
@@ -671,6 +684,7 @@ TableHeader
 Mihai
 KeyboardInterrupt
 justo
+hexdump
 sectionbody
 SectionBody
 nnoremap
@@ -700,6 +714,7 @@ URIs
 lang
 basebackend
 urna
+rowsep
 blockmacro
 BlockMacro
 mailto
@@ -813,8 +828,8 @@ toolchain
 cellpadding
 entrytbl
 authorinitials
-javascripts
 JavaScripts
+javascripts
 undefining
 leveloffset
 CustomBlock
@@ -868,8 +883,8 @@ Redhat
 datadir
 Kumar
 IndentedParagraphs
-Berguvsvagen
 Berguvsvägen
+Berguvsvagen
 executables
 tabledef
 ftdetect
@@ -889,6 +904,6 @@ lectus
 JavaHelp
 unescaped
 mydoc
-middlename
 MiddleName
+middlename
 Jimmac's

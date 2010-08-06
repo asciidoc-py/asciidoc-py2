@@ -3,7 +3,10 @@ Embedding LaTeX Math in AsciiDoc dblatex documents
 
 You can include
 ftp://ftp.ams.org/pub/tex/doc/amsmath/short-math-guide.pdf[LaTeX math]
-equations in AsciiDoc documents that are processed by 'dblatex'.
+equations in AsciiDoc documents that are processed by 'dblatex'. The
+AsciiDoc 'latexmath' macros generate DocBook 'inlineequation' and
+'informalequation' elements containing the LaTeX markup which is
+processed by 'dblatex'.
 
 
 Inline equations

@@ -1,4 +1,4 @@
-personal_ws-1.1 en 908 
+personal_ws-1.1 en 907 
 mandoc
 colspecs
 API
@@ -29,8 +29,8 @@ BOM
 Bon
 ungenerated
 zipP
-cmd
 des
+cmd
 ListItems
 dev
 vulputate
@@ -90,8 +90,8 @@ hhc
 Chai
 strongwords
 setlocal
-listingblock
 ListingBlock
+listingblock
 exe
 AuthorInfo
 vsides
@@ -104,8 +104,8 @@ magna
 xreflabel
 PDF's
 PDFs
-pede
 MSIE
+pede
 permalinks
 Daly
 arcu
@@ -118,8 +118,8 @@ apos
 ShareSource
 projectname
 hoc
-Maier
 ispum
+Maier
 TableFooter
 blog
 passthroughs
@@ -172,8 +172,8 @@ symlinks
 optionname
 companyname
 pageunits
-loc
 nec
+loc
 latexmath
 articleinfo
 auctor
@@ -201,12 +201,12 @@ endDocument
 odt
 Cygwin
 ultrices
-IndentedParagraph
 indentedparagraph
+IndentedParagraph
 ltr
 doctests
-asciidocapi
 AsciiDocAPI
+asciidocapi
 itemtag
 Dvips
 Jython
@@ -228,7 +228,6 @@ facto
 ListParagraphs
 nunc
 opf
-OPF
 CustomBlocks
 informalfigure
 ORed
@@ -240,9 +239,9 @@ BlockId
 png
 lobortis
 Bowlin
-ASCIIMathML
-AsciiMathML
 asciimathml
+AsciiMathML
+ASCIIMathML
 conf
 RCS
 CalloutList
@@ -290,8 +289,8 @@ pgwide
 RevisionDate
 crlf
 tex
-Bolido
 Bólido
+Bolido
 tabsize
 colpcwidth
 Orry
@@ -306,8 +305,8 @@ Tsawassen
 Aenean
 postsubs
 src
-lastname
 LastName
+lastname
 toc
 tmp
 Knisley
@@ -352,13 +351,13 @@ revisionhistory
 params
 undefines
 Andrés
-HTMLHelp
 htmlhelp
+HTMLHelp
 cellspacing
 Citeaux
 srackham
-Lulea
 Luleå
+Lulea
 Ubuntu
 xml
 XSLTLib
@@ -390,8 +389,8 @@ hg
 guimenu
 toclevels
 xzf
-JB
 gq
+JB
 refactored
 sgml
 backcolor
@@ -412,8 +411,8 @@ js
 blogpost
 xsltproc
 jw
-nd
 ln
+nd
 ne
 oa
 Terje
@@ -435,9 +434,9 @@ ps
 runtime
 tcqn
 epub
+px
 td
 Vivamus
-px
 py
 th
 ru
@@ -497,8 +496,8 @@ pretium
 notitle
 manvolnum
 homero
-listindex
 validators
+listindex
 testasciidoc
 HotSpot
 vimrc
@@ -828,8 +827,8 @@ toolchain
 cellpadding
 entrytbl
 authorinitials
-JavaScripts
 javascripts
+JavaScripts
 undefining
 leveloffset
 CustomBlock
@@ -883,8 +882,8 @@ Redhat
 datadir
 Kumar
 IndentedParagraphs
-Berguvsvägen
 Berguvsvagen
+Berguvsvägen
 executables
 tabledef
 ftdetect
@@ -904,6 +903,6 @@ lectus
 JavaHelp
 unescaped
 mydoc
-MiddleName
 middlename
+MiddleName
 Jimmac's

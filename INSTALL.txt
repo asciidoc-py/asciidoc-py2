@@ -75,6 +75,10 @@ Distribution tarball installation
 The distribution source tarballs can be downloaded from the
 SourceForge http://sourceforge.net/projects/asciidoc/.
 
+NOTE: Unless you are <<X3,installing on Microsoft Windows>> you should
+use the tarball and not the zip file to install the the distribution
+(the tarball contains symlinks).
+
 If your flavor or UNIX or Linux does not have a packaged AsciiDoc
 distribution or if you prefer to install the latest AsciiDoc version
 from source use the `configure` shell script in the tarball root
@@ -178,6 +182,7 @@ See also link:userguide.html#X38[Packager Notes] in the 'AsciiDoc User
 Guide'.
 
 
+[[X3]]
 Microsoft Windows installation
 ------------------------------
 AsciiDoc is developed and tested on Linux but there seem to be quite a

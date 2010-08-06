@@ -43,6 +43,7 @@
 <xsl:param name="callout.graphics.path" select="'images/icons/callouts/'"/>
 <xsl:param name="callout.list.table" select="'1'"/>
 
+<!-- This does not seem to work. -->
 <xsl:param name="section.autolabel.max.depth" select="2"/>
 
 <xsl:param name="chunk.first.sections" select="1"/>

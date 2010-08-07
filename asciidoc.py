@@ -461,14 +461,6 @@ def subs_quotes(text):
     """Quoted text is marked up and the resulting text is
     returned."""
     keys = config.quotes.keys()
-    # If the quote attribute is a comma separated list of allowed quote tags.
-    quotes = document.attributes.get('quotes')
-    if quotes == 'none':
-        tags = []
-    elif quotes:
-        tags = [s.strip() for s in quotes.split(',') if s.strip()]
-    else:
-        tags = config.quotes.values()
     for q in keys:
         i = q.find('|')
         if i != -1 and q != '|' and q != '||':
@@ -477,8 +469,6 @@ def subs_quotes(text):
         else:
             lq = rq = q
         tag = config.quotes[q]
-        if not tag in tags:
-            continue
         # Unconstrained quotes prefix the tag name with a hash.
         if tag[0] == '#':
             tag = tag[1:]
@@ -1183,6 +1173,8 @@ class Lex:
         """Perform substitution specified in 'options' (in 'options' order)."""
         if not s:
             return s
+        if document.attributes.get('plaintext') is not None:
+            options = ('specialcharacters',)
         result = s
         options = Lex.canonical_subs(options)
         for o in options:
@@ -2440,7 +2432,8 @@ class Paragraph(AbstractBlock):
         body = [self.text] + list(body)
         presubs = self.parameters.presubs
         postsubs = self.parameters.postsubs
-        body = Lex.set_margin(body) # Move body to left margin.
+        if document.attributes.get('plaintext') is None:
+            body = Lex.set_margin(body) # Move body to left margin.
         body = Lex.subs(body,presubs)
         template = self.parameters.template
         template = subs_attrs(template,attrs)

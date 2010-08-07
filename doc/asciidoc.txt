@@ -5417,16 +5417,14 @@ document header.
 Adds section numbers to section titles. The 'docbook' backend ignores
 'numbered' attribute entries after the document header.
 
+|plaintext | All backends |
+If this global attribute is defined all inline substitutions are
+suppressed and block indents are retained.  This option is useful when
+dealing with large amounts of imported plain text.
+
 |quirks |xhtml11 |
 Use the `xhtml11-quirks.css` stylesheet to work around IE6 browser
 incompatibilities (this is the default behavior).
-
-|quotes | All backends |
-This global attribute is a comma separated list of the tag names of
-allowed <<X51,quotes>>. If the 'quotes' attribute is not defined then
-all quotes are used. If the 'quotes' attribute is set to 'none' all
-quoting is suppressed (this is useful when dealing with large amounts
-of imported plain text).
 
 |revremark |docbook |
 A short summary of changes in this document revision. Must be defined

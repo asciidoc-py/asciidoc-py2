@@ -461,6 +461,14 @@ def subs_quotes(text):
     """Quoted text is marked up and the resulting text is
     returned."""
     keys = config.quotes.keys()
+    # If the quote attribute is a comma separated list of allowed quote tags.
+    quotes = document.attributes.get('quotes')
+    if quotes == 'none':
+        tags = []
+    elif quotes:
+        tags = [s.strip() for s in quotes.split(',') if s.strip()]
+    else:
+        tags = config.quotes.values()
     for q in keys:
         i = q.find('|')
         if i != -1 and q != '|' and q != '||':
@@ -469,6 +477,8 @@ def subs_quotes(text):
         else:
             lq = rq = q
         tag = config.quotes[q]
+        if not tag in tags:
+            continue
         # Unconstrained quotes prefix the tag name with a hash.
         if tag[0] == '#':
             tag = tag[1:]
@@ -1425,8 +1435,10 @@ class Document:
                 '(\s+(?P<name3>[^<>\s]+))?'
                 '(\s+<(?P<email>\S+)>)?$',s)
         if not mo:
-            message.error('malformed author: %s' % s)
-            return False
+            # Names that don't match the formal specification.
+            if s:
+                attrs['firstname'] = s
+            return
         firstname = mo.group('name1')
         if mo.group('name3'):
             middlename = mo.group('name2')
@@ -1448,7 +1460,7 @@ class Document:
             attrs['lastname'] = lastname
         if email:
             attrs['email'] = email
-        return True
+        return
     def process_author_names(self):
         """ Calculate any missing author related attributes."""
         attrs = self.attributes # Alias for readability.
@@ -1458,8 +1470,7 @@ class Document:
         author = attrs.get('author')
         initials = attrs.get('authorinitials')
         if author and not (firstname or middlename or lastname):
-            if not self.parse_author(author):
-                return
+            self.parse_author(author)
             attrs['author'] = author.replace('_',' ')
             self.process_author_names()
             return

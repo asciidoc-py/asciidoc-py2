@@ -291,17 +291,23 @@ Here's an example AsciiDoc document header:
   Rewritten for version 2 release.
 
 The author information line contains the author's name optionally
-followed by the author's email address. The author's name consists of
-a first name followed by optional middle and last names separated by
-white space.  Multi-word first, middle and last names can be entered
-in the header author line using the underscore as a word separator.
-The email address comes last and must be enclosed in angle <>
-brackets. Author names cannot contain angle <> bracket characters.
+followed by the author's email address. The author's name is formatted
+like:
+
+  firstname[ [middlename ]lastname][ <email>]]
+
+i.e. a first name followed by optional middle and last names followed
+by an email address in that order.  Multi-word first, middle and last
+names can be entered using the underscore as a word separator.  The
+email address comes last and must be enclosed in angle <> brackets.
 Here a some examples of author information lines:
 
   Joe Bloggs <jbloggs@mymail.com>
   Joe Bloggs
   Vincent Willem van_Gogh
+
+If the author line does not match the above specification then the
+entire author line is treated as the first name.
 
 The optional revision information line follows the author information
 line. The revision information can be one of two formats:
@@ -5414,6 +5420,13 @@ Adds section numbers to section titles. The 'docbook' backend ignores
 |quirks |xhtml11 |
 Use the `xhtml11-quirks.css` stylesheet to work around IE6 browser
 incompatibilities (this is the default behavior).
+
+|quotes | All backends |
+This global attribute is a comma separated list of the tag names of
+allowed <<X51,quotes>>. If the 'quotes' attribute is not defined then
+all quotes are used. If the 'quotes' attribute is set to 'none' all
+quoting is suppressed (this is useful when dealing with large amounts
+of imported plain text).
 
 |revremark |docbook |
 A short summary of changes in this document revision. Must be defined

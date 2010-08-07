@@ -664,7 +664,8 @@ NOTE: Escaping is unnecessary inside 'inline literal passthroughs'
 Here's how to handle situations where the first line of a paragraph is
 mistaken for a list item.
 
-=== Numbered and bulleted lists
+[float]
+==== Numbered and bulleted lists
 Precede the bullet or index of the first list item with an `{empty}`
 attribute, for example:
 
@@ -674,7 +675,8 @@ attribute, for example:
 The predefined `{empty}` attribute is replaced by an empty string and
 ensures the first line is not mistaken for a bulleted list item.
 
-=== Labeled lists
+[float]
+==== Labeled lists
 Two colons or semicolons in a paragraph may be confused with a labeled
 list entry. Use the predefined `{two-colons}` and `{two-semicolons}`
 attributes to suppress this behavior, for example:

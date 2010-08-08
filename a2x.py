@@ -206,7 +206,6 @@ def shell(cmd, raise_error=True):
     popen.wait()
     if popen.returncode != 0 and raise_error:
         die('%s returned non-zero exit status %d' % (cmd, popen.returncode))
-#        raise subprocess.CalledProcessError(popen.returncode, cmd)
     return popen
 
 def find_resources(files, tagname, attrname, filter=None):
@@ -357,12 +356,10 @@ class A2X(AttrDict):
         for d in self.resource_dirs:
             if not os.path.isdir(d):
                 die('missing --resource-dir: %s' % d)
-        if not self.doctype:
-            if self.format == 'manpage':
-                self.doctype = 'manpage'
-            else:
-                self.doctype = 'article'
-        self.asciidoc_opts += ' --doctype %s' % self.doctype
+        if not self.doctype and self.format == 'manpage':
+            self.doctype = 'manpage'
+        if self.doctype:
+            self.asciidoc_opts += ' --doctype %s' % self.doctype
         for attr in self.attributes:
             self.asciidoc_opts += ' --attribute "%s"' % attr
         self.xsltproc_opts += ' --nonet'
@@ -615,7 +612,10 @@ class A2X(AttrDict):
         if not self.keep_artifacts:
             shell_rmtree(build_dir)
         if self.epubcheck and EPUBCHECK:
-            shell('"%s" "%s"' % (EPUBCHECK, epub_file))
+            if not find_executable(EPUBCHECK):
+                warning('epubsheck skipped: unable to find executable: %s' % EPUBCHECK)
+            else:
+                shell('"%s" "%s"' % (EPUBCHECK, epub_file))
 
     def to_text(self):
         text_file = self.dst_path('.text')

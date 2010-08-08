@@ -2844,12 +2844,15 @@ by specifying absolute column widths.
 
 Specifying absolute column widths is not media independent because
 different presentation media have different physical dimensions. To
-get round this limitation 'DocBook XSL Stylesheets' have implemented
-http://www.sagehill.net/docbookxsl/Tables.html#TableWidth[table width
-processing instructions] for setting the table width as a percentage
-of the available width. AsciiDoc emits these processing instructions
-if the 'width' attribute is set along with proportional column widths
-(the AsciiDoc docbook backend 'pageunits' attribute defaults to '*').
+get round this limitation both
+http://www.sagehill.net/docbookxsl/Tables.html#TableWidth[DocBook XSL
+Stylesheets] and
+http://dblatex.sourceforge.net/doc/manual/ch03s05.html#sec-table-width[dblatex]
+have implemented table width processing instructions for setting the
+table width as a percentage of the available width. AsciiDoc emits
+these processing instructions if the 'width' attribute is set along
+with proportional column widths (the AsciiDoc docbook backend
+'pageunits' attribute defaults to '*').
 
 To generate DocBook tables with absolute column widths set the
 'pageunits' attribute to a CALS absolute unit such as 'pt' and set the

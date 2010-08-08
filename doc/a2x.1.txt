@@ -104,6 +104,14 @@ OPTIONS
 *--dblatex-opts*='DBLATEX_OPTS'::
   Additional 'dblatex(1)' options.
 
+Options can also be set in the AsciiDoc source file. If 'FILE'
+contains a line beginning with *// a2x:* then the remainder of the
+line will be treated as 'a2x' command-line options.  Actual
+command-line options take precedence over options set in the source
+file. Example:
+
+  // a2x: -dbook --dblatex-opts "-P latex.output.revhistory=0"
+
 
 OUTPUT FILES
 ------------

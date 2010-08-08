@@ -281,6 +281,44 @@ def exec_xsltproc(xsl_file, xml_file, dst_dir, opts = ''):
     finally:
         shell_cd(cwd)
 
+def get_source_options(asciidoc_file):
+    '''
+    Look for a2x command options in AsciiDoc source file.
+    Limitation: options cannot contain double-quote characters.
+    '''
+    PREFIX = '// a2x:'
+
+    def parse_line():
+        # Parse options in line to result sequence.
+        inquotes = False
+        opt = ''
+        for c in line:
+            if c == '"':
+                if inquotes:
+                    result.append(opt)
+                    opt = ''
+                    inquotes = False
+                else:
+                    inquotes = True
+            elif c == ' ':
+                if inquotes:
+                    opt += c
+                elif opt:
+                    result.append(opt)
+                    opt = ''
+            else:
+                opt += c
+        if opt:
+            result.append(opt)
+
+    result = []
+    if os.path.isfile(asciidoc_file):
+        for line in open(asciidoc_file):
+            if line.startswith(PREFIX):
+                line = line[len(PREFIX):].strip()
+                parse_line()
+    return result
+
 
 #####################################################################
 # Application class
@@ -730,12 +768,15 @@ if __name__ == '__main__':
         help='increase verbosity')
     if len(sys.argv) == 1:
         parser.parse_args(['--help'])
-    opts, args = parser.parse_args()
+    source_options = get_source_options(sys.argv[-1])
+    argv = source_options + sys.argv[1:] 
+    opts, args = parser.parse_args(argv)
     if len(args) != 1:
         parser.error('incorrect number of arguments')
     opts = eval(str(opts))  # Convert optparse.Values to dict.
     a2x = A2X(opts)
     OPTIONS = a2x           # verbose and dry_run used by utility functions.
+    verbose('args: %r' % argv)
     a2x.asciidoc_file = args[0]
     try:
         a2x.load_conf()

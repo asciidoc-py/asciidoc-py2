@@ -74,7 +74,9 @@ OPTIONS
 *-r, --resource-dir*='PATH'::
   If a relative image or CSS resource is not found relative to the
   source 'FILE' then search the 'PATH' recursively. This option may be
-  specified more than once.
+  specified more than once. Finally, if a resource is still not found
+  then 'a2x' will recursively search directories named 'images' and
+  'stylesheets' in the 'asciidoc' configuration files directory.
 
 *--stylesheet*='PATH'::
   A path (relative to destination HTML files) specifying the

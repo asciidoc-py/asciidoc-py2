@@ -286,7 +286,6 @@ def get_source_options(asciidoc_file):
     Look for a2x command options in AsciiDoc source file.
     Limitation: options cannot contain double-quote characters.
     '''
-    PREFIX = '// a2x:'
     def parse_options():
         # Parse options to result sequence.
         inquotes = False
@@ -372,12 +371,15 @@ class A2X(AttrDict):
             if os.path.isfile(f):
                 verbose('loading conf file: %s' % f)
                 execfile(f, globals())
+        self.asciidoc = find_executable(ASCIIDOC)
         # If asciidoc can't be found anywhere else look in the a2x directory.
-        if not find_executable(ASCIIDOC):
+        if not self.asciidoc:
             a2xdir = os.path.dirname(os.path.realpath(__file__))
             asciidoc = os.path.join(a2xdir, 'asciidoc.py')
             if os.path.isfile(asciidoc):
-                ASCIIDOC = asciidoc
+                self.asciidoc = asciidoc
+            else:
+                die('unable to find asciidoc: %s' % ASCIIDOC)
 
     def process_options(self):
         '''
@@ -395,6 +397,11 @@ class A2X(AttrDict):
         for d in self.resource_dirs:
             if not os.path.isdir(d):
                 die('missing --resource-dir: %s' % d)
+        # Lastly search among images and stylesheets distributed with asciidoc.
+        for p in (os.path.dirname(self.asciidoc), CONF_DIR):
+            for d in ('images','stylesheets'):
+                self.resource_dirs.append(os.path.join(p,d))
+        print self.resource_dirs
         if not self.doctype and self.format == 'manpage':
             self.doctype = 'manpage'
         if self.doctype:
@@ -456,10 +463,7 @@ class A2X(AttrDict):
         Search first the directory containing the asciidoc executable then
         the global configuration file directory.
         '''
-        asciidoc = find_executable(ASCIIDOC)
-        if not asciidoc:
-            die('unable to find asciidoc: %s' % ASCIIDOC)
-        f = os.path.join(os.path.dirname(asciidoc), path)
+        f = os.path.join(os.path.dirname(self.asciidoc), path)
         if not os.path.isfile(f):
             f = os.path.join(CONF_DIR, path)
             if not os.path.isfile(f):
@@ -527,7 +531,7 @@ class A2X(AttrDict):
                 die('missing docbook file: %s' % docbook_file)
             return
         shell('"%s" --backend docbook %s --out-file "%s" "%s"' %
-             (ASCIIDOC, self.asciidoc_opts, docbook_file, self.asciidoc_file))
+             (self.asciidoc, self.asciidoc_opts, docbook_file, self.asciidoc_file))
         if not self.no_xmllint and XMLLINT:
             shell('"%s" --nonet --noout --valid "%s"' % (XMLLINT, docbook_file))
 
@@ -661,7 +665,7 @@ class A2X(AttrDict):
         html_file = self.dst_path('.text.html')
         if self.lynx:
             shell('"%s" %s --conf-file "%s" -b html4 -o "%s" "%s"' %
-                 (ASCIIDOC, self.asciidoc_opts, self.asciidoc_conf_file('text.conf'),
+                 (self.asciidoc, self.asciidoc_opts, self.asciidoc_conf_file('text.conf'),
                   html_file, self.asciidoc_file))
             shell('"%s" -dump "%s" > "%s"' %
                  (LYNX, html_file, text_file))
@@ -669,7 +673,6 @@ class A2X(AttrDict):
             # Use w3m(1).
             self.to_docbook()
             docbook_file = self.dst_path('.xml')
-            xhtml_file = self.dst_path('.html')
             opts = '%s --output "%s"' % (self.xsltproc_opts, html_file)
             exec_xsltproc(self.xsl_file(), docbook_file,
                     self.destination_dir, opts)

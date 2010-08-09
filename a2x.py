@@ -287,16 +287,6 @@ def get_source_options(asciidoc_file):
     Limitation: options cannot contain double-quote characters.
     '''
     PREFIX = '// a2x:'
-    result = []
-    if os.path.isfile(asciidoc_file):
-        options = ''
-        for line in open(asciidoc_file):
-            mo = re.search(r'^//\s*a2x:', line)
-            if mo:
-                options += ' ' + line[mo.end():].strip()
-        parse_options()
-    return result
-
     def parse_options():
         # Parse options to result sequence.
         inquotes = False
@@ -319,6 +309,16 @@ def get_source_options(asciidoc_file):
                 opt += c
         if opt:
             result.append(opt)
+
+    result = []
+    if os.path.isfile(asciidoc_file):
+        options = ''
+        for line in open(asciidoc_file):
+            mo = re.search(r'^//\s*a2x:', line)
+            if mo:
+                options += ' ' + line[mo.end():].strip()
+        parse_options()
+    return result
 
 
 #####################################################################

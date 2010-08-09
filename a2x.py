@@ -288,11 +288,11 @@ def get_source_options(asciidoc_file):
     '''
     PREFIX = '// a2x:'
 
-    def parse_line():
-        # Parse options in line to result sequence.
+    def parse_options():
+        # Parse options to result sequence.
         inquotes = False
         opt = ''
-        for c in line:
+        for c in options:
             if c == '"':
                 if inquotes:
                     result.append(opt)
@@ -313,10 +313,12 @@ def get_source_options(asciidoc_file):
 
     result = []
     if os.path.isfile(asciidoc_file):
+        options = ''
         for line in open(asciidoc_file):
-            if line.startswith(PREFIX):
-                line = line[len(PREFIX):].strip()
-                parse_line()
+            mo = re.search(r'^//\s*a2x:', line)
+            if mo:
+                options += ' ' + line[mo.end():].strip()
+        parse_options()
     return result
 
 

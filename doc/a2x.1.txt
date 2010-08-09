@@ -105,12 +105,17 @@ OPTIONS
   Additional 'dblatex(1)' options.
 
 Options can also be set in the AsciiDoc source file. If 'FILE'
-contains a line beginning with *// a2x:* then the remainder of the
-line will be treated as 'a2x' command-line options.  Actual
-command-line options take precedence over options set in the source
-file. Example:
+contains a comment line beginning with *// a2x:* then the remainder of
+the line will be treated as 'a2x' command-line options. Options
+spanning multiple such comment lines will be concatenated.  Zero or
+more white space characters can appear between the leading *//* and
+*a2x:*.  Command-line options take precedence over options set in the
+source file. Example usage:
 
-  // a2x: -dbook --dblatex-opts "-P latex.output.revhistory=0"
+  // a2x default options.
+  //    a2x: -dbook --epubcheck
+  // Suppress revision history in dblatex outputs.
+  //    a2x: --dblatex-opts "-P latex.output.revhistory=0"
 
 
 OUTPUT FILES

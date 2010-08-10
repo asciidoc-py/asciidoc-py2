@@ -401,7 +401,6 @@ class A2X(AttrDict):
         for p in (os.path.dirname(self.asciidoc), CONF_DIR):
             for d in ('images','stylesheets'):
                 self.resource_dirs.append(os.path.join(p,d))
-        print self.resource_dirs
         if not self.doctype and self.format == 'manpage':
             self.doctype = 'manpage'
         if self.doctype:

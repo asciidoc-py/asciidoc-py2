@@ -1,0 +1,223 @@
+Publishing eBooks with AsciiDoc
+===============================
+
+// Use the same article for both a blog post and on the AsciiDoc
+// website.
+:blogpost-title: Publishing eBooks with AsciiDoc
+:blogpost-status: published
+:blogpost-doctype: article
+:blogpost-posttype: post
+:blogpost-categories: AsciiDoc,eBook,EPUB,DocBook
+
+{backend-wordpress}*Published*: 2010-08-10
+
+It's easy to write and publish books in
+http://en.wikipedia.org/wiki/EPUB[EPUB] and PDF formats using
+http://www.methods.co.nz/asciidoc/[AsciiDoc].
+
+Here's a minimal book written in AsciiDoc containing a title and two
+chapters each with two paragraphs. The AsciiDoc source is a plain text
+file named `minimal-book.txt`:
+
+---------------------------------------------------------------------
+= The Book Title
+
+== The first chapter
+Nec vitae mus fringilla eu vel pede sed pellentesque. Nascetur fugiat
+nobis. Eu felis id mauris sollicitudin ut. Sem volutpat feugiat.
+Ornare convallis urna vitae.
+
+Nec mauris sed aliquam nam mauris dolor lorem imperdiet.
+
+== The second chapter
+Ut suspendisse nulla. Auctor felis facilisis. Rutrum vivamus nec
+lectus porttitor dui dapibus eu ridiculus tempor sodales et. Sit a
+cras. Id tellus cubilia erat.
+
+Quisque nullam et. Blandit dui tempor. Posuere in elit diam egestas
+sem vivamus vel ac.
+---------------------------------------------------------------------
+
+pass::[<!--more-->]
+
+To generate the EPUB formatted book file `minimal-book.epub` run
+AsciiDocs's 'a2x' toolchain wrapper command from the command-line:
+
+  a2x -fepub -dbook minimal-book.txt
+
+The `-f` option specifies the output format, the `-d` option specifies
+the document type (book, article or manpage).  The optional
+`--epubcheck` option tells 'a2x' to validate the EPUB file using
+http://code.google.com/p/epubcheck/[epubcheck]. To generate a PDF
+version (`minimal-book.pdf`) run:
+
+  a2x -fpdf -dbook minimal-book.txt
+
+If you prefer http://xmlgraphics.apache.org/fop/[FOP] over
+http://dblatex.sourceforge.net/[dblatex] use:
+
+  a2x -fpdf -dbook --fop minimal-book.txt
+
+NOTE: A number of 'asciidoc' and 'a2x' features used in this article
+were introduced in AsciiDoc version 8.5.4 -- install version 8.5.4 or
+better to compile the examples. The version of
+http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
+Stylesheets] used was 1.75.2.
+
+Now a couple of real books: 'The Adventures of Sherlock Holmes' and
+'The Brothers Karamazov'.  To generate the AsciiDoc source I edited
+the http://www.gutenberg.org[Project Gutenberg] plain text sources
+manually with a text editor (this took around 15 minutes per book).
+
+== The Adventures of Sherlock Holmes
+Here's the start of the AsciiDoc source file showing the AsciiDoc
+specific meta-data:
+
+---------------------------------------------------------------------
+//
+// Text from Project Gutenburg http://www.gutenberg.org/etext/1661
+//
+// Formatted for AsciiDoc by Stuart Rackham.
+//
+// a2x default options.
+//    a2x: -f epub -d book -a docinfo --epubcheck
+// Suppress revision history in dblatex outputs.
+//    a2x: --dblatex-opts "-P latex.output.revhistory=0"
+//
+
+= The Adventures of Sherlock Holmes
+:author: Sir Arthur Conan Doyle
+:encoding: iso-8859-1
+:plaintext:
+
+== A Scandal in Bohemia
+
+To Sherlock Holmes she is always THE woman. I have seldom heard ...
+---------------------------------------------------------------------
+
+Points to note:
+
+- The comment lines starting with `// a2x:` contain 'a2x' command
+  options for this document (it's easier to put them in the document
+  once than type them every time on the command-line).
+- Setting the AsciiDoc 'plaintext' attribute suppresses most of
+  AsciiDoc's text formatting and substitution conventions, this allows
+  large amounts of text to be imported with little or no manual
+  editing.
+
+The EPUB file includes a book cover image and the Project Gutenberg
+legal notice, both of these items have been added by 'asciidoc' from
+the `adventures-of-sherlock-holmes-docinfo.xml` 'docinfo' file (a file
+containing DocBook elements for inclusion in the DocBook 'bookinfo'
+element).  DocBook XSL Stylesheets identifies the book cover image in
+the docinfo file by the `role="cover"` attribute on the `mediaobject`
+element.
+
+:examples-url: http://www.methods.co.nz/misc/examples/books
+
+[options="header"]
+|====================================================================
+|EPUB |PDF |AsciiDoc source |Project Gutenburg text
+|{examples-url}/adventures-of-sherlock-holmes.epub[adventures-of-sherlock-holmes.epub]
+
+|{examples-url}/adventures-of-sherlock-holmes.pdf[adventures-of-sherlock-holmes.pdf]
+
+|{examples-url}/adventures-of-sherlock-holmes.zip[adventures-of-sherlock-holmes.zip]
+
+|http://www.gutenberg.org/etext/1661
+
+|====================================================================
+
+
+== The Brothers Karamazov
+'The Brothers Karamazov' is an example of a multi-part book.  Here's
+the start of the AsciiDoc source file showing the AsciiDoc specific
+meta-data:
+
+---------------------------------------------------------------------
+//
+// Text from Project Gutenburg http://www.gutenberg.org/etext/28054
+//
+// Formatted for AsciiDoc by Stuart Rackham.
+//
+// a2x default options.
+//    a2x: -fepub -dbook --epubcheck
+// Suppress revision history in dblatex outputs.
+//    a2x: --dblatex-opts "-P latex.output.revhistory=0"
+// Suppress part and chapter numbering in DocBook XSL outputs.
+//    a2x: --xsltproc-opts
+//    a2x: "--stringparam section.autolabel.max.depth 0
+//    a2x: --stringparam chapter.autolabel 0
+//    a2x: --stringparam part.autolabel 0"
+//
+
+= The Brothers Karamazov
+:author: Fyodor Dostoyevsky
+:encoding: iso-8859-1
+:plaintext:
+
+..........................................................................
+Translated from the Russian of Fyodor Dostoyevsky by Constance Garnett
+The Lowell Press New York
+
+ :
+ :
+
+***START OF THE PROJECT GUTENBERG EBOOK THE BROTHERS KARAMAZOV***
+..........................................................................
+
+
+= PART I
+
+== The History Of A Family
+
+=== Fyodor Pavlovitch Karamazov
+
+Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
+...
+---------------------------------------------------------------------
+
+There are a number of differences between this and the Sherlock Holmes
+meta-data:
+
+- I haven't used a 'docinfo' file and there is no cover image -- the
+  book is built from a single `brothers-karamazov.txt` text file.
+- In this example the 'Project Gutenberg' heading was put in the
+  untitled preface using an AsciiDoc literal block.
+- A number of 'xsltproc' options are passed to 'a2x' to suppress part
+  and chapter numbering.
+
+|====================================================================
+|EPUB |PDF |AsciiDoc source |Project Gutenburg text
+|{examples-url}/brothers-karamazov.epub[brothers-karamazov.epub]
+
+|{examples-url}/brothers-karamazov.pdf[brothers-karamazov.pdf]
+
+|{examples-url}/brothers-karamazov.zip[brothers-karamazov.zip],
+
+|http://www.gutenberg.org/etext/28054
+
+|====================================================================
+
+
+== Styling your books
+To date most EPUB documents have enjoyed a reputation for, to put it
+kindly, utilitarian styling (the above examples included).
+
+You can completely customize the appearance of a document by creating
+your own CSS file. The easiest way to do this is to copy the existing
+default `docbook-xsl.css` file (located in the AsciiDoc `stylesheets`
+configuration directory) to the same directory as your AsciiDoc source
+file and then edit it.
+
+
+== Reading EPUB documents
+My current favorite software epub reader is the
+https://addons.mozilla.org/en-US/firefox/addon/45281/[Firefox
+PUBReader addon].  Browsers are a natural fit for EPUB (EPUB is just a
+bunch of zipped HTML files) and I'd like to see browsers support EPUB
+natively.
+
+As of writing this article most eBook readers (with the notable
+exception of Amazon's Kindle) support the EPUB format.
+

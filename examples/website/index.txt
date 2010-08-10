@@ -73,7 +73,7 @@ AsciiDoc markup supports all the standard DocBook frontmatter and
 backmatter sections (dedication, preface, bibliography, glossary,
 index, colophon) plus footnotes and index entries.  PDF and EPUB
 formatted ebooks can be generated using link:a2x.1.html[a2x] (see also
-link:epub.html[AsciiDoc EPUB Notes]).
+link:epub-notes.html[AsciiDoc EPUB Notes]).
 
 - This link:book.txt[AsciiDoc book] produced link:book.html[this HTML
   file] using the 'DocBook XSL Stylesheets'.

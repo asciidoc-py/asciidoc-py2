@@ -35,6 +35,7 @@ WEB_ROOT =
     manpage
     music-filter
     latex-filter
+    publishing-ebooks-with-asciidoc
     README
     README-website
     source-highlight-filter

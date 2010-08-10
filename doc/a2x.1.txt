@@ -72,15 +72,13 @@ OPTIONS
   Do not do anything just print what would have been done.
 
 *-r, --resource-dir*='PATH'::
-  If a relative image or CSS resource is not found relative to the
-  source 'FILE' then search the 'PATH' recursively. This option may be
-  specified more than once. Finally, if a resource is still not found
-  then 'a2x' will recursively search directories named 'images' and
-  'stylesheets' in the 'asciidoc' configuration files directory.
+  Recursively search 'PATH' for required image or CSS <<X3,resource
+  file>>.  This option may be specified more than once.
 
-*--stylesheet*='PATH'::
-  A path (relative to destination HTML files) specifying the
-  docbook-xsl CSS stylesheet file. Defaults to 'docbook-xsl.css'.
+*--stylesheet*='STYLESHEET'::
+  The file name of the docbook-xsl CSS stylesheet file. Defaults to
+  'docbook-xsl.css'.  The stylesheet must reside in a valid <<X3,
+  resource file>> location.
   Applies to HTML formats: 'xhtml', 'epub', 'chunked', 'htmlhelp'
   formats.
 
@@ -137,11 +135,29 @@ appropriate file name extension: `.html` for 'xhtml'; `.epub` for
 Same named existing files are overwritten.
 
 In addition to generating HTML files the 'xhtml', 'epub', 'chunked'
-and 'htmlhelp' formats copy images and CSS stylesheet files referenced
-in the generated HTML outputs from locations relative to the asciidoc
-input 'FILE' to the correct relative destination directory locations
-generating required sub-directories if necessary. See also the
-'--resource-dir' option.
+and 'htmlhelp' formats ensure image and CSS stylesheet <<X3,resource
+files>> are copied to their correct destination directory locations.
+
+
+[[X3]]
+RESOURCES
+---------
+Resources are local CSS and images files that are required by HTML
+based outputs ('xhtml', 'epub', 'chunked', 'htmlhelp' formats).
+
+'a2x' searches for resources in the following locations in the
+following order:
+
+. The source 'FILE' directory.
+. Directories specified by *--resource-dir* options (recursively).
+. The 'asciidoc(1)' `images` and `stylesheets` configuration file directories
+  (recursively).
+. The destination directory.
+
+If a required resource cannot be found a 'missing resource' warning
+message is generated. If the resource is found then it is copied to
+the correct relative destination directory.  Missing destination
+sub-directories are created automatically.
 
 
 EXAMPLES

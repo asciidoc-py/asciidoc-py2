@@ -741,7 +741,7 @@ if __name__ == '__main__':
     parser.add_option('-r','--resource-dir',
         action='append', dest='resource_dirs', default=[],
         metavar='PATH',
-        help='directory containing images and stylesheets')
+        help='directory containing image and stylesheet resources')
     #DEPRECATED
     parser.add_option('-s','--skip-asciidoc',
         action='store_true', dest='skip_asciidoc', default=False,

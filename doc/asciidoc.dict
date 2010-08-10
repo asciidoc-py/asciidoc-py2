@@ -1,10 +1,11 @@
-personal_ws-1.1 en 909 
+personal_ws-1.1 en 960 
 mandoc
 colspecs
 API
 testcases
 BSBEV
 dblatex
+dapibus
 attributelist
 AttributeList
 Blondel
@@ -15,6 +16,7 @@ libxslt
 asc
 XSLT
 stdin
+convallis
 AttributeEntrys
 Steen
 BOTTM
@@ -61,6 +63,7 @@ Mandelson
 GCC
 CSW
 Potapov
+nullam
 Moolenaar
 doctime
 CVS
@@ -69,12 +72,14 @@ Graphviz
 toclevel
 plaintext
 hyperlinks
+dui
 dsv
 ENV
 dvi
 stderr
 SimpleSection
 gif
+eBook
 prepend
 RevisionNumber
 CommentBlocks
@@ -93,6 +98,7 @@ strongwords
 setlocal
 ListingBlock
 listingblock
+Posuere
 exe
 AuthorInfo
 vsides
@@ -108,6 +114,7 @@ PDFs
 MSIE
 pede
 permalinks
+Boscombe
 Daly
 arcu
 GPL
@@ -153,6 +160,7 @@ velit
 père
 pere
 purus
+iso
 ItemLabel
 JPG
 adipiscing
@@ -168,9 +176,11 @@ PassthroughBlocks
 blockdef
 javascript
 JavaScript
+nam
 OEBPS
 symlinks
 optionname
+sollicitudin
 companyname
 pageunits
 nec
@@ -253,6 +263,7 @@ stdout
 monospaced
 walsh
 pre
+facilisis
 tzname
 ListParagraph
 Windtrainer
@@ -260,6 +271,7 @@ hgignore
 eget
 sed
 userguide
+cras
 zwsp
 keeptogether
 bweb
@@ -274,6 +286,7 @@ inlinemacro
 bgcolor
 pts
 Buenos
+feugiat
 colend
 sprintf
 pyc
@@ -295,6 +308,7 @@ Bolido
 tabsize
 colpcwidth
 Orry
+Nascetur
 onload
 RTF
 quickstart
@@ -314,6 +328,8 @@ Knisley
 massa
 vel
 colstart
+volutpat
+stringparam
 showcomments
 SVN
 Tps
@@ -332,9 +348,11 @@ VMiklos's
 sys
 doctype
 retrive
+Pavlovitch
 uri
 wnone
 xhtml
+url
 utf
 footrow
 usr
@@ -352,6 +370,7 @@ revisionhistory
 params
 undefines
 Andrés
+Quisque
 htmlhelp
 HTMLHelp
 cellspacing
@@ -378,6 +397,7 @@ de
 backends
 eb
 br
+Gutenburg
 cp
 fb
 fermentum
@@ -388,6 +408,7 @@ fo
 eu
 hg
 guimenu
+fugiat
 toclevels
 xzf
 gq
@@ -409,6 +430,7 @@ defacto
 mb
 IndentedBlocks
 js
+erat
 blogpost
 xsltproc
 jw
@@ -437,13 +459,15 @@ tcqn
 epub
 px
 td
-Vivamus
+vivamus
 py
+addon
 th
 ru
 docname
 su
 expandtab
+autolabel
 LinuxDoc
 linuxdoc
 tt
@@ -451,17 +475,20 @@ VM
 Frédérique
 SidebarBlock
 wj
+ut
 Efros
 param
 Movet
 hcol
 manpurpose
+eBooks
 colalign
 debian
 quis
 eval's
 stylename
 tooltip
+fpdf
 Tiago
 BLAUS
 endtag
@@ -470,11 +497,13 @@ Lebihan
 ListTerms
 colsep
 indir
+sherlock
 texttag
 ctags
 RPMs
 arabic
 dolorum
+posttype
 eval
 termtag
 passthrough
@@ -505,6 +534,7 @@ vimrc
 O'Reilly
 literallayout
 doctitle
+holmes
 Dmitry
 backtick
 Bouchers
@@ -520,6 +550,7 @@ captionless
 orgname
 OpenOffice
 asciidocEmphasized
+Dostoyevsky
 chapt
 necessitatibus
 unformatted
@@ -539,6 +570,7 @@ infty
 presubs
 Tascii
 MathML
+nobis
 LOCALCLASSPATH
 Cheatsheet
 mktemp
@@ -574,9 +606,10 @@ Stas
 colspec
 uriStartString
 infile
-Suspendisse
+suspendisse
 todo
 mimetype
+ridiculus
 setlevel
 Rosenkraenzer
 bodydata
@@ -608,8 +641,10 @@ outdir
 getvalue
 callouts
 autowidth
+karamazov
 labitur
 xmlto
+Fyodor
 HMTL
 CentOS
 Skype
@@ -618,6 +653,7 @@ builtins
 bulleted
 Google
 globals
+Garnett
 porta
 OpenBlock
 colabswidth
@@ -630,6 +666,7 @@ undefine
 docdate
 Zolochevskiy
 lacus
+felis
 backend
 ListBlock
 LiteralBlock
@@ -645,6 +682,7 @@ BLONP
 dbook
 asciimath
 interesset
+pellentesque
 formatlistpat
 IMGs
 attributeentry
@@ -665,6 +703,7 @@ admonitionparagraph
 mantitle
 init
 VerbatimBlocks
+imperdiet
 refsynopsisdiv
 emacs
 consetetur
@@ -695,8 +734,9 @@ BulletedList
 html
 unchunked
 Gouichi
+Alexey
 StringIO
-Wordpress
+wordpress
 nonet
 tagname
 gzip
@@ -721,6 +761,7 @@ BlockMacro
 mailto
 http
 pychart
+fepub
 Wiki
 euismod
 arounds
@@ -745,6 +786,7 @@ bookinfo
 Vajna
 upperalpha
 xmldecl
+tellus
 EmailAddress
 qanda
 hyperlink
@@ -769,6 +811,7 @@ snabbkop
 NumberedList
 everti
 multi
+cubilia
 manpage
 conformant
 AttributeEntries
@@ -784,18 +827,22 @@ dbtimestamp
 ebuild
 rewritePrefix
 BOLID
+PUBReader
 inlinemediaobject
 nochunks
 newlists
 mediaobjects
 endif
+natively
 mkdir
+sodales
 BONAP
 ItemContinuation
 tyger
 upperroman
 RevisionInfo
 Berglunds
+egestas
 nabc
 symlinked
 Sommer
@@ -828,6 +875,7 @@ labeltag
 toolchain
 cellpadding
 entrytbl
+Ornare
 authorinitials
 javascripts
 JavaScripts
@@ -849,6 +897,7 @@ ipsum
 namespaced
 FilterBlocks
 Julien
+tempor
 WINNT
 TableData
 pagefile
@@ -880,6 +929,7 @@ attrlist
 Bazon
 attrname
 Forsterstr
+Rutrum
 Redhat
 datadir
 Kumar
@@ -896,6 +946,7 @@ baz
 lorem
 Comidas
 bodyrows
+Fyodorovitch
 topbot
 greek
 comspec

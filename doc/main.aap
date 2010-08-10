@@ -216,7 +216,8 @@ clean:
     :del {f} *.bak          # Remove aspell backups.
 
 spell: $INFILES ../CHANGELOG.txt ../README.txt ../BUGS.txt ../INSTALL.txt \
-        a2x.1.txt faq.txt asciidocapi.txt testasciidoc.txt epub.txt
+        a2x.1.txt faq.txt asciidocapi.txt testasciidoc.txt \
+        epub-notes.txt publishing-ebooks-with-asciidoc.txt
     # Interactively spell check all files.
     @for s in source_list:
         :sys {i} $ASPELL check -p ./asciidoc.dict $s

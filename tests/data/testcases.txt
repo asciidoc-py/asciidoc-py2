@@ -155,6 +155,11 @@ An [[X3, anchor reftext]] inline anchor with reftext.
 
 Link to <<X3>> anchor.
 
+An example link to a bibliography entry <<Test::Unit>>.
+
+[horizontal]
+[[[Test::Unit]]]:: http://ruby-doc.org/stdlib/libdoc/test/unit/rdoc/classes/Test/Unit.html
+
 
 == Titles ==
 

@@ -2091,10 +2091,11 @@ Used to specify hypertext link targets:
   [[<id>,<xreflabel>]]
   anchor:<id>[<xreflabel>]
 
-The `<id>` is a unique identifier that must begin with a letter. The
-optional `<xreflabel>` is the text to be displayed by captionless
-'xref' macros that refer to this anchor. The optional `<xreflabel>` is
-only really useful when generating DocBook output. Example anchor:
+The `<id>` is a unique string that conforms to the output markup's
+anchor syntax. The optional `<xreflabel>` is the text to be displayed
+by captionless 'xref' macros that refer to this anchor. The optional
+`<xreflabel>` is only really useful when generating DocBook output.
+Example anchor:
 
   [[X1]]
 

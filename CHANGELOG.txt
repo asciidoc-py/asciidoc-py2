@@ -6,6 +6,8 @@ AsciiDoc ChangeLog
 Version 8.5.4 (2010-08-15)
 --------------------------
 .Additions and changes
+- Relaxed anchor ID name syntax
+  (http://groups.google.com/group/asciidoc/browse_thread/thread/5f3e825c74ed30c).
 - Added document files: `doc/epub-notes.txt`,
   `doc/publishing-ebooks-with-asciidoc.txt`.
 - 'a2x': If all other resource locations are exhausted then recursively

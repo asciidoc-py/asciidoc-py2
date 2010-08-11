@@ -38,12 +38,13 @@ Quisque nullam et. Blandit dui tempor. Posuere in elit diam egestas
 sem vivamus vel ac.
 ---------------------------------------------------------------------
 
-pass::[<!--more-->]
-
 To generate the EPUB formatted book file `minimal-book.epub` run
 AsciiDoc's 'a2x' toolchain wrapper command from the command-line:
 
   a2x -fepub -dbook minimal-book.txt
+
+// Wordpress processing instruction.
+pass::[<!--more-->]
 
 The `-f` option specifies the output format, the `-d` option specifies
 the document type (book, article or manpage).  The optional
@@ -95,6 +96,11 @@ specific meta-data:
 To Sherlock Holmes she is always THE woman. I have seldom heard ...
 ---------------------------------------------------------------------
 
+To generate the `adventures-of-sherlock-holmes.epub` EPUB file run
+this command:
+
+  a2x adventures-of-sherlock-holmes.txt
+
 Points to note:
 
 - The comment lines starting with `// a2x:` contain 'a2x' command
@@ -136,12 +142,18 @@ Holmes only has two title levels:
 == Colophon
 ---------------------------------------------------------------------
 
-So long as you define the AsciiDoc 'plaintext' the only remaining
-manual editing may be the odd paragraph being interpreted as some
-other AsciiDoc block element. In the combined 49 thousand lines of
-'Sherlock Holmes' and 'Brothers Karamazov' I only encountered only two
-misinterpreted list items, neither affected the rendered output or
-necessitated editing.
+So long as you have defined the AsciiDoc 'plaintext' attribute the
+only remaining manual editing will be the odd paragraph being
+interpreted as some other AsciiDoc block element. In the combined 49
+thousand lines of imported 'Sherlock Holmes' and 'Brothers Karamazov'
+text I only encountered two misinterpreted list items, neither
+affected the rendered output or necessitated editing.
+
+NOTE: If you are writing a document from scratch you'll probably want
+to take advantage of
+http://www.methods.co.nz/asciidoc/userguide.html#_text_formatting[AsciiDoc's
+rich text formatting conventions], in which case do not define the
+AsciiDoc 'plaintext' attribute.
 
 :examples-url: http://www.methods.co.nz/misc/examples/books/
 
@@ -206,6 +218,10 @@ The Lowell Press New York
 Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
 ...
 ---------------------------------------------------------------------
+
+To generate the `brothers-karamazov.epub` EPUB file run this command:
+
+  a2x brothers-karamazov.txt
 
 There are a number of differences between this and the Sherlock Holmes
 meta-data:

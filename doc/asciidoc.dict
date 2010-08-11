@@ -1,4 +1,4 @@
-personal_ws-1.1 en 960 
+personal_ws-1.1 en 968 
 mandoc
 colspecs
 API
@@ -10,6 +10,7 @@ attributelist
 AttributeList
 Blondel
 permalink
+Chunking
 unescapes
 frontmatter
 libxslt
@@ -240,8 +241,10 @@ ListParagraphs
 nunc
 opf
 CustomBlocks
+refentryinfo
 informalfigure
 ORed
+Pygments
 yyyy
 online
 LIBDIR
@@ -249,6 +252,7 @@ docinfo
 BlockId
 png
 lobortis
+Broberg
 Bowlin
 asciimathml
 AsciiMathML
@@ -385,9 +389,9 @@ headrow
 Morbi
 Blauer
 footdata
-cb
-bg
 al
+bg
+cb
 cd
 xsl
 backmatter
@@ -429,6 +433,7 @@ lf
 defacto
 mb
 IndentedBlocks
+md
 js
 erat
 blogpost
@@ -497,6 +502,7 @@ Lebihan
 ListTerms
 colsep
 indir
+Hajage
 sherlock
 texttag
 ctags
@@ -610,6 +616,7 @@ suspendisse
 todo
 mimetype
 ridiculus
+volnitsky
 setlevel
 Rosenkraenzer
 bodydata
@@ -756,6 +763,7 @@ lang
 basebackend
 urna
 rowsep
+checksums
 blockmacro
 BlockMacro
 mailto

@@ -25,7 +25,7 @@ WEB_ROOT =
     asciimathml
     asciidocapi
     CHANGELOG
-    epub
+    epub-notes
     faq
     index
     INSTALL

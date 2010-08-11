@@ -3,6 +3,124 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.5.4 (2010-08-15)
+--------------------------
+.Additions and changes
+- Added document files: `doc/epub-notes.txt`,
+  `doc/publishing-ebooks-with-asciidoc.txt`.
+- 'a2x': If all other resource locations are exhausted then recursively
+  search directories named 'images' and 'stylesheets' in the
+  'asciidoc' configuration files directory.
+- 'a2x': options can also be set in the AsciiDoc source file. If the
+  source file contains a line beginning with '// a2x:' then the
+  remainder of the line will be treated as a2x command-line options.
+- Added dblatex table-width processing instruction -- tables generated
+  by dblatex now observe the AsciiDoc table width as a percentage
+  (thanks to Gustav Broberg for suggesting this enhancement).
+- 'a2x': Don't exit if the `--epubcheck` option is set and 'epubcheck'
+  is missing, issue warning and continue.
+- Added a global 'plaintext' attribute for dealing with large amounts
+  of imported text.
+- The author name format has been relaxed, if the the author does not
+  match the formal specification then it is assigned to the
+  'firstname' attribute (previously asciidoc exited with an error
+  message).
+- FAQ and documentation updates.
+- Refactored chunked.xsl and epub.xsl files.
+- Exchanged article.epub for more relevant book.epub on website.
+- Put asciidoc.epub User Guide on website.
+- 'a2x': Chunking EPUB and HTML outputs set to a per chapter basis and
+  the first chapter is separate from preceding contents.
+- Changed dates format in example article and books to suppress EPUB
+  validation error.
+- Added 'style' and 'role' CSS classes to xhtml11 section templates.
+- Added the 'role' element to xhtml11 backend block templates.
+- Suppressed md5 module deprecation warning from music and Graphviz filters.
+- Pygments (http://pygments.org/) option added to source code
+  highlight filter.  Based on Pygments source code filter written by
+  David Hajage
+  (http://groups.google.com/group/asciidoc/browse_thread/thread/d8d042f5a3021369/8934ebbb8cb7144b).
+- xhtml11: Added a new theme (volnitsky). Written and contributed by
+  Leonid V. Volnitsky.
+- xhtml11: Set body element class name to document type.
+- Added refentryinfo element and contents (including revdate) to man
+  page DocBook output. Man pages are now dated using the revdate
+  attribute value if it has been defined.  Based on patch supplied by
+  Rainer Muller
+  http://groups.google.com/group/asciidoc/browse_frm/thread/319e5cd94493e330/3fcb83fab067af42.
+- Added `{template:...}` system attribute.
+- Table of contents attribute 'toc' can now be specified in the
+  document header.
+- Reimplemented music and latex filter -m option functionality when
+  the input is stdin using MD5 checksums.
+- Added 'latex' filter.
+- Added auto file name generation to image generating filters
+  (latex,music, graphviz).
+- Added `counter2` and `set2` system attributes (to implement image
+  auto file name generation).
+- Undefined attribute in filter command generates error but does not
+  exit.
+- Attribute substitution proceeds from start line to end line
+  (previously was in reverse order which was really confusing).
+- Tidied up music filter code:
+  * Format option is optional and default to 'abc' unless Lilypond
+    notation detected.
+  * The -m option does not apply to stdin input.
+- Added paragraph styles to music and graphviz filters.
+- Documented dynamic template names.  753: Graphviz filter can now
+  generate SVG format images. Patch submitted by Elmo Todurov, see:
+  http://groups.google.com/group/asciidoc/browse_frm/thread/fe9b33d8f5f1e0af
+  The xhtml11 SVG Graphviz template marked EXPERIMENTAL. No SVG
+  support for other backends.
+- AsciiDoc template names can now contain embedded attribute
+  references.
+- Added 'legalnotice' tag to `doc/article-docinfo.xml` example.
+- xhtml11 backend: Callouts and callout lists display callout icons
+  when the 'icons' attribute is defined. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/8eda3ea812968854
+- Document attribute names are case insensitive everywhere, this makes using
+attribute entries more consistent e.g. previously :VERS: had to be refered to
+with {vers} ({VERS} did not work).
+- Hungarian translation of footer-text (submitted by Miklos Vajna).
+  See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/7174cb7598993c72#
+- asciidocapi.py 0.1.2: Can now load AsciiDoc script named asciidoc.
+  See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/66e7b59d12cd2f91
+  Based on patch submitted by Phillip Lord.
+- German translation of footer-text (submitted by Simon Ruderich). See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/7174cb7598993c72
+- Pushed HTML footer text into language conf files with the
+  introduction of a [footer-text] configuration file template section.
+  See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/7174cb7598993c72
+
+.Bug fixes
+- *FIXED*: Sometimes multiple double quoted text elements in the same
+  paragraph were mistakenly seen as starting with an inline literal.
+  See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/219c86ae25b79a21
+- *FIXED*: 'localtime' and 'doctime' attributes calculated incorrect
+  daylight saving / non daylight saving timezones and consequently so
+  did HTML footers.  Patch submitted by Slawomir Testowy. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/af652507caf6cec9
+- *FIXED*: Missing selector for 'List of examples' title in DocBook
+  CSS file. Patch submitted by Laurent Laville. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/3f96900f7fbf5620
+- *FIXED*: Broken accents in lang-hu.conf. See:
+  http://groups.google.com/group/asciidoc/browse_frm/thread/7174cb7598993c72
+- *FIXED*: DocBook XSL generated HTML callout lists are properly
+  aligned.  Submitted by Lionel Orry. See
+  http://groups.google.com/group/asciidoc/browse_frm/thread/2ff802547b6a75ea
+- *FIXED*: Filter execution now occurs prior to filter markup template
+  substitution to ensure image data URI encoding happens after image
+  generation (see
+  http://groups.google.com/group/asciidoc/browse_thread/thread/14e8fcb289a135b).
+- *FIXED*: The section numbers no longer increment when the 'numbered'
+  attribute is undefined (see
+  http://groups.google.com/group/asciidoc/browse_thread/thread/faa36e9e5c7da019/d24cab3fe363e58d).
+
+
 Version 8.5.3 (2010-01-18)
 --------------------------
 .Additions and changes

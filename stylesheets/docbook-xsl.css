@@ -22,12 +22,7 @@ body div {
   margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6,
-div.toc p b,
-div.list-of-figures p b,
-div.list-of-tables p b,
-div.list-of-examples p b,
-div.abstract p.title
+h1, h2, h3, h4, h5, h6
 {
   color: #527bbd;
   font-family: tahoma, verdana, sans-serif;
@@ -36,8 +31,13 @@ div.abstract p.title
 div.toc p:first-child,
 div.list-of-figures p:first-child,
 div.list-of-tables p:first-child,
-div.example p.title
+div.list-of-examples p:first-child,
+div.example p.title,
+div.sidebar p.title
 {
+  font-weight: bold;
+  color: #527bbd;
+  font-family: tahoma, verdana, sans-serif;
   margin-bottom: 0.2em;
 }
 
@@ -147,7 +147,6 @@ div.sidebar {
 div.sidebar * { padding: 0; }
 div.sidebar div { margin: 0; }
 div.sidebar p.title {
-  font-family: sans-serif;
   margin-top: 0.5em;
   margin-bottom: 0.2em;
 }

@@ -1,15 +1,12 @@
 AsciiDoc EPUB Notes
 ===================
 
-Notes that mostly relate to limitations imposed by bugs in DocBook XSL
-Stylesheets EPUB generation.
 
-
-Limitations
------------
-- If the date format of the DocBook 'data' element is not
+Restrictions
+------------
+- If the date format of the DocBook 'data' element is not formatted like
   `YYYY[-MM[-DD]]` you will get an error like the following one when
-  you valid using `epubcheck(1)`:
+  validating with `epubcheck(1)`:
 
   ERROR: doc/article.epub/OEBPS/content.opf(6): date value 'Dec 2003'
   is not valid, YYYY[-MM[-DD]] expected
@@ -18,11 +15,21 @@ Limitations
   `docbook-xsl/epub.xsl`
   (see <<X2,bug report>>).
 
-- Untitled sidebars are displayed in bold text
-  (see <<X1,bug report>>).
 
-EPUB bugs in DocBook XSL Stylesheets
-------------------------------------
+DocBook XSL Stylesheets related limitations and bugs
+----------------------------------------------------
+
+=== epub: toc.section.depth parameter ignored
+https://sourceforge.net/tracker/?func=detail&aid=3043393&group_id=21935&atid=373747
+
+epub outputs include every section in the table of contents regardless of the
+toc.section.depth XSL Stylesheets parameter
+(http://docbook.sourceforge.net/release/xsl/current/doc/html/toc.section.depth.html).
+This behavior is specific to epub (xhtml and fo outputs honor
+toc.section.depth).
+
+Environment: DocBook XSL 1.75.2; Xubuntu 10.04
+
 
 [[X1]]
 === epub: untitled DocBook sidebar emits invalid XHTML

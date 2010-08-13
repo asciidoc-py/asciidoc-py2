@@ -106,8 +106,12 @@ glossary, index).
 
 book
 ~~~~
-Books share the same format as articles; in addition there is the
-option to add level 0 book part sections.
+Books share the same format as articles, with the following
+differences:
+
+- The part titles in multi-part books are <<X17,top level titles>>
+  (same level as book title).
+- Some sections are book specific e.g. preface and colophon.
 
 Book documents will normally be used to produce DocBook output since
 DocBook processors can automatically generate footnotes, table of
@@ -184,10 +188,10 @@ distribution `./stylesheets/` directory.
 =====================================================================
 All browsers have CSS quirks, but Microsoft's IE6 has so many
 omissions and errors that the `xhtml11-quirks.css` stylesheet and
-`xhtml11-quirks.conf` configuration files are included during XHTML
-backend processing to to implement workarounds for IE6. If you don't
-use IE6 then the quirks stylesheet and configuration files can be
-omitted using the `--attribute quirks!` command-line option.
+`xhtml11-quirks.conf` configuration files are available for inclusion
+during XHTML backend processing to to implement workarounds for IE6.
+Set the AsciiDoc 'quirks' attribute to enable AsciiDoc's quirks mode,
+for example with the `--attribute quirks!` command-line option.
 =====================================================================
 
 Default 'xhtml11' stylesheets:
@@ -204,8 +208,8 @@ Default 'xhtml11' stylesheets:
 
 Use the 'theme' attribute to select an alternative set of stylesheets.
 For example, the command-line option `-a theme=foo` will use
-stylesheets `foo.css`, `foo-manpage.css` and `foo-quirks.css` instead
-of the default stylesheets.
+stylesheets `foo.css`, `foo-manpage.css` (and `foo-quirks.css` if
+quirks mode is enabled) instead of the default stylesheets.
 
 Use the 'stylesheet' attribute to include an additional stylesheet in
 XHTML documents.  For example, the command-line option `-a
@@ -952,14 +956,16 @@ Unique identifier typically serve as link targets.
 Can also be set by the 'BlockId' element.
 
 |role |html4, xhtml11, docbook |
-Role contains a string used to classify or subclassify an element:
+Role contains a string used to classify or subclassify an element and
+can be applied to the following AsciiDoc elements:
 
-- Adds 'role' attribute to block elements ('docbook' and 'xhtml11'
+- Block elements ('docbook' and 'xhtml11'
   backends).
-- Adds 'role' attribute to <<X51,quoted inline elements>> ('docbook',
+- <<X51,Quoted inline elements>> ('docbook',
   'xhtml11' and 'html4' backends).
-- The AsciiDoc 'role' attribute is sets the 'role' attribute in
-  DocBook elements and sets the 'class' attribute in HTML elements.
+
+The AsciiDoc 'role' attribute is sets the 'role' attribute in DocBook
+outputs and sets the 'class' attribute in HTML outputs.
 
 |reftext |docbook |
 'reftext' is used to set the DocBook 'xreflabel' attribute.
@@ -4086,7 +4092,8 @@ predefined intrinsic attributes:
   {verbose}             defined as '' if --verbose command option specified
   {zwsp}                Zero-width space character entity
 
-.NOTES
+[NOTE]
+======
 1. Intrinsic attributes are global so avoid defining custom attributes
    with the same names.
 
@@ -4110,6 +4117,8 @@ predefined intrinsic attributes:
    the current input file which may be the root document or an
    included file. When the input is being read from the standard
    input (`stdin`) these attributes are undefined.
+======
+
 
 [[X73]]
 Block Element Definitions
@@ -4794,6 +4803,9 @@ indent and then executing the `gq}` command.
 Example `~/.vimrc` File
 ^^^^^^^^^^^^^^^^^^^^^^^
 ---------------------------------------------------------------------
+" Use bold bright fonts.
+set background=dark
+
 " Show tabs and trailing characters.
 set listchars=tab:»·,trail:·
 set list
@@ -5223,14 +5235,11 @@ to the end of you AsciiDoc source files:
 
   // vim: set syntax=asciidoc:
 
-NOTE: Dag Wieers has implemented an alternative Vim syntax file for
-AsciiDoc which can be found here
-http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/.
+TIP: Bold fonts are often easier to read, use the Vim `:set background=dark`
+command to set bold bright fonts.
 
-NOTE: Emacs users: The http://xpt.sourceforge.net/[*Nix Power Tools
-project] has released an
-http://xpt.sourceforge.net/tools/doc-mode/[AsciiDoc syntax highlighter
-for emacs].
+NOTE: There are a number of alternative syntax highlighters for various editors
+listed on the http://www.methods.co.nz/asciidoc/[AsciiDoc website].
 
 Limitations
 ~~~~~~~~~~~
@@ -5427,7 +5436,7 @@ suppressed and block indents are retained.  This option is useful when
 dealing with large amounts of imported plain text.
 
 |quirks |xhtml11 |
-Use the `xhtml11-quirks.css` stylesheet to work around IE6 browser
+Include the `xhtml11-quirks.css` stylesheet to work around IE6 browser
 incompatibilities (this is the default behavior).
 
 |revremark |docbook |

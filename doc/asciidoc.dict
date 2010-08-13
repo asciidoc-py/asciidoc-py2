@@ -1,4 +1,4 @@
-personal_ws-1.1 en 968 
+personal_ws-1.1 en 972 
 mandoc
 colspecs
 API
@@ -66,10 +66,11 @@ CSW
 Potapov
 nullam
 Moolenaar
+dtb
 doctime
 CVS
 DTD
-Graphviz
+graphviz
 toclevel
 plaintext
 hyperlinks
@@ -194,6 +195,7 @@ mim
 Farhat
 uninstall
 localdate
+ncx
 ListEntry
 textwidth
 ItemTerm
@@ -254,6 +256,7 @@ png
 lobortis
 Broberg
 Bowlin
+navPoint
 asciimathml
 AsciiMathML
 ASCIIMathML
@@ -764,8 +767,8 @@ basebackend
 urna
 rowsep
 checksums
-blockmacro
 BlockMacro
+blockmacro
 mailto
 http
 pychart
@@ -786,6 +789,7 @@ halign
 AROUT
 Wiese
 bodyrow
+navMap
 listtags
 mauris
 ListingBlocks

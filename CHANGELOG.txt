@@ -6,6 +6,8 @@ AsciiDoc ChangeLog
 Version 8.5.4 (2010-08-15)
 --------------------------
 .Additions and changes
+- CSS 'quirks' mode is no longer the default 'xhtml11' output
+  (http://groups.google.com/group/asciidoc/browse_thread/thread/1c02d27d49221aa2).
 - Relaxed anchor ID name syntax
   (http://groups.google.com/group/asciidoc/browse_thread/thread/5f3e825c74ed30c).
 - Added document files: `doc/epub-notes.txt`,

@@ -161,18 +161,33 @@ documented in link:latexmath.pdf[this PDF file] and can be used in
 AsciiDoc documents processed by `dblatex(1)`.
 
 
-Vim Syntax Highlighter
-----------------------
-An AsciiDoc syntax highlighter for the Vim text editor is included in
-the AsciiDoc distribution (see 'Appendix F' of the 'AsciiDoc User
-Guide' for details).
-
+Editor Support
+--------------
+- An AsciiDoc syntax highlighter for the Vim text editor is included in the
+  AsciiDoc distribution (see 'Appendix F' of the 'AsciiDoc User Guide' for
+details).
++
 .Syntax highlighter screenshot
 image::images/highlighter.png[height=250,caption="",link="images/highlighter.png"]
 
-Dag Wieers has implemented an alternative Vim syntax file for AsciiDoc
-which can be found here
-http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/.
+- Dag Wieers has implemented an alternative Vim syntax file for AsciiDoc which
+  can be found here http://svn.rpmforge.net/svn/trunk/tools/asciidoc-vim/.
+- David Avsajanishvili has written a source highlighter for AsciiDoc
+  files for http://projects.gnome.org/gtksourceview/[GtkSourceView]
+  (used by http://projects.gnome.org/gedit/[gedit] and a number of
+  other applications). The project is hosted here:
+  https://launchpad.net/asciidoc-gtk-highlight
+- Florian Kaufman has written
+  http://code.google.com/p/sensorflo-emacs/source/browse/trunk/adoc-mode.el[adoc-mode.el]
+-- a major-mode for editing asciidoc files in Emacs.
+- Sun Tong has written an http://xpt.sourceforge.net/tools/doc-mode/[Emacs mode
+  for AsciiDoc fontlocking].
+- The http://xpt.sourceforge.net/[*Nix Power Tools project] has released an
+  http://xpt.sourceforge.net/tools/doc-mode/[AsciiDoc syntax highlighter for
+  Emacs].
+- Terrence Brannon has written
+  http://github.com/metaperl/asciidoc-el[AsciiDoc functions for
+  Emacs].
 
 
 [[X5]]
@@ -197,11 +212,6 @@ Resources
 Here are resources that I know of, if you know of more drop me a line
 and I'll add them to the list.
 
-- David Avsajanishvili has written a source highlighter for AsciiDoc
-  files for http://projects.gnome.org/gtksourceview/[GtkSourceView]
-  (used by http://projects.gnome.org/gedit/[gedit] and a number of
-  other applications). The project is hosted here:
-  https://launchpad.net/asciidoc-gtk-highlight
 - Check the link:INSTALL.html#X2[installation page] for packaged versions
   of AsciiDoc.
 - Alex Efros has written an HTML formatted
@@ -214,18 +224,6 @@ and I'll add them to the list.
   http://www.wikimatrix.org/syntax.php[web page] that compares the
   various Wiki markup syntaxes. An interesting attempt at Wiki markup
   standardization is http://www.wikicreole.org/[CREOLE].
-- Terrence Brannon has written
-  http://github.com/metaperl/asciidoc-el[AsciiDoc functions for
-  Emacs].
-- Florian Kaufman has written
-  http://code.google.com/p/sensorflo-emacs/source/browse/trunk/adoc-mode.el[adoc-mode.el]
-  -- a major-mode for editing asciidoc files in Emacs.
-- Sun Tong has written an
-  http://xpt.sourceforge.net/tools/doc-mode/[Emacs mode for AsciiDoc
-  fontlocking].
-- The http://xpt.sourceforge.net/[*Nix Power Tools project] has
-  released an http://xpt.sourceforge.net/tools/doc-mode/[AsciiDoc
-  syntax highlighter for Emacs].
 - Franck Pommereau has written
   http://www.univ-paris12.fr/lacl/pommereau/soft/asciidoctest.html[Asciidoctest],
   a program that doctests snippets of Python code within your Asciidoc
@@ -329,8 +327,7 @@ discussion group thread] for details.
 - The http://www.netpromi.com/kirbybase_ruby.html[KirbyBase for Ruby]
   database management system manual.
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] uses
-  AsciiDoc for documentation and has released an Emacs syntax
-  highlighter (see <<X2,Resources>> above).
+  AsciiDoc for documentation.
 - The http://www.wesnoth.org/[Battle for Wesnoth] project uses
   AsciiDoc for its http://www.wesnoth.org/wiki/WesnothManual[Manual]
   in a number of different languages.

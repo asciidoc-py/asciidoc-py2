@@ -93,8 +93,6 @@ DOCS =
 # AsciiDoc options to generate documentation HTML.
 ASCIIDOC_HTML =
     python ../../asciidoc.py -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revnumber=$(VERS)@ -a revdate="$(DATE)@" -a max-width=70em
-@if LAYOUT == 'layout2':
-    ASCIIDOC_HTML += -a quirks!
 
 :rule %.html : %.txt $(LAYOUT).conf
     @if target in ('userguide.html','faq.html'):

@@ -3,7 +3,7 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
-Version 8.5.4 (2010-08-15)
+Version 8.6.0 (2010-08-15)
 --------------------------
 .Additions and changes
 - The global configuration files directory is ignored by both

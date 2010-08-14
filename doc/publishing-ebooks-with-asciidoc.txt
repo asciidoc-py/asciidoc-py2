@@ -64,7 +64,7 @@ http://dblatex.sourceforge.net/[dblatex] use:
   a2x -fpdf -dbook --fop minimal-book.txt
 
 NOTE: A number of 'asciidoc' and 'a2x' features used in this article
-were introduced in AsciiDoc version 8.5.4 -- install version 8.5.4 or
+were introduced in AsciiDoc version 8.6.0 -- install version 8.6.0 or
 better to compile the examples. The version of
 http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
 Stylesheets] used was 1.75.2.

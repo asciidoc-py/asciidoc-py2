@@ -2,7 +2,7 @@
 # Executed by all main.aap's before anything else.
 #
 
-_parent.VERS = 8.5.4
+_parent.VERS = 8.6.0
 _parent.DATE = 15 August 2010
 
 all:

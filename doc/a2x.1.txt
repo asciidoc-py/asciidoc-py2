@@ -203,10 +203,12 @@ A configuration file contains executable Python code that overrides
 the global configuration parameters in `a2x.py`.  Optional configuration
 files are loaded in the following order:
 
-. `a2x.conf` from the AsciiDoc global configuration directory.
+. `a2x.conf` from the directory containing the 'a2x.py' executable.
+. `a2x.conf` from the AsciiDoc global configuration directory.  Skip
+  this step if we are executing a locally installed (non system wide)
+  copy.
 . `a2x.conf` from the AsciiDoc `$HOME/.asciidoc` configuration
   directory.
-. `a2x.conf` from the directory containing 'a2x.py'.
 . The 'CONF_FILE' specified in the '--conf-file' option.
 
 Here are the default configuration file option values:

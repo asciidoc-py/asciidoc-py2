@@ -6,6 +6,11 @@ AsciiDoc ChangeLog
 Version 8.5.4 (2010-08-15)
 --------------------------
 .Additions and changes
+- The global configuration files directory is ignored by both
+  'asciidoc' and 'a2x' if AsciiDoc configuration files are installed
+  in the same directory as the asciidoc executable.  This change
+  allows both a system wide copy and multiple local copies of AsciiDoc
+  to coexist on the same host PC.
 - CSS 'quirks' mode is no longer the default 'xhtml11' output
   (http://groups.google.com/group/asciidoc/browse_thread/thread/1c02d27d49221aa2).
 - Relaxed anchor ID name syntax

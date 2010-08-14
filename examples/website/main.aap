@@ -53,8 +53,6 @@ SPELL_CHECK =
     index.txt
     README-website.txt
     support.txt
-    source-highlight-filter.txt
-    music-filter.txt
 
 # Accompanying documents in DOCS_DIR.
 DOCS_ROOT =

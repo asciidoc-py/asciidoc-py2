@@ -351,12 +351,20 @@ class A2X(AttrDict):
         '''
         global ASCIIDOC
         CONF_FILE = 'a2x.conf'
+        a2xdir = os.path.dirname(os.path.realpath(__file__))
         conf_files = []
-        # From global conf directory.
-        conf_files.append(os.path.join(CONF_DIR, CONF_FILE))
         # From a2x.py directory.
-        conf_files.append(os.path.join(
-            os.path.dirname(os.path.realpath(__file__)), CONF_FILE))
+        conf_files.append(os.path.join(a2xdir, CONF_FILE))
+        # If the asciidoc executable and conf files are in the a2x directory
+        # then use the local copy of asciidoc and skip the global a2x conf.
+        asciidoc = os.path.join(a2xdir, 'asciidoc.py')
+        asciidoc_conf = os.path.join(a2xdir, 'asciidoc.conf')
+        if os.path.isfile(asciidoc) and os.path.isfile(asciidoc_conf):
+            self.asciidoc = asciidoc
+        else:
+            self.asciidoc = None
+            # From global conf directory.
+            conf_files.append(os.path.join(CONF_DIR, CONF_FILE))
         # From $HOME directory.
         home_dir = os.environ.get('HOME')
         if home_dir is not None:
@@ -371,14 +379,10 @@ class A2X(AttrDict):
             if os.path.isfile(f):
                 verbose('loading conf file: %s' % f)
                 execfile(f, globals())
-        self.asciidoc = find_executable(ASCIIDOC)
-        # If asciidoc can't be found anywhere else look in the a2x directory.
+        # If asciidoc is not local to a2x then search the PATH.
         if not self.asciidoc:
-            a2xdir = os.path.dirname(os.path.realpath(__file__))
-            asciidoc = os.path.join(a2xdir, 'asciidoc.py')
-            if os.path.isfile(asciidoc):
-                self.asciidoc = asciidoc
-            else:
+            self.asciidoc = find_executable(ASCIIDOC)
+            if not self.asciidoc:
                 die('unable to find asciidoc: %s' % ASCIIDOC)
 
     def process_options(self):

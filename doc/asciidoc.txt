@@ -3562,9 +3562,14 @@ option).
 Implicit configuration files are loaded from the following directories
 in the following order:
 
-1. The global configuration directory (normally `/etc/asciidoc` or
-   `/usr/local/etc/asciidoc`) if it exists.
-2. The directory containing the asciidoc executable.
+1. The directory containing the asciidoc executable.
+2. If there is no `asciidoc.conf` file in the directory containing the
+   asciidoc executable then load from the global configuration
+   directory (normally `/etc/asciidoc` or `/usr/local/etc/asciidoc`)
+   i.e. the global configuration files directory is skipped if
+   AsciiDoc configuration files are installed in the same directory as
+   the asciidoc executable. This allows both a system wide copy and
+   multiple local copies of AsciiDoc to coexist on the same host PC.
 3. The user's `$HOME/.asciidoc` directory (if it exists).
 4. The directory containing the AsciiDoc source file.
 

@@ -1,4 +1,4 @@
-personal_ws-1.1 en 201 
+personal_ws-1.1 en 204 
 O'Reilly
 awb
 Blogpost
@@ -66,6 +66,8 @@ matplotlib
 stdout
 usr
 txt
+ebooks
+eBooks
 linenumbering
 ImageMagick
 distros
@@ -123,6 +125,7 @@ mkdir
 Solaris
 LilyPond
 dx
+eBook
 hg
 Gouichi
 conf

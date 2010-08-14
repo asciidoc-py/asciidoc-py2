@@ -215,6 +215,13 @@ class Message:
         self.error('unsafe: '+msg)
 
 
+def localapp():
+    """
+    Return True if we are not executing the system wide version
+    i.e. the configuration is in the executable's directory.
+    """
+    return os.path.isfile(os.path.join(APP_DIR, 'asciidoc.conf'))
+
 def file_in(fname, directory):
     """Return True if file fname resides inside directory."""
     assert os.path.isfile(fname)
@@ -651,9 +658,10 @@ def filter_lines(filter_cmd, lines, attrs={}):
         if USER_DIR:
             found = findfilter(filtername, USER_DIR, cmd)
         if not found:
-            found = findfilter(filtername, CONF_DIR, cmd)
-        if not found:
-            found = findfilter(filtername, APP_DIR, cmd)
+            if localapp():
+                found = findfilter(filtername, APP_DIR, cmd)
+            else:
+                found = findfilter(filtername, CONF_DIR, cmd)
     else:
         if os.path.isfile(cmd):
             found = cmd
@@ -4280,10 +4288,12 @@ class Config:
     def get_load_dirs(self):
         """Return list of well known paths to search for conf files."""
         result = []
-        # Load global configuration from system configuration directory.
-        result.append(CONF_DIR)
-        # Load global configuration files from folders in asciidoc directory.
-        result.append(APP_DIR)
+        if localapp():
+            # Load from folders in asciidoc executable directory.
+            result.append(APP_DIR)
+        else:
+            # Load from global configuration directory.
+            result.append(CONF_DIR)
         # Load configuration files from ~/.asciidoc if it exists.
         if USER_DIR is not None:
             result.append(USER_DIR)

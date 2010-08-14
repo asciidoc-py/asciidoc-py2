@@ -1,4 +1,4 @@
-personal_ws-1.1 en 972 
+personal_ws-1.1 en 974 
 mandoc
 colspecs
 API
@@ -113,6 +113,7 @@ magna
 xreflabel
 PDF's
 PDFs
+pygmentize
 MSIE
 pede
 permalinks
@@ -246,7 +247,7 @@ CustomBlocks
 refentryinfo
 informalfigure
 ORed
-Pygments
+pygments
 yyyy
 online
 LIBDIR
@@ -400,6 +401,7 @@ xsl
 backmatter
 ar
 fils
+linenumbering
 de
 backends
 eb
@@ -963,7 +965,7 @@ topbot
 greek
 comspec
 refmiscinfo
-Firefox
+firefox
 lectus
 JavaHelp
 unescaped

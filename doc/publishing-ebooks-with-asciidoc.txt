@@ -13,11 +13,18 @@ Publishing eBooks with AsciiDoc
 
 It's easy to write and publish books in
 http://en.wikipedia.org/wiki/EPUB[EPUB] and PDF formats using
-http://www.methods.co.nz/asciidoc/[AsciiDoc].
+http://www.methods.co.nz/asciidoc/[AsciiDoc]. Here are three examples:
+The first is a minimal example introducing the AsciiDoc format, the
+second and third are real books totalling over 49 thousand lines of
+text.
 
-Here's a minimal book written in AsciiDoc containing a title and two
-chapters each with two paragraphs. The AsciiDoc source is a plain text
-file named `minimal-book.txt`:
+// Wordpress processing instruction.
+pass::[<!--more-->]
+
+
+== Minimal Book
+This didactic example contains a title and two chapters.  The AsciiDoc
+source is a plain text file named `minimal-book.txt`:
 
 ---------------------------------------------------------------------
 = The Book Title
@@ -43,9 +50,6 @@ AsciiDoc's 'a2x' toolchain wrapper command from the command-line:
 
   a2x -fepub -dbook minimal-book.txt
 
-// Wordpress processing instruction.
-pass::[<!--more-->]
-
 The `-f` option specifies the output format, the `-d` option specifies
 the document type (book, article or manpage).  The optional
 `--epubcheck` option tells 'a2x' to validate the EPUB file using
@@ -65,12 +69,27 @@ better to compile the examples. The version of
 http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
 Stylesheets] used was 1.75.2.
 
-Now a couple of real books: 'The Adventures of Sherlock Holmes' and
-'The Brothers Karamazov'.  To generate the AsciiDoc source I edited
-the http://www.gutenberg.org[Project Gutenberg] plain text sources
-manually with a text editor (this took around 15 minutes per book).
 
 == The Adventures of Sherlock Holmes
+Now for a more substantial example. To generate the AsciiDoc source I
+downloaded the http://www.gutenberg.org[Project Gutenberg] plain text
+source and edited it manually (this took around 20 minutes).
+
+:examples-url: http://www.methods.co.nz/misc/examples/books/
+
+[frame="topbot",options="header"]
+|====================================================================
+|EPUB |PDF |AsciiDoc source |Project Gutenburg text
+|{examples-url}adventures-of-sherlock-holmes.epub[adventures-of-sherlock-holmes.epub]
+
+|{examples-url}adventures-of-sherlock-holmes.pdf[adventures-of-sherlock-holmes.pdf]
+
+|{examples-url}adventures-of-sherlock-holmes.zip[adventures-of-sherlock-holmes.zip]
+
+|http://www.gutenberg.org/etext/1661
+
+|====================================================================
+
 Here's the start of the AsciiDoc source file showing the AsciiDoc
 specific meta-data:
 
@@ -155,26 +174,25 @@ http://www.methods.co.nz/asciidoc/userguide.html#_text_formatting[AsciiDoc's
 rich text formatting conventions], in which case do not define the
 AsciiDoc 'plaintext' attribute.
 
-:examples-url: http://www.methods.co.nz/misc/examples/books/
-
-[options="header"]
-|====================================================================
-|EPUB |PDF |AsciiDoc source |Project Gutenburg text
-|{examples-url}adventures-of-sherlock-holmes.epub[adventures-of-sherlock-holmes.epub]
-
-|{examples-url}adventures-of-sherlock-holmes.pdf[adventures-of-sherlock-holmes.pdf]
-
-|{examples-url}adventures-of-sherlock-holmes.zip[adventures-of-sherlock-holmes.zip]
-
-|http://www.gutenberg.org/etext/1661
-
-|====================================================================
-
 
 == The Brothers Karamazov
-'The Brothers Karamazov' is an example of a multi-part book.  Here's
-the start of the AsciiDoc source file showing the AsciiDoc specific
-meta-data:
+'The Brothers Karamazov' is an example of a multi-part book.
+
+[frame="topbot",options="header"]
+|====================================================================
+|EPUB |PDF |AsciiDoc source |Project Gutenburg text
+|{examples-url}brothers-karamazov.epub[brothers-karamazov.epub]
+
+|{examples-url}brothers-karamazov.pdf[brothers-karamazov.pdf]
+
+|{examples-url}brothers-karamazov.zip[brothers-karamazov.zip],
+
+|http://www.gutenberg.org/etext/28054
+
+|====================================================================
+
+Here's the start of the AsciiDoc source file showing the AsciiDoc
+specific meta-data:
 
 ---------------------------------------------------------------------
 //
@@ -244,18 +262,6 @@ The part titles of multi-part books like must be level zero titles:
 
 Additional sub-chapter levels can be accommodated with `===`, `====`
 and `=====` title prefixes.
-
-|====================================================================
-|EPUB |PDF |AsciiDoc source |Project Gutenburg text
-|{examples-url}brothers-karamazov.epub[brothers-karamazov.epub]
-
-|{examples-url}brothers-karamazov.pdf[brothers-karamazov.pdf]
-
-|{examples-url}brothers-karamazov.zip[brothers-karamazov.zip],
-
-|http://www.gutenberg.org/etext/28054
-
-|====================================================================
 
 
 == Styling your books

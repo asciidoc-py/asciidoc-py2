@@ -17,7 +17,7 @@ website http://www.methods.co.nz/asciidoc/
 
 Tools
 -----
-Current AsciiDoc version tested on Xubuntu Linux 8.04 with:
+Current AsciiDoc version tested on Xubuntu Linux 10.04 with:
 
 - Python 2.6.5
 - DocBook XSL Stylesheets 1.75.2

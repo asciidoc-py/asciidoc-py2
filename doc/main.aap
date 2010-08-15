@@ -35,7 +35,7 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         article.html book.html book-multi.html asciidoc.xml asciidoc.1.xml \
         ../BUGS ../CHANGELOG ../README ../INSTALL \
         latex-backend.html \
-        ${HTMLHELP_FILE}.chm \
+        $HTMLHELP_DIR/index.html \
         $CHUNK_DIR/index.html \
         article.pdf \
         latexmath.pdf \
@@ -174,11 +174,11 @@ asciidoc.1.html: asciidoc.1.txt
 
 # User Guide 'chunked' into linked HTML pages.
 $CHUNK_DIR/index.html: asciidoc.txt
-    :sys $A2X -fchunked -dbook --icons -D $CHUNK_DIR asciidoc.txt
+    :sys $A2X -fchunked -dbook --icons -D ./ asciidoc.txt
 
 # HTML Help formatted User Guide.
 $HTMLHELP_DIR/index.html: asciidoc.xml
-    :sys $A2X -fhtmlhelp -dbook --icons -D $HTMLHELP_DIR asciidoc.txt
+    :sys $A2X -fhtmlhelp -dbook --icons -D ./ asciidoc.txt
 
 ../BUGS: ../BUGS.text
     # Make BUGS.text and copy to BUGS.

@@ -76,11 +76,6 @@ DOCS =
 
 # Client applications.
 @if OSTYPE == 'posix':
-    ASCIIDOC = `program_path("asciidoc")`
-    @if not ASCIIDOC:
-        :print ERROR: asciidoc(1) not found
-        :exit
-    TAR = `program_path("tar")`
     ASPELL = `program_path("aspell")`
 @else:
     :print ERROR: Unsupported operating system $OSTYPE

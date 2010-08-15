@@ -24,33 +24,35 @@ website:
     :execute ./examples/website/main.aap
 
 distribution: docs website
+    NAME = asciidoc-$(VERS)
     # Make configure script.
     :sys autoconf
     # Make tarball of all files in MANIFEST.
-    :syseval pwd | :assign WD
-    :sys cd .. && ln -s $(WD) asciidoc-$(VERS)
-    :sys cd .. && tar -czf $(WD)/asciidoc-$(VERS).tar.gz \
-        ``sed s:^:asciidoc-$(VERS)/: $(WD)/MANIFEST``
-    :sys cd .. && rm -f asciidoc-$VERS
+    :sys ln -s . $(NAME)
+    :sys tar -czf $(NAME).tar.gz \
+        ``sed s:^:$(NAME)/: MANIFEST``
+    :sys rm -f asciidoc-$VERS
     # Make zip file.
     ZIP = `program_path("zip")`
     @if ZIP:
-        :sys rm -f asciidoc-$(VERS).zip
-        :sys ls ``cat MANIFEST`` | $ZIP asciidoc-$(VERS).zip -@
+        :sys ln -s . $(NAME)
+        :sys rm -f $(NAME).zip
+        :sys ls ``sed s:^:$(NAME)/: MANIFEST`` | $ZIP $(NAME).zip -@
         # Zip files don't know about symlinks so just duplicate the
         # files.
-        :sys $ZIP asciidoc-$(VERS).zip \
-                doc/images/tiger.png \
-                doc/images/smallnew.png \
-                doc/images/icons/README \
-                doc/images/icons/*.png \
-                doc/images/icons/callouts/*.png \
-                examples/website/images/tiger.png \
-                examples/website/images/highlighter.png \
-                examples/website/images/smallnew.png \
-                examples/website/images/icons/README \
-                examples/website/images/icons/*.png \
-                examples/website/images/icons/callouts/*.png
+        :sys $ZIP $(NAME).zip \
+                $(NAME)/doc/images/tiger.png \
+                $(NAME)/doc/images/smallnew.png \
+                $(NAME)/doc/images/icons/README \
+                $(NAME)/doc/images/icons/*.png \
+                $(NAME)/doc/images/icons/callouts/*.png \
+                $(NAME)/examples/website/images/tiger.png \
+                $(NAME)/examples/website/images/highlighter.png \
+                $(NAME)/examples/website/images/smallnew.png \
+                $(NAME)/examples/website/images/icons/README \
+                $(NAME)/examples/website/images/icons/*.png \
+                $(NAME)/examples/website/images/icons/callouts/*.png
+        :sys rm -f asciidoc-$VERS
     @else:
         :print WARNING: zip(1) unavailable, skipping zip file creation
 

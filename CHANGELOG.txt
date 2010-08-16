@@ -6,6 +6,9 @@ AsciiDoc ChangeLog
 Version 8.6.0 (2010-08-15)
 --------------------------
 .Additions and changes
+- The AsciiDoc distribution can now be built ``out of the box''
+  from the distribution tarball or the Mercurial repository
+  (provided you have the requisite build applications installed).
 - The global configuration files directory is ignored by both
   'asciidoc' and 'a2x' if AsciiDoc configuration files are installed
   in the same directory as the asciidoc executable.  This change

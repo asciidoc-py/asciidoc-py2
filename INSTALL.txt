@@ -33,9 +33,9 @@ date packaged version or want to get the latest version from the trunk:
   $ cd ~/bin
   $ hg clone -r {revnumber} https://asciidoc.googlecode.com/hg/ asciidoc-{revnumber}
 
-You now have two choices: you can run asciidoc directly from you local
+You now have two choices: you can run asciidoc locally from your
 repository or you can use 'autoconf(1)' and 'make(1)' to perform a
-normal install from the repository.
+system-wide install.
 
 Running asciidoc from your local copy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,25 +106,62 @@ and filetype detection scripts will be install in the global Vim
 configuration file directory (`asciidoc.vim` in the `syntax` directory
 and `asciidoc_filetype.vim` in the `ftdetect` directory).
 
-.Building the distribution
-*********************************************************************
-The AsciiDoc distribution tarball is built using
-http://www.a-a-p.org/[A-A-P] (a software build system written by Bram
-Moolenaar). The AsciiDoc A-A-P scripts are:
 
-`./common.aap`:: Included in all scripts.
-`./main.aap`:: Builds distribution tarball and zip files.
+[[X3]]
+Microsoft Windows installation
+------------------------------
+AsciiDoc is developed and tested on Linux but there seem to be quite a
+few people using it on Windows.  To install AsciiDoc on Windows unzip
+the distribution Zip file contents:
+
+[subs="attributes"]
+  $ unzip asciidoc-{revnumber}.zip
+
+This will create the folder +asciidoc-{revnumber}+ containing the
+`asciidoc.py` and `a2x.py` executables along with configuration files
+and documentation.
+
+
+Testing your installation
+-------------------------
+Test out asciidoc by changing to the AsciiDoc application directory
+and convert the User Guide document (`./doc/asciidoc.txt`) to XHTML
+(`./doc/asciidoc.html`):
+
+  $ python asciidoc.py doc/asciidoc.txt
+
+link:testasciidoc.html[testasciidoc] offers a more extensive set of
+conformance tests, though you do need to create the test data before
+running the tests (this in itself is a good post-install test):
+
+  $ python ./tests/testasciidoc.py update
+
+Now you can run the tests by executing this command:
+
+  $ python ./tests/testasciidoc.py run
+
+A full battery of tests can be run from the `main.aap` script in the
+distribution root directory:
+
+  $ aap test
+
+
+Building the distribution
+-------------------------
+The AsciiDoc distribution is built using http://www.a-a-p.org/[A-A-P]
+(a software build system written by Bram Moolenaar). The AsciiDoc
+A-A-P scripts are:
+
+`./main.aap`:: Builds the distribution tarball and zip files,
+documentation and example website.
 `./doc/main.aap`:: Builds distribution documentation.
 `./examples/website/main.aap`:: Builds AsciiDoc website.
+`./common.aap`:: Included in all scripts.
 
-It's arguable that build and install should be done with a single tool
-but I wrote the A-A-P build scripts before the installer (because I
-find make/autoconf tedious). The make/autoconf installer was added as
-the canonical installer for packagers and for users who don't have
-pre-built AsciiDoc packages and/or don't want to install from the
-Mercurial repository.
+To build the distribution tarball and zip files, documentation and
+example website run A-A-P from the distribution root directory:
 
-*********************************************************************
+  $ aap
 
 
 [[X2]]
@@ -181,31 +218,4 @@ The following platform specific AsciiDoc packages are available:
 See also link:userguide.html#X38[Packager Notes] in the 'AsciiDoc User
 Guide'.
 
-
-[[X3]]
-Microsoft Windows installation
-------------------------------
-AsciiDoc is developed and tested on Linux but there seem to be quite a
-few people using it on Windows.  To install AsciiDoc on Windows unzip
-the distribution Zip file contents to a new folder:
-
-[subs="attributes"]
-  $ mkdir asciidoc
-  $ cd asciidoc
-  $ unzip ../asciidoc-{revnumber}.zip
-
-
-Testing your installation
--------------------------
-Test out asciidoc by changing to the AsciiDoc application directory
-and convert the User Guide document (`./doc/asciidoc.txt`) to XHTML
-(`./doc/asciidoc.html`):
-
-  $ python asciidoc.py doc/asciidoc.txt
-
-link:testasciidoc.html[testasciidoc] offers a more extensive set of
-conformance tests, though you do need to create the test data before
-running the tests (this in itself is a good post-install test):
-
-  $ python ./tests/testasciidoc.py update
 

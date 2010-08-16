@@ -27,15 +27,13 @@ distribution: docs website
     NAME = asciidoc-$(VERS)
     # Make configure script.
     :sys autoconf
-    # Make tarball of all files in MANIFEST.
     :sys ln -s . $(NAME)
+    # Make tarball of all files in MANIFEST.
     :sys tar -czf $(NAME).tar.gz \
         ``sed s:^:$(NAME)/: MANIFEST``
-    :sys rm -f asciidoc-$VERS
     # Make zip file.
     ZIP = `program_path("zip")`
     @if ZIP:
-        :sys ln -s . $(NAME)
         :sys rm -f $(NAME).zip
         :sys ls ``sed s:^:$(NAME)/: MANIFEST`` | $ZIP $(NAME).zip -@
         # Zip files don't know about symlinks so just duplicate the
@@ -52,9 +50,17 @@ distribution: docs website
                 $(NAME)/examples/website/images/icons/README \
                 $(NAME)/examples/website/images/icons/*.png \
                 $(NAME)/examples/website/images/icons/callouts/*.png
-        :sys rm -f asciidoc-$VERS
+        :sys rm -f $(NAME)
     @else:
         :print WARNING: zip(1) unavailable, skipping zip file creation
+    :sys rm -f $(NAME)
 
 test:
+    :sys python ./asciidoc.py --doctest
+    :sys python ./asciidocapi.py
     :execute ./doc/main.aap test
+    :syseval ls ./tests/data/*.html | :assign TESTFILES
+    @if _no.TESTFILES:
+        :sys python ./tests/testasciidoc.py run
+    @else:
+        :print WARNING: no test files, run './tests/testasciidoc.py update'

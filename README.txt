@@ -25,6 +25,7 @@ Current AsciiDoc version tested on Xubuntu Linux 10.04 with:
 - w3m 0.5.2
 - dblatex 0.3
 - FOP 0.95
+- A-A-P 1.091
 
 
 COPYING

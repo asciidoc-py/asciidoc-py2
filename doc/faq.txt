@@ -947,10 +947,11 @@ through text with hyphen characters:
 
 == Where can I find examples of commands used to build output documents?
 
-The User Guide has some. You could also look at `./doc/main.aap` in
-the AsciiDoc distribution, it has all the commands used to build the
-AsciiDoc documentation (even if you don't use A-A-P you'll still find
-it useful).
+The User Guide has some. You could also look at `./doc/main.aap` and
+`./examples/website/main.aap` in the AsciiDoc distribution, they have
+all the commands used to build the AsciiDoc documentation and the
+AsciiDoc website (even if you don't use A-A-P you'll still find it
+useful).
 
 
 == Why have you used the DocBook <simpara> element instead of <para>?

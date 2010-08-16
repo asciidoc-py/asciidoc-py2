@@ -659,7 +659,7 @@ class A2X(AttrDict):
             shell_rmtree(build_dir)
         if self.epubcheck and EPUBCHECK:
             if not find_executable(EPUBCHECK):
-                warning('epubsheck skipped: unable to find executable: %s' % EPUBCHECK)
+                warning('epubcheck skipped: unable to find executable: %s' % EPUBCHECK)
             else:
                 shell('"%s" "%s"' % (EPUBCHECK, epub_file))
 

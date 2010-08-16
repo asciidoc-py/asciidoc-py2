@@ -46,7 +46,6 @@ TEST_FILES = $*(ROOT).css-embedded.html
         article.xml book.xml book-multi.xml asciidoc.xml asciidoc.1.xml \
         asciidoc.1.html a2x.1.xml music-filter.xml \
         book.epub asciidoc.epub \
-        ../examples/oldtables.xml ../examples/oldtables.html
 
 
 #####################################################################
@@ -225,12 +224,5 @@ clean_testfiles:
     :del {f} $TEST_FILES
     :del {f} music*.png     # Force Lilypond to run.
 
-doctest:
-    :sys python ../asciidoc.py --doctest
-    :sys python ../asciidocapi.py
-
-testasciidoc:
-    :sys python ../tests/testasciidoc.py run
-
-test: doctest clean_testfiles $TEST_FILES testasciidoc
+test: clean_testfiles $TEST_FILES
     # Force generation and validation of .html and Docbook (.xml) files.

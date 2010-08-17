@@ -70,24 +70,26 @@ A=*_X_*, (`_X_`), _`X`_, [*_X_*] +_X_+ _X_
 [[_intro]]
 <<_intro>> <<_intro,intro>> xref:_intro[] _intro_
 
-[green,yellow,2]##fun with text##.
-More [red,black,4]*fun with text*.
-Yet more [red,,1.5]**fun with text**.
-Yet more [red,,1.5]+fun with text+.
-Yet more [red,,1.5]'fun with text'.
-Yet more [red,,1.5]_fun with text_.
-Yet more [orange]'fun with text'.
+// Quote attributes.
+[foo]#fun with text#.
+[foo bar]*fun with text*.
+[foo]+fun with text+.
+[foo]_fun with text_.
+[foo]'fun with text'.
 
-// role attributes.
-[role="foo"]#fun with text#.
-["green",role="foo"]#fun with text#.
-["green","yellow",2,role="foo"]#fun with text#.
-["green","yellow",2,role="foo"]*fun with text*.
-["green","yellow",2,role="foo"]+fun with text+.
-["green","yellow",2,role="foo"]_fun with text_.
-["green","yellow",2,role="foo"]'fun with text'.
-["green","yellow",2,role="foo"]$$fun with text$$.
-["green","yellow",2,role="foo"]+++fun with text+++.
+[foo]$$fun with text$$.
+
+[foo]+++fun with text+++.
+
+[red]#obvious#
+[big red yellowback]*very obvious*
+
+[red]#obvious#
+[big red
+yellowback]*very
+obvious*
+
+[firstletter]##T##esting 123 ...
 
 
 == Break list nesting ==

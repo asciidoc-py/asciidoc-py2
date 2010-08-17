@@ -24,7 +24,7 @@ Some example 'LaTeXMathML' formulas:
 
 - latexmath:[$R_x = 10.0 \times \sin(R_\phi)$]
 
-- [,,2]##latexmath:[$\sum_{n=1}^\infty \frac{1}{2^n}$]##
+- latexmath:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
 
 - latexmath:[$\lim_{x\to\infty} f(x) = k \choose r + \frac ab
   \sum_{n=1}^\infty a_n + \displaystyle{ \left\{ \frac{1}{13}

@@ -643,7 +643,10 @@ _Emphasized text_::
 #Unquoted text#::
         Placing \#hashes around text# does nothing, it is a mechanism
         to allow inline attributes to be applied to otherwise
-        unformatted text (see examples below).
+        unformatted text.
+
+New quote types can be defined by editing asciidoc(1) configuration
+files. See the <<X7,Configuration Files>> section for details.
 
 .Quoted text behavior
 - Quoting cannot be overlapped.
@@ -655,27 +658,32 @@ _Emphasized text_::
   multi-character quotes you may even need to escape individual
   characters.
 
-Quoted text can be prefixed with an <<X21,attribute list>>:
+Quoted text can be prefixed with an <<X21,attribute list>>.  The first
+positional attribute is translated to an HTML 'span' element 'class'
+attribute:
 
-. Setting the AsciiDoc 'role' attribute will enclose DocBook markup in
-  a 'phrase' element and HTML markup in a 'span' element. For example
-  this AsciiDoc: `[role="foo"]'Hello World'` generates this DocBook:
-  `<phrase role="foo"><emphasis>Hello World</emphasis></phrase>` and
-  this HTML: `<span class="foo"><em>Hello World</em></span>`
+- Directly using the AsciiDoc HTML backends.
+- Indirectly using the AsciiDoc 'docbook' backend followed by DocBook
+  XSL Stylesheets. DocBook XSL Stylesheets translate DocBook 'phrase'
+  elements with 'role' attributes to corresponding HTML 'span'
+  elements with the same 'class' attributes; CSS is then used
+  http://www.sagehill.net/docbookxsl/UsingCSS.html[to style the
+  generated HTML].
 
-. You can set the font color, background color and size using the
-  first three positional attribute arguments (HTML outputs only). The
-  first argument is the text color; the second the background color;
-  the third is the font size. Colors are valid CSS colors and the font
-  size is a number which treated as em units. Here are some examples:
+This allows CSS styling to be applied to both DocBook and HTML outputs
+from the same AsciiDoc source.  You can also specify multiple class
+names separated by spaces. Examples:
 
-  [red]#Red text#.
-  [,yellow]*bold text on a yellow background*.
-  [blue,#b0e0e6]+Monospaced blue text on a light blue background+
-  [,,2]#Double sized text#.
+  [red]#obvious#
+  [big red yellowback]*very obvious*
 
-New quotes can be defined by editing asciidoc(1) configuration files.
-See the <<X7,Configuration Files>> section for details.
+The following CSS rules for 'big', 'red' and 'yellowback' class names
+could be used to style HTML outputs generated from the previous
+examples:
+
+  span.big { font-size: 2em; }
+  span.red { color: #e3372e; }
+  span.yellowback { background: #faf519; }
 
 [[X52]]
 Constrained and Unconstrained Quotes
@@ -955,17 +963,16 @@ Most block elements support the following attributes:
 Unique identifier typically serve as link targets.
 Can also be set by the 'BlockId' element.
 
-|role |html4, xhtml11, docbook |
+|role |xhtml11, docbook |
 Role contains a string used to classify or subclassify an element and
-can be applied to the following AsciiDoc elements:
+can be applied to AsciiDoc block elements.  The AsciiDoc 'role'
+attribute is translated to the 'role' attribute in DocBook outputs and
+to the 'class' attribute in HTML outputs.
 
-- Block elements ('docbook' and 'xhtml11'
-  backends).
-- <<X51,Quoted inline elements>> ('docbook',
-  'xhtml11' and 'html4' backends).
-
-The AsciiDoc 'role' attribute is sets the 'role' attribute in DocBook
-outputs and sets the 'class' attribute in HTML outputs.
+DocBook XSL Stylesheets translate DocBook 'role' attributes to HTML
+'class' attributes; CSS can then be used
+http://www.sagehill.net/docbookxsl/UsingCSS.html[to style the
+generated HTML].
 
 |reftext |docbook |
 'reftext' is used to set the DocBook 'xreflabel' attribute.

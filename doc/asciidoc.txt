@@ -5402,8 +5402,7 @@ character set encoding to `ISO-8859-1`.
 - This attribute specifies the character set in the output document.
 - The encoding name must correspond to a Python codec name or alias.
 - The 'encoding' attribute can be set using an AttributeEntry inside
-  the document header but it must come at the start of the document
-  before the document title. For example:
+  the document header. For example:
 
   :encoding: ISO-8859-1
 
@@ -5441,8 +5440,8 @@ suppressed and block indents are retained.  This option is useful when
 dealing with large amounts of imported plain text.
 
 |quirks |xhtml11 |
-Include the `xhtml11-quirks.css` stylesheet to work around IE6 browser
-incompatibilities (this is the default behavior).
+Include the `xhtml11-quirks.css` <<X35,stylesheet>> to work around IE6
+browser incompatibilities.
 
 |revremark |docbook |
 A short summary of changes in this document revision. Must be defined

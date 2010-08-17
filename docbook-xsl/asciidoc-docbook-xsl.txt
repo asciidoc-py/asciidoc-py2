@@ -1,12 +1,6 @@
 AsciiDoc DocBook XSL Stylesheets Notes
 ======================================
 
-PDF generation from AsciiDoc generated DocBook using FOP plus DocBook XSL
-Stylesheets.
-
-- FOP 0.95beta.
-- DocBook XSL Stylesheets version 1.74.0.
-
 Output file customisation is achieved by tweaking the DocBook XSL
 stylesheets.  I've tried to keep customization to a minimum and
 confine it to the separate XSL driver files in the distribution

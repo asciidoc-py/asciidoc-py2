@@ -274,6 +274,9 @@ default `docbook-xsl.css` file (located in the AsciiDoc `stylesheets`
 configuration directory) to the same directory as your AsciiDoc source
 file and then edit it.
 
+There are some great examples of EPUB book styles at
+http://epubzengarden.com/[ePub Zen Garden].
+
 
 == Reading EPUB documents
 My current favorite software epub reader is the

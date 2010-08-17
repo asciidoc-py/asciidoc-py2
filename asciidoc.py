@@ -4339,6 +4339,7 @@ class Config:
             dirs = self.get_load_dirs()
         for d in dirs:
             self.load_file('asciidoc.conf',d)
+        for d in dirs:
             conf = document.backend + '.conf'
             self.load_file(conf,d)
             conf = document.backend + '-' + document.doctype + '.conf'

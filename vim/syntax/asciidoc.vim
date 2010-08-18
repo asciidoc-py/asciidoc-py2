@@ -33,6 +33,7 @@ syn match asciidocAttributeRef /\\\@<!{\w\(\w\|-\)*\([=!@#$%?:].*\)\?}/
 
 " As a damage control measure quoted patterns always terminate at a blank
 " line (see 'Limitations' above).
+syn match asciidocQuotedAttributeList /\\\@<!\[[a-zA-Z0-9_-][a-zA-Z0-9 _-]*\][+_'`#*]\@=/
 syn match asciidocQuotedSubscript /\\\@<!\~\S\_.\{-}\(\~\|\n\s*\n\)/
 syn match asciidocQuotedSuperscript /\\\@<!\^\S\_.\{-}\(\^\|\n\s*\n\)/
 
@@ -139,6 +140,7 @@ highlight link asciidocOneLineTitle Title
 highlight link asciidocPagebreak Type
 highlight link asciidocPassthroughBlock Identifier
 highlight link asciidocQuoteBlockDelimiter Type
+highlight link asciidocQuotedAttributeList Special
 highlight link asciidocQuotedBold Special
 highlight link asciidocQuotedDoubleQuoted Label
 highlight link asciidocQuotedEmphasized2 Type

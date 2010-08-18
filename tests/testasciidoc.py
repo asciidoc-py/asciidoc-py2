@@ -297,7 +297,7 @@ class AsciiDocTests(object):
         """
         self.passed = self.failed = self.skipped = 0
         for test in self.tests:
-            if (not test.disabled or number) and (not number or number == test.number):
+            if (not test.disabled or number) and (not number or number == test.number) and (not backend or backend in test.backends):
                 test.run(backend)
                 self.passed += test.passed
                 self.failed += test.failed

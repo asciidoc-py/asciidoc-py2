@@ -15,8 +15,9 @@ It's easy to write and publish books in
 http://en.wikipedia.org/wiki/EPUB[EPUB] and PDF formats using
 http://www.methods.co.nz/asciidoc/[AsciiDoc]. Here are three examples:
 The first is a minimal example introducing the AsciiDoc format, the
-second and third are real books totalling over 49 thousand lines of
-text.
+second ('The Brothers Karamazov') is a rather long multi-part book and
+the third ('The Adventures of Sherlock Holmes') includes a front cover
+image and fully customized styling.
 
 // Wordpress processing instruction.
 pass::[<!--more-->]
@@ -54,138 +55,44 @@ The `-f` option specifies the output format, the `-d` option specifies
 the document type (book, article or manpage).  The optional
 `--epubcheck` option tells 'a2x' to validate the EPUB file using
 http://code.google.com/p/epubcheck/[epubcheck]. To generate a PDF
-version (`minimal-book.pdf`) run:
+version (`minimal-book.pdf`) with 'dblatex' run:
 
   a2x -fpdf -dbook minimal-book.txt
 
-If you prefer http://xmlgraphics.apache.org/fop/[FOP] over
+The example PDFs referenced on this page were built using FOP -- if
+you prefer http://xmlgraphics.apache.org/fop/[FOP] over
 http://dblatex.sourceforge.net/[dblatex] use:
 
   a2x -fpdf -dbook --fop minimal-book.txt
 
 NOTE: A number of 'asciidoc' and 'a2x' features used in this article
-were introduced in AsciiDoc version 8.6.0 -- install version 8.6.0 or
-better to compile the examples. The version of
+require AsciiDoc version 8.6.1 -- install version 8.6.1 or better to
+compile the examples. The version of
 http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
 Stylesheets] used was 1.75.2.
 
 
-== The Adventures of Sherlock Holmes
-Now for a more substantial example. To generate the AsciiDoc source I
-downloaded the http://www.gutenberg.org[Project Gutenberg] plain text
-source and edited it manually (this took around 20 minutes).
+The Brothers Karamazov
+----------------------
+'The Brothers Karamazov' is an example of a multi-part book. To
+generate the AsciiDoc source I downloaded the
+http://www.gutenberg.org[Project Gutenberg] plain text source and
+edited it manually (this took around 15 minutes). To generate the
+`brothers-karamazov.epub` EPUB file run this command:
+
+  a2x brothers-karamazov.txt
 
 :examples-url: http://www.methods.co.nz/misc/examples/books/
 
-[frame="topbot",options="header"]
-|====================================================================
-|EPUB |PDF |AsciiDoc source |Project Gutenburg text
-|{examples-url}adventures-of-sherlock-holmes.epub[adventures-of-sherlock-holmes.epub]
-
-|{examples-url}adventures-of-sherlock-holmes.pdf[adventures-of-sherlock-holmes.pdf]
-
-|{examples-url}adventures-of-sherlock-holmes.zip[adventures-of-sherlock-holmes.zip]
-
-|http://www.gutenberg.org/etext/1661
-
-|====================================================================
-
-Here's the start of the AsciiDoc source file showing the AsciiDoc
-specific meta-data:
-
----------------------------------------------------------------------
-//
-// Text from Project Gutenburg http://www.gutenberg.org/etext/1661
-//
-// Formatted for AsciiDoc by Stuart Rackham.
-//
-// a2x default options.
-//    a2x: -f epub -d book -a docinfo --epubcheck
-// Suppress revision history in dblatex outputs.
-//    a2x: --dblatex-opts "-P latex.output.revhistory=0"
-//
-
-= The Adventures of Sherlock Holmes
-:author: Sir Arthur Conan Doyle
-:encoding: iso-8859-1
-:plaintext:
-
-== A Scandal in Bohemia
-
-To Sherlock Holmes she is always THE woman. I have seldom heard ...
----------------------------------------------------------------------
-
-To generate the `adventures-of-sherlock-holmes.epub` EPUB file run
-this command:
-
-  a2x adventures-of-sherlock-holmes.txt
-
-Points to note:
-
-- The comment lines starting with `// a2x:` contain 'a2x' command
-  options for this document (it's easier to put them in the document
-  once than type them every time on the command-line).
-- Setting the AsciiDoc 'plaintext' attribute suppresses most of
-  AsciiDoc's text formatting and substitution conventions, this allows
-  large amounts of text to be imported with little or no manual
-  editing.
-
-The EPUB file includes a book cover image and the Project Gutenberg
-legal notice, both of these items have been added by 'asciidoc' from
-the `adventures-of-sherlock-holmes-docinfo.xml` 'docinfo' file (a file
-containing DocBook elements for inclusion in the DocBook 'bookinfo'
-element).  DocBook XSL Stylesheets identifies the book cover image in
-the docinfo file by the `role="cover"` attribute on the `mediaobject`
-element.
-
-The manual editing of imported plain text involves formatting the
-title and chapter names as
-http://www.methods.co.nz/asciidoc/userguide.html#X17[AsciiDoc titles].
-In the examples I've used the 'single line' title format.  Sherlock
-Holmes only has two title levels:
-
----------------------------------------------------------------------
-= The Adventures of Sherlock Holmes
-== A Scandal in Bohemia
-== The Red-Headed League
-== A Case of Identity
-== The Boscombe Valley Mystery
-== The Five Orange Pips
-== The Man with the Twisted Lip
-== The Adventure of the Blue Carbuncle
-== The Adventure of the Speckled Band
-== The Adventure of the Engineer's Thumb
-== The Adventure of the Noble Bachelor
-== The Adventure of the Beryl Coronet
-== The Adventure of the Copper Beeches
-== Colophon
----------------------------------------------------------------------
-
-So long as you have defined the AsciiDoc 'plaintext' attribute the
-only remaining manual editing will be the odd paragraph being
-interpreted as some other AsciiDoc block element. In the combined 49
-thousand lines of imported 'Sherlock Holmes' and 'Brothers Karamazov'
-text I only encountered two misinterpreted list items, neither
-affected the rendered output or necessitated editing.
-
-NOTE: If you are writing a document from scratch you'll probably want
-to take advantage of
-http://www.methods.co.nz/asciidoc/userguide.html#_text_formatting[AsciiDoc's
-rich text formatting conventions], in which case do not define the
-AsciiDoc 'plaintext' attribute.
-
-
-== The Brothers Karamazov
-'The Brothers Karamazov' is an example of a multi-part book.
-
-[frame="topbot",options="header"]
+[frame="topbot",options="header",caption=""]
+.Brothers Karamazov source files and eBooks
 |====================================================================
 |EPUB |PDF |AsciiDoc source |Project Gutenburg text
 |{examples-url}brothers-karamazov.epub[brothers-karamazov.epub]
 
 |{examples-url}brothers-karamazov.pdf[brothers-karamazov.pdf]
 
-|{examples-url}brothers-karamazov.zip[brothers-karamazov.zip],
+|{examples-url}brothers-karamazov.zip[brothers-karamazov.zip]
 
 |http://www.gutenberg.org/etext/28054
 
@@ -237,54 +144,190 @@ Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
 ...
 ---------------------------------------------------------------------
 
-To generate the `brothers-karamazov.epub` EPUB file run this command:
+- The book, book part and chapter titles have been edited to conform
+  to http://www.methods.co.nz/asciidoc/userguide.html#X17[AsciiDoc
+  title conventions].
 
-  a2x brothers-karamazov.txt
+- Book part titles must be level zero titles:
 
-There are a number of differences between this and the Sherlock Holmes
-meta-data:
+  = Book title (level 0)
+  = Part one title (level 0)
+  == Chapter 1 title (level 1)
+    :
 
-- I haven't used a 'docinfo' file and there is no cover image -- the
-  book is built from a single `brothers-karamazov.txt` text file.
-- In this example the 'Project Gutenberg' heading was put in the
-  untitled preface using an AsciiDoc literal block.
+- Sub-chapter levels can be accommodated with `===`, `====` and
+  `=====` title prefixes.
+
+- In this example the 'Project Gutenberg' front matter was put in the
+  untitled preface inside an AsciiDoc literal block.
+
+- The comment lines starting with `// a2x:` contain 'a2x' command
+  options for this document (it's easier to put them in the document
+  once than type them every time on the command-line).
+
 - A number of 'xsltproc' options are passed to 'a2x' to suppress part
   and chapter numbering.
 
-The part titles of multi-part books like must be level zero titles:
+- Setting the AsciiDoc 'plaintext' attribute suppresses most of
+  http://www.methods.co.nz/asciidoc/userguide.html#_text_formatting[AsciiDoc's
+  text formatting] and substitution conventions, this allows large
+  amounts of text to be imported with little or no manual editing.
+
+  * Once you have defined the AsciiDoc 'plaintext' attribute the only
+    requisite manual editing will be to format the titles and rectify
+    the odd paragraph being interpreted as some other AsciiDoc block
+    element.
+  * In the combined 49 thousand lines of imported 'Sherlock Holmes'
+    and 'Brothers Karamazov' text I only encountered two
+    misinterpreted list items, neither affected the rendered output or
+    necessitated editing.
+  * You can selectively enable and disable the 'plaintext' attribute
+    throughout your document using AsciiDoc
+    http://www.methods.co.nz/asciidoc/userguide.html#X18[attribute
+    entries].
+
+
+The Adventures of Sherlock Holmes
+---------------------------------
+This book includes a front cover image and a customized page design.
+To generate the `adventures-of-sherlock-holmes.epub` EPUB file run
+this command:
+
+  a2x adventures-of-sherlock-holmes.txt
+
+Here's a screenshot of the first page of the fist chapter (rendered by
+the https://addons.mozilla.org/en-US/firefox/addon/45281/[Firefox
+PUBReader addon]):
+
+image::images/epub.png[]
+
+[frame="topbot",options="header",caption=""]
+.Sherlock Holmes source files and eBooks
+|====================================================================
+|EPUB |PDF |AsciiDoc source |Project Gutenburg text
+|{examples-url}adventures-of-sherlock-holmes.epub[adventures-of-sherlock-holmes.epub]
+
+|{examples-url}adventures-of-sherlock-holmes.pdf[adventures-of-sherlock-holmes.pdf]
+
+|{examples-url}adventures-of-sherlock-holmes.zip[adventures-of-sherlock-holmes.zip]
+
+|http://www.gutenberg.org/etext/1661
+
+|====================================================================
+
+The {examples-url}adventures-of-sherlock-holmes.zip[AsciiDoc source
+Zip file] contains the following files:
+
+`adventures-of-sherlock-holmes.txt`::
+  The AsciiDoc source (derived from the
+  http://www.gutenberg.org/etext/1661[Project Gutenberg plain text
+  source]).
+
+`adventures-of-sherlock-holmes.jpg`::
+  The front cover image.
+
+`adventures-of-sherlock-holmes-docinfo.xml`::
+  A http://www.methods.co.nz/asciidoc/userguide.html#X87[docinfo] file
+  containing DocBook markup for the front cover image and Project
+  Gutenberg frontmatter.  DocBook XSL Stylesheets identifies the book
+  cover image by the `role="cover"` attribute in the DocBook
+  `mediaobject` element.
+
+`adventures-of-sherlock-holmes.css`::
+  CSS rules for styling the page layout. The design is based on the
+  http://epubzengarden.com[ePub Zen Garden] 'Gbs' style.
+
+`adventures-of-sherlock-holmes-l10n.xml`::
+  A
+  http://www.sagehill.net/docbookxsl/CustomGentext.html#CustomGenText[DocBook
+  XSL Stylesheets customization file] for formatting chapter titles
+  without chapter numbering.
+
+`underline.png`::
+  A title underline image that is used by the CSS stylesheet.
+
+Here's the start of the AsciiDoc source file showing the AsciiDoc
+specific meta-data:
 
 ---------------------------------------------------------------------
-= Book title (level 0)
-= Part one title (level 0)
-== Chapter 1 title (level 1)
-  :
+//
+// Text from Project Gutenburg http://www.gutenberg.org/etext/1661
+//
+// Formatted for AsciiDoc by Stuart Rackham.
+//
+// a2x default options.
+//    a2x: -f epub -d book -a docinfo --epubcheck
+//    a2x: --stylesheet adventures-of-sherlock-holmes.css
+// Suppress revision history in dblatex outputs.
+//    a2x: --dblatex-opts "-P latex.output.revhistory=0"
+// Suppress part and chapter numbering in DocBook XSL outputs.
+//    a2x: --xsltproc-opts
+//    a2x: "--stringparam section.autolabel.max.depth 0
+//    a2x: --stringparam chapter.autolabel 0
+//    a2x: --stringparam part.autolabel 0
+// Customize generated text (chapter title).
+//    a2x: --param local.l10n.xml
+//    a2x:         document\(\'adventures-of-sherlock-holmes-l10n.xml\'\)"
+// Added external resources.
+//    a2x: --resource underline.png
+//
+
+= The Adventures of Sherlock Holmes
+:author: Sir Arthur Conan Doyle
+:encoding: iso-8859-1
+:plaintext:
+
+== A Scandal in Bohemia
+
+To Sherlock Holmes she is always THE woman. I have seldom heard ...
 ---------------------------------------------------------------------
 
-Additional sub-chapter levels can be accommodated with `===`, `====`
-and `=====` title prefixes.
+The manual editing of imported plain text involves formatting the
+title and chapter names as
+http://www.methods.co.nz/asciidoc/userguide.html#X17[AsciiDoc titles]
+(in this example we've used the 'single line' title format). Sherlock
+Holmes only has two title levels:
+
+---------------------------------------------------------------------
+= The Adventures of Sherlock Holmes
+== A Scandal in Bohemia
+== The Red-Headed League
+== A Case of Identity
+== The Boscombe Valley Mystery
+== The Five Orange Pips
+== The Man with the Twisted Lip
+== The Adventure of the Blue Carbuncle
+== The Adventure of the Speckled Band
+== The Adventure of the Engineer's Thumb
+== The Adventure of the Noble Bachelor
+== The Adventure of the Beryl Coronet
+== The Adventure of the Copper Beeches
+== Colophon
+---------------------------------------------------------------------
 
 
-== Styling your books
-To date most EPUB documents have enjoyed a reputation for, to put it
-kindly, utilitarian styling (the above examples included).
-
-You can completely customize the appearance of a document by creating
-your own CSS file. The easiest way to do this is to copy the existing
-default `docbook-xsl.css` file (located in the AsciiDoc `stylesheets`
+Styling your books
+------------------
+You can customize the appearance of a document by creating your own
+CSS file. Either create your own or copy and edit the existing default
+`docbook-xsl.css` file (located in the AsciiDoc `stylesheets`
 configuration directory) to the same directory as your AsciiDoc source
-file and then edit it.
+file. Use the 'a2x' `--stylesheet` option if you prefer to use a
+different stylesheet file name.
 
 There are some great examples of EPUB book styles at
 http://epubzengarden.com/[ePub Zen Garden].
 
 
-== Reading EPUB documents
+Reading EPUB documents
+----------------------
 My current favorite software epub reader is the
 https://addons.mozilla.org/en-US/firefox/addon/45281/[Firefox
 PUBReader addon].  Browsers are a natural fit for EPUB (EPUB is just a
-bunch of zipped HTML files) and I'd like to see browsers support EPUB
+bunch of zipped XHTML files) -- I'd like to see browsers support EPUB
 natively.
 
 As of writing this article most eBook readers (with the notable
 exception of Amazon's Kindle) support the EPUB format.
+
 

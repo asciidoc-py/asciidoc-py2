@@ -10,16 +10,16 @@ a2x - A toolchain manager for AsciiDoc (converts Asciidoc text files to other
 
 SYNOPSIS
 --------
-*a2x* ['OPTIONS'] 'FILE'
+*a2x* ['OPTIONS'] 'SOURCE_FILE'
 
 
 DESCRIPTION
 -----------
 A DocBook toolchain manager that translates an AsciiDoc text file
-'FILE' to PDF, EPUB, DVI, PS, LaTeX, XHTML (single page or chunked),
-man page, HTML Help or plain text formats using 'asciidoc(1)' and
-other applications (see <<X1,REQUISITES section>>). 'FILE' can also be
-a DocBook file with an .xml extension.
+'SOURCE_FILE' to PDF, EPUB, DVI, PS, LaTeX, XHTML (single page or
+chunked), man page, HTML Help or plain text formats using
+'asciidoc(1)' and other applications (see <<X1,REQUISITES section>>).
+'SOURCE_FILE' can also be a DocBook file with an .xml extension.
 
 
 OPTIONS
@@ -35,7 +35,7 @@ OPTIONS
   Load configuration file. See <<X2,CONF FILES section>>.
 
 *-D, --destination-dir*='PATH'::
-  Output directory. Defaults to source 'FILE' directory.
+  Output directory. Defaults to 'SOURCE_FILE' directory.
 
 *-d, --doctype*='DOCTYPE'::
   DocBook document type: 'article', 'manpage' or 'book'.  Default
@@ -71,9 +71,15 @@ OPTIONS
 *-n, --dry-run*::
   Do not do anything just print what would have been done.
 
-*-r, --resource-dir*='PATH'::
-  Recursively search 'PATH' for required image or CSS <<X3,resource
-  file>>.  This option may be specified more than once.
+*-r, --resource*='PATH'::
+  If 'PATH' refers to a directory recursively search it for required
+  <<X3,resource files>>. If 'PATH' refers to a file add it to the list
+  of required resource files. This option may be specified more than
+  once.
+
+*-m, --resource-manifest*='FILE'::
+  'FILE' contains a list resources (one per line). Manifest 'FILE'
+  entries are treated just like *--resource* option arguments.
 
 *--stylesheet*='STYLESHEET'::
   The file name of the docbook-xsl CSS stylesheet file. Defaults to
@@ -104,7 +110,7 @@ OPTIONS
 *--dblatex-opts*='DBLATEX_OPTS'::
   Additional 'dblatex(1)' options.
 
-Options can also be set in the AsciiDoc source file. If 'FILE'
+Options can also be set in the AsciiDoc source file. If 'SOURCE_FILE'
 contains a comment line beginning with *// a2x:* then the remainder of
 the line will be treated as 'a2x' command-line options. Options
 spanning multiple such comment lines will be concatenated.  Zero or
@@ -122,9 +128,9 @@ OUTPUT FILES
 ------------
 Output files are written to the directory specified by the
 *--destination-dir* option. If no *--destination-dir* option is set
-output files are written to the source 'FILE' directory.
+output files are written to the 'SOURCE_FILE' directory.
 
-Output files have the same name as the source 'FILE' but with an
+Output files have the same name as the 'SOURCE_FILE' but with an
 appropriate file name extension: `.html` for 'xhtml'; `.epub` for
 'epub'; `.hhp` for 'htmlhelp'; `.pdf` for 'pdf'; `.text` for 'text',
 `.xml` for 'docbook'. By convention manpages have no `.man` extension
@@ -135,29 +141,32 @@ appropriate file name extension: `.html` for 'xhtml'; `.epub` for
 Same named existing files are overwritten.
 
 In addition to generating HTML files the 'xhtml', 'epub', 'chunked'
-and 'htmlhelp' formats ensure image and CSS stylesheet <<X3,resource
-files>> are copied to their correct destination directory locations.
+and 'htmlhelp' formats ensure <<X3,resource files>> are copied to
+their correct destination directory locations.
 
 
 [[X3]]
 RESOURCES
 ---------
-Resources are local CSS and images files that are required by HTML
-based outputs ('xhtml', 'epub', 'chunked', 'htmlhelp' formats).
+Resources are files (typically CSS and images) that are required by
+HTML based outputs ('xhtml', 'epub', 'chunked', 'htmlhelp' formats).
+'a2x' scans the generated HTML files and builds a list of required CSS
+and image file. Additional resource files can be specified explicitly
+using the *--resource* option.
 
 'a2x' searches for resources in the following locations in the
 following order:
 
-. The source 'FILE' directory.
-. Directories specified by *--resource-dir* options (recursively).
-. The 'asciidoc(1)' `images` and `stylesheets` configuration file directories
-  (recursively).
+. The 'SOURCE_FILE' directory.
+. Directories specified by *--resource* and *--resource-manifest*
+  options (recursively).
+. The 'asciidoc(1)' `images` and `stylesheets` configuration file
+  directories (recursively).
 . The destination directory.
 
-If a required resource cannot be found a 'missing resource' warning
-message is generated. If the resource is found then it is copied to
-the correct relative destination directory.  Missing destination
-sub-directories are created automatically.
+When a resource is found it is copied to the correct relative
+destination directory.  Missing destination sub-directories are
+created automatically.
 
 
 EXAMPLES
@@ -192,6 +201,8 @@ REQUISITES
   http://w3m.sourceforge.net/index.en.html
 - *Lynx* (text format -- alternative text file generator):
   http://lynx.isc.org/
+- *epubcheck* (epub format -- EPUB file validator):
+  http://code.google.com/p/epubcheck/
 
 See also the latest README file.
 

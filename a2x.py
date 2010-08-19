@@ -233,7 +233,7 @@ def find_resources(files, tagname, attrname, filter=None):
         files = [files]
     result = []
     for f in files:
-        verbose('find resources in: %s' % f)
+        verbose('finding resources in: %s' % f)
         if OPTIONS.dry_run:
             continue
         parser = FindResources()
@@ -243,7 +243,7 @@ def find_resources(files, tagname, attrname, filter=None):
     result.sort()
     return result
 
-# Not used.
+# NOT USED.
 def copy_files(files, src_dir, dst_dir):
     '''
     Copy list of relative file names from src_dir to dst_dir.
@@ -390,7 +390,7 @@ class A2X(AttrDict):
         Validate and command options and set defaults.
         '''
         if not os.path.isfile(self.asciidoc_file):
-            die('missing input FILE: %s' % self.asciidoc_file)
+            die('missing SOURCE_FILE: %s' % self.asciidoc_file)
         self.asciidoc_file = os.path.abspath(self.asciidoc_file)
         if not self.destination_dir:
             self.destination_dir = os.path.dirname(self.asciidoc_file)
@@ -398,9 +398,20 @@ class A2X(AttrDict):
             if not os.path.isdir(self.destination_dir):
                 die('missing --destination-dir: %s' % self.destination_dir)
             self.destination_dir = os.path.abspath(self.destination_dir)
-        for d in self.resource_dirs:
-            if not os.path.isdir(d):
-                die('missing --resource-dir: %s' % d)
+        self.resource_dirs = []
+        self.resource_files = []
+        if self.resource_manifest:
+            if not os.path.isfile(self.resource_manifest):
+                die('missing --resource-manifest: %s' % self.resource_manifest)
+            for r in open(self.resource_manifest):
+                self.resources.append(r.strip())
+        for r in self.resources:
+            if os.path.isfile(r):
+                self.resource_files.append(r)
+            elif os.path.isdir(r):
+                self.resource_dirs.append(r)
+            else:
+                die('missing resource: %s' % r)
         # Lastly search among images and stylesheets distributed with asciidoc.
         for p in (os.path.dirname(self.asciidoc), CONF_DIR):
             for d in ('images','stylesheets'):
@@ -489,7 +500,7 @@ class A2X(AttrDict):
         If the URIs are relative then copy them from the src_dir to the
         dst_dir.
         If not found in src_dir then recursively search all specified
-        --resource-dir's for the file name.
+        resources for the file name.
         Optional additional resources URIs can be passed in the resources list.
         Does not copy absolute URIs.
         '''
@@ -497,6 +508,7 @@ class A2X(AttrDict):
         resources += find_resources(html_files, 'link', 'href',
                         lambda attrs: attrs.get('type') == 'text/css')
         resources += find_resources(html_files, 'img', 'src')
+        resources += self.resource_files
         resources = list(set(resources))    # Drop duplicates.
         resources.sort()
         for f in resources:
@@ -692,7 +704,7 @@ class A2X(AttrDict):
 if __name__ == '__main__':
     description = '''A toolchain manager for AsciiDoc (converts Asciidoc text files to other file formats)'''
     from optparse import OptionParser
-    parser = OptionParser(usage='usage: %prog [OPTIONS] FILE',
+    parser = OptionParser(usage='usage: %prog [OPTIONS] SOURCE_FILE',
         version='%s %s' % (PROG,VERSION),
         description=description)
     parser.add_option('-a', '--attribute',
@@ -710,7 +722,7 @@ if __name__ == '__main__':
         help='configuration file')
     parser.add_option('-D', '--destination-dir',
         action='store', dest='destination_dir', default=None, metavar='PATH',
-        help=' output directory (defaults to FILE directory)')
+        help='output directory (defaults to SOURCE_FILE directory)')
     parser.add_option('-d','--doctype',
         action='store', dest='doctype', metavar='DOCTYPE',
         choices=('article','manpage','book'),
@@ -742,10 +754,18 @@ if __name__ == '__main__':
     parser.add_option('-n','--dry-run',
         action='store_true', dest='dry_run', default=False,
         help='just print the commands that would have been executed')
-    parser.add_option('-r','--resource-dir',
-        action='append', dest='resource_dirs', default=[],
+    parser.add_option('-r','--resource',
+        action='append', dest='resources', default=[],
         metavar='PATH',
-        help='directory containing image and stylesheet resources')
+        help='resource file or directory containing resource files')
+    parser.add_option('-m', '--resource-manifest',
+        action='store', dest='resource_manifest', default=None, metavar='FILE',
+        help='read resources from FILE')
+    #DEPRECATED
+    parser.add_option('--resource-dir',
+        action='append', dest='resources', default=[],
+        metavar='PATH',
+        help='DEPRECATED: use --resource')
     #DEPRECATED
     parser.add_option('-s','--skip-asciidoc',
         action='store_true', dest='skip_asciidoc', default=False,

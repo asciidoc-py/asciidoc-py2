@@ -108,14 +108,14 @@ specific meta-data:
 // Formatted for AsciiDoc by Stuart Rackham.
 //
 // a2x default options.
-//    a2x: -fepub -dbook --epubcheck
+//    a2x: -f epub -d book --epubcheck
 // Suppress revision history in dblatex outputs.
 //    a2x: --dblatex-opts "-P latex.output.revhistory=0"
-// Suppress part and chapter numbering in DocBook XSL outputs.
+// Suppress book part, chapter and section numbering in DocBook XSL outputs.
 //    a2x: --xsltproc-opts
-//    a2x: "--stringparam section.autolabel.max.depth 0
+//    a2x: "--stringparam part.autolabel 0
 //    a2x: --stringparam chapter.autolabel 0
-//    a2x: --stringparam part.autolabel 0"
+//    a2x: --stringparam section.autolabel.max.depth 0"
 //
 
 = The Brothers Karamazov
@@ -165,8 +165,8 @@ Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
   options for this document (it's easier to put them in the document
   once than type them every time on the command-line).
 
-- A number of 'xsltproc' options are passed to 'a2x' to suppress part
-  and chapter numbering.
+- A number of 'xsltproc' options are passed to 'a2x' to suppress book
+  part, chapter and section numbering.
 
 - Setting the AsciiDoc 'plaintext' attribute suppresses most of
   http://www.methods.co.nz/asciidoc/userguide.html#_text_formatting[AsciiDoc's
@@ -237,12 +237,6 @@ Zip file] contains the following files:
   CSS rules for styling the page layout. The design is based on the
   http://epubzengarden.com[ePub Zen Garden] 'Gbs' style.
 
-`adventures-of-sherlock-holmes-l10n.xml`::
-  A
-  http://www.sagehill.net/docbookxsl/CustomGentext.html#CustomGenText[DocBook
-  XSL Stylesheets customization file] for formatting chapter titles
-  without chapter numbering.
-
 `underline.png`::
   A title underline image that is used by the CSS stylesheet.
 
@@ -260,14 +254,11 @@ specific meta-data:
 //    a2x: --stylesheet adventures-of-sherlock-holmes.css
 // Suppress revision history in dblatex outputs.
 //    a2x: --dblatex-opts "-P latex.output.revhistory=0"
-// Suppress part and chapter numbering in DocBook XSL outputs.
+// Suppress book part, chapter and section numbering in DocBook XSL outputs.
 //    a2x: --xsltproc-opts
-//    a2x: "--stringparam section.autolabel.max.depth 0
+//    a2x: "--stringparam part.autolabel 0
 //    a2x: --stringparam chapter.autolabel 0
-//    a2x: --stringparam part.autolabel 0
-// Customize generated text (chapter title).
-//    a2x: --param local.l10n.xml
-//    a2x:         document\(\'adventures-of-sherlock-holmes-l10n.xml\'\)"
+//    a2x: --stringparam section.autolabel.max.depth 0"
 // Added external resources.
 //    a2x: --resource underline.png
 //
@@ -279,7 +270,8 @@ specific meta-data:
 
 == A Scandal in Bohemia
 
-To Sherlock Holmes she is always THE woman. I have seldom heard ...
+To Sherlock Holmes she is always THE woman. I have seldom heard
+...
 ---------------------------------------------------------------------
 
 The manual editing of imported plain text involves formatting the

@@ -36,3 +36,30 @@ wait for the Debian `docbook-xsl` package:
   $ cd /etc/xml/
   $ sudo cp -p docbook-xsl.xml docbook-xsl.xml.ORIG
   $ sudo vi docbook-xsl.xml
+
+
+Customizing Generated Text
+--------------------------
+An example
+http://www.sagehill.net/docbookxsl/CustomGentext.html#CustomGenText[DocBook
+XSL Stylesheets customization file] for formatting chapter titles
+without chapter numbering.
+
+.custom-chapter.xml
+---------------------------------------------------------------------
+<!-- Customize chapter title -->
+<l:i18n xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">
+  <l:l10n language="en">
+    <l:context name="title">
+      <l:template name="chapter" text="%t"/>
+    </l:context>
+  </l:l10n>
+</l:i18n>
+---------------------------------------------------------------------
+
+Executed with this 'xsltproc' parameter:
+
+  --param local.l10n.xml document\(\'custom-chapter.xml\'\)
+
+NOTE: This example is hypothetical -- use the 'xsltproc'
+`--stringparam chapter.autolabel 0` option to do the same job.

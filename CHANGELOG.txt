@@ -3,6 +3,37 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+Version 8.6.1 (2010-08-22)
+--------------------------
+.Additions and changes
+- 'a2x': `--resource-dir` option renamed to `--resource`.
+- 'a2x': `--resource` option accepts both file and directory names.
+- 'a2x': Added `-m,--resource-manifest` option.
+- Added Vim syntax highlighting for quote attribute lists.
+- Load 'asciidoc.conf' from all configuration directories before any
+  other configuration files. This ensures that attributes used for
+  conditional inclusion are set before backend configuration files are
+  processed. Previously if you wanted to control global conf file
+  inclusion your only choice was to modify the global 'asciidoc.conf'
+  file.
+- AsciiDoc 'Quote element' attributes have been simplified and
+  generalized -- positional color and size attributes and named 'role'
+  attribute have been replaced by a single positional attribute.
+
+.Bug fixes
+- 'FIXED': 'asciidoctest.py': `BACKEND` command argument was being
+  ignored.
+
+Regression issues
+~~~~~~~~~~~~~~~~~
+This release breaks compatibility with quoted element positional color
+and size attributes (HTML backends). To revert to the deprecated quote
+behavior define the 'deprecated-quotes' attribute in the global
+`asciidoc.conf` file or on the command-line.  For a more detailed
+explanation of the rationale behind this change see
+http://groups.google.com/group/asciidoc/browse_thread/thread/b22603bfb879418c.
+
+
 Version 8.6.0 (2010-08-16)
 --------------------------
 .Additions and changes

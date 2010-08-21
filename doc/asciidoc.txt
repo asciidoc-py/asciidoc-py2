@@ -359,33 +359,37 @@ header template with <<X18,Attribute Entry>> elements.
 [[X87]]
 Additional document header information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-DocBook defines numerous elements for document meta-data, for example:
-copyrights, document history and authorship information.  The AsciiDoc
-header syntax provides for basic revision and author information --
-additional information such as copyrights, document history authorship
-details can be optionally included from a separate 'document
-information file'. The document information file can contain any
-DocBook elements that are allowed inside the DocBook 'articleinfo' and
-'bookinfo' elements:
+A 'docinfo' file is a mechanism for including additional meta-data in
+the header of the output document.
 
-- The document information file must be in the same directory as the
-  source document and must be named like `<docname>-docinfo.xml`.  For
-  example, if the source document is called `mydoc.txt` then the
-  document information file would be named `mydoc-docinfo.xml`.
-- The document information file will only be included in the DocBook
-  output if the `docinfo` attribute is defined, for example:
+- The docinfo file is named like the AsciiDoc source file with the
+  addition of a `-docinfo` suffix.  For example, if the source
+  document is called `mydoc.txt` then the document information file
+  would be named `mydoc-docinfo.xml` (for DocBook output) or
+  `mydoc-docinfo.html` (for HTML outputs).
+- To include the docinfo file in you need to define the AsciiDoc
+  'docinfo' attribute. The following first example will include the
+  `mydoc-docinfo.xml` docinfo file inside the DocBook 'articleinfo'
+  element; the second example will include the `mydoc-docinfo.html`
+  docinfo file inside the HTML 'header' element:
 
   $ asciidoc -a docinfo -b docbook mydoc.txt
+  $ asciidoc -a docinfo -b html4 mydoc.txt
 
-- See the `./doc/article-docinfo.xml` example that comes with the
-  AsciiDoc distribution.
-- Similarly AsciiDoc will include a docinfo file named like
-  `<docname>-docinfo.html` (if it exists) into HTML backend outputs.
-  In the case of HTML outputs however it's usually easier to put
-  AsciiDoc markup in your source file directly after the header.
+The contents docinfo file is dependent on the type of output:
 
-NOTE: DocBook has a rich set of meta data elements, just which of
-these elements are rendered is DocBook processor dependent.
+HTML::
+  Valid HTML 'head' child elements. Typically 'style' and 'script'
+  elements for CSS and JavaScript inclusion.
+
+DocBook::
+  Valid 'articleinfo' or 'bookinfo' child elements.  DocBook defines
+  numerous elements for document meta-data, for example: copyrights,
+  document history and authorship information.  See the DocBook
+  `./doc/article-docinfo.xml` example that comes with the AsciiDoc
+  distribution.  The rendering of meta-data elements (or not) is
+  DocBook processor dependent.
+
 
 [[X86]]
 Preamble
@@ -5396,9 +5400,9 @@ default AsciiDoc automatically embeds or links the `asciidoc.js`
 JavaScript to the 'xhtml11' output document. The script dynamically
 generates <<X91,table of contents>> and <<X92,footnotes>>.
 
-|docinfo |docbook |
-The <<X87,document information file>> will be included in the DocBook
-output if the `docinfo` attribute is defined.
+|docinfo |All backends |
+If the `docinof` attribute is defined the <<X87,document information
+file>> will be included in the the header of the output file.
 
 |[[X54]]encoding |html4, xhtml11, docbook |
 Set the input and output document character set encoding. For example
@@ -5470,7 +5474,7 @@ The name of the directory containing linked stylesheets. Defaults to
 
 |stylesheet |xhtml11 |
 The file name of an optional additional CSS stylesheet. If you are
-embedding the stylesheet specify the actual file name; if you are
+embedding the stylesheet specify the actual file location; if you are
 linking CSS specify the file name relative to the directory specified
 by the 'stylesdir' attribute.
 

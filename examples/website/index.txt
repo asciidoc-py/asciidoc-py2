@@ -3,12 +3,17 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-This release follows hard on the heels of 8.6.0, it includes a couple
-'a2x' enhancements. In addition the AsciiDoc 'Quote element'
-attributes have been simplified and generalized (this change is not
-backward compatible).  The
-link:publishing-ebooks-with-asciidoc.html[publishing eBooks with
-AsciiDoc] webpage has also been updated.
+This release follows hard on the heels of 8.6.0, it includes:
+
+- A couple of new and enhanced 'a2x' command options.
+- The AsciiDoc link:userguide.html#X96[Quote element attributes] have
+  been simplified and generalized (this change is not backward
+  compatible).
+- A cover image and customized page design have been added to the
+  link:publishing-ebooks-with-asciidoc.html#_the_adventures_of_sherlock_holmes[Sherlock
+  Holmes example eBook] on the
+  link:publishing-ebooks-with-asciidoc.html[publishing eBooks with
+  AsciiDoc] web page.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the

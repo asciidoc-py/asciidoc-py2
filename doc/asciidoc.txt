@@ -379,8 +379,8 @@ the header of the output document.
 The contents docinfo file is dependent on the type of output:
 
 HTML::
-  Valid HTML 'head' child elements. Typically 'style' and 'script'
-  elements for CSS and JavaScript inclusion.
+  Valid 'head' child elements. Typically 'style' and 'script' elements
+  for CSS and JavaScript inclusion.
 
 DocBook::
   Valid 'articleinfo' or 'bookinfo' child elements.  DocBook defines
@@ -662,21 +662,23 @@ files. See the <<X7,Configuration Files>> section for details.
   multi-character quotes you may even need to escape individual
   characters.
 
+[[X96]]
+Quoted text attributes
+^^^^^^^^^^^^^^^^^^^^^^
 Quoted text can be prefixed with an <<X21,attribute list>>.  The first
-positional attribute is translated to an HTML 'span' element 'class'
-attribute:
+positional attribute is translated by AsciiDoc to an HTML 'span'
+element 'class' attribute or a DocBook 'phrase' element 'role'
+attribute.
 
-- Directly using the AsciiDoc HTML backends.
-- Indirectly using the AsciiDoc 'docbook' backend followed by DocBook
-  XSL Stylesheets. DocBook XSL Stylesheets translate DocBook 'phrase'
-  elements with 'role' attributes to corresponding HTML 'span'
-  elements with the same 'class' attributes; CSS is then used
-  http://www.sagehill.net/docbookxsl/UsingCSS.html[to style the
-  generated HTML].
+DocBook XSL Stylesheets translate DocBook 'phrase' elements with
+'role' attributes to corresponding HTML 'span' elements with the same
+'class' attributes; CSS can then be used
+http://www.sagehill.net/docbookxsl/UsingCSS.html[to style the
+generated HTML].
 
-This allows CSS styling to be applied to both DocBook and HTML outputs
-from the same AsciiDoc source.  You can also specify multiple class
-names separated by spaces. Examples:
+Thus CSS styling can be applied to both DocBook and AsciiDoc generated
+HTML outputs from the same AsciiDoc source.  You can also specify
+multiple class names separated by spaces. Examples:
 
   [red]#obvious#
   [big red yellowback]*very obvious*
@@ -5401,7 +5403,7 @@ JavaScript to the 'xhtml11' output document. The script dynamically
 generates <<X91,table of contents>> and <<X92,footnotes>>.
 
 |docinfo |All backends |
-If the `docinof` attribute is defined the <<X87,document information
+If the `docinfo` attribute is defined the <<X87,document information
 file>> will be included in the the header of the output file.
 
 |[[X54]]encoding |html4, xhtml11, docbook |

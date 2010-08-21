@@ -309,8 +309,8 @@ Holmes only has two title levels:
 
 Styling your books
 ------------------
-You can customize the appearance of a document by creating your own
-CSS file. Either create your own or copy and edit the existing default
+You can customize the appearance of a document with CSS.  CSS file.
+Either create your own or copy and edit the existing default
 `docbook-xsl.css` file (located in the AsciiDoc `stylesheets`
 configuration directory) then place it in the same directory as your
 AsciiDoc source file. Use the 'a2x' `--stylesheet` option if you
@@ -331,3 +331,13 @@ natively.
 
 As of writing this article most eBook readers (with the notable
 exception of Amazon's Kindle) support the EPUB format.
+
+
+Non-fiction Books and Manuals
+-----------------------------
+AsciiDoc supports a rich set of markup conventions and can generate
+reference works and technical manuals complete with tables,
+illustrations, indexes, bibliographies and appendices. All the
+examples on the http:///www.methods.co.nz/asciidoc/[AsciiDoc web site]
+can be formatted as EPUB eBooks.
+

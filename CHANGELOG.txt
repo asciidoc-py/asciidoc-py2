@@ -21,10 +21,10 @@ Version 8.6.1 (2010-08-22)
   attribute have been replaced by a single positional attribute.
 
 .Bug fixes
-- 'FIXED': 'asciidoctest.py': `BACKEND` command argument was being
+- 'FIXED': 'testasciidoc.py': `BACKEND` command argument was being
   ignored.
-- 'FIXED': Broken 'docinfo' file functionality to 'html4' and
-  'xhtml11' backends (previously the docinfo file was included into
+- 'FIXED': Broken 'docinfo' file functionality in 'html4' and
+  'xhtml11' backends (previously the docinfo file was included in
   the 'body' instead of the 'header').
 
 Regression issues

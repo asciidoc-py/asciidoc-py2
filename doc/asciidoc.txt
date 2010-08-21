@@ -4545,8 +4545,8 @@ and managing intermediate and output files.  `a2x(1)` also optionally
 deploys admonition and navigation icons and a CSS stylesheet. See the
 `a2x(1)` man page for more details. In addition to `asciidoc(1)` you
 also need <<X40,xsltproc(1)>>, <<X13,DocBook XSL Stylesheets>> and
-optionally: <<X31,dblatex>> or <<X14,FOP>> (if to generate PDF);
-`w3m(1)` or `lynx(1)` (if to generate text).
+optionally: <<X31,dblatex>> or <<X14,FOP>> (to generate PDF);
+`w3m(1)` or `lynx(1)` (to generate text).
 
 The following examples generate `doc/source-highlight-filter.pdf` from
 the AsciiDoc `doc/source-highlight-filter.txt` source file. The first

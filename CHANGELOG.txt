@@ -23,6 +23,9 @@ Version 8.6.1 (2010-08-22)
 .Bug fixes
 - 'FIXED': 'asciidoctest.py': `BACKEND` command argument was being
   ignored.
+- 'FIXED': Broken 'docinfo' file functionality to 'html4' and
+  'xhtml11' backends (previously the docinfo file was included into
+  the 'body' instead of the 'header').
 
 Regression issues
 ~~~~~~~~~~~~~~~~~

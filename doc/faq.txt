@@ -12,9 +12,9 @@ AsciiDoc Frequently Asked Questions
 == Can AsciiDoc generate slide shows?
 There are a number of browser based HTML slideshow applications
 written in JavaScript, most could probably be made to work with
-AsciiDoc. Here's how use http://staticfree.info/projects/jqs5/[JQS5]
-to turn an AsciiDoc document (`mydoc.txt`) into a slideshow
-(`mydoc.html`):
+AsciiDoc. Here's how to use
+http://staticfree.info/projects/jqs5/[JQS5] to turn an AsciiDoc
+document (`mydoc.txt`) into a slideshow (`mydoc.html`):
 
 . Download and extract the 'JQS5' tarball.
 . Put this your document's link:userguide.html#X87[docinfo file]

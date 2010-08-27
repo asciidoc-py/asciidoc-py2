@@ -1,6 +1,7 @@
 Publishing eBooks with AsciiDoc
 ===============================
 
+ifdef::backend-wordpress[]
 // Use the same article for both a blog post and on the AsciiDoc
 // website.
 :blogpost-title: Publishing eBooks with AsciiDoc
@@ -9,16 +10,23 @@ Publishing eBooks with AsciiDoc
 :blogpost-posttype: post
 :blogpost-categories: AsciiDoc,eBook,EPUB,DocBook
 
-{backend-wordpress}*Published*: 2010-08-10
+*Published*: 2010-08-23
+endif::backend-wordpress[]
 
 It's easy to write and publish books in
 http://en.wikipedia.org/wiki/EPUB[EPUB] and PDF formats using
 http://www.methods.co.nz/asciidoc/[AsciiDoc].
+ifdef::backend-wordpress[]
+This article was originally published on the
+http://www.methods.co.nz/asciidoc/publishing-ebooks-with-asciidoc.html[AsciiDoc
+website].
+endif::backend-wordpress[]
 
-Here are three examples: The first is a minimal example introducing
-the AsciiDoc format, the second ('The Brothers Karamazov') is a rather
-long multi-part book and the third ('The Adventures of Sherlock
-Holmes') includes a front cover image and customized page styling.
+Here are three examples: The first is a <<X1,minimal example>>
+introducing the AsciiDoc format, the second <<X2,The Brothers
+Karamazov>> is a rather long multi-part book and the third <<X3,The
+Adventures of Sherlock Holmes>> includes a front cover image and
+customized page styling.
 
 // Wordpress processing instruction.
 pass::[<!--more-->]
@@ -27,7 +35,14 @@ The examples presented below were created on a PC running Xubuntu
 Linux 10.04 but should be applicable to any UNIX-based operating
 system.
 
+NOTE: A number of 'asciidoc' and 'a2x' features used in this article
+require AsciiDoc version 8.6.1 -- install version 8.6.1 or better to
+compile the examples. The version of
+http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
+Stylesheets] used was 1.75.2.
 
+
+[[X1]]
 == Minimal Book
 This didactic example contains a title and two chapters.  The AsciiDoc
 source is a plain text file named `minimal-book.txt`:
@@ -70,13 +85,33 @@ http://dblatex.sourceforge.net/[dblatex] use:
 
   a2x -fpdf -dbook --fop minimal-book.txt
 
-NOTE: A number of 'asciidoc' and 'a2x' features used in this article
-require AsciiDoc version 8.6.1 -- install version 8.6.1 or better to
-compile the examples. The version of
-http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
-Stylesheets] used was 1.75.2.
+You can also generate an HTML formatted book, either using DocBook XSL
+Stylesheets:
+
+  a2x -fxhtml -dbook minimal-book.txt
+
+or directly using the 'asciidoc' command:
+
+  asciidoc -dbook minimal-book.txt
+
+[NOTE]
+======
+The http://www.methods.co.nz/asciidoc/a2x.1.html[a2x toolchain
+wrapper] uses the following programs (most will be available
+prepackaged for your Linux distribution):
+
+- http://xmlsoft.org/XSLT/[xsltproc]
+- http://docbook.sourceforge.net/projects/xsl/[DocBook XSL
+  Stylesheets]
+- http://dblatex.sourceforge.net/[dblatex] (PDF file generator)
+- http://xmlgraphics.apache.org/fop/[FOP] (alternative PDF file
+  generator)
+- http://code.google.com/p/epubcheck/[epubcheck] (optional EPUB file
+  validator)
+======
 
 
+[[X2]]
 The Brothers Karamazov
 ----------------------
 'The Brothers Karamazov' is an example of a multi-part book. To
@@ -192,6 +227,7 @@ Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
     entries].
 
 
+[[X3]]
 The Adventures of Sherlock Holmes
 ---------------------------------
 This book includes a front cover image and a customized page design.
@@ -214,9 +250,8 @@ this command:
 
 |====================================================================
 
-Here's a screenshot of the first page of the first chapter (rendered by
-the https://addons.mozilla.org/en-US/firefox/addon/45281/[Firefox
-PUBReader addon]):
+Here's a screenshot of the first page of the first chapter (rendered
+by the http://www.epubread.com/en/[Firefox EPUBReader addon]):
 
 image::images/epub.png[]
 
@@ -324,10 +359,9 @@ http://epubzengarden.com/[ePub Zen Garden].
 Reading EPUB documents
 ----------------------
 My current favorite software epub reader is the
-https://addons.mozilla.org/en-US/firefox/addon/45281/[Firefox
-PUBReader addon].  Browsers are a natural fit for EPUB (EPUB is just a
-bunch of zipped XHTML files) -- I'd like to see browsers support EPUB
-natively.
+http://www.epubread.com/en/[Firefox EPUBReader addon].  Browsers are a
+natural fit for EPUB (EPUB is just a bunch of zipped XHTML files) --
+I'd like to see browsers support EPUB natively.
 
 As of writing this article most eBook readers (with the notable
 exception of Amazon's Kindle) support the EPUB format.

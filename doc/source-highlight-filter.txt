@@ -2,11 +2,15 @@ Source Code Highlight Filter
 ============================
 
 The AsciiDoc distribution includes a source code syntax highlight
-filter (`source-highlight-filter.conf`). It uses
-http://www.gnu.org/software/src-highlite/[GNU source-highlight] to
-highlight HTML outputs. You also have the option of using the
-http://pygments.org/[Pygments] syntax highlighter for 'xhtml11'
-outputs.
+filter (`source-highlight-filter.conf`).
+
+
+HTML Outputs
+------------
+The highlighter uses http://www.gnu.org/software/src-highlite/[GNU
+source-highlight] to highlight 'html4' and 'xhtml11' outputs. You also
+have the option of using the http://pygments.org/[Pygments] syntax
+highlighter for 'xhtml11' outputs.
 
 To use Pygments you need to define an AsciiDoc attribute named
 'pygments' (either from the command-line or in the global
@@ -16,20 +20,18 @@ customize Pygments CSS styles by editing `./stylesheets/pygments.css`.
 To make Pygments your default highlighter put the following line your
 `~/.asciidoc/asciidoc.conf` file:
 
+  pygments=
+
+
+DocBook Outputs
+---------------
 DocBook outputs are highlighted by toolchains that have
 `programlisting` element highlight support, for example 'dblatex'.
 
-[TIP]
-=====
-- If the source 'language' attribute has been set (using an
-  'AttributeEntry' or from the command-line) you don't have to specify
-  it in each source code block.
-- You may need to place callout markers inside source code comments to
-  ensure they are not misinterpreted and mangled by the highlighter.
-=====
 
 Examples
 --------
+
 Source code paragraphs
 ~~~~~~~~~~~~~~~~~~~~~~
 The `source` paragraph style will highlight a paragraph of source
@@ -180,6 +182,15 @@ end
 
 <1> First callout.
 <2> Second callout.
+
+[TIP]
+=====
+- If the source 'language' attribute has been set (using an
+  'AttributeEntry' or from the command-line) you don't have to specify
+  it in each source code block.
+- You may need to place callout markers inside source code comments to
+  ensure they are not misinterpreted and mangled by the highlighter.
+=====
 
 
 Installation

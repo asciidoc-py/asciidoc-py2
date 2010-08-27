@@ -10,7 +10,7 @@ This release follows hard on the heels of 8.6.0, it includes:
   been simplified and generalized (this change is not backward
   compatible).
 - A cover image and customized page design have been added to the
-  link:publishing-ebooks-with-asciidoc.html#_the_adventures_of_sherlock_holmes[Sherlock
+  link:publishing-ebooks-with-asciidoc.html#X3[Sherlock
   Holmes example eBook] on the
   link:publishing-ebooks-with-asciidoc.html[publishing eBooks with
   AsciiDoc] web page.

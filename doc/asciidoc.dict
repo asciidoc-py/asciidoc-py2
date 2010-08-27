@@ -1,4 +1,4 @@
-personal_ws-1.1 en 981 
+personal_ws-1.1 en 983 
 mandoc
 colspecs
 API
@@ -378,6 +378,7 @@ subprocess
 outfile
 blandit
 revisionhistory
+EPUBReader
 params
 undefines
 Andrés
@@ -907,6 +908,7 @@ BufRead
 specialwords
 libexslt
 subsnormal
+fxhtml
 Builtin
 hardcoded
 Mery

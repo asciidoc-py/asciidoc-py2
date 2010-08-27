@@ -121,6 +121,14 @@ This will create the folder +asciidoc-{revnumber}+ containing the
 `asciidoc.py` and `a2x.py` executables along with configuration files
 and documentation.
 
+To generate DocBook based outputs (e.g. PDFs) you will also need a
+working DocBook toolchain. Installing and configuring a DocBook
+toolchain on Windows can be a challenge -- this blog post explains
+http://blog.rainwebs.net/2010/02/25/how-to-create-handsome-pdf-documents-without-frustration/[How
+to Create Handsome PDF Documents Without Frustration] using
+http://www.cygwin.com/[Cygwin],
+http://dblatex.sourceforge.net/[dblatex] and AsciiDoc.
+
 
 Testing your installation
 -------------------------

@@ -152,13 +152,47 @@ formats, all translation rules are contained in customizable cascading
 configuration files. Backend specific attributes are listed in the
 <<X88,Backend Attributes>> section.
 
-AsciiDoc ships with the following predefined backend output formats:
+docbook45::
+  Outputs DocBook XML 4.5 markup.
 
-docbook
+html4::
+  This backend generates plain HTML 4.01 Transitional markup.
+
+xhtml11::
+  This backend generates XHTML 1.1 markup styled with CSS2. Output
+  files have an `.html` extension.
+
+wordpress::
+  A minor variant of the 'html4' backend to support
+  http://srackham.wordpress.com/blogpost1/[blogpost].
+
+latex::
+  Experimental LaTeX backend.
+
+Backend Aliases
+~~~~~~~~~~~~~~~
+Backend aliases are alternative names for AsciiDoc backends.  AsciiDoc
+comes with two backend aliases: 'html' (aliased to 'xhtml11') and
+'docbook' (aliased to 'docbook45').
+
+You can assign (or reassign) backend aliases by setting an AsciiDoc
+attribute named like `backend-alias-<alias>` to an AsciiDoc backend
+name. For example, the following backend alias attribute definitions
+appear in the `[attributes]` section of the global `asciidoc.conf`
+configuration file:
+
+  backend-alias-html=xhtml11
+  backend-alias-docbook=docbook45
+
+NOTE: Backend aliases must be assigned in one of the `asciidoc.conf`
+configuration files because these files are loaded first (before the
+backend configuration files).
+
+DocBook
 ~~~~~~~
-AsciiDoc generates the following DocBook document types: article, book
-and refentry (corresponding to the AsciiDoc 'article', 'book' and
-'manpage' document types).
+AsciiDoc generates 'article', 'book' and 'refentry'
+http://www.docbook.org/[DocBook] documents (corresponding to the
+AsciiDoc 'article', 'book' and 'manpage' document types).
 
 DocBook documents are not designed to be viewed directly.  Most Linux
 distributions come with conversion tools (collectively called a
@@ -166,21 +200,9 @@ toolchain) for <<X12,converting DocBook files>> to presentation
 formats such as Postscript, HTML, PDF, EPUB, DVI, PostScript, LaTeX,
 roff (the native man page format), HTMLHelp, JavaHelp and text.
 
-The AsciiDoc <<X86,Preamble>> element generates a DocBook book
-'preface'.
-
-[[X33]]
-xhtml11
-~~~~~~~
-The default asciidoc(1) backend is `xhtml11` -- XHTML 1.1 markup
-styled with CSS2. Output files have a `.html` extension.  'xhtml11'
-document generation is influenced by the following optional attributes
-(the default behavior is to generate XHTML with no section numbers,
-embedded CSS and no linked admonition icon images):
-
 [[X35]]
-Stylesheets
-^^^^^^^^^^^
+XHTML Stylesheets
+~~~~~~~~~~~~~~~~~
 AsciiDoc XHTML output is styled using CSS2 stylesheets from the
 distribution `./stylesheets/` directory.
 
@@ -214,10 +236,6 @@ quirks mode is enabled) instead of the default stylesheets.
 Use the 'stylesheet' attribute to include an additional stylesheet in
 XHTML documents.  For example, the command-line option `-a
 stylesheet=newsletter.css` will use stylesheets `newsletter.css`.
-
-html4
-~~~~~
-This backend generates plain (unstyled) HTML 4.01 Transitional markup.
 
 
 Document Structure
@@ -3425,9 +3443,9 @@ single line formatted like:
   <special_character>=<translated_characters>
 
 Special characters are normally confined to those that resolve
-markup ambiguity (in the case of SGML/XML markups the ampersand, less
-than and greater than characters).  The following example causes all
-occurrences of the `<` character to be replaced by `&lt;`.
+markup ambiguity (in the case of HTML and XML markups the ampersand,
+less than and greater than characters).  The following example causes
+all occurrences of the `<` character to be replaced by `&lt;`.
 
   <=&lt;
 
@@ -3935,11 +3953,11 @@ Conditional attributes are mainly used in AsciiDoc configuration
 files -- see the distribution `.conf` files for examples.
 
 Attribute equality test::
-  If `{backend}` is `docbook` or `xhtml11` the example evaluates to
-  ``DocBook or XHTML backend'' otherwise it evaluates to ``some other
-  backend'':
+  If `{backend}` is `docbook45` or `xhtml11` the example evaluates to
+  ``DocBook 4.5 or XHTML 1.1 backend'' otherwise it evaluates to ``some
+  other backend'':
 
-  {backend@docbook|xhtml11:DocBook or XHTML backend:some other backend}
+  {backend@docbook45|xhtml11:DocBook 4.5 or XHTML 1.1 backend:some other backend}
 
 Attribute value map::
   This example maps the `frame` attribute values [`topbot`, `all`,
@@ -4119,8 +4137,8 @@ predefined intrinsic attributes:
    effectively read-only (you can set them but it won't affect the
    input or output file paths).
 
-3. See also the <<X33,xhtml11>> subsection for attributes that relate
-   to AsciiDoc XHTML file generation.
+3.  See also the <<X88,Backend Attributes>> section for attributes
+    that relate to AsciiDoc XHTML file generation.
 
 4. The entries that translate to blank strings are designed to be used
    for conditional text inclusion. You can also use the `ifdef`,
@@ -5015,9 +5033,9 @@ liking you can:
 Supporting minor DocBook DTD variations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The conditional inclusion of DocBook SGML markup at the end of the
-distribution `docbook.conf` file illustrates how to support minor DTD
-variations. The included sections override corresponding entries from
-preceding sections.
+distribution `docbook45.conf` file illustrates how to support minor
+DTD variations. The included sections override corresponding entries
+from preceding sections.
 
 Creating stand-alone HTML documents
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5075,7 +5093,7 @@ example includes a DocBook glossary division at the top section level
 (level 0):
 
 ---------------------------------------------------------------------
-\ifdef::backend-docbook[]
+\ifdef::basebackend-docbook[]
 
 \eval::[Section.setlevel(0)]
 
@@ -5087,7 +5105,7 @@ example includes a DocBook glossary division at the top section level
   </glossdiv>
 </glossary>
 +++++++++++++++++++++++++++++++
-\endif::backend-docbook[]
+\endif::basebackend-docbook[]
 ---------------------------------------------------------------------
 
 Validating output files
@@ -5465,10 +5483,10 @@ dated to output this attribute.
 The name of the directory containing linked JavaScripts. Defaults to
 `.` (the same directory as the linking document).
 
-|sgml |docbook |
-The `--backend=docbook` command-line option produces DocBook XML.  You
-can produce the older DocBook SGML format using the `--attribute sgml`
-command-line option.
+|sgml |docbook45 |
+The `--backend=docbook45` command-line option produces DocBook 4.5
+XML.  You can produce the older DocBook SGML format using the
+`--attribute sgml` command-line option.
 
 |stylesdir |xhtml11 |
 The name of the directory containing linked stylesheets. Defaults to

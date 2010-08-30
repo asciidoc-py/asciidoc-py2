@@ -16,7 +16,7 @@ MIN_PYTHON_VERSION = 2.4    # Require this version of Python or better.
 #---------------------------------------------------------------------------
 # Program constants.
 #---------------------------------------------------------------------------
-DEFAULT_BACKEND = 'xhtml11'
+DEFAULT_BACKEND = 'html'
 DEFAULT_DOCTYPE = 'article'
 # Allowed substitution options for List, Paragraph and DelimitedBlock
 # definition subs entry.
@@ -2027,7 +2027,7 @@ class Section:
         if Title.level == 0 and document.doctype != 'book':
             message.error('only book doctypes can contain level 0 sections')
         if Title.level > document.level \
-                and document.backend == 'docbook' \
+                and document.attributes.get('basebackend') == 'docbook' \
                 and prev_sectname in ('colophon','abstract', \
                     'dedication','glossary','bibliography'):
             message.error('%s section cannot contain sub-sections' % prev_sectname)
@@ -4338,7 +4338,15 @@ class Config:
         if dirs is None:
             dirs = self.get_load_dirs()
         for d in dirs:
+            # asciidoc.conf's take precedence over other conf files.
             self.load_file('asciidoc.conf',d)
+        alias = 'backend-alias-' + document.backend
+        if alias in document.attributes:
+            document.backend = document.attributes[alias]
+            document.update_attributes()   # Update backend related attributes.
+        f = document.backend + '.conf'
+        if not self.find_in_dirs(f):
+            message.warning('missing backend conf file: %s' % f, linenos=False)
         for d in dirs:
             conf = document.backend + '.conf'
             self.load_file(conf,d)
@@ -5233,9 +5241,6 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         if doctype not in ('article','manpage','book'):
             raise EAsciiDoc,'illegal document type'
         document.backend = backend
-        f = backend+'.conf'
-        if not config.find_in_dirs(f):
-            message.warning('missing backend conf file: %s' % f, linenos=False)
         document.doctype = doctype
         document.infile = infile
         document.update_attributes()

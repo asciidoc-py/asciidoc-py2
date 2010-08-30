@@ -33,8 +33,11 @@ OPTIONS
     'trace' controls the output of diagnostic information.
 
 *-b, --backend*='BACKEND'::
-    Backend output file format: 'docbook', 'xhtml11' or 'html4'.
-    Defaults to 'xhtml11'.
+    Backend output file format: 'docbook45', 'xhtml11', 'html4',
+    'wordpress' or 'latex' (the 'latex' backend is experimental).
+    You can also the backend alias names 'html' (aliased to 'xhtml11')
+    or 'docbook' (aliased to 'docbook45').
+    Defaults to 'html'.
 
 *-f, --conf-file*='CONF_FILE'::
     Use configuration file 'CONF_FILE'.Configuration files processed

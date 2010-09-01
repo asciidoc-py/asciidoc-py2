@@ -429,7 +429,7 @@ class A2X(AttrDict):
         if self.icons or self.icons_dir:
             params = [
                 'callout.graphics 1',
-                'navig.graphics 0',
+                'navig.graphics 1',
                 'admon.textlabel 0',
                 'admon.graphics 1',
             ]

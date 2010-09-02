@@ -55,6 +55,11 @@ musicfilterconfdir = $(filtersdir)/music
 sourcefilterconf = filters/source/source-highlight-filter.conf
 sourcefilterconfdir = $(filtersdir)/source
 
+latexfilter = filters/latex/latex2png.py
+latexfilterdir = $(filtersdir)/latex
+latexfilterconf = filters/latex/latex-filter.conf
+latexfilterconfdir = $(filtersdir)/latex
+
 docbook = $(wildcard docbook-xsl/*.xsl)
 docbookdir = $(ASCIIDOCCONF)/docbook-xsl
 
@@ -75,8 +80,8 @@ iconsdir = $(ASCIIDOCCONF)/images/icons
 
 doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*) $(wildcard CHANGELOG*)
 
-DATATARGETS = manp conf docbook dblatex css js callouts icons codefilterconf musicfilterconf sourcefilterconf graphvizfilterconf
-PROGTARGETS = prog codefilter musicfilter graphvizfilter
+DATATARGETS = manp conf docbook dblatex css js callouts icons codefilterconf musicfilterconf sourcefilterconf graphvizfilterconf latexfilterconf
+PROGTARGETS = prog codefilter musicfilter graphvizfilter latexfilter
 TARGETS = $(DATATARGETS) $(PROGTARGETS) doc
 
 INSTDIRS = $(TARGETS:%=%dir)

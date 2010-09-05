@@ -166,6 +166,13 @@ You can also change the image size using the following LaTeX commands:
   \LARGE
   \huge
 
+For example:
+
+  [latex]
+  \Large $y = \int_0^\infty \gamma^2 \cos(x) dx$
+
+NOTE: The `\Large` command is outside the `$` math delimiters.
+
 =====================================================================
 
 The filter (`./filters/latex/latex2png.py`) can be used outside

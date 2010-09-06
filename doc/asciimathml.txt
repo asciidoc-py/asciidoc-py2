@@ -35,30 +35,27 @@ page.
 - See the link:latexmathml.html[LaTeXMathML page] if you prefer to use
   LaTeX math formulas.
 
-A list of formulas with a mixture of formatting:
+A list of example formulas:
 
-- asciimath:[[[a,b\],[c,d\]\]((n),(k))]
 - $$`[[a,b],[c,d]]((n),(k))`$$
 - asciimath:[x/x={(1,if x!=0),(text{undefined},if x=0):}]
 - asciimath:[d/dxf(x)=lim_(h->0)(f(x+h)-f(x))/h]
-- Red [red]+++`sum_(i=1)\^n i=(n(n+1))/2`$+++ and [blue]*bold
+- +++`sum_(i=1)\^n i=(n(n+1))/2`$+++ and *bold
   asciimath:[int_0\^(pi/2) sinx\ dx=1]*
-- [,,1.5]## 1.5 times normal size asciimath:[(a,b\]={x in RR : a < x <= b}]##
-- A [,,2]##big## [blue]##blue## formula
-  [blue,,2]##asciimath:[x^2+y_1+z_12^34]##.
-- [green,yellow,4]##asciimath:[x^2+y_1+z_12^34]##
+- asciimath:[(a,b\]={x in RR : a < x <= b}]
+- asciimath:[x^2+y_1+z_12^34]
 
 *********************************************************************
 The first three terms factor to give
-[red]##asciimath:[(x+b/(2a))^2=(b^2)/(4a^2)-c/a]##.
+asciimath:[(x+b/(2a))^2=(b^2)/(4a^2)-c/a].
 
-[red]##asciimath:[x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)]##.
+asciimath:[x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)].
 
 Now we take square roots on both sides and get
-[red]##asciimath:[x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)]##.  Finally we
-move the [red]##asciimath:[b/(2a)]## to the right and simplify to get
-the two solutions:
-[red]*asciimath:[x_(1,2)=(-b+-sqrt(b^2-4ac))/(2a)]*.
+asciimath:[x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)].
+Finally we move the asciimath:[b/(2a)] to the right and simplify to
+get the two solutions:
+*asciimath:[x_(1,2)=(-b+-sqrt(b^2-4ac))/(2a)]*.
 
 *********************************************************************
 

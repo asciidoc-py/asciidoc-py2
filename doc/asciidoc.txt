@@ -4926,7 +4926,7 @@ Special characters in attribute values::
     on the substitution context, need to escape the special characters
     yourself. For example:
 
-    $ asciidoc -a 'corpname=Bill &amp; Ben Inc.' mydoc.txt
+    $ asciidoc -a 'orgname=Bill &amp; Ben Inc.' mydoc.txt
 
 Attribute lists::
     If any named attribute entries are present then all string

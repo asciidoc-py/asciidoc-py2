@@ -970,14 +970,15 @@ def subs_attrs(lines, dictionary=None):
                 # mo.end() not good enough because '{x={y}}' matches '{x={y}'.
                 end = end_brace(line,mo.start())
                 rval = line[mo.start('value'):end-1]
+                UNDEFINED = '{zzzzz}'
                 if lval is None:
                     if op == '=': s = rval
                     elif op == '?': s = ''
                     elif op == '!': s = rval
-                    elif op == '#': s = '{'+name+'}'  # So the line is dropped.
+                    elif op == '#': s = UNDEFINED   # So the line is dropped.
                     elif op == '%': s = rval
                     elif op in ('@','$'):
-                        s = '{'+name+'}'              # So the line is dropped.
+                        s = UNDEFINED               # So the line is dropped.
                     else:
                         assert False, 'illegal attribute: %s' % attr
                 else:
@@ -985,7 +986,7 @@ def subs_attrs(lines, dictionary=None):
                     elif op == '?': s = rval
                     elif op == '!': s = ''
                     elif op == '#': s = rval
-                    elif op == '%': s = '{zzzzz}'     # So the line is dropped.
+                    elif op == '%': s = UNDEFINED   # So the line is dropped.
                     elif op in ('@','$'):
                         v = re.split(r'(?<!\\):',rval)
                         if len(v) not in (2,3):
@@ -1010,12 +1011,12 @@ def subs_attrs(lines, dictionary=None):
                                     if len(v) == 2:   # {<name>$<re>:<v1>}
                                         s = v[1]
                                     elif v[1] == '':  # {<name>$<re>::<v2>}
-                                        s = '{zzzzz}' # So the line is dropped.
+                                        s = UNDEFINED # So the line is dropped.
                                     else:             # {<name>$<re>:<v1>:<v2>}
                                         s = v[1]
                                 else:
                                     if len(v) == 2:   # {<name>$<re>:<v1>}
-                                        s = '{zzzzz}' # So the line is dropped.
+                                        s = UNDEFINED # So the line is dropped.
                                     else:             # {<name>$<re>:<v1>:<v2>}
                                         s = v[2]
                     else:
@@ -2027,7 +2028,7 @@ class Section:
         if Title.level == 0 and document.doctype != 'book':
             message.error('only book doctypes can contain level 0 sections')
         if Title.level > document.level \
-                and document.attributes.get('basebackend') == 'docbook' \
+                and 'basebackend-docbook' in document.attributes \
                 and prev_sectname in ('colophon','abstract', \
                     'dedication','glossary','bibliography'):
             message.error('%s section cannot contain sub-sections' % prev_sectname)

@@ -30,6 +30,12 @@ endif::basebackend-html[]
 
 Hello *{author}* ({firstname} {lastname}, {authorinitials}).
 
+{firstname,lastname,surname#}first name or last name or surname.
+
+{firstname+lastname+surname#}first name and last name and surname.
+
+{firstname+lastname#}first name and last name.
+
 
 == System attributes ==
 {counter:c1} {counter:c2:99} {counter:c3:A}

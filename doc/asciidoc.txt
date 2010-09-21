@@ -1607,6 +1607,14 @@ TIP: To apply the 'compact' option globally define a document-wide
 'compact-option' attribute, e.g. using the `-a compact-option`
 command-line option.
 
+You can set the list start number using the 'start' attribute (works
+for HTML outputs and DocBook outputs processed by DocBook XSL
+Stylesheets). Example:
+
+  [start=7]
+  . List item 7.
+  . List item 8.
+
 Labeled Lists
 ~~~~~~~~~~~~~
 Labeled list items consist of one or more text labels followed by the

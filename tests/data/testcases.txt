@@ -243,6 +243,11 @@ three:: Item three.
 - The `__init__` method.
 - The `{id}` attribute.
 
+List start number test:
+
+[start=7]
+. List item 7.
+. List item 8.
 
 == Images
 

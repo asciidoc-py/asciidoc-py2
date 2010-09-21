@@ -377,22 +377,18 @@ header template with <<X18,Attribute Entry>> elements.
 [[X87]]
 Additional document header information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-A 'docinfo' file is a mechanism for including additional meta-data in
-the header of the output document.
+'docinfo' files are a mechanism for optionally including additional
+meta-data in the header of the output document.
 
-- The docinfo file is named like the AsciiDoc source file with the
-  addition of a `-docinfo` suffix.  For example, if the source
-  document is called `mydoc.txt` then the document information file
-  would be named `mydoc-docinfo.xml` (for DocBook output) or
-  `mydoc-docinfo.html` (for HTML outputs).
-- To include the docinfo file in you need to define the AsciiDoc
-  'docinfo' attribute. The following first example will include the
-  `mydoc-docinfo.xml` docinfo file inside the DocBook 'articleinfo'
-  element; the second example will include the `mydoc-docinfo.html`
-  docinfo file inside the HTML 'header' element:
+Two docinfo files are recognized: one named `docinfo` and a second
+named like the AsciiDoc source file with a `-docinfo` suffix.  For
+example, if the source document is called `mydoc.txt` then the
+document information files would be `docinfo.xml` and
+`mydoc-docinfo.xml` (for DocBook outputs) and `docinfo.html` and
+`mydoc-docinfo.html` (for HTML outputs).
 
-  $ asciidoc -a docinfo -b docbook mydoc.txt
-  $ asciidoc -a docinfo -b html4 mydoc.txt
+The <<X97,docinfo, docinfo1 and docinfo2>> attributes control which
+docinfo files are included in the output files.
 
 The contents docinfo file is dependent on the type of output:
 
@@ -5420,9 +5416,27 @@ default AsciiDoc automatically embeds or links the `asciidoc.js`
 JavaScript to the 'xhtml11' output document. The script dynamically
 generates <<X91,table of contents>> and <<X92,footnotes>>.
 
-|docinfo |All backends |
-If the `docinfo` attribute is defined the <<X87,document information
-file>> will be included in the the header of the output file.
+|[[X97]] docinfo, docinfo1, docinfo2 |All backends |
+These three attributes control which <<X87,document information
+files>> will be included in the the header of the output file:
+
+docinfo:: Include `<filename>-docinfo.<ext>`
+docinfo1:: Include `docinfo.<ext>`
+docinfo2:: Include `docinfo.<ext>` and `<filename>-docinfo.<ext>`
+
+Where `<filename>` is the file name of (sans extension) of the
+AsciiDoc input file and `<ext>` is `.html` for HTML outputs or `.xml`
+for DocBook outputs. The following example will include the
+`mydoc-docinfo.xml` docinfo file in the DocBook `mydoc.xml` output
+file:
+
+  $ asciidoc -a docinfo -b docbook mydoc.txt
+
+This next example will include `docinfo.html` and `mydoc-docinfo.html`
+docinfo files in the HTML output file:
+
+  $ asciidoc -a docinfo2 -b html4 mydoc.txt
+
 
 |[[X54]]encoding |html4, xhtml11, docbook |
 Set the input and output document character set encoding. For example

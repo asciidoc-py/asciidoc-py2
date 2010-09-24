@@ -3784,17 +3784,21 @@ class Reader1:
         self.current_depth = 0  # Current include depth.
         self.max_depth = 5      # Initial maxiumum allowed include depth.
         self.bom = None         # Byte order mark (BOM).
+        self.infile = None      # Saved document 'infile' attribute.
+        self.indir = None       # Saved document 'indir' attribute.
     def open(self,fname):
         self.fname = fname
         message.verbose('reading: '+fname)
         if fname == '<stdin>':
             self.f = sys.stdin
-            document.attributes['infile'] = None
-            document.attributes['indir'] = None
+            self.infile = None
+            self.indir = None
         else:
             self.f = open(fname,'rb')
-            document.attributes['infile'] = fname
-            document.attributes['indir'] = os.path.dirname(fname)
+            self.infile = fname
+            self.indir = os.path.dirname(fname)
+        document.attributes['infile'] = self.infile
+        document.attributes['indir'] = self.indir
         self._lineno = 0            # The last line read from file object f.
         self.next = []
         # Prefill buffer by reading the first line and then pushing it back.
@@ -3897,6 +3901,8 @@ class Reader1:
             if self.parent:
                 self.closefile()
                 assign(self,self.parent)    # Restore parent reader.
+                document.attributes['infile'] = self.infile
+                document.attributes['indir'] = self.indir
                 return Reader1.eof(self)
             else:
                 return True

@@ -336,8 +336,8 @@ tt, div.listingblock > div.content {
   margin-top: 1em;
 }
 
-.paragraph p, li, .content { max-width: 45em; }
-.admonitionblock           { max-width: 35em; }
+.paragraph p, li, dd, .content { max-width: 45em; }
+.admonitionblock               { max-width: 35em; }
 
 div.sectionbody > div.ulist > ul > li {
   list-style-type: square;

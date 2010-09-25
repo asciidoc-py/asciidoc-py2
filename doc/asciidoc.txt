@@ -2451,6 +2451,14 @@ Is equivalent to:
   Version number 42
   endif::revnumber[]
 
+'ifdef' and 'ifndef' macros also accept multiple attribute names:
+
+- Multiple ',' separated attribute names evaluate to defined if if one
+  or more of the attributes is defined, otherwise it's value is
+  undefined.
+- Multiple '+' separated attribute names evaluate to defined if if all
+  of the attributes is defined, otherwise it's value is undefined.
+
 Take a look at the `*.conf` configuration files in the AsciiDoc
 distribution for examples of conditional inclusion macro usage.
 

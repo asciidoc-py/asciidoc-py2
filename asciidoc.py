@@ -29,6 +29,7 @@ SUBS_NORMAL = ('specialcharacters','quotes','attributes',
 SUBS_VERBATIM = ('specialcharacters','callouts')
 
 NAME_RE = r'(?u)[^\W\d][-\w]*'  # Valid section or attribute name.
+OR, AND = ',', '+'              # Attribute list separators.
 
 
 #---------------------------------------------------------------------------
@@ -615,6 +616,27 @@ def update_attrs(attrs,dict):
             raise EAsciiDoc,'illegal attribute name: %s' % k
         attrs[k] = v
 
+def is_attr_defined(attrs,dic):
+    """
+    Check if the sequence of attributes is defined in dictionary 'dic'.
+    Valid 'attrs' sequence syntax:
+    <attr> Return True if single attrbiute is defined.
+    <attr1>,<attr2>,... Return True if one or more attributes are defined.
+    <attr1>+<attr2>+... Return True if all the attributes are defined.
+    """
+    if OR in attrs:
+        for a in attrs.split(OR):
+            if dic.get(a.strip()) is not None:
+                return True
+        else: return False
+    elif AND in attrs:
+        for a in attrs.split(AND):
+            if dic.get(a.strip()) is None:
+                return False
+        else: return True
+    else:
+        return dic.get(attrs.strip()) is not None
+
 def filter_lines(filter_cmd, lines, attrs={}):
     """
     Run 'lines' through the 'filter_cmd' shell command and return the result.
@@ -928,7 +950,6 @@ def subs_attrs(lines, dictionary=None):
                           r'(?P<op>\=|\?|!|#|%|@|\$)' \
                           r'(?P<value>.*?)\}(?!\\)')
         # Multiple names (n1,n2,... or n1+n2+...) -- lower precedence.
-        OR,AND = ',','+'    # Attribute separators.
         reo2 = re.compile(r'(?su)\{(?P<name>[^\\\W][-\w'+OR+AND+r']*?)' \
                           r'(?P<op>\=|\?|!|#|%|@|\$)' \
                           r'(?P<value>.*?)\}(?!\\)')
@@ -3970,7 +3991,7 @@ class Reader(Reader1):
             else:   # ifdef or ifndef.
                 if not target:
                     raise EAsciiDoc,'missing macro target: %s' % result
-                defined = document.attributes.get(target) is not None
+                defined = is_attr_defined(target, document.attributes)
                 attrlist = mo.group('attrlist')
                 if name == 'ifdef':
                     if attrlist:

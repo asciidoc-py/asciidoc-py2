@@ -154,8 +154,8 @@ div.verseblock {
   padding-left: 2.0em;
   margin-right: 10%;
 }
-div.verseblock > div.content {
-  white-space: pre;
+div.verseblock > pre.content {
+  font-family: inherit;
 }
 div.verseblock > div.attribution {
   padding-top: 0.75em;

@@ -339,22 +339,22 @@ tt, div.listingblock > div.content {
 .paragraph p, li, dd, .content { max-width: 45em; }
 .admonitionblock               { max-width: 35em; }
 
-div.sectionbody > div.ulist > ul > li {
+div.sectionbody div.ulist > ul > li {
   list-style-type: square;
   /*font-size: 200%; */
   color: #aaa;
 }
-  div.sectionbody >  div.ulist >  ul > li > * {
+  div.sectionbody div.ulist >  ul > li > * {
     color: black;
     /*font-size: 50%;*/
   }
 
 
-div.sectionbody >  div.ulist >  ul > li >  div.ulist >  ul > li {
+div.sectionbody div.ulist > ul > li div.ulist > ul > li {
   color: #ccd ;
   /*list-style-type: circle ;*/
 }
-  div.sectionbody >  div.ulist >  ul > li >  div.ulist >  ul > li > * {
+  div.sectionbody div.ulist > ul > li div.ulist > ul > li > * {
     color: black ;
   }
 

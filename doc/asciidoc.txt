@@ -2,6 +2,9 @@ AsciiDoc User Guide
 ===================
 Stuart Rackham <srackham@gmail.com>
 :Author Initials: SJR
+:toc:
+:icons:
+:numbered:
 
 AsciiDoc is a text document format for writing documentation,
 articles, manuals, books and UNIX man pages. AsciiDoc files can be
@@ -296,11 +299,9 @@ revision information:
 
 - The Header is optional, but if it is used it must start with a
   document <<X17,title>>.
-- The header can be preceded by comments and <<X18,attribute
-  entries>>.
+- The header can include comments and <<X18,attribute entries>>.
 - Optional Author and Revision information immediately follows the
   header title.
-- The header can include attribute entries.
 - The document header must be separated from the remainder of the
   document by one or more blank lines.
 
@@ -344,7 +345,7 @@ line. The revision information can be one of two formats:
     will be dropped.
   * If a revision remark is specified it must be preceded by a colon.
     The revision remark extends from the colon up to the next blank
-    line or attribute entry and is subject to normal text
+    line, attribute entry or comment and is subject to normal text
     substitutions.
   * If a revision number or remark has been set but the revision date
     has not been set then the revision date is set to the value of the
@@ -2473,9 +2474,7 @@ These examples illustrate the two forms of conditional inclusion. The
 only difference between them is that the first is evaluated at program
 load time while the second is evaluated when the output is written:
 
-  ifdef::world[]
-    Hello World!
-  endif::world[]
+  ifdef::world[Hello World!]
 
   {world#}Hello World!
 
@@ -2485,18 +2484,16 @@ is not defined the whole line is dropped.
 
 The subtle difference between the two types of conditional inclusion
 has implications for AsciiDoc configuration files: AsciiDoc has to
-read the configuration files *before* reading the source document,
+read the configuration files *before* writing the output document,
 this is necessary because the AsciiDoc source syntax is mostly defined
-by the configuration files.  This means that any lines of markup
-enveloped by conditional inclusion macros will be included or excluded
-*before* the attribute entries in the AsciiDoc document header are
-read, so setting related attributes in the AsciiDoc source document
-header will have no effect.  If you need to control configuration file
-markup inclusion with attribute entries in the AsciiDoc source file
-header you need to use attribute references to control inclusion
-instead of conditional inclusion macros (attribute references are
-substituted at the time the output is written rather than at program
-startup).
+by the configuration files.  This means that any AsciiDoc attributes
+set *after the source file header* will not affect conditional
+inclusion macro expansion defined inside configuration files.  If you
+need to control configuration file markup inclusion with attribute
+entries in the body of the AsciiDoc source file you need to use
+attribute references to control inclusion instead of conditional
+inclusion macros (attribute references are substituted at the time the
+output is written rather than at program startup).
 *********************************************************************
 
 Executable system macros
@@ -3606,11 +3603,10 @@ Configuration File Names and Locations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configuration files have a `.conf` file name extension; they are
 loaded implicitly (using predefined file names and locations) or
-explicitly (using the asciidoc(1) `-f` (`--conf-file`) command-line
-option).
+explicitly (using the asciidoc(1) `--conf-file`) command-line option).
 
-Implicit configuration files are loaded from the following directories
-in the following order:
+Implicit configuration files are loaded from the following
+locations:
 
 1. The directory containing the asciidoc executable.
 2. If there is no `asciidoc.conf` file in the directory containing the
@@ -3623,43 +3619,54 @@ in the following order:
 3. The user's `$HOME/.asciidoc` directory (if it exists).
 4. The directory containing the AsciiDoc source file.
 
-The following implicit configuration files from each of the above
-locations are loaded in the following order:
+Implicit configuration files from the above locations are loaded in
+the following order:
 
-1. `asciidoc.conf`
-2. `<backend>.conf`
-3. `<backend>-<doctype>.conf`
+- `asciidoc.conf` from locations 1, 2, 3.
+- The document header is parsed at this point.
+- `<backend>.conf` and `<backend>-<doctype>.conf` from locations 1,
+  2,3.
+- Filter conf files from the `filters` directory in locations 1, 2, 3.
+- `lang-<lang>.conf` from locations 1, 2, 3.
+- `asciidoc.conf` from location 4.
+- `<backend>.conf` and `<backend>-<doctype>.conf` from location 4.
+  2,3.
+- Filter conf files from location 4.
+- `<docfile>.conf` and `<docfile>-<backend>.conf` from location 4.
+- Configuration files specified by asciidoc(1) `--conf-file`
+  command-line options.  The `--conf-file` option can be specified
+  multiple times, in which case configuration files will be processed
+  in the order they appear on the command-line.
 
-Where `<backend>` and `<doctype>` are values specified by the
-asciidoc(1) `-b` (`--backend`) and `-d` (`--doctype`) command-line
-options.
+Where:
 
-Next, configuration files named like the source file will be
-automatically loaded if they are found in the source file directory.
-For example if the source file is `mydoc.txt` and the
-`--backend=html4` option is used then asciidoc(1) will look for
-`mydoc.conf` and `mydoc-html4.conf` in that order.
+- `<backend>` and `<doctype>` are values specified by the asciidoc(1)
+  `-b` (`--backend`) and `-d` (`--doctype`) command-line options.
+- `<infile>` is the path name of the AsciiDoc input file without the
+  file name extension.
+- `<lang>` is a two letter country code set by the the AsciiDoc 'lang'
+  attribute.
 
 Implicit configuration files that don't exist will be silently
 skipped.
 
-The user can explicitly specify additional configuration files using
-the asciidoc(1) `-f` (`--conf-file`) command-line option.  The `-f`
-option can be specified multiple times, in which case configuration
-files will be processed in the order they appear on the command-line.
+[NOTE]
+=====================================================================
+The important point to take away is that backend and language global
+configuration files are loaded *after* the header has been parsed.
+This means that you can set just about any attribute in the document
+header. Here's an example header:
 
-For example, when we translate our AsciiDoc document `mydoc.txt` with:
+  Life's Mysteries
+  ================
+  :author: Hu Nose
+  :doctype: book
+  :toc:
+  :icons:
+  :data-uri:
+  :lang: en
 
-  $ asciidoc -f extra.conf mydoc.txt
-
-The last configuration file to load is the language configuration file
-`lang-<lang>.conf`. `<lang>` is the value of the AsciiDoc `lang`
-attribute (defaults to `en` (English)). You can set the `lang`
-attribute inside the AsciiDoc source file using an
-<<X18,AttributeEntry>> provided it is the first entry and provided it
-precedes the document header, for example:
-
-  :lang: es
+=====================================================================
 
 TIP: Use the asciidoc(1) `-v` (`--verbose`) command-line option to see
 which configuration files are loaded and the order in which they are

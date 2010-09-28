@@ -389,7 +389,7 @@ This is a *bold* a line
 This is a 'strong' line
 This is another _strong_ line
 
-ifndef::backend-docbook[]
+ifndef::basebackend-docbook[]
 .Monospaced paragraph with line breaks
 +This is a *bold* line+ +
 +This is a 'strong' line+ +
@@ -401,7 +401,7 @@ ifndef::backend-docbook[]
 This is a 'strong' line +
 This is another _strong_ line+
 
-endif::backend-docbook[]
+endif::basebackend-docbook[]
 
 .Literal block with quotes substitution
 [subs="quotes"]

@@ -3,6 +3,8 @@
 
 Languages Test
 ==============
+:revnumber: v1.0
+:revdate:   2003-12-21
 
 ifdef::doctype-article[]
 // Translate title.
@@ -100,7 +102,7 @@ A second glossary term::
   The corresponding (indented) definition.
 
 
-ifdef::backend-docbook[]
+ifdef::basebackend-docbook[]
 // Translate title.
 Index
 -----
@@ -109,4 +111,4 @@ Index special section.
 The index is normally left completely empty, it's contents being
 generated automatically by the DocBook toolchain.
 ////////////////////////////////////////////////////////////////
-endif::backend-docbook[]
+endif::basebackend-docbook[]

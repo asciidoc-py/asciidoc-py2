@@ -9,7 +9,7 @@ under the terms of the GNU General Public License (GPL).
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
 
 ### Used by asciidocapi.py ###
-VERSION = '8.6.1'           # See CHANGLOG file for version history.
+VERSION = '8.7.0b1'         # See CHANGLOG file for version history.
 
 MIN_PYTHON_VERSION = 2.4    # Require this version of Python or better.
 
@@ -168,7 +168,9 @@ class Message:
     PROG = os.path.basename(os.path.splitext(__file__)[0])
 
     def __init__(self):
-        self.linenos = None     # Used to globally override line numbers.
+        # Set to True or False to globally override line numbers method
+        # argument. Has no effect when set to None.
+        self.linenos = None
         self.messages = []
 
     def stderr(self,msg=''):
@@ -1271,10 +1273,27 @@ class Lex:
 # Document element classes parse AsciiDoc reader input and write DocBook writer
 # output.
 #---------------------------------------------------------------------------
-class Document:
+class Document(object):
+
+    # doctype property.
+    def getdoctype(self):
+        return self.attributes.get('doctype')
+    def setdoctype(self,doctype):
+        self.attributes['doctype'] = doctype
+    doctype = property(getdoctype,setdoctype)
+
+    # backend property.
+    def getbackend(self):
+        return self.attributes.get('backend')
+    def setbackend(self,backend):
+        if backend:
+            backend = self.attributes.get('backend-alias-' + backend, backend)
+        self.attributes['backend'] = backend
+    backend = property(getbackend,setbackend)
+
     def __init__(self):
-        self.doctype = None     # 'article','manpage' or 'book'.
-        self.backend = None     # -b option argument.
+#        self.doctype = None     # 'article','manpage' or 'book'.
+#        self.backend = None     # -b option argument.
         self.infile = None      # Source file name.
         self.outfile = None     # Output file name.
         self.attributes = InsensitiveDict()
@@ -1284,34 +1303,13 @@ class Document:
         self.safe = False       # Default safe mode.
     def update_attributes(self):
         # Set implicit attributes.
-        if self.infile and os.path.exists(self.infile):
-            t = os.path.getmtime(self.infile)
-        elif self.infile == '<stdin>':
-            t = time.time()
-        else:
-            t = None
-        if t:
-            self.attributes['doctime'] = time_str(t)
-            self.attributes['docdate'] = date_str(t)
         t = time.time()
         self.attributes['localtime'] = time_str(t)
         self.attributes['localdate'] = date_str(t)
         self.attributes['asciidoc-version'] = VERSION
-        self.attributes['backend'] = document.backend
-        self.attributes['doctype'] = document.doctype
-        self.attributes['backend-'+document.backend] = ''
-        self.attributes['doctype-'+document.doctype] = ''
-        self.attributes[document.backend+'-'+document.doctype] = ''
         self.attributes['asciidoc-file'] = APP_FILE
         self.attributes['asciidoc-dir'] = APP_DIR
         self.attributes['user-dir'] = USER_DIR
-        if self.infile != '<stdin>':
-            self.attributes['infile'] = self.infile
-            self.attributes['indir'] = os.path.dirname(self.infile)
-            self.attributes['docfile'] = self.infile
-            self.attributes['docdir'] = os.path.dirname(self.infile)
-            self.attributes['docname'] = os.path.splitext(
-                    os.path.basename(self.infile))[0]
         if config.verbose:
             self.attributes['verbose'] = ''
         # Update with configuration file attributes.
@@ -1322,6 +1320,24 @@ class Document:
         config.load_miscellaneous(config.conf_attrs)
         config.load_miscellaneous(config.cmd_attrs)
         self.attributes['newline'] = config.newline
+        # File name related attributes can't be overridden.
+        if self.infile is not None:
+            if self.infile and os.path.exists(self.infile):
+                t = os.path.getmtime(self.infile)
+            elif self.infile == '<stdin>':
+                t = time.time()
+            else:
+                t = None
+            if t:
+                self.attributes['doctime'] = time_str(t)
+                self.attributes['docdate'] = date_str(t)
+            if self.infile != '<stdin>':
+                self.attributes['infile'] = self.infile
+                self.attributes['indir'] = os.path.dirname(self.infile)
+                self.attributes['docfile'] = self.infile
+                self.attributes['docdir'] = os.path.dirname(self.infile)
+                self.attributes['docname'] = os.path.splitext(
+                        os.path.basename(self.infile))[0]
         if self.outfile:
             if self.outfile != '<stdout>':
                 self.attributes['outfile'] = self.outfile
@@ -1336,7 +1352,7 @@ class Document:
             if ext:
                 self.attributes['filetype'] = ext
                 self.attributes['filetype-'+ext] = ''
-    def load_lang(self,linenos=False):
+    def load_lang(self):
         """
         Load language configuration file.
         """
@@ -1345,7 +1361,6 @@ class Document:
             filename = 'lang-en.conf'   # Default language file.
         else:
             filename = 'lang-' + lang + '.conf'
-        message.linenos = linenos
         if config.load_from_dirs(filename):
             self.attributes['lang'] = lang  # Reinstate new lang attribute.
         else:
@@ -1354,7 +1369,6 @@ class Document:
                 message.error('missing conf file: %s' % filename, halt=True)
             else:
                 message.warning('missing language conf file: %s' % filename)
-        message.linenos = None  # Restore default line number behavior.
     def set_deprecated_attribute(self,old,new):
         """
         Ensures the 'old' name of an attribute that was renamed to 'new' is
@@ -1365,60 +1379,110 @@ class Document:
                 self.attributes[new] = self.attributes[old]
         else:
             self.attributes[old] = self.attributes[new]
-    def consume_attributes_and_comments(self,comments_only=False):
+    def consume_attributes_and_comments(self,comments_only=False,noblanks=False):
+        """
+        Returns True if one or more attributes or comments were consumed.
+        If 'noblanks' is True then consumation halts if a blank line is
+        encountered.
+        """
+        result = False
         finished = False
         while not finished:
             finished = True
+            if noblanks and not reader.read_next(): return result
             if blocks.isnext() and 'skip' in blocks.current.options:
+                result = True
                 finished = False
                 blocks.current.translate()
+            if noblanks and not reader.read_next(): return result
             if macros.isnext() and macros.current.name == 'comment':
+                result = True
                 finished = False
                 macros.current.translate()
             if not comments_only:
                 if AttributeEntry.isnext():
+                    result = True
                     finished = False
                     AttributeEntry.translate()
-                    if AttributeEntry.name == 'lang':
-                        message.error('lang attribute must be first entry')
                 if AttributeList.isnext():
+                    result = True
                     finished = False
                     AttributeList.translate()
+        return result
     def consume_comments(self):
         self.consume_attributes_and_comments(comments_only=True)
-    def translate(self):
-        assert self.doctype in ('article','manpage','book'), \
-            'illegal document type'
+    def parse_header(self,doctype,backend):
+        """
+        Parses header, sets corresponding document attributes and finalizes
+        document doctype and backend properties.
+        Returns False if the document does not have a header.
+        'doctype' and 'backend' are the doctype and backend option values
+        passed on the command-line, None if no command-line option was not
+        specified.
+        """
         assert self.level == 0
-        message.verbose('writing: '+writer.fname,False)
-        # Skip leading comments.
-        self.consume_comments()
-        # Load language configuration file.
-        loaded = False
-        if AttributeEntry.isnext() and AttributeEntry.name == 'lang':
-            # The first non-comment in the document can be 'lang' attribute.
-            AttributeEntry.translate()
-            if 'lang' not in config.cmd_attrs:
-                self.load_lang(linenos=True)
-                loaded = True
-        if not loaded:
-            self.load_lang()
-        # All configuration files have been loaded so can expand templates.
-        config.expand_all_templates()
         # Skip comments and attribute entries that preceed the header.
         self.consume_attributes_and_comments()
+        if doctype is not None:
+            # Command-line overrides header.
+            self.doctype = doctype
+        elif self.doctype is None:
+            # Was not set on command-line or in document header.
+            self.doctype = DEFAULT_DOCTYPE
         # Process document header.
-        has_header =  Lex.next() is Title and Title.level == 0
+        has_header = (Title.isnext() and Title.level == 0
+                      and AttributeList.style() != 'float')
         if self.doctype == 'manpage' and not has_header:
-            message.error('manpage document title is mandatory')
+            message.error('manpage document title is mandatory',halt=True)
+        tmp = self.doctype
         if has_header:
-            Header.translate()
-            # Command-line entries override header derived entries.
-            self.attributes.update(config.cmd_attrs)
-            # DEPRECATED: revision renamed to revnumber.
-            self.set_deprecated_attribute('revision','revnumber')
-            # DEPRECATED: date renamed to revdate.
-            self.set_deprecated_attribute('date','revdate')
+            Header.parse()
+        if self.doctype != tmp and self.doctype == 'manpage':
+            message.error('doctype manpage must be set before the title',halt=True)
+        # Command-line entries override header derived entries.
+        self.attributes.update(config.cmd_attrs)
+        # DEPRECATED: revision renamed to revnumber.
+        self.set_deprecated_attribute('revision','revnumber')
+        # DEPRECATED: date renamed to revdate.
+        self.set_deprecated_attribute('date','revdate')
+        if doctype is not None:
+            # Command-line overrides header.
+            self.doctype = doctype
+        if backend is not None:
+            # Command-line overrides header.
+            self.backend = backend
+        elif self.backend is None:
+            # Was not set on command-line or in document header.
+            self.backend = DEFAULT_BACKEND
+        else:
+            # Has been set in document header.
+            self.backend = self.backend # Translate alias in header.
+        assert self.doctype in ('article','manpage','book'), 'illegal document type'
+        return has_header
+    def translate(self,has_header):
+        if self.doctype == 'manpage':
+            # Translate mandatory NAME section.
+            if Lex.next() is not Title:
+                message.error('name section expected')
+            else:
+                Title.translate()
+                if Title.level != 1:
+                    message.error('name section title must be at level 1')
+                if not isinstance(Lex.next(),Paragraph):
+                    message.error('malformed name section body')
+                lines = reader.read_until(r'^$')
+                s = ' '.join(lines)
+                mo = re.match(r'^(?P<manname>.*?)\s+-\s+(?P<manpurpose>.*)$',s)
+                if not mo:
+                    message.error('malformed name section body')
+                self.attributes['manname'] = mo.group('manname').strip()
+                self.attributes['manpurpose'] = mo.group('manpurpose').strip()
+                names = [s.strip() for s in self.attributes['manname'].split(',')]
+                if len(names) > 9:
+                    message.warning('to many manpage names')
+                for i,name in enumerate(names):
+                    self.attributes['manname%d' % (i+1)] = name
+        if has_header:
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr,trace='header')
@@ -1432,7 +1496,7 @@ class Document:
                     Section.translate_body()
                     writer.write(etag,trace='preamble close')
         else:
-            document.process_author_names()
+            self.process_author_names()
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr,trace='header')
@@ -1530,7 +1594,7 @@ class Header:
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     @staticmethod
-    def translate():
+    def parse():
         assert Lex.next() is Title and Title.level == 0
         Title.translate()
         attrs = document.attributes # Alias for readability.
@@ -1548,24 +1612,27 @@ class Header:
                     mantitle = mantitle.lower()
                 attrs['mantitle'] = mantitle;
                 attrs['manvolnum'] = mo.group('manvolnum').strip()
-        AttributeEntry.translate_all()
+        document.consume_attributes_and_comments(noblanks=True)
         s = reader.read_next()
         mo = None
         if s:
+            # Process first header line after the title that is not a comment
+            # or an attribute entry.
             s = reader.read()
             mo = re.match(Header.RCS_ID_RE,s)
             if not mo:
                 document.parse_author(s)
-                AttributeEntry.translate_all()
+                document.consume_attributes_and_comments(noblanks=True)
                 if reader.read_next():
-                    # Parse revision line.
+                    # Process second header line after the title that is not a
+                    # comment or an attribute entry.
                     s = reader.read()
                     s = subs_attrs(s)
                     if s:
                         mo = re.match(Header.RCS_ID_RE,s)
                         if not mo:
                             mo = re.match(Header.REV_LINE_RE,s)
-            AttributeEntry.translate_all()
+            document.consume_attributes_and_comments(noblanks=True)
         s = attrs.get('revnumber')
         if s:
             mo = re.match(Header.RCS_ID_RE,s)
@@ -1580,40 +1647,19 @@ class Header:
             if revremark is not None:
                 revremark = [revremark]
                 # Revision remarks can continue on following lines.
-                while reader.read_next() and not AttributeEntry.isnext():
+                while reader.read_next():
+                    if document.consume_attributes_and_comments(noblanks=True):
+                        break
                     revremark.append(reader.read())
                 revremark = Lex.subs(revremark,['normal'])
                 revremark = '\n'.join(revremark).strip()
                 attrs['revremark'] = revremark
-                AttributeEntry.translate_all()
             revdate = mo.group('revdate')
             if revdate:
                 attrs['revdate'] = revdate.strip()
             elif revnumber or revremark:
                 # Set revision date to ensure valid DocBook revision.
                 attrs['revdate'] = attrs['docdate']
-        if document.doctype == 'manpage':
-            # Translate mandatory NAME section.
-            if Lex.next() is not Title:
-                message.error('name section expected')
-            else:
-                Title.translate()
-                if Title.level != 1:
-                    message.error('name section title must be at level 1')
-                if not isinstance(Lex.next(),Paragraph):
-                    message.error('malformed name section body')
-                lines = reader.read_until(r'^$')
-                s = ' '.join(lines)
-                mo = re.match(r'^(?P<manname>.*?)\s+-\s+(?P<manpurpose>.*)$',s)
-                if not mo:
-                    message.error('malformed name section body')
-                attrs['manname'] = mo.group('manname').strip()
-                attrs['manpurpose'] = mo.group('manpurpose').strip()
-                names = [s.strip() for s in attrs['manname'].split(',')]
-                if len(names) > 9:
-                    message.warning('to many manpage names')
-                for i,name in enumerate(names):
-                    attrs['manname%d' % (i+1)] = name
         document.process_author_names()
 
 class AttributeEntry:
@@ -1690,11 +1736,6 @@ class AttributeEntry:
                 document.attributes[attr.name] = attr.value
             elif attr.name in document.attributes:
                 del document.attributes[attr.name]
-    @staticmethod
-    def translate_all():
-        """ Process all contiguous attribute lines on reader."""
-        while AttributeEntry.isnext():
-            AttributeEntry.translate()
 
 class AttributeList:
     """Static methods and attributes only."""
@@ -4102,6 +4143,7 @@ class Writer:
             self.f = sys.stdout
         else:
             self.f = open(fname,'wb+')
+        message.verbose('writing: '+writer.fname,False)
         if bom:
             self.f.write(bom)
         self.lines_out = 0
@@ -4229,7 +4271,9 @@ class Config:
         if os.path.realpath(fname) in self.loaded:
             return True
         rdr = Reader()  # Reader processes system macros.
+        message.linenos = False         # Disable document line numbers.
         rdr.open(fname)
+        message.linenos = None
         self.fname = fname
         reo = re.compile(r'(?u)^\[(?P<section>[^\W\d][\w-]*)\]\s*$')
         sections = OrderedDict()
@@ -4270,8 +4314,7 @@ class Config:
         rdr.close()
         self.load_sections(sections)
         self.loaded.append(os.path.realpath(fname))
-        if document.infile is not None:
-            document.update_attributes() # So they are available immediately.
+        document.update_attributes() # So they are available immediately.
         return True
 
     def load_sections(self,sections):
@@ -4314,7 +4357,9 @@ class Config:
         macros.load(sections.get('macros',()))
 
     def get_load_dirs(self):
-        """Return list of well known paths to search for conf files."""
+        """
+        Return list of well known paths with conf files.
+        """
         result = []
         if localapp():
             # Load from folders in asciidoc executable directory.
@@ -4325,9 +4370,6 @@ class Config:
         # Load configuration files from ~/.asciidoc if it exists.
         if USER_DIR is not None:
             result.append(USER_DIR)
-        # Load configuration files from document directory.
-        if document.infile not in (None,'<stdin>'):
-            result.append(os.path.dirname(document.infile))
         return result
 
     def find_in_dirs(self, filename, dirs=None):
@@ -4357,29 +4399,27 @@ class Config:
                 count += 1
         return count != 0
 
-    def load_all(self, dirs=None):
+    def load_backend(self, dirs=None):
         """
-        Load the standard configuration (except the language file)
-        files from dirs list.
+        Load the backend configuration files from dirs list.
         If dirs not specified try all the well known locations.
         """
         if dirs is None:
             dirs = self.get_load_dirs()
         for d in dirs:
-            # asciidoc.conf's take precedence over other conf files.
-            self.load_file('asciidoc.conf',d)
-        alias = 'backend-alias-' + document.backend
-        if alias in document.attributes:
-            document.backend = document.attributes[alias]
-            document.update_attributes()   # Update backend related attributes.
-        f = document.backend + '.conf'
-        if not self.find_in_dirs(f):
-            message.warning('missing backend conf file: %s' % f, linenos=False)
-        for d in dirs:
             conf = document.backend + '.conf'
             self.load_file(conf,d)
             conf = document.backend + '-' + document.doctype + '.conf'
             self.load_file(conf,d)
+
+    def load_filters(self, dirs=None):
+        """
+        Load filter configuration files from 'filters' directory in dirs list.
+        If dirs not specified try all the well known locations.
+        """
+        if dirs is None:
+            dirs = self.get_load_dirs()
+        for d in dirs:
             # Load filter .conf files.
             filtersdir = os.path.join(d,'filters')
             for dirpath,dirnames,filenames in os.walk(filtersdir):
@@ -4546,14 +4586,6 @@ class Config:
         [tags] section. Raise error if not found. If a dictionary 'd' is
         passed then merge with document attributes and perform attribute
         substitution on tags."""
-
-        # TODO: Tags should be stored a single string, not split into start
-        # and end tags since most are going to be substituted anyway (see
-        # subs_tag() for how we should process them. parse_tags() (above)
-        # should only validate i.e. parse_check(). This routine should be renamed
-        # split_tag() and would call subs_tag(). self.tags dictionary values
-        # would be strings not tuples.
-
         if not name in self.tags:
             raise EAsciiDoc, 'missing tag: %s' % name
         stag,etag = self.tags[name]
@@ -4735,7 +4767,6 @@ class Config:
 # Deprecated old table classes follow.
 # Naming convention is an _OLD name suffix.
 # These will be removed from future versions of AsciiDoc
-#
 
 def join_lines_OLD(lines):
     """Return a list in which lines terminated with the backslash line
@@ -5266,12 +5297,8 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
     The AsciiDoc document is read from file object src the translated
     DocBook file written to file object dst."""
     try:
-        if doctype not in ('article','manpage','book'):
+        if doctype not in (None,'article','manpage','book'):
             raise EAsciiDoc,'illegal document type'
-        document.backend = backend
-        document.doctype = doctype
-        document.infile = infile
-        document.update_attributes()
         # Set processing options.
         for o in options:
             if o == '-c': config.dumping = True
@@ -5280,47 +5307,73 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # Check the infile exists.
         if infile != '<stdin>' and not os.path.isfile(infile):
             raise EAsciiDoc,'input file %s missing' % infile
+        document.infile = infile
+        # Load asciidoc.conf files.
+        if not config.load_from_dirs('asciidoc.conf'):
+            raise EAsciiDoc,'configuration file asciidoc.conf missing'
+        AttributeList.initialize()
+        # Open input file and parse document header.
+        reader.tabsize = config.tabsize
+        reader.open(infile)
+        has_header = document.parse_header(doctype,backend)
+        # doctype is now finalized.
+        document.attributes['doctype-'+document.doctype] = ''
+        # Load backend configuration files.
         if '-e' not in options:
-            config.load_all()
+            f = document.backend + '.conf'
+            if not config.find_in_dirs(f):
+                message.warning('missing backend conf file: %s' % f, linenos=False)
+            config.load_backend()
+        # backend is now finalized.
+        document.attributes['backend-'+document.backend] = ''
+        document.attributes[document.backend+'-'+document.doctype] = ''
+        # Load filters and language file.
+        if '-e' not in options:
+            config.load_filters()
+            document.load_lang()
+        # Load local conf files (conf files in the input file directory).
         if infile != '<stdin>':
-            # Load implicit document specific configuration files if they exist.
-            config.load_file(os.path.splitext(infile)[0] + '.conf')
-            config.load_file(os.path.splitext(infile)[0] + '-' + backend + '.conf')
-        # If user specified configuration file(s) overlay the defaults.
+            d =os.path.dirname(infile)
+            config.load_from_dirs('asciidoc.conf', [d])
+            config.load_backend([d])
+            config.load_filters([d])
+            # Load document specific configuration files.
+            f = os.path.splitext(infile)[0]
+            config.load_file(f + '.conf')
+            config.load_file(f + '-' + document.backend + '.conf')
+        # Load conf files specified on the command-line.
         if confiles:
             for conf in confiles:
                 if os.path.isfile(conf):
                     config.load_file(conf)
                 else:
                     raise EAsciiDoc,'configuration file %s missing' % conf
-        document.update_attributes()
-        # Check configuration for consistency.
-        config.validate()
-        # Build outfile name now all conf files have been read.
+        # Build outfile name.
         if outfile is None:
-            outfile = os.path.splitext(infile)[0] + '.' + backend
+            outfile = os.path.splitext(infile)[0] + '.' + document.backend
             if config.outfilesuffix:
                 # Change file extension.
                 outfile = os.path.splitext(outfile)[0] + config.outfilesuffix
         document.outfile = outfile
+        document.update_attributes()
+        # Check configuration for consistency.
+        config.validate()
+        paragraphs.initialize()
+        lists.initialize()
         if config.dumping:
             config.dump()
         else:
-            reader.tabsize = config.tabsize
-            reader.open(infile)
+            # Configuration is fully loaded so can expand templates.
+            config.expand_all_templates()
+            writer.newline = config.newline
             try:
-                writer.newline = config.newline
                 writer.open(outfile, reader.bom)
                 try:
-                    AttributeList.initialize()
-                    paragraphs.initialize()
-                    lists.initialize()
-                    document.update_attributes()   # Add file name related.
-                    document.translate()
+                    document.translate(has_header) # Generate the output.
                 finally:
                     writer.close()
             finally:
-                reader.closefile()  # Keep reader state for postmortem.
+                reader.closefile()
     except KeyboardInterrupt:
         raise
     except Exception,e:
@@ -5429,8 +5482,8 @@ def execute(cmd,opts,args):
     if len(args) > 1:
         usage('To many arguments')
         sys.exit(1)
-    backend = DEFAULT_BACKEND
-    doctype = DEFAULT_DOCTYPE
+    backend = None
+    doctype = None
     confiles = []
     outfile = None
     options = []
@@ -5448,10 +5501,12 @@ def execute(cmd,opts,args):
             sys.exit(0)
         if o in ('-b','--backend'):
             backend = v
+#            config.cmd_attrs['backend'] = v
         if o in ('-c','--dump-conf'):
             options.append('-c')
         if o in ('-d','--doctype'):
             doctype = v
+#            config.cmd_attrs['doctype'] = v
         if o in ('-e','--no-conf'):
             options.append('-e')
         if o in ('-f','--conf-file'):
@@ -5488,9 +5543,9 @@ def execute(cmd,opts,args):
     if len(args) == 0:
         usage('No source file specified')
         sys.exit(1)
-    if not backend:
-        usage('No --backend option specified')
-        sys.exit(1)
+#    if not backend:
+#        usage('No --backend option specified')
+#        sys.exit(1)
     stdin,stdout = sys.stdin,sys.stdout
     try:
         infile = args[0]

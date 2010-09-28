@@ -1434,11 +1434,8 @@ class Document(object):
                       and AttributeList.style() != 'float')
         if self.doctype == 'manpage' and not has_header:
             message.error('manpage document title is mandatory',halt=True)
-        tmp = self.doctype
         if has_header:
             Header.parse()
-        if self.doctype != tmp and self.doctype == 'manpage':
-            message.error('doctype manpage must be set before the title',halt=True)
         # Command-line entries override header derived entries.
         self.attributes.update(config.cmd_attrs)
         # DEPRECATED: revision renamed to revnumber.
@@ -1599,19 +1596,6 @@ class Header:
         Title.translate()
         attrs = document.attributes # Alias for readability.
         attrs['doctitle'] = Title.attributes['title']
-        if document.doctype == 'manpage':
-            # manpage title formatted like mantitle(manvolnum).
-            mo = re.match(r'^(?P<mantitle>.*)\((?P<manvolnum>.*)\)$',
-                          attrs['doctitle'])
-            if not mo:
-                message.error('malformed manpage title')
-            else:
-                mantitle = mo.group('mantitle').strip()
-                # mantitle is lowered only if in ALL CAPS
-                if mantitle == mantitle.upper():
-                    mantitle = mantitle.lower()
-                attrs['mantitle'] = mantitle;
-                attrs['manvolnum'] = mo.group('manvolnum').strip()
         document.consume_attributes_and_comments(noblanks=True)
         s = reader.read_next()
         mo = None
@@ -1661,6 +1645,19 @@ class Header:
                 # Set revision date to ensure valid DocBook revision.
                 attrs['revdate'] = attrs['docdate']
         document.process_author_names()
+        if document.doctype == 'manpage':
+            # manpage title formatted like mantitle(manvolnum).
+            mo = re.match(r'^(?P<mantitle>.*)\((?P<manvolnum>.*)\)$',
+                          attrs['doctitle'])
+            if not mo:
+                message.error('malformed manpage title')
+            else:
+                mantitle = mo.group('mantitle').strip()
+                # mantitle is lowered only if in ALL CAPS
+                if mantitle == mantitle.upper():
+                    mantitle = mantitle.lower()
+                attrs['mantitle'] = mantitle;
+                attrs['manvolnum'] = mo.group('manvolnum').strip()
 
 class AttributeEntry:
     """Static methods and attributes only."""

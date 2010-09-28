@@ -1301,8 +1301,10 @@ class Document(object):
         self.has_errors = False # Set true if processing errors were flagged.
         self.has_warnings = False # Set true if warnings were flagged.
         self.safe = False       # Default safe mode.
-    def update_attributes(self):
-        # Set implicit attributes.
+    def update_attributes(self,attrs=None):
+        """
+        Set implicit attributes and attributes in 'attrs'.
+        """
         t = time.time()
         self.attributes['localtime'] = time_str(t)
         self.attributes['localdate'] = date_str(t)
@@ -1313,11 +1315,13 @@ class Document(object):
         if config.verbose:
             self.attributes['verbose'] = ''
         # Update with configuration file attributes.
-        self.attributes.update(config.conf_attrs)
+        if attrs:
+            self.attributes.update(attrs)
         # Update with command-line attributes.
         self.attributes.update(config.cmd_attrs)
         # Extract miscellaneous configuration section entries from attributes.
-        config.load_miscellaneous(config.conf_attrs)
+        if attrs:
+            config.load_miscellaneous(attrs)
         config.load_miscellaneous(config.cmd_attrs)
         self.attributes['newline'] = config.newline
         # File name related attributes can't be overridden.
@@ -1409,8 +1413,6 @@ class Document(object):
                     finished = False
                     AttributeList.translate()
         return result
-    def consume_comments(self):
-        self.consume_attributes_and_comments(comments_only=True)
     def parse_header(self,doctype,backend):
         """
         Parses header, sets corresponding document attributes and finalizes
@@ -1709,8 +1711,7 @@ class AttributeEntry:
                 attr.value = None
             # Strip white space and illegal name chars.
             attr.name = re.sub(r'(?u)[^\w\-_]', '', attr.name).lower()
-            # Don't override command-line attributes (the exception is the
-            # system 'trace' attribute).
+            # Don't override most command-line attributes.
             if attr.name in config.cmd_attrs \
                     and attr.name not in ('trace','numbered'):
                 return
@@ -4309,15 +4310,18 @@ class Config:
             else:
                 sections[section] = contents
         rdr.close()
-        self.load_sections(sections)
+        attrs = {}
+        self.load_sections(sections,attrs)
         self.loaded.append(os.path.realpath(fname))
-        document.update_attributes() # So they are available immediately.
+        document.update_attributes(attrs) # So they are available immediately.
         return True
 
-    def load_sections(self,sections):
-        '''Loads sections dictionary. Each dictionary entry contains a
+    def load_sections(self,sections,attrs=None):
+        """
+        Loads sections dictionary. Each dictionary entry contains a
         list of lines.
-        '''
+        Updates 'attrs' with parsed [attributes] section entries.
+        """
         # Delete trailing blank lines from sections.
         for k in sections.keys():
             for i in range(len(sections[k])-1,-1,-1):
@@ -4332,11 +4336,11 @@ class Config:
         d = {}
         parse_entries(sections.get('miscellaneous',()), d, unquote=True,
                 allow_name_only=True)
-        update_attrs(self.conf_attrs,d)
-        d = {}
         parse_entries(sections.get('attributes',()), d, unquote=True,
                 allow_name_only=True)
         update_attrs(self.conf_attrs,d)
+        if attrs is not None:
+            attrs.update(d)
         d = {}
         parse_entries(sections.get('titles',()),d)
         Title.load(d)

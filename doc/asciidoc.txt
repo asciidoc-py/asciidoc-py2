@@ -2359,8 +2359,6 @@ that support inline macro expansion. Example comment line:
 If the 'showcomments' attribute is defined comment lines are written
 to the output:
 
-- The normal AsciiDoc inline text formatting is applied to comment
-  lines.
 - In DocBook the comment lines are enclosed by the 'remark' element
   (which may or may not be rendered by your toolchain).
 - The 'showcomments' attribute does not expose <<X26,Comment Blocks>>.

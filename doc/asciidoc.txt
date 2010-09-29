@@ -165,6 +165,11 @@ xhtml11::
   This backend generates XHTML 1.1 markup styled with CSS2. Output
   files have an `.html` extension.
 
+slidy::
+  Use this backend to generate self-contained
+  http://www.w3.org/Talks/Tools/Slidy2/[Sidy] HTML slideshows for your
+  web browser from AsciiDoc documents.
+
 wordpress::
   A minor variant of the 'html4' backend to support
   http://srackham.wordpress.com/blogpost1/[blogpost].
@@ -1447,7 +1452,7 @@ See also <<X47,Admonition Icons and Captions>>.
 [[X29]]
 Open Blocks
 ~~~~~~~~~~~
-An 'OpenBlock' groups a set of block elements. 'Openblock' usage:
+An 'OpenBlock' groups a set of block elements. 'OpenBlock' usage:
 
 . <<X15,List item continuation>>.
 

@@ -4459,6 +4459,7 @@ class Config:
     def validate(self):
         """Check the configuration for internal consistancy. Called after all
         configuration files have been loaded."""
+        message.linenos = False     # Disable document line numbers.
         # Heuristic validate that at least one configuration file was loaded.
         if not self.specialchars or not self.tags or not lists:
             raise EAsciiDoc,'incomplete configuration files'
@@ -4495,6 +4496,7 @@ class Config:
         tables_OLD.validate()
         tables.validate()
         macros.validate()
+        message.linenos = None
 
     def entries_section(self,section_name):
         """
@@ -5357,6 +5359,8 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 outfile = os.path.splitext(outfile)[0] + config.outfilesuffix
         document.outfile = outfile
         document.update_attributes()
+        # Configuration is fully loaded so can expand templates.
+        config.expand_all_templates()
         # Check configuration for consistency.
         config.validate()
         paragraphs.initialize()
@@ -5364,8 +5368,6 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         if config.dumping:
             config.dump()
         else:
-            # Configuration is fully loaded so can expand templates.
-            config.expand_all_templates()
             writer.newline = config.newline
             try:
                 writer.open(outfile, reader.bom)

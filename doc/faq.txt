@@ -139,20 +139,20 @@ Example:
 [listing]
 .........................................
 :showcomments:
-// A *block comment line*.
+// A block comment line.
 
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-// An *inline comment line*.
+// An inline comment line.
 adolescens.
 .........................................
 
 Is rendered as:
 
 :showcomments:
-// A *block comment line*.
+// A block comment line.
 
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
-// An *inline comment line*.
+// An inline comment line.
 adolescens.
 
 NOTE: link:userguide.html#X26[Comment blocks] are never displayed.

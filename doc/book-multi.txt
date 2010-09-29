@@ -38,6 +38,12 @@ documents.
 The First Part of the Book
 ==========================
 
+[partintro]
+.Optional part introduction title
+--
+Optional part introduction goes here.
+--
+
 The First Chapter
 -----------------
 Chapters can be grouped by preceeding them with a level 0 Book Part

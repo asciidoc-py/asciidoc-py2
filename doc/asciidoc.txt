@@ -1266,15 +1266,6 @@ Any AsciiDoc SectionBody element (apart from
 SidebarBlocks) can be placed inside a sidebar.
 ************************************************
 
-Apply the 'abstract' style to generate an abstract, for example:
-
----------------------------------------------------------------------
-[abstract]
-************************************************
-In this paper we will ...
-************************************************
----------------------------------------------------------------------
-
 [[X26]]
 Comment Blocks
 ~~~~~~~~~~~~~~
@@ -1456,18 +1447,25 @@ See also <<X47,Admonition Icons and Captions>>.
 [[X29]]
 Open Blocks
 ~~~~~~~~~~~
-An 'OpenBlock' groups a set of elements -- the enclosed elements are
-rendered normally. Open blocks are used primarily for <<X15,list item
-continuation>>.
+An 'OpenBlock' groups a set of block elements. 'Openblock' usage:
 
-- An open block adds no markup to DocBook outputs.
-- An open block adds no markup to HTML outputs unless either 'id' or
-  'role' attributes are specified, in which case the block will be
-  enclosed by a 'div' element:
+. <<X15,List item continuation>>.
 
-  . The 'id' attribute sets the 'id' attribute of the output 'div'.
-  . The 'role' attribute sets the 'class' attribute of the output
-    'div'.
+. Apply the 'abstract' style to generate an abstract, for example:
+
+  [abstract]
+  --
+  In this paper we will ...
+  --
+
+. Apply the 'partintro' style to generate a book part introduction for
+  a multi-part book, for example:
+
+  [partintro]
+  .Optional part introduction title
+  --
+  Optional part introduction goes here.
+  --
 
 
 [[X64]]

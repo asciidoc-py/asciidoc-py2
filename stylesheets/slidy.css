@@ -422,7 +422,24 @@ div.initial_prompt { display: none; visibility: hidden }
   div.slide.first-slide { page-break-before: avoid }
 }
 
-/* SJR */
-div.olist, div.ulist {
-  margin: 0.8em 0.2em;
+
+/* SJR: AsciiDoc slidy backend tweaks */
+
+ol, ul {
+  margin: 0.8em 1.5em 0.8em 1.8em;
+}
+li > ul, li > ol {
+  margin-top: 0.5em;
+}
+
+.outline > li.folded,
+.outline > li.unfolded {
+  color: #527bbd;
+}
+ul > li{ color: #aaa; }
+ul > li > *, ol > li > * { color: black; }
+
+li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }

@@ -49,6 +49,38 @@ sed pede litora.
 . Volutpat tristique nec.
 
 
+Outline Elements
+----------------
+The following list is a Slidy 'outline' list -- nested bulleted or
+numbered lists are expanded when the enclosing list item (the ones
+with blue bullet points or numbers) are clicked.
+
+[role="outline"]
+- Rhoncus pede justo.
+  * Rhoncus pede justo.
+  * Velit pede dolor.
+
+- Velit pede dolor.
+  * Iaculis commodo et.
++
+NOTE: 'Note' admonition paragraph.
+
+  * Volutpat tristique nec.
++
+image::images/tiger.png[]
+  * Iaculis commodo et.
+  * Volutpat tristique nec.
+
+- Iaculis commodo et.
+[role="outline"]
+  . Rhoncus pede justo.
+  ** Velit pede dolor.
+  ** Iaculis commodo et.
+  . Volutpat tristique nec.
+
+- Volutpat tristique nec.
+
+
 AsciiDoc Elements
 -----------------
 NOTE: 'Note' admonition paragraph.

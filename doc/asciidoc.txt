@@ -3666,6 +3666,7 @@ header. Here's an example header:
   :icons:
   :data-uri:
   :lang: en
+  :encoding: iso-8859-1
 
 =====================================================================
 

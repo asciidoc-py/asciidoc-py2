@@ -74,6 +74,12 @@ If you set the 'copyright' attribute it will be displayed in the Slidy
 menu bar at the bottom of the slide. If the 'copyright' attribute is
 not define then the author name, if it is defined, will be displayed.
 
+outline::
+Setting the 'role' attribute to 'outline' in a bulleted or numbered
+list allows nested lists to be expanded and collapsed using the mouse.
+Nested lists are expanded when an enclosing list item (the ones with
+blue bullet points or numbers) is clicked.
+
 
 Stylesheets
 -----------

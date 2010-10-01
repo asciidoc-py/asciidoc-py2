@@ -679,13 +679,17 @@ def filter_lines(filter_cmd, lines, attrs={}):
     if not os.path.dirname(cmd):
         # Filter command has no directory path so search filter directories.
         filtername = attrs.get('style')
-        if USER_DIR:
-            found = findfilter(filtername, USER_DIR, cmd)
+        d = document.attributes.get('docdir')
+        if d:
+            found = findfilter(filtername, d, cmd)
         if not found:
-            if localapp():
-                found = findfilter(filtername, APP_DIR, cmd)
-            else:
-                found = findfilter(filtername, CONF_DIR, cmd)
+            if USER_DIR:
+                found = findfilter(filtername, USER_DIR, cmd)
+            if not found:
+                if localapp():
+                    found = findfilter(filtername, APP_DIR, cmd)
+                else:
+                    found = findfilter(filtername, CONF_DIR, cmd)
     else:
         if os.path.isfile(cmd):
             found = cmd

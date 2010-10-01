@@ -5508,6 +5508,14 @@ icons. Defaults to `./images/icons`.
 If this attribute is defined it is prepended to the target image file
 name paths in inline and block image macros.
 
+|keywords, description, title |html4, xhtml11 |
+The 'keywords' and 'description' attributes set the correspondingly
+named meta tag contents; the 'title' attribute sets the title tag
+contents.  Their principle use is for SEO (Search Engine
+Optimisation).  All three are optional, but if they are used they must
+be set in the document header (or on the command-line). If 'title' is
+not specified the AsciiDoc document title is used.
+
 |linkcss |xhtml11 |
 Link CSS stylesheets and JavaScripts (see the 'stylesdir' and
 'scriptsdir' attributes below). By default 'linkcss' is undefined in

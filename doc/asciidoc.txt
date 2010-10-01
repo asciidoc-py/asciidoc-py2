@@ -5,13 +5,15 @@ Stuart Rackham <srackham@gmail.com>
 :toc:
 :icons:
 :numbered:
+:website: http://www.methods.co.nz/asciidoc/
 
 AsciiDoc is a text document format for writing documentation,
-articles, manuals, books and UNIX man pages. AsciiDoc files can be
-translated to HTML and DocBook markups using the asciidoc(1) command.
-AsciiDoc is highly configurable: both the AsciiDoc source file syntax
-and the backend output markups (which can be almost any type of
-SGML/XML markup) can be customized and extended by the user.
+articles, manuals, books, slideshows and UNIX man pages. AsciiDoc
+files can be translated to HTML and DocBook markups using the
+asciidoc(1) command.  AsciiDoc is highly configurable: both the
+AsciiDoc source file syntax and the backend output markups (which can
+be almost any type of SGML/XML markup) can be customized and extended
+by the user.
 
 .This document
 **********************************************************************
@@ -78,8 +80,8 @@ The best way to quickly get a feel for AsciiDoc is to view the
 AsciiDoc web site and/or distributed examples:
 
 - Take a look at the linked examples on the AsciiDoc web site home
-  page http://www.methods.co.nz/asciidoc/.  Press the 'Page Source'
-  sidebar menu item to view corresponding AsciiDoc source.
+  page {website}.  Press the 'Page Source' sidebar menu item to view
+  corresponding AsciiDoc source.
 - Read the `*.txt` source files in the distribution `./doc` directory
   along with the corresponding HTML and DocBook XML files.
 
@@ -167,8 +169,10 @@ xhtml11::
 
 slidy::
   Use this backend to generate self-contained
-  http://www.w3.org/Talks/Tools/Slidy2/[Sidy] HTML slideshows for your
-  web browser from AsciiDoc documents.
+  http://www.w3.org/Talks/Tools/Slidy2/[Slidy] HTML slideshows for
+  your web browser from AsciiDoc documents. The Slidy backend is
+  documented in the distribution `doc/slidy.txt` file and
+  {website}slidy.html[online].
 
 wordpress::
   A minor variant of the 'html4' backend to support
@@ -299,16 +303,20 @@ Where:
 [[X95]]
 Header
 ~~~~~~
-The Header contains a document title plus optional authorship and
-revision information:
+The Header contains document meta-data, typically title plus optional
+authorship and revision information:
 
 - The Header is optional, but if it is used it must start with a
   document <<X17,title>>.
-- The header can include comments and <<X18,attribute entries>>.
+- The header can include comments.
+- The header can include <<X18,attribute entries>>, typically
+  'doctype', 'lang', 'encoding', 'icons', 'data-uri', 'toc',
+  'numbered'.  Header attributes are overridden by command-line
+  attributes.
 - Optional Author and Revision information immediately follows the
   header title.
 - The document header must be separated from the remainder of the
-  document by one or more blank lines.
+  document by one or more blank lines and cannot contain blank lines.
 
 Here's an example AsciiDoc document header:
 
@@ -2067,7 +2075,7 @@ list'.  The usual syntax is `<name>:<target>[<attrlist>]` (for
 inline macros) and `<name>::<target>[<attrlist>]` (for block
 macros).  Here are some examples:
 
-  http://www.methods.co.nz/asciidoc/index.html[Asciidoc home page]
+  http://www.docbook.org/[DocBook.org]
   include::chapt1.txt[tabsize=2]
   mailto:srackham@gmail.com[]
 
@@ -2111,16 +2119,16 @@ rendered using predefined inline macros.
 
 Here are some examples:
 
-  http://www.methods.co.nz/asciidoc/[The AsciiDoc home page]
-  http://www.methods.co.nz/asciidoc/
+  http://www.docbook.org/[DocBook.org]
+  http://www.docbook.org/
   mailto:joe.bloggs@foobar.com[email Joe Bloggs]
   joe.bloggs@foobar.com
 
 Which are rendered:
 
-http://www.methods.co.nz/asciidoc/[The AsciiDoc home page]
+http://www.docbook.org/[DocBook.org]
 
-http://www.methods.co.nz/asciidoc/
+http://www.docbook.org/
 
 mailto:joe.bloggs@foobar.com[email Joe Bloggs]
 
@@ -3214,8 +3222,8 @@ math] can be included in documents that are processed by
 
   latexmath:[$C = \alpha + \beta Y^{\gamma} + \epsilon$]
 
-For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
-website] or the distributed `doc/latexmath.txt` file.
+For more examples see the {website}[AsciiDoc website] or the
+distributed `doc/latexmath.txt` file.
 
 ASCIIMathML
 ~~~~~~~~~~~
@@ -3235,8 +3243,8 @@ command-line option.  Example inline formula:
 
   asciimath:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
 
-For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
-website] or the distributed `doc/asciimathml.txt` file.
+For more examples see the {website}[AsciiDoc website] or the
+distributed `doc/asciimathml.txt` file.
 
 LaTeXMathML
 ~~~~~~~~~~~
@@ -3260,11 +3268,8 @@ formula:
 
   latexmath:[$\sum_{n=1}^\infty \frac{1}{2^n}$]
 
-For more examples see the http://www.methods.co.nz/asciidoc/[AsciiDoc
-website] or the distributed `doc/latexmathml.txt` file.
-
-There are more examples on the
-http://www.methods.co.nz/asciidoc/[AsciiDoc website].
+For more examples see the {website}[AsciiDoc website] or the
+distributed `doc/latexmathml.txt` file.
 
 MathML
 ~~~~~~
@@ -4551,19 +4556,18 @@ def sub_word(mo):
 Source Code Highlighter Filter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A
-http://www.methods.co.nz/asciidoc/source-highlight-filter.html[source
-code highlighter filter] can be found in the AsciiDoc distribution
-`./filters` directory.
+{website}source-highlight-filter.html[source code highlighter filter]
+can be found in the AsciiDoc distribution `./filters` directory.
 
 [[X58]]
 Music Filter
 ~~~~~~~~~~~~
-A http://www.methods.co.nz/asciidoc/music-filter.html[music filter] is
-included in the distribution `./filters` directory. It translates
-music in http://lilypond.org/[LilyPond] or
-http://abcnotation.org.uk/[ABC] notation to standard Western classical
-notation in the form of a trimmed PNG image which is automatically
-inserted into the output document.
+A {website}music-filter.html[music filter] is included in the
+distribution `./filters` directory. It translates music in
+http://lilypond.org/[LilyPond] or http://abcnotation.org.uk/[ABC]
+notation to standard Western classical notation in the form of a
+trimmed PNG image which is automatically inserted into the output
+document.
 
 
 [[X12]]
@@ -4627,8 +4631,8 @@ route:
 
 On the other hand, HTML output directly from AsciiDoc is much faster,
 is easily customized and can be used in situations where there is no
-suitable DocBook toolchain (for example, see the
-http://www.methods.co.nz/asciidoc/[AsciiDoc website]).
+suitable DocBook toolchain (for example, see the {website}[AsciiDoc
+website]).
 
 PDF generation
 ~~~~~~~~~~~~~~
@@ -5077,8 +5081,7 @@ containing <<X66,embedded images>>, CSS stylesheets, and JavaScript
 
   $ asciidoc -a data-uri -a icons -a toc -a max-width=55em article.txt
 
-You can view the HTML file here:
-http://www.methods.co.nz/asciidoc/article-standalone.html
+You can view the HTML file here: {website}article-standalone.html
 
 Shipping stand-alone AsciiDoc source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5299,11 +5302,11 @@ to the end of you AsciiDoc source files:
 
   // vim: set syntax=asciidoc:
 
-TIP: Bold fonts are often easier to read, use the Vim `:set background=dark`
-command to set bold bright fonts.
+TIP: Bold fonts are often easier to read, use the Vim `:set
+background=dark` command to set bold bright fonts.
 
-NOTE: There are a number of alternative syntax highlighters for various editors
-listed on the http://www.methods.co.nz/asciidoc/[AsciiDoc website].
+NOTE: There are a number of alternative syntax highlighters for
+various editors listed on the {website}[AsciiDoc website].
 
 Limitations
 ~~~~~~~~~~~

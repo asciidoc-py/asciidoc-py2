@@ -3,17 +3,12 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-This release follows hard on the heels of 8.6.0, it includes:
+This release adds a <<X8,Slidy>> backend for creating browser
+slideshows.
 
-- A couple of new and enhanced 'a2x' command options.
-- The AsciiDoc link:userguide.html#X96[Quote element attributes] have
-  been simplified and generalized (this change is not backward
-  compatible).
-- A cover image and customized page design have been added to the
-  link:publishing-ebooks-with-asciidoc.html#X3[Sherlock
-  Holmes example eBook] on the
-  link:publishing-ebooks-with-asciidoc.html[publishing eBooks with
-  AsciiDoc] web page.
+You can now put document 'doctype', 'icons', 'lang' and 'backend' meta
+attributes in the document header.  Backend and language configuration
+files are now loaded *after* the header has been parsed.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the
@@ -105,6 +100,19 @@ from link:asciidoc.1.txt[this file].
 This link:asciidoc.1[roff formatted  man page] was generated from
 asciidoc(1) DocBook output using `xsltproc(1)` and DocBook XSL
 Stylesheets.
+
+[[X8]]
+Example Slideshows
+~~~~~~~~~~~~~~~~~~
+The http://www.w3.org/Talks/Tools/Slidy2/[Slidy] backend generates
+HTML slideshows that can be viewed in any web browser.  What's nice is
+that you can create completely self contained slideshows including
+embedded images.
+
+- Here is the link:slidy.html[slidy backend documentation] slideshow
+  and here is it's link:slidy.txt[AsciiDoc source].
+- An link:slidy-example.html[example slidy slideshow] and the
+  link:slidy-example.txt[AsciiDoc source].
 
 Example Web Site
 ~~~~~~~~~~~~~~~~

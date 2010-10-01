@@ -45,6 +45,8 @@ WEB_ROOT =
     version83
     newtables
     newlists
+    slidy
+    slidy-example
 WEB_PAGES = $*(WEB_ROOT).html
 WEB_SOURCE = $*(WEB_ROOT).txt
 
@@ -83,9 +85,10 @@ DOCS =
 
 :syseval which xmllint | :assign XMLLINT    # Validates XML.
 
+ASCIIDOC = python ../../asciidoc.py
 # AsciiDoc options to generate documentation HTML.
 ASCIIDOC_HTML =
-    python ../../asciidoc.py -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revnumber=$(VERS)@ -a revdate="$(DATE)@" -a max-width=70em
+    $ASCIIDOC -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revnumber=$(VERS)@ -a revdate="$(DATE)@" -a max-width=70em
 
 :rule %.html : %.txt $(LAYOUT).conf
     @if target in ('userguide.html','faq.html'):
@@ -109,6 +112,12 @@ ASCIIDOC_HTML =
         :sys $XMLLINT --nonet --noout --valid $target
     @else:
         :print WARNING: xmllint(1) unavailable: skipping validation
+
+slidy.html : slidy.txt
+    :sys $ASCIIDOC $(source[0])
+
+slidy-example.html : slidy-example.txt
+    :sys $ASCIIDOC $(source[0])
 
 all: $(WEB_PAGES)
 

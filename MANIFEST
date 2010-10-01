@@ -9,7 +9,7 @@ common.aap
 CHANGELOG
 CHANGELOG.txt
 asciidoc.conf
-docbook.conf
+docbook45.conf
 help.conf
 html4.conf
 lang-*.conf

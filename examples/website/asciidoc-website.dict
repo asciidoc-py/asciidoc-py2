@@ -1,4 +1,4 @@
-personal_ws-1.1 en 204 
+personal_ws-1.1 en 209 
 O'Reilly
 awb
 Blogpost
@@ -23,6 +23,7 @@ faq
 Efros
 stdin
 LinuxDoc
+slideshows
 Klum
 CentOS
 src
@@ -37,6 +38,7 @@ css
 Rosten
 screenshot
 CSW
+slideshow
 Wiese
 ShareSource
 autowidth
@@ -66,8 +68,8 @@ matplotlib
 stdout
 usr
 txt
-ebooks
 eBooks
+ebooks
 linenumbering
 ImageMagick
 distros
@@ -94,6 +96,7 @@ doctests
 backends
 Gingras
 sinx
+Romé
 multi
 autoconf
 Dmitry
@@ -128,8 +131,9 @@ dx
 eBook
 hg
 Gouichi
+lang
 conf
-Wiki
+wiki
 Maier
 DelimitedBlocks
 Berker
@@ -172,6 +176,7 @@ DocBook
 fontlocking
 Rosenkraenzer
 toolchain
+slidy
 ebuild
 syntaxes
 toclevels

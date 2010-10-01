@@ -308,15 +308,17 @@ authorship and revision information:
 
 - The Header is optional, but if it is used it must start with a
   document <<X17,title>>.
-- The header can include comments.
-- The header can include <<X18,attribute entries>>, typically
-  'doctype', 'lang', 'encoding', 'icons', 'data-uri', 'toc',
-  'numbered'.  Header attributes are overridden by command-line
-  attributes.
 - Optional Author and Revision information immediately follows the
   header title.
 - The document header must be separated from the remainder of the
   document by one or more blank lines and cannot contain blank lines.
+- The header can include comments.
+- The header can include <<X18,attribute entries>>, typically
+  'doctype', 'lang', 'encoding', 'icons', 'data-uri', 'toc',
+  'numbered'.
+- Header attributes are overridden by command-line attributes.
+- If the header contains non-UTF-8 characters then the 'encoding' must
+  precede the header (either in the document or on the command-line).
 
 Here's an example AsciiDoc document header:
 

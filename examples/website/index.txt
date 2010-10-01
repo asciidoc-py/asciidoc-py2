@@ -4,7 +4,7 @@ AsciiDoc Home Page
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
 This release adds a <<X8,Slidy>> backend for creating browser
-slideshows.
+slideshows (based on Phillip Lord's slidy backend).
 
 You can now put document 'doctype', 'icons', 'lang' and 'backend' meta
 attributes in the document header.  Backend and language configuration
@@ -281,6 +281,12 @@ and I'll add them to the list.
   blog] describes a http://ditaa.sourceforge.net/[ditaa] filter for
   AsciiDoc which converts http://en.wikipedia.org/wiki/ASCII_art[ASCII
   art] into graphics.
+- http://github.com/github/gollum[Gollum] is a git-powered wiki, it
+  supports various formats, including AsciiDoc.
+- Gregory Romé has written an
+  http://github.com/gpr/redmine_asciidoc_formatter[AsciiDoc plugin]
+  for the http://www.redmine.org/[Redmine] project management
+  application.
 
 Please let me know if any of these links need updating.
 
@@ -367,6 +373,9 @@ discussion group thread] for details.
   website is generated using AsciiDoc.
 - Warren Block has http://www.wonkity.com/~wblock/docs/[posted a
   number of articles written using AsciiDoc].
+- The http://code.google.com/p/waf/[Waf project]'s
+  http://freehackers.org/~tnagy/wafbook/index.html[Waf Book] is
+  written using AsciiDoc.
 
 Please let me know if any of these links need updating.
 

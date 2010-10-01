@@ -34,7 +34,7 @@ Version 8.6.2 (2010-10-03)
 - Added two more docinfo attributes 'docinfo1' and 'docinfo2' to allow
   and control inclusion of a shared docinfo file. See
   http://groups.google.com/group/asciidoc/browse_thread/thread/c948697943432e24
-- Vim syntax highligher highlights multi-name conditional attributes.
+- Vim syntax highlighter highlights multi-name conditional attributes.
 - LaTeX backend patch submitted by Andreas Hermann Braml (see
   http://groups.google.com/group/asciidoc/browse_thread/thread/1c415fc4540ce5e5).
 - Implemented 'backend aliases'; renamed `docbook.conf` to

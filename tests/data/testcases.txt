@@ -5,6 +5,10 @@
 Test Cases
 ==========
 :author: Joe Bloggs
+// Web page meta data.
+:keywords:    AsciiDoc, DocBook, EPUB, slideshow
+:description: AsciiDoc is a text document format for writing short documents, +
+              articles, books, slideshows and UNIX man pages.
 
 
 == Passthrough attributes ==

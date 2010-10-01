@@ -26,7 +26,8 @@ syn match asciidocLineBreak /[ \t]+$/
 syn match asciidocRuler /^'\{3,}$/
 syn match asciidocPagebreak /^<\{3,}$/
 syn match asciidocEntityRef /\\\@<!&[#a-zA-Z]\S\{-};/
-syn region asciidocLiteralParagraph start=/^\s\+\S\+/ end=/\(^+\?\s*$\)\@=/
+"syn region asciidocLiteralParagraph start=/^\s\+\S\+/ end=/\(^+\?\s*$\)\@=/
+syn region asciidocLiteralParagraph start=/\(\%^\|\_^\n\)\@<=\s\+\S\+/ end=/\(^+\?\s*$\)\@=/
 syn match asciidocURL /\\\@<!\<\(http\|https\|ftp\|file\|irc\):\/\/[^| \t]*\(\w\|\/\)/
 syn match asciidocEmail /[\\.:]\@<!\(\<\|<\)\w\(\w\|[.-]\)*@\(\w\|[.-]\)*\w>\?[0-9A-Za-z_]\@!/
 syn match asciidocAttributeRef /\\\@<!{\w\(\w\|[-,+]\)*\([=!@#$%?:].*\)\?}/

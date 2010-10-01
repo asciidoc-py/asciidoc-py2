@@ -1694,6 +1694,9 @@ class AttributeEntry:
         assert Lex.next() is AttributeEntry
         attr = AttributeEntry    # Alias for brevity.
         reader.read()            # Discard attribute entry from reader.
+        while attr.value.endswith(' +'):
+            if not reader.read_next(): break
+            attr.value = attr.value[:-1] + reader.read().strip()
         if AttributeEntry.name2: # The entry is a conf file entry.
             section = {}
             # Some sections can have name! syntax.

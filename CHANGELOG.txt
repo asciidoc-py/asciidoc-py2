@@ -6,6 +6,10 @@ AsciiDoc ChangeLog
 Version 8.6.2 (2010-10-03)
 --------------------------
 .Additions and changes
+- Added 'keywords' and 'description' meta-data attributes to HTML
+  backends for SEO.
+- AttributeEntry values can span multiple lines with a ' +' line
+  continuation.
 - Added 'slidy' backend (based on Philip Lord's slidy backend
   https://phillordbio-asciidoc-fixes.googlecode.com/hg/).
 - Implemented 'OpenBlock' 'partintro' style for book part

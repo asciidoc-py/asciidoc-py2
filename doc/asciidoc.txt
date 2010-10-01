@@ -7,8 +7,8 @@ Stuart Rackham <srackham@gmail.com>
 :numbered:
 :website: http://www.methods.co.nz/asciidoc/
 
-AsciiDoc is a text document format for writing documentation,
-articles, manuals, books, slideshows and UNIX man pages. AsciiDoc
+AsciiDoc is a text document format for writing notes, documentation,
+articles, books, slideshows, web pages and UNIX man pages. AsciiDoc
 files can be translated to HTML and DocBook markups using the
 asciidoc(1) command.  AsciiDoc is highly configurable: both the
 AsciiDoc source file syntax and the backend output markups (which can
@@ -3737,6 +3737,13 @@ To delete (undefine) an attribute use the following syntax:
   characters deleted). This allows more human friendly text to be
   used.
 - Leading and trailing white space is stripped from the `<value>`.
+- Lines ending in a space followed by a plus character are continued
+  to the next line, for example:
+
+  :description: AsciiDoc is a text document format for writing notes, +
+                documentation, articles, books, slideshows, web pages +
+                and man pages.
+
 - If the `<value>` is blank then the corresponding attribute value is
   set to an empty string.
 - Attribute references contained in the entry `<value>` will be
@@ -3764,7 +3771,7 @@ AsciiDoc User Manual
 Which creates these attributes:
 
   {author}, {firstname}, {lastname}, {authorinitials}, {email},
-  {revdate}, {revnumber}, {keywords}
+  {revdate}, {revnumber}
 
 The previous example is equivalent to this <<X95,document header>>:
 

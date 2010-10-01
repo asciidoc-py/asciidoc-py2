@@ -9,6 +9,15 @@ AsciiDoc Frequently Asked Questions
   newer FAQs may apply to the trunk and not the current release.
 ======
 
+== AsciiDoc sometimes generates invalid output markup, why?
+AsciiDoc is backend agnostic, the 'asciidoc' command has no knowledge
+of the syntax or structure of the backend format that it generates.
+Output document validation (syntactic and structural) should be
+performed separately by external validation tools. For example,
+AsciiDoc's 'a2x' toolchain command automatically performs validation
+checks using 'xmllint'.
+
+
 == The AsciiDoc toclevels attribute does not work with DocBook outputs, why?
 DocBook has no provision for specifying table of contents levels but
 you can set the TOC level further down the toolchain by passing the

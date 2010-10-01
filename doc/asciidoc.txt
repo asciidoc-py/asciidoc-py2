@@ -8,8 +8,8 @@ Stuart Rackham <srackham@gmail.com>
 :website: http://www.methods.co.nz/asciidoc/
 
 AsciiDoc is a text document format for writing notes, documentation,
-articles, books, slideshows, web pages and UNIX man pages. AsciiDoc
-files can be translated to HTML and DocBook markups using the
+articles, books, slideshows, web pages, blogs and UNIX man pages.
+AsciiDoc files can be translated to HTML and DocBook markups using the
 asciidoc(1) command.  AsciiDoc is highly configurable: both the
 AsciiDoc source file syntax and the backend output markups (which can
 be almost any type of SGML/XML markup) can be customized and extended
@@ -5510,10 +5510,10 @@ name paths in inline and block image macros.
 
 |keywords, description, title |html4, xhtml11 |
 The 'keywords' and 'description' attributes set the correspondingly
-named meta tag contents; the 'title' attribute sets the title tag
-contents.  Their principle use is for SEO (Search Engine
+named HTML meta tag contents; the 'title' attribute sets the HTML
+title tag contents.  Their principle use is for SEO (Search Engine
 Optimisation).  All three are optional, but if they are used they must
-be set in the document header (or on the command-line). If 'title' is
+appear in the document header (or on the command-line). If 'title' is
 not specified the AsciiDoc document title is used.
 
 |linkcss |xhtml11 |

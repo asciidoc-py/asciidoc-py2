@@ -2,9 +2,9 @@ AsciiDoc Home Page
 ==================
 // Web page meta data.
 :keywords:    AsciiDoc, DocBook, EPUB, PDF, slideshow, man page
-:description: AsciiDoc is a text document format for writing notes, +
-              documentation, articles, books, slideshows, web pages +
-              and man pages.
+:description: AsciiDoc is a text document format for writing notes,  +
+              documentation, articles, books, slideshows, web pages, +
+              man pages and blogs.
 
 
 .{revdate}: AsciiDoc {revnumber} Released
@@ -15,6 +15,10 @@ slideshows (based on Phillip Lord's slidy backend).
 You can now put document 'doctype', 'icons', 'lang' and 'backend' meta
 attributes in the document header.  Backend and language configuration
 files are now loaded *after* the header has been parsed.
+
+Optional 'keywords', 'description' and 'title' document header
+meta-data attributes have been added to HTML backends for web page
+SEO.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the
@@ -27,9 +31,8 @@ mailto:srackham@gmail.com['Stuart Rackham']
 
 Introduction
 ------------
-AsciiDoc is a text document format for writing notes, documentation,
-articles, books, slideshows, web pages and UNIX man pages. AsciiDoc
-files can be translated to HTML and DocBook markups using the
+{description}
+AsciiDoc files can be translated to HTML and DocBook markups using the
 asciidoc(1) command.
 
 AsciiDoc is highly configurable: both the AsciiDoc source file syntax

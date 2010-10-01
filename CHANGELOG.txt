@@ -6,8 +6,8 @@ AsciiDoc ChangeLog
 Version 8.6.2 (2010-10-03)
 --------------------------
 .Additions and changes
-- Added 'keywords' and 'description' meta-data attributes to HTML
-  backends for SEO.
+- Added optional 'keywords', 'description' and 'title' document header
+  meta-data attributes to HTML backends for SEO.
 - AttributeEntry values can span multiple lines with a ' +' line
   continuation.
 - Added 'slidy' backend (based on Philip Lord's slidy backend

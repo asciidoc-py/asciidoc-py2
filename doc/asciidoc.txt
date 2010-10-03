@@ -1794,6 +1794,7 @@ generating DocBook bibliography entries. Example:
 
 ---------------------------------------------------------------------
 [bibliography]
+.Optional list title
 - [[[taoup]]] Eric Steven Raymond. 'The Art of UNIX
   Programming'. Addison-Wesley. ISBN 0-13-142901-9.
 - [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.

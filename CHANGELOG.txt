@@ -6,6 +6,8 @@ AsciiDoc ChangeLog
 Version 8.6.2 (2010-10-03)
 --------------------------
 .Additions and changes
+- 'docbook45': Enclosed bibliographic lists in a 'bibliodiv' -- you
+  can now include block titles with bibliographic lists.
 - Added optional 'keywords', 'description' and 'title' document header
   meta-data attributes to HTML backends for SEO.
 - AttributeEntry values can span multiple lines with a ' +' line

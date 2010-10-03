@@ -1,10 +1,12 @@
 AsciiDoc Home Page
 ==================
 // Web page meta data.
-:keywords:    AsciiDoc, DocBook, EPUB, PDF, slideshow, man page
+:keywords:    AsciiDoc, DocBook, EPUB, PDF, ebooks, slideshow, slidy, man page
 :description: AsciiDoc is a text document format for writing notes,  +
-              documentation, articles, books, slideshows, web pages, +
-              man pages and blogs.
+              documentation, articles, books, ebooks, slideshows,    +
+              web pages, man pages and blogs.  AsciiDoc files can be +
+              translated to many formats including HTML, PDF, EPUB,  +
+              man page.
 
 
 .{revdate}: AsciiDoc {revnumber} Released
@@ -18,7 +20,7 @@ files are now loaded *after* the header has been parsed.
 
 Optional 'keywords', 'description' and 'title' document header
 meta-data attributes have been added to HTML backends for web page
-SEO.
+SEO and you can now enter multi-line attribute values.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the
@@ -32,8 +34,6 @@ mailto:srackham@gmail.com['Stuart Rackham']
 Introduction
 ------------
 {description}
-AsciiDoc files can be translated to HTML and DocBook markups using the
-asciidoc(1) command.
 
 AsciiDoc is highly configurable: both the AsciiDoc source file syntax
 and the backend output markups (which can be almost any type of
@@ -136,14 +136,22 @@ More examples
 - Example link:newtables.html[Tables].
 
 
-eBooks
-------
+eBook Publication
+-----------------
 The two most popular open eBook formats are
 http://en.wikipedia.org/wiki/EPUB[EPUB] and PDF.
 The AsciiDoc link:a2x.1.html[a2x] toolchain wrapper makes it easy to
 link:publishing-ebooks-with-asciidoc.html[publish EPUB and PDF eBooks
 with AsciiDoc]. See also <<X7,example books>> and
 link:epub-notes.html[AsciiDoc EPUB Notes]).
+
+
+Blogpost weblog client
+----------------------
+http://srackham.wordpress.com/blogpost-readme/[blogpost] is a
+command-line weblog client for publishing AsciiDoc documents to
+http://wordpress.org/[WordPress] blog hosts. It creates and updates
+weblog posts and pages directly from AsciiDoc source documents.
 
 
 Music Filter
@@ -231,8 +239,8 @@ http://andrewk.webfactional.com/asciidoc.php
 
 
 [[X2]]
-Resources
----------
+External Resources and Applications
+-----------------------------------
 Here are resources that I know of, if you know of more drop me a line
 and I'll add them to the list.
 
@@ -262,6 +270,11 @@ and I'll add them to the list.
   http://www.mowson.org/karl/colophon/[here] and there is some
   discussion of the ikiwiki integration
   http://ikiwiki.info/users/KarlMW/discussion/[here].
+- Glenn Eychaner has
+  http://groups.google.com/group/asciidoc/browse_thread/thread/bf04b55628efe214[reworked
+  the Asciidoc plugin for ikiwiki] that was created by Karl Mowson,
+  the source can be downloaded from
+  http://dl.dropbox.com/u/11256359/asciidoc.pm
 - David Hajage has written an AsciiDoc package for the
   http://www.r-project.org/[R Project] (R is a free software
   environment for statistical computing).  'ascii' is available on
@@ -299,14 +312,6 @@ and I'll add them to the list.
   application.
 
 Please let me know if any of these links need updating.
-
-
-Blogpost weblog client
-----------------------
-http://srackham.wordpress.com/blogpost-readme/[blogpost] is a
-command-line weblog client for publishing AsciiDoc documents to
-http://wordpress.org/[WordPress] blog hosts. It creates and updates
-weblog posts and pages directly from AsciiDoc source documents.
 
 
 [[X6]]

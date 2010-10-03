@@ -1,5 +1,8 @@
 Publishing eBooks with AsciiDoc
 ===============================
+// Web page meta data.
+:keywords:    AsciiDoc, EPUB tools, EPUB, PDF, ebooks
+:description: How to create EPUB and PDF ebooks using AsciiDoc.
 
 ifdef::backend-wordpress[]
 // Use the same article for both a blog post and on the AsciiDoc

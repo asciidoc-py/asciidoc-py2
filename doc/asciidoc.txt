@@ -8,9 +8,9 @@ Stuart Rackham <srackham@gmail.com>
 :website: http://www.methods.co.nz/asciidoc/
 
 AsciiDoc is a text document format for writing notes, documentation,
-articles, books, slideshows, web pages, blogs and UNIX man pages.
-AsciiDoc files can be translated to HTML and DocBook markups using the
-asciidoc(1) command.  AsciiDoc is highly configurable: both the
+articles, books, ebooks, slideshows, web pages, blogs and UNIX man
+pages.  AsciiDoc files can be translated to many formats including
+HTML, PDF, EPUB, man page.  AsciiDoc is highly configurable: both the
 AsciiDoc source file syntax and the backend output markups (which can
 be almost any type of SGML/XML markup) can be customized and extended
 by the user.
@@ -5524,8 +5524,7 @@ output document.
 
 |max-width |xhtml11 |
 Set the document maximum display width (sets the 'body' element CSS
-'max-width' property). 'max-width' definition must precede the
-document header.
+'max-width' property).
 
 |numbered |html4, xhtml11, docbook (XSL Stylesheets) |
 Adds section numbers to section titles. The 'docbook' backend ignores

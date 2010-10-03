@@ -46,6 +46,8 @@ Version 8.6.2 (2010-10-03)
   aliased 'xhtml11' to 'html'.
 
 .Bug fixes
+- *FIXED*: Filter commands located in filter directories local to the
+  source document that where not in the search 'PATH' where not found.
 - *FIXED*: Volnitsky theme: Verseblock font set normal instead of
   monospaced.
 - *FIXED*: 'xhtml11': Callout icons were not rendered as Data URIs

@@ -1710,7 +1710,6 @@ class AttributeEntry:
                section[attr.name] = ['%s=%s' % (attr.name2,attr.value)]
             config.load_sections(section)
             config.load_miscellaneous(config.conf_attrs)
-            config.validate()
         else: # The entry is an attribute.
             if attr.name[-1] == '!':
                 # Names like name! undefine the attribute.

@@ -711,7 +711,7 @@ if __name__ == '__main__':
         action='append', dest='attributes', default=[], metavar='ATTRIBUTE',
         help='set asciidoc attribute value')
     parser.add_option('--asciidoc-opts',
-        action='store', dest='asciidoc_opts', default='',
+        action='append', dest='asciidoc_opts', default=[],
         metavar='ASCIIDOC_OPTS', help='asciidoc options')
     #DEPRECATED
     parser.add_option('--copy',
@@ -779,16 +779,16 @@ if __name__ == '__main__':
         action='store_true', dest='safe', default=False,
         help='DEPRECATED: does nothing')
     parser.add_option('--dblatex-opts',
-        action='store', dest='dblatex_opts', default='',
+        action='append', dest='dblatex_opts', default=[],
         metavar='DBLATEX_OPTS', help='dblatex options')
     parser.add_option('--fop',
         action='store_true', dest='fop', default=False,
         help='use FOP to generate PDF files')
     parser.add_option('--fop-opts',
-        action='store', dest='fop_opts', default='',
+        action='append', dest='fop_opts', default=[],
         metavar='FOP_OPTS', help='options for FOP pdf generation')
     parser.add_option('--xsltproc-opts',
-        action='store', dest='xsltproc_opts', default='',
+        action='append', dest='xsltproc_opts', default=[],
         metavar='XSLTPROC_OPTS', help='options for FOP pdf generation')
     parser.add_option('-v', '--verbose',
         action='count', dest='verbose', default=0,
@@ -800,6 +800,10 @@ if __name__ == '__main__':
     opts, args = parser.parse_args(argv)
     if len(args) != 1:
         parser.error('incorrect number of arguments')
+    opts.asciidoc_opts = ' '.join(opts.asciidoc_opts)
+    opts.dblatex_opts = ' '.join(opts.dblatex_opts)
+    opts.fop_opts = ' '.join(opts.fop_opts)
+    opts.xsltproc_opts = ' '.join(opts.xsltproc_opts)
     opts = eval(str(opts))  # Convert optparse.Values to dict.
     a2x = A2X(opts)
     OPTIONS = a2x           # verbose and dry_run used by utility functions.

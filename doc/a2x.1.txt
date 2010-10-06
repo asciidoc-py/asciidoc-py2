@@ -27,10 +27,12 @@ OPTIONS
 -------
 *-a, --attribute*='ATTRIBUTE'::
   Set asciidoc(1) attribute value (shortcut for *--asciidoc-opts*='"-a
-  ATTRIBUTE"' option).  This option may be specified more than once.
+  ATTRIBUTE"' option).
+  This option may be specified more than once.
 
 *--asciidoc-opts*='ASCIIDOC_OPTS'::
   Additional 'asciidoc(1)' options.
+  This option may be specified more than once.
 
 *--conf-file*='CONF_FILE'::
   Load configuration file. See <<X2,CONF FILES section>>.
@@ -98,6 +100,7 @@ OPTIONS
 
 *--xsltproc-opts*='XSLTPROC_OPTS'::
   Additional 'xsltproc(1)' options.
+  This option may be specified more than once.
 
 *--fop*::
   Use FOP to generate PDFs. The default behavior is to use
@@ -107,9 +110,11 @@ OPTIONS
 *--fop-opts*='FOP_OPTS'::
   Additional 'fop(1)' options. If this option is specified FOP is used
   to generate PDFs.
+  This option may be specified more than once.
 
 *--dblatex-opts*='DBLATEX_OPTS'::
   Additional 'dblatex(1)' options.
+  This option may be specified more than once.
 
 Options can also be set in the AsciiDoc source file. If 'SOURCE_FILE'
 contains a comment line beginning with *// a2x:* then the remainder of

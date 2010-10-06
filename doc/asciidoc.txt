@@ -3802,7 +3802,8 @@ It is exactly equivalent to a configuration file containing:
   [listdef-labeled]
   style=horizontal
 
-No substitution is performed on configuration file attribute entries.
+No substitution is performed on configuration file attribute entries
+and they cannot be undefined.
 
 [[X62]]
 .Attribute entries promote clarity and eliminate repetition
@@ -3867,8 +3868,7 @@ comma (`&#44;`) and double-quote (`&#34;`) character entities:
 - Positional attributes are referred to as `{1}`,`{2}`,`{3}`,...
 - Attribute `{0}` refers to the entire list (excluding the enclosing
   square brackets).
-- Named attribute names cannot contain dash characters (as they can
-  elsewhere).
+- Named attribute names cannot contain dash characters.
 
 [[X75]]
 Options attribute

@@ -310,6 +310,9 @@ and I'll add them to the list.
   http://github.com/gpr/redmine_asciidoc_formatter[AsciiDoc plugin]
   for the http://www.redmine.org/[Redmine] project management
   application.
+- Paul Hsu has started a
+  http://github.com/paulhsu/AsciiDoc.CHT.userguide[Chinese translation
+  of the AsciiDoc User Guide].
 
 Please let me know if any of these links need updating.
 

@@ -1020,26 +1020,34 @@ The 'reftext' attribute can an also be set by the 'BlockId' element.
 Paragraphs
 ----------
 Paragraphs are blocks of text terminated by a blank line, the end of
-file, or the start of a DelimitedBlock.  Paragraph markup is specified
-by configuration file `[paradef-*]` sections.
+file, or the start of a delimited block or a list.  Paragraph markup
+is specified by configuration file `[paradef-*]` sections.
 
-Normal paragraphs consist of one or more non-blank lines of text. The
-first line must start hard against the left margin (no intervening
-white space). The default processing expectation is that of a normal
-paragraph of text. 'literal' and 'verse' paragraph styles are
-available (in addition to the 'default' paragraph style).
+There are three paragraph syntaxes: normal, indented (literal) and
+admonition which are rendered, by default, with the corresponding
+paragraph style. Each syntax has a default style, but you can, if you
+wish,  explicitly apply any paragraph style to any paragraph syntax.
+The common paragraph styles are 'normal', 'literal', 'verse', 'quote',
+'listing', 'TIP', 'NOTE', 'IMPORTANT', 'WARNING' and 'CAUTION'.
+
+normal paragraph syntax
+~~~~~~~~~~~~~~~~~~~~~~~
+Normal paragraph syntax consists of one or more non-blank lines of
+text. The first line must start hard against the left margin (no
+intervening white space). The default processing expectation is that
+of a normal paragraph of text.
 
 [[X85]]
-literal paragraph style
+literal paragraph syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~
 Literal paragraphs are rendered verbatim in a monospaced font without
 any distinguishing background or border.  By default there is no text
 formatting or substitutions within Literal paragraphs apart from
 Special Characters and Callouts.
 
-The 'literal' style is applied to indented paragraphs i.e. where the
-first line of the paragraph is indented by one or more space or tab
-characters.  For example:
+The 'literal' style is applied implicitly to indented paragraphs i.e.
+where the first line of the paragraph is indented by one or more space
+or tab characters.  For example:
 
 ---------------------------------------------------------------------
   Consul *necessitatibus* per id,
@@ -4338,7 +4346,7 @@ delimiter=(?P<text>\S.*)
 template=paragraph
 --------------------------------------------------------------------
 
-The Default paragraph definition has a couple of special properties:
+The normal paragraph definition has a couple of special properties:
 
 1. It must exist and be defined in a configuration file section named
    `[paradef-default]`.

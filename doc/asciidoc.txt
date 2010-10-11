@@ -1075,24 +1075,43 @@ consetetur, eu pro everti postulant
 homero verear ea mea, qui.
 
 [[X94]]
-verse paragraph style
-~~~~~~~~~~~~~~~~~~~~~
-The 'verse' paragraph <<X23,style>> preserves line boundaries and is
-useful for lyrics and poems.  For example:
+quote and verse paragraph styles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The optional 'attribution' and 'citetitle' attributes (positional
+attributes 2 and 3) specify the author and source respectively.
+
+The 'verse' style retains the line breaks, for example:
 
 ---------------------------------------------------------------------
-[verse]
-Consul *necessitatibus* per id,
-consetetur, eu pro everti postulant
-homero verear ea mea, qui.
+[verse, William Blake, from Auguries of Innocence]
+To see a world in a grain of sand,
+And a heaven in a wild flower,
+Hold infinity in the palm of your hand,
+And eternity in an hour.
 ---------------------------------------------------------------------
 
-Renders:
+Which is rendered as:
 
-[verse]
-Consul *necessitatibus* per id,
-consetetur, eu pro everti postulant
-homero verear ea mea, qui.
+[verse, William Blake, from Auguries of Innocence]
+To see a world in a grain of sand,
+And a heaven in a wild flower,
+Hold infinity in the palm of your hand,
+And eternity in an hour.
+
+The 'quote' style flows the text at left and right margins, for
+example:
+
+---------------------------------------------------------------------
+[quote, Bertrand Russell, The World of Mathematics (1956)]
+A good notation has subtlety and suggestiveness which at times makes
+it almost seem like a live teacher.
+---------------------------------------------------------------------
+
+Which is rendered as:
+
+[quote, Bertrand Russell, The World of Mathematics (1956)]
+A good notation has subtlety and suggestiveness which at times makes
+it almost seem like a live teacher.
 
 [[X28]]
 Admonition Paragraphs
@@ -1330,51 +1349,41 @@ asciimath, latexmath::
 Quote Blocks
 ~~~~~~~~~~~~
 'QuoteBlocks' are used for quoted passages of text. There are two
-styles: 'quote' and 'verse'. The style is set by the first positional
-attribute, if no style attribute is specified the 'quote' style.  The
-optional 'attribution' and 'citetitle' attributes (positional
-attributes 2 and 3) specify the quote's author and source.
-
-The 'quote' style treats the content like a SectionBody, for example:
-
----------------------------------------------------------------------
-[quote, Bertrand Russell, The World of Mathematics (1956)]
-____________________________________________________________________
-A good notation has subtlety and suggestiveness which at times makes
-it almost seem like a live teacher.
-____________________________________________________________________
----------------------------------------------------------------------
-
-Which is rendered as:
-
-[quote, Bertrand Russell, The World of Mathematics (1956)]
-____________________________________________________________________
-A good notation has subtlety and suggestiveness which at times makes
-it almost seem like a live teacher.
-____________________________________________________________________
-
-The 'verse' style
-retains the content's line breaks, for example:
+styles: 'quote' and 'verse'. The style behavior is identical to
+<<X94,quote and verse paragraphs>> except that blocks can contain
+multiple paragraphs and, in the case of the 'quote' style, other
+section elements.  The first positional attribute sets the style, if
+no attributes are specified the 'quote' style is used.  The optional
+'attribution' and 'citetitle' attributes (positional attributes 2 and
+3) specify the quote's author and source. For example:
 
 ---------------------------------------------------------------------
-[verse, William Blake, from Auguries of Innocence]
-__________________________________________________
-To see a world in a grain of sand,
-And a heaven in a wild flower,
-Hold infinity in the palm of your hand,
-And eternity in an hour.
-__________________________________________________
+[quote, Sir Arthur Conan Doyle, The Adventures of Sherlock Holmes]
+____________________________________________________________________
+As he spoke there was the sharp sound of horses' hoofs and
+grating wheels against the curb, followed by a sharp pull at the
+bell. Holmes whistled.
+
+"A pair, by the sound," said he. "Yes," he continued, glancing
+out of the window. "A nice little brougham and a pair of
+beauties. A hundred and fifty guineas apiece. There's money in
+this case, Watson, if there is nothing else."
+____________________________________________________________________
 ---------------------------------------------------------------------
 
 Which is rendered as:
 
-[verse, William Blake, from Auguries of Innocence]
-__________________________________________________
-To see a world in a grain of sand,
-And a heaven in a wild flower,
-Hold infinity in the palm of your hand,
-And eternity in an hour.
-__________________________________________________
+[quote, Sir Arthur Conan Doyle, The Adventures of Sherlock Holmes]
+____________________________________________________________________
+As he spoke there was the sharp sound of horses' hoofs and
+grating wheels against the curb, followed by a sharp pull at the
+bell. Holmes whistled.
+
+"A pair, by the sound," said he. "Yes," he continued, glancing
+out of the window. "A nice little brougham and a pair of
+beauties. A hundred and fifty guineas apiece. There's money in
+this case, Watson, if there is nothing else."
+____________________________________________________________________
 
 [[X48]]
 Example Blocks
@@ -3023,7 +3032,7 @@ No text formatting; monospaced font; all line breaks are retained
 (the same as the AsciiDoc <<X65,LiteralBlock>> element).
 
 verse::
-All line breaks are retained (the same as the AsciiDoc <<X94,verse
+All line breaks are retained (just like the AsciiDoc <<X94,verse
 paragraph style>>).
 
 [[X72]]

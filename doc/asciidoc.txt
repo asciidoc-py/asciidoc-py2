@@ -1020,15 +1020,13 @@ The 'reftext' attribute can an also be set by the 'BlockId' element.
 Paragraphs
 ----------
 Paragraphs are blocks of text terminated by a blank line, the end of
-file, or the start of a delimited block or a list.  Paragraph markup
-is specified by configuration file `[paradef-*]` sections.
-
-There are three paragraph syntaxes: normal, indented (literal) and
-admonition which are rendered, by default, with the corresponding
-paragraph style. Each syntax has a default style, but you can, if you
-wish,  explicitly apply any paragraph style to any paragraph syntax.
-The common paragraph styles are 'normal', 'literal', 'verse', 'quote',
-'listing', 'TIP', 'NOTE', 'IMPORTANT', 'WARNING' and 'CAUTION'.
+file, or the start of a delimited block or a list.  There are three
+paragraph syntaxes: normal, indented (literal) and admonition which
+are rendered, by default, with the corresponding paragraph style. Each
+syntax has a default style, but you can, if you wish,  explicitly
+apply any paragraph style to any paragraph syntax.  The common
+paragraph styles are 'normal', 'literal', 'verse', 'quote', 'listing',
+'TIP', 'NOTE', 'IMPORTANT', 'WARNING' and 'CAUTION'.
 
 normal paragraph syntax
 ~~~~~~~~~~~~~~~~~~~~~~~

@@ -237,7 +237,9 @@ def find_resources(files, tagname, attrname, filter=None):
         if OPTIONS.dry_run:
             continue
         parser = FindResources()
-        parser.feed(open(f).read())
+        # UTF-8 is a better bet than the default ASCII.
+        # See http://bugs.python.org/issue3932
+        parser.feed(open(f).read().decode('utf8'))
         parser.close()
     result = list(set(result))   # Drop duplicate values.
     result.sort()

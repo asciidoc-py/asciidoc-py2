@@ -4259,10 +4259,12 @@ class Config:
         self.include1 = {}      # Holds include1::[] files for {include1:}.
         self.dumping = False    # True if asciidoc -c option specified.
 
-    def load_file(self,fname,dir=None):
+    def load_file(self, fname, dir=None, include=[]):
         """
         Loads sections dictionary with sections from file fname.
         Existing sections are overlaid.
+        The 'include' list contains the section names to be loaded,
+        if 'inlude' is not specified all sections are loaded.
         Return False if no file was found in any of the locations.
         """
         if dir:
@@ -4316,9 +4318,14 @@ class Config:
             else:
                 sections[section] = contents
         rdr.close()
+        if include:
+            for s in set(sections) - set(include):
+                del sections[s]
         attrs = {}
         self.load_sections(sections,attrs)
-        self.loaded.append(os.path.realpath(fname))
+        if not include:
+            # If all sections are loaded mark this file as loaded.
+            self.loaded.append(os.path.realpath(fname))
         document.update_attributes(attrs) # So they are available immediately.
         return True
 
@@ -5313,13 +5320,17 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             if o == '-c': config.dumping = True
             if o == '-s': config.header_footer = False
             if o == '-v': config.verbose = True
-        # Check the infile exists.
-        if infile != '<stdin>' and not os.path.isfile(infile):
-            raise EAsciiDoc,'input file %s missing' % infile
-        document.infile = infile
         # Load asciidoc.conf files.
         if not config.load_from_dirs('asciidoc.conf'):
             raise EAsciiDoc,'configuration file asciidoc.conf missing'
+        # Check the infile exists.
+        if infile != '<stdin>':
+            if not os.path.isfile(infile):
+                raise EAsciiDoc,'input file %s missing' % infile
+            indir = os.path.dirname(infile)
+            config.load_file('asciidoc.conf', indir,
+                            ['attributes','titles','specialchars'])
+        document.infile = infile
         AttributeList.initialize()
         # Open input file and parse document header.
         reader.tabsize = config.tabsize
@@ -5342,10 +5353,9 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             document.load_lang()
         # Load local conf files (conf files in the input file directory).
         if infile != '<stdin>':
-            d =os.path.dirname(infile)
-            config.load_from_dirs('asciidoc.conf', [d])
-            config.load_backend([d])
-            config.load_filters([d])
+            config.load_file('asciidoc.conf', indir)
+            config.load_backend([indir])
+            config.load_filters([indir])
             # Load document specific configuration files.
             f = os.path.splitext(infile)[0]
             config.load_file(f + '.conf')

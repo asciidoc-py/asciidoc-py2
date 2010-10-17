@@ -3647,6 +3647,8 @@ Implicit configuration files from the above locations are loaded in
 the following order:
 
 - `asciidoc.conf` from locations 1, 2, 3.
+- 'attributes', 'titles' and 'specialcharacters' sections from the
+  `asciidoc.conf` in location 4.
 - The document header is parsed at this point.
 - `<backend>.conf` and `<backend>-<doctype>.conf` from locations 1,
   2,3.

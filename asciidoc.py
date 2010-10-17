@@ -5320,16 +5320,26 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             if o == '-c': config.dumping = True
             if o == '-s': config.header_footer = False
             if o == '-v': config.verbose = True
-        # Load asciidoc.conf files.
-        if not config.load_from_dirs('asciidoc.conf'):
-            raise EAsciiDoc,'configuration file asciidoc.conf missing'
+        if '-e' not in options:
+            # Load asciidoc.conf files.
+            if not config.load_from_dirs('asciidoc.conf'):
+                raise EAsciiDoc,'configuration file asciidoc.conf missing'
+            if infile != '<stdin>':
+                indir = os.path.dirname(infile)
+                config.load_file('asciidoc.conf', indir,
+                                ['attributes','titles','specialchars'])
+        else:
+            # Load conf files specified on the command-line.
+            if confiles:
+                for f in confiles:
+                    if os.path.isfile(f):
+                        config.load_file(f)
+                    else:
+                        raise EAsciiDoc,'configuration file %s missing' % f
         # Check the infile exists.
         if infile != '<stdin>':
             if not os.path.isfile(infile):
                 raise EAsciiDoc,'input file %s missing' % infile
-            indir = os.path.dirname(infile)
-            config.load_file('asciidoc.conf', indir,
-                            ['attributes','titles','specialchars'])
         document.infile = infile
         AttributeList.initialize()
         # Open input file and parse document header.
@@ -5344,29 +5354,29 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             if not config.find_in_dirs(f):
                 message.warning('missing backend conf file: %s' % f, linenos=False)
             config.load_backend()
-        # backend is now finalized.
+        # backend is now known.
         document.attributes['backend-'+document.backend] = ''
         document.attributes[document.backend+'-'+document.doctype] = ''
-        # Load filters and language file.
         if '-e' not in options:
+            # Load filters and language file.
             config.load_filters()
             document.load_lang()
-        # Load local conf files (conf files in the input file directory).
-        if infile != '<stdin>':
-            config.load_file('asciidoc.conf', indir)
-            config.load_backend([indir])
-            config.load_filters([indir])
-            # Load document specific configuration files.
-            f = os.path.splitext(infile)[0]
-            config.load_file(f + '.conf')
-            config.load_file(f + '-' + document.backend + '.conf')
-        # Load conf files specified on the command-line.
-        if confiles:
-            for conf in confiles:
-                if os.path.isfile(conf):
-                    config.load_file(conf)
-                else:
-                    raise EAsciiDoc,'configuration file %s missing' % conf
+            if infile != '<stdin>':
+                # Load local conf files (files in the source file directory).
+                config.load_file('asciidoc.conf', indir)
+                config.load_backend([indir])
+                config.load_filters([indir])
+                # Load document specific configuration files.
+                f = os.path.splitext(infile)[0]
+                config.load_file(f + '.conf')
+                config.load_file(f + '-' + document.backend + '.conf')
+            # Load conf files specified on the command-line.
+            if confiles:
+                for f in confiles:
+                    if os.path.isfile(f):
+                        config.load_file(f)
+                    else:
+                        raise EAsciiDoc,'configuration file %s missing' % f
         # Build outfile name.
         if outfile is None:
             outfile = os.path.splitext(infile)[0] + '.' + document.backend

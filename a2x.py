@@ -612,6 +612,9 @@ class A2X(AttrDict):
         xsl_file = self.xsl_file()
         if self.format == 'chunked':
             dst_dir = self.dst_path('.chunked')
+            # Books chunked at chapter level (articles default to section level).
+            if self.doctype == 'book' and not 'chunk.section.depth' in opts:
+                opts += ' --stringparam chunk.section.depth "0"'
         elif self.format == 'htmlhelp':
             dst_dir = self.dst_path('.htmlhelp')
             opts += ' --stringparam htmlhelp.chm "%s"' % self.basename('.chm')

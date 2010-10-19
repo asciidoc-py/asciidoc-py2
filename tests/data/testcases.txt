@@ -2,8 +2,8 @@
 // A collection of AsciiDoc test cases.
 //
 
-Test Cases
-==========
+Test 'Cases'
+============
 :author: Joe Bloggs
 // Web page meta data.
 :keywords:    AsciiDoc, DocBook, EPUB, slideshow

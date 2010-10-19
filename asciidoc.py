@@ -1296,8 +1296,6 @@ class Document(object):
     backend = property(getbackend,setbackend)
 
     def __init__(self):
-#        self.doctype = None     # 'article','manpage' or 'book'.
-#        self.backend = None     # -b option argument.
         self.infile = None      # Source file name.
         self.outfile = None     # Output file name.
         self.attributes = InsensitiveDict()
@@ -1486,6 +1484,8 @@ class Document(object):
                 for i,name in enumerate(names):
                     self.attributes['manname%d' % (i+1)] = name
         if has_header:
+            # Do postponed substitutions (backend confs have been loaded).
+            self.attributes['doctitle'] = Title.dosubs(self.attributes['doctitle'])
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr,trace='header')
@@ -1599,8 +1599,9 @@ class Header:
     @staticmethod
     def parse():
         assert Lex.next() is Title and Title.level == 0
-        Title.translate()
         attrs = document.attributes # Alias for readability.
+        # Postpone title subs until backend conf files have been loaded.
+        Title.translate(skipsubs=True)
         attrs['doctitle'] = Title.attributes['title']
         document.consume_attributes_and_comments(noblanks=True)
         s = reader.read_next()
@@ -1853,7 +1854,7 @@ class Title:
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     @staticmethod
-    def translate():
+    def translate(skipsubs=False):
         """Parse the Title.attributes and Title.level from the reader. The
         real work has already been done by parse()."""
         assert Lex.next() in (Title,FloatingTitle)
@@ -1861,14 +1862,20 @@ class Title:
         for i in range(Title.linecount):
             reader.read()
         Title.setsectname()
-        # Perform title substitutions.
+        if not skipsubs:
+            Title.attributes['title'] = Title.dosubs(Title.attributes['title'])
+    @staticmethod
+    def dosubs(title):
+        """
+        Perform title substitutions.
+        """
         if not Title.subs:
             Title.subs = config.subsnormal
-        s = Lex.subs((Title.attributes['title'],), Title.subs)
-        s = writer.newline.join(s)
-        if not s:
+        title = Lex.subs((title,), Title.subs)
+        title = writer.newline.join(title)
+        if not title:
             message.warning('blank section title')
-        Title.attributes['title'] = s
+        return title
     @staticmethod
     def isnext():
         lines = reader.read_ahead(2)

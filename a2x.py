@@ -449,9 +449,19 @@ class A2X(AttrDict):
                 'admon.graphics 0',
             ]
         if self.stylesheet:
-            params.append('html.stylesheet "%s"' % self.stylesheet)
-        params = ['--stringparam %s' % o for o in params]
-        self.xsltproc_opts += ' ' + ' '.join(params)
+            params += ['html.stylesheet "%s"' % self.stylesheet]
+        if self.format == 'chunked':
+            # Books chunked at chapter level (articles at section level).
+            if self.doctype == 'book':
+                params += ['chunk.section.depth 0']
+        if self.format == 'htmlhelp':
+            params += ['htmlhelp.chm "%s"' % self.basename('.chm'),
+                       'htmlhelp.hhc "%s"' % self.basename('.hhc')]
+        if self.doctype == 'book':
+            params += ['toc.section.depth 1']
+        for o in params:
+            if o.split()[0]+' ' not in self.xsltproc_opts:
+                self.xsltproc_opts += ' --stringparam ' + o
         if self.fop_opts:
             self.fop = True
         if os.path.splitext(self.asciidoc_file)[1].lower() == '.xml':
@@ -612,15 +622,10 @@ class A2X(AttrDict):
         xsl_file = self.xsl_file()
         if self.format == 'chunked':
             dst_dir = self.dst_path('.chunked')
-            # Books chunked at chapter level (articles default to section level).
-            if self.doctype == 'book' and not 'chunk.section.depth' in opts:
-                opts += ' --stringparam chunk.section.depth "0"'
         elif self.format == 'htmlhelp':
             dst_dir = self.dst_path('.htmlhelp')
-            opts += ' --stringparam htmlhelp.chm "%s"' % self.basename('.chm')
-            opts += ' --stringparam htmlhelp.hhc "%s"' % self.basename('.hhc')
-            opts += ' --stringparam htmlhelp.hhp "%s"' % self.basename('.hhp')
-        opts += ' --stringparam base.dir "%s/"' % os.path.basename(dst_dir)
+        if not 'base.dir ' in opts:
+            opts += ' --stringparam base.dir "%s/"' % os.path.basename(dst_dir)
         # Create content.
         shell_rmtree(dst_dir)
         shell_makedirs(dst_dir)

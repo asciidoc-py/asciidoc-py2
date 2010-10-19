@@ -79,6 +79,22 @@
     <xsl:when test="/processing-instruction('asciidoc-toc')">
 article toc,title
 book    toc,title,figure,table,example,equation
+      <!-- The only way I could find that suppressed book chapter TOCs -->
+      <xsl:if test="$generate.section.toc.level != 0">
+chapter   toc,title
+part      toc,title
+preface   toc,title
+qandadiv  toc
+qandaset  toc
+reference toc,title
+sect1     toc
+sect2     toc
+sect3     toc
+sect4     toc
+sect5     toc
+section   toc
+set       toc,title
+      </xsl:if>
     </xsl:when>
     <xsl:otherwise>
 article nop

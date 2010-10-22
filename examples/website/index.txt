@@ -391,9 +391,10 @@ discussion group thread] for details.
   website is generated using AsciiDoc.
 - Warren Block has http://www.wonkity.com/~wblock/docs/[posted a
   number of articles written using AsciiDoc].
-- The http://code.google.com/p/waf/[Waf project]'s
-  http://freehackers.org/~tnagy/wafbook/index.html[Waf Book] is
-  written using AsciiDoc.
+- The http://code.google.com/p/waf/[Waf project's] 'Waf Book' is
+  written using AsciiDoc, there is an
+  http://waf.googlecode.com/svn/docs/wafbook/single.html[HTML] and a
+  http://waf.googlecode.com/svn/docs/wafbook/waf.pdf[PDF] version.
 
 Please let me know if any of these links need updating.
 

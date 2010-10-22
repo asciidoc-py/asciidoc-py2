@@ -9,6 +9,12 @@ AsciiDoc Frequently Asked Questions
   newer FAQs may apply to the trunk and not the current release.
 ======
 
+== Why is the generated HTML title element text invalid?
+Probably because your document title contains formatting that has
+generated HTML title markup. You can resolve this by explicitly
+defining the 'title' attribute in your document's header.
+
+
 == AsciiDoc sometimes generates invalid output markup, why?
 AsciiDoc is backend agnostic, the 'asciidoc' command has no knowledge
 of the syntax or structure of the backend format that it generates.

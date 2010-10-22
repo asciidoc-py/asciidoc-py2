@@ -5327,6 +5327,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             if o == '-c': config.dumping = True
             if o == '-s': config.header_footer = False
             if o == '-v': config.verbose = True
+        document.update_attributes()
         if '-e' not in options:
             # Load asciidoc.conf files.
             if not config.load_from_dirs('asciidoc.conf'):

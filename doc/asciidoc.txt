@@ -2281,6 +2281,9 @@ referring document.
 
   image::images/logo.png[scaledwidth="75%",alt="Company Logo"]
 
+- The image `scale` attribute sets the DocBook `imagedata` element
+  `scale` attribute.
+
 - The optional `align` attribute is used for horizontal image
   alignment.  Allowed values are `center`, `left` and `right`. For
   example:

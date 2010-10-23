@@ -313,6 +313,9 @@ and I'll add them to the list.
 - Paul Hsu has started a
   http://github.com/paulhsu/AsciiDoc.CHT.userguide[Chinese translation
   of the AsciiDoc User Guide].
+- Dag Wieers has written
+  http://dag.wieers.com/home-made/unoconv/[UNOCONV]. 'UNOCONV' can
+  export AsciiDoc outputs to OpenOffice export formats.
 
 Please let me know if any of these links need updating.
 

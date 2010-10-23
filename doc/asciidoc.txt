@@ -2452,16 +2452,17 @@ Conditional Inclusion Macros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Lines of text in the source document can be selectively included or
 excluded from processing based on the existence (or not) of a document
-attribute.  There are two conditional inclusion macros; the first
-includes document text between the `ifdef` and `endif` macros if a
+attribute.
+
+Document text between the `ifdef` and `endif` macros is included if a
 document attribute is defined:
 
   ifdef::<attribute>[]
   :
   endif::<attribute>[]
 
-The second includes document text between the `ifndef` and `endif`
-macros if the attribute is not defined:
+Document text between the `ifndef` and `endif` macros is not included
+if a document attribute is defined:
 
   ifndef::<attribute>[]
   :
@@ -2490,41 +2491,20 @@ Is equivalent to:
 - Multiple '+' separated attribute names evaluate to defined if if all
   of the attributes is defined, otherwise it's value is undefined.
 
+Document text between the `ifeval` and `endif` macros is included if
+the Python expression inside the square brackets is true. Example:
+
+  ifeval::[{rs458}==2]]
+  :
+  endif::[]
+
+- Document attribute references are expanded before the expression is
+  evaluated.
+- If an attribute reference is undefined then the expression is
+  considered false.
+
 Take a look at the `*.conf` configuration files in the AsciiDoc
 distribution for examples of conditional inclusion macro usage.
-
-.Two types of conditional inclusion
-*********************************************************************
-Conditional inclusion macros are evaluated when they are read, but
-there is another type of conditional inclusion based on attribute
-references, the latter being evaluated when the output file is
-written.
-
-These examples illustrate the two forms of conditional inclusion. The
-only difference between them is that the first is evaluated at program
-load time while the second is evaluated when the output is written:
-
-  ifdef::world[Hello World!]
-
-  {world#}Hello World!
-
-In this example when the `{world#}` conditional attribute reference
-is evaluates to a zero length string if `world` is defined; if `world`
-is not defined the whole line is dropped.
-
-The subtle difference between the two types of conditional inclusion
-has implications for AsciiDoc configuration files: AsciiDoc has to
-read the configuration files *before* writing the output document,
-this is necessary because the AsciiDoc source syntax is mostly defined
-by the configuration files.  This means that any AsciiDoc attributes
-set *after the source file header* will not affect conditional
-inclusion macro expansion defined inside configuration files.  If you
-need to control configuration file markup inclusion with attribute
-entries in the body of the AsciiDoc source file you need to use
-attribute references to control inclusion instead of conditional
-inclusion macros (attribute references are substituted at the time the
-output is written rather than at program startup).
-*********************************************************************
 
 Executable system macros
 ^^^^^^^^^^^^^^^^^^^^^^^^

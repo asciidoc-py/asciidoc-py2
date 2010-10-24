@@ -237,9 +237,14 @@ def find_resources(files, tagname, attrname, filter=None):
         if OPTIONS.dry_run:
             continue
         parser = FindResources()
-        # UTF-8 is a better bet than the default ASCII.
+        # HTMLParser has problems with non-ASCII strings.
         # See http://bugs.python.org/issue3932
-        parser.feed(open(f).read().decode('utf8'))
+        mo = re.search(r'^<\?xml.* encoding="(.*?)"', open(f).readline())
+        if mo:
+            encoding = mo.group(1)
+            parser.feed(open(f).read().decode(encoding))
+        else:
+            parser.feed(open(f).read())
         parser.close()
     result = list(set(result))   # Drop duplicate values.
     result.sort()

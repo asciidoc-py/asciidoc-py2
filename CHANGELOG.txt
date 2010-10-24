@@ -3,6 +3,64 @@ AsciiDoc ChangeLog
 
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
+
+Version 8.6.3 (2010-10-28)
+--------------------------
+.Additions and changes
+- Added and 'unbreakable' option to bulleted and numbered lists
+  (thanks to Henrik Maier for this patch).
+- Added `ifeval::[]` system macro (thanks to Henrik Maier for
+  suggesting this feature).
+- The image 'scale' attribute sets the DocBook 'imagedata' element
+  'scale' attribute.  Patch submitted by Henrik Maier.
+- DocBook 'preface', 'colophon' and 'dedication' style section titles
+  now work. Based on patch submitted by Henrik Maier.
+- 'a2x': Do not inject xsltproc parameters if they were specified on
+  the command-line (parameter double-ups generate xsltproc 'Global
+  parameter already defined' errors).
+- 'a2x': Refactored xsltproc parameter injection.
+- 'a2x': articles chunked at section level by default.
+- 'attributes', 'titles' and 'specialcharacters' sections are now read
+  from the local `asciidoc.conf` file before the header is parsed.
+  This fixes a regression problem. See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/1b3f88f1f8118ab3
+- Refactored 'music', 'graphviz' and 'latex' filter configurations.
+- Refactored source filter configuration and added literal paragraph
+  source style.
+- Separated paragraph styles from paragraph syntax -- any style can be
+  applied to any syntax.
+- Added 'listing' and 'quote' paragraph styles.
+- Renamed paragraph 'default' style to 'normal'.
+- Updated `--help` option text.
+- 'a2x': The `asciidoc_opts`, `dblatex_opts`, `fop_opts` and
+  `xsltproc_opts` command-line options can be specified multiple
+  times.  This makes embedding multiple 'a2x' options in document
+  headers easier to manage and less error prone.
+- Added ASCIIMathML and LaTeXMathML support to slidy backend.
+
+.Bug fixes
+- *FIXED*: Regression in 8.6.2: command-line attribute were not
+  available to the global asciidoc.conf.
+- *FIXED*: Postponed document title substitutions until backend conf
+  files have been loaded (8.6.2 regression). See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/42b63ce90c2563b8
+- *FIXED*: The XSL Stylesheets customizations were preventing chapter
+  and section level TOCs from being generated when using XSL
+  Stylesheets via 'a2x'.  See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/42b63ce90c2563b8
+- *FIXED*: ``UnicodeDecodeError: 'ascii' codec can't decode byte''.
+  This error is due to a limitation in the Python HTMLParser module,
+  see: http://bugs.python.org/issue3932 Resolved by assuming UTF-8
+  input (this assumption is not always going be correct but it will be
+  correct more often that not doing anything i.e. assuming an 'ascii'
+  encoding.
+- *FIXED*: Broken `--no-conf` option (8.6.2 regression).
+- *FIXED*: Regression in 8.6.2: configuration attribute entries set in
+  the document header may cause a 'FAILED: incomplete configuration
+  files' error.
+- *FIXED*: 'html4': corrected self closed meta tags.
+
+
 Version 8.6.2 (2010-10-03)
 --------------------------
 .Additions and changes

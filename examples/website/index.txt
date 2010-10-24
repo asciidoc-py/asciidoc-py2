@@ -11,16 +11,8 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-This release adds a <<X8,Slidy>> backend for creating browser
-slideshows (based on Phillip Lord's slidy backend).
-
-You can now put document 'doctype', 'icons', 'lang' and 'backend' meta
-attributes in the document header.  Backend and language configuration
-files are now loaded *after* the header has been parsed.
-
-Optional 'keywords', 'description' and 'title' document header
-meta-data attributes have been added to HTML backends for web page
-SEO and you can now enter multi-line attribute values.
+This release is primarily to fix regressions introduced by 8.6.2, but
+there a also a number of enhancements an few other bug fixes.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the

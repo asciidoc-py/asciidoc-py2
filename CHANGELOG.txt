@@ -50,10 +50,7 @@ Version 8.6.3 (2010-10-28)
   http://groups.google.com/group/asciidoc/browse_thread/thread/42b63ce90c2563b8
 - *FIXED*: ``UnicodeDecodeError: 'ascii' codec can't decode byte''.
   This error is due to a limitation in the Python HTMLParser module,
-  see: http://bugs.python.org/issue3932 Resolved by assuming UTF-8
-  input (this assumption is not always going be correct but it will be
-  correct more often that not doing anything i.e. assuming an 'ascii'
-  encoding.
+  see: http://bugs.python.org/issue3932
 - *FIXED*: Broken `--no-conf` option (8.6.2 regression).
 - *FIXED*: Regression in 8.6.2: configuration attribute entries set in
   the document header may cause a 'FAILED: incomplete configuration

@@ -4424,7 +4424,7 @@ class Config:
                 result.append(f)
         return result
 
-    def load_from_dirs(self, filename, dirs=None):
+    def load_from_dirs(self, filename, dirs=None, include=[]):
         """
         Load conf file from dirs list.
         If dirs not specified try all the well known locations.
@@ -4432,7 +4432,7 @@ class Config:
         """
         count = 0
         for f in self.find_in_dirs(filename,dirs):
-            if self.load_file(f):
+            if self.load_file(f, include=include):
                 count += 1
         return count != 0
 
@@ -5345,9 +5345,12 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             if o == '-v': config.verbose = True
         document.update_attributes()
         if '-e' not in options:
-            # Load asciidoc.conf files.
-            if not config.load_from_dirs('asciidoc.conf'):
+            # Load asciidoc.conf files in two passes: the first for attributes
+            # the second for everything. This is so that locally set attributes
+            # available are in the global asciidoc.conf
+            if not config.load_from_dirs('asciidoc.conf',include=['attributes']):
                 raise EAsciiDoc,'configuration file asciidoc.conf missing'
+            config.load_from_dirs('asciidoc.conf')
             if infile != '<stdin>':
                 indir = os.path.dirname(infile)
                 config.load_file('asciidoc.conf', indir,

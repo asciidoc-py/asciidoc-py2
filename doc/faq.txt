@@ -74,11 +74,9 @@ example] on the AsciiDoc website.
 
 
 == DocBook has many elements for document meta-data -- how can I use them from AsciiDoc?
-If the 'docinfo' attribute is defined then AsciiDoc looks for a file
-named like the source file but ending in `-docinfo.xml` and includes
-it in the output document. See the link:userguide.html#X87[Additional
-document header information] section in the AsciiDoc User Guide for
-details.
+The 'docinfo', 'docinfo1' and 'docinfo2' attributes allow you include
+link:userguide.html#X97[document information files] containing DocBook
+XML into the header of the output file.
 
 
 == Do element titles automatically generate link captions?
@@ -943,7 +941,7 @@ The default format for the `{localdate}` attribute is the ISO 8601
 the `{localdate}` attribute. For example by setting it using the
 asciidoc(1) `-a` command-line option:
 
-  $ asciidoc -a localdate=`date +%d-%d-%Y` mydoc.txt
+  $ asciidoc -a localdate=`date +%d-%m-%Y` mydoc.txt
 
 You could also set it by adding an Attribute Entry to your source
 document, for example:

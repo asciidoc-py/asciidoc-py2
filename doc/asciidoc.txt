@@ -3609,11 +3609,7 @@ attribute reference if you need a literal | character in the template.
 Configuration File Names and Locations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configuration files have a `.conf` file name extension; they are
-loaded implicitly (using predefined file names and locations) or
-explicitly (using the asciidoc(1) `--conf-file`) command-line option).
-
-Implicit configuration files are loaded from the following
-locations:
+loaded from the following locations:
 
 1. The directory containing the asciidoc executable.
 2. If there is no `asciidoc.conf` file in the directory containing the
@@ -3625,14 +3621,26 @@ locations:
    multiple local copies of AsciiDoc to coexist on the same host PC.
 3. The user's `$HOME/.asciidoc` directory (if it exists).
 4. The directory containing the AsciiDoc source file.
+5. Explicit configuration files specified with the asciidoc(1)
+   `--conf-file`) command-line option.  The `--conf-file` option can
+   be specified multiple times, in which case configuration files will
+   be processed in the same order they appear on the command-line.
 
-Implicit configuration files from the above locations are loaded in
-the following order:
+Configuration files from the above locations are loaded in the
+following order:
+
+- The `[attributes]` section only from:
+  * `asciidoc.conf` in location 3
+  * Files from location 5.
++
+This first pass makes locally set attributes available in the global
+`asciidoc.conf` file.
 
 - `asciidoc.conf` from locations 1, 2, 3.
 - 'attributes', 'titles' and 'specialcharacters' sections from the
   `asciidoc.conf` in location 4.
-- The document header is parsed at this point.
+- The document header is parsed at this point and we can assume the
+  'backend' and 'doctype' have now been defined.
 - `<backend>.conf` and `<backend>-<doctype>.conf` from locations 1,
   2,3.
 - Filter conf files from the `filters` directory in locations 1, 2, 3.
@@ -3642,10 +3650,7 @@ the following order:
   2,3.
 - Filter conf files from location 4.
 - `<docfile>.conf` and `<docfile>-<backend>.conf` from location 4.
-- Configuration files specified by asciidoc(1) `--conf-file`
-  command-line options.  The `--conf-file` option can be specified
-  multiple times, in which case configuration files will be processed
-  in the order they appear on the command-line.
+- Configuration files from location 5.
 
 Where:
 
@@ -3655,9 +3660,6 @@ Where:
   file name extension.
 - `<lang>` is a two letter country code set by the the AsciiDoc 'lang'
   attribute.
-
-Implicit configuration files that don't exist will be silently
-skipped.
 
 [NOTE]
 =====================================================================
@@ -5272,8 +5274,8 @@ you need to be aware of:
 - If you are outputting HTML directly from asciidoc(1) you'll
   need to set the various `*_caption` attributes to match your target
   language (see the list of captions and titles in the `[attributes]`
-  section of the default `asciidoc.conf` file). The easiest way is to
-  create a language `.conf` file (see the AsciiDoc's `lang-en.conf`
+  section of the distribution `lang-*.conf` files). The easiest way is
+  to create a language `.conf` file (see the AsciiDoc's `lang-en.conf`
   file).
 +
 NOTE: You still use the 'NOTE', 'CAUTION', 'TIP', 'WARNING',

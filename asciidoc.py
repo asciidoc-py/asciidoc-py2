@@ -5335,6 +5335,15 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
     """Convert AsciiDoc document to DocBook document of type doctype
     The AsciiDoc document is read from file object src the translated
     DocBook file written to file object dst."""
+    def load_conffiles(include=[]):
+        # Load conf files specified on the command-line.
+        if confiles:
+            for f in confiles:
+                if os.path.isfile(f):
+                    config.load_file(f, include=include)
+                else:
+                    raise EAsciiDoc,'configuration file %s missing' % f
+
     try:
         if doctype not in (None,'article','manpage','book'):
             raise EAsciiDoc,'illegal document type'
@@ -5350,19 +5359,14 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             # available are in the global asciidoc.conf
             if not config.load_from_dirs('asciidoc.conf',include=['attributes']):
                 raise EAsciiDoc,'configuration file asciidoc.conf missing'
+            load_conffiles(include=['attributes'])
             config.load_from_dirs('asciidoc.conf')
             if infile != '<stdin>':
                 indir = os.path.dirname(infile)
                 config.load_file('asciidoc.conf', indir,
                                 ['attributes','titles','specialchars'])
         else:
-            # Load conf files specified on the command-line.
-            if confiles:
-                for f in confiles:
-                    if os.path.isfile(f):
-                        config.load_file(f)
-                    else:
-                        raise EAsciiDoc,'configuration file %s missing' % f
+            load_conffiles()
         # Check the infile exists.
         if infile != '<stdin>':
             if not os.path.isfile(infile):
@@ -5397,13 +5401,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 f = os.path.splitext(infile)[0]
                 config.load_file(f + '.conf')
                 config.load_file(f + '-' + document.backend + '.conf')
-            # Load conf files specified on the command-line.
-            if confiles:
-                for f in confiles:
-                    if os.path.isfile(f):
-                        config.load_file(f)
-                    else:
-                        raise EAsciiDoc,'configuration file %s missing' % f
+            load_conffiles()
         # Build outfile name.
         if outfile is None:
             outfile = os.path.splitext(infile)[0] + '.' + document.backend

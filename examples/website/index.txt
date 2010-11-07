@@ -390,6 +390,8 @@ discussion group thread] for details.
   written using AsciiDoc, there is an
   http://waf.googlecode.com/svn/docs/wafbook/single.html[HTML] and a
   http://waf.googlecode.com/svn/docs/wafbook/waf.pdf[PDF] version.
+- The http://www.diffkit.org/[DiffKit] project's documentation and
+  website have been written using Asciidoc.
 
 Please let me know if any of these links need updating.
 

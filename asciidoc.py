@@ -1673,6 +1673,7 @@ class AttributeEntry:
     name = None
     name2 = None
     value = None
+    attributes = {}     # Accumulates all the parsed attribute entries.
     def __init__(self):
         raise AssertionError,'no class instances allowed'
     @staticmethod
@@ -1741,6 +1742,7 @@ class AttributeEntry:
                 document.attributes[attr.name] = attr.value
             elif attr.name in document.attributes:
                 del document.attributes[attr.name]
+            attr.attributes[attr.name] = attr.value
 
 class AttributeList:
     """Static methods and attributes only."""
@@ -4282,12 +4284,12 @@ class Config:
         self.include1 = {}      # Holds include1::[] files for {include1:}.
         self.dumping = False    # True if asciidoc -c option specified.
 
-    def load_file(self, fname, dir=None, include=[]):
+    def load_file(self, fname, dir=None, include=[], exclude=[]):
         """
         Loads sections dictionary with sections from file fname.
         Existing sections are overlaid.
-        The 'include' list contains the section names to be loaded,
-        if 'inlude' is not specified all sections are loaded.
+        The 'include' list contains the section names to be loaded.
+        The 'exclude' list contains section names not to be loaded.
         Return False if no file was found in any of the locations.
         """
         if dir:
@@ -4343,6 +4345,9 @@ class Config:
         rdr.close()
         if include:
             for s in set(sections) - set(include):
+                del sections[s]
+        if exclude:
+            for s in set(sections) & set(exclude):
                 del sections[s]
         attrs = {}
         self.load_sections(sections,attrs)
@@ -5335,12 +5340,12 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
     """Convert AsciiDoc document to DocBook document of type doctype
     The AsciiDoc document is read from file object src the translated
     DocBook file written to file object dst."""
-    def load_conffiles(include=[]):
+    def load_conffiles(include=[], exclude=[]):
         # Load conf files specified on the command-line.
         if confiles:
             for f in confiles:
                 if os.path.isfile(f):
-                    config.load_file(f, include=include)
+                    config.load_file(f, include=include, exclude=exclude)
                 else:
                     raise EAsciiDoc,'configuration file %s missing' % f
 
@@ -5364,9 +5369,10 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
             if infile != '<stdin>':
                 indir = os.path.dirname(infile)
                 config.load_file('asciidoc.conf', indir,
-                                ['attributes','titles','specialchars'])
+                                include=['attributes','titles','specialchars'])
         else:
             load_conffiles()
+        document.update_attributes()
         # Check the infile exists.
         if infile != '<stdin>':
             if not os.path.isfile(infile):
@@ -5409,6 +5415,8 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 # Change file extension.
                 outfile = os.path.splitext(outfile)[0] + config.outfilesuffix
         document.outfile = outfile
+        # Document header attributes override conf file attributes.
+        document.attributes.update(AttributeEntry.attributes)
         document.update_attributes()
         # Configuration is fully loaded so can expand templates.
         config.expand_all_templates()

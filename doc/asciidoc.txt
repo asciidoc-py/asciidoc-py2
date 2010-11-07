@@ -3663,10 +3663,9 @@ Where:
 
 [NOTE]
 =====================================================================
-The important point to take away is that backend and language global
-configuration files are loaded *after* the header has been parsed.
-This means that you can set just about any attribute in the document
-header. Here's an example header:
+The backend and language global configuration files are loaded *after*
+the header has been parsed.  This means that you can set most
+attributes in the document header. Here's an example header:
 
   Life's Mysteries
   ================
@@ -3677,6 +3676,9 @@ header. Here's an example header:
   :data-uri:
   :lang: en
   :encoding: iso-8859-1
+
+Attributes set in the document header take precedence over
+configuration file attributes.
 
 =====================================================================
 

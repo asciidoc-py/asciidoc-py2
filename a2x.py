@@ -429,7 +429,7 @@ class A2X(AttrDict):
             self.asciidoc_opts += ' --doctype %s' % self.doctype
         for attr in self.attributes:
             self.asciidoc_opts += ' --attribute "%s"' % attr
-        self.xsltproc_opts += ' --nonet'
+#        self.xsltproc_opts += ' --nonet'
         if self.verbose:
             self.asciidoc_opts += ' --verbose'
             self.dblatex_opts += ' -V'

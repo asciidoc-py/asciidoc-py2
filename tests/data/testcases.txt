@@ -102,6 +102,10 @@ obvious*
 
 [firstletter]##T##esting 123 ...
 
+(``+1\n+'') if (usually ``+-1\n+'')
+
+(``++1\n++'') if (usually ``++-1\n++'')
+
 
 == Break list nesting ==
 1. List 1.

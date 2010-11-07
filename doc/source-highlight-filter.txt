@@ -15,12 +15,17 @@ highlighter for 'xhtml11' outputs.
 To use Pygments you need to define an AsciiDoc attribute named
 'pygments' (either from the command-line or in the global
 `asciidoc.conf` configuration file) and you will also need to have
-Pygments installed and the 'pygmentize' command in your PATH.  You can
-customize Pygments CSS styles by editing `./stylesheets/pygments.css`.
-To make Pygments your default highlighter put the following line your
-`~/.asciidoc/asciidoc.conf` file:
+Pygments installed and the 'pygmentize' command in your PATH.
+
+- You can customize Pygments CSS styles by editing
+  `./stylesheets/pygments.css`.
+- To make Pygments your default highlighter put the following line
+  your `~/.asciidoc/asciidoc.conf` file:
 
   pygments=
+
+- The AsciiDoc 'encoding' attribute is passed to Pygments as a `-O`
+  command-line option.
 
 
 DocBook Outputs

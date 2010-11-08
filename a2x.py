@@ -461,6 +461,8 @@ class A2X(AttrDict):
                 params += ['chunk.section.depth 0']
         if self.format == 'htmlhelp':
             params += ['htmlhelp.chm "%s"' % self.basename('.chm'),
+                       'htmlhelp.hhp "%s"' % self.basename('.hhp'),
+                       'htmlhelp.hhk "%s"' % self.basename('.hhk'),
                        'htmlhelp.hhc "%s"' % self.basename('.hhc')]
         if self.doctype == 'book':
             params += ['toc.section.depth 1']

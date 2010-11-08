@@ -11,8 +11,9 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-This release is primarily to fix regressions introduced by 8.6.2, but
-there a also a number of enhancements an few other bug fixes.
+This release was intented primarily to fix regressions introduced by
+8.6.2, but the incubation period was longer than expected and it now
+also includes a number of enhancements an few other bug fixes.
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the

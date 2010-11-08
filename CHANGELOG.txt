@@ -24,6 +24,8 @@ Version 8.6.3 (2010-10-28)
   from the local `asciidoc.conf` file before the header is parsed.
   This fixes a regression problem. See
   http://groups.google.com/group/asciidoc/browse_thread/thread/1b3f88f1f8118ab3
+- Document header attributes take precedence over configuration file
+  attributes.
 - Refactored 'music', 'graphviz' and 'latex' filter configurations.
 - Refactored source filter configuration and added literal paragraph
   source style.
@@ -37,9 +39,14 @@ Version 8.6.3 (2010-10-28)
   times.  This makes embedding multiple 'a2x' options in document
   headers easier to manage and less error prone.
 - Added ASCIIMathML and LaTeXMathML support to slidy backend.
+- Pass the 'encoding' attribute to the Pygments source highlight
+  filter command.
 
 .Bug fixes
-- *FIXED*: Regression in 8.6.2: command-line attribute were not
+- *FIXED*: Sometimes double backquotes were msinterpreted as inline
+  literal macros.  See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/f510ea82a88aaee8
+- *FIXED*: Regression in 8.6.2: command-line attributes were not
   available to the global asciidoc.conf.
 - *FIXED*: Postponed document title substitutions until backend conf
   files have been loaded (8.6.2 regression). See

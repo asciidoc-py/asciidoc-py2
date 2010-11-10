@@ -381,6 +381,10 @@ class A2X(AttrDict):
             if not os.path.isfile(self.conf_file):
                 die('missing configuration file: %s' % self.conf_file)
             conf_files.append(self.conf_file)
+        # From --xsl-file option.
+        if self.xsl_file is not None:
+            if not os.path.isfile(self.xsl_file):
+                die('missing XSL file: %s' % self.xsl_file)
         # Load ordered files.
         for f in conf_files:
             if os.path.isfile(f):
@@ -503,11 +507,15 @@ class A2X(AttrDict):
                 die('missing configuration file: %s' % f)
         return os.path.normpath(f)
 
-    def xsl_file(self, file_name=None):
+    def xsl_stylesheet(self, file_name=None):
         '''
         Return full path name of file in asciidoc docbook-xsl configuration
         directory.
+        If an XSL file was specified with the --xsl-file option then it is
+        returned.
         '''
+        if self.xsl_file is not None:
+            return self.xsl_file
         if not file_name:
             file_name = self.format + '.xsl'
         return self.asciidoc_conf_file(os.path.join('docbook-xsl', file_name))
@@ -574,7 +582,7 @@ class A2X(AttrDict):
         docbook_file = self.dst_path('.xml')
         xhtml_file = self.dst_path('.html')
         opts = '%s --output "%s"' % (self.xsltproc_opts, xhtml_file)
-        exec_xsltproc(self.xsl_file(), docbook_file, self.destination_dir, opts)
+        exec_xsltproc(self.xsl_stylesheet(), docbook_file, self.destination_dir, opts)
         src_dir = os.path.dirname(self.asciidoc_file)
         self.copy_resources(xhtml_file, src_dir, self.destination_dir)
 
@@ -582,7 +590,7 @@ class A2X(AttrDict):
         self.to_docbook()
         docbook_file = self.dst_path('.xml')
         opts = self.xsltproc_opts
-        exec_xsltproc(self.xsl_file(), docbook_file, self.destination_dir, opts)
+        exec_xsltproc(self.xsl_stylesheet(), docbook_file, self.destination_dir, opts)
 
     def to_pdf(self):
         if self.fop:
@@ -593,7 +601,7 @@ class A2X(AttrDict):
     def exec_fop(self):
         self.to_docbook()
         docbook_file = self.dst_path('.xml')
-        xsl = self.xsl_file('fo.xsl')
+        xsl = self.xsl_stylesheet('fo.xsl')
         fo = self.dst_path('.fo')
         pdf = self.dst_path('.pdf')
         opts = '%s --output "%s"' % (self.xsltproc_opts, fo)
@@ -626,7 +634,7 @@ class A2X(AttrDict):
         self.to_docbook()
         docbook_file = self.dst_path('.xml')
         opts = self.xsltproc_opts
-        xsl_file = self.xsl_file()
+        xsl_file = self.xsl_stylesheet()
         if self.format == 'chunked':
             dst_dir = self.dst_path('.chunked')
         elif self.format == 'htmlhelp':
@@ -643,7 +651,7 @@ class A2X(AttrDict):
 
     def to_epub(self):
         self.to_docbook()
-        xsl_file = self.xsl_file()
+        xsl_file = self.xsl_stylesheet()
         docbook_file = self.dst_path('.xml')
         epub_file = self.dst_path('.epub')
         build_dir = epub_file + '.d'
@@ -706,7 +714,7 @@ class A2X(AttrDict):
             self.to_docbook()
             docbook_file = self.dst_path('.xml')
             opts = '%s --output "%s"' % (self.xsltproc_opts, html_file)
-            exec_xsltproc(self.xsl_file(), docbook_file,
+            exec_xsltproc(self.xsl_stylesheet(), docbook_file,
                     self.destination_dir, opts)
             shell('"%s" -cols 70 -dump -T text/html -no-graph "%s" > "%s"' %
                  (W3M, html_file, text_file))
@@ -807,6 +815,9 @@ if __name__ == '__main__':
     parser.add_option('--xsltproc-opts',
         action='append', dest='xsltproc_opts', default=[],
         metavar='XSLTPROC_OPTS', help='options for FOP pdf generation')
+    parser.add_option('--xsl-file',
+        action='store', dest='xsl_file', metavar='XSL_FILE',
+        help='custom XSL stylesheet')
     parser.add_option('-v', '--verbose',
         action='count', dest='verbose', default=0,
         help='increase verbosity')

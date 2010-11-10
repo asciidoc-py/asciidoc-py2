@@ -42,6 +42,8 @@ Version 8.6.3 (2010-10-28)
 - Pass the 'encoding' attribute to the Pygments source highlight
   filter command.
 - 'a2x': HTML Help `.hhk` file named after AsciiDoc source file.
+- 'a2x': Added `--xsl-file` option to allow custom XSL stylesheets to
+  be specified.
 
 .Bug fixes
 - *FIXED*: Sometimes double backquotes were msinterpreted as inline

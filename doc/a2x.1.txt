@@ -105,6 +105,10 @@ OPTIONS
   Additional 'xsltproc(1)' options.
   This option may be specified more than once.
 
+*--xsl-file*='XSL_FILE'::
+  Override the built-in XSL stylesheet with the custom XSL stylesheet
+  'XSL_FILE'.
+
 *--fop*::
   Use FOP to generate PDFs. The default behavior is to use
   'dblatex(1)'.  The '--fop' option is implicit if this option is

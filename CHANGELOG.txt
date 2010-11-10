@@ -41,6 +41,7 @@ Version 8.6.3 (2010-10-28)
 - Added ASCIIMathML and LaTeXMathML support to slidy backend.
 - Pass the 'encoding' attribute to the Pygments source highlight
   filter command.
+- 'a2x': HTML Help `.hhk` file named after AsciiDoc source file.
 
 .Bug fixes
 - *FIXED*: Sometimes double backquotes were msinterpreted as inline
@@ -55,14 +56,18 @@ Version 8.6.3 (2010-10-28)
   and section level TOCs from being generated when using XSL
   Stylesheets via 'a2x'.  See
   http://groups.google.com/group/asciidoc/browse_thread/thread/42b63ce90c2563b8
-- *FIXED*: ``UnicodeDecodeError: 'ascii' codec can't decode byte''.
-  This error is due to a limitation in the Python HTMLParser module,
-  see: http://bugs.python.org/issue3932
+- *FIXED*: ``UnicodeDecodeError: \'ascii' codec can't decode byte''
+  error.  This error is due to a limitation in the Python HTMLParser
+  module, see: http://bugs.python.org/issue3932
 - *FIXED*: Broken `--no-conf` option (8.6.2 regression).
 - *FIXED*: Regression in 8.6.2: configuration attribute entries set in
   the document header may cause a 'FAILED: incomplete configuration
   files' error.
 - *FIXED*: 'html4': corrected self closed meta tags.
+- *FIXED*: 'a2x' regression in 8.6.2: HTML Help `.hhp` file name had
+  reverted to default name instead of the AsciiDoc source file name.
+  See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/dedc961b23e9ac56
 
 
 Version 8.6.2 (2010-10-03)

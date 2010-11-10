@@ -68,6 +68,8 @@ Version 8.6.3 (2010-10-28)
   reverted to default name instead of the AsciiDoc source file name.
   See:
   http://groups.google.com/group/asciidoc/browse_thread/thread/dedc961b23e9ac56
+- *FIXED*: Attributes in man page title caused it to be dropped
+  resulting in invalid DocBook output.
 
 
 Version 8.6.2 (2010-10-03)

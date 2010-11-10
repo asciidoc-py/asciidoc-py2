@@ -1660,6 +1660,9 @@ class Header:
                 message.error('malformed manpage title')
             else:
                 mantitle = mo.group('mantitle').strip()
+                mantitle = subs_attrs(mantitle)
+                if mantitle is None:
+                    message.error('undefined attribute in manpage title')
                 # mantitle is lowered only if in ALL CAPS
                 if mantitle == mantitle.upper():
                     mantitle = mantitle.lower()

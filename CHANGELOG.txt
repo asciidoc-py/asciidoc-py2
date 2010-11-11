@@ -4,7 +4,7 @@ AsciiDoc ChangeLog
 :replacements.\bweb:: http://www.methods.co.nz/asciidoc/
 
 
-Version 8.6.3 (2010-10-28)
+Version 8.6.3 (2010-11-14)
 --------------------------
 .Additions and changes
 - Added and 'unbreakable' option to bulleted and numbered lists

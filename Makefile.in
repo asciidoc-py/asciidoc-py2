@@ -30,7 +30,6 @@ progdir = $(bindir)
 vimdir = @sysconfdir@/vim
 
 manp = $(wildcard doc/*.1)
-manpdir = $(mandir)/man1
 
 conf = $(wildcard *.conf)
 confdir = $(ASCIIDOCCONF)

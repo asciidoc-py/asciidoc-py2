@@ -57,8 +57,6 @@ Create `configure` using 'autoconf(1)'; use `configure` to create the
 $ autoconf
 $ ./configure
 $ make
-$ python a2x.py -f manpage doc/asciidoc.1.txt
-$ python a2x.py -f manpage doc/a2x.1.txt
 $ sudo make install
 ---------------------------------------------
 

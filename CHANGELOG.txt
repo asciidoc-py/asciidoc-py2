@@ -44,6 +44,8 @@ Version 8.6.3 (2010-11-14)
 - 'a2x': HTML Help `.hhk` file named after AsciiDoc source file.
 - 'a2x': Added `--xsl-file` option to allow custom XSL stylesheets to
   be specified.
+- Make builds the man pages. See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/c21c2902c29bae64
 
 .Bug fixes
 - *FIXED*: Sometimes double backquotes were msinterpreted as inline
@@ -72,6 +74,8 @@ Version 8.6.3 (2010-11-14)
   http://groups.google.com/group/asciidoc/browse_thread/thread/dedc961b23e9ac56
 - *FIXED*: Attributes in man page title caused it to be dropped
   resulting in invalid DocBook output.
+- *FIXED*: `make uninstall` now deletes the `asciidoc.1` and `a2x.1`
+  man pages.
 
 
 Version 8.6.2 (2010-10-03)

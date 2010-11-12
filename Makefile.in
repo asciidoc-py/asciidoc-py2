@@ -29,7 +29,8 @@ progdir = $(bindir)
 
 vimdir = @sysconfdir@/vim
 
-manp = $(wildcard doc/*.1)
+manp = $(patsubst %1.txt,%1,$(wildcard doc/*.1.txt))
+manpdir = $(mandir)/man1
 
 conf = $(wildcard *.conf)
 confdir = $(ASCIIDOCCONF)
@@ -99,6 +100,9 @@ $(PROGTARGETS): % : %dir
 $(DATATARGETS): % : %dir
 	$(INSTALL_DATA) $($@) $(DESTDIR)/$($<)/
 
+$(manp): %.1 : %.1.txt
+	python a2x.py -f manpage $<
+
 docs:
 	$(INSTALL) -d $(DESTDIR)/$(docdir)
 	$(INSTALL_DATA) $(doc) $(DESTDIR)/$(docdir)
@@ -151,7 +155,8 @@ uninstall-vim:
 	done
 
 
-build: fixconfpath
+build: fixconfpath $(manp)
+
 
 install: all $(PROGTARGETS) $(DATATARGETS) progsymlink install-vim
 
@@ -160,10 +165,13 @@ uninstall: uninstall-vim
 	rm -f $(DESTDIR)/$(progdir)/asciidoc.py
 	rm -f $(DESTDIR)/$(progdir)/a2x
 	rm -f $(DESTDIR)/$(progdir)/a2x.py
-	rm -f $(DESTDIR)/$(mandir)/asciidoc.1
-	rm -f $(DESTDIR)/$(mandir)/a2x.1
+	rm -f $(DESTDIR)/$(manpdir)/asciidoc.1
+	rm -f $(DESTDIR)/$(manpdir)/a2x.1
 	rm -rf $(DESTDIR)/$(confdir)
 	rm -rf $(DESTDIR)/$(docdir)
+
+clean:
+	rm -f $(manp)
 
 test:
 	@echo "Nothing to see here...Move along."

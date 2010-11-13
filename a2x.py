@@ -385,6 +385,7 @@ class A2X(AttrDict):
         if self.xsl_file is not None:
             if not os.path.isfile(self.xsl_file):
                 die('missing XSL file: %s' % self.xsl_file)
+            self.xsl_file = os.path.abspath(self.xsl_file)
         # Load ordered files.
         for f in conf_files:
             if os.path.isfile(f):
@@ -459,10 +460,6 @@ class A2X(AttrDict):
             ]
         if self.stylesheet:
             params += ['html.stylesheet "%s"' % self.stylesheet]
-        if self.format == 'chunked':
-            # Books chunked at chapter level (articles at section level).
-            if self.doctype == 'book':
-                params += ['chunk.section.depth 0']
         if self.format == 'htmlhelp':
             params += ['htmlhelp.chm "%s"' % self.basename('.chm'),
                        'htmlhelp.hhp "%s"' % self.basename('.hhp'),
@@ -470,6 +467,8 @@ class A2X(AttrDict):
                        'htmlhelp.hhc "%s"' % self.basename('.hhc')]
         if self.doctype == 'book':
             params += ['toc.section.depth 1']
+            # Books are chunked at chapter level.
+            params += ['chunk.section.depth 0']
         for o in params:
             if o.split()[0]+' ' not in self.xsltproc_opts:
                 self.xsltproc_opts += ' --stringparam ' + o

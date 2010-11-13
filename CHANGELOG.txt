@@ -44,11 +44,11 @@ Version 8.6.3 (2010-11-14)
 - 'a2x': HTML Help `.hhk` file named after AsciiDoc source file.
 - 'a2x': Added `--xsl-file` option to allow custom XSL stylesheets to
   be specified.
-- Make builds the man pages. See
+- Make builds the man pages. Patch submitted by Sebastian Pipping.  See
   http://groups.google.com/group/asciidoc/browse_thread/thread/c21c2902c29bae64
 
 .Bug fixes
-- *FIXED*: Sometimes double backquotes were msinterpreted as inline
+- *FIXED*: Sometimes double backquotes were misinterpreted as inline
   literal macros.  See:
   http://groups.google.com/group/asciidoc/browse_thread/thread/f510ea82a88aaee8
 - *FIXED*: Regression in 8.6.2: command-line attributes were not

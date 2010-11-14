@@ -13,6 +13,17 @@ all: distribution
 vers:
     :print Version: $VERS (released $DATE)
 
+vers_update:
+    # Propagate version number in common.aap to other versioned files.
+    :syseval grep "$$VERSION = '$(VERS)'" asciidoc.py | :assign dummy
+    @if exit != 0:
+        :print updating version numbers...
+        @for (fname,match) in (('asciidoc.py',r'^VERSION = '),('a2x.py',r'^VERSION = '),('configure.ac',r'^AC_INIT\(.*\)')):
+            :sys sed '/$match/ s/[0-9.]\+/$VERS/' <$fname >$(fname).tmp
+            :sys mv -f $(fname).tmp $fname
+            @if fname in ('asciidoc.py','a2x.py'):
+                :sys chmod +x $fname
+
 tags:
     :sys rm -f tags
     :sys ctags asciidoc.py asciidocapi.py tests/testasciidoc.py
@@ -23,7 +34,7 @@ docs:
 website:
     :execute ./examples/website/main.aap
 
-distribution: docs website
+distribution: vers_update docs website
     NAME = asciidoc-$(VERS)
     # Make configure script.
     :sys autoconf

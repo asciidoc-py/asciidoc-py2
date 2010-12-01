@@ -183,9 +183,9 @@ The following platform specific AsciiDoc packages are available:
 
 *Gentoo Linux*::
   If you use Gentoo Linux there's a
-  http://packages.gentoo.org/packages/?category=app-text;name=asciidoc[Gentoo
-  AsciiDoc package] available. Thanks to
-  mailto:brandon@ifup.org[Brandon Philips] for writing the ebuild.
+  http://packages.gentoo.org/package/app-text/asciidoc[Gentoo AsciiDoc
+  package] available. Thanks to mailto:brandon@ifup.org[Brandon
+  Philips] for writing the ebuild.
 
 *Fedora Linux*::
   With help from Terje Røsten, Chris Wright added asciidoc to Fedora

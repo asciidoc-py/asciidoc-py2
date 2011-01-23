@@ -3602,8 +3602,8 @@ replaced by text from the source element.  Use the `{brvbar}`
 attribute reference if you need a literal | character in the template.
 
 [[X27]]
-Configuration File Names and Locations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Configuration file names, precedence and locations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Configuration files have a `.conf` file name extension; they are
 loaded from the following locations:
 
@@ -3617,10 +3617,15 @@ loaded from the following locations:
    multiple local copies of AsciiDoc to coexist on the same host PC.
 3. The user's `$HOME/.asciidoc` directory (if it exists).
 4. The directory containing the AsciiDoc source file.
-5. Explicit configuration files specified with the asciidoc(1)
-   `--conf-file`) command-line option.  The `--conf-file` option can
-   be specified multiple times, in which case configuration files will
-   be processed in the same order they appear on the command-line.
+5. Explicit configuration files specified using:
+   - The `conf-files` attribute (one or more file names separated by a
+     `|` character). These files are loaded in the order they are
+     specified and prior to files specified using the `--conf-file`
+     command-line option.
+   - The asciidoc(1) `--conf-file`) command-line option.  The
+     `--conf-file` option can be specified multiple times, in which
+     case configuration files will be processed in the same order they
+     appear on the command-line.
 
 Configuration files from the above locations are loaded in the
 following order:

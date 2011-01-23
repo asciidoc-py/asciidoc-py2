@@ -5344,9 +5344,12 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
     The AsciiDoc document is read from file object src the translated
     DocBook file written to file object dst."""
     def load_conffiles(include=[], exclude=[]):
-        # Load conf files specified on the command-line.
-        if confiles:
-            for f in confiles:
+        # Load conf files specified on the command-line and by the conf-files attribute.
+        files = document.attributes.get('conf-files','')
+        files = [f.strip() for f in files.split('|') if f.strip()]
+        files += confiles
+        if files:
+            for f in files:
                 if os.path.isfile(f):
                     config.load_file(f, include=include, exclude=exclude)
                 else:

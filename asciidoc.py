@@ -93,7 +93,7 @@ class AttrDict(dict):
     """
     def __getattr__(self, key):
         try: return self[key]
-        except KeyError, k: return None
+        except KeyError: return None
     def __setattr__(self, key, value):
         self[key] = value
     def __delattr__(self, key):

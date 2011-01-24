@@ -4520,7 +4520,7 @@ class Config:
             if not macro in self.sections:
                 message.warning('missing special word macro: [%s]' % macro)
         # Check all text quotes have a corresponding tag.
-        for q in self.quotes.keys():
+        for q in self.quotes.keys()[:]:
             tag = self.quotes[q]
             if not tag:
                 del self.quotes[q]  # Undefine quote.

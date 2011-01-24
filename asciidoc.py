@@ -1568,8 +1568,9 @@ class Document(object):
             author = author.strip()
             author = re.sub(r'\s+',' ', author)
         if not initials:
-            initials = firstname[:1] + middlename[:1] + lastname[:1]
-            initials = initials.upper()
+            initials = (char_decode(firstname)[:1] +
+                       char_decode(middlename)[:1] + char_decode(lastname)[:1])
+            initials = char_encode(initials).upper()
         names = [firstname,middlename,lastname,author,initials]
         for i,v in enumerate(names):
             v = config.subs_specialchars(v)

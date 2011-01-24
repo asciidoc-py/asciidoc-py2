@@ -309,6 +309,12 @@ and I'll add them to the list.
 - Dag Wieers has written
   http://dag.wieers.com/home-made/unoconv/[UNOCONV]. 'UNOCONV' can
   export AsciiDoc outputs to OpenOffice export formats.
+- Ed Keith has written http://codeextactor.berlios.de/[Code
+  Extractor], it extracts code snippets from source code files and
+  inserts them into AsciiDoc documents.
+- The http://csrp.iut-blagnac.fr/jmiwebsite/home/[JMI website] hosts
+  a number of extras for AsciiDoc and Slidy written by Jean-Michel
+  Inglebert.
 
 Please let me know if any of these links need updating.
 
@@ -393,6 +399,9 @@ discussion group thread] for details.
   http://waf.googlecode.com/svn/docs/wafbook/waf.pdf[PDF] version.
 - The http://www.diffkit.org/[DiffKit] project's documentation and
   website have been written using Asciidoc.
+- The http://www.networkupstools.org[Network UPS Tools] project
+  http://www.networkupstools.org/documentation.html[documentation] is
+  an example of a large documentation project written using AsciiDoc.
 
 Please let me know if any of these links need updating.
 

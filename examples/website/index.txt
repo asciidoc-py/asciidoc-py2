@@ -194,7 +194,7 @@ Editor Support
   details).
 +
 .Syntax highlighter screenshot
-image::images/highlighter.png[height=250,caption="",link="images/highlighter.png"]
+image::images/highlighter.png[height=400,caption="",link="images/highlighter.png"]
 
 - Dag Wieers has implemented an alternative Vim syntax file for
   AsciiDoc which can be found here
@@ -213,6 +213,9 @@ image::images/highlighter.png[height=250,caption="",link="images/highlighter.png
 - Terrence Brannon has written
   http://github.com/metaperl/asciidoc-el[AsciiDoc functions for
   Emacs].
+- Christian Zuckschwerdt has written a
+  https://github.com/zuckschwerdt/asciidoc.tmbundle[TextMate bundle]
+  for AsciiDoc.
 
 
 [[X5]]
@@ -315,9 +318,6 @@ and I'll add them to the list.
 - The http://csrp.iut-blagnac.fr/jmiwebsite/home/[JMI website] hosts
   a number of extras for AsciiDoc and Slidy written by Jean-Michel
   Inglebert.
-- Christian Zuckschwerdt has written a
-  https://github.com/zuckschwerdt/asciidoc.tmbundle[TextMate bundle]
-  for AsciiDoc.
 
 Please let me know if any of these links need updating.
 
@@ -405,6 +405,9 @@ discussion group thread] for details.
 - The http://www.networkupstools.org[Network UPS Tools] project
   http://www.networkupstools.org/documentation.html[documentation] is
   an example of a large documentation project written using AsciiDoc.
+- http://www.archlinux.org/pacman/[Pacman], the
+  http://www.archlinux.org/[Arch Linux] package manager, has been
+  documented using AsciiDoc.
 
 Please let me know if any of these links need updating.
 

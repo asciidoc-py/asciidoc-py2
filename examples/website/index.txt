@@ -315,6 +315,9 @@ and I'll add them to the list.
 - The http://csrp.iut-blagnac.fr/jmiwebsite/home/[JMI website] hosts
   a number of extras for AsciiDoc and Slidy written by Jean-Michel
   Inglebert.
+- Christian Zuckschwerdt has written a
+  https://github.com/zuckschwerdt/asciidoc.tmbundle[TextMate bundle]
+  for AsciiDoc.
 
 Please let me know if any of these links need updating.
 

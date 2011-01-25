@@ -1348,8 +1348,9 @@ class Document(object):
             if self.outfile != '<stdout>':
                 self.attributes['outfile'] = self.outfile
                 self.attributes['outdir'] = os.path.dirname(self.outfile)
-                self.attributes['docname'] = os.path.splitext(
-                        os.path.basename(self.outfile))[0]
+                if self.infile == '<stdin>':
+                    self.attributes['docname'] = os.path.splitext(
+                            os.path.basename(self.outfile))[0]
                 ext = os.path.splitext(self.outfile)[1][1:]
             elif config.outfilesuffix:
                 ext = config.outfilesuffix[1:]

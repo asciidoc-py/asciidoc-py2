@@ -479,6 +479,7 @@ def subs_quotes(text):
         else:
             lq = rq = q
         tag = config.quotes[q]
+        if not tag: continue
         # Unconstrained quotes prefix the tag name with a hash.
         if tag[0] == '#':
             tag = tag[1:]

@@ -109,7 +109,8 @@ See the AsciiDoc distribution BUGS file.
 
 AUTHOR
 ------
-Written by Stuart Rackham, <srackham@gmail.com>
+AsciiDoc was originally written by Stuart Rackham. Many people have
+contributed to it.
 
 
 RESOURCES

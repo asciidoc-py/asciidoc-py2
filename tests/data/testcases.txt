@@ -87,6 +87,8 @@ A=*_X_*, (`_X_`), _`X`_, [*_X_*] +_X_+ _X_
 [foo]+fun with text+.
 [foo]_fun with text_.
 [foo]'fun with text'.
+[foo]``fun with text''.
+[foo]`fun with text'.
 
 [foo]$$fun with text$$.
 

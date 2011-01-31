@@ -73,7 +73,7 @@ def print_verbose(line):
 def run(cmd):
     global verbose
     if not verbose:
-        cmd += ' 2>/dev/null'
+        cmd += ' 2>%s' % os.devnull
     print_verbose('executing: %s' % cmd)
     if os.system(cmd):
         raise EApp, 'failed command: %s' % cmd

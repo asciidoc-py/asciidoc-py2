@@ -111,7 +111,7 @@ LICENSE
             msg = 'Execute: %s' % cmd
             sys.stderr.write(msg + os.linesep)
         else:
-            cmd += ' 2>/dev/null'
+            cmd += ' 2>%s' % os.devnull
         if os.system(cmd):
             raise EApp, 'failed command: %s' % cmd
 

@@ -95,7 +95,7 @@ def run(cmd):
     if verbose:
         cmd += ' 1>&2'
     else:
-        cmd += ' >/dev/null 2>&1'
+        cmd += ' 2>%s' % os.devnull
     print_verbose('executing: %s' % cmd)
     if os.system(cmd):
         raise EApp, 'failed command: %s' % cmd

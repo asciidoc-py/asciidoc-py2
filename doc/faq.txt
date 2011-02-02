@@ -9,6 +9,36 @@ AsciiDoc Frequently Asked Questions
   newer FAQs may apply to the trunk and not the current release.
 ======
 
+== What's the difference between + quoted text and ` quoted monospaced text?
+`+` (plus) quoted text is implemented as an AsciiDoc 'quotes' whereas
++`+ (grave accent or backtick) quoted text is implemented as an
+AsciiDoc 'inline literal' passthrough macro. The semantics are
+different:
+
+1. Inline passthrough macros are processed before any other inline
+   substitutions e.g. all of the following line will be processed as a
+   single inline passthrough and rendered as monospaced text (which is
+   not the intended result):
++
+--
+  `single quoted text' and `monospaced quoted text`
+
+This line works as expected:
+
+  `single quoted text' and +monospaced quoted text+
+--
+
+2. Backtick quoted text is rendered literally i.e. no substitutions
+   are performed on the enclosed text.  Here are some examples that
+   would have to be escaped if plus quoting were used (<<X4,see
+   also>>):
+
+  The `++i` and `++j` auto-increments.
+  Paths `~/.vim` and `~/docs`.
+  The `__init__` method.
+  The `{id}` attribute. 
+
+
 == Why is the generated HTML title element text invalid?
 Probably because your document title contains formatting that has
 generated HTML title markup. You can resolve this by explicitly
@@ -301,6 +331,7 @@ recognized by `dblatex(1)` when it processes the DocBook XML generated
 by Asciidoc).
 
 
+[[X4]]
 == How do I prevent double-quoted text being mistaken for an inline literal?
 Mixing doubled-quoted text with inline literal passthroughs can
 produce undesired results, for example, all of the following line is

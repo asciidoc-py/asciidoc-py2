@@ -7,8 +7,8 @@ Languages Test
 :revdate:   2011-01-30
 
 ifdef::doctype-article[]
-Аннотация
----------
+Анотація
+--------
 Abstract special section.
 
 endif::doctype-article[]

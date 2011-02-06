@@ -4487,6 +4487,9 @@ There's nothing special about the filters, they're just standard UNIX
 filters: they read text from the standard input, process it, and write
 to the standard output.
 
+The asciidoc(1) `--filter` option can be used to install and remove
+filters.
+
 Attribute substitution is performed on the filter command prior to
 execution -- attributes can be used to pass parameters from the
 AsciiDoc source document to the filter.

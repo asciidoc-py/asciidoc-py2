@@ -56,6 +56,9 @@ OPTIONS
 *-c, --dump-conf*::
     Dump configuration to stdout.
 
+*--filter*::
+    Manage asciidoc(1) filters (see <<X1,*FILTER COMMANDS*>>).
+
 *-h, --help*[='TOPIC']::
     Print help TOPIC. *--help*='topics' will print a list of help
     topics, *--help*='syntax' summarizes AsciiDoc syntax,
@@ -90,6 +93,46 @@ OPTIONS
 
 *--version*::
     Print program version number.
+
+
+[[X1]]
+FILTER COMMANDS
+---------------
+The *--filter* option is used to manage AsciiDoc filters. Filter
+command syntax:
+
+  asciidoc --filter install ZIP_FILE [FILTERS_DIR]
+  asciidoc --filter remove FILTER_NAME
+  asciidoc --filter list
+
+Where:
+
+*FILTER_NAME*::
+  A unique filter name containing only alphanumeric or underscore
+  characters.
+
+*ZIP_FILE*::
+  A Zip file containing filter resources, the name must start with the
+  filter name e.g.  `my_filter-1.0.zip` packages filter `my_filter`.
+
+*FILTERS_DIR*::
+  Filters are installed into a same-named subdirectory of the
+  *FILTERS_DIR* directory (*FILTERS_DIR* defaults to the
+  `.asciidoc/filters` directory in the user's home directory).
+
+The filter commands perform as follows:
+
+*install*::
+  Create a subdirectory in *FILTERS_DIR* with the same name as the
+  filter then extract the *ZIP_FILE* into it.
+
+*remove*::
+  Delete the *FILTER_NAME* filter directory and all its contents from
+  the `.asciidoc/filters` directory in the user's home directory.
+
+*list*::
+  List the names of all installed filters (including standard filters
+  installed in the global configuration directory).
 
 
 EXIT STATUS

@@ -173,6 +173,9 @@ class Message:
         self.linenos = None
         self.messages = []
 
+    def stdout(self,msg):
+        print msg
+
     def stderr(self,msg=''):
         self.messages.append(msg)
         if __name__ == '__main__':
@@ -217,6 +220,15 @@ class Message:
     def unsafe(self, msg):
         self.error('unsafe: '+msg)
 
+
+def userdir():
+    """
+    Return user's home directory or None if it is not defined.
+    """
+    result = os.path.expanduser('~')
+    if result == '~':
+        result = None
+    return result
 
 def localapp():
     """
@@ -4290,6 +4302,29 @@ class Config:
         self.include1 = {}      # Holds include1::[] files for {include1:}.
         self.dumping = False    # True if asciidoc -c option specified.
 
+    def init(self, cmd):
+        """
+        Check Python version and locate the executable and configuration files
+        directory.
+        cmd is the asciidoc command or asciidoc.py path.
+        """
+        if float(sys.version[:3]) < MIN_PYTHON_VERSION:
+            message.stderr('FAILED: Python 2.3 or better required')
+            sys.exit(1)
+        if not os.path.exists(cmd):
+            message.stderr('FAILED: Missing asciidoc command: %s' % cmd)
+            sys.exit(1)
+        global APP_FILE
+        APP_FILE = os.path.realpath(cmd)
+        global APP_DIR
+        APP_DIR = os.path.dirname(APP_FILE)
+        global USER_DIR
+        USER_DIR = userdir()
+        if USER_DIR is not None:
+            USER_DIR = os.path.join(USER_DIR,'.asciidoc')
+            if not os.path.isdir(USER_DIR):
+                USER_DIR = None
+
     def load_file(self, fname, dir=None, include=[], exclude=[]):
         """
         Loads sections dictionary with sections from file fname.
@@ -5310,6 +5345,123 @@ class Tables_OLD(AbstractBlocks):
 #---------------------------------------------------------------------------
 
 #---------------------------------------------------------------------------
+# Filter commands.
+#---------------------------------------------------------------------------
+import shutil, zipfile
+
+def die(msg):
+    message.stderr(msg)
+    sys.exit(1)
+
+def unzip(zip_file, destdir):
+    """
+    Unzip Zip file to destination directory.
+    Throws exception if error occurs.
+    """
+    zipo = zipfile.ZipFile(zip_file, 'r')
+    try:
+        for name in zipo.namelist():
+            if not name.endswith('/'): 
+                d, fname = os.path.split(name)
+                directory = os.path.normpath(os.path.join(destdir, d))
+                if not os.path.isdir(directory):
+                    os.makedirs(directory)
+                fname = os.path.join(directory, fname)
+                message.verbose('extracting: %s' % fname)
+                file(fname, 'wb').write(zipo.read(name))
+    finally:
+        zipo.close()
+
+class Filter:
+    """
+    --filter option commands.
+    """
+
+    @staticmethod
+    def get_filters_dir():
+        """
+        Return path of .asciidoc/filters in user's home direcory or None if
+        user home not defined.
+        """
+        result = userdir()
+        if result:
+            result = os.path.join(result,'.asciidoc','filters')
+        return result
+
+    @staticmethod
+    def install(args):
+        """
+        Install filter Zip file.
+        args[0] is filter zip file path.
+        args[1] is optional destination filters directory.
+        """
+        if len(args) not in (1,2):
+            die('invalid number of arguments: --filter install %s'
+                    % ' '.join(args))
+        zip_file = args[0]
+        if not os.path.isfile(zip_file):
+            die('file not found: %s' % zip_file)
+        reo = re.match(r'^\w+',os.path.split(zip_file)[1])
+        if not reo:
+            die('filter file name does not start with legal filter name: %s'
+                    % zip_file)
+        filter_name = reo.group()
+        if len(args) == 2:
+            filters_dir = args[1]
+            if not os.path.isdir(filters_dir):
+                die('directory not found: %s' % filters_dir)
+        else:
+            filters_dir = Filter.get_filters_dir()
+            if not filters_dir:
+                die('user home directory is not defined')
+        filter_dir = os.path.join(filters_dir, filter_name)
+        if os.path.exists(filter_dir):
+            die('filter is already installed: %s' % filter_dir)
+        try:
+            os.makedirs(filter_dir)
+        except Exception,e:
+            die('failed to create filter directory: %s' % str(e))
+        try:
+            unzip(zip_file, filter_dir)
+        except Exception,e:
+            die('failed to extract filter: %s' % str(e))
+
+    @staticmethod
+    def remove(args):
+        """
+        Delete filter from .asciidoc/filters/ in user's home directory.
+        args[0] is filter name.
+        """
+        if len(args) != 1:
+            die('invalid number of arguments: --filter remove %s'
+                    % ' '.join(args))
+        filter_name = args[0]
+        if not re.match(r'^\w+$',filter_name):
+            die('illegal filter name: %s' % filter_name)
+        d = Filter.get_filters_dir()
+        if not d:
+            die('user directory is not defined')
+        filter_dir = os.path.join(d, filter_name)
+        if not os.path.isdir(filter_dir):
+            die('cannot find filter: %s' % filter_dir)
+        try:
+            message.verbose('removing: %s' % filter_dir)
+            shutil.rmtree(filter_dir)
+        except Exception,e:
+            die('failed to delete filter: %s' % str(e))
+
+    @staticmethod
+    def list():
+        """
+        List all filter directories (global and local).
+        """
+        for d in [os.path.join(d,'filters') for d in config.get_load_dirs()]:
+            if os.path.isdir(d):
+                for f in os.walk(d).next()[1]:
+                    message.stdout(os.path.join(d,f))
+
+
+#---------------------------------------------------------------------------
 # Application code.
 #---------------------------------------------------------------------------
 # Constants
@@ -5533,23 +5685,7 @@ def execute(cmd,opts,args):
        >>>
 
     """
-    if float(sys.version[:3]) < MIN_PYTHON_VERSION:
-        message.stderr('FAILED: Python 2.3 or better required')
-        sys.exit(1)
-    if not os.path.exists(cmd):
-        message.stderr('FAILED: Missing asciidoc command: %s' % cmd)
-        sys.exit(1)
-    # Locate the executable and configuration files directory.
-    global APP_FILE
-    APP_FILE = os.path.realpath(cmd)
-    global APP_DIR
-    APP_DIR = os.path.dirname(APP_FILE)
-    global USER_DIR
-    USER_DIR = os.environ.get('HOME')
-    if USER_DIR is not None:
-        USER_DIR = os.path.join(USER_DIR,'.asciidoc')
-        if not os.path.isdir(USER_DIR):
-            USER_DIR = None
+    config.init(cmd)
     if len(args) > 1:
         usage('To many arguments')
         sys.exit(1)
@@ -5654,7 +5790,7 @@ if __name__ == '__main__':
             ['attribute=','backend=','conf-file=','doctype=','dump-conf',
             'help','no-conf','no-header-footer','out-file=',
             'section-numbers','verbose','version','safe','unsafe',
-            'doctest'])
+            'doctest','filter'])
     except getopt.GetoptError:
         message.stderr('illegal command options')
         sys.exit(1)
@@ -5665,10 +5801,24 @@ if __name__ == '__main__':
         failures,tries = doctest.testmod(optionflags=options)
         if failures == 0:
             message.stderr('All doctests passed')
-            exit(0)
+            sys.exit(0)
         else:
-            exit(1)
+            sys.exit(1)
+    if '--filter' in [opt[0] for opt in opts]:
+        config.init(sys.argv[0])
+        config.verbose = bool(set(['-v','--verbose']) & set([opt[0] for opt in opts]))
+        if not args:
+            die('missing --filter command')
+        elif args[0] == 'install':
+            Filter.install(args[1:])
+        elif args[0] == 'remove':
+            Filter.remove(args[1:])
+        elif args[0] == 'list':
+            Filter.list()
+        else:
+            die('illegal --filter command: %s' % args[0])
+        sys.exit(0)
     try:
         execute(sys.argv[0],opts,args)
     except KeyboardInterrupt:
-        exit(1)
+        sys.exit(1)

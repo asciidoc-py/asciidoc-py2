@@ -160,7 +160,8 @@ respective `asciidoc(1)` defaults are used.
 [[X1]]
 Class `Options(object)`
 ~~~~~~~~~~~~~~~~~~~~~~~
-Stores `asciidoc(1)` command options.
+Stores `asciidoc(1)` command options. You can use any `asciidoc(1)`
+options with the exception of the `--doctest` and `--filter` options.
 
 Instance attributes
 ^^^^^^^^^^^^^^^^^^^

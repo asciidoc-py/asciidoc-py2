@@ -5431,16 +5431,22 @@ class Filter:
         """
         Delete filter from .asciidoc/filters/ in user's home directory.
         args[0] is filter name.
+        args[1] is optional filters directory.
         """
-        if len(args) != 1:
+        if len(args) not in (1,2):
             die('invalid number of arguments: --filter remove %s'
                     % ' '.join(args))
         filter_name = args[0]
         if not re.match(r'^\w+$',filter_name):
             die('illegal filter name: %s' % filter_name)
-        d = Filter.get_filters_dir()
-        if not d:
-            die('user directory is not defined')
+        if len(args) == 2:
+            d = args[1]
+            if not os.path.isdir(d):
+                die('directory not found: %s' % d)
+        else:
+            d = Filter.get_filters_dir()
+            if not d:
+                die('user directory is not defined')
         filter_dir = os.path.join(d, filter_name)
         if not os.path.isdir(filter_dir):
             die('cannot find filter: %s' % filter_dir)

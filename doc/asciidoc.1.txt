@@ -102,7 +102,7 @@ The *--filter* option is used to manage AsciiDoc filters. Filter
 command syntax:
 
   asciidoc --filter install ZIP_FILE [FILTERS_DIR]
-  asciidoc --filter remove FILTER_NAME
+  asciidoc --filter remove FILTER_NAME [FILTERS_DIR]
   asciidoc --filter list
 
 Where:
@@ -116,9 +116,11 @@ Where:
   filter name e.g.  `my_filter-1.0.zip` packages filter `my_filter`.
 
 *FILTERS_DIR*::
-  Filters are installed into a same-named subdirectory of the
-  *FILTERS_DIR* directory (*FILTERS_DIR* defaults to the
-  `.asciidoc/filters` directory in the user's home directory).
+  The directory containing installed filters. Each filter is contained
+  in its own separate subdirectory which has the same name as the
+  filter.
+  *FILTERS_DIR* defaults to the `.asciidoc/filters` directory in the
+  user's home directory.
 
 The filter commands perform as follows:
 
@@ -127,12 +129,12 @@ The filter commands perform as follows:
   filter then extract the *ZIP_FILE* into it.
 
 *remove*::
-  Delete the *FILTER_NAME* filter directory and all its contents from
-  the `.asciidoc/filters` directory in the user's home directory.
+  Delete the *FILTER_NAME* filter subdirectory and all its contents from
+  the *FILTERS_DIR*.
 
 *list*::
-  List the names of all installed filters (including standard filters
-  installed in the global configuration directory).
+  List the names and locations of all installed filters (including
+  standard filters installed in the global configuration directory).
 
 
 EXIT STATUS

@@ -5368,10 +5368,13 @@ def unzip(zip_file, destdir):
                 if not os.path.isdir(directory):
                     os.makedirs(directory)
                 outfile = os.path.join(directory, outfile)
-                perms = (zi.external_attr >> 16L) & 0777
+                perms = (zi.external_attr >> 16) & 0777
                 message.verbose('extracting: %s' % outfile)
                 fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perms)
-                os.write(fh, zipo.read(zi.filename))
+                try:
+                    os.write(fh, zipo.read(zi.filename))
+                finally:
+                    os.close(fh)
     finally:
         zipo.close()
 

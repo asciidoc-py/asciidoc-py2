@@ -5360,15 +5360,18 @@ def unzip(zip_file, destdir):
     """
     zipo = zipfile.ZipFile(zip_file, 'r')
     try:
-        for name in zipo.namelist():
-            if not name.endswith('/'): 
-                d, fname = os.path.split(name)
+        for zi in zipo.infolist():
+            outfile = zi.filename
+            if not outfile.endswith('/'): 
+                d, outfile = os.path.split(outfile)
                 directory = os.path.normpath(os.path.join(destdir, d))
                 if not os.path.isdir(directory):
                     os.makedirs(directory)
-                fname = os.path.join(directory, fname)
-                message.verbose('extracting: %s' % fname)
-                file(fname, 'wb').write(zipo.read(name))
+                outfile = os.path.join(directory, outfile)
+                perms = (zi.external_attr >> 16L) & 0777
+                message.verbose('extracting: %s' % outfile)
+                fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perms)
+                os.write(fh, zipo.read(zi.filename))
     finally:
         zipo.close()
 

@@ -6,7 +6,7 @@ Copyright (C) 2002-2010 Stuart Rackham. Free use of this software is granted
 under the terms of the GNU General Public License (GPL).
 """
 
-import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale
+import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale, unicodedata
 
 ### Used by asciidocapi.py ###
 VERSION = '8.6.3'           # See CHANGLOG file for version history.
@@ -1120,6 +1120,26 @@ def char_encoding():
 def char_len(s):
     return len(char_decode(s))
 
+east_asian_widths = {'W': 2,   # Wide
+                     'F': 2,   # Full-width (wide)
+                     'Na': 1,  # Narrow
+                     'H': 1,   # Half-width (narrow)
+                     'N': 1,   # Neutral (not East Asian, treated as narrow)
+                     'A': 1}   # Ambiguous (s/b wide in East Asian context,
+                               # narrow otherwise, but that doesn't work)
+"""Mapping of result codes from `unicodedata.east_asian_width()` to character
+column widths."""
+
+def column_width(s):
+    text = char_decode(s)
+    if isinstance(text, unicode):
+        width = 0
+        for c in text:
+            width += east_asian_widths[unicodedata.east_asian_width(c)]
+        return width
+    else:
+        return len(text)
+
 def char_decode(s):
     if char_encoding():
         try:
@@ -1922,13 +1942,16 @@ class Title:
             if not Title.pattern: return False  # Single-line titles only.
             if len(lines) < 2: return False
             title,ul = lines[:2]
-            title_len = char_len(title)
+            title_len = column_width(title)
             ul_len = char_len(ul)
             if ul_len < 2: return False
             # Fast elimination check.
             if ul[:2] not in Title.underlines: return False
             # Length of underline must be within +-3 of title.
-            if not (ul_len-3 < title_len < ul_len+3): return False
+            if not ((ul_len-3 < title_len < ul_len+3)
+                    # Next test for backward compatibility.
+                    or (ul_len-3 < char_len(title) < ul_len+3)):
+                return False
             # Check for valid repetition of underline character pairs.
             s = ul[:2]*((ul_len+1)/2)
             if ul != s[:ul_len]: return False

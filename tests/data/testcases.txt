@@ -655,3 +655,9 @@ Lorum ipsum...
 <<<
 
 Lorum ipsum...
+
+
+这是一个测试
+------------
+Double-with character titles.
+

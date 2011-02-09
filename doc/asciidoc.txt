@@ -5313,12 +5313,6 @@ the HTML output file.
   matches the current AsciiDoc `lang` attribute. See also
   <<X27,Configuration File Names and Locations>>.
 
-- Some character sets display double-width characters (for example
-  Japanese). As far as <<X17,title underlines>> are concerned they
-  should be treated as single character.  If you think this looks
-  untidy so you may prefer to use the <<X46,single line title>>
-  format.
-
 
 [appendix]
 Vim Syntax Highlighter

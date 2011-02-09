@@ -1741,16 +1741,26 @@ class AttributeEntry:
         while attr.value.endswith(' +'):
             if not reader.read_next(): break
             attr.value = attr.value[:-1] + reader.read().strip()
-        if AttributeEntry.name2: # The entry is a conf file entry.
-            section = {}
-            # Some sections can have name! syntax.
-            if attr.name in ('attributes','miscellaneous') and attr.name2[-1] == '!':
-                section[attr.name] = [attr.name2]
+        if attr.name2 is not None:
+            # Configuration file attribute.
+            if attr.name2 != '':
+                # Section entry attribute.
+                section = {}
+                # Some sections can have name! syntax.
+                if attr.name in ('attributes','miscellaneous') and attr.name2[-1] == '!':
+                    section[attr.name] = [attr.name2]
+                else:
+                   section[attr.name] = ['%s=%s' % (attr.name2,attr.value)]
+                config.load_sections(section)
+                config.load_miscellaneous(config.conf_attrs)
             else:
-               section[attr.name] = ['%s=%s' % (attr.name2,attr.value)]
-            config.load_sections(section)
-            config.load_miscellaneous(config.conf_attrs)
-        else: # The entry is an attribute.
+                # Markup template section attribute.
+                if attr.name in config.sections:
+                    config.sections[attr.name] = [attr.value]
+                else:
+                    message.warning('missing configuration section: %s' % attr.name)
+        else:
+            # Normal attribute.
             if attr.name[-1] == '!':
                 # Names like name! undefine the attribute.
                 attr.name = attr.name[:-1]

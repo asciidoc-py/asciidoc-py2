@@ -3792,14 +3792,15 @@ Stuart Rackham <srackham@gmail.com>
 Setting configuration entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 A variant of the Attribute Entry syntax allows configuration file
-entries to be set from within an AsciiDoc document:
+section entries and markup template sections to be set from within an
+AsciiDoc document:
 
-  :<section_name>.<entry_name>: <entry_value>
+  :<section_name>.[<entry_name>]: <entry_value>
 
 Where `<section_name>` is the configuration section name,
 `<entry_name>` is the name of the entry and `<entry_value>` is the
-optional entry value. This example sets the default labeled list style
-to 'horizontal':
+optional entry value. This example sets the default labeled list
+style to 'horizontal':
 
   :listdef-labeled.style: horizontal
 
@@ -3807,6 +3808,13 @@ It is exactly equivalent to a configuration file containing:
 
   [listdef-labeled]
   style=horizontal
+
+If the `<entry_name>` is omitted then the entire section is
+substituted with the `<entry_value>`. This feature should only be used
+to set markup template sections. The following example sets the
+'xref2' inline macro markup template:
+
+  :xref2-inlinemacro.: <a href="#{1}">{2?{2}}</a>
 
 No substitution is performed on configuration file attribute entries
 and they cannot be undefined.

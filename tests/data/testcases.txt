@@ -109,6 +109,25 @@ obvious*
 (``++1\n++'') if (usually ``++-1\n++'')
 
 
+== Configuration attribute entries ==
+
+:listdef-labeled.style: horizontal
+term:: definition
+
+:listdef-labeled.style: vertical
+term:: definition
+
+ifdef::backend-xhtml11[]
+<<link1>>
+
+:xref2-inlinemacro.: <a href="#{1}">{2?{2}}</a>
+
+<<link1>>
+
+:xref2-inlinemacro.: <a href="#{1}">{2=[{1}]}</a>
+endif::[]
+
+
 == Break list nesting ==
 1. List 1.
 2. List 1.

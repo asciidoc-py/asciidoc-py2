@@ -2113,7 +2113,10 @@ class Section:
         NCNameStartChar ::=     Letter | '_'
         NameChar        ::=     Letter | Digit | '.' | '-' | '_' | ':'
         """
-        base_ident = re.sub(r'[^a-zA-Z0-9]+', '_', title).strip('_').lower()
+        # Replace non-alpha numeric characters in title with underscores and
+        # convert to lower case.
+        base_ident = char_encode(re.sub(r'(?u)\W+', '_',
+                char_decode(title)).strip('_').lower())
         # Prefix the ID name with idprefix attribute or underscore if not
         # defined. Prefix ensures the ID does not clash with existing IDs.
         idprefix = document.attributes.get('idprefix','_')

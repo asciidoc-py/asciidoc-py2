@@ -660,4 +660,5 @@ Lorum ipsum...
 这是一个测试
 ------------
 Double-with character titles.
+<<_这是一个测试,link to auto-generated section ID>>.
 

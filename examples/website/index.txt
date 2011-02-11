@@ -147,30 +147,6 @@ http://wordpress.org/[WordPress] blog hosts. It creates and updates
 weblog posts and pages directly from AsciiDoc source documents.
 
 
-Music Filter
-------------
-A link:music-filter.html[music filter] is included in the distribution
-`./filters/` directory. It translates music in
-http://lilypond.org/[LilyPond] or http://abcnotation.org.uk/[ABC]
-notation to standard classical notation
-
-
-Source Code Highlight Filter
-----------------------------
-A link:source-highlight-filter.html[source code highlight filter] is
-included in the distribution `./filters/` directory.
-
-
-[[X4]]
-Graphviz Filter
----------------
-Gouichi Iisaka has written a http://www.graphviz.org/[Graphviz] filter
-for AsciiDoc.  Graphviz generates diagrams from a textual
-specification. Gouichi Iisaka's Graphviz filter is included in the
-AsciiDoc distribution. Here are some
-link:asciidoc-graphviz-sample.html[AsciiDoc Graphviz examples].
-
-
 [[X3]]
 Mathematical Formulae
 ---------------------
@@ -179,7 +155,7 @@ link:asciimathml.html[ASCIIMathML] or link:latexmathml.html[LaTeXMathML]
 notation.
 
 The link:latex-filter.html[AsciiDoc LaTeX filter] translates LaTeX
-source to PNG image which is automatically inserted into the AsciiDoc
+source to a PNG image that is automatically inserted into the AsciiDoc
 output documents.
 
 AsciiDoc also has 'latexmath' macros for DocBook outputs -- they are
@@ -218,13 +194,43 @@ image::images/highlighter.png[height=400,caption="",link="images/highlighter.png
   for AsciiDoc.
 
 
+Filters
+-------
+link:userguide#X9[AsciiDoc Filters] are distributed as
+link:filter-plugins.html[Filter Plugins] and a few are included in the
+AsciiDoc distribution.
+
+=== Music filter
+A link:music-filter.html[music filter] is included in the distribution
+`./filters/` directory. It translates music in
+http://lilypond.org/[LilyPond] or http://abcnotation.org.uk/[ABC]
+notation to standard classical notation
+
+
+=== Source Code Highlight filter
+A link:source-highlight-filter.html[source code highlight filter] is
+included in the distribution `./filters/` directory.
+
+
+=== LaTeX filter
+The link:latex-filter.html[AsciiDoc LaTeX filter] translates LaTeX
+source to a PNG image that is automatically inserted into the AsciiDoc
+output documents.
+
 [[X5]]
-matplotlib Filter
------------------
+=== matplotlib filter
 Leonid Volnitsky has written a
 http://volnitsky.com/project/mplw/index.html[matplotlib] filter for
 AsciiDoc.  Using this filter you can generate charts from inline
 matplotlib scripts.
+
+[[X4]]
+== Graphviz filter
+Gouichi Iisaka has written a http://www.graphviz.org/[Graphviz] filter
+for AsciiDoc.  Graphviz generates diagrams from a textual
+specification. Gouichi Iisaka's Graphviz filter is included in the
+AsciiDoc distribution. Here are some
+link:asciidoc-graphviz-sample.html[AsciiDoc Graphviz examples].
 
 
 Try AsciiDoc on the Web

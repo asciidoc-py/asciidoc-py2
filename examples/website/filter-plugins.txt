@@ -1,0 +1,33 @@
+AsciiDoc Filter Plugins
+=======================
+
+Filter plugins are a simple mechanism for distributing AsciiDoc
+filters.  A filter plugin is a Zip file containing the files that
+constitute a filter. The asciidoc(1) link:manpage.html[--filter
+option] implements commands to install, remove and list filter
+plugins.
+
+IMPORTANT: Until AsciiDoc 8.6.4 is released you will need to run from
+the
+link:INSTALL.html#_installing_from_the_mercurial_repository[AsciiDoc
+trunk] to use the new asciidoc(1) filter plugin commands,
+alternatively you could manually unzip to the appropriately named
+filters subdirectory.
+
+[cols="1e,1,3,3",options="header"]
+|====
+|Filter name |Author |Home page |Description
+
+|ditaa |Henrik Maier
+|http://code.google.com/p/asciidoc-ditaa-filter/
+|ASCII line art filter
+
+|aafigure |Henrik Maier
+|http://code.google.com/p/asciidoc-aafigure-filter/
+|ASCII line art filter
+
+|mscgen |Henrik Maier
+|http://code.google.com/p/asciidoc-mscgen-filter/
+|Message sequence chart filter
+
+|====

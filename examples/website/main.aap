@@ -47,6 +47,7 @@ WEB_ROOT =
     newlists
     slidy
     slidy-example
+    filter-plugins
 WEB_PAGES = $*(WEB_ROOT).html
 WEB_SOURCE = $*(WEB_ROOT).txt
 

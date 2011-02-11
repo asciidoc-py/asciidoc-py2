@@ -1197,9 +1197,6 @@ Predefined delimited block underlines:
   ExampleBlock:     ==========================
   OpenBlock:        --
 
-The <<X56,code>>, <<X57,source>> and <<X58,music>> filter blocks are
-detailed in the <<X59,Filters>> section.
-
 .Default DelimitedBlock substitutions
 [cols="2e,7*^",frame="topbot",options="header,autowidth"]
 |=====================================================
@@ -2061,7 +2058,7 @@ Including callouts in included code
 You can annotate working code examples with callouts -- just remember
 to put the callouts inside source code comments. This example displays
 the `test.py` source file (containing a single callout) using the
-<<X57,Source Code Highlighter Filter>>:
+'source' (code highlighter) filter:
 
 .AsciiDoc source
 ---------------------------------------------------------------------
@@ -4542,8 +4539,8 @@ asciidoc(1) auto-loads all `.conf` files found in the filter search
 paths (see previous section).
 
 [[X56]]
-Code Filter
-~~~~~~~~~~~
+Example Filter
+~~~~~~~~~~~~~~
 AsciiDoc comes with a toy filter for highlighting source code keywords
 and comments.  See also the `./filters/code/code-filter-readme.txt`
 file.
@@ -4551,7 +4548,7 @@ file.
 NOTE: This filter primarily to demonstrate how to write a filter --
 it's much to simplistic to be passed off as a code syntax highlighter.
 If you want a full featured multi-language highlighter use the
-<<X57,Source Code Highlighter Filter>>.
+{website}source-highlight-filter.html[source code highlighter filter].
 
 [listing]
 .....................................................................
@@ -4586,22 +4583,22 @@ def sub_word(mo):
         return word
 ----------------------------------------------
 
-[[X57]]
-Source Code Highlighter Filter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A
-{website}source-highlight-filter.html[source code highlighter filter]
-can be found in the AsciiDoc distribution `./filters` directory.
+Built-in filters
+~~~~~~~~~~~~~~~~
+The AsciiDoc distribution includes 'source', 'music', 'latex' and
+'graphviz' filters, details are on the
+{website}index.html#_filters[AsciiDoc website].
 
 [[X58]]
-Music Filter
-~~~~~~~~~~~~
-A {website}music-filter.html[music filter] is included in the
-distribution `./filters` directory. It translates music in
-http://lilypond.org/[LilyPond] or http://abcnotation.org.uk/[ABC]
-notation to standard Western classical notation in the form of a
-trimmed PNG image which is automatically inserted into the output
-document.
+Filter plugins
+~~~~~~~~~~~~~~
+Filter plugins are a simple mechanism for distributing AsciiDoc
+filters.  A filter plugin is a Zip file containing the files that
+constitute a filter. The asciidoc(1) `--filter` option implements
+commands to install, remove and list filter plugins.  Filter plugin
+commands and conventions are documented in the asciidoc(1) man page.
+You can find a list of filter plugins on the
+{website}filter-plugins.html[AsciiDoc website].
 
 
 [[X12]]

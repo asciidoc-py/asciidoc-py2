@@ -348,7 +348,8 @@ line. The revision information can be one of two formats:
 
 . An optional document revision number followed by an optional
   revision date followed by an optional revision remark:
-
++
+--
   * If the revision number is specified it must be followed by a
     comma.
   * The revision number must contain at least one numeric character.
@@ -362,10 +363,7 @@ line. The revision information can be one of two formats:
     has not been set then the revision date is set to the value of the
     'docdate' attribute.
 
-. An RCS/CVS/SVN $Id$ marker (if an $Id$ revision marker is used the
-  header author line can be omitted).
-
-Here a some examples of header revision lines:
+Examples:
 
   v2.0, February 2003
   February 2003
@@ -374,6 +372,22 @@ Here a some examples of header revision lines:
   February 2003: Rewritten for version 2 release.
   v2.0,: Rewritten for version 2 release.
   :Rewritten for version 2 release.
+--
+
+. The revision information line can also be an RCS/CVS/SVN $Id$
+  marker:
++
+--
+  * AsciiDoc extracts the 'revnumber', 'revdate', and 'author'
+    attributes from the $Id$ revision marker and displays them in the
+    docment header.
+  * If an $Id$ revision marker is used the header author line can be
+    omitted.
+
+Example:
+
+  $Id: mydoc.txt,v 1.5 2009/05/17 17:58:44 jbloggs Exp $
+--
 
 You can override or set header parameters by passing 'revnumber',
 'revremark', 'revdate', 'email', 'author', 'authorinitials',
@@ -382,7 +396,6 @@ You can override or set header parameters by passing 'revnumber',
 
   $ asciidoc -a revdate=2004/07/27 article.txt
 
-The 'revnumber' attribute can be an RCS/CVS/SVN $Id$ marker.
 Attributes can also be added to the header for substitution in the
 header template with <<X18,Attribute Entry>> elements.
 

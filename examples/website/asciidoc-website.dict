@@ -1,4 +1,4 @@
-personal_ws-1.1 en 215 
+personal_ws-1.1 en 217 
 O'Reilly
 awb
 Blogpost
@@ -58,6 +58,7 @@ UNOCONV
 dxf
 Gentoo
 Mowatt
+Zuckschwerdt
 SGML
 raggedright
 uri
@@ -70,8 +71,8 @@ matplotlib
 stdout
 usr
 txt
-ebooks
 eBooks
+ebooks
 linenumbering
 ImageMagick
 distros
@@ -189,6 +190,7 @@ Eychaner
 Yannick
 repo
 showcomments
+plugins
 Xubuntu
 AsciiDoc's
 png

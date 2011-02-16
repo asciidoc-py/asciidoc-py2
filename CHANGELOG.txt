@@ -1,7 +1,56 @@
 AsciiDoc ChangeLog
 ==================
 
-:replacements.\bweb:: http://www.methods.co.nz/asciidoc/
+:web: http://www.methods.co.nz/asciidoc/
+
+
+Version 8.6.4 (2010-02-20)
+--------------------------
+.Additions and changes
+- Attribute entries can be used to set configuration markup templates.
+- Double-width East Asian characters in titles now correctly match the
+  title underline widths. Submitted by Changjian Gao (see
+  http://groups.google.com/group/asciidoc/browse_thread/thread/77f28b0dfe60d262).
+- Implemented asciidoc(1) filter commands, see:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/40c64cd33ee1905c
+- User's home directory now calculated in a platform independent
+  manner.
+- Added double-quote characters to French language file.  Patch
+  contributed Yves-Alexis Perez, see:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/e15282f072413940
+- Vim Syntax highlighter: Highlight closing OpenBlocks which
+  immediately follow a literal paragraph.
+- Changed UNIX `/dev/null` to OS independent `os.devnull` in filters
+  code.  Suggested by Herik Maier:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/5ac8e8ea895147e9
+- Vim sytnax highlighter: Single and double quoted text now highlights
+  correctly when preceded by an attributes list.
+- Added Ukrainian language file (`lang-uk.conf`). Added double-quote
+  characters to Russian language file.conf). Patches contributed by
+  Lavruschenko Oleksandr, see
+  http://groups.google.com/group/asciidoc/browse_thread/thread/e15282f072413940
+- Single and double quote characters are now set using the `{lsquo}`,
+  `{rsquo}`, `{ldquo}` and `{rdquo}` attributes. This makes is easy to
+  customise language specific quotes. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/e15282f072413940
+- Implemented 'conf-files' attribute to allow configuration files to
+  be specified in the source document. Suggested by Lex Trotman, see:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/b11066a828ab45b9
+
+.Bug fixes
+- *FIXED*: Auto-generated section title ids are now unicode aware.
+- *FIXED*: Setting 'quotes' configuration entries using document
+  attribute entries failed if the attribute entry was not in the
+  document header.  See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/a1dd0562dee8b939
+- *FIXED*: If the input and output file names were different then the
+  output file name was incorrectly used to synthesize 'docinfo' file
+  names. Reported by Christian Zuckschwerdt.
+- *FIXED*: An error can occur when more than one consecutive quotes
+  are defined as a blank string. Reported by Peggy Russell.
+- *FIXED*: Encoding error in automatically generated author initials.
+  Patch submitted by Xin Wang. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/f44615dca0b834e9
 
 
 Version 8.6.3 (2010-11-14)
@@ -568,7 +617,7 @@ Regression issues
   regardless of the 'width' attribute setting. To restore width
   behavior change the 'pageunits' miscellaneous parameter to 'pt'. You
   can do this from the command-line with the `-a pageunits=pt` option.
-  See web:userguide.html#X89[DocBook table widths].
+  See {web}userguide.html#X89[DocBook table widths].
 
 
 Version 8.4.5 (2009-05-24)
@@ -720,7 +769,7 @@ Version 8.4.3 (2009-04-13)
 Version 8.4.2 (2009-03-19)
 --------------------------
 .Additions and changes
-- Added web:testasciidoc.html[testasciidoc], a tool to verify AsciiDoc
+- Added {web}testasciidoc.html[testasciidoc], a tool to verify AsciiDoc
   conformance.
 - A warning is issued if nested inline passthroughs are encountered.
 - 'asciidocapi': setting an attribute value to `None` will undefine
@@ -733,7 +782,7 @@ Version 8.4.2 (2009-03-19)
 Version 8.4.1 (2009-03-10)
 --------------------------
 .Additions and changes
-- AsciiDoc now has a web:asciidocapi.html[Python API].  The following
+- AsciiDoc now has a {web}asciidocapi.html[Python API].  The following
   minimal example compiles `mydoc.txt` to `mydoc.html`:
 +
 [source,python]
@@ -932,7 +981,7 @@ Version 8.3.1 (2008-12-14)
 --------------------------
 .Additions and changes
 - Replaced the `install.sh` script with Ben Walton's updated autoconf
-  scripts -- see web:INSTALL.html[INSTALL] for details.
+  scripts -- see {web}INSTALL.html[INSTALL] for details.
 - Added a generalized 'AttributeEntry' syntax to allow arbitrary
   configuration file entries to be set from within an AsciiDoc
   document (suggested by Henrik Maier).
@@ -954,11 +1003,11 @@ Version 8.3.1 (2008-12-14)
 Version 8.3.0 (2008-11-29)
 --------------------------
 .Additions and changes
-- web:newtables.html[AsciiDoc new tables] is a complete redesign of
+- {web}newtables.html[AsciiDoc new tables] is a complete redesign of
   the tables syntax and generation. The new syntax and features are a
   huge improvement over the old tables. The old tables syntax has been
   deprecated but is currently still processed.
-- web:newlists.html[Lists can now be styled] like other block
+- {web}newlists.html[Lists can now be styled] like other block
   elements. This allows a single list syntax for 'glossary', 'qanda'
   (Question and Answer) and 'bibliography' lists instead of having to
   remember a different syntax for each type.
@@ -967,12 +1016,12 @@ Version 8.3.0 (2008-11-29)
   when the macro is called.
 - The passthrough block has a fully transparent passthrough delimited
   block block style called 'pass'.
-- The 'asciimath' and 'latexmath' web:userguide.html#X77[passthrough
+- The 'asciimath' and 'latexmath' {web}userguide.html#X77[passthrough
   macros] along with 'asciimath' and 'latexmath'
-  web:userguide.html#X76[passthrough blocks] provide a (backend
+  {web}userguide.html#X76[passthrough blocks] provide a (backend
   dependent) mechanism for rendering mathematical formulas. There are
-  web:latexmath.pdf[LaTeX Math], web:asciimathml.html[AsciiMathML] and
-  web:latexmathml.html[LaTeXMathML] examples on the AsciiDoc website.
+  {web}latexmath.pdf[LaTeX Math], {web}asciimathml.html[AsciiMathML] and
+  {web}latexmathml.html[LaTeXMathML] examples on the AsciiDoc website.
 - Reimplemented and cleaned up filter processing based on a patch
   submitted by Kelly Anderson.  Uses the newer subprocess module
   instead of the deprecated popen2 module.  Now works in Win32 command

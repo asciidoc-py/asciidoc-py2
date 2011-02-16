@@ -7,6 +7,10 @@ AsciiDoc ChangeLog
 Version 8.6.4 (2010-02-20)
 --------------------------
 .Additions and changes
+- Vim Syntax highlighter: highlight macros that start with an
+  attribute reference (a common idiom).
+- Vim Syntax highlighter: highlight attribute references in macro
+  attribute lists.
 - Attribute entries can be used to set configuration markup templates.
 - Double-width East Asian characters in titles now correctly match the
   title underline widths. Submitted by Changjian Gao (see

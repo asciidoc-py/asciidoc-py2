@@ -1,4 +1,4 @@
-AC_INIT(asciidoc, 8.6.3) 
+AC_INIT(asciidoc, 8.6.4_beta_1)
 
 AC_CONFIG_FILES(Makefile)
 

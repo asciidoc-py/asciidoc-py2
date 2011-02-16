@@ -19,7 +19,7 @@ vers_update:
     @if exit != 0:
         :print updating version numbers...
         @for (fname,match) in (('asciidoc.py',r'^VERSION = '),('a2x.py',r'^VERSION = '),('configure.ac',r'^AC_INIT\(.*\)')):
-            :sys sed '/$match/ s/[0-9.]\+/$VERS/' <$fname >$(fname).tmp
+            :sys sed '/$match/ s/[0-9.][0-9.a-zA-Z_]\+/$VERS/' <$fname >$(fname).tmp
             :sys mv -f $(fname).tmp $fname
             @if fname in ('asciidoc.py','a2x.py'):
                 :sys chmod +x $fname

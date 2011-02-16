@@ -2,8 +2,8 @@
 # Executed by all main.aap's before anything else.
 #
 
-_parent.VERS = 8.6.3
-_parent.DATE = 14 November 2010
+_parent.VERS = 8.6.4_beta_1
+_parent.DATE = 17 February 2011
 
 all:
     :pass

@@ -4497,29 +4497,30 @@ pageunits::
 [[X59]]
 Filters
 -------
-Filters are external shell commands used to process Paragraph,
-DelimitedBlock and Table content and are specified in the
-corresponding configuration file definitions.
+AsciiDoc filters allow external commands to process AsciiDoc
+'Paragraphs', 'DelimitedBlocks' and 'Table' content. Filters are
+primarily an extension mechanism for generating specialized outputs.
+Filters are implemented using external commands which are specified in
+configuration file definitions.
 
 There's nothing special about the filters, they're just standard UNIX
 filters: they read text from the standard input, process it, and write
 to the standard output.
 
-The asciidoc(1) `--filter` option can be used to install and remove
-filters.
+The asciidoc(1) command `--filter` option can be used to install and
+remove filters.
 
 Attribute substitution is performed on the filter command prior to
 execution -- attributes can be used to pass parameters from the
 AsciiDoc source document to the filter.
 
-WARNING: Filters can potentially generate unsafe output. Before
-installing a filter you should verify that it is from a trusted
-source.
+WARNING: Filters sometimes included executable code. Before installing
+a filter you should verify that it is from a trusted source.
 
 Filter Search Paths
 ~~~~~~~~~~~~~~~~~~~
 If the filter command does not specify a directory path then
-asciidoc(1) searches for the command:
+asciidoc(1) recursively searches for the executable filter command:
 
 - First it looks in the user's `$HOME/.asciidoc/filters` directory.
 - Next the global filters directory (usually `/etc/asciidoc/filters`
@@ -4528,11 +4529,10 @@ asciidoc(1) searches for the command:
 - Finally it relies on the executing shell to search the environment
   search path (`$PATH`).
 
-Sub-directories are also included in the searches -- standard practice
-is to install each filter in it's own sub-directory with the same name
-as the filter's style definition. For example the music filter's style
-name is 'music' so it's configuration and filter files are stored in
-the `filters/music` directory.
+Standard practice is to install each filter in it's own sub-directory
+with the same name as the filter's style definition. For example the
+music filter's style name is 'music' so it's configuration and filter
+files are stored in the `filters/music` directory.
 
 Filter Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4540,7 +4540,7 @@ Filters are normally accompanied by a configuration file containing a
 Paragraph or DelimitedBlock definition along with corresponding markup
 templates.
 
-While it is possible to create new Paragraph or DelimitedBlock
+While it is possible to create new 'Paragraph' or 'DelimitedBlock'
 definitions the preferred way to implement a filter is to add a
 <<X23,style>> to the existing Paragraph and ListingBlock definitions
 (all filters shipped with AsciiDoc use this technique). The filter is
@@ -4558,10 +4558,11 @@ AsciiDoc comes with a toy filter for highlighting source code keywords
 and comments.  See also the `./filters/code/code-filter-readme.txt`
 file.
 
-NOTE: This filter primarily to demonstrate how to write a filter --
-it's much to simplistic to be passed off as a code syntax highlighter.
-If you want a full featured multi-language highlighter use the
-{website}source-highlight-filter.html[source code highlighter filter].
+NOTE: The purpose of this toy filter is to demonstrate how to write a
+filter -- it's much to simplistic to be passed off as a code syntax
+highlighter.  If you want a full featured multi-language highlighter
+use the {website}source-highlight-filter.html[source code highlighter
+filter].
 
 [listing]
 .....................................................................
@@ -4611,7 +4612,7 @@ constitute a filter. The asciidoc(1) `--filter` option implements
 commands to install, remove and list filter plugins.  Filter plugin
 commands and conventions are documented in the asciidoc(1) man page.
 You can find a list of filter plugins on the
-{website}filter-plugins.html[AsciiDoc website].
+{website}filters[AsciiDoc website].
 
 
 [[X12]]

@@ -3,7 +3,7 @@ AsciiDoc Filters
 
 
 AsciiDoc link:userguide#X59[filters] allow external commands to
-process AsciiDoc 'Paragraphs', 'DelimitedBlocks' and 'Table' content.
+process AsciiDoc 'Paragraph', 'DelimitedBlock' and 'Table' contents.
 Filters are primarily an extension mechanism for generating
 specialized outputs. Filters are available as external
 <<_filter_plugins,plugins>> and come

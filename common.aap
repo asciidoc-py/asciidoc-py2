@@ -2,7 +2,7 @@
 # Executed by all main.aap's before anything else.
 #
 
-_parent.VERS = 8.6.4_beta_1
+_parent.VERS = 8.6.4
 _parent.DATE = 17 February 2011
 
 all:

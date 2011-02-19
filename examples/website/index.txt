@@ -418,7 +418,7 @@ these guidelines:
 - When reporting problems please illustrate the problem with the
   smallest possible example that replicates the issue (and please test
   your example before posting). This technique will also help to
-  eliminate red herrings before you post the problem.
+  eliminate red herrings prior to posting.
 - Paste the commands that you executed along with any relevant
   outputs.
 - Include the version of AsciiDoc and the platform you're running it

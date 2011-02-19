@@ -8,7 +8,7 @@ Version 8.6.4 (2010-02-20)
 --------------------------
 .Additions and changes
 - Added text foreground and background color along with text size CSS
-  styles for XHTML outputs.
+  styles for XHTML outputs, see {website}userguide.html#X96[].
 - Vim syntax highlighter: highlight macros that start with an
   attribute reference (a common idiom).
 - Vim syntax highlighter: highlight attribute references in macro
@@ -27,7 +27,7 @@ Version 8.6.4 (2010-02-20)
 - Vim Syntax highlighter: Highlight closing OpenBlocks which
   immediately follow a literal paragraph.
 - Changed UNIX `/dev/null` to OS independent `os.devnull` in filters
-  code.  Suggested by Herik Maier:
+  code.  Suggested by Henrik Maier:
   http://groups.google.com/group/asciidoc/browse_thread/thread/5ac8e8ea895147e9
 - Vim syntax highlighter: Single and double quoted text now highlights
   correctly when preceded by an attributes list.
@@ -44,7 +44,7 @@ Version 8.6.4 (2010-02-20)
   http://groups.google.com/group/asciidoc/browse_thread/thread/b11066a828ab45b9
 
 .Bug fixes
-- *FIXED*: Auto-generated section title ids are now unicode aware.
+- *FIXED*: Auto-generated section title ids are now Unicode aware.
 - *FIXED*: Setting 'quotes' configuration entries using document
   attribute entries failed if the attribute entry was not in the
   document header.  See:

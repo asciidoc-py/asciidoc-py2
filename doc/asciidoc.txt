@@ -380,7 +380,7 @@ Examples:
 --
   * AsciiDoc extracts the 'revnumber', 'revdate', and 'author'
     attributes from the $Id$ revision marker and displays them in the
-    docment header.
+    document header.
   * If an $Id$ revision marker is used the header author line can be
     omitted.
 

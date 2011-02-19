@@ -22,7 +22,7 @@ updated link:userguide.html[User Guide]. See the
 link:INSTALL.html[Installation page] for downloads and and
 installation instructions.
 
-mailto:srackham@gmail.com['Stuart Rackham']
+'Stuart Rackham'
 ************************************************************************
 
 Introduction

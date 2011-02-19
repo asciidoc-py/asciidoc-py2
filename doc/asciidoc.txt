@@ -725,8 +725,11 @@ and 'small' (large and small text).  Where '<color>' can be any of the
 http://en.wikipedia.org/wiki/Web_colors#HTML_color_names[sixteen HTML
 color names].  Examples:
 
-  [red]#obvious#
-  [big red yellow-background]*very obvious*
+  [red]#Obvious# and [big red yellow-background]*very obvious*.
+
+is rendered as:
+
+[red]#Obvious# and [big red yellow-background]*very obvious*.
 
 [[X52]]
 Constrained and Unconstrained Quotes

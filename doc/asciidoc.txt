@@ -713,22 +713,20 @@ DocBook XSL Stylesheets translate DocBook 'phrase' elements with
 'role' attributes to corresponding HTML 'span' elements with the same
 'class' attributes; CSS can then be used
 http://www.sagehill.net/docbookxsl/UsingCSS.html[to style the
-generated HTML].
+generated HTML].  Thus CSS styling can be applied to both DocBook and
+AsciiDoc generated XHTML outputs from the same AsciiDoc source.  You
+can also specify multiple class names separated by spaces.
 
-Thus CSS styling can be applied to both DocBook and AsciiDoc generated
-HTML outputs from the same AsciiDoc source.  You can also specify
-multiple class names separated by spaces. Examples:
+CSS rules for text color and size are included in the distributed
+AsciiDoc CSS files and are used in conjunction with AsciiDoc 'xhtml11'
+and 'docbook' outputs. The CSS class names are: '<color>' (text
+foreground color); '<color>-background' (text background color); 'big'
+and 'small' (large and small text).  Where '<color>' can be any of the
+http://en.wikipedia.org/wiki/Web_colors#HTML_color_names[sixteen HTML
+color names].  Examples:
 
   [red]#obvious#
-  [big red yellowback]*very obvious*
-
-The following CSS rules for 'big', 'red' and 'yellowback' class names
-could be used to style HTML outputs generated from the previous
-examples:
-
-  span.big { font-size: 2em; }
-  span.red { color: #e3372e; }
-  span.yellowback { background: #faf519; }
+  [big red yellow-background]*very obvious*
 
 [[X52]]
 Constrained and Unconstrained Quotes

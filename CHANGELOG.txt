@@ -7,6 +7,8 @@ AsciiDoc ChangeLog
 Version 8.6.4 (2010-02-20)
 --------------------------
 .Additions and changes
+- Added text foreground and background color along with text size CSS
+  styles for XHTML outputs.
 - Vim syntax highlighter: highlight macros that start with an
   attribute reference (a common idiom).
 - Vim syntax highlighter: highlight attribute references in macro

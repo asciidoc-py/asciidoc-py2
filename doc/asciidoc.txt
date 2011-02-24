@@ -202,11 +202,13 @@ AsciiDoc generates 'article', 'book' and 'refentry'
 http://www.docbook.org/[DocBook] documents (corresponding to the
 AsciiDoc 'article', 'book' and 'manpage' document types).
 
-DocBook documents are not designed to be viewed directly.  Most Linux
-distributions come with conversion tools (collectively called a
-toolchain) for <<X12,converting DocBook files>> to presentation
-formats such as Postscript, HTML, PDF, EPUB, DVI, PostScript, LaTeX,
-roff (the native man page format), HTMLHelp, JavaHelp and text.
+Most Linux distributions come with conversion tools (collectively
+called a toolchain) for <<X12,converting DocBook files>> to
+presentation formats such as Postscript, HTML, PDF, EPUB, DVI,
+PostScript, LaTeX, roff (the native man page format), HTMLHelp,
+JavaHelp and text.  There are also programs that allow you to view
+DocBook files directly, for example http://live.gnome.org/Yelp[Yelp]
+(the GNOME help viewer).
 
 [[X35]]
 XHTML Stylesheets
@@ -4613,7 +4615,7 @@ constitute a filter. The asciidoc(1) `--filter` option implements
 commands to install, remove and list filter plugins.  Filter plugin
 commands and conventions are documented in the asciidoc(1) man page.
 You can find a list of filter plugins on the
-{website}filters[AsciiDoc website].
+{website}filters.html[AsciiDoc website].
 
 
 [[X12]]
@@ -5139,7 +5141,7 @@ containing <<X66,embedded images>>, CSS stylesheets, and JavaScript
 
   $ asciidoc -a data-uri -a icons -a toc -a max-width=55em article.txt
 
-You can view the HTML file here: {website}article-standalone.html
+You can view the HTML file here: {website}article-standalone.html[]
 
 Shipping stand-alone AsciiDoc source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

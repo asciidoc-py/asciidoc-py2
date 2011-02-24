@@ -813,7 +813,7 @@ if __name__ == '__main__':
         metavar='FOP_OPTS', help='options for FOP pdf generation')
     parser.add_option('--xsltproc-opts',
         action='append', dest='xsltproc_opts', default=[],
-        metavar='XSLTPROC_OPTS', help='options for FOP pdf generation')
+        metavar='XSLTPROC_OPTS', help='xsltproc options for XSL stylesheets')
     parser.add_option('--xsl-file',
         action='store', dest='xsl_file', metavar='XSL_FILE',
         help='custom XSL stylesheet')

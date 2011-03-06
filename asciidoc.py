@@ -503,7 +503,7 @@ def subs_quotes(text):
             # The text within constrained quotes must be bounded by white space.
             # Non-word (\W) characters are allowed at boundaries to accomodate
             # enveloping quotes and punctuation e.g. a='x', ('x'), 'x', ['x'].
-            reo = re.compile(r'(?msu)(^|[^\w;:])(\[(?P<attrlist>[^[\]]+?)\])?' \
+            reo = re.compile(r'(?msu)(^|[^\w;:}])(\[(?P<attrlist>[^[\]]+?)\])?' \
                 + r'(?:' + re.escape(lq) + r')' \
                 + r'(?P<content>\S|\S.*?\S)(?:'+re.escape(rq)+r')(?=\W|$)')
         pos = 0

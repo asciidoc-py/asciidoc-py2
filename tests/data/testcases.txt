@@ -108,6 +108,8 @@ obvious*
 
 (``++1\n++'') if (usually ``++-1\n++'')
 
+(`{author}') and `{author}'
+
 
 == Configuration attribute entries ==
 

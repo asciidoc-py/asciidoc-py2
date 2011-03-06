@@ -197,33 +197,8 @@ Is this a DocBook XSL bug?
 
 The Linux zip(1) command
 ------------------------
-The Linux zip(1) command does not seem to be able to generate EPUB
-compatible zip files -- the 'mimetype' file contents start at 0x3b,
-not the required 0x38 and the validator generates this error:
-
-  $ zip -0 test.epub mimetype 
-    adding: mimetype (stored 0%)
-
-  $ hexdump -C test.epub
-  00000000  50 4b 03 04 0a 00 00 00  00 00 99 50 21 3b 6f 61  |PK.........P!;oa|
-  00000010  ab 2c 14 00 00 00 14 00  00 00 08 00 15 00 6d 69  |.,............mi|
-  00000020  6d 65 74 79 70 65 55 54  09 00 03 01 49 9c 4a 01  |metypeUT....I.J.|
-  00000030  49 9c 4a 55 78 04 00 e9  03 e9 03 61 70 70 6c 69  |I.JUx......appli|
-  00000040  63 61 74 69 6f 6e 2f 65  70 75 62 2b 7a 69 70 50  |cation/epub+zipP|
-  00000050  4b 01 02 17 03 0a 00 00  00 00 00 99 50 21 3b 6f  |K...........P!;o|
-  00000060  61 ab 2c 14 00 00 00 14  00 00 00 08 00 0d 00 00  |a.,.............|
-  00000070  00 00 00 00 00 00 00 a4  81 00 00 00 00 6d 69 6d  |.............mim|
-  00000080  65 74 79 70 65 55 54 05  00 03 01 49 9c 4a 55 78  |etypeUT....I.JUx|
-  00000090  00 00 50 4b 05 06 00 00  00 00 01 00 01 00 43 00  |..PK..........C.|
-  000000a0  00 00 4f 00 00 00 00 00                           |..O.....|
-  000000a8
-
-  $ epubcheck test.epub 
-  Epubcheck Version 1.0.3
-
-  ERROR: test.epub: mimetype contains wrong type (application/epub+zip expected)
-  ERROR: test.epub: META-INF/container.xml is missing
-
-If there's some zip(1) command-line option I'm missing I'd be keen to
-know about it.
-
+If you use the Linux `zip(1)` command to update or create EPUB files
+you must use the `-X`, `--no-extra` command-line option, if you do not
+the platform dependent extra fields will confuse `epubcheck(1)` which
+will emit errors like ``extra field length for first filename must be
+0, but was 28''.

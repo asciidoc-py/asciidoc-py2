@@ -44,6 +44,11 @@ compile the examples. The version of
 http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
 Stylesheets] used was 1.75.2.
 
+TIP: If you are experiencing 'xsltproc' errors when you run 'a2x' take
+a look at Francis Shanahan's
+http://francisshanahan.com/index.php/2011/fixing-epub-problem-docbook-xsl-asciidoc-a2x/[Fixing
+the ePub problem with Docbook-XSL/A2X/Asciidoc] blog post.
+
 
 [[X1]]
 == Minimal Book

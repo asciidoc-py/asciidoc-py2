@@ -1532,6 +1532,8 @@ class Document(object):
                     writer.write(stag,trace='preamble open')
                     Section.translate_body()
                     writer.write(etag,trace='preamble close')
+            elif self.doctype == 'manpage' and 'name' in config.sections:
+                writer.write(config.subs_section('name',{}), trace='name')
         else:
             self.process_author_names()
             if config.header_footer:

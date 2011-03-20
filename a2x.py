@@ -19,6 +19,8 @@ import sys
 import traceback
 import urlparse
 import zipfile
+import xml.dom.minidom
+import mimetypes
 
 PROG = os.path.basename(os.path.splitext(__file__)[0])
 VERSION = '8.6.4'
@@ -648,6 +650,45 @@ class A2X(AttrDict):
         src_dir = os.path.dirname(self.asciidoc_file)
         self.copy_resources(html_files, src_dir, dst_dir)
 
+    def update_epub_manifest(self, opf_file):
+        '''
+        Scan the OEBPS directory for any files that have not been registered in
+        the OPF manifest then add them to the manifest.
+        '''
+        opf_dir = os.path.dirname(opf_file)
+        resource_files = []
+        for (p,dirs,files) in os.walk(os.path.dirname(opf_file)):
+            for f in files:
+                f = os.path.join(p,f)
+                if f.startswith(opf_dir):
+                    f = '.' + f[len(opf_dir):]
+                f = os.path.normpath(f)
+                if os.path.isfile(f):
+                    resource_files.append(f)
+        opf = xml.dom.minidom.parseString(open(opf_file).read())
+        manifest_files = []
+        manifest = opf.getElementsByTagName('manifest')[0]
+        for el in manifest.getElementsByTagName('item'):
+            f = el.getAttribute('href')
+            f = os.path.normpath(f)
+            manifest_files.append(f)
+        count = 0
+        for f in resource_files:
+            if f not in manifest_files:
+                count += 1
+                verbose('adding to manifest: %s' % f)
+                item = opf.createElement('item')
+                item.setAttribute('href', f)
+                item.setAttribute('id', 'a2x-%d' % count)
+                mimetype = mimetypes.guess_type(f)[0]
+                if mimetype is None:
+                    warning('unknown mimetype: %s' % f)
+                    continue
+                item.setAttribute('media-type', mimetype)
+                manifest.appendChild(item)
+        if count > 0:
+            open(opf_file, 'w').write(opf.toxml())
+
     def to_epub(self):
         self.to_docbook()
         xsl_file = self.xsl_stylesheet()
@@ -661,13 +702,10 @@ class A2X(AttrDict):
         # Copy OPF file resources.
         src_dir = os.path.dirname(self.asciidoc_file)
         dst_dir = os.path.join(build_dir, 'OEBPS')
-        # Get the resources from OPF instead of HTML content to get round this
-        # bug: https://sourceforge.net/tracker/?func=detail&aid=2854080&group_id=21935&atid=373747
-        opf = os.path.join(dst_dir, 'content.opf')
-        resources = find_resources(opf, 'item', 'href')
-#        html_files = find_files(dst_dir, '*.html')
-#        self.copy_resources(html_files, src_dir, dst_dir)
+        opf_file = os.path.join(dst_dir, 'content.opf')
+        resources = find_resources(opf_file, 'item', 'href')
         self.copy_resources([], src_dir, dst_dir, resources)
+        self.update_epub_manifest(opf_file)
         # Build epub archive.
         cwd = os.getcwd()
         shell_cd(build_dir)

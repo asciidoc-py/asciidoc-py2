@@ -678,7 +678,7 @@ class A2X(AttrDict):
                 count += 1
                 verbose('adding to manifest: %s' % f)
                 item = opf.createElement('item')
-                item.setAttribute('href', f)
+                item.setAttribute('href', f.replace(os.path.sep, '/'))
                 item.setAttribute('id', 'a2x-%d' % count)
                 mimetype = mimetypes.guess_type(f)[0]
                 if mimetype is None:
@@ -699,12 +699,16 @@ class A2X(AttrDict):
         shell_makedirs(build_dir)
         # Create content.
         exec_xsltproc(xsl_file, docbook_file, build_dir, self.xsltproc_opts)
-        # Copy OPF file resources.
+        # Copy resources referenced in the OPF and resources referenced by the
+        # generated HTML (in theory DocBook XSL should ensure they are
+        # identical but this is not always the case).
         src_dir = os.path.dirname(self.asciidoc_file)
         dst_dir = os.path.join(build_dir, 'OEBPS')
         opf_file = os.path.join(dst_dir, 'content.opf')
-        resources = find_resources(opf_file, 'item', 'href')
-        self.copy_resources([], src_dir, dst_dir, resources)
+        opf_resources = find_resources(opf_file, 'item', 'href')
+        html_files = find_files(dst_dir, '*.html')
+        self.copy_resources(html_files, src_dir, dst_dir, opf_resources)
+        # Register any unregistered resources.
         self.update_epub_manifest(opf_file)
         # Build epub archive.
         cwd = os.getcwd()

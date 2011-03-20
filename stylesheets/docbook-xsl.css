@@ -272,6 +272,10 @@ div.calloutlist p
   margin-bottom: 0.4em;
 }
 
+a img {
+  border-style: none;
+}
+
 @media print {
   div.navheader, div.navfooter { display: none; }
 }

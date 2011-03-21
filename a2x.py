@@ -420,12 +420,10 @@ class A2X(AttrDict):
             for r in open(self.resource_manifest):
                 self.resources.append(r.strip())
         for r in self.resources:
-            if os.path.isfile(r):
-                self.resource_files.append(r)
-            elif os.path.isdir(r):
+            if os.path.isdir(r):
                 self.resource_dirs.append(r)
             else:
-                die('missing resource: %s' % r)
+                self.resource_files.append(r)
         # Lastly search among images and stylesheets distributed with asciidoc.
         for p in (os.path.dirname(self.asciidoc), CONF_DIR):
             for d in ('images','stylesheets'):
@@ -525,12 +523,10 @@ class A2X(AttrDict):
         '''
         Search html_files for images and CSS resource URIs (html_files can be a
         list of file names or a single file name).
-        If the URIs are relative then copy them from the src_dir to the
-        dst_dir.
+        Copy them from the src_dir to the dst_dir.
         If not found in src_dir then recursively search all specified
-        resources for the file name.
-        Optional additional resources URIs can be passed in the resources list.
-        Does not copy absolute URIs.
+        resource directories.
+        Optional additional resources files can be passed in the resources list.
         '''
         resources = resources[:]
         resources += find_resources(html_files, 'link', 'href',
@@ -540,24 +536,32 @@ class A2X(AttrDict):
         resources = list(set(resources))    # Drop duplicates.
         resources.sort()
         for f in resources:
-            f = os.path.normpath(f)
-            if os.path.isabs(f):
-                if not os.path.isfile(f):
-                    warning('missing resource: %s' % f)
-                continue
-            src = os.path.join(src_dir, f)
-            dst = os.path.join(dst_dir, f)
+            if '=' in f:
+                src, dst = f.split('=')
+                if not dst:
+                    dst = src
+            else:
+                src = dst = f
+            src = os.path.normpath(src)
+            dst = os.path.normpath(dst)
+            if os.path.isabs(dst):
+                die('absolute resource file name: %s' % dst)
+            if dst.startswith('..'):
+                die('resource file outside destination directory: %s' % dst)
+            src = os.path.join(src_dir, src)
+            dst = os.path.join(dst_dir, dst)
             if not os.path.isfile(src):
                 for d in self.resource_dirs:
-                    src = find_files(d, os.path.basename(f))
-                    if src:
-                        src = src[0]
+                    d = os.path.join(src_dir, d)
+                    found = find_files(d, os.path.basename(src))
+                    if found:
+                        src = found[0]
                         break
                 else:
                     if not os.path.isfile(dst):
-                        warning('missing resource: %s' % f)
-                    continue    # Continues outer for loop.
-            # Arrive here if relative resource file has been found.
+                        die('missing resource: %s' % src)
+                    continue
+            # Arrive here if resource file has been found.
             if os.path.normpath(src) != os.path.normpath(dst):
                 dstdir = os.path.dirname(dst)
                 shell_makedirs(dstdir)
@@ -660,11 +664,12 @@ class A2X(AttrDict):
         for (p,dirs,files) in os.walk(os.path.dirname(opf_file)):
             for f in files:
                 f = os.path.join(p,f)
-                if f.startswith(opf_dir):
-                    f = '.' + f[len(opf_dir):]
-                f = os.path.normpath(f)
                 if os.path.isfile(f):
-                    resource_files.append(f)
+                    assert f.startswith(opf_dir)
+                    f = '.' + f[len(opf_dir):]
+                    f = os.path.normpath(f)
+                    if f not in ['content.opf']:
+                        resource_files.append(f)
         opf = xml.dom.minidom.parseString(open(opf_file).read())
         manifest_files = []
         manifest = opf.getElementsByTagName('manifest')[0]
@@ -683,7 +688,7 @@ class A2X(AttrDict):
                 mimetype = mimetypes.guess_type(f)[0]
                 if mimetype is None:
                     warning('unknown mimetype: %s' % f)
-                    continue
+                    mimetype = 'application/xhtml+xml'
                 item.setAttribute('media-type', mimetype)
                 manifest.appendChild(item)
         if count > 0:

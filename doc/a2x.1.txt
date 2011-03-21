@@ -37,7 +37,7 @@ OPTIONS
 *--conf-file*='CONF_FILE'::
   Load configuration file. See <<X2,CONF FILES section>>.
 
-*-D, --destination-dir*='PATH'::
+*-D, --destination-dir*='DESTINATION_DIR'::
   Output directory. Defaults to 'SOURCE_FILE' directory.
 
 *-d, --doctype*='DOCTYPE'::
@@ -77,11 +77,9 @@ OPTIONS
 *-n, --dry-run*::
   Do not do anything just print what would have been done.
 
-*-r, --resource*='PATH'::
-  If 'PATH' refers to a directory recursively search it for required
-  <<X3,resource files>>. If 'PATH' refers to a file add it to the list
-  of required resource files. This option may be specified more than
-  once.
+*-r, --resource*='RESOURCE_SPEC'::
+  Specify a resouce.  This option may be specified more than once.
+  See the <<X3,*RESOURCES*>> section for more details.
 
 *-m, --resource-manifest*='FILE'::
   'FILE' contains a list resources (one per line). Manifest 'FILE'
@@ -137,6 +135,7 @@ source file. Example usage:
   //    a2x: --dblatex-opts "-P latex.output.revhistory=0"
 
 
+[[X4]]
 OUTPUT FILES
 ------------
 Output files are written to the directory specified by the
@@ -164,22 +163,59 @@ RESOURCES
 Resources are files (typically CSS and images) that are required by
 HTML based outputs ('xhtml', 'epub', 'chunked', 'htmlhelp' formats).
 'a2x' scans the generated HTML files and builds a list of required CSS
-and image file. Additional resource files can be specified explicitly
+and image files. Additional resource files can be specified explicitly
 using the *--resource* option.
 
-'a2x' searches for resources in the following locations in the
+'a2x' searches for resource files in the following locations in the
 following order:
 
 . The 'SOURCE_FILE' directory.
-. Directories specified by *--resource* and *--resource-manifest*
-  options (recursively).
+. Resource directories (specified by *--resource* and
+  *--resource-manifest* options) are searched recursively.
 . The 'asciidoc(1)' `images` and `stylesheets` configuration file
-  directories (recursively).
+  directories are searched recursively.
 . The destination directory.
 
 When a resource is found it is copied to the correct relative
-destination directory.  Missing destination sub-directories are
-created automatically.
+destination directory. Destination sub-directories are created
+automatically.
+
+A resource specifier (*--resource* option 'RESOURCE_SPEC') can specify
+a single resource file or a directory to be recursively searched for
+resource files. A resource specifier can be either of the following
+two formats:
+
+  <resource_dir>
+  <resource_file>[=<destination_file>]
+
+Where:
+
+`<resource_dir>`::
+  Specifies a directory (absolute or relative to the 'SOURCE_FILE')
+  which is searched recursively for resource files.
+
+`<resource_file>`::
+  Specifies a resource file (absolute or relative to the
+  'SOURCE_FILE') which is copied to `<destination_file>`. If
+  `<destination_file>` is not specified then it is the same as the
+  `<resource_file>`.
+
+`<destination_file>`::
+  Specifies the destination of the copied source file. The
+  `<destination_file>` path is relative to the destination directory
+  (absolute paths are not allowed). The destination directory is
+  format dependent (see the <<X4,*OUTPUT FILES*>> section for
+  details):
+
+  chunked, htmlhelp;; The chunked directory.
+  epub;;              The archived `OEBPS` directory.
+  xhtml;;             The *DESTINATION_DIR*.
+
+Resource specifier examples:
+
+  ../images
+  doc/README.txt=README.txt
+  /home/srackham/images/tiger.png=images/tiger.png
 
 
 EXAMPLES

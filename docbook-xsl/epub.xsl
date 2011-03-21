@@ -18,11 +18,6 @@ DocBook XSL 1.75.2: Nav headers are invalid XHTML (table width element)
 <xsl:param name="suppress.navigation" select="1"/>
 
 <!--
-DocBook XSL 1.75.2 doesn't handle admonition icons
--->
-<xsl:param name="admon.graphics" select="0"/>
-
-<!--
 DocBook XLS 1.75.2 doesn't handle TOCs
 -->
 <xsl:param name="generate.toc">

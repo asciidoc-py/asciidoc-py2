@@ -420,7 +420,12 @@ class A2X(AttrDict):
             for r in open(self.resource_manifest):
                 self.resources.append(r.strip())
         for r in self.resources:
-            if os.path.isdir(r):
+            if r.endswith(('/','\\')):
+                if  os.path.isdir(r):
+                    self.resource_dirs.append(r)
+                else:
+                    die('missing resource directory: %s' % r)
+            elif os.path.isdir(r):
                 self.resource_dirs.append(r)
             else:
                 self.resource_files.append(r)
@@ -546,7 +551,7 @@ class A2X(AttrDict):
             dst = os.path.normpath(dst)
             if os.path.isabs(dst):
                 die('absolute resource file name: %s' % dst)
-            if dst.startswith('..'):
+            if dst.startswith(os.pardir):
                 die('resource file outside destination directory: %s' % dst)
             src = os.path.join(src_dir, src)
             dst = os.path.join(dst_dir, dst)
@@ -844,7 +849,7 @@ if __name__ == '__main__':
     parser.add_option('--stylesheet',
         action='store', dest='stylesheet', default=None,
         metavar='STYLESHEET',
-        help='target HTML CSS stylesheet file name')
+        help='HTML CSS stylesheet file name')
     #DEPRECATED
     parser.add_option('--safe',
         action='store_true', dest='safe', default=False,

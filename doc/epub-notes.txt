@@ -11,9 +11,8 @@ Restrictions
   ERROR: doc/article.epub/OEBPS/content.opf(6): date value 'Dec 2003'
   is not valid, YYYY[-MM[-DD]] expected
 
-- Navigation headers and admonition icons are suppressed by
-  `docbook-xsl/epub.xsl`
-  (see <<X2,bug report>>).
+- Navigation headers are suppressed by `docbook-xsl/epub.xsl` (see
+  <<X3,bug report>>).
 
 
 DocBook XSL Stylesheets related limitations and bugs
@@ -75,6 +74,9 @@ for the above example:
 
 
 === epub: Unreferenced callout icons in OPF
+NOTE: A workaround  for this problem was added in `a2x(1)` version
+8.6.5.
+
 https://sourceforge.net/tracker/?func=detail&aid=2854075&group_id=21935&atid=373747
 
 Environment: DocBook XSL 1.75.2; Xubuntu 8.04
@@ -158,6 +160,9 @@ This works fine:
 
 [[X2]]
 === epub: admonition icon images missing from contents.opf
+NOTE: A workaround  for this problem was added in `a2x(1)` version
+8.6.5.
+
 https://sourceforge.net/tracker/?func=detail&aid=2849681&group_id=21935&atid=373747
 
 Environment: DocBook XSL 1.75.2; Xubuntu 8.04
@@ -174,6 +179,7 @@ been added to the content.opf manifest. Compare this with callout icons
 which are processed correctly.
 
 
+[[X3]]
 === Table width attribute validation error
 https://sourceforge.net/tracker/?func=detail&aid=2848734&group_id=21935&atid=373747
 

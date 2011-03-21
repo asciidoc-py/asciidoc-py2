@@ -84,6 +84,7 @@ OPTIONS
 *-m, --resource-manifest*='FILE'::
   'FILE' contains a list resources (one per line). Manifest 'FILE'
   entries are formatted just like *--resource* option arguments.
+  Environment variables and tilda home directories are allowed.
 
 *--stylesheet*='STYLESHEET'::
   The file name of the CSS stylesheet file that is used to style HTML
@@ -191,8 +192,8 @@ There are two distinct mechanisms for specifying additional resources:
 . A resouce file which will be copied to the output destination
   directory.
 
-Resources are defined by the  *--resource* option value and can be
-either of the following two formats:
+Resources are specified by *--resource* option values and can be one
+of the following two formats:
 
   <resource_dir>
   <resource_file>[=<destination_file>]
@@ -226,7 +227,7 @@ Resource specifier examples:
 
   ../images/
   doc/README.txt=README.txt
-  /home/srackham/images/tiger.png=images/tiger.png
+  ~/images/tiger.png=images/tiger.png
 
 
 EXAMPLES

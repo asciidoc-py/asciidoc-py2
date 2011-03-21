@@ -420,6 +420,8 @@ class A2X(AttrDict):
             for r in open(self.resource_manifest):
                 self.resources.append(r.strip())
         for r in self.resources:
+            r = os.path.expanduser(r)
+            r = os.path.expandvars(r)
             if r.endswith(('/','\\')):
                 if  os.path.isdir(r):
                     self.resource_dirs.append(r)
@@ -432,7 +434,11 @@ class A2X(AttrDict):
         # Lastly search among images and stylesheets distributed with asciidoc.
         for p in (os.path.dirname(self.asciidoc), CONF_DIR):
             for d in ('images','stylesheets'):
-                self.resource_dirs.append(os.path.join(p,d))
+                d = os.path.join(p,d)
+                if os.path.isdir(d):
+                    self.resource_dirs.append(d)
+        verbose('resource files: %s' % self.resource_files)
+        verbose('resource directories: %s' % self.resource_dirs)
         if not self.doctype and self.format == 'manpage':
             self.doctype = 'manpage'
         if self.doctype:

@@ -53,7 +53,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
 #####################################################################
 
 :rule %.epub : %.txt
-    :sys $A2X -f epub -d book --epubcheck $source
+    :sys $A2X -f epub -d book --epubcheck --icons $source
 
 :rule %.text : %.txt
     # Convert AsciiDoc to HTML then use lynx(1) to convert HTML to text.

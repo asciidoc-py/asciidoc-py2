@@ -431,7 +431,6 @@ class A2X(AttrDict):
                 self.resource_dirs.append(r)
             else:
                 self.resource_files.append(r)
-        # Lastly search among images and stylesheets distributed with asciidoc.
         for p in (os.path.dirname(self.asciidoc), CONF_DIR):
             for d in ('images','stylesheets'):
                 d = os.path.join(p,d)

@@ -429,6 +429,9 @@ class A2X(AttrDict):
                     die('missing resource directory: %s' % r)
             elif os.path.isdir(r):
                 self.resource_dirs.append(r)
+            elif r.startswith('.') and '=' in r:
+                ext, mimetype = r.split('=')
+                mimetypes.add_type(mimetype, ext)
             else:
                 self.resource_files.append(r)
         for p in (os.path.dirname(self.asciidoc), CONF_DIR):
@@ -697,8 +700,7 @@ class A2X(AttrDict):
                 item.setAttribute('id', 'a2x-%d' % count)
                 mimetype = mimetypes.guess_type(f)[0]
                 if mimetype is None:
-                    warning('unknown mimetype: %s' % f)
-                    mimetype = 'application/xhtml+xml'
+                    die('unknown mimetype: %s' % f)
                 item.setAttribute('media-type', mimetype)
                 manifest.appendChild(item)
         if count > 0:

@@ -9,6 +9,54 @@ AsciiDoc Frequently Asked Questions
   newer FAQs may apply to the trunk and not the current release.
 ======
 
+[[X5]]
+== How can I include embedded fonts in an EPUB document
+This is a two step process:
+
+1. Declare the font files and their use in your document's CSS
+   stylesheet. For example:
++
+[listing]
+.........................................
+@font-face {
+  font-family : LiberationSerif-Regular;
+  font-weight : normal;
+  font-style: normal;
+  src : url(LiberationSerif-Regular.ttf);
+}
+
+body {
+  font-family: LiberationSerif-Regular, serif;
+}
+.........................................
+
+2. Declare the the font file as resource when you use `a2x(1)` to
+   compile the EPUB. For example:
+
+  a2x -f epub -d book --epubcheck --stylesheet epubtest.css --resource .ttf=application/x-font-ttf --resource LiberationSerif-Regular.ttf epubtest.txt
+
+[NOTE]
+======
+- Requires AsciiDoc 8.6.5 or better.
+- The True Type Font mimetype had to be declared explicitly with the
+  `--resource .ttf=application/x-font-ttf` option because it wasn't
+  registered on my Linux system.
+- In the above example the font file is in the same directory as the
+  AsciiDoc source file and is installed to the same relative location
+  in the EPUB archive OEBPS directory -- if your font file resides in
+  a different location you'll need to adjust the `--resource` option
+  accordingly (see the 'RESOURCES' section in the `a2x(1)` man page
+  for details).
+- The URL value of the CSS 'src' property is set to the destination
+  font file relative the the CSS file.
+- The `--resource` option allows you to inject any file (not just font
+  files) into the EPUB output document.
+- Using the CSS '@font-face' rule is a complex subject and is outside
+  the scope of the FAQ.
+- Many EPUB readers do not process embedded fonts.
+======
+
+
 == What's the difference between + quoted text and ` quoted monospaced text?
 `+` (plus) quoted text is implemented as an AsciiDoc 'quotes' whereas
 +`+ (grave accent or backtick) quoted text is implemented as an
@@ -36,7 +84,7 @@ This line works as expected:
   The `++i` and `++j` auto-increments.
   Paths `~/.vim` and `~/docs`.
   The `__init__` method.
-  The `{id}` attribute. 
+  The `{id}` attribute.
 
 
 == Why is the generated HTML title element text invalid?

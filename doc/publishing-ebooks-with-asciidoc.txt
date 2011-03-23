@@ -51,7 +51,8 @@ the ePub problem with Docbook-XSL/A2X/Asciidoc] blog post.
 
 
 [[X1]]
-== Minimal Book
+Minimal Book
+------------
 This didactic example contains a title and two chapters.  The AsciiDoc
 source is a plain text file named `minimal-book.txt`:
 
@@ -362,6 +363,11 @@ a look at the `adventures-of-sherlock-holmes.css` CSS file.
 
 There are some great examples of EPUB book styles at
 http://epubzengarden.com/[ePub Zen Garden].
+
+
+Including embedded fonts
+------------------------
+See link:faq.html#X5[this FAQ].
 
 
 Reading EPUB documents

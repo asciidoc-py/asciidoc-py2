@@ -13,7 +13,8 @@
 <xsl:import href="common.xsl"/>
 
 <!--
-DocBook XSL 1.75.2: Nav headers are invalid XHTML (table width element)
+DocBook XSL 1.75.2: Nav headers are invalid XHTML (table width element).
+Suppressed by default in Docbook XSL 1.76.1 epub.xsl.
 -->
 <xsl:param name="suppress.navigation" select="1"/>
 

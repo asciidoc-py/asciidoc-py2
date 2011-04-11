@@ -5582,7 +5582,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 config.load_file('asciidoc.conf', indir,
                                 include=['attributes','titles','specialchars'])
         else:
-            load_conffiles()
+            load_conffiles(include=['attributes','titles','specialchars'])
         document.update_attributes()
         # Check the infile exists.
         if infile != '<stdin>':
@@ -5618,7 +5618,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 f = os.path.splitext(infile)[0]
                 config.load_file(f + '.conf')
                 config.load_file(f + '-' + document.backend + '.conf')
-            load_conffiles()
+        load_conffiles()
         # Build outfile name.
         if outfile is None:
             outfile = os.path.splitext(infile)[0] + '.' + document.backend

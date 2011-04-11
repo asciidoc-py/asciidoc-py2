@@ -84,7 +84,7 @@ OPTIONS
 *-m, --resource-manifest*='FILE'::
   'FILE' contains a list resources (one per line). Manifest 'FILE'
   entries are formatted just like *--resource* option arguments.
-  Environment variables and tilda home directories are allowed.
+  Environment variables and tilde home directories are allowed.
 
 *--stylesheet*='STYLESHEET'::
   The file name of the CSS stylesheet file that is used to style HTML

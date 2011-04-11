@@ -312,6 +312,11 @@ and I'll add them to the list.
   http://www.ncfaculty.net/dogle/fishR/bookex/AIFFD/AIFFD.html[book
   examples] written using AsciiDoc.
 
+- The Neo4j graph database project uses Asciidoc, and the output is
+  published here: http://docs.neo4j.org/. The build process includes
+  live tested source code snippets and is described
+  http://groups.google.com/group/asciidoc/browse_thread/thread/49d570062fd3ff52[here].
+
 - http://frugalware.org/[Frugalware Linux] uses AsciiDoc for
   http://frugalware.org/docs[documentation].
 - http://www.cherokee-project.com/doc/[Cherokee documentation].

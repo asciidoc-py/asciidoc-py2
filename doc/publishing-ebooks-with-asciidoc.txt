@@ -4,7 +4,7 @@ Publishing eBooks with AsciiDoc
 :keywords:    AsciiDoc, EPUB tools, EPUB, PDF, ebooks
 :description: How to create EPUB and PDF ebooks using AsciiDoc.
 
-ifdef::backend-wordpress[]
+ifdef::blogpost[]
 // Use the same article for both a blog post and on the AsciiDoc
 // website.
 :blogpost-title: Publishing eBooks with AsciiDoc
@@ -14,16 +14,17 @@ ifdef::backend-wordpress[]
 :blogpost-categories: AsciiDoc,eBook,EPUB,DocBook
 
 *Published*: 2010-08-23
-endif::backend-wordpress[]
+*Updated*: 2010-03-24
+endif::blogpost[]
 
 It's easy to write and publish books in
 http://en.wikipedia.org/wiki/EPUB[EPUB] and PDF formats using
 http://www.methods.co.nz/asciidoc/[AsciiDoc].
-ifdef::backend-wordpress[]
+ifdef::blogpost[]
 This article was originally published on the
 http://www.methods.co.nz/asciidoc/publishing-ebooks-with-asciidoc.html[AsciiDoc
 website].
-endif::backend-wordpress[]
+endif::blogpost[]
 
 Here are three examples: The first is a <<X1,minimal example>>
 introducing the AsciiDoc format, the second <<X2,The Brothers
@@ -357,9 +358,9 @@ You can customize the appearance of a document with CSS.  CSS file.
 Either create your own or copy and edit the existing default
 `docbook-xsl.css` file (located in the AsciiDoc `stylesheets`
 configuration directory) then place it in the same directory as your
-AsciiDoc source file. Use the 'a2x' `--stylesheet` option if you
-prefer to use a different stylesheet file name and/or location.  Take
-a look at the `adventures-of-sherlock-holmes.css` CSS file.
+AsciiDoc source file. Use the 'a2x' `--stylesheet` option if you want
+to use a different stylesheet file.  Take a look at the
+`adventures-of-sherlock-holmes.css` CSS file.
 
 There are some great examples of EPUB book styles at
 http://epubzengarden.com/[ePub Zen Garden].
@@ -367,15 +368,19 @@ http://epubzengarden.com/[ePub Zen Garden].
 
 Including embedded fonts
 ------------------------
-See link:faq.html#X5[this FAQ].
+See http://www.methods.co.nz/asciidoc/faq.html#X5[this FAQ].
 
 
 Reading EPUB documents
 ----------------------
 My current favorite software epub reader is the
-http://www.epubread.com/en/[Firefox EPUBReader addon].  Browsers are a
-natural fit for EPUB (EPUB is just a bunch of zipped XHTML files) --
-I'd like to see browsers support EPUB natively.
+http://www.epubread.com/en/[Firefox EPUBReader addon]. EPUBReader
+honors the book's CSS styling rules and renders the page as the author
+intended (many EPUB readers only process a sub-set of CSS styling
+rules).
+
+Browsers are a natural fit for EPUB (EPUB is just a bunch of zipped
+XHTML files) -- I'd love to see browsers support EPUB natively.
 
 As of writing this article most eBook readers (with the notable
 exception of Amazon's Kindle) support the EPUB format.

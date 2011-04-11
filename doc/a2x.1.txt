@@ -124,16 +124,18 @@ OPTIONS
 
 Options can also be set in the AsciiDoc source file. If 'SOURCE_FILE'
 contains a comment line beginning with *// a2x:* then the remainder of
-the line will be treated as 'a2x' command-line options. Options
-spanning multiple such comment lines will be concatenated.  Zero or
-more white space characters can appear between the leading *//* and
-*a2x:*.  Command-line options take precedence over options set in the
-source file. Example usage:
+the line will be treated as 'a2x' command-line options. For example:
 
   // a2x default options.
   //    a2x: -dbook --epubcheck
   // Suppress revision history in dblatex outputs.
   //    a2x: --dblatex-opts "-P latex.output.revhistory=0"
+
+- Options spanning multiple such comment lines will be concatenated.
+- Zero or more white space characters can appear between the leading
+  *//* and *a2x:*.
+- Command-line options take precedence over options set in the source
+  file.
 
 
 [[X4]]
@@ -242,9 +244,10 @@ EXAMPLES
 `a2x -f pdf doc/source-highlight-filter.txt`::
   Generates `doc/source-highlight-filter.pdf` file.
 
-`a2x -f xhtml -D ../doc --icons -r ../images team.txt`::
-  Creates HTML file `../doc/team.html`, uses admonition icons
-  and searches `../images` for any missing resources.
+`a2x -f xhtml -D ../doc --icons -r ../images/ team.txt`::
+  Creates HTML file `../doc/team.html`, uses admonition icons and
+  recursively searches the `../images/` directory for any missing
+  resources.
 
 `a2x -f manpage doc/asciidoc.1.txt`::
   Generate `doc/asciidoc.1` manpage.

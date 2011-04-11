@@ -385,6 +385,14 @@ discussion group thread] for details.
 Please let me know if any of these links need updating.
 
 
+DocBook 5.0 Backend
+-------------------
+Shlomi Fish has begun work on a DocBook 5.0 `docbook50.conf` backend
+configuration file, you can find it
+http://bitbucket.org/shlomif/asciidoc[here]. See also:
+http://groups.google.com/group/asciidoc/browse_thread/thread/4386c7cc053d51a9
+
+
 [[X1]]
 LaTeX Backend
 -------------

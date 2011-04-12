@@ -1011,7 +1011,7 @@ Most block elements support the following attributes:
 Unique identifier typically serve as link targets.
 Can also be set by the 'BlockId' element.
 
-|role |xhtml11, docbook |
+|role |html4, xhtml11, docbook |
 Role contains a string used to classify or subclassify an element and
 can be applied to AsciiDoc block elements.  The AsciiDoc 'role'
 attribute is translated to the 'role' attribute in DocBook outputs and

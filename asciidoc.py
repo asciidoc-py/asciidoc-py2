@@ -4580,7 +4580,7 @@ class Config:
         """Check the configuration for internal consistancy. Called after all
         configuration files have been loaded."""
         message.linenos = False     # Disable document line numbers.
-        # Heuristic validate that at least one configuration file was loaded.
+        # Heuristic to validate that at least one configuration file was loaded.
         if not self.specialchars or not self.tags or not lists:
             raise EAsciiDoc,'incomplete configuration files'
         # Check special characters are only one character long.

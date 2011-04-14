@@ -1015,7 +1015,7 @@ Can also be set by the 'BlockId' element.
 Role contains a string used to classify or subclassify an element and
 can be applied to AsciiDoc block elements.  The AsciiDoc 'role'
 attribute is translated to the 'role' attribute in DocBook outputs and
-to the 'class' attribute in HTML outputs.
+is included in the 'class' attribute in HTML outputs.
 
 DocBook XSL Stylesheets translate DocBook 'role' attributes to HTML
 'class' attributes; CSS can then be used

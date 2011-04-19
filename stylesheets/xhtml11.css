@@ -13,11 +13,6 @@ div.sectionbody {
   font-family: Georgia,"Times New Roman",Times,serif;
 }
 
-/* Monospace font. */
-tt {
-  font-size: inherit;
-}
-
 body {
   margin: 1em 5% 1em 5%;
 }

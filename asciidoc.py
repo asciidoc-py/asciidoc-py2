@@ -3148,8 +3148,8 @@ class Table(AbstractBlock):
                     self.error('illegal column spec: %s' % col,self.start)
         # Set column (and indirectly cell) default alignments.
         for col in self.columns:
-            col.halign = col.halign or halign or 'left'
-            col.valign = col.valign or valign or 'top'
+            col.halign = col.halign or halign or document.attributes.get('halign') or 'left'
+            col.valign = col.valign or valign or document.attributes.get('valign') or 'top'
         # Validate widths and calculate missing widths.
         n = 0; percents = 0; props = 0
         for col in self.columns:

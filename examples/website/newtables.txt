@@ -603,3 +603,141 @@ homero verear ea mea, qui.
 
 |==================================
 .....................................................................
+
+
+== Combinations of 'align', 'frame', 'grid', 'valign' and 'halign' attributes
+
+:frame: all
+:grid: all
+:halign: left
+:valign: top
+
+[options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+
+.AsciiDoc source
+---------------------------------------------------------------------
+:frame: all
+:grid: all
+:halign: left
+:valign: top
+
+[options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+---------------------------------------------------------------------
+
+
+:frame: sides
+:grid: rows
+:halign: center
+:valign: middle
+
+.Table test
+[width="50%",options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+
+.AsciiDoc source
+---------------------------------------------------------------------
+:frame: sides
+:grid: rows
+:halign: center
+:valign: middle
+
+.Table test
+[width="50%",options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+---------------------------------------------------------------------
+
+
+:frame: topbot
+:grid: cols
+:halign: right
+:valign: bottom
+
+[align="right",width="50%",options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+
+.AsciiDoc source
+---------------------------------------------------------------------
+:frame: topbot
+:grid: cols
+:halign: right
+:valign: bottom
+
+[align="right",width="50%",options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+---------------------------------------------------------------------
+
+
+:frame: none
+:grid: none
+:halign: left
+:valign: top
+
+[align="center",width="50%",options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+
+.AsciiDoc source
+---------------------------------------------------------------------
+:frame: none
+:grid: none
+:halign: left
+:valign: top
+
+[align="center",width="50%",options="header"]
+|====
+||frame | grid |valign |halign
+v|&nbsp;
+&nbsp;
+&nbsp;
+|{frame} | {grid} |{valign} |{halign}
+|====
+---------------------------------------------------------------------
+
+:frame!:
+:grid!:
+:halign!:
+:valign!:
+

@@ -148,6 +148,15 @@ http://wordpress.org/[WordPress] blog hosts. It creates and updates
 weblog posts and pages directly from AsciiDoc source documents.
 
 
+Source code highlighter
+-----------------------
+AsciiDoc includes a link:source-highlight-filter.html[source code
+highter filter] that uses
+http://www.gnu.org/software/src-highlite/[GNU source-highlight] to
+highlight HTML outputs. You also have the option of using the
+http://pygments.org/[Pygments] highlighter.
+
+
 [[X3]]
 Mathematical Formulae
 ---------------------

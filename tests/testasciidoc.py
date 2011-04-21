@@ -25,9 +25,9 @@ import os, sys, re, StringIO, difflib
 import asciidocapi
 
 
-BACKENDS = ('html4','xhtml11','docbook','wordpress')    # Default backends.
+BACKENDS = ('html4','xhtml11','docbook','wordpress','html5')    # Default backends.
 BACKEND_EXT = {'html4':'.html', 'xhtml11':'.html', 'docbook':'.xml',
-        'wordpress':'.html','slidy':'.html'}
+        'wordpress':'.html','slidy':'.html','html5':'.html'}
 
 
 def iif(condition, iftrue, iffalse=None):

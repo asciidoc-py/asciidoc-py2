@@ -2494,10 +2494,10 @@ Is equivalent to:
 
 'ifdef' and 'ifndef' macros also accept multiple attribute names:
 
-- Multiple ',' separated attribute names evaluate to defined if if one
+- Multiple ',' separated attribute names evaluate to defined if one
   or more of the attributes is defined, otherwise it's value is
   undefined.
-- Multiple '+' separated attribute names evaluate to defined if if all
+- Multiple '+' separated attribute names evaluate to defined if all
   of the attributes is defined, otherwise it's value is undefined.
 
 Document text between the `ifeval` and `endif` macros is included if

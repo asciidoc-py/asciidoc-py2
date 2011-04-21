@@ -39,7 +39,7 @@ A,B,C,D
 A table with a numeric ruler and externally sourced CSV data:
 
 [frame="all", grid="all"]
-.15`20`25`20`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`15`20`25`20`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ID,Customer Name,Contact Name,Customer Address,Phone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "AROUT","Around the Horn","Thomas Hardy","120 Hanover Sq.

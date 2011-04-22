@@ -59,6 +59,25 @@ toc: function (toclevels) {
   }
 
   var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName == 'DIV'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+  
+  // Rebuild TOC entries.
   var entries = tocEntries(document.getElementById("content"), toclevels);
   for (var i = 0; i < entries.length; ++i) {
     var entry = entries[i];
@@ -86,24 +105,44 @@ toc: function (toclevels) {
  */
 
 footnotes: function () {
-  var cont = document.getElementById("content");
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
   var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName == 'DIV' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
   var spans = cont.getElementsByTagName("span");
   var refs = {};
   var n = 0;
   for (i=0; i<spans.length; i++) {
     if (spans[i].className == "footnote") {
       n++;
-      // Use [\s\S] in place of . so multi-line matches work.
-      // Because JavaScript has no s (dotall) regex flag.
-      note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
       noteholder.innerHTML +=
         "<div class='footnote' id='_footnote_" + n + "'>" +
         "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
         n + "</a>. " + note + "</div>";
-      spans[i].innerHTML =
-        "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
-        "' title='View footnote' class='footnote'>" + n + "</a>]";
       var id =spans[i].getAttribute("id");
       if (id != null) refs["#"+id] = n;
     }
@@ -123,6 +162,28 @@ footnotes: function () {
       }
     }
   }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
 }
 
 }

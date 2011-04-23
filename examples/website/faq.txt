@@ -643,7 +643,7 @@ To selectively indent paragraphs you could either create an 'indented'
 paragraph style from scratch or use the 'role' attribute.
 
 [float]
-==== Create an indented paragraph style
+==== Create an indented paragraph style (xhtml11 backend)
 Define an 'indented' paragraph style, for example, by putting this in
 a configuration file:
 
@@ -668,7 +668,7 @@ lacinia. Vivamus at lectus.
 ---------------------------------------------------------------------
 
 [float]
-==== Use the role attribute
+==== Use the role attribute (xhtml11 backend)
 Add the following line to the `xhtml11.css` stylesheet (or a custom
 stylesheet).
 
@@ -690,6 +690,32 @@ NOTE: This FAQ applies to XHTML output not DocBook. To achieve the
 same results with DocBook use the 'role' attribute and customize the
 DocBook XSL stylesheets to indent paragraphs with the `simpara`
 element `role="indented"` attribute.
+
+[float]
+==== Use the role attribute (docbook backend)
+Add the following line to the distributed `docbook-xsl.css` stylesheet
+or include it in a custom stylesheet.
+
+---------------------------------------------------------------------
+p.indented {text-indent: 3em;}
+---------------------------------------------------------------------
+
+Apply the 'role' attribute to indented paragraphs, for example:
+
+---------------------------------------------------------------------
+[role="indented"]
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
+ultrices justo porttitor augue. Vestibulum pretium. Donec porta
+vestibulum mi. Aliquam pede. Aenean lobortis lorem et lacus. Sed
+lacinia. Vivamus at lectus.
+---------------------------------------------------------------------
+
+If you have included the custom CSS in a separate stylesheet you will
+need to specify the stylesheet file name (along with the default
+`docbook-xsl.css` stylesheet file name) with the `html.stylesheet` XSL
+parameter. If you are using 'a2x(1)' use the `--stylesheet` option (it
+sets the `html.stylesheet` XSL parameter), for example: `--stylesheet
+"docbook-xsl.css mycss.css"`.
 
 
 == Is there a way to set default image height and width attributes?

@@ -4140,6 +4140,7 @@ configuration files; the execution context.  Here's the list of
 predefined intrinsic attributes:
 
   {amp}                 ampersand (&) character entity
+  {asciidoc-confdir}    the asciidoc(1) global configuration directory
   {asciidoc-dir}        the asciidoc(1) application directory
   {asciidoc-file}       the full path name of the asciidoc(1) script
   {asciidoc-version}    the version of asciidoc(1)

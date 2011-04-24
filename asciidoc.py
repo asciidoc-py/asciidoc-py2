@@ -1346,6 +1346,7 @@ class Document(object):
         self.attributes['asciidoc-version'] = VERSION
         self.attributes['asciidoc-file'] = APP_FILE
         self.attributes['asciidoc-dir'] = APP_DIR
+        self.attributes['asciidoc-confdir'] = CONF_DIR
         self.attributes['user-dir'] = USER_DIR
         if config.verbose:
             self.attributes['verbose'] = ''

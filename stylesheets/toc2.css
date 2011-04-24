@@ -1,0 +1,48 @@
+@media screen {
+  body {
+    max-width: 50em; /* approximately 80 characters wide */
+    margin-left: 15em;
+  }
+
+  #toc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 13em;
+    padding: 0.5em;
+    padding-bottom: 1.5em;
+    margin: 0 !important;
+    overflow: auto;
+  }
+
+  #toc a {
+    color: #083194 !important;
+    text-decoration: none;
+  }
+
+  #toc a:hover {
+    text-decoration: underline;
+  }
+
+  #toc .toclevel1 {
+    margin-top: 0.5em;
+  }
+
+  #toc .toclevel2 {
+    margin-top: 0.25em;
+    display: list-item;
+    color: #aaaaaa;
+  }
+
+  #toctitle {
+    margin-top: 0.5em;
+  }
+}
+
+@media print {
+  #toc {
+    display: none;
+  }
+}
+

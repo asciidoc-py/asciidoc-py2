@@ -5632,6 +5632,12 @@ header or from the command-line with an `--attribute toc!` option.
 
   $ asciidoc -a toc -a numbered mydoc.txt
 
+|toc2 |xhtml11 |
+Adds a scrollable table of contents in the left hand margin of an
+article or book document. Use the 'max-width' attribute to change the
+content width. In all other respects behaves the same as the 'toc'
+attibute.
+
 |toc-title |xhtml11 |
 Sets the table of contents title (defaults to 'Table of Contents').
 

@@ -1,8 +1,24 @@
 
 /*
- * AsciiDoc theme based on css from http://volnitsky.com,
+ * AsciiDoc xhtml11 theme based on css from http://volnitsky.com,
  * which was in turn based on default theme from AsciiDoc
  */
+
+/* Default font. */
+* {
+  font-family: Georgia,"Times New Roman",Times,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Candara,Arial,sans-serif;
+}
+
 
 a {
   color: blue;
@@ -24,19 +40,17 @@ strong {
 
 h1, h2, h3, h4, h5, h6 {
   color: #666688;
-  font-family: sans-serif;
-  /*margin-top: 1.2em;*/
   margin-bottom: 0.5em;
   line-height: 1.3;
+  letter-spacing:+0.15em;
 }
 
-h1, h2, h3  { border-bottom: 2px solid #666688; }
+h1, h2, h3  { border-bottom: 2px solid #ccd; }
 h2    { padding-top: 0.5em; }
 h3    { float: left; }
 h3 + *    { clear: left; }
 
 div.sectionbody {
-  /*font-family: serif;*/
   margin-left: 0;
 }
 
@@ -58,34 +72,30 @@ pre {
   margin: 0;
 }
 
-span#author {
+#author {
   color: #444466;
-  font-family: sans-serif;
   font-weight: bold;
   font-size: 1.1em;
 }
-span#email {}
-span#revnumber, span#revdate, span#revremark { font-family: sans-serif; }
 
-div#footer {
-  font-family: sans-serif;
+#footer {
   font-size: small;
   border-top: 2px solid silver;
   padding-top: 0.5em;
   margin-top: 4.0em;
 }
 
-div#footer-text {
+#footer-text {
   float: left;
   padding-bottom: 0.5em;
 }
 
-div#footer-badges {
+#footer-badges {
   float: right;
   padding-bottom: 0.5em;
 }
 
-div#preamble {
+#preamble {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
@@ -109,7 +119,6 @@ div.content { /* Block element content. */
 /* Block element titles. */
 div.title, caption.title {
   color: #444466;
-  font-family: sans-serif;
   font-weight: bold;
   text-align: left;
   margin-top: 1.0em;
@@ -232,7 +241,6 @@ div.tableblock > table {
   border: 3px solid #444466;
 }
 thead {
-  font-family: sans-serif;
   font-weight: bold;
   color: #444466;
 }
@@ -288,12 +296,11 @@ div.hdlist.compact tr {
 }
 
 @media print {
-  div#footer-badges { display: none; }
+  #footer-badges { display: none; }
 }
 
-div#toctitle {
-  color: #6644bb;
-  font-family: sans-serif;
+#toctitle {
+  color: #666688;
   font-size: 1.1em;
   font-weight: bold;
   margin-top: 1.0em;
@@ -317,7 +324,6 @@ div.toclevel4 {
   font-size: 0.9em;
 }
 body {
-  font-family:  "Cambria", "URW Bookman L", "Georgia", "Arial", sans-serif;
   max-width:  55em;
   padding-left: 5%;
 
@@ -341,7 +347,6 @@ tt, div.listingblock > div.content {
 
 div.sectionbody div.ulist > ul > li {
   list-style-type: square;
-  /*font-size: 200%; */
   color: #aaa;
 }
   div.sectionbody div.ulist >  ul > li > * {
@@ -352,18 +357,10 @@ div.sectionbody div.ulist > ul > li {
 
 div.sectionbody div.ulist > ul > li div.ulist > ul > li {
   color: #ccd ;
-  /*list-style-type: circle ;*/
 }
   div.sectionbody div.ulist > ul > li div.ulist > ul > li > * {
     color: black ;
   }
-
-h1, h2, h3, h4, h5, h6 {
-  font-family:  "Candara", "Arial", sans-serif;
-  letter-spacing:+0.15em;
-}
-
-h1, h2, h3  { border-bottom: 2px solid #ccd; }
 
 em {
   font-style: normal ! important;

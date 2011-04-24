@@ -26,7 +26,7 @@ OPTIONS
     'NAME=VALUE'. Command-line attributes take precedence over
     document and configuration file attributes.  Alternate acceptable
     forms are 'NAME' (the 'VALUE' defaults to an empty string);
-    'NAME!' (delete the 'NAME' attribute); 'NAME@' (do not override
+    'NAME!' (delete the 'NAME' attribute); 'NAME=VALUE@' (do not override
     document or configuration file attributes).  Values containing
     spaces should be enclosed in double-quote characters. This option
     may be specified more than once.  A special attribute named

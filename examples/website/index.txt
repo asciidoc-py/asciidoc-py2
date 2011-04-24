@@ -395,6 +395,13 @@ discussion group thread] for details.
 - http://www.archlinux.org/pacman/[Pacman], the
   http://www.archlinux.org/[Arch Linux] package manager, has been
   documented using AsciiDoc.
+- Suraj Kurapati has written a number of customized manuals for his
+  Open Source projects using AsciiDoc:
+
+  * http://snk.tuxfamily.org/lib/detest/
+  * http://snk.tuxfamily.org/lib/ember/
+  * http://snk.tuxfamily.org/lib/inochi/
+  * http://snk.tuxfamily.org/lib/rumai/
 
 Please let me know if any of these links need updating.
 

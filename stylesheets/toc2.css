@@ -39,10 +39,3 @@
     margin-top: 0.5em;
   }
 }
-
-@media print {
-  #toc {
-    display: none;
-  }
-}
-

@@ -1,5 +1,5 @@
 /* Default font. */
-* {
+body {
   font-family: Georgia,"Times New Roman",Times,serif;
 }
 
@@ -35,7 +35,7 @@ strong {
   color: #083194;
 }
 
-*.monospaced {
+.monospaced {
   font-family: monospace;
   font-size: inherit;
   color: navy;

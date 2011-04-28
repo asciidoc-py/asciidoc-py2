@@ -1,11 +1,10 @@
-
 /*
  * AsciiDoc xhtml11 theme based on css from http://volnitsky.com,
  * which was in turn based on default theme from AsciiDoc
  */
 
 /* Default font. */
-* {
+body {
   font-family: Georgia,"Times New Roman",Times,serif;
 }
 

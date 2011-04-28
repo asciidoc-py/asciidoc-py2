@@ -6,6 +6,7 @@ Test 'Cases'
 ============
 :author: Joe Bloggs
 // Web page meta data.
+:title:       Test Cases
 :keywords:    AsciiDoc, DocBook, EPUB, slideshow
 :description: AsciiDoc is a text document format for writing short documents, +
               articles, books, slideshows and UNIX man pages.
@@ -283,9 +284,13 @@ three:: Item three.
 
 List start number test:
 
+// The ol start attribute is not valid XHTML 1.1 (but it works in all
+// browsers).
+ifndef::backend-xhtml11[]
 [start=7]
 . List item 7.
 . List item 8.
+endif::backend-xhtml11[]
 
 == Images
 

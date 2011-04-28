@@ -1524,6 +1524,8 @@ class Document(object):
             if config.header_footer:
                 hdr = config.subs_section('header',{})
                 writer.write(hdr,trace='header')
+            if 'title' in self.attributes:
+                del self.attributes['title']
             self.consume_attributes_and_comments()
             if self.doctype in ('article','book'):
                 # Translate 'preamble' (untitled elements between header

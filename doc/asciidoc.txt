@@ -398,8 +398,12 @@ You can override or set header parameters by passing 'revnumber',
 
   $ asciidoc -a revdate=2004/07/27 article.txt
 
-Attributes can also be added to the header for substitution in the
-header template with <<X18,Attribute Entry>> elements.
+Attribute entries can also be added to the header for substitution in
+the header template with <<X18,Attribute Entry>> elements.
+
+The 'title' element in HTML outputs is set to the AsciiDoc document
+title, you can set it to a different value by including a 'title'
+attribute entry in the document header.
 
 [[X87]]
 Additional document header information

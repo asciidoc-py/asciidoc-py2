@@ -5403,7 +5403,7 @@ def unzip(zip_file, destdir):
     try:
         for zi in zipo.infolist():
             outfile = zi.filename
-            if not outfile.endswith('/'): 
+            if not outfile.endswith('/'):
                 d, outfile = os.path.split(outfile)
                 directory = os.path.normpath(os.path.join(destdir, d))
                 if not os.path.isdir(directory):
@@ -5622,6 +5622,21 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 config.load_file(f + '.conf')
                 config.load_file(f + '-' + document.backend + '.conf')
         load_conffiles()
+        # Build asciidoc-args attribute.
+        args = ''
+        # Add custom conf file arguments.
+        for f in confiles:
+            args += ' --conf-file "%s"' % f
+        # Add command-line and header attributes.
+        attrs = {}
+        attrs.update(AttributeEntry.attributes)
+        attrs.update(config.cmd_attrs)
+        for k,v in attrs.items():
+            if v:
+                args += ' --attribute "%s=%s"' % (k,v)
+            else:
+                args += ' --attribute "%s"' % k
+        document.attributes['asciidoc-args'] = args
         # Build outfile name.
         if outfile is None:
             outfile = os.path.splitext(infile)[0] + '.' + document.backend

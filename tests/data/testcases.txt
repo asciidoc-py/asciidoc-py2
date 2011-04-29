@@ -136,6 +136,11 @@ endif::[]
 [role="test"]
 Paragraph with a role attribute.
 
+[role="test"]
+- first
+- second
+- third
+
 
 == Break list nesting ==
 1. List 1.

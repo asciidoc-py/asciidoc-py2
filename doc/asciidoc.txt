@@ -2653,6 +2653,77 @@ subslist::
   document.
 
 
+HTML 5 audio and video block macros
+-----------------------------------
+The 'html5' backend 'audio' and 'video' block macros generate the HTML
+5 'audio' and 'video' elements respectively.  They follow the usual
+AsciiDoc block macro syntax `<name>::<target>[<attrlist>]` where:
+
+[horizontal]
+`<name>`:: 'audio' or 'video'.
+`<target>`:: The URL or file name of the video or audio file.
+`<attrlist>`:: A list of named attritubutes (see below).
+
+.Audio macro attributes
+[options="header",cols="1,5",width="50%",frame="topbot"]
+|====================================================================
+|Name | Value
+|options
+|A comma separated list of one or more of the following items:
+'autoplay', 'loop' which correspond to the same-named HTML 5 'audio'
+element boolean attributes.  By default the player 'controls' are
+enabled, include the 'nocontrols' option value to hide them.
+|====================================================================
+
+.Video macro attributes
+[options="header",cols="1,5",width="50%",frame="topbot"]
+|====================================================================
+|Name   | Value
+|height | The height of the player in pixels.
+|width  | The width of the player in pixels.
+|poster | The URL or file name of an image representing the video.
+|options
+|A comma separated list of one or more of the following items:
+'autoplay', 'loop' which correspond to the same-named HTML 5 'video'
+element boolean attributes.  By default the player 'controls' are
+enabled, include the 'nocontrols' option value to hide them.
+|====================================================================
+
+Examples:
+
+---------------------------------------------------------------------
+audio::images/example.ogg[]
+
+video::gizmo.ogv[width="200",options="nocontrols,autoplay"]
+
+.Example video
+video::gizmo.ogv[]
+
+video::http://www.808.dk/pics/video/gizmo.ogv[]
+---------------------------------------------------------------------
+
+If your needs are more complex put raw HTML 5 in a markup block, for
+example (from http://www.808.dk/?code-html-5-video):
+
+---------------------------------------------------------------------
+++++
+<video poster="pics/video/gizmo.jpg" id="video" style="cursor: pointer;" >
+  <source src="pics/video/gizmo.mp4" />
+  <source src="pics/video/gizmo.webm" type="video/webm" />
+  <source src="pics/video/gizmo.ogv" type="video/ogg" />
+  Video not playing? <a href="pics/video/gizmo.mp4">Download file</a> instead.
+</video>
+
+<script type="text/javascript">
+  var video = document.getElementById('video');
+  video.addEventListener('click',function(){
+    video.play();
+  },false);
+</script>
+++++
+---------------------------------------------------------------------
+
+
 Tables
 ------
 The AsciiDoc table syntax looks and behaves like other delimited block

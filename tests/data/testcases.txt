@@ -699,3 +699,17 @@ Lorum ipsum...
 Double-with character titles.
 <<_这是一个测试,link to auto-generated section ID>>.
 
+
+ifdef::backend-html5[]
+HTML 5 audio and video block macros
+-----------------------------------
+audio::images/example.ogg[]
+
+video::images/gizmo.ogv[width="200",options="nocontrols,autoplay"]
+
+.Example video
+video::images/gizmo.ogv[]
+
+video::http://www.808.dk/pics/video/gizmo.ogv[]
+
+endif::backend-html5[]

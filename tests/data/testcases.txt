@@ -712,4 +712,19 @@ video::images/gizmo.ogv[]
 
 video::http://www.808.dk/pics/video/gizmo.ogv[]
 
+++++
+<video poster="images/gizmo.jpg" id="video" style="cursor: pointer;" >
+  <source src="images/gizmo.webm" type="video/webm" />
+  <source src="images/gizmo.ogv" type="video/ogg" />
+  Video not playing? <a href="images/gizmo.mp4">Download file</a> instead.
+</video>
+
+<script type="text/javascript">
+  var video = document.getElementById('video');
+  video.addEventListener('click',function(){
+    video.play();
+  },false);
+</script>
+++++
+
 endif::backend-html5[]

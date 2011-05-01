@@ -705,6 +705,9 @@ HTML 5 audio and video block macros
 -----------------------------------
 audio::images/example.ogg[]
 
+.Audio tag test
+audio::images/example.ogg[]
+
 video::images/gizmo.ogv[width="200",options="nocontrols,autoplay"]
 
 .Example video

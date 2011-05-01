@@ -3897,15 +3897,18 @@ It is exactly equivalent to a configuration file containing:
   [listdef-labeled]
   style=horizontal
 
-If the `<entry_name>` is omitted then the entire section is
-substituted with the `<entry_value>`. This feature should only be used
-to set markup template sections. The following example sets the
-'xref2' inline macro markup template:
+- If the `<entry_name>` is omitted then the entire section is
+  substituted with the `<entry_value>`. This feature should only be
+  used to set markup template sections. The following example sets the
+  'xref2' inline macro markup template:
 
   :xref2-inlinemacro.: <a href="#{1}">{2?{2}}</a>
 
-No substitution is performed on configuration file attribute entries
-and they cannot be undefined.
+- No substitution is performed on configuration file attribute entries
+  and they cannot be undefined.
+- This feature can only be used in attribute entries -- configuration
+  attributes cannot be set using the asciidoc(1) command `--attribute`
+  option.
 
 [[X62]]
 .Attribute entries promote clarity and eliminate repetition

@@ -5608,6 +5608,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # backend is now known.
         document.attributes['backend-'+document.backend] = ''
         document.attributes[document.backend+'-'+document.doctype] = ''
+        doc_conffiles = []
         if '-e' not in options:
             # Load filters and language file.
             config.load_filters()
@@ -5619,18 +5620,23 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 config.load_filters([indir])
                 # Load document specific configuration files.
                 f = os.path.splitext(infile)[0]
-                config.load_file(f + '.conf')
-                config.load_file(f + '-' + document.backend + '.conf')
+                doc_conffiles = [
+                        f for f in (f+'.conf', f+'-'+document.backend+'.conf')
+                        if os.path.isfile(f) ]
+                for f in doc_conffiles:
+                    config.load_file(f)
         load_conffiles()
         # Build asciidoc-args attribute.
         args = ''
         # Add custom conf file arguments.
-        for f in confiles:
+        for f in doc_conffiles + confiles:
             args += ' --conf-file "%s"' % f
         # Add command-line and header attributes.
         attrs = {}
         attrs.update(AttributeEntry.attributes)
         attrs.update(config.cmd_attrs)
+        if 'title' in attrs:    # Don't pass the header title.
+            del attrs['title']
         for k,v in attrs.items():
             if v:
                 args += ' --attribute "%s=%s"' % (k,v)

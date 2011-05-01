@@ -589,6 +589,21 @@ hard + 1min really hard taking the HR up to 160).
 
 |=========================================================
 
+Table with embedded asciidoc
+----------------------------
+
+[cols="asciidoc"]
+|====
+|
+- a
+- b
+- c
+
+Test file specific configuration files work in asciidoc columns:
+
+test-replacement
+|====
+
 Floating tables and images
 --------------------------
 .Simple table
@@ -708,7 +723,7 @@ audio::images/example.ogg[]
 .Audio tag test
 audio::images/example.ogg[]
 
-video::images/gizmo.ogv[width="200",options="nocontrols,autoplay"]
+video::images/gizmo.ogv[width=200,options="nocontrols,autoplay"]
 
 .Example video
 video::images/gizmo.ogv[]

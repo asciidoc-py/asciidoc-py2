@@ -2694,7 +2694,7 @@ Examples:
 ---------------------------------------------------------------------
 audio::images/example.ogg[]
 
-video::gizmo.ogv[width="200",options="nocontrols,autoplay"]
+video::gizmo.ogv[width=200,options="nocontrols,autoplay"]
 
 .Example video
 video::gizmo.ogv[]

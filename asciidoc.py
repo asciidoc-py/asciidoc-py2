@@ -5717,7 +5717,8 @@ def show_help(topic, f=None):
             n += 1
             lines = config.sections[k]
     if n == 0:
-        message.stderr('help topic not found: [%s] in %s' % (topic, help_file))
+        if topic != 'topics':
+            message.stderr('help topic not found: [%s] in %s' % (topic, help_file))
         message.stderr('available help topics: %s' % ', '.join(config.sections.keys()))
         sys.exit(1)
     elif n > 1:

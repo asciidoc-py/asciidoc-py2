@@ -58,10 +58,10 @@ OPTIONS
 *--filter*::
     Manage asciidoc(1) filters (see <<X1,*FILTER COMMANDS*>>).
 
-*-h, --help*[='TOPIC']::
-    Print help TOPIC. *--help*='topics' will print a list of help
-    topics, *--help*='syntax' summarizes AsciiDoc syntax,
-    *--help*='manpage' prints the AsciiDoc manpage.
+*-h, --help* ['TOPIC']::
+    Print help TOPIC. *--help* 'topics' will print a list of help
+    topics, *--help* 'syntax' summarizes AsciiDoc syntax,
+    *--help* 'manpage' prints the AsciiDoc manpage.
 
 *-e, --no-conf*::
     Exclude implicitly loaded configuration files except for those

@@ -11,6 +11,7 @@ Test 'Cases'
 :description: AsciiDoc is a text document format for writing short documents, +
               articles, books, slideshows and UNIX man pages.
 :replacements.(\w)'(\w): \1&#8217;\2
+:test-attribute: TEST_ATTRIBUTE
 
 
 == Passthrough attributes ==
@@ -589,19 +590,13 @@ hard + 1min really hard taking the HR up to 160).
 
 |=========================================================
 
-Table with embedded asciidoc
-----------------------------
+== Table with parent configuration file and header attribute entry
 
 [cols="asciidoc"]
 |====
 |
-- a
-- b
-- c
-
-Test file specific configuration files work in asciidoc columns:
-
-test-replacement
+- Attribute entry from header: {test-attribute}
+- Replacement from `testcases.conf` configuration file: test-replacement
 |====
 
 Floating tables and images

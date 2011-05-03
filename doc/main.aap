@@ -39,7 +39,8 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         source-highlight-filter.pdf \
         music-filter.pdf \
         book.epub \
-        article-standalone.html
+        article-standalone.html \
+        article-html5-toc2.html
 
 TEST_FILES = $*(ROOT).css-embedded.html 
         article.css-embedded.html book.css-embedded.html \
@@ -161,6 +162,9 @@ TEST_FILES = $*(ROOT).css-embedded.html
 
 article-standalone.html: article.txt
     :sys $ASCIIDOC -a data-uri -a icons -a toc -a max-width=55em -o $target $source
+
+article-html5-toc2.html: article.txt
+    :sys $ASCIIDOC -b html5 -a icons -a toc2 -o $target $source
 
 asciidoc.1.html: asciidoc.1.txt
     :sys $ASCIIDOC -d manpage -b html4 $source

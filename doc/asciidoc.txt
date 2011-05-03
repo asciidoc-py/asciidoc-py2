@@ -169,7 +169,7 @@ xhtml11::
 
 html5::
   This backend generates HTML 5 markup, apart from the inclusion of
-  <<X97,audio and video block macros>> it is functionally identical to
+  <<X98,audio and video block macros>> it is functionally identical to
   the 'xhtml11' backend. The default HTML 5 stylesheet is
   `./stylesheets/html5.css`.
 
@@ -2662,7 +2662,7 @@ subslist::
   document.
 
 
-[[X97]]
+[[X98]]
 HTML 5 audio and video block macros
 -----------------------------------
 The 'html5' backend 'audio' and 'video' block macros generate the HTML

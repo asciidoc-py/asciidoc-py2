@@ -69,7 +69,7 @@ DOCS =
     asciidoc.pdf
     asciidoc.epub
     asciidoc.1
-    article.txt article.html article-standalone.html
+    article.txt article.html article-standalone.html article-html5-toc2.html
     book.txt book.html
     book-multi.txt book-multi.html
     docbook-xsl.css

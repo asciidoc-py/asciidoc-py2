@@ -30,6 +30,6 @@ Current AsciiDoc version tested on Xubuntu Linux 10.04 with:
 
 COPYING
 -------
-Copyright (C) 2002-2010 Stuart Rackham. Free use of this software
+Copyright (C) 2002-2011 Stuart Rackham. Free use of this software
 is granted under the terms of the GNU General Public License (GPL).
 

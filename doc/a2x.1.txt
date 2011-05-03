@@ -195,11 +195,12 @@ There are two distinct mechanisms for specifying additional resources:
 . A resource file which will be copied to the output destination
   directory.
 
-Resources are specified by *--resource* option values and can be one
-of the following formats:
+Resources are specified with *--resource* option values which can be
+one of the following formats:
 
   <resource_dir>
   <resource_file>[=<destination_file>]
+  .<ext>=<mimetype>
 
 Where:
 
@@ -226,18 +227,19 @@ Where:
   epub;;              The archived `OEBPS` directory.
   xhtml;;             The output *DESTINATION_DIR*.
 
-Resource specifier examples:
+`.<ext>=<mimetype>`::
+  When adding resources to EPUB files the mimetype is inferred from
+  the `<destination file>` extension, if the mimetype cannot be
+  guessed an error occurs. The `.<ext>=<mimetype>` resource syntax can
+  be used to explicitly set mimetypes. `<ext>` is the file name
+  extension, `<mimetype>` is the corresponding MIME type.
 
-  ../images/
-  doc/README.txt=README.txt
-  ~/images/tiger.png=images/tiger.png
+Resource option examples:
 
-When adding resources to EPUB files the mimetype is inferred from the
-`<destination file>` extension, if the mimetype cannot be guessed an
-error occurs. The `.<ext>=<mimetype>` resource syntax can be used to
-explicitly set mimetypes, for example:
-
-  .asciidoc=text/plain
+  --resource ../images/
+  --resource doc/README.txt=README.txt
+  --resource ~/images/tiger.png=images/tiger.png
+  --resource .ttf=application/x-font-ttf
 
 
 EXAMPLES
@@ -339,6 +341,6 @@ Main web site: http://www.methods.co.nz/asciidoc/
 
 COPYING
 -------
-Copyright \(C) 2002-2010 Stuart Rackham. Free use of this software is
+Copyright \(C) 2002-2011 Stuart Rackham. Free use of this software is
 granted under the terms of the MIT license.
 

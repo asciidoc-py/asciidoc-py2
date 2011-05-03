@@ -747,7 +747,7 @@ color names].  Examples:
   [red]#Obvious# and [big red yellow-background]*very obvious*.
 
   [underline]#Underline text#, [overline]#overline text#,
-  [small bold blue line-through blink]*small bold blue line-through and blink*.
+  [small bold blue blink]*small bold blue and blink*.
 
 is rendered as:
 
@@ -755,10 +755,13 @@ is rendered as:
 
 [underline]#Underline text#, [overline]#overline text#,
 [line-through]#line-through text# and
-[small bold blue line-through blink]*small bold blue line-through and blink*.
+[small bold blue blink]*small bold blue and blink*.
 
-NOTE: Quoted text attributes are not applicable to PDF or HTML 4
-outputs.
+[NOTE]
+======
+- Quoted text attributes are not applicable to PDF or HTML 4 outputs.
+- The 'blink' text decorator is not supported in IE, Chrome, or Safari.
+======
 
 [[X52]]
 Constrained and Unconstrained Quotes

@@ -23,7 +23,7 @@ implemented a plugin and it's not in the list please post a message to
 the http://groups.google.com/group/asciidoc[asciidoc discussion list]
 and I'll include it in the list).
 
-[cols="1e,1,3,3",options="header"]
+[cols="1e,1,3,3",frame="topbot",options="header"]
 .Filter Plugins list
 |====
 |Filter name |Author |Home page |Description
@@ -46,7 +46,7 @@ and I'll include it in the list).
 Built-in Filters
 ----------------
 
-[cols="1e,5",options="header"]
+[cols="1e,5",frame="topbot",options="header"]
 .Built-in filters list
 |====
 |Filter name |Description

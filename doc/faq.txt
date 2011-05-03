@@ -692,23 +692,23 @@ DocBook XSL stylesheets to indent paragraphs with the `simpara`
 element `role="indented"` attribute.
 
 
-== Is there a way to set default image height and width attributes?
+== Is there a way to set default table grid and frame attributes?
 
-You can set the 'height' and 'width' attributes globally in your
-document with Attribute Entries or from the command-line using the
-`--attribute` option. In the following example images that don't
-explicitly set the 'height' and 'width' values will be 350 by 250
-pixels.
+You can set the 'grid' and 'frame' attributes globally in your
+document header with Attribute Entries or from the command-line using
+the `--attribute` option. In the following example tables that don't
+explicitly set the 'grid' and 'frame' values will default to 'all' and
+'topbot' respectively:
 
 ---------------------------------------------------------------------
-:height: 250
-:width: 350
-
-image:images/tiger.png[]
+:grid: all
+:frame: topbot
 ---------------------------------------------------------------------
 
-NOTE: Setting the global 'width' attribute will also set the default
-table width and you will need to explicitly set table widths.
+TIP: This technique can be applied to any block element attribute
+(just beware of possible ambiguity, for example, table and image
+blocks both have a 'width' attrbiute).
+
 
 == How can I place a backslash character in front of an attribute reference without escaping the reference?
 

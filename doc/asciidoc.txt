@@ -167,6 +167,12 @@ xhtml11::
   This backend generates XHTML 1.1 markup styled with CSS2. Output
   files have an `.html` extension.
 
+html5::
+  This backend generates HTML 5 markup, apart from the inclusion of
+  <<X97,audio and video block macros>> it is functionally identical to
+  the 'xhtml11' backend. The default HTML 5 stylesheet is
+  `./stylesheets/html5.css`.
+
 slidy::
   Use this backend to generate self-contained
   http://www.w3.org/Talks/Tools/Slidy2/[Slidy] HTML slideshows for
@@ -724,10 +730,11 @@ AsciiDoc generated XHTML outputs from the same AsciiDoc source.  You
 can also specify multiple class names separated by spaces.
 
 CSS rules for text color and size are included in the distributed
-AsciiDoc CSS files and are used in conjunction with AsciiDoc 'xhtml11'
-and 'docbook' outputs. The CSS class names are: '<color>' (text
-foreground color); '<color>-background' (text background color); 'big'
-and 'small' (large and small text).  Where '<color>' can be any of the
+AsciiDoc CSS files and are used in conjunction with AsciiDoc
+'xhtml11', 'html5' and 'docbook' outputs. The CSS class names are:
+'<color>' (text foreground color); '<color>-background' (text
+background color); 'big' and 'small' (large and small text).  Where
+'<color>' can be any of the
 http://en.wikipedia.org/wiki/Web_colors#HTML_color_names[sixteen HTML
 color names].  Examples:
 
@@ -1011,11 +1018,11 @@ Most block elements support the following attributes:
 |====================================================================
 |Name |Backends |Description
 
-|id |html4, xhtml11, docbook |
+|id |html4, html5, xhtml11, docbook |
 Unique identifier typically serve as link targets.
 Can also be set by the 'BlockId' element.
 
-|role |html4, xhtml11, docbook |
+|role |html4, html5, xhtml11, docbook |
 Role contains a string used to classify or subclassify an element and
 can be applied to AsciiDoc block elements.  The AsciiDoc 'role'
 attribute is translated to the 'role' attribute in DocBook outputs and
@@ -1167,10 +1174,10 @@ you are going the DocBook route then the <<X43,a2x(1)>> `--no-icons`
 and `--icons-dir` options can be used to set the appropriate XSL
 Stylesheets parameters.
 
-By default the asciidoc(1) `xhtml11` and `html4` backends generate
-text captions instead of admonition icon image links. To generate
-links to icon images define the <<X45,`icons`>> attribute, for example
-using the `-a icons` command-line option.
+By default the asciidoc(1) HTML backends generate text captions
+instead of admonition icon image links. To generate links to icon
+images define the <<X45,`icons`>> attribute, for example using the `-a
+icons` command-line option.
 
 The <<X44,`iconsdir`>> attribute sets the location of linked icon
 images.
@@ -1433,7 +1440,7 @@ adolescens.
 =====================================================================
 
 A title prefix that can be inserted with the `caption` attribute
-(`xhtml11` and `html4` backends). For example:
+(HTML backends). For example:
 
 ---------------------------------------------------------------------
 [caption="Example 1: "]
@@ -1933,9 +1940,10 @@ macros:
 
 The footnote text can span multiple lines.
 
-The 'xhtml11' backend renders footnotes dynamically using JavaScript;
-'html4' outputs do not use JavaScript and leave the footnotes inline;
-'docbook' footnotes are processed by the downstream DocBook toolchain.
+The 'xhtml11' and 'html5' backends render footnotes dynamically using
+JavaScript; 'html4' outputs do not use JavaScript and leave the
+footnotes inline; 'docbook' footnotes are processed by the downstream
+DocBook toolchain.
 
 Example footnotes:
 
@@ -2209,8 +2217,8 @@ link's displayed text. Example:
 If `<caption>` is not specified then the displayed text is
 auto-generated:
 
-- The AsciiDoc `xhtml11` backend displays the `<id>` enclosed in
-  square brackets.
+- The AsciiDoc 'xhtml11' and 'html5' backends display the `<id>`
+  enclosed in square brackets.
 - If DocBook is produced the DocBook toolchain is responsible for the
   displayed text which will normally be the referenced figure, table
   or section title number followed by the element's title text.
@@ -2364,7 +2372,7 @@ is equivalent to:
                             title="Main circuit board"]
 
 A title prefix that can be inserted with the `caption` attribute
-(`xhtml11` and `html4` backends). For example:
+(HTML backends). For example:
 
   .Main circuit board
   [caption="Figure 2: "]
@@ -2376,8 +2384,9 @@ A title prefix that can be inserted with the `caption` attribute
 If you define the `data-uri` attribute then images will be embedded in
 XHTML outputs using the
 http://en.wikipedia.org/wiki/Data:_URI_scheme[data URI scheme].  You
-can use the 'data-uri' attribute with the 'xhtml11' backend to produce
-single-file XHTML documents with embedded images and CSS, for example:
+can use the 'data-uri' attribute with the 'xhtml11' and 'html5'
+backends to produce single-file XHTML documents with embedded images
+and CSS, for example:
 
   $ asciidoc -a data-uri mydocument.txt
 
@@ -2653,6 +2662,7 @@ subslist::
   document.
 
 
+[[X97]]
 HTML 5 audio and video block macros
 -----------------------------------
 The 'html5' backend 'audio' and 'video' block macros generate the HTML
@@ -3323,8 +3333,8 @@ because:
 
 http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
 formulas can be included in XHTML documents generated using the
-'xhtml11' backend. To enable ASCIIMathML support you must define the
-'asciimath' attribute, for example using the `-a asciimath`
+'xhtml11' and 'html5' backends. To enable ASCIIMathML support you must
+define the 'asciimath' attribute, for example using the `-a asciimath`
 command-line option.  Example inline formula:
 
   asciimath:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
@@ -3341,8 +3351,8 @@ the inclusion of a CSS file.
 /////////////////////////////////////////////////////////////////////
 
 'LaTeXMathML' allows LaTeX Math style formulas to be included in XHTML
-documents generated using the AsciiDoc 'xhtml11' backend.  AsciiDoc
-uses the
+documents generated using the AsciiDoc 'xhtml11' and 'html5' backends.
+AsciiDoc uses the
 http://www.maths.nottingham.ac.uk/personal/drw/lm.html[original
 LaTeXMathML] by Douglas Woodall.  'LaTeXMathML' is derived from
 ASCIIMathML and is for users who are more familiar with or prefer
@@ -4101,9 +4111,9 @@ Conditional attributes are mainly used in AsciiDoc configuration
 files -- see the distribution `.conf` files for examples.
 
 Attribute equality test::
-  If `{backend}` is `docbook45` or `xhtml11` the example evaluates to
-  ``DocBook 4.5 or XHTML 1.1 backend'' otherwise it evaluates to ``some
-  other backend'':
+  If `{backend}` is 'docbook45' or 'xhtml11' the example evaluates to
+  ``DocBook 4.5 or XHTML 1.1 backend'' otherwise it evaluates to
+  ``some other backend'':
 
   {backend@docbook45|xhtml11:DocBook 4.5 or XHTML 1.1 backend:some other backend}
 
@@ -5469,7 +5479,7 @@ Here is the list of predefined <<X75,attribute list options>>:
 |====================================================================
 |Option|Backends|AsciiDoc Elements|Description
 
-|autowidth |xhtml11,html4 |table|
+|autowidth |xhtml11, html5, html4 |table|
 The column widths are determined by the browser, not the AsciiDoc
 'cols' attribute. If there is no 'width' attribute the table width is
 also left up to the browser.
@@ -5480,20 +5490,20 @@ boundaries; 'unbreakable' attempts to keep the block element together
 on a single page. If neither option is specified the default XSL
 stylesheet behavior prevails.
 
-|compact |docbook, xhtml11 |bulleted list, numbered list|
+|compact |docbook, xhtml11, html5 |bulleted list, numbered list|
 Minimizes vertical space in the list
 
-|footer |docbook, xhtml11, html4 |table|
+|footer |docbook, xhtml11, html5, html4 |table|
 The last row of the table is rendered as a footer.
 
-|header |docbook, xhtml11, html4 |table|
+|header |docbook, xhtml11, html5, html4 |table|
 The first row of the table is rendered as a header.
 
 |pgwide |docbook (XSL/FO) |table, block image, horizontal labeled list|
 Specifies that the element should be rendered across the full text
 width of the page irrespective of the current indentation.
 
-|strong |xhtml11,html4 |labeled lists|
+|strong |xhtml11, html5, html4 |labeled lists|
 Emboldens label text.
 |====================================================================
 
@@ -5568,22 +5578,22 @@ generated outputs.
 |====================================================================
 |Name |Backends |Description
 
-|badges |xhtml11 |
+|badges |xhtml11, html5 |
 Link badges ('XHTML 1.1', 'CSS' and 'Get Firefox!') in document
 footers. By default badges are omitted ('badges' is undefined).
 
 NOTE: The path names of images, icons and scripts are relative path
 names to the output document not the source document.
 
-|data-uri |xhtml11 |
+|data-uri |xhtml11, html5 |
 Embed images using the <<X66,data: uri scheme>>.
 
-|disable-javascript |xhtml11 |
+|disable-javascript |xhtml11, html5 |
 If the `disable-javascript` attribute is defined the `asciidoc.js`
 JavaScript is not embedded or linked to the output document.  By
 default AsciiDoc automatically embeds or links the `asciidoc.js`
-JavaScript to the 'xhtml11' output document. The script dynamically
-generates <<X91,table of contents>> and <<X92,footnotes>>.
+JavaScript to the output document. The script dynamically generates
+<<X91,table of contents>> and <<X92,footnotes>>.
 
 |[[X97]] docinfo, docinfo1, docinfo2 |All backends |
 These three attributes control which <<X87,document information
@@ -5608,7 +5618,7 @@ docinfo files in the HTML output file:
   $ asciidoc -a docinfo2 -b html4 mydoc.txt
 
 
-|[[X54]]encoding |html4, xhtml11, docbook |
+|[[X54]]encoding |html4, html5, xhtml11, docbook |
 Set the input and output document character set encoding. For example
 the `--attribute encoding=ISO-8859-1` command-line option will set the
 character set encoding to `ISO-8859-1`.
@@ -5621,20 +5631,20 @@ character set encoding to `ISO-8859-1`.
 
   :encoding: ISO-8859-1
 
-|[[X45]]icons |xhtml11 |
+|[[X45]]icons |xhtml11, html5 |
 Link admonition paragraph and admonition block icon images and badge
 images. By default 'icons' is undefined and text is used in place of
 icon images.
 
-|[[X44]]iconsdir |html4, xhtml11, docbook |
+|[[X44]]iconsdir |html4, html5, xhtml11, docbook |
 The name of the directory containing linked admonition and navigation
 icons. Defaults to `./images/icons`.
 
-|imagesdir |html4, xhtml11, docbook |
+|imagesdir |html4, html5, xhtml11, docbook |
 If this attribute is defined it is prepended to the target image file
 name paths in inline and block image macros.
 
-|keywords, description, title |html4, xhtml11 |
+|keywords, description, title |html4, html5, xhtml11 |
 The 'keywords' and 'description' attributes set the correspondingly
 named HTML meta tag contents; the 'title' attribute sets the HTML
 title tag contents.  Their principle use is for SEO (Search Engine
@@ -5642,17 +5652,17 @@ Optimisation).  All three are optional, but if they are used they must
 appear in the document header (or on the command-line). If 'title' is
 not specified the AsciiDoc document title is used.
 
-|linkcss |xhtml11 |
+|linkcss |html5, xhtml11 |
 Link CSS stylesheets and JavaScripts (see the 'stylesdir' and
 'scriptsdir' attributes below). By default 'linkcss' is undefined in
 which case stylesheets and scripts are automatically embedded in the
 output document.
 
-|max-width |xhtml11 |
+|max-width |html5, xhtml11 |
 Set the document maximum display width (sets the 'body' element CSS
 'max-width' property).
 
-|numbered |html4, xhtml11, docbook (XSL Stylesheets) |
+|numbered |html4, html5, xhtml11, docbook (XSL Stylesheets) |
 Adds section numbers to section titles. The 'docbook' backend ignores
 'numbered' attribute entries after the document header.
 
@@ -5670,7 +5680,7 @@ A short summary of changes in this document revision. Must be defined
 prior to the first document section. The document also needs to be
 dated to output this attribute.
 
-|scriptsdir |xhtml11 |
+|scriptsdir |html5, xhtml11 |
 The name of the directory containing linked JavaScripts. Defaults to
 `.` (the same directory as the linking document).
 
@@ -5679,20 +5689,20 @@ The `--backend=docbook45` command-line option produces DocBook 4.5
 XML.  You can produce the older DocBook SGML format using the
 `--attribute sgml` command-line option.
 
-|stylesdir |xhtml11 |
+|stylesdir |html5, xhtml11 |
 The name of the directory containing linked stylesheets. Defaults to
 `.` (the same directory as the linking document).
 
-|stylesheet |xhtml11 |
+|stylesheet |html5, xhtml11 |
 The file name of an optional additional CSS stylesheet. If you are
 embedding the stylesheet specify the actual file location; if you are
 linking CSS specify the file name relative to the directory specified
 by the 'stylesdir' attribute.
 
-|theme |xhtml11 |
+|theme |html5, xhtml11 |
 Use alternative stylesheets (see <<X35,Stylesheets>>).
 
-|[[X91]]toc |xhtml11, docbook (XSL Stylesheets) |
+|[[X91]]toc |html5, xhtml11, docbook (XSL Stylesheets) |
 Adds a table of contents to the start of an article or book document.
 The `toc` attribute can be specified using the `--attribute toc`
 command-line option or a `:toc:` attribute entry in the document
@@ -5701,7 +5711,7 @@ backend is used. To disable table of contents generation undefine the
 'toc' attribute by putting a `:toc!:` attribute entry in the document
 header or from the command-line with an `--attribute toc!` option.
 
-*xhtml11 backend*
+*xhtml11 and html5 backends*
 
 - JavaScript needs to be enabled in your browser.
 - The following example generates a numbered table of contents using a
@@ -5711,16 +5721,16 @@ header or from the command-line with an `--attribute toc!` option.
 
   $ asciidoc -a toc -a numbered mydoc.txt
 
-|toc2 |xhtml11 |
+|toc2 |html5, xhtml11 |
 Adds a scrollable table of contents in the left hand margin of an
 article or book document. Use the 'max-width' attribute to change the
 content width. In all other respects behaves the same as the 'toc'
 attibute.
 
-|toc-title |xhtml11 |
+|toc-title |html5, xhtml11 |
 Sets the table of contents title (defaults to 'Table of Contents').
 
-|toclevels |xhtml11 |
+|toclevels |html5, xhtml11 |
 Sets the number of title levels (1..4) reported in the table of
 contents (see the 'toc' attribute above). Defaults to 2 and must be
 used with the 'toc' attribute. Example usage:

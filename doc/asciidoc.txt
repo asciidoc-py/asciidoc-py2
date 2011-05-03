@@ -737,8 +737,8 @@ outputs. The CSS class names are:
 - '<color>' (text foreground color).
 - '<color>-background' (text background color).
 - 'big' and 'small' (text size).
-- 'underline', 'overline', 'line-through' (strike through) and 'blink'
-  (text decorators).
+- 'underline', 'overline' and 'line-through' (strike through) text
+  decorators.
 
 Where '<color>' can be any of the
 http://en.wikipedia.org/wiki/Web_colors#HTML_color_names[sixteen HTML
@@ -746,22 +746,18 @@ color names].  Examples:
 
   [red]#Obvious# and [big red yellow-background]*very obvious*.
 
-  [underline]#Underline text#, [overline]#overline text#,
-  [small bold blue blink]*small bold blue and blink*.
+  [underline]#Underline text#, [overline]#overline text# and
+  [bold blue line-through]*bold blue and line-through*.
 
 is rendered as:
 
 [red]#Obvious# and [big red yellow-background]*very obvious*.
 
-[underline]#Underline text#, [overline]#overline text#,
-[line-through]#line-through text# and
-[small bold blue blink]*small bold blue and blink*.
+[underline]#Underline text#, [overline]#overline text# and
+[bold blue line-through]*bold blue and line-through*.
 
-[NOTE]
-======
-- Quoted text attributes are not applicable to PDF or HTML 4 outputs.
-- The 'blink' text decorator is not supported in IE, Chrome, or Safari.
-======
+NOTE: Quoted text attributes are not applicable to PDF or HTML 4
+outputs.
 
 [[X52]]
 Constrained and Unconstrained Quotes

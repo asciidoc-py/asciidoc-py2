@@ -98,8 +98,8 @@ A=*_X_*, (`_X_`), _`X`_, [*_X_*] +_X_+ _X_
 
 [red]#Obvious# and [big red yellow-background]*very obvious*.
 
-[underline]#Underline text#, [overline]#overline text#,
-[line-through]#line-through text# and [blink]#blink text#.
+[underline]#Underline text#, [overline]#overline text#
+and [line-through]#line-through text#.
 
 [firstletter]##T##esting 123 ...
 

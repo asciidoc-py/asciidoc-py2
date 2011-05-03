@@ -726,28 +726,39 @@ DocBook XSL Stylesheets translate DocBook 'phrase' elements with
 'class' attributes; CSS can then be used
 http://www.sagehill.net/docbookxsl/UsingCSS.html[to style the
 generated HTML].  Thus CSS styling can be applied to both DocBook and
-AsciiDoc generated XHTML outputs from the same AsciiDoc source.  You
-can also specify multiple class names separated by spaces.
+AsciiDoc generated HTML outputs.  You can also specify multiple class
+names separated by spaces.
 
-CSS rules for text color and size are included in the distributed
-AsciiDoc CSS files and are used in conjunction with AsciiDoc
-'xhtml11', 'html5' and 'docbook' outputs. The CSS class names are:
-'<color>' (text foreground color); '<color>-background' (text
-background color); 'big' and 'small' (large and small text).  Where
-'<color>' can be any of the
+CSS rules for text color, text background color, text size and text
+decorators are included in the distributed AsciiDoc CSS files and are
+used in conjunction with AsciiDoc 'xhtml11', 'html5' and 'docbook'
+outputs. The CSS class names are:
+
+- '<color>' (text foreground color).
+- '<color>-background' (text background color).
+- 'big' and 'small' (text size).
+- 'underline', 'overline', 'line-through' (strike through) and 'blink'
+  (text decorators).
+
+Where '<color>' can be any of the
 http://en.wikipedia.org/wiki/Web_colors#HTML_color_names[sixteen HTML
 color names].  Examples:
 
   [red]#Obvious# and [big red yellow-background]*very obvious*.
 
+  [underline]#Underline text#, [overline]#overline text#,
+  [small bold blue line-through blink]*small bold blue line-through and blink*.
+
 is rendered as:
 
 [red]#Obvious# and [big red yellow-background]*very obvious*.
 
-Similarly, CSS rules for text decoration is also included. Examples:
-
 [underline]#Underline text#, [overline]#overline text#,
-[line-through]#line-through text# and [blink]#blink text#.
+[line-through]#line-through text# and
+[small bold blue line-through blink]*small bold blue line-through and blink*.
+
+NOTE: Quoted text attributes are not applicable to PDF or HTML 4
+outputs.
 
 [[X52]]
 Constrained and Unconstrained Quotes

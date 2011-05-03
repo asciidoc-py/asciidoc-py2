@@ -1011,35 +1011,6 @@ document, for example:
   :localdate: {sys: date +%Y-%m-%d}
 
 
-== Why doesn't AsciiDoc support strike through text?
-
-DocBook does not have provision for strike through text and one of the
-AsciiDoc design goals is that AsciiDoc markup should strive to be
-applicable to all output formats.
-
-Strike through is normally used to mark deleted text -- a more
-comprehensive way to manage document revisions is to use a version
-control system such as Subversion. You can also use the AsciiDoc
-'CommentLines' and 'CommentBlocks' to retain revised text in the
-source document.
-
-If you really need strike through text for (X)HTML outputs then adding
-the following to a configuration file will allow you to quote strike
-through text with hyphen characters:
-
----------------------------------------------------------------------
- ifdef::basebackend-html[]
-
- [quotes]
- -=strikethrough
-
- [tags]
- strikethrough=<del>|</del>
-
- endif::basebackend-html[]
----------------------------------------------------------------------
-
-
 == Where can I find examples of commands used to build output documents?
 
 The User Guide has some. You could also look at `./doc/main.aap` and

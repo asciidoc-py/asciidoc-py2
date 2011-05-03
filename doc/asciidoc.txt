@@ -744,6 +744,11 @@ is rendered as:
 
 [red]#Obvious# and [big red yellow-background]*very obvious*.
 
+Similarly, CSS rules for text decoration is also included. Examples:
+
+[underline]#Underline text#, [overline]#overline text#,
+[line-through]#line-through text# and [blink]#blink text#.
+
 [[X52]]
 Constrained and Unconstrained Quotes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -2672,7 +2677,7 @@ AsciiDoc block macro syntax `<name>::<target>[<attrlist>]` where:
 [horizontal]
 `<name>`:: 'audio' or 'video'.
 `<target>`:: The URL or file name of the video or audio file.
-`<attrlist>`:: A list of named attritubutes (see below).
+`<attrlist>`:: A list of named attributes (see below).
 
 .Audio macro attributes
 [options="header",cols="1,5",width="50%",frame="topbot"]
@@ -5725,7 +5730,7 @@ header or from the command-line with an `--attribute toc!` option.
 Adds a scrollable table of contents in the left hand margin of an
 article or book document. Use the 'max-width' attribute to change the
 content width. In all other respects behaves the same as the 'toc'
-attibute.
+attribute.
 
 |toc-title |html5, xhtml11 |
 Sets the table of contents title (defaults to 'Table of Contents').

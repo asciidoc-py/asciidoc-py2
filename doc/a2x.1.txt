@@ -78,7 +78,7 @@ OPTIONS
   Do not do anything just print what would have been done.
 
 *-r, --resource*='RESOURCE_SPEC'::
-  Specify a resouce.  This option may be specified more than once.
+  Specify a resource.  This option may be specified more than once.
   See the <<X3,*RESOURCES*>> section for more details.
 
 *-m, --resource-manifest*='FILE'::
@@ -192,7 +192,7 @@ There are two distinct mechanisms for specifying additional resources:
 
 . A resource directory which will be searched recursively for missing
   resource files.
-. A resouce file which will be copied to the output destination
+. A resource file which will be copied to the output destination
   directory.
 
 Resources are specified by *--resource* option values and can be one
@@ -232,7 +232,7 @@ Resource specifier examples:
   doc/README.txt=README.txt
   ~/images/tiger.png=images/tiger.png
 
-When adding resources to EPUB files the mimetype is infered from the
+When adding resources to EPUB files the mimetype is inferred from the
 `<destination file>` extension, if the mimetype cannot be guessed an
 error occurs. The `.<ext>=<mimetype>` resource syntax can be used to
 explicitly set mimetypes, for example:

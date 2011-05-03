@@ -1,6 +1,6 @@
 /* Default font. */
 body {
-  font-family: Georgia,"Times New Roman",Times,serif;
+  font-family: Georgia,serif;
 }
 
 /* Title font. */
@@ -36,6 +36,7 @@ strong {
 }
 
 tt {
+  font-family: monospace;
   font-size: inherit;
   color: navy;
 }

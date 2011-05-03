@@ -717,9 +717,9 @@ files. See the <<X7,Configuration Files>> section for details.
 Quoted text attributes
 ^^^^^^^^^^^^^^^^^^^^^^
 Quoted text can be prefixed with an <<X21,attribute list>>.  The first
-positional attribute is translated by AsciiDoc to an HTML 'span'
-element 'class' attribute or a DocBook 'phrase' element 'role'
-attribute.
+positional attribute ('role' attribute) is translated by AsciiDoc to
+an HTML 'span' element 'class' attribute or a DocBook 'phrase' element
+'role' attribute.
 
 DocBook XSL Stylesheets translate DocBook 'phrase' elements with
 'role' attributes to corresponding HTML 'span' elements with the same
@@ -1042,7 +1042,8 @@ Can also be set by the 'BlockId' element.
 Role contains a string used to classify or subclassify an element and
 can be applied to AsciiDoc block elements.  The AsciiDoc 'role'
 attribute is translated to the 'role' attribute in DocBook outputs and
-is included in the 'class' attribute in HTML outputs.
+is included in the 'class' attribute in HTML outputs, in this respect
+it behaves like the <<X96,quoted text role attribute>>.
 
 DocBook XSL Stylesheets translate DocBook 'role' attributes to HTML
 'class' attributes; CSS can then be used

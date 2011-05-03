@@ -11,10 +11,24 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-link:filters.html[Filter plugins] have been formalised and
-`asciidoc(1)` commands to install, remove and list filter plugins have
-been implemented.  The remainder of this release contains mostly minor
-additions plus a number of bug fixes.
+In this release:
+
+- The addition of an 'html5' backend to generate HTML 5 output. Apart
+  from the inclusion of 'audio' and 'video' block macros the 'html5'
+  backend is functionally identical to the 'xhtml11' backend.
+
+- `a2x(1)`  now has a flexible mechanism for copying arbitrary
+  resource files into HTML based outputs -- this is very handy for
+  generating EPUB files with embedded fonts and other resources.
+
+  * The `a2x(1)` `--resource` option can be used to inject any file
+    into EPUB output documents e.g. CSS resources such as fonts and
+    background images.
+  * Explicitly specified resources are added to the EPUB OPF manifest
+    automatically.
+  * You can explicitly specify file extension MIME types.
+  * The enhanced resource processing works around a couple of DocBook
+    XSL bugs (see link:epub-notes.html[EPUB Notes]).
 
 Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
 additions, changes and bug fixes. Changes are documented in the
@@ -157,7 +171,7 @@ weblog posts and pages directly from AsciiDoc source documents.
 Source code highlighter
 -----------------------
 AsciiDoc includes a link:source-highlight-filter.html[source code
-highter filter] that uses
+highlighter filter] that uses
 http://www.gnu.org/software/src-highlite/[GNU source-highlight] to
 highlight HTML outputs. You also have the option of using the
 http://pygments.org/[Pygments] highlighter.

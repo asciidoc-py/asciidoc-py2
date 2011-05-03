@@ -14,7 +14,7 @@ ifdef::blogpost[]
 :blogpost-categories: AsciiDoc,eBook,EPUB,DocBook
 
 *Published*: 2010-08-23
-*Updated*: 2010-03-24
+*Updated*: 2010-05-08
 endif::blogpost[]
 
 It's easy to write and publish books in
@@ -40,10 +40,10 @@ Linux 10.04 but should be applicable to any UNIX-based operating
 system.
 
 NOTE: A number of 'asciidoc' and 'a2x' features used in this article
-require AsciiDoc version 8.6.1 -- install version 8.6.1 or better to
-compile the examples. The version of
+require newer versions of AsciiDoc -- version 8.6.5 or better is
+recommended. The version of
 http://wiki.docbook.org/topic/DocBookXslStylesheets[DocBook XSL
-Stylesheets] used was 1.75.2.
+Stylesheets] used was 1.76.1.
 
 TIP: If you are experiencing 'xsltproc' errors when you run 'a2x' take
 a look at Francis Shanahan's

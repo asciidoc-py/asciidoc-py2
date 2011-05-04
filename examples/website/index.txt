@@ -17,8 +17,9 @@ In this release:
   from the inclusion of 'audio' and 'video' block macros the 'html5'
   backend is functionally identical to the 'xhtml11' backend.
 
-- The new 'toc2' attribute generates a scrollable table of contents in
+- The new 'toc2' attribute generates a table of contents in
   the left hand margin ('xhtml11' and 'html5' backends).
+  link:article-html5-toc2.html[Here's an example].
 
 - `a2x(1)` now has a flexible mechanism for copying arbitrary
   resource files to HTML based outputs -- this is very handy for

@@ -72,7 +72,6 @@ DOCS =
     article.txt article.html article-standalone.html article-html5-toc2.html
     book.txt book.html
     book-multi.txt book-multi.html
-    docbook-xsl.css
     book.epub
     article.pdf
     latexmath.pdf
@@ -132,6 +131,7 @@ copy: all
     :sys cp *.js $LOCAL_WEB
     :execute $PROJ_DIR/main.aap distribution    # Make docs and tarball.
     :sys cp $DOCS_DIR/$*DOCS $LOCAL_WEB
+    :sys cp $PROJ_DIR/stylesheets/docbook-xsl.css $LOCAL_WEB
     # Copy images.
     :sys cp $DOCS_DIR/images/*.png $LOCAL_WEB/images/
     :sys cp $DOCS_DIR/images/icons/*.png $LOCAL_WEB/images/icons/

@@ -756,8 +756,7 @@ is rendered as:
 [underline]#Underline text#, [overline]#overline text# and
 [bold blue line-through]*bold blue and line-through*.
 
-NOTE: Quoted text attributes are not applicable to PDF or HTML 4
-outputs.
+NOTE: Text attributes are not applicable to PDF or HTML 4 outputs.
 
 [[X52]]
 Constrained and Unconstrained Quotes

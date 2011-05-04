@@ -3215,7 +3215,7 @@ is a list of things to be aware of:
   you will need to include the `--no-xmllint` option to suppress
   DocBook validation errors.
 +
-NOTE: Technically you can nest DocBook 4 tables one level using the
+NOTE: In theory you can nest DocBook 4 tables one level using the
 'entrytbl' element, but not all toolchains process 'entrytbl'.
 
 - DocBook only allows a subset of block elements inside table cells so

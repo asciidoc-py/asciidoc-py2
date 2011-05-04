@@ -29,7 +29,6 @@ doc/book.epub
 doc/asciidoc.1
 doc/asciidoc.conf
 doc/article-docinfo.xml
-doc/*.css
 doc/customers.csv
 doc/images/
 doc/main.aap

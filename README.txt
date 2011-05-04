@@ -20,7 +20,7 @@ Tools
 Current AsciiDoc version tested on Xubuntu Linux 10.04 with:
 
 - Python 2.6.5
-- DocBook XSL Stylesheets 1.75.2
+- DocBook XSL Stylesheets 1.76.1
 - xsltproc (libxml 20706, libxslt 10126 and libexslt 815).
 - w3m 0.5.2
 - dblatex 0.3
@@ -28,8 +28,8 @@ Current AsciiDoc version tested on Xubuntu Linux 10.04 with:
 - A-A-P 1.091
 
 
-COPYING
+Copying
 -------
-Copyright (C) 2002-2011 Stuart Rackham. Free use of this software
-is granted under the terms of the GNU General Public License (GPL).
-
+Copyright (C) 2002-2011 Stuart Rackham. Free use of this software is
+granted under the terms of the GNU General Public License version 2
+(GPLv2).

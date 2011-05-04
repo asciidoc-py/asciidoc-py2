@@ -17,8 +17,11 @@ In this release:
   from the inclusion of 'audio' and 'video' block macros the 'html5'
   backend is functionally identical to the 'xhtml11' backend.
 
-- `a2x(1)`  now has a flexible mechanism for copying arbitrary
-  resource files into HTML based outputs -- this is very handy for
+- The new 'toc2' attribute generates a scrollable table of contents in
+  the left hand margin ('xhtml11' and 'html5' backends).
+
+- `a2x(1)` now has a flexible mechanism for copying arbitrary
+  resource files to HTML based outputs -- this is very handy for
   generating EPUB files with embedded fonts and other resources.
 
   * The `a2x(1)` `--resource` option can be used to inject any file
@@ -46,6 +49,9 @@ Introduction
 AsciiDoc is highly configurable: both the AsciiDoc source file syntax
 and the backend output markups (which can be almost any type of
 SGML/XML markup) can be customized and extended by the user.
+
+AsciiDoc is free software and is licenced under the terms of the 'GNU
+General Public License version 2' (GPLv2).
 
 TIP: The pages you are reading were written using AsciiDoc, to view
 the corresponding AsciiDoc source click on the *Page Source* menu item
@@ -141,7 +147,7 @@ embedded images.
 Example Web Site
 ~~~~~~~~~~~~~~~~
 The link:README-website.html[AsciiDoc website] is included in the
-AsciiDoc distribution (in `./examples/website/`) as example website
+AsciiDoc distribution (in `./examples/website/`) as an example website
 built using AsciiDoc.  See `./examples/website/README-website.txt`.
 
 More examples

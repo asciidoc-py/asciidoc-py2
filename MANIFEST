@@ -12,6 +12,7 @@ asciidoc.conf
 docbook45.conf
 help.conf
 html4.conf
+html5.conf
 lang-*.conf
 latex.conf
 slidy.conf

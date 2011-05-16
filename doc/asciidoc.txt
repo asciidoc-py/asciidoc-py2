@@ -5531,27 +5531,64 @@ The `asciidoc(1)` `--verbose` command-line option prints additional
 information to stderr: files processed, filters processed, warnings,
 system attribute evaluation.
 
-A special attribute named 'trace' controls the output of diagnostic
-information. If the 'trace' attribute is defined then
+A special attribute named 'trace' enables the output of
 element-by-element diagnostic messages detailing output markup
-generation are printed to stderr. The 'trace' attribute can be set on
-the command-line or from within the document using <<X18,Attribute
+generation to stderr.  The 'trace' attribute can be set on the
+command-line or from within the document using <<X18,Attribute
 Entries>> (the latter allows tracing to be confined to specific
 portions of the document).
 
-- Trace messages consist of a descriptive name followed by the related
-  markup.
+- Trace messages print the source file name and line number and the
+  trace name followed by related markup.
+- 'trace names' are normally the names of AsciiDoc elements see the
+  list below.
 - The trace message is only printed if the 'trace' attribute value
-  matches the start of the trace name. The 'trace' attribute value can
-  be any Python regular expression.
-- A blank trace value matches all trace names and all trace messages
-  will be printed (this can result in large amounts of output if
-  applied to the whole document).
+  matches the start of a 'trace name'. The 'trace' attribute value can
+  be any Python regular expression.  If a trace value is not specified
+  all trace messages will be printed (this can result in large amounts
+  of output if applied to the whole document).
+
 - In the case of inline substitutions:
-  * The text before and after the substitution are printed delineated
-    by `<<<` and `>>>` delimiters.
-  * The message is only printed if a substitution is made.
+  * The text before and after the substitution is printed; the before
+    text is preceded by a line containing `<<<` and the after text by
+    a line containing `>>>`.
   * The 'subs' trace value is an alias for all inline substitutions.
+
+.Trace names
+.....................................................................
+<blockname> block close
+<blockname> block open
+<subs>
+floating title
+footer
+header
+list close
+list entry close
+list entry open
+list item close
+list item open
+list label close
+list label open
+list open
+macro block (a block macro)
+name (man page NAME section)
+paragraph
+preamble close
+preamble open
+section close
+section open: level <level>
+subs (all inline substitutions)
+table
+.....................................................................
+
+Where:
+
+- `<level>` is section level number '0...4'.
+- `<blockname>` is a delimited block name: 'comment', 'sidebar',
+  'open', 'pass', 'listing', 'literal', 'quote', 'example'.
+- `<subs>` is an inline substitution type:
+  'specialcharacters','quotes','specialwords', 'replacements',
+  'attributes','macros','callouts', 'replacements2'.
 
 Command-line examples:
 
@@ -5563,7 +5600,7 @@ Command-line examples:
 
   $ asciidoc -a 'trace=quotes|macros'  mydoc.txt
 
-. Print the first line of all trace messages:
+. Print the first line of each trace message:
 
   $ asciidoc -a trace mydoc.txt 2>&1 | grep ^TRACE:
 

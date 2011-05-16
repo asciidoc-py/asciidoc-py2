@@ -142,6 +142,8 @@ class Trace(object):
         """
         Print trace message if tracing is on and the trace 'name' matches the
         document 'trace' attribute (treated as a regexp).
+        'before' is the source text before substitution; 'after' text is the
+        source text after substitutuion.
         The 'before' and 'after' messages are only printed if they differ.
         """
         name_re = document.attributes.get('trace')
@@ -3807,7 +3809,7 @@ class Macro:
             if self.has_passthrough():
                 s = macros.restore_passthroughs(s)
             if s:
-                trace('macro',before,s)
+                trace('macro block',before,s)
                 writer.write(s)
 
     def subs_passthroughs(self, text, passthroughs):

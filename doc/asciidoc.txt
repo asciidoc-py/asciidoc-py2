@@ -5559,6 +5559,7 @@ portions of the document).
 <blockname> block close
 <blockname> block open
 <subs>
+dropped line (a line containing an undefined attribute reference).
 floating title
 footer
 header

@@ -1069,6 +1069,7 @@ def subs_attrs(lines, dictionary=None):
         # Drop line if it contains  unsubstituted {name} references.
         skipped = re.search(r'(?su)\{[^\\\W][-\w]*?\}(?!\\)', line)
         if skipped:
+            trace('dropped line', line)
             continue;
         # Expand system attributes (eval has precedence).
         reos = [

@@ -733,7 +733,7 @@ explicitly set the 'grid' and 'frame' values will default to 'all' and
 
 TIP: This technique can be applied to any block element attribute
 (just beware of possible ambiguity, for example, table and image
-blocks both have a 'width' attrbiute).
+blocks both have a 'width' attribute).
 
 
 == How can I place a backslash character in front of an attribute reference without escaping the reference?

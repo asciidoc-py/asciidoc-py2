@@ -32,8 +32,10 @@ Karamazov>> is a rather long multi-part book and the third <<X3,The
 Adventures of Sherlock Holmes>> includes a front cover image and
 customized page styling.
 
+ifdef::blogpost[]
 // Wordpress processing instruction.
 pass::[<!--more-->]
+endif::blogpost[]
 
 The examples presented below were created on a PC running Xubuntu
 Linux 10.04 but should be applicable to any UNIX-based operating

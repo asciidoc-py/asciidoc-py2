@@ -2690,7 +2690,7 @@ AsciiDoc block macro syntax `<name>::<target>[<attrlist>]` where:
 `<attrlist>`:: A list of named attributes (see below).
 
 .Audio macro attributes
-[options="header",cols="1,5",width="50%",frame="topbot"]
+[options="header",cols="1,5",frame="topbot"]
 |====================================================================
 |Name | Value
 |options
@@ -2701,7 +2701,7 @@ enabled, include the 'nocontrols' option value to hide them.
 |====================================================================
 
 .Video macro attributes
-[options="header",cols="1,5",width="50%",frame="topbot"]
+[options="header",cols="1,5",frame="topbot"]
 |====================================================================
 |Name   | Value
 |height | The height of the player in pixels.
@@ -5540,8 +5540,8 @@ portions of the document).
 
 - Trace messages print the source file name and line number and the
   trace name followed by related markup.
-- 'trace names' are normally the names of AsciiDoc elements see the
-  list below.
+- 'trace names' are normally the names of AsciiDoc elements (see the
+  list below).
 - The trace message is only printed if the 'trace' attribute value
   matches the start of a 'trace name'. The 'trace' attribute value can
   be any Python regular expression.  If a trace value is not specified

@@ -11,11 +11,15 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-In this release:
+Release highlights:
 
 - The addition of an 'html5' backend to generate HTML 5 output. Apart
   from the inclusion of 'audio' and 'video' block macros the 'html5'
   backend is functionally identical to the 'xhtml11' backend.
+
+- A new 'flask' theme for 'xhtml11' and 'html5' backends inspired by
+  the http://flask.pocoo.org/docs/[Flask website] styling (see 'toc2'
+  example in the next item below).
 
 - The new 'toc2' attribute generates a table of contents in
   the left hand margin ('xhtml11' and 'html5' backends).
@@ -23,9 +27,6 @@ In this release:
   the following command:
 
   asciidoc -b html5 -a icons -a toc2 -a theme=flask article.txt
-
-- A new 'flask' theme for 'xhtml11' and 'html5' backends (see 'toc2'
-  example above).
 
 - `a2x(1)` now has a flexible mechanism for copying arbitrary
   resource files to HTML based outputs -- this is very handy for

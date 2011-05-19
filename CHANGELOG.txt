@@ -7,12 +7,13 @@ AsciiDoc ChangeLog
 Version 8.6.5 (2011-05-08)
 --------------------------
 .Additions and changes
-- A new 'flask' theme for 'xhtml11' and 'html5' backends.
+- A new 'flask' theme for 'xhtml11' and 'html5' backends.  A shameless
+  knock-off of the http://flask.pocoo.org/docs/[Flask website]
+  styling.
 - Added HTML 5 article with 'toc2' table of contents to the example on
   the AsciiDoc website home page.
-- Added 'filters' and 'topics' help topics.
-  Fixed documentation errors in help text.  Patch submitted by Lionel
-  Orry, see:
+- Added 'filters' and 'topics' help topics.  Fixed documentation
+  errors in help text.  Patch submitted by Lionel Orry, see:
   http://groups.google.com/group/asciidoc/browse_thread/thread/9da9d48a6461ff14
 - Pass parent configuration files, command-line attributes and header
   attributes to table asciidoc filters. Based on patch submitted by
@@ -61,8 +62,8 @@ Version 8.6.5 (2011-05-08)
   directory separator.
 - a2x: Added a new syntax to the `--resource` option specifier which
   allows the destination path to be specified.
-- a2x: Copy resources referenced in the OPF and resources referenced by
-  the generated HTML (in theory DocBook XSL should ensure they are
+- a2x: Copy resources referenced in the OPF and resources referenced
+  by the generated HTML (in theory DocBook XSL should ensure they are
   identical but this is not always the case e.g.
   http://sourceforge.net/tracker/?func=detail&atid=373747&aid=2854075&group_id=21935).
 - Drop border from callout list image links.

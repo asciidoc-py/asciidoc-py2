@@ -2,10 +2,8 @@
  * AsciiDoc 'flask' theme for xhtml11 and html5 backends. A shameless knock-off
  * of the Flask website styling (http://flask.pocoo.org/docs/).
  *
- * This is a quick and dirty implementation consisting of the default
- * asciidoc.css file followed by theme specific overrides -- the overrides at
- * the end of the file should probably be merged, redundant rules dropped, and
- * things generally tidied up.
+ * The implementation is straight-forward, consisting of the asciidoc.css file
+ * followed by theme specific overrides.
  *
  * */
 
@@ -521,7 +519,7 @@ th.tableblock.valign-bottom, td.tableblock.valign-bottom {
 
 
 /*
- * flask overrides to preceding CSS (asciidoc.css) follows).
+ * Theme specific overrides of the preceding (asciidoc.css) CSS.
  *
  */
 body {
@@ -569,7 +567,7 @@ h6 { font-size: 100%; }
 }
 div.toclevel1 { margin-top: 0.2em; font-size: 16px; }
 div.toclevel2 { margin-top: 0.15em; font-size: 14px; }
-em, dt { color: black; }
+em, dt, td.hdlist1 { color: black; }
 strong { color: #3E4349; }
 a { color: #004B6B; text-decoration: none; border-bottom: 1px dotted #004B6B; }
 a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }

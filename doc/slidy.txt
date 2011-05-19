@@ -83,19 +83,18 @@ blue bullet points or numbers) is clicked.
 
 Stylesheets
 -----------
-- The 'slidy' backend uses the 'xhtml11' backend stylesheets.
-- By default it loads the 'xhtml11.css' stylesheet followed by
-  'slidy.css':
-  * `xhtml11.css` contains content presentational styles.
+- 'slidy' loads the 'asciidoc.css' stylesheet followed by 'slidy.css':
+  * `asciidoc.css` contains content presentational styles.
   * The customized `slidy.css` stylesheet contains Slidy specific
     styles (table of contents, menu and transition related).
-- You can use 'xhtml11' themes. For example, the 'asciidoc'
+- You can use AsciiDoc CSS themes. For example, the 'asciidoc'
   `--attribute theme=volnitsky` command-line option will substitute
-  the `xhtml11.css` stylesheet for the distributed Volnitsky
+  the `asciidoc.css` stylesheet for the distributed Volnitsky
   `volnitsky.css` stylesheet.
-- An optional third and last loaded stylesheet can be specified by
-  setting the 'stylesheet' attribute. For example, the `--attribute
-  stylesheet=myslidy.css` will load `myslidy.css`.
+- An additional stylesheet can be specified by setting the
+  'stylesheet' attribute. For example, the `--attribute
+  stylesheet=myslidy.css` will load `myslidy.css` after the standard
+  CSS files.
 
 
 Tips

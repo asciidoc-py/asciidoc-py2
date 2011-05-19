@@ -9,7 +9,7 @@ h2 {
   border-style: none;
 }
 div.sectionbody {
-  margin-left: 5%;
+  margin-left: 3em;
 }
 
 @media print {

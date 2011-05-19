@@ -164,7 +164,7 @@ article-standalone.html: article.txt
     :sys $ASCIIDOC -a data-uri -a icons -a toc -a max-width=55em -o $target $source
 
 article-html5-toc2.html: article.txt
-    :sys $ASCIIDOC -b html5 -a icons -a toc2 -o $target $source
+    :sys $ASCIIDOC -b html5 -a icons -a toc2 -a theme=flask -o $target $source
 
 asciidoc.1.html: asciidoc.1.txt
     :sys $ASCIIDOC -d manpage -b html4 $source

@@ -12,18 +12,9 @@
     width: 13em;
     padding: 0.5em;
     padding-bottom: 1.5em;
-    margin: 0 !important;
+    margin: 0;
     overflow: auto;
     border-right: 3px solid #f8f8f8;
-  }
-
-  #toc a {
-    color: #083194;
-    text-decoration: none;
-  }
-
-  #toc a:hover {
-    text-decoration: underline;
   }
 
   #toc .toclevel1 {

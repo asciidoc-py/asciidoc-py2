@@ -7,6 +7,7 @@ AsciiDoc ChangeLog
 Version 8.6.5 (2011-05-08)
 --------------------------
 .Additions and changes
+- A new 'flask' theme for 'xhtml11' and 'html5' backends.
 - Added HTML 5 article with 'toc2' table of contents to the example on
   the AsciiDoc website home page.
 - Added 'filters' and 'topics' help topics.

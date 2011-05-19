@@ -65,7 +65,6 @@ DOCS =
     $*(DOCS_ROOT).txt
     $*(DOCS_ROOT).html
     $*(DOCS_ROOT).css-embedded.html
-    $*(DOCS_ROOT).xml
     asciidoc.pdf
     asciidoc.epub
     asciidoc.1

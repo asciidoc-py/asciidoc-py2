@@ -19,7 +19,13 @@ In this release:
 
 - The new 'toc2' attribute generates a table of contents in
   the left hand margin ('xhtml11' and 'html5' backends).
-  link:article-html5-toc2.html[Here's an example].
+  link:article-html5-toc2.html[This example] was generated using
+  the following command:
+
+  asciidoc -b html5 -a icons -a toc2 -a theme=flask article.txt
+
+- A new 'flask' theme for 'xhtml11' and 'html5' backends (see 'toc2'
+  example above).
 
 - `a2x(1)` now has a flexible mechanism for copying arbitrary
   resource files to HTML based outputs -- this is very handy for

@@ -1,6 +1,10 @@
 /*
- * AsciiDoc xhtml11 theme based on css from http://volnitsky.com,
- * which was in turn based on default theme from AsciiDoc
+ * AsciiDoc 'volnitsky' theme for xhtml11 and html5 backends.
+ * Based on css from http://volnitsky.com, which was in turn based on default
+ * theme from AsciiDoc
+ *
+ * FIXME: The stlying is still a bit rough in places.
+ *
  */
 
 /* Default font. */
@@ -19,13 +23,19 @@ thead, p.table.header,
 }
 
 
-a {
-  color: blue;
-  text-decoration: underline;
+#toc a {
+    border-bottom: 1px dotted #999999;
+    color: #3A3A4D !important;
+    text-decoration: none !important;
 }
-a:visited {
-  color: fuchsia;
+#toc a:hover {
+    border-bottom: 1px solid #6D4100;
+    color: #6D4100 !important;
+    text-decoration: none !important;
 }
+a { color: #666688; text-decoration: none; border-bottom: 1px dotted #666688; }
+a:visited { color: #615FA0; border-bottom: 1px dotted #615FA0; }
+a:hover { color: #6D4100; border-bottom: 1px solid #6D4100; }
 
 em {
   font-style: italic;
@@ -44,10 +54,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing:+0.15em;
 }
 
-h1, h2, h3  { border-bottom: 2px solid #ccd; }
-h2    { padding-top: 0.5em; }
-h3    { float: left; }
-h3 + *    { clear: left; }
+h1, h2, h3 { border-bottom: 2px solid #ccd; }
+h2 { padding-top: 0.5em; }
+h3 { float: left; }
+h3 + * { clear: left; }
 
 div.sectionbody {
   margin-left: 0;
@@ -300,36 +310,27 @@ div.hdlist.compact tr {
 
 #toctitle {
   color: #666688;
-  font-size: 1.1em;
+  font-size: 1.2em;
   font-weight: bold;
   margin-top: 1.0em;
   margin-bottom: 0.1em;
 }
 
-div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-div.toclevel2 {
-  margin-left: 2em;
-  font-size: 0.9em;
-}
-div.toclevel3 {
-  margin-left: 4em;
-  font-size: 0.9em;
-}
-div.toclevel4 {
-  margin-left: 6em;
-  font-size: 0.9em;
-}
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 { margin-top: 0; margin-bottom: 0; }
+div.toclevel1 { margin-top: 0.3em; margin-left: 0; font-size: 1.0em; }
+div.toclevel2 { margin-top: 0.25em; margin-left: 2em; font-size: 0.9em; }
+div.toclevel3 { margin-left: 4em; font-size: 0.8em; }
+div.toclevel4 { margin-left: 6em; font-size: 0.8em; }
+
 body {
+  margin: 1em 5%;
   max-width:  55em;
-  padding-left: 5%;
+  padding-left: 0;
 
 }
 
-tt, div.listingblock > div.content {
-  font-family:  "Consolas", "Andale Mono", "Courier New", monospace;
+.monospaced, tt, div.listingblock > div.content {
+  font-family:  Consolas, "Andale Mono", "Courier New", monospace;
   color: #004400;
   background: #f4f4f4;
   max-width: 80em;
@@ -368,10 +369,67 @@ em {
   letter-spacing:+0.08em ! important;
 }
 
-a {
-  text-decoration: none !important;
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #666688;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #444466;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #444466;
 }
 
-a:hover, a:focus {
-  text-decoration: underline !important;
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
 }
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+

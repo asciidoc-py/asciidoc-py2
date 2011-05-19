@@ -190,9 +190,9 @@ link text to '2nd section' for 'Section Two'.
 
 == Can I define my own table styles?
 In addition to the built-in styles you can define your own. This
-example (for the 'xhtml11' backend) defines a table style called 'red'
-which sets the background cell color to red. First put the definition
-in a configuration file:
+(simplified) example for HTML backends defines a table style called
+'red' which sets the background cell color to red. First put the
+definition in a configuration file:
 
 [listing]
 .........................................
@@ -402,11 +402,11 @@ substitutions in the monospaced text, for example:
 With the advent of Internet Explorer 8 all major web browsers now
 support the
 http://en.wikipedia.org/wiki/Data:_URI_scheme[data URI scheme] for
-embedded images. The AsciiDoc 'xhtml11' backend supports the data URI
-scheme for embedded images and by default it embeds the CSS
-stylesheet. For example the following command will generate a single
-`article.html` file containing embedded images, admonition icons and the CSS
-stylesheet:
+embedded images. The AsciiDoc 'xhtml11' and 'html5' backends supports
+the data URI scheme for embedded images and by default it embeds the
+CSS stylesheet. For example the following command will generate a
+single `article.html` file containing embedded images, admonition
+icons and the CSS stylesheet:
 
   $ asciidoc -a data-uri -a icons article.txt
 
@@ -626,27 +626,16 @@ image::barchart.png[]
   same directory as the output file (`{outdir}`).
 =====================================================================
 
+
 == How can I render indented paragraphs?
 
-To unconditionally indent all paragraphs add the following line to the
-`xhtml11.css` stylesheet (or a custom stylesheet).
-
----------------------------------------------------------------------
-div.paragraph p {text-indent: 3em;}
----------------------------------------------------------------------
-
-This will restyle the entire document by indenting all paragraphs
-which is normally what you want to do (mixed paragraph styles produce
-ugly documents).
-
-To selectively indent paragraphs you could either create an 'indented'
-paragraph style from scratch or use the 'role' attribute.
+Styling is backend dependent:
 
 [float]
-==== Create an indented paragraph style (xhtml11 backend)
-Define an 'indented' paragraph style, for example, by putting this in
-a configuration file:
-
+==== Create an indented paragraph style (xhtml11 and html5 backends)
+. Define an 'indented' paragraph style, for example, by putting this
+  in a custom configuration file:
++
 ---------------------------------------------------------------------
 [paradef-default]
 indented-style=template="indentedparagraph"
@@ -657,8 +646,8 @@ indented-style=template="indentedparagraph"
 </p></div>
 ---------------------------------------------------------------------
 
-Now apply the 'indented' style to normal paragraphs, for example:
-
+. Now apply the 'indented' style to normal paragraphs, for example:
++
 ---------------------------------------------------------------------
 [indented]
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
@@ -668,16 +657,15 @@ lacinia. Vivamus at lectus.
 ---------------------------------------------------------------------
 
 [float]
-==== Use the role attribute (xhtml11 backend)
-Add the following line to the `xhtml11.css` stylesheet (or a custom
-stylesheet).
-
+==== Use the role attribute (xhtml11 and html5 backends)
+. Add the following line to custom stylesheet:
++
 ---------------------------------------------------------------------
 div.paragraph.indented p {text-indent: 3em;}
 ---------------------------------------------------------------------
 
-Apply the 'role' attribute to indented paragraphs, for example:
-
+. Apply the 'role' attribute to indented paragraphs, for example:
++
 ---------------------------------------------------------------------
 [role="indented"]
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
@@ -686,17 +674,21 @@ vestibulum mi. Aliquam pede. Aenean lobortis lorem et lacus. Sed
 lacinia. Vivamus at lectus.
 ---------------------------------------------------------------------
 
+. Include the custom stylesheet by setting the 'stylesheet' attribute
+  (either from the command-line or with an attribute entry in the
+  document header).
+
 [float]
 ==== Use the role attribute (docbook backend)
-Add the following line to the distributed `docbook-xsl.css` stylesheet
-or include it in a custom stylesheet.
-
+. Add the following line to the distributed `docbook-xsl.css`
+  stylesheet or include it in a custom stylesheet:
++
 ---------------------------------------------------------------------
 p.indented {text-indent: 3em;}
 ---------------------------------------------------------------------
 
-Apply the 'role' attribute to indented paragraphs, for example:
-
+. Apply the 'role' attribute to indented paragraphs, for example:
++
 ---------------------------------------------------------------------
 [role="indented"]
 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
@@ -705,12 +697,12 @@ vestibulum mi. Aliquam pede. Aenean lobortis lorem et lacus. Sed
 lacinia. Vivamus at lectus.
 ---------------------------------------------------------------------
 
-If you have included the custom CSS in a separate stylesheet you will
-need to specify the stylesheet file name (along with the default
-`docbook-xsl.css` stylesheet file name) with the `html.stylesheet` XSL
-parameter. If you are using 'a2x(1)' use the `--stylesheet` option (it
-sets the `html.stylesheet` XSL parameter), for example: `--stylesheet
-"docbook-xsl.css mycss.css"`.
+. If you have included the custom CSS in a separate stylesheet you
+  will need to specify the stylesheet file name (along with the
+  default `docbook-xsl.css` stylesheet file name) with the
+  `html.stylesheet` XSL parameter. If you are using 'a2x(1)' use the
+  `--stylesheet` option (it sets the `html.stylesheet` XSL parameter),
+  for example: `--stylesheet "docbook-xsl.css mycss.css"`.
 
 NOTE: This applies to HTML outputs not PDF. To achieve the same
 results with PDF outputs you will need to customize the DocBook XSL

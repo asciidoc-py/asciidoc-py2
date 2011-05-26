@@ -13,7 +13,7 @@ ifdef::blogpost[]
 :blogpost-posttype: post
 :blogpost-categories: AsciiDoc,eBook,EPUB,DocBook
 
-*Published*: 2010-08-23
+*Published*: 2010-08-23 +
 *Updated*: 2010-05-08
 endif::blogpost[]
 

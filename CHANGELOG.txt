@@ -4,7 +4,7 @@ AsciiDoc ChangeLog
 :website: http://www.methods.co.nz/asciidoc/
 
 
-Version 8.6.5 (2011-05-08)
+Version 8.6.5 (2011-05-20)
 --------------------------
 .Additions and changes
 - A new 'flask' theme for 'xhtml11' and 'html5' backends.  A shameless

@@ -103,7 +103,7 @@ Example Articles
   link:article-html5-toc2.html[this HTML 5] (the 'toc2' attribute puts
   a table of contents in the left margin) from this command:
 
-  asciidoc -b html5 -a icons -a toc2 article.txt
+  asciidoc -b html5 -a icons -a toc2 -a theme=flask article.txt
 
 - The same link:article.txt[AsciiDoc article template] produced
   this link:article.html[HTML file] and this
@@ -329,6 +329,16 @@ and I'll add them to the list.
 - The http://csrp.iut-blagnac.fr/jmiwebsite/home/[JMI website] hosts
   a number of extras for AsciiDoc and Slidy written by Jean-Michel
   Inglebert.
+- Ryan Tomayko has written an number of
+  http://tomayko.com/src/adoc-themes/[themes for AsciiDoc] along with
+  a http://tomayko.com/src/adoc-themes/hacking.html[script for
+  combining the CSS files] into single CSS theme files for AsciiDoc
+  embedded CSS documents.
+- Ilya Portnov has written a
+  https://gitorious.org/doc-building-system[document building system
+  for AsciiDoc], here is
+  http://iportnov.blogspot.com/2011/03/asciidoc-beamer.html[short
+  article in Russian] describing it.
 
 Please let me know if any of these links need updating.
 

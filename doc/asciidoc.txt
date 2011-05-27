@@ -5686,6 +5686,14 @@ names to the output document not the source document.
 |data-uri |xhtml11, html5 |
 Embed images using the <<X66,data: uri scheme>>.
 
+|css-signature |html5, xhtml11 |
+Set a 'CSS signature' for the document (sets the 'id' attribute of the
+HTML 'body' element). CSS signatures provide a mechanism that allows
+users to personalize the document appearance. The term 'CSS signature'
+was http://archivist.incutio.com/viewlist/css-discuss/13291[coined by
+Eric Meyer].
+
+
 |disable-javascript |xhtml11, html5 |
 If the `disable-javascript` attribute is defined the `asciidoc.js`
 JavaScript is not embedded or linked to the output document.  By

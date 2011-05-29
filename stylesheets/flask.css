@@ -1,13 +1,3 @@
-/*
- * AsciiDoc 'flask' theme for xhtml11 and html5 backends. A shameless knock-off
- * of the Flask website styling (http://flask.pocoo.org/docs/).
- *
- * The implementation is straight-forward, consisting of the asciidoc.css file
- * followed by theme specific overrides.
- *
- * */
-
-
 /* Shared CSS for AsciiDoc xhtml11 and html5 backends */
 
 /* Default font. */
@@ -515,6 +505,29 @@ th.tableblock.valign-middle, td.tableblock.valign-middle {
 }
 th.tableblock.valign-bottom, td.tableblock.valign-bottom {
   vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
 }
 
 

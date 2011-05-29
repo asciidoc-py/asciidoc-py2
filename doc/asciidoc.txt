@@ -225,13 +225,9 @@ their outputs.  The CSS2 stylesheets are located in the distribution
 `./stylesheets/asciidoc.css`::
     The main stylesheet.
 
-`./stylesheets/asciidoc-manpage.css`::
-    Tweaks for manpage document type generation.
-
 Use the 'theme' attribute to select an alternative set of stylesheets.
 For example, the command-line option `-a theme=foo` will use
-stylesheets `foo.css`, `foo-manpage.css` instead of the default
-stylesheets.
+stylesheet `foo.css` instead of the default `asciidoc.css` stylesheet.
 
 Use the 'stylesheet' attribute to include an additional stylesheet in
 XHTML documents.  For example, the command-line option `-a
@@ -5805,7 +5801,7 @@ See <<X99,HTML stylesheets and JavaScript locations>>.
 The file name of an optional additional CSS <<X35,stylesheet>>.
 
 |theme |html5, xhtml11 |
-Use alternative stylesheets (see <<X35,Stylesheets>>).
+Use alternative stylesheet (see <<X35,Stylesheets>>).
 
 |[[X91]]toc |html5, xhtml11, docbook (XSL Stylesheets) |
 Adds a table of contents to the start of an article or book document.

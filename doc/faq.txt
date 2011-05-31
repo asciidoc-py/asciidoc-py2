@@ -9,8 +9,66 @@ AsciiDoc Frequently Asked Questions
   newer FAQs may apply to the trunk and not the current release.
 ======
 
+
+== How do I number all paragraphs?
+Some documents such as specifications and legalese require all
+paragraphs to be sequentially numbered through the document, and to be
+able to reference these numbers.
+
+This can be achieved by using the DocBook toolchain but numbering the
+paragraphs with AsciiDoc using a custom config file containing the
+following (see http://www.methods.co.nz/asciidoc/userguide.html#X27
+for ways to include such a file):
+
+---------------------------------------------------------------------
+[paragraph]
+<formalpara{id? id="{id}"}{role? role="{role}"}{id? xreflabel="{paracounter}"}><title>{title}</title><para>
+{title%}<simpara{id? id="{id}"}{role? role="{role}"}{id? xreflabel="{paracounter}"}>
+{paracounter} |
+{title%}</simpara>
+{title#}</para></formalpara>
+{counter2:paracounter}
+{empty}
+---------------------------------------------------------------------
+
+References to the paragraphs operate in the normal way, you label the
+paragraph:
+
+-----------------------------
+[[some_label_you_understand]]
+paragraph contents
+-----------------------------
+
+and reference it in the normal manner:
+
+-----------------------------
+<<some_label_you_understand>>
+-----------------------------
+
+The text of the reference will be the paragraph number.
+
+For this to work for HTML you have to generate it via the DocBook
+toolchain.
+
+
+== Sources of information on configuring DocBook toolchains
+As DocBook is a content and structure markup language, AsciiDoc is
+also limited to content and structure.  Layout and formatting
+definition is specific to the DocBook toolchain.
+
+The dbLatex toolchain can be configured by setting parameters defined
+at http://dblatex.sourceforge.net/doc/manual/sec-params.html or for
+more complex styling by custom Latex stylesheets described at
+http://dblatex.sourceforge.net/doc/manual/sec-custom-latex.html.
+
+Similarly FOP can be configured by parameters described at
+http://sagehill.net/docbookxsl/OptionsPart.html and with custom xsl
+stylesheets generating formatting objects as described at
+http://sagehill.net/docbookxsl/CustomizingPart.html.
+
+
 [[X5]]
-== How can I include embedded fonts in an EPUB document
+== How can I include embedded fonts in an EPUB document?
 This is a two step process:
 
 1. Declare the font files and their use in your document's CSS

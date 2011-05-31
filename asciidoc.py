@@ -273,15 +273,12 @@ def is_safe_file(fname, directory=None):
 def safe_filename(fname, parentdir):
     """
     Return file name which must reside in the parent file directory.
-    Return None if file is not found or not safe.
+    Return None if file is not not safe.
     """
     if not os.path.isabs(fname):
         # Include files are relative to parent document
         # directory.
         fname = os.path.normpath(os.path.join(parentdir,fname))
-    if not os.path.isfile(fname):
-        message.warning('include file not found: %s' % fname)
-        return None
     if not is_safe_file(fname, parentdir):
         message.unsafe('include file: %s' % fname)
         return None
@@ -3641,7 +3638,7 @@ class Macros:
                 if mo:
                     if m.name == name:
                         return mo
-                    if re.match(name,mo.group('name')):
+                    if re.match(name, mo.group('name')):
                         return mo
         return None
     def extract_passthroughs(self,text,prefix=''):
@@ -3977,8 +3974,12 @@ class Reader1:
             del self.next[0]
             result = self.cursor[2]
             # Check for include macro.
-            mo = macros.match('+',r'include[1]?',result)
+            mo = macros.match('+',r'^include[1]?$',result)
             if mo and not skip:
+                # Parse include macro attributes.
+                attrs = {}
+                parse_attributes(mo.group('attrlist'),attrs)
+                warnings = attrs.get('warnings', True)
                 # Don't process include macro once the maximum depth is reached.
                 if self.current_depth >= self.max_depth:
                     return result
@@ -3991,20 +3992,23 @@ class Reader1:
                     fname = safe_filename(fname, os.path.dirname(self.fname))
                     if not fname:
                         return Reader1.read(self)   # Return next input line.
+                    if not os.path.isfile(fname):
+                        if warnings:
+                            message.warning('include file not found: %s' % fname)
+                        return Reader1.read(self)   # Return next input line.
                     if mo.group('name') == 'include1':
                         if not config.dumping:
-                            # Store the include file in memory for later
-                            # retrieval by the {include1:} system attribute.
-                            config.include1[fname] = [
-                                s.rstrip() for s in open(fname)]
+                            if fname not in config.include1:
+                                message.verbose('include1: ' + fname, linenos=False)
+                                # Store the include file in memory for later
+                                # retrieval by the {include1:} system attribute.
+                                config.include1[fname] = [
+                                    s.rstrip() for s in open(fname)]
                             return '{include1:%s}' % fname
                         else:
                             # This is a configuration dump, just pass the macro
                             # call through.
                             return result
-                # Parse include macro attributes.
-                attrs = {}
-                parse_attributes(mo.group('attrlist'),attrs)
                 # Clone self and set as parent (self assumes the role of child).
                 parent = Reader1()
                 assign(parent,self)
@@ -4022,6 +4026,7 @@ class Reader1:
                         'illegal include macro depth argument'))
                     self.max_depth = self.current_depth + attrs['depth']
                 # Process included file.
+                message.verbose('include: ' + fname, linenos=False)
                 self.open(fname)
                 self.current_depth = self.current_depth + 1
                 result = Reader1.read(self)
@@ -4553,6 +4558,29 @@ class Config:
                 for f in filenames:
                     if re.match(r'^.+\.conf$',f):
                         self.load_file(f,dirpath)
+
+    def find_config_dir(self, *dirnames):
+        """
+        Return path of configuration directory.
+        Try all the well known locations.
+        Return None if directory not found.
+        """
+        for d in [os.path.join(d, *dirnames) for d in self.get_load_dirs()]:
+            if os.path.isdir(d):
+                return d
+        return None
+
+    def set_theme_attributes(self):
+        theme = document.attributes.get('theme')
+        if theme and 'themedir' not in document.attributes:
+            themedir = config.find_config_dir('themes', theme)
+            if themedir:
+                document.attributes['themedir'] = themedir
+                iconsdir = os.path.join(themedir, 'icons')
+                if 'data-uri' in document.attributes and os.path.isdir(iconsdir):
+                    document.attributes['iconsdir'] = iconsdir
+            else:
+                message.warning('missing theme: %s' % theme, linenos=False)
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""
@@ -5389,7 +5417,7 @@ class Tables_OLD(AbstractBlocks):
 #---------------------------------------------------------------------------
 
 #---------------------------------------------------------------------------
-# Filter commands.
+# filter and theme plugin commands.
 #---------------------------------------------------------------------------
 import shutil, zipfile
 
@@ -5422,96 +5450,98 @@ def unzip(zip_file, destdir):
     finally:
         zipo.close()
 
-class Filter:
+class Plugin:
     """
-    --filter option commands.
+    --filter and --theme option commands.
     """
 
+    type = None     # 'filter' or 'theme'.
+
     @staticmethod
-    def get_filters_dir():
+    def get_dir():
         """
-        Return path of .asciidoc/filters in user's home direcory or None if
-        user home not defined.
+        Return plugins path (.asciidoc/filters or .asciidoc/themes) in user's
+        home direcory or None if user home not defined.
         """
         result = userdir()
         if result:
-            result = os.path.join(result,'.asciidoc','filters')
+            result = os.path.join(result, '.asciidoc', Plugin.type+'s')
         return result
 
     @staticmethod
     def install(args):
         """
-        Install filter Zip file.
-        args[0] is filter zip file path.
-        args[1] is optional destination filters directory.
+        Install plugin Zip file.
+        args[0] is plugin zip file path.
+        args[1] is optional destination plugins directory.
         """
         if len(args) not in (1,2):
-            die('invalid number of arguments: --filter install %s'
-                    % ' '.join(args))
+            die('invalid number of arguments: --%s install %s'
+                    % (Plugin.type, ' '.join(args)))
         zip_file = args[0]
         if not os.path.isfile(zip_file):
             die('file not found: %s' % zip_file)
         reo = re.match(r'^\w+',os.path.split(zip_file)[1])
         if not reo:
-            die('filter file name does not start with legal filter name: %s'
-                    % zip_file)
-        filter_name = reo.group()
+            die('file name does not start with legal %s name: %s'
+                    % (Plugin.type, zip_file))
+        plugin_name = reo.group()
         if len(args) == 2:
-            filters_dir = args[1]
-            if not os.path.isdir(filters_dir):
-                die('directory not found: %s' % filters_dir)
+            plugins_dir = args[1]
+            if not os.path.isdir(plugins_dir):
+                die('directory not found: %s' % plugins_dir)
         else:
-            filters_dir = Filter.get_filters_dir()
-            if not filters_dir:
+            plugins_dir = Plugin.get_dir()
+            if not plugins_dir:
                 die('user home directory is not defined')
-        filter_dir = os.path.join(filters_dir, filter_name)
-        if os.path.exists(filter_dir):
-            die('filter is already installed: %s' % filter_dir)
+        plugin_dir = os.path.join(plugins_dir, plugin_name)
+        if os.path.exists(plugin_dir):
+            die('%s is already installed: %s' % (Plugin.type, plugin_dir))
         try:
-            os.makedirs(filter_dir)
+            os.makedirs(plugin_dir)
         except Exception,e:
-            die('failed to create filter directory: %s' % str(e))
+            die('failed to create %s directory: %s' % (Plugin.type, str(e)))
         try:
-            unzip(zip_file, filter_dir)
+            unzip(zip_file, plugin_dir)
         except Exception,e:
-            die('failed to extract filter: %s' % str(e))
+            die('failed to extract %s: %s' % (Plugin.type, str(e)))
 
     @staticmethod
     def remove(args):
         """
-        Delete filter from .asciidoc/filters/ in user's home directory.
-        args[0] is filter name.
-        args[1] is optional filters directory.
+        Delete plugin directory.
+        args[0] is plugin name.
+        args[1] is optional plugin directory (defaults to ~/.asciidoc/<plugin_name>).
         """
         if len(args) not in (1,2):
-            die('invalid number of arguments: --filter remove %s'
-                    % ' '.join(args))
-        filter_name = args[0]
-        if not re.match(r'^\w+$',filter_name):
-            die('illegal filter name: %s' % filter_name)
+            die('invalid number of arguments: --%s remove %s'
+                    % (Plugin.type, ' '.join(args)))
+        plugin_name = args[0]
+        if not re.match(r'^\w+$',plugin_name):
+            die('illegal %s name: %s' % (Plugin.type, plugin_name))
         if len(args) == 2:
             d = args[1]
             if not os.path.isdir(d):
                 die('directory not found: %s' % d)
         else:
-            d = Filter.get_filters_dir()
+            d = Plugin.get_dir()
             if not d:
                 die('user directory is not defined')
-        filter_dir = os.path.join(d, filter_name)
-        if not os.path.isdir(filter_dir):
-            die('cannot find filter: %s' % filter_dir)
+        plugin_dir = os.path.join(d, plugin_name)
+        if not os.path.isdir(plugin_dir):
+            die('cannot find %s: %s' % (Plugin.type, plugin_dir))
         try:
-            message.verbose('removing: %s' % filter_dir)
-            shutil.rmtree(filter_dir)
+            message.verbose('removing: %s' % plugin_dir)
+            shutil.rmtree(plugin_dir)
         except Exception,e:
-            die('failed to delete filter: %s' % str(e))
+            die('failed to delete %s: %s' % (Plugin.type, str(e)))
 
     @staticmethod
     def list():
         """
-        List all filter directories (global and local).
+        List all plugin directories (global and local).
         """
-        for d in [os.path.join(d,'filters') for d in config.get_load_dirs()]:
+        for d in [os.path.join(d, Plugin.type+'s') for d in config.get_load_dirs()]:
             if os.path.isdir(d):
                 for f in os.walk(d).next()[1]:
                     message.stdout(os.path.join(d,f))
@@ -5602,6 +5632,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         has_header = document.parse_header(doctype,backend)
         # doctype is now finalized.
         document.attributes['doctype-'+document.doctype] = ''
+        config.set_theme_attributes()
         # Load backend configuration files.
         if '-e' not in options:
             f = document.backend + '.conf'
@@ -5656,7 +5687,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # Document header attributes override conf file attributes.
         document.attributes.update(AttributeEntry.attributes)
         document.update_attributes()
-        # Configuration is fully loaded so can expand templates.
+        # Configuration is fully loaded.
         config.expand_all_templates()
         # Check configuration for consistency.
         config.validate()
@@ -5868,7 +5899,7 @@ if __name__ == '__main__':
             ['attribute=','backend=','conf-file=','doctype=','dump-conf',
             'help','no-conf','no-header-footer','out-file=',
             'section-numbers','verbose','version','safe','unsafe',
-            'doctest','filter'])
+            'doctest','filter','theme'])
     except getopt.GetoptError:
         message.stderr('illegal command options')
         sys.exit(1)
@@ -5882,19 +5913,27 @@ if __name__ == '__main__':
             sys.exit(0)
         else:
             sys.exit(1)
+    plugin= None
     if '--filter' in [opt[0] for opt in opts]:
+        plugin = 'filter'
+    if '--theme' in [opt[0] for opt in opts]:
+        if plugin:
+            die('--filter and --theme options are mutually exclusive')
+        plugin = 'theme'
+    if plugin:
+        Plugin.type = plugin
         config.init(sys.argv[0])
         config.verbose = bool(set(['-v','--verbose']) & set([opt[0] for opt in opts]))
         if not args:
-            die('missing --filter command')
+            die('missing --%s command' % plugin)
         elif args[0] == 'install':
-            Filter.install(args[1:])
+            Plugin.install(args[1:])
         elif args[0] == 'remove':
-            Filter.remove(args[1:])
+            Plugin.remove(args[1:])
         elif args[0] == 'list':
-            Filter.list()
+            Plugin.list()
         else:
-            die('illegal --filter command: %s' % args[0])
+            die('illegal --%s command: %s' % (plugin,args[0]))
         sys.exit(0)
     try:
         execute(sys.argv[0],opts,args)

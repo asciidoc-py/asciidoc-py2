@@ -60,6 +60,14 @@ latexfilterdir = $(filtersdir)/latex
 latexfilterconf = filters/latex/latex-filter.conf
 latexfilterconfdir = $(filtersdir)/latex
 
+themesdir = $(ASCIIDOCCONF)/themes
+
+flasktheme = themes/flask/flask.css
+flaskthemedir = $(themesdir)/flask
+
+volnitskytheme = themes/volnitsky/volnitsky.css
+volnitskythemedir = $(themesdir)/volnitsky
+
 docbook = $(wildcard docbook-xsl/*.xsl)
 docbookdir = $(ASCIIDOCCONF)/docbook-xsl
 
@@ -80,7 +88,7 @@ iconsdir = $(ASCIIDOCCONF)/images/icons
 
 doc = $(wildcard README*) $(wildcard BUGS*) $(wildcard INSTALL*) $(wildcard CHANGELOG*)
 
-DATATARGETS = manp conf docbook dblatex css js callouts icons codefilterconf musicfilterconf sourcefilterconf graphvizfilterconf latexfilterconf
+DATATARGETS = manp conf docbook dblatex css js callouts icons codefilterconf musicfilterconf sourcefilterconf graphvizfilterconf latexfilterconf flasktheme volnitskytheme
 PROGTARGETS = prog codefilter musicfilter graphvizfilter latexfilter
 TARGETS = $(DATATARGETS) $(PROGTARGETS) doc
 

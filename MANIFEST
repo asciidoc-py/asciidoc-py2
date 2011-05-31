@@ -84,5 +84,6 @@ tests/testasciidoc.conf
 tests/asciidocapi.py
 tests/data/*.conf
 tests/data/*.txt
+themes/*
 vim/syntax/asciidoc.vim
 vim/ftdetect/asciidoc_filetype.vim

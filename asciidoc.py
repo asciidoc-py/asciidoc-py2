@@ -316,16 +316,6 @@ def re_join(relist):
     result = '('+result+')'
     return result
 
-def validate(value,rule,errmsg):
-    """Validate value against rule expression. Throw EAsciiDoc exception with
-    errmsg if validation fails."""
-    try:
-        if not eval(rule.replace('$',str(value))):
-            raise EAsciiDoc,errmsg
-    except Exception:
-        raise EAsciiDoc,errmsg
-    return value
-
 def lstrip_list(s):
     """
     Return list with empty items from start of list removed.
@@ -383,6 +373,100 @@ def dovetail_tags(stag,content,etag):
     include extraneous opening and closing line breaks."""
     return dovetail(dovetail(stag,content), etag)
 
+if float(sys.version[:3]) < 2.4:
+    pass # No compiler
+elif float(sys.version[:3]) < 2.6:
+    import compiler
+    from compiler.ast import Const, Dict, Expression, Name, Tuple, UnarySub, Keyword
+        
+    # Code from:
+    # http://mail.python.org/pipermail/python-list/2009-September/1219992.html
+    # Modified to use compiler.ast.List as this module has a List
+    def literal_eval(node_or_string):
+        """ 
+        Safely evaluate an expression node or a string containing a Python
+        expression.  The string or node provided may only consist of the  
+        following Python literal structures: strings, numbers, tuples, 
+        lists, dicts, booleans, and None.
+        """ 
+        _safe_names = {'None': None, 'True': True, 'False': False}
+        if isinstance(node_or_string, basestring):
+            node_or_string = compiler.parse(node_or_string, mode='eval')
+        if isinstance(node_or_string, Expression):
+            node_or_string = node_or_string.node
+        def _convert(node):
+            if isinstance(node, Const) and isinstance(node.value,
+                    (basestring, int, float, long, complex)):
+                 return node.value
+            elif isinstance(node, Tuple):
+                return tuple(map(_convert, node.nodes))
+            elif isinstance(node, compiler.ast.List):
+                return list(map(_convert, node.nodes))
+            elif isinstance(node, Dict):
+                return dict((_convert(k), _convert(v)) for k, v
+                            in node.items)
+            elif isinstance(node, Name):
+                if node.name in _safe_names:
+                    return _safe_names[node.name]
+            elif isinstance(node, UnarySub):
+                return -_convert(node.expr)
+            raise ValueError('malformed string')
+        return _convert(node_or_string)
+
+    def get_args(val):
+        d = {}
+        args = compiler.parse("d(" + val + ")", mode='eval').node.args
+        i = 1
+        for arg in args:
+            if isinstance(arg, Keyword):
+                break
+            d[str(i)] = literal_eval(arg)
+            i = i + 1
+        return d
+
+    def get_kwargs(val):
+        d = {}
+        args = compiler.parse("d(" + val + ")", mode='eval').node.args
+        i = 0
+        for arg in args:
+            if isinstance(arg, Keyword):
+                break
+            i += 1
+        args = args[i:]
+        for arg in args:
+            d[str(arg.name)] = literal_eval(arg.expr)
+        return d
+
+    def parse_to_list(val):
+        values = compiler.parse("[" + val + "]", mode='eval').node.asList()
+        return [literal_eval(v) for v in values]
+else:
+    import ast
+    from ast import literal_eval
+
+    def get_args(val):
+        d = {}
+        args = ast.parse("d(" + val + ")", mode='eval').body.args
+        i = 1
+        for arg in args:
+            if isinstance(arg, ast.Name):
+                d[str(i)] = literal_eval(arg.id)
+            else:
+                d[str(i)] = literal_eval(arg)
+            i += 1
+        return d
+
+    def get_kwargs(val):
+        d = {}
+        args = ast.parse("d(" + val + ")", mode='eval').body.keywords
+        for arg in args:
+            d[arg.arg] = literal_eval(arg.value)
+        return d
+
+    def parse_to_list(val):
+        values = ast.parse("[" + val + "]", mode='eval').body.elts
+        return [literal_eval(v) for v in values]
+
 def parse_attributes(attrs,dict):
     """Update a dictionary with name/value attributes from the attrs string.
     The attrs string is a comma separated list of values and keyword name=value
@@ -411,9 +495,10 @@ def parse_attributes(attrs,dict):
     dict['0'] = attrs
     # Replace line separators with spaces so line spanning works.
     s = re.sub(r'\s', ' ', attrs)
+    d = {}
     try:
-        d = eval('f('+s+')')
-        # Attributes must evaluate to strings, numbers or None.
+        d.update(get_args(s))
+        d.update(get_kwargs(s))
         for v in d.values():
             if not (isinstance(v,str) or isinstance(v,int) or isinstance(v,float) or v is None):
                 raise Exception
@@ -423,7 +508,9 @@ def parse_attributes(attrs,dict):
         s = map(lambda x: '"' + x.strip() + '"', s)
         s = ','.join(s)
         try:
-            d = eval('f('+s+')')
+            d = {}
+            d.update(get_args(s))
+            d.update(get_kwargs(s))
         except Exception:
             return  # If there's a syntax error leave with {0}=attrs.
         for k in d.keys():  # Drop any empty positional arguments.
@@ -441,7 +528,8 @@ def parse_named_attributes(s,attrs):
     def f(**keywords): return keywords
 
     try:
-        d = eval('f('+s+')')
+        d = {}
+        d = get_kwargs(s)
         attrs.update(d)
         return True
     except Exception:
@@ -451,7 +539,7 @@ def parse_list(s):
     """Parse comma separated string of Python literals. Return a tuple of of
     parsed values."""
     try:
-        result = eval('tuple(['+s+'])')
+        result = tuple(parse_to_list(s))
     except Exception:
         raise EAsciiDoc,'malformed list: '+s
     return result
@@ -3059,7 +3147,7 @@ class Table(AbstractBlock):
                 self.error('missing section: [tabletags-%s]' % t,halt=True)
         if self.separator:
             # Evaluate escape characters.
-            self.separator = eval('"'+self.separator+'"')
+            self.separator = literal_eval('"'+self.separator+'"')
         #TODO: Move to class Tables
         # Check global table parameters.
         elif config.pagewidth is None:
@@ -4043,16 +4131,24 @@ class Reader1:
                 self.parent = parent
                 # Set attributes in child.
                 if 'tabsize' in attrs:
-                    self.tabsize = int(validate(attrs['tabsize'],
-                        'int($)>=0',
-                        'illegal include macro tabsize argument'))
+                    try:
+                        val = int(attrs['tabsize'])
+                        if not val >= 0:
+                            raise ValueError, "not >= 0"
+                        self.tabsize = val
+                    except ValueError:
+                        raise EAsciiDoc, 'illegal include macro tabsize argument'
                 else:
                     self.tabsize = config.tabsize
                 if 'depth' in attrs:
-                    attrs['depth'] = int(validate(attrs['depth'],
-                        'int($)>=1',
-                        'illegal include macro depth argument'))
-                    self.max_depth = self.current_depth + attrs['depth']
+                    try:
+                        val = int(attrs['depth'])
+                        if not val >= 1:
+                            raise ValueError, "not >= 1"
+                        self.max_depth = self.current_depth + val
+                    except ValueError:
+                        raise EAsciiDoc, 'illegal include macro depth argument'
+
                 # Process included file.
                 message.verbose('include: ' + fname, linenos=False)
                 self.open(fname)
@@ -4158,6 +4254,9 @@ class Reader(Reader1):
                     else:
                         self.skip = defined
                 elif name == 'ifeval':
+                    if safe():
+                        message.unsafe('ifeval invalid')
+                        raise EAsciiDoc,'ifeval invalid safe document'
                     if not attrlist:
                         raise EAsciiDoc,'missing ifeval condition: %s' % result
                     cond = False
@@ -4612,23 +4711,33 @@ class Config:
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""
-        def set_misc(name,rule='True',intval=False):
+        def set_if_int_gt_zero(name, d):
             if name in d:
-                errmsg = 'illegal [miscellaneous] %s entry' % name
-                if intval:
-                    setattr(self, name, int(validate(d[name],rule,errmsg)))
-                else:
-                    setattr(self, name, validate(d[name],rule,errmsg))
-        set_misc('tabsize','int($)>0',intval=True)
-        set_misc('textwidth','int($)>0',intval=True) # DEPRECATED: Old tables only.
-        set_misc('pagewidth','"%f" % $')
+                try:
+                    val = int(d[name])
+                    if not val > 0:
+                        raise ValueError, "not > 0"
+                    if val > 0:
+                        setattr(self, name, val)
+                except ValueError:
+                    raise EAsciiDoc, 'illegal [miscellaneous] %s entry' % name
+        set_if_int_gt_zero('tabsize', d)
+        set_if_int_gt_zero('textwidth', d) # DEPRECATED: Old tables only.
+
         if 'pagewidth' in d:
-            self.pagewidth = float(self.pagewidth)
-        set_misc('pageunits')
-        set_misc('outfilesuffix')
+            try:
+                val = float(d['pagewidth'])
+                self.pagewidth = val
+            except ValueError:
+                raise EAsciiDoc, 'illegal [miscellaneous] pagewidth entry'
+
+        if 'pageunits' in d:
+            self.pageunits = d['pageunits']
+        if 'outfilesuffix' in d:
+            self.outfilesuffix = d['outfilesuffix']
         if 'newline' in d:
             # Convert escape sequences to their character values.
-            self.newline = eval('"'+d['newline']+'"')
+            self.newline = literal_eval('"'+d['newline']+'"')
         if 'subsnormal' in d:
             self.subsnormal = parse_options(d['subsnormal'],SUBS_OPTIONS,
                     'illegal [%s] %s: %s' %
@@ -5116,8 +5225,13 @@ class Table_OLD(AbstractBlock):
                 if s == '':
                     c.rulerwidth = None
                 else:
-                    c.rulerwidth = int(validate(s,'int($)>0',
-                        'malformed ruler: bad width'))
+                    try:
+                        val = int(s)
+                        if not val > 0:
+                            raise ValueError, 'not > 0'
+                        c.rulerwidth = val
+                    except ValueError:
+                        raise EAsciiDoc, 'malformed ruler: bad width'
             else:   # Calculate column width from inter-fillchar intervals.
                 if not re.match(r'^'+fc+r'+$',s):
                     raise EAsciiDoc,'malformed ruler: illegal fillchars'
@@ -5280,7 +5394,7 @@ class Table_OLD(AbstractBlock):
         """Parse the list of source table rows. Each row item in the returned
         list contains a list of cell data elements."""
         separator = self.attributes.get('separator',':')
-        separator = eval('"'+separator+'"')
+        separator = literal_eval('"'+separator+'"')
         if len(separator) != 1:
             raise EAsciiDoc,'malformed dsv separator: %s' % separator
         # TODO If separator is preceeded by an odd number of backslashes then
@@ -5290,7 +5404,7 @@ class Table_OLD(AbstractBlock):
             # Skip blank lines
             if row == '': continue
             # Unescape escaped characters.
-            row = eval('"'+row.replace('"','\\"')+'"')
+            row = literal_eval('"'+row.replace('"','\\"')+'"')
             data = row.split(separator)
             data = [s.strip() for s in data]
             result.append(data)

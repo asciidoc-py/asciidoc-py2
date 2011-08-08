@@ -339,6 +339,9 @@ and I'll add them to the list.
   for AsciiDoc], here is
   http://iportnov.blogspot.com/2011/03/asciidoc-beamer.html[short
   article in Russian] describing it.
+- Lex Trotman has written
+  https://github.com/elextr/codiicsa[codiicsa], a program that
+  converts DocBook to AsciiDoc.
 
 Please let me know if any of these links need updating.
 
@@ -375,10 +378,11 @@ and I'll add them to the list.
 - http://www.cherokee-project.com/doc/[Cherokee documentation].
 
 - Henrik Maier produced this professional User manual using AsciiDoc:
-  http://www.proconx.com/gcpmg/UMGCPMG-0801.pdf.
+  http://www.proconx.com/assets/files/products/modg100/UMMBRG300-1101.pdf
 
 - Henrik also produced this folded single page brochure format
-  example: http://www.proconx.com/gcpmg/IGGCPMG-0801-up.pdf.
+  example:
+  http://www.proconx.com/assets/files/products/modg100/IGMBRG300-1101-up.pdf
 +
 See this
 http://groups.google.com/group/asciidoc/browse_thread/thread/16ab5a06864b934f[AsciiDoc

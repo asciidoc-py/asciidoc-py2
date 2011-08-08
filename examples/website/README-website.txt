@@ -19,8 +19,8 @@ following layouts:
 [width="80%",cols="1,4",options="header"]
 |====================================================================
 |Layout   |  Description
-|layout1  |  Table based layout (this is the default layout)
-|layout2  |  CSS based simulated frames layout
+|layout1  |  Table based layout
+|layout2  |  CSS based layout (this is the default layout)
 |====================================================================
 
 The default tables based layout (layout1) works with most modern

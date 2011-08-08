@@ -10,7 +10,7 @@
 
 WEB_NAME = asciidoc
 
-LAYOUT ?= layout1
+LAYOUT ?= layout2
 
 # Various document locations.
 PROJ_DIR = ../..

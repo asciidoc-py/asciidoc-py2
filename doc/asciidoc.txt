@@ -5693,8 +5693,8 @@ generated outputs.
 |Name |Backends |Description
 
 |badges |xhtml11, html5 |
-Link badges ('XHTML 1.1', 'CSS' and 'Get Firefox!') in document
-footers. By default badges are omitted ('badges' is undefined).
+Link badges ('XHTML 1.1' and 'CSS') in document footers. By default
+badges are omitted ('badges' is undefined).
 
 NOTE: The path names of images, icons and scripts are relative path
 names to the output document not the source document.

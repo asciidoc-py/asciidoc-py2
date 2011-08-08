@@ -48,6 +48,7 @@ OPTIONS
 *-f, --format*='FORMAT'::
   Output formats: 'chunked', 'docbook', 'dvi', 'epub', 'htmlhelp',
   'manpage', 'pdf' (default), 'ps', 'tex', 'text', 'xhtml'.
+  The AsciiDoc 'a2x-format' attribute value is set to 'FORMAT'.
 
 *-h, --help*::
   Print command-line syntax and program options to stdout.

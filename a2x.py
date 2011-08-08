@@ -590,8 +590,8 @@ class A2X(AttrDict):
             if not os.path.isfile(docbook_file):
                 die('missing docbook file: %s' % docbook_file)
             return
-        shell('"%s" --backend docbook %s --out-file "%s" "%s"' %
-             (self.asciidoc, self.asciidoc_opts, docbook_file, self.asciidoc_file))
+        shell('"%s" --backend docbook -a "a2x-format=%s" %s --out-file "%s" "%s"' %
+             (self.asciidoc, self.format, self.asciidoc_opts, docbook_file, self.asciidoc_file))
         if not self.no_xmllint and XMLLINT:
             shell('"%s" --nonet --noout --valid "%s"' % (XMLLINT, docbook_file))
 
@@ -762,9 +762,9 @@ class A2X(AttrDict):
         text_file = self.dst_path('.text')
         html_file = self.dst_path('.text.html')
         if self.lynx:
-            shell('"%s" %s --conf-file "%s" -b html4 -o "%s" "%s"' %
+            shell('"%s" %s --conf-file "%s" -b html4 -a "a2x-format=%s" -o "%s" "%s"' %
                  (self.asciidoc, self.asciidoc_opts, self.asciidoc_conf_file('text.conf'),
-                  html_file, self.asciidoc_file))
+                  self.format, html_file, self.asciidoc_file))
             shell('"%s" -dump "%s" > "%s"' %
                  (LYNX, html_file, text_file))
         else:

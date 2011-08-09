@@ -738,3 +738,16 @@ video::http://www.808.dk/pics/video/gizmo.ogv[]
 ++++
 
 endif::backend-html5[]
+
+
+== Block macros
+
+:rs458: 2
+
+ifeval::[{rs458}==2]
+RS458 is 2.
+endif::[]
+ifeval::[not ({rs458}==2)]
+This will not be processed.
+endif::[]
+

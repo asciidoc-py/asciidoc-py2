@@ -2785,7 +2785,7 @@ Is equivalent to:
 Document text between the `ifeval` and `endif` macros is included if
 the Python expression inside the square brackets is true. Example:
 
-  ifeval::[{rs458}==2]]
+  ifeval::[{rs458}==2]
   :
   endif::[]
 

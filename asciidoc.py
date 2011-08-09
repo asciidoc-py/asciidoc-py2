@@ -4266,6 +4266,7 @@ class Reader(Reader1):
                             cond = eval(attrlist)
                         except Exception,e:
                             raise EAsciiDoc,'error evaluating ifeval condition: %s: %s' % (result, str(e))
+                        message.verbose('ifeval: %s: %r' % (attrlist, cond))
                     self.skip = not cond
                 if not attrlist or name == 'ifeval':
                     if self.skip:

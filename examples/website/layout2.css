@@ -2,20 +2,11 @@ body {
   margin: 0;
 }
 
-#layout-banner-box {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  height: 110px;
-  z-index: 2;
-  background-color: #73a0c5;
-}
-
 #layout-menu-box {
   position: fixed;
   left: 0px;
-  top: 110px;
-  width: 175px;
+  top: 0px;
+  width: 160px;
   height: 100%;
   z-index: 1;
   background-color: #f4f4f4;
@@ -23,8 +14,7 @@ body {
 
 #layout-content-box {
   position: relative;
-  margin-top: 100px;
-  margin-left: 175px;
+  margin-left: 160px;
   background-color: white;
 }
 
@@ -34,6 +24,7 @@ h1 {
 
 #layout-banner {
   color: white;
+  background-color: #73a0c5;
   font-family: sans-serif;
   text-align: left;
   padding: 0.8em 20px;
@@ -56,9 +47,9 @@ h1 {
   height: 100%;
   border-right: 3px solid #eeeeee;
   padding-top: 0.8em;
-  padding-left: 20px;
+  padding-left: 15px;
   padding-right: 0.8em;
-  font-size: 1.1em;
+  font-size: 1.0em;
   font-family: sans-serif;
   font-weight: bold;
 }

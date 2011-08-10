@@ -596,6 +596,18 @@ hard + 1min really hard taking the HR up to 160).
 - Replacement from `testcases.conf` configuration file: test-replacement
 |====
 
+== Table column specifiers with merged cells
+See
+http://groups.google.com/group/asciidoc/browse_thread/thread/c9238380a1f2507a
+
+[cols="<1m,>1,^1s, ^1e"]
+|============================================
+ .2+|        .2+|1- A     2+|2- B
+                            |i- a      |ii- b
+    |Values 1   |v1         |v2        |v3
+    |Values 2   |v4         |v5        |v6
+|============================================
+
 Floating tables and images
 --------------------------
 .Simple table
@@ -750,4 +762,3 @@ endif::[]
 ifeval::[not ({rs458}==2)]
 This will not be processed.
 endif::[]
-

@@ -88,7 +88,7 @@ body {
 }
 .........................................
 
-2. Declare the the font file as resource when you use `a2x(1)` to
+2. Declare the font file as resource when you use `a2x(1)` to
    compile the EPUB. For example:
 
   a2x -f epub -d book --epubcheck --stylesheet epubtest.css --resource .ttf=application/x-font-ttf --resource LiberationSerif-Regular.ttf epubtest.txt
@@ -106,7 +106,7 @@ body {
   accordingly (see the 'RESOURCES' section in the `a2x(1)` man page
   for details).
 - The URL value of the CSS 'src' property is set to the destination
-  font file relative the the CSS file.
+  font file relative to the CSS file.
 - The `--resource` option allows you to inject any file (not just font
   files) into the EPUB output document.
 - Using the CSS '@font-face' rule is a complex subject and is outside

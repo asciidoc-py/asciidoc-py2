@@ -273,7 +273,7 @@ def is_safe_file(fname, directory=None):
 def safe_filename(fname, parentdir):
     """
     Return file name which must reside in the parent file directory.
-    Return None if file is not not safe.
+    Return None if file is not safe.
     """
     if not os.path.isabs(fname):
         # Include files are relative to parent document

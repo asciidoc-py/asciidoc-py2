@@ -5795,7 +5795,7 @@ dealing with large amounts of imported plain text.
 |quirks |xhtml11 |
 Include the `xhtml11-quirks.conf` configuration file and
 `xhtml11-quirks.css` <<X35,stylesheet>> to work around IE6 browser
-incompatibilities. This feature is deprecated and it's use is
+incompatibilities. This feature is deprecated and its use is
 discouraged -- documents are still viewable in IE6 without it.
 
 |revremark |docbook |

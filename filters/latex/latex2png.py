@@ -142,7 +142,7 @@ def latex2png(infile, outfile, dpi, modified):
         cmd = 'dvipng'
         if dpi:
             cmd += ' -D %s' % dpi
-        cmd += ' -T tight -x 1000 -z 9 -bg Transparent --truecolor -o "%s" "%s ' \
+        cmd += ' -T tight -x 1000 -z 9 -bg Transparent --truecolor -o "%s" "%s" ' \
                % (outfile,dvifile)
         run(cmd)
     finally:

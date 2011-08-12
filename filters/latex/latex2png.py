@@ -113,13 +113,12 @@ def latex2png(infile, outfile, dpi, modified):
     skip = False
     if infile == '-':
         tex = sys.stdin.read()
-        checksum = md5.new(tex).digest()
-        f = os.path.splitext(outfile)[0] + '.md5'
         if modified:
-            if os.path.isfile(f) and os.path.isfile(outfile) and \
-                    checksum == open(f,'rb').read():
+            checksum = md5.new(tex).digest()
+            md5_file = os.path.splitext(outfile)[0] + '.md5'
+            if os.path.isfile(md5_file) and os.path.isfile(outfile) and \
+                    checksum == open(md5_file,'rb').read():
                 skip = True
-            open(f,'wb').write(checksum)
     else:
         if not os.path.isfile(infile):
             raise EApp, 'input file does not exist: %s' % infile
@@ -147,10 +146,13 @@ def latex2png(infile, outfile, dpi, modified):
         run(cmd)
     finally:
         os.chdir(saved_pwd)
-    for f in temps:
-        if os.path.isfile(f):
-            print_verbose('deleting: %s' % f)
-            os.remove(f)
+        for f in temps:
+            if os.path.isfile(f):
+                print_verbose('deleting: %s' % f)
+                os.remove(f)
+    if 'md5_file' in locals():
+        print_verbose('writing: %s' % md5_file)
+        open(md5_file,'wb').write(checksum)
 
 def usage(msg=''):
     if msg:

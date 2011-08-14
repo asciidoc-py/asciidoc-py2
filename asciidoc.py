@@ -1434,7 +1434,10 @@ class Document(object):
         self.attributes['asciidoc-version'] = VERSION
         self.attributes['asciidoc-file'] = APP_FILE
         self.attributes['asciidoc-dir'] = APP_DIR
-        self.attributes['asciidoc-confdir'] = CONF_DIR
+        if localapp():
+            self.attributes['asciidoc-confdir'] = APP_DIR
+        else:
+            self.attributes['asciidoc-confdir'] = CONF_DIR
         self.attributes['user-dir'] = USER_DIR
         if config.verbose:
             self.attributes['verbose'] = ''
@@ -4663,14 +4666,29 @@ class Config:
         """
         Load the backend configuration files from dirs list.
         If dirs not specified try all the well known locations.
+        Return True if a backend conf file was found.
         """
         if dirs is None:
             dirs = self.get_load_dirs()
+        loaded = False
+        # First search for filter backends.
         for d in dirs:
-            conf = document.backend + '.conf'
-            self.load_file(conf,d)
-            conf = document.backend + '-' + document.doctype + '.conf'
-            self.load_file(conf,d)
+            conf = os.path.join(d, 'filters', document.backend,
+                    '__backend__.conf')
+            if self.load_file(conf):
+                loaded = True
+            conf = os.path.join(d, 'filters', document.backend,
+                    '__backend-' + document.doctype + '__.conf')
+            self.load_file(conf)
+        if not loaded:
+            # Search in the normal locations.
+            for d in dirs:
+                conf = document.backend + '.conf'
+                if self.load_file(conf,d):
+                    loaded = True
+                conf = document.backend + '-' + document.doctype + '.conf'
+                self.load_file(conf,d)
+        return loaded
 
     def load_filters(self, dirs=None):
         """
@@ -4683,9 +4701,11 @@ class Config:
             # Load filter .conf files.
             filtersdir = os.path.join(d,'filters')
             for dirpath,dirnames,filenames in os.walk(filtersdir):
-                for f in filenames:
-                    if re.match(r'^.+\.conf$',f):
-                        self.load_file(f,dirpath)
+                if '__noautoload__' not in filenames:
+                    for f in filenames:
+                        if not f.startswith('__'):  # Don't load reserved names.
+                            if re.match(r'^.+\.conf$',f):
+                                self.load_file(f,dirpath)
 
     def find_config_dir(self, *dirnames):
         """
@@ -5737,7 +5757,14 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 if os.path.isfile(f):
                     config.load_file(f, include=include, exclude=exclude)
                 else:
-                    raise EAsciiDoc,'configuration file %s missing' % f
+                    # Search in filters directories.
+                    for d in config.get_load_dirs():
+                        f2 = os.path.join(d, 'filters', f)
+                        if os.path.isfile(f2):
+                            config.load_file(f2, include=include, exclude=exclude)
+                            break
+                    else:
+                        raise EAsciiDoc,'missing configuration file: %s' % f
 
     try:
         if doctype not in (None,'article','manpage','book'):
@@ -5779,9 +5806,8 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # Load backend configuration files.
         if '-e' not in options:
             f = document.backend + '.conf'
-            if not config.find_in_dirs(f):
-                message.warning('missing backend conf file: %s' % f, linenos=False)
-            config.load_backend()
+            if not config.load_backend():
+                raise EAsciiDoc,'missing backend conf file: %s' % f
         # backend is now known.
         document.attributes['backend-'+document.backend] = ''
         document.attributes[document.backend+'-'+document.doctype] = ''

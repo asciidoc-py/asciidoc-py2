@@ -4671,23 +4671,19 @@ class Config:
         if dirs is None:
             dirs = self.get_load_dirs()
         loaded = False
+        conf = document.backend + '.conf'
+        conf2 = document.backend + '-' + document.doctype + '.conf'
         # First search for filter backends.
-        for d in dirs:
-            conf = os.path.join(d, 'filters', document.backend,
-                    '__backend__.conf')
-            if self.load_file(conf):
+        for d in [os.path.join(d, 'backends', document.backend) for d in dirs]:
+            if self.load_file(conf,d):
                 loaded = True
-            conf = os.path.join(d, 'filters', document.backend,
-                    '__backend-' + document.doctype + '__.conf')
-            self.load_file(conf)
+            self.load_file(conf2,d)
         if not loaded:
             # Search in the normal locations.
             for d in dirs:
-                conf = document.backend + '.conf'
                 if self.load_file(conf,d):
                     loaded = True
-                conf = document.backend + '-' + document.doctype + '.conf'
-                self.load_file(conf,d)
+                self.load_file(conf2,d)
         return loaded
 
     def load_filters(self, dirs=None):
@@ -4701,11 +4697,9 @@ class Config:
             # Load filter .conf files.
             filtersdir = os.path.join(d,'filters')
             for dirpath,dirnames,filenames in os.walk(filtersdir):
-                if '__noautoload__' not in filenames:
-                    for f in filenames:
-                        if not f.startswith('__'):  # Don't load reserved names.
-                            if re.match(r'^.+\.conf$',f):
-                                self.load_file(f,dirpath)
+                for f in filenames:
+                    if re.match(r'^.+\.conf$',f):
+                        self.load_file(f,dirpath)
 
     def find_config_dir(self, *dirnames):
         """
@@ -5617,6 +5611,7 @@ class Plugin:
     """
     --filter and --theme option commands.
     """
+    CMDS = ('install','remove','list')
 
     type = None     # 'filter' or 'theme'.
 
@@ -5700,7 +5695,7 @@ class Plugin:
             die('failed to delete %s: %s' % (Plugin.type, str(e)))
 
     @staticmethod
-    def list():
+    def list(args):
         """
         List all plugin directories (global and local).
         """
@@ -5757,14 +5752,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 if os.path.isfile(f):
                     config.load_file(f, include=include, exclude=exclude)
                 else:
-                    # Search in filters directories.
-                    for d in config.get_load_dirs():
-                        f2 = os.path.join(d, 'filters', f)
-                        if os.path.isfile(f2):
-                            config.load_file(f2, include=include, exclude=exclude)
-                            break
-                    else:
-                        raise EAsciiDoc,'missing configuration file: %s' % f
+                    raise EAsciiDoc,'missing configuration file: %s' % f
 
     try:
         if doctype not in (None,'article','manpage','book'):
@@ -6068,11 +6056,12 @@ if __name__ == '__main__':
             ['attribute=','backend=','conf-file=','doctype=','dump-conf',
             'help','no-conf','no-header-footer','out-file=',
             'section-numbers','verbose','version','safe','unsafe',
-            'doctest','filter','theme'])
+            'doctest','filter=','theme='])
     except getopt.GetoptError:
         message.stderr('illegal command options')
         sys.exit(1)
-    if '--doctest' in [opt[0] for opt in opts]:
+    opt_names = [opt[0] for opt in opts]
+    if '--doctest' in opt_names:
         # Run module doctests.
         import doctest
         options = doctest.NORMALIZE_WHITESPACE + doctest.ELLIPSIS
@@ -6082,29 +6071,33 @@ if __name__ == '__main__':
             sys.exit(0)
         else:
             sys.exit(1)
-    plugin= None
-    if '--filter' in [opt[0] for opt in opts]:
-        plugin = 'filter'
-    if '--theme' in [opt[0] for opt in opts]:
-        if plugin:
-            die('--filter and --theme options are mutually exclusive')
-        plugin = 'theme'
-    if plugin:
+    # Look for plugin management commands.
+    count = 0
+    for o,v in opts:
+        if o in ('-b','--backend','--filter','--theme'):
+            if o == '-b':
+                o = '--backend'
+            plugin = o[2:]
+            cmd = v
+            if plugin == 'backend' and cmd not in Plugin.CMDS:
+                # --backend is setting document backend.
+                continue
+            count += 1
+    if count > 1:
+        die('--backend, --filter and --theme options are mutually exclusive')
+    if count == 1:
+        # Execute plugin management commands.
+        if not cmd:
+            die('missing --%s command' % plugin)
+        if cmd not in Plugin.CMDS:
+            die('illegal --%s command: %s' % (plugin, cmd))
         Plugin.type = plugin
         config.init(sys.argv[0])
-        config.verbose = bool(set(['-v','--verbose']) & set([opt[0] for opt in opts]))
-        if not args:
-            die('missing --%s command' % plugin)
-        elif args[0] == 'install':
-            Plugin.install(args[1:])
-        elif args[0] == 'remove':
-            Plugin.remove(args[1:])
-        elif args[0] == 'list':
-            Plugin.list()
-        else:
-            die('illegal --%s command: %s' % (plugin,args[0]))
-        sys.exit(0)
-    try:
-        execute(sys.argv[0],opts,args)
-    except KeyboardInterrupt:
-        sys.exit(1)
+        config.verbose = bool(set(['-v','--verbose']) & set(opt_names))
+        getattr(Plugin,cmd)(args)
+    else:
+        # Execute asciidoc.
+        try:
+            execute(sys.argv[0],opts,args)
+        except KeyboardInterrupt:
+            sys.exit(1)

@@ -201,6 +201,24 @@ configuration file:
   backend-alias-html=xhtml11
   backend-alias-docbook=docbook45
 
+[[X100]]
+Backend Plugins
+~~~~~~~~~~~~~~~
+The asciidoc(1) `--backend` option is also used to install and manage
+backend plugins. A backend plugin is a ZIP file containing backend
+configuration files and associated stylesheets and JavaScript files.
+
+- A backend plugin is used just like the built-in backends.
+- Backend plugins <<X27,take precedence>> over built-in backends with
+  the same name.
+- You can use the `{asciidoc-confdir}` <<X60, intrinsic attribute>> to
+  refer to built-in backend configuration file paths from backend
+  plugin configuration files.
+- By default backends plugins are installed in
+  `$HOME/.asciidoc/backends/<backend>` where `<backend>` is that
+  backend name.
+
+
 DocBook
 -------
 AsciiDoc generates 'article', 'book' and 'refentry'
@@ -3995,6 +4013,9 @@ loaded from the following locations:
      `--conf-file` option can be specified multiple times, in which
      case configuration files will be processed in the same order they
      appear on the command-line.
+6. <<X100,Backend plugin>> configuration files are loaded from
+   subdirectories named like `backends/<backend>` in locations 1, 2
+   and 3.
 
 Configuration files from the above locations are loaded in the
 following order:
@@ -4011,8 +4032,10 @@ This first pass makes locally set attributes available in the global
   `asciidoc.conf` in location 4.
 - The document header is parsed at this point and we can assume the
   'backend' and 'doctype' have now been defined.
-- `<backend>.conf` and `<backend>-<doctype>.conf` from locations 1,
-  2,3.
+- Backend plugin `<backend>.conf` and `<backend>-<doctype>.conf` files
+  from locations 6.  If a backend plugin is not found then try
+  locations 1, 2 and 3 for `<backend>.conf` and
+  `<backend>-<doctype>.conf` backend configuration files.
 - Filter conf files from the `filters` directory in locations 1, 2, 3.
 - `lang-<lang>.conf` from locations 1, 2, 3.
 - `asciidoc.conf` from location 4.

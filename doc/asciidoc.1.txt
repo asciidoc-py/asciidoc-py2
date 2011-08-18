@@ -38,6 +38,8 @@ OPTIONS
     You can also the backend alias names 'html' (aliased to 'xhtml11')
     or 'docbook' (aliased to 'docbook45').
     Defaults to 'html'.
+    The *--backend* option is also used to manage backend plugins (see
+    <<X1,*PLUGIN COMMANDS*>>).
 
 *-f, --conf-file*='CONF_FILE'::
     Use configuration file 'CONF_FILE'.Configuration files processed
@@ -100,14 +102,19 @@ OPTIONS
 [[X1]]
 PLUGIN COMMANDS
 ---------------
-The *--filter* and *--theme* options are used to install, remove and
-list AsciiDoc filter and theme plugins. Syntax:
+The asciidoc(1) *--filter*, *--backend* and *--theme* options are used
+to install, remove and list AsciiDoc filter, backend and theme
+plugins. Syntax:
 
-  asciidoc --filter|--theme install ZIP_FILE [PLUGINS_DIR]
-  asciidoc --filter|--theme remove PLUGIN_NAME [PLUGINS_DIR]
-  asciidoc --filter|--theme list
+  asciidoc OPTION install ZIP_FILE [PLUGINS_DIR]
+  asciidoc OPTION remove PLUGIN_NAME [PLUGINS_DIR]
+  asciidoc OPTION list
 
 Where:
+
+*OPTION*::
+  asciidoc(1) *--filter*, *--backend* or *--theme* option specifying
+  the type of plugin.
 
 *PLUGIN_NAME*::
   A unique plugin name containing only alphanumeric or underscore
@@ -122,8 +129,8 @@ Where:
   in its own separate subdirectory which has the same name as the
   plugin.
   *PLUGINS_DIR* defaults to the `.asciidoc/filters` directory (for
-  filter plugins) or `.asciidoc/themes` (for theme plugins) in the
-  user's home directory.
+  filter plugins) or `.asciidoc/backends` (for backend plugins)or
+  `.asciidoc/themes` (for theme plugins) in the user's home directory.
 
 The plugin commands perform as follows:
 

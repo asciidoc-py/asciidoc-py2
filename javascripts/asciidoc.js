@@ -68,7 +68,7 @@ toc: function (toclevels) {
   var i;
   for (i = 0; i < toc.childNodes.length; i++) {
     var entry = toc.childNodes[i];
-    if (entry.nodeName == 'DIV'
+    if (entry.nodeName == 'div'
      && entry.getAttribute("class")
      && entry.getAttribute("class").match(/^toclevel/))
       tocEntriesToRemove.push(entry);
@@ -114,7 +114,7 @@ footnotes: function () {
   var entriesToRemove = [];
   for (i = 0; i < noteholder.childNodes.length; i++) {
     var entry = noteholder.childNodes[i];
-    if (entry.nodeName == 'DIV' && entry.getAttribute("class") == "footnote")
+    if (entry.nodeName == 'div' && entry.getAttribute("class") == "footnote")
       entriesToRemove.push(entry);
   }
   for (i = 0; i < entriesToRemove.length; i++) {

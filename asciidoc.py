@@ -5599,7 +5599,11 @@ def unzip(zip_file, destdir):
                 outfile = os.path.join(directory, outfile)
                 perms = (zi.external_attr >> 16) & 0777
                 message.verbose('extracting: %s' % outfile)
-                fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perms)
+                if perms == 0:
+                    # Zip files created under Window do not include permissions.
+                    fh = os.open(outfile, os.O_CREAT | os.O_WRONLY)
+                else:
+                    fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perms)
                 try:
                     os.write(fh, zipo.read(zi.filename))
                 finally:

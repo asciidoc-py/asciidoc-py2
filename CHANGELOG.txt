@@ -4,6 +4,13 @@ AsciiDoc ChangeLog
 :website: http://www.methods.co.nz/asciidoc/
 
 
+Version 8.6.5 (2011-08-??)
+--------------------------
+.Additions and changes
+
+.Bug fixes
+
+
 Version 8.6.5 (2011-05-20)
 --------------------------
 .Additions and changes

@@ -4577,6 +4577,7 @@ predefined intrinsic attributes:
   {revnumber}           document revision number (from document header)
   {rsquo}               Right single quote character (note 7)
   {sectnum}             formatted section number (in section titles)
+  {sp}                  space character
   {showcomments}        send comment lines to the output
   {title}               section title (in titled elements)
   {two-colons}          Two colon characters

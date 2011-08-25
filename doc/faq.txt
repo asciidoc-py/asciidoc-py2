@@ -10,6 +10,18 @@ AsciiDoc Frequently Asked Questions
 ======
 
 
+== How do you handle spaces in included file names?
+Spaces are not allowed in macro targets so this include macro will not
+be processed:
+
+  include::my document.txt[]
+
+The work-around is to replace the spaces with the `{sp}` (space
+character) attribute, for example:
+
+  include::my{sp}document.txt[]
+
+
 == How do I number all paragraphs?
 Some documents such as specifications and legalese require all
 paragraphs to be sequentially numbered through the document, and to be

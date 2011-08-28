@@ -688,7 +688,7 @@ meta-data in the header of the output document:
 'docinfo' configuration file sections::
 If a <<X7,configuration file>> section named 'docinfo' has been loaded
 then it will be included in the document header. Typically the
-'docinfo' section name will be prfixed with a '+' character so that it
+'docinfo' section name will be prefixed with a '+' character so that it
 is appended to (rather than replace) other 'docinfo' sections.
 
 'docinfo' files::

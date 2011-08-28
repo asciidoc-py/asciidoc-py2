@@ -4513,6 +4513,25 @@ class Config:
         The 'exclude' list contains section names not to be loaded.
         Return False if no file was found in any of the locations.
         """
+        def update_section(section):
+            """ Update section in sections with contents. """
+            if section and contents:
+                if section in sections and self.entries_section(section):
+                    if ''.join(contents):
+                        # Merge entries.
+                        sections[section] += contents
+                    else:
+                        del sections[section]
+                else:
+                    if section.startswith('+'):
+                        # Append section.
+                        if section in sections:
+                            sections[section] += contents
+                        else:
+                            sections[section] = contents
+                    else:
+                        # Replace section.
+                        sections[section] = contents
         if dir:
             fname = os.path.join(dir, fname)
         # Sliently skip missing configuration file.
@@ -4527,7 +4546,7 @@ class Config:
         rdr.open(fname)
         message.linenos = None
         self.fname = fname
-        reo = re.compile(r'(?u)^\[(?P<section>[^\W\d][\w-]*)\]\s*$')
+        reo = re.compile(r'(?u)^\[(?P<section>\+?[^\W\d][\w-]*)\]\s*$')
         sections = OrderedDict()
         section,contents = '',[]
         while not rdr.eof():
@@ -4539,30 +4558,12 @@ class Config:
             s = s.rstrip()
             found = reo.findall(s)
             if found:
-                if section:             # Store previous section.
-                    if section in sections \
-                        and self.entries_section(section):
-                        if ''.join(contents):
-                            # Merge entries.
-                            sections[section] = sections[section] + contents
-                        else:
-                            del sections[section]
-                    else:
-                        sections[section] = contents
+                update_section(section) # Store previous section.
                 section = found[0].lower()
                 contents = []
             else:
                 contents.append(s)
-        if section and contents:        # Store last section.
-            if section in sections \
-                and self.entries_section(section):
-                if ''.join(contents):
-                    # Merge entries.
-                    sections[section] = sections[section] + contents
-                else:
-                    del sections[section]
-            else:
-                sections[section] = contents
+        update_section(section)         # Store last section.
         rdr.close()
         if include:
             for s in set(sections) - set(include):
@@ -4591,8 +4592,18 @@ class Config:
                     del sections[k][i]
                 elif not self.entries_section(k):
                     break
-        # Add/overwrite new sections.
-        self.sections.update(sections)
+        # Update new sections.
+        for k,v in sections.items():
+            if k.startswith('+'):
+                # Append section.
+                k = k[1:]
+                if k in self.sections:
+                    self.sections[k] += v
+                else:
+                    self.sections[k] = v
+            else:
+                # Replace section.
+                self.sections[k] = v
         self.parse_tags()
         # Internally [miscellaneous] section entries are just attributes.
         d = {}

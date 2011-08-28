@@ -682,20 +682,27 @@ attribute entry in the document header.
 [[X87]]
 Additional document header information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-'docinfo' files are a mechanism for optionally including additional
-meta-data in the header of the output document.
+AsciiDoc has two mechanisms for optionally including additional
+meta-data in the header of the output document:
 
+'docinfo' configuration file sections::
+If a <<X7,configuration file>> section named 'docinfo' has been loaded
+then it will be included in the document header. Typically the
+'docinfo' section name will be prfixed with a '+' character so that it
+is appended to (rather than replace) other 'docinfo' sections.
+
+'docinfo' files::
 Two docinfo files are recognized: one named `docinfo` and a second
 named like the AsciiDoc source file with a `-docinfo` suffix.  For
 example, if the source document is called `mydoc.txt` then the
 document information files would be `docinfo.xml` and
 `mydoc-docinfo.xml` (for DocBook outputs) and `docinfo.html` and
-`mydoc-docinfo.html` (for HTML outputs).
+`mydoc-docinfo.html` (for HTML outputs).  The <<X97,docinfo, docinfo1
+and docinfo2>> attributes control which docinfo files are included in
+the output files.
 
-The <<X97,docinfo, docinfo1 and docinfo2>> attributes control which
-docinfo files are included in the output files.
-
-The contents docinfo file is dependent on the type of output:
+The contents docinfo templates and files is dependent on the type of
+output:
 
 HTML::
   Valid 'head' child elements. Typically 'style' and 'script' elements
@@ -2847,8 +2854,8 @@ section:
 - The `template::[]` macro is useful for factoring configuration file
   markup.
 - `template::[]` macros cannot be nested.
-- `template::[]` macro expansion is applied to all sections
-  after all configuration files have been read.
+- `template::[]` macro expansion is applied after all configuration
+  files have been read.
 
 
 [[X77]]
@@ -3681,11 +3688,14 @@ lines of text between adjacent section headings.
   dash characters and cannot begin or end with a dash.
 - Lines starting with a hash character "#" are treated as comments and
   ignored.
-- Same named sections and section entries override previously loaded
-  sections and section entries (this is sometimes referred to as
-  'cascading').  Consequently, downstream configuration files need
-  only contain those sections and section entries that need to be
-  overridden.
+- If the section name is prefixed with a '+' character then the
+  section contents is appended to the contents of an already existing
+  same-named section.
+- Otherwise same-named sections and section entries override
+  previously loaded sections and section entries (this is sometimes
+  referred to as 'cascading').  Consequently, downstream configuration
+  files need only contain those sections and section entries that need
+  to be overridden.
 
 TIP: When creating custom configuration files you only need to include
 the sections and entries that differ from the default configuration.

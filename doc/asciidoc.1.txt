@@ -112,6 +112,7 @@ plugins. Syntax:
   asciidoc OPTION install ZIP_FILE [PLUGINS_DIR]
   asciidoc OPTION remove PLUGIN_NAME [PLUGINS_DIR]
   asciidoc OPTION list
+  asciidoc OPTION build ZIP_FILE PLUGIN_DIR
 
 Where:
 
@@ -135,6 +136,9 @@ Where:
   filter plugins) or `.asciidoc/backends` (for backend plugins)or
   `.asciidoc/themes` (for theme plugins) in the user's home directory.
 
+*PLUGIN_DIR*::
+  The name of a directory containing a plugin.
+
 The plugin commands perform as follows:
 
 *install*::
@@ -149,6 +153,11 @@ The plugin commands perform as follows:
   List the names and locations of all installed filter or theme
   plugins (including standard plugins installed in the global
   configuration directory).
+
+*build*::
+  Create a plugin file named *ZIP_FILE* containing all the files and
+  subdirectories in *PLUGIN_DIR*. Hidden files and directories (names
+  starting with a period) are skipped.
 
 
 EXIT STATUS

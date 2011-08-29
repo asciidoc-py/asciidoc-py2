@@ -5601,7 +5601,7 @@ def die(msg):
     message.stderr(msg)
     sys.exit(1)
 
-def unzip(zip_file, destdir):
+def extract_zip(zip_file, destdir):
     """
     Unzip Zip file to destination directory.
     Throws exception if error occurs.
@@ -5619,7 +5619,7 @@ def unzip(zip_file, destdir):
                 perms = (zi.external_attr >> 16) & 0777
                 message.verbose('extracting: %s' % outfile)
                 if perms == 0:
-                    # Zip files created under Window do not include permissions.
+                    # Zip files created under Windows do not include permissions.
                     fh = os.open(outfile, os.O_CREAT | os.O_WRONLY)
                 else:
                     fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perms)
@@ -5630,13 +5630,43 @@ def unzip(zip_file, destdir):
     finally:
         zipo.close()
 
+def create_zip(zip_file, srcdir, skip_hidden=True):
+    """
+    Create Zip file containing files in source directory.
+    Hidden files and directories (names starting with .) are skipped
+    if skip_hidden is True.
+    Throws exception if error occurs.
+    """
+    zipo = zipfile.ZipFile(zip_file, 'w')
+    try:
+        srcdir = os.path.abspath(srcdir)
+        if srcdir[-1] != os.path.sep:
+            srcdir += os.path.sep
+        for root, dirs, files in os.walk(srcdir):
+            arcroot = os.path.abspath(root)[len(srcdir):]
+            if skip_hidden:
+                for d in dirs[:]:
+                    if d.startswith('.'):
+                        message.verbose('skipping: %s' % os.path.join(arcroot, d))
+                        del dirs[dirs.index(d)]
+            for f in files:
+                filename = os.path.join(root,f)
+                arcname = os.path.join(arcroot, f)
+                if skip_hidden and f.startswith('.'):
+                    message.verbose('skipping: %s' % arcname)
+                    continue
+                message.verbose('archiving: %s' % arcname)
+                zipo.write(filename, arcname, zipfile.ZIP_DEFLATED)
+    finally:
+        zipo.close()
+
 class Plugin:
     """
     --filter and --theme option commands.
     """
-    CMDS = ('install','remove','list')
+    CMDS = ('install','remove','list','build')
 
-    type = None     # 'filter' or 'theme'.
+    type = None     # 'backend', 'filter' or 'theme'.
 
     @staticmethod
     def get_dir():
@@ -5683,7 +5713,7 @@ class Plugin:
         except Exception,e:
             die('failed to create %s directory: %s' % (Plugin.type, str(e)))
         try:
-            unzip(zip_file, plugin_dir)
+            extract_zip(zip_file, plugin_dir)
         except Exception,e:
             die('failed to extract %s: %s' % (Plugin.type, str(e)))
 
@@ -5726,6 +5756,25 @@ class Plugin:
             if os.path.isdir(d):
                 for f in os.walk(d).next()[1]:
                     message.stdout(os.path.join(d,f))
+
+    @staticmethod
+    def build(args):
+        """
+        Create plugin Zip file.
+        args[0] is Zip file name.
+        args[1] is plugin directory.
+        """
+        if len(args) != 2:
+            die('invalid number of arguments: --%s build %s'
+                    % (Plugin.type, ' '.join(args)))
+        zip_file = args[0]
+        plugin_dir = args[1]
+        if not os.path.isdir(plugin_dir):
+            die('plugin directory not found: %s' % plugin_dir)
+        try:
+            create_zip(zip_file, plugin_dir)
+        except Exception,e:
+            die('failed to create %s: %s' % (zip_file, str(e)))
 
 
 #---------------------------------------------------------------------------

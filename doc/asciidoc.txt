@@ -4905,7 +4905,8 @@ filters: they read text from the standard input, process it, and write
 to the standard output.
 
 The asciidoc(1) command `--filter` option can be used to install and
-remove filters.
+remove filters. The same option is used to unconditionally load a
+filter.
 
 Attribute substitution is performed on the filter command prior to
 execution -- attributes can be used to pass parameters from the
@@ -4946,7 +4947,10 @@ attribute list: the first positional attribute is the style name,
 remaining attributes are normally filter specific parameters.
 
 asciidoc(1) auto-loads all `.conf` files found in the filter search
-paths (see previous section).
+paths unless the container directory also contains a file named
+`__noautoload__` (see previous section). The `__noautoload__` feature
+is used for filters that will be loaded manually using the `--filter`
+option.
 
 [[X56]]
 Example Filter

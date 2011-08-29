@@ -4481,6 +4481,7 @@ class Config:
         self.loaded = []        # Loaded conf files.
         self.include1 = {}      # Holds include1::[] files for {include1:}.
         self.dumping = False    # True if asciidoc -c option specified.
+        self.filters = []       # Filter names specified by --filter option.
 
     def init(self, cmd):
         """
@@ -4700,7 +4701,10 @@ class Config:
     def load_filters(self, dirs=None):
         """
         Load filter configuration files from 'filters' directory in dirs list.
-        If dirs not specified try all the well known locations.
+        If dirs not specified try all the well known locations.  Suppress
+        loading if a file named __noautoload__ is in same directory as the conf
+        file unless the filter has been specified with the --filter
+        command-line option (in which case it is loaded unconditionally).
         """
         if dirs is None:
             dirs = self.get_load_dirs()
@@ -4708,9 +4712,13 @@ class Config:
             # Load filter .conf files.
             filtersdir = os.path.join(d,'filters')
             for dirpath,dirnames,filenames in os.walk(filtersdir):
-                for f in filenames:
-                    if re.match(r'^.+\.conf$',f):
-                        self.load_file(f,dirpath)
+                subdirs = dirpath[len(filtersdir):].split(os.path.sep)
+                # True if processing a filter specified by a --filter option.
+                filter_opt = len(subdirs) > 1 and subdirs[1] in self.filters
+                if '__noautoload__' not in filenames or filter_opt:
+                    for f in filenames:
+                        if re.match(r'^.+\.conf$',f):
+                            self.load_file(f,dirpath)
 
     def find_config_dir(self, *dirnames):
         """
@@ -5768,8 +5776,10 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                     config.load_file(f, include=include, exclude=exclude)
                 else:
                     raise EAsciiDoc,'missing configuration file: %s' % f
-
     try:
+        for f in config.filters:
+            if not config.find_config_dir('filters', f):
+                raise EAsciiDoc,'missing filter: %s' % f
         if doctype not in (None,'article','manpage','book'):
             raise EAsciiDoc,'illegal document type'
         # Set processing options.
@@ -5989,16 +5999,16 @@ def execute(cmd,opts,args):
             sys.exit(0)
         if o in ('-b','--backend'):
             backend = v
-#            config.cmd_attrs['backend'] = v
         if o in ('-c','--dump-conf'):
             options.append('-c')
         if o in ('-d','--doctype'):
             doctype = v
-#            config.cmd_attrs['doctype'] = v
         if o in ('-e','--no-conf'):
             options.append('-e')
         if o in ('-f','--conf-file'):
             confiles.append(v)
+        if o == '--filter':
+            config.filters.append(v)
         if o in ('-n','--section-numbers'):
             o = '-a'
             v = 'numbered'
@@ -6031,9 +6041,6 @@ def execute(cmd,opts,args):
     if len(args) == 0:
         usage('No source file specified')
         sys.exit(1)
-#    if not backend:
-#        usage('No --backend option specified')
-#        sys.exit(1)
     stdin,stdout = sys.stdin,sys.stdout
     try:
         infile = args[0]
@@ -6094,8 +6101,7 @@ if __name__ == '__main__':
                 o = '--backend'
             plugin = o[2:]
             cmd = v
-            if plugin == 'backend' and cmd not in Plugin.CMDS:
-                # --backend is setting document backend.
+            if plugin in ('backend','filter') and cmd not in Plugin.CMDS:
                 continue
             count += 1
     if count > 1:

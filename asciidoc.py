@@ -5618,11 +5618,14 @@ def extract_zip(zip_file, destdir):
                 outfile = os.path.join(directory, outfile)
                 perms = (zi.external_attr >> 16) & 0777
                 message.verbose('extracting: %s' % outfile)
+                flags = os.O_CREAT | os.O_WRONLY
+                if sys.platform == 'win32':
+                    flags |= os.O_BINARY
                 if perms == 0:
                     # Zip files created under Windows do not include permissions.
-                    fh = os.open(outfile, os.O_CREAT | os.O_WRONLY)
+                    fh = os.open(outfile, flags)
                 else:
-                    fh = os.open(outfile, os.O_CREAT | os.O_WRONLY, perms)
+                    fh = os.open(outfile, flags, perms)
                 try:
                     os.write(fh, zipo.read(zi.filename))
                 finally:

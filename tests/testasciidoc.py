@@ -275,7 +275,9 @@ class AsciiDocTests(object):
         first = True
         while not lines.eol():
             s = lines.read_until(r'^%+$')
-            if s:
+            s = [ l for l in s if l]    # Drop blank lines.
+            # Must be at least one non-blank line in addition to delimiter.
+            if len(s) > 1:
                 # Optional globals precede all tests.
                 if first and re.match(r'^%\s*globals$',s[0]):
                     self.globals = eval(' '.join(normalize_data(s[1:])))

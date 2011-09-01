@@ -64,9 +64,10 @@ toolchain.
 
 
 == Sources of information on configuring DocBook toolchains
-As DocBook is a content and structure markup language, AsciiDoc is
-also limited to content and structure.  Layout and formatting
-definition is specific to the DocBook toolchain.
+As DocBook is a content and structure markup language, therefore
+AsciiDoc generated DocBook markup is also limited to content and
+structure.  Layout and formatting definition is specific to the
+DocBook toolchain.
 
 The dblatex toolchain can be configured by setting parameters defined
 at http://dblatex.sourceforge.net/doc/manual/sec-params.html or for

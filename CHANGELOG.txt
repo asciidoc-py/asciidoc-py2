@@ -4,16 +4,150 @@ AsciiDoc ChangeLog
 :website: http://www.methods.co.nz/asciidoc/
 
 
-Version 8.6.5 (2011-08-??)
+Version 8.6.6 (2011-09-??)
 --------------------------
-.Additions and changes
+.Release highlights
+- The number and scope of the plugin commands has been increased:
+  * The asciidoc(1) `--backend` option has been extended, it now
+    recognizes plugin commands.
+  * An asciidoc(1) `--theme` option has been implemented to manage
+    theme plugins.
+  * A plugin 'build' command (for creating plugins) added to existing
+    'install', 'list' and 'remove' commands. All four commands are
+    recognized by asciidoc(1) `--backend`, `--filter` and `--theme`
+    options.
+- A security update by Kenny MacDermid removes the use of `eval()` on
+  untrusted input (to disallow code malicious execution).
+
+.All additions and changes
+- Added plugin 'build' command for plugin file creation.
+- Merged `--help plugins` back to `--help manpage` so it matches the
+  asciidoc(1) manpage.
+- The `--filter` command-line option can specify the name of filters
+  that will be unconditionally loaded.
+- If a filter directory contains a file named `__noautoload__` then
+  the filter is not automatically loaded (you can used the `--filter`
+  command-line option to override this behavior).
+- tests: Add Italian language tests.  Patch submitted by Simon
+  Ruderich. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/5e2e6f4dd740d51a
+- tests: Add tests for localized man pages.  Patch submitted by Simon
+  Ruderich. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/5e2e6f4dd740d51a
+- If the section name is prefixed with a '+' character then the
+  section contents is appended to the contents of an already existing
+  same-named section (the default behavior is to replace the the
+  section).
+- If a configuration file section named 'docinfo' is loaded then it
+  will be included in the document header.  Typically the 'docinfo'
+  section name will be prefixed with a '+' character so that it is
+  appended to (rather than replace) other 'docinfo' sections.
+- Added `{sp}` intrinsic attribute for single space character.  See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/a839aa01db0765d2
+- Fixed TOC and footnotes generator. Patch submitted by Will.  See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/734ac5afed736987
+- The `asciidoc-confdir` attribute is set to the asciidoc executable
+  directory if it contains global configuration files i.e. a local
+  asciidoc installation.
+- asciidoc now throws an error instead of just a warning of the
+  backend configuration file is not found.
+- latex filter: write MD5 file after successful PNG file generation.
+  Always delete temp files irrespective of outcome.
+- Added truecolor option to LaTeX filter. Patch submitted by Michel
+  Krämer. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/6436788a10561851
+- Unit test for table column specifiers with merged cells. Patch
+  submitted by Simon Ruderich. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/c9238380a1f2507a
+- Added verbose message for `ifeval::[]` macro evaluation.
+- Added test case for `ifeval::[]` evaluation.
+- Security update to remove the use of `eval()` on untrusted input (to
+  disallow code malicious execution).  Patch submitted by Kenny
+  MacDermid.
+- Changed web site layout from table to CSS based.  See
+  http://groups.google.com/group/asciidoc/browse_thread/thread/ec8e8481eb0e27b0/d1c035092b5bb7a4?lnk=gst&q=caption+option#d1c035092b5bb7a4
+- a2x: Pass `--format` option value to asciidoc as 'a2x-format'
+  attribute.  Patch submitted by Lex Trotman
+  (http://groups.google.com/group/asciidoc/browse_thread/thread/3e177b84bc133ca9/659796dfadad30ea?lnk=gst&q=a2x+format#659796dfadad30ea).
+- Added two FAQs submitted by Lex Trotman. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/16d3fb9672a408e7
+- html5,xhtml11: Implemented themes directory structure.
+- html5,xhtml11: Implemented asciidoc `--theme` management option
+  (install, list, build and remove commands).
+- html5,xhtml11: A theme can now optionally include a JavaScript file
+  `<theme>.js`
+- html5,xhtml11: If the 'data-uri' attribute is defined then icons
+  from the theme icons directory (if they exist) will be embedded in
+  the generated document.
+- Added optional 'warnings' argument to include macros.
+- The asciidoc `--verbose` option now prints file inclusion messages.
+- xhtml11, html5: Remove necessity for separate manpage CSS files.
+- Added 'css-signature' attribute to tests.
+- Add 'css-signature' attribute to set a CSS signature for the
+  document.  Patch submitted by Peg Russell, see:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/bacbf8aeb8ad6a3a
+- White background for toc2 TOC viewport so that horizontally scrolled
+  content does not obscure the the TOC.  Patch submitted by Lionel
+  Orry, see: http://code.google.com/p/asciidoc/issues/detail?id=8
 
 .Bug fixes
+- *FIXED*: Plugin install command: Delete backend directory is install
+  fails.
+- *FIXED*: Plugin install command: Fixed bug extracting binary files
+  on Windows (reported by Jean-Michel Inglebert).
+- *FIXED*: tests: Skip blank sections in testasciidoc.conf test
+  configuration file instead of throwing an exception (reported by
+  Jean-Michel Inglebert).
+- *FIXED*: If a plugin Zip file does not contain file permissions
+  (probably because it was created under Windows) then install it
+  using the default permissions.
+- *FIXED*: Fixed missing quote in preceding LaTeX filter patch. Fix
+  submitted by Simon Ruderich. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/6436788a10561851
+- *FIXED*: Some path attributes were processed as escaped Python
+  strings which could result in corrupted path names with backslash
+  separated Windows path names. Reported by Will. See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/e8f3938bcb4c8bb4/44d13113a35738ef
+- *FIXED*: Vertically spanned table cells resulted in incorrect column
+  styles being applied to some cells.  Reported by Will:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/c9238380a1f2507a/9afc4559d51e1dbd
+- *FIXED*: LaTeX backend: fixed bad escapes. Patch submitted by Mark
+  McCurry:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/8c111f1046b33691/158a944cf4d5ff0d?lnk=gst&q=latex+escapes#158a944cf4d5ff0d
 
 
 Version 8.6.5 (2011-05-20)
 --------------------------
-.Additions and changes
+.Release highlights
+- The addition of an 'html5' backend to generate HTML 5 output. Apart
+  from the inclusion of 'audio' and 'video' block macros the 'html5'
+  backend is functionally identical to the 'xhtml11' backend.
+
+- A new 'flask' theme for 'xhtml11' and 'html5' backends inspired by
+  the http://flask.pocoo.org/docs/[Flask website] styling (see 'toc2'
+  example in the next item below).
+
+- The new 'toc2' attribute generates a table of contents in
+  the left hand margin ('xhtml11' and 'html5' backends).
+  link:article-html5-toc2.html[This example] was generated using
+  the following command:
+
+  asciidoc -b html5 -a icons -a toc2 -a theme=flask article.txt
+
+- `a2x(1)` now has a flexible mechanism for copying arbitrary
+  resource files to HTML based outputs -- this is very handy for
+  generating EPUB files with embedded fonts and other resources.
+
+  * The `a2x(1)` `--resource` option can be used to inject any file
+    into EPUB output documents e.g. CSS resources such as fonts and
+    background images.
+  * Explicitly specified resources are added to the EPUB OPF manifest
+    automatically.
+  * You can explicitly specify file extension MIME types.
+  * The enhanced resource processing works around a couple of DocBook
+    XSL bugs (see link:epub-notes.html[EPUB Notes]).
+
+.All additions and changes
 - A new 'flask' theme for 'xhtml11' and 'html5' backends.  A shameless
   knock-off of the http://flask.pocoo.org/docs/[Flask website]
   styling.

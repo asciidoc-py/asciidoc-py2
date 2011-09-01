@@ -11,39 +11,9 @@ AsciiDoc Home Page
 
 .{revdate}: AsciiDoc {revnumber} Released
 ************************************************************************
-Release highlights:
-
-- The addition of an 'html5' backend to generate HTML 5 output. Apart
-  from the inclusion of 'audio' and 'video' block macros the 'html5'
-  backend is functionally identical to the 'xhtml11' backend.
-
-- A new 'flask' theme for 'xhtml11' and 'html5' backends inspired by
-  the http://flask.pocoo.org/docs/[Flask website] styling (see 'toc2'
-  example in the next item below).
-
-- The new 'toc2' attribute generates a table of contents in
-  the left hand margin ('xhtml11' and 'html5' backends).
-  link:article-html5-toc2.html[This example] was generated using
-  the following command:
-
-  asciidoc -b html5 -a icons -a toc2 -a theme=flask article.txt
-
-- `a2x(1)` now has a flexible mechanism for copying arbitrary
-  resource files to HTML based outputs -- this is very handy for
-  generating EPUB files with embedded fonts and other resources.
-
-  * The `a2x(1)` `--resource` option can be used to inject any file
-    into EPUB output documents e.g. CSS resources such as fonts and
-    background images.
-  * Explicitly specified resources are added to the EPUB OPF manifest
-    automatically.
-  * You can explicitly specify file extension MIME types.
-  * The enhanced resource processing works around a couple of DocBook
-    XSL bugs (see link:epub-notes.html[EPUB Notes]).
-
-Read the link:CHANGELOG.html[CHANGELOG] for a full list of all
-additions, changes and bug fixes. Changes are documented in the
-updated link:userguide.html[User Guide]. See the
+Read the link:CHANGELOG.html[CHANGELOG] for release hightlights and a
+full list of all additions, changes and bug fixes. Changes are
+documented in the updated link:userguide.html[User Guide]. See the
 link:INSTALL.html[Installation page] for downloads and and
 installation instructions.
 

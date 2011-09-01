@@ -5718,6 +5718,8 @@ class Plugin:
         try:
             extract_zip(zip_file, plugin_dir)
         except Exception,e:
+            if os.path.isdir(plugin_dir):
+                shutil.rmtree(plugin_dir)
             die('failed to extract %s: %s' % (Plugin.type, str(e)))
 
     @staticmethod

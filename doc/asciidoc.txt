@@ -501,8 +501,9 @@ stylesheet and to optionally include additional JavaScript code.
   named `themes/<theme>/` (where `<theme>` is the the theme name set
   by the 'theme' attribute). asciidoc(1) sets the 'themedir' attribute
   to the theme directory path name.
-- Themes can be installed, listed and removed using the asciidoc(1)
-  `--theme` option.
+- The 'theme' attribute can be set using the asciidoc(1) `--theme`
+  option, the `--theme` option can also be used to install, list and
+  remove theme plugins.
 - AsciiDoc ships with two themes: 'flask' and 'volnitsky'.
 - The `<theme>.css` file replaces the default `asciidoc.css` CSS file.
 - The `<theme>.js` file is included in addition to the default

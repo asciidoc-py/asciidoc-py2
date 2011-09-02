@@ -5633,33 +5633,41 @@ def extract_zip(zip_file, destdir):
     finally:
         zipo.close()
 
-def create_zip(zip_file, srcdir, skip_hidden=True):
+def create_zip(zip_file, src, skip_hidden=False):
     """
-    Create Zip file containing files in source directory.
-    Hidden files and directories (names starting with .) are skipped
+    Create Zip file. If src is a directory archive all contained files and
+    subdirectories, if src is a file archive the src file.
+    Files and directories names starting with . are skipped
     if skip_hidden is True.
     Throws exception if error occurs.
     """
     zipo = zipfile.ZipFile(zip_file, 'w')
     try:
-        srcdir = os.path.abspath(srcdir)
-        if srcdir[-1] != os.path.sep:
-            srcdir += os.path.sep
-        for root, dirs, files in os.walk(srcdir):
-            arcroot = os.path.abspath(root)[len(srcdir):]
-            if skip_hidden:
-                for d in dirs[:]:
-                    if d.startswith('.'):
-                        message.verbose('skipping: %s' % os.path.join(arcroot, d))
-                        del dirs[dirs.index(d)]
-            for f in files:
-                filename = os.path.join(root,f)
-                arcname = os.path.join(arcroot, f)
-                if skip_hidden and f.startswith('.'):
-                    message.verbose('skipping: %s' % arcname)
-                    continue
-                message.verbose('archiving: %s' % arcname)
-                zipo.write(filename, arcname, zipfile.ZIP_DEFLATED)
+        if os.path.isfile(src):
+            arcname = os.path.basename(src)
+            message.verbose('archiving: %s' % arcname)
+            zipo.write(src, arcname, zipfile.ZIP_DEFLATED)
+        elif os.path.isdir(src):
+            srcdir = os.path.abspath(src)
+            if srcdir[-1] != os.path.sep:
+                srcdir += os.path.sep
+            for root, dirs, files in os.walk(srcdir):
+                arcroot = os.path.abspath(root)[len(srcdir):]
+                if skip_hidden:
+                    for d in dirs[:]:
+                        if d.startswith('.'):
+                            message.verbose('skipping: %s' % os.path.join(arcroot, d))
+                            del dirs[dirs.index(d)]
+                for f in files:
+                    filename = os.path.join(root,f)
+                    arcname = os.path.join(arcroot, f)
+                    if skip_hidden and f.startswith('.'):
+                        message.verbose('skipping: %s' % arcname)
+                        continue
+                    message.verbose('archiving: %s' % arcname)
+                    zipo.write(filename, arcname, zipfile.ZIP_DEFLATED)
+        else:
+            raise ValueError,'src must specify directory or file: %s' % src
     finally:
         zipo.close()
 
@@ -5773,11 +5781,11 @@ class Plugin:
             die('invalid number of arguments: --%s build %s'
                     % (Plugin.type, ' '.join(args)))
         zip_file = args[0]
-        plugin_dir = args[1]
-        if not os.path.isdir(plugin_dir):
-            die('plugin directory not found: %s' % plugin_dir)
+        plugin_source = args[1]
+        if not (os.path.isdir(plugin_source) or os.path.isfile(plugin_source)):
+            die('plugin source not found: %s' % plugin_source)
         try:
-            create_zip(zip_file, plugin_dir)
+            create_zip(zip_file, plugin_source, skip_hidden=True)
         except Exception,e:
             die('failed to create %s: %s' % (zip_file, str(e)))
 
@@ -6066,6 +6074,9 @@ def execute(cmd,opts,args):
         if o in ('-n','--section-numbers'):
             o = '-a'
             v = 'numbered'
+        if o == '--theme':
+            o = '-a'
+            v = 'theme='+v
         if o in ('-a','--attribute'):
             e = parse_entry(v, allow_name_only=True)
             if not e:
@@ -6155,7 +6166,7 @@ if __name__ == '__main__':
                 o = '--backend'
             plugin = o[2:]
             cmd = v
-            if plugin in ('backend','filter') and cmd not in Plugin.CMDS:
+            if cmd not in Plugin.CMDS:
                 continue
             count += 1
     if count > 1:

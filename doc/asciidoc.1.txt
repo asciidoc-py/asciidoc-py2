@@ -58,10 +58,10 @@ OPTIONS
     Dump configuration to stdout.
 
 *--filter*='FILTER'::
-    Specify the name of a filter that will be unconditionally loaded.
-    This option may be specified more than once, it is used to load
-    filters that are not autoloaded.  The *--filter* option is also
-    used to manage backend plugins (see <<X1,*PLUGIN COMMANDS*>>).
+    Specify the name of a filter to be loaded (used to load filters
+    that are not auto-loaded).  This option may be specified more than
+    once. The *--filter* option is also used to manage filter plugins
+    (see <<X1,*PLUGIN COMMANDS*>>).
 
 *-h, --help* ['TOPIC']::
     Print help TOPIC. *--help* 'topics' will print a list of help
@@ -83,16 +83,18 @@ OPTIONS
     standard output is used.
 
 *-n, --section-numbers*::
-    Auto-number HTML article section titles.  Synonym for *-a
-    numbered*.
+    Auto-number HTML article section titles.  Synonym for
+    *--attribute numbered*.
 
 *--safe*::
     Enable safe mode. Safe mode is disabled by default.  AsciiDoc
     'safe mode' skips potentially dangerous scripted sections in
     AsciiDoc source files.
 
-*--theme*::
-    Manage asciidoc(1) themes (see <<X1,*PLUGIN COMMANDS*>>).
+*--theme*='THEME'::
+    Specify a theme name.  Synonym for *--attribute theme*='THEME'.
+    The *--theme* option is also used to manage theme plugins (see
+    <<X1,*PLUGIN COMMANDS*>>).
 
 *-v, --verbose*::
     Verbosely print processing information and configuration file
@@ -112,7 +114,7 @@ plugins. Syntax:
   asciidoc OPTION install ZIP_FILE [PLUGINS_DIR]
   asciidoc OPTION remove PLUGIN_NAME [PLUGINS_DIR]
   asciidoc OPTION list
-  asciidoc OPTION build ZIP_FILE PLUGIN_DIR
+  asciidoc OPTION build ZIP_FILE PLUGIN_SOURCE
 
 Where:
 
@@ -132,12 +134,13 @@ Where:
   The directory containing installed plugins. Each plugin is contained
   in its own separate subdirectory which has the same name as the
   plugin.
-  *PLUGINS_DIR* defaults to the `.asciidoc/filters` directory (for
-  filter plugins) or `.asciidoc/backends` (for backend plugins)or
-  `.asciidoc/themes` (for theme plugins) in the user's home directory.
+  *PLUGINS_DIR* defaults to the `$HOME/.asciidoc/filters` (for
+  filter plugins) or `$HOME/.asciidoc/backends` (for backend plugins)or
+  `$HOME/.asciidoc/themes` (for theme plugins).
 
-*PLUGIN_DIR*::
-  The name of a directory containing a plugin.
+*PLUGIN_SOURCE*::
+  The name of a directory containing the plugin source files or the
+  name of a single source file.
 
 The plugin commands perform as follows:
 
@@ -155,9 +158,9 @@ The plugin commands perform as follows:
   configuration directory).
 
 *build*::
-  Create a plugin file named *ZIP_FILE* containing all the files and
-  subdirectories in *PLUGIN_DIR*. Hidden files and directories (names
-  starting with a period) are skipped.
+  Create a plugin file named *ZIP_FILE* containing the files and
+  subdirectories specified by *PLUGIN_SOURCE*. File and directory
+  names starting with a period are skipped.
 
 
 EXIT STATUS

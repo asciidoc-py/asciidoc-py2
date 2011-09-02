@@ -34,12 +34,11 @@ OPTIONS
 
 *-b, --backend*='BACKEND'::
     Backend output file format: 'docbook45', 'xhtml11', 'html4',
-    'wordpress' or 'latex' (the 'latex' backend is experimental).
-    You can also the backend alias names 'html' (aliased to 'xhtml11')
-    or 'docbook' (aliased to 'docbook45').
-    Defaults to 'html'.
-    The *--backend* option is also used to manage backend plugins (see
-    <<X1,*PLUGIN COMMANDS*>>).
+    'html5', 'slidy', 'wordpress' or 'latex' (the 'latex' backend is
+    experimental).  You can also the backend alias names 'html'
+    (aliased to 'xhtml11') or 'docbook' (aliased to 'docbook45').
+    Defaults to 'html'.  The *--backend* option is also used to manage
+    backend plugins (see <<X1,*PLUGIN COMMANDS*>>).
 
 *-f, --conf-file*='CONF_FILE'::
     Use configuration file 'CONF_FILE'.Configuration files processed

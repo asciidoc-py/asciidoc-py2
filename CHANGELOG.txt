@@ -115,6 +115,10 @@ Version 8.6.6 (2011-09-??)
 - *FIXED*: LaTeX backend: fixed bad escapes. Patch submitted by Mark
   McCurry:
   http://groups.google.com/group/asciidoc/browse_thread/thread/8c111f1046b33691/158a944cf4d5ff0d?lnk=gst&q=latex+escapes#158a944cf4d5ff0d
+- *FIXED*: When using slidy backend, display of characters with
+  accents is wrong because of 'meta http-equiv' line missing. Reported
+  by Fabrice Flore-Thebault.  See:
+  http://groups.google.com/group/asciidoc/browse_thread/thread/eaf25f21d1da180a
 
 
 Version 8.6.5 (2011-05-20)

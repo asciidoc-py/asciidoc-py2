@@ -18,10 +18,8 @@ discussion list] and I'll add it.
 
 |fossil
 |Stuart Rackham
-|TODO
-|Generates Fossil friendly Wiki markup from AsciiDoc source (see also
-http://srackham.wordpress.com/2011/08/30/fossil-backend-for-asciidoc/[Fossil
-Backend for AsciiDoc]).
+|https://github.com/srackham/asciidoc-fossil-backend
+|Generates Fossil friendly Wiki markup from AsciiDoc source.
 
 |slidy2
 |Jean-Michel Inglebert
@@ -37,21 +35,21 @@ Backend for AsciiDoc]).
 |====
 |Filter name |Author |Home page |Description
 
-|ditaa |Henrik Maier
-|http://code.google.com/p/asciidoc-ditaa-filter/
-|http://ditaa.sourceforge.net[ditaa] ASCII line art filter.
-
 |aafigure |Henrik Maier
 |http://code.google.com/p/asciidoc-aafigure-filter/
 |https://launchpad.net/aafigure[Aafigure] ASCII line art filter.
 
-|mscgen |Henrik Maier
-|http://code.google.com/p/asciidoc-mscgen-filter/
-|Message sequence chart filter.
+|ditaa |Henrik Maier
+|http://code.google.com/p/asciidoc-ditaa-filter/
+|http://ditaa.sourceforge.net[ditaa] ASCII line art filter.
 
 |matplotlib |Leonid Volnitsky
 |http://volnitsky.com/project/mplw/
 |Using this filter you can generate charts from inline matplotlib scripts.
+
+|mscgen |Henrik Maier
+|http://code.google.com/p/asciidoc-mscgen-filter/
+|Message sequence chart filter.
 
 |====
 

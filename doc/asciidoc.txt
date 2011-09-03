@@ -5071,7 +5071,7 @@ added to AsciiDoc.
 
 Plugin commands and conventions are documented in the asciidoc(1) man
 page.  You can find lists of plugins on the
-{website}filters.html[AsciiDoc website].
+{website}plugins.html[AsciiDoc website].
 
 
 [[X36]]

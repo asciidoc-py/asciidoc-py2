@@ -7,15 +7,16 @@ AsciiDoc ChangeLog
 Version 8.6.6 (2011-09-??)
 --------------------------
 .Release highlights
-- The number and scope of the plugin commands has been increased:
-  * The asciidoc(1) `--backend` option has been extended, it now
-    recognizes plugin commands.
-  * An asciidoc(1) `--theme` option has been implemented to manage
-    theme plugins.
+- The AsciiDoc plugin architecture has been enhanced, unified and
+  extended:
+  * Plugin commands have been added to the asciidoc(1) `--backend`
+    option.
+  * An asciidoc(1) `--theme` option has been implemented to specify a
+    theme and to manage theme plugins.
   * A plugin 'build' command (for creating plugins) added to existing
-    'install', 'list' and 'remove' commands. All four commands are
-    recognized by asciidoc(1) `--backend`, `--filter` and `--theme`
-    options.
+    'install', 'list' and 'remove' plugin commands. All four commands
+    are recognized by asciidoc(1) `--backend`, `--filter` and
+    `--theme` options.
 - A security update by Kenny MacDermid removes the use of `eval()` on
   untrusted input (to disallow code malicious execution).
 

@@ -2,12 +2,7 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
-[NOTE]
-======
-- New FAQs are normally added at the top of this document.
-- The FAQ may be updated between AsciiDoc releases so some of the
-  newer FAQs may apply to the trunk and not the current release.
-======
+NOTE: New FAQs are normally added at the top of this document.
 
 
 == How do you handle spaces in included file names?
@@ -123,7 +118,7 @@ body {
 - The `--resource` option allows you to inject any file (not just font
   files) into the EPUB output document.
 - Using the CSS '@font-face' rule is a complex subject and is outside
-  the scope of the FAQ.
+  the scope of this FAQ.
 - Many EPUB readers do not process embedded fonts.
 ======
 

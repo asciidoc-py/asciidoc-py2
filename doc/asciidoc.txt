@@ -205,17 +205,16 @@ configuration file:
 Backend Plugins
 ~~~~~~~~~~~~~~~
 The asciidoc(1) `--backend` option is also used to install and manage
-backend plugins. A backend plugin is a ZIP file containing backend
-configuration files and associated stylesheets and JavaScript files.
+backend <<X101,plugins>>.
 
 - A backend plugin is used just like the built-in backends.
 - Backend plugins <<X27,take precedence>> over built-in backends with
   the same name.
 - You can use the `{asciidoc-confdir}` <<X60, intrinsic attribute>> to
-  refer to built-in backend configuration file paths from backend
-  plugin configuration files.
+  refer to the built-in backend configuration file location from
+  backend plugin configuration files.
 - By default backends plugins are installed in
-  `$HOME/.asciidoc/backends/<backend>` where `<backend>` is that
+  `$HOME/.asciidoc/backends/<backend>` where `<backend>` is the
   backend name.
 
 
@@ -501,9 +500,9 @@ stylesheet and to optionally include additional JavaScript code.
   named `themes/<theme>/` (where `<theme>` is the the theme name set
   by the 'theme' attribute). asciidoc(1) sets the 'themedir' attribute
   to the theme directory path name.
-- The 'theme' attribute can be set using the asciidoc(1) `--theme`
-  option, the `--theme` option can also be used to install, list and
-  remove theme plugins.
+- The 'theme' attribute can also be set using the asciidoc(1)
+  `--theme` option, the `--theme` option can also be used to manage
+  theme <<X101,plugins>>.
 - AsciiDoc ships with two themes: 'flask' and 'volnitsky'.
 - The `<theme>.css` file replaces the default `asciidoc.css` CSS file.
 - The `<theme>.js` file is included in addition to the default
@@ -517,10 +516,11 @@ stylesheet and to optionally include additional JavaScript code.
 - Linked CSS and JavaScript theme files are linked to the same linked
   locations as <<X35,other CSS and JavaScript files>>.
 
-For example, the command-line option `-a theme=foo` will cause
-asciidoc(1) to search <<X27,well known configuration file locations>>
-for a sub-directory called `themes/foo` containing the stylesheet
-`foo.css` and optionally a JavaScript file name `foo.js`.
+For example, the command-line option `--theme foo` (or `--attribute
+theme=foo`) will cause asciidoc(1) to search <<X27,well known
+configuration file locations>> for a sub-directory called `themes/foo`
+containing the stylesheet `foo.css` and optionally a JavaScript file
+name `foo.js`.
 
 
 Document Structure
@@ -5005,15 +5005,72 @@ The AsciiDoc distribution includes 'source', 'music', 'latex' and
 'graphviz' filters, details are on the
 {website}index.html#_filters[AsciiDoc website].
 
+[cols="1e,5",frame="topbot",options="header"]
+.Built-in filters list
+|====================================================================
+|Filter name |Description
+
+|music
+|A {website}music-filter.html[music filter] is included in the
+distribution `./filters/` directory. It translates music in
+http://lilypond.org/[LilyPond] or http://abcnotation.org.uk/[ABC]
+notation to standard classical notation
+
+|source
+|A {website}source-highlight-filter.html[source code highlight filter]
+is included in the distribution `./filters/` directory.
+
+
+|latex
+|The {website}latex-filter.html[AsciiDoc LaTeX filter] translates
+LaTeX source to a PNG image that is automatically inserted into the
+AsciiDoc output documents.
+
+|graphviz
+|Gouichi Iisaka has written a http://www.graphviz.org/[Graphviz]
+filter for AsciiDoc.  Graphviz generates diagrams from a textual
+specification. Gouichi Iisaka's Graphviz filter is included in the
+AsciiDoc distribution. Here are some
+{website}asciidoc-graphviz-sample.html[AsciiDoc Graphviz examples].
+
+|====================================================================
+
 [[X58]]
 Filter plugins
 ~~~~~~~~~~~~~~
-Filter plugins are a simple mechanism for distributing AsciiDoc
+Filter <<X101,plugins>> are a mechanism for distributing AsciiDoc
 filters.  A filter plugin is a Zip file containing the files that
-constitute a filter. The asciidoc(1) `--filter` option implements
-commands to install, remove and list filter plugins.  Filter plugin
-commands and conventions are documented in the asciidoc(1) man page.
-You can find a list of filter plugins on the
+constitute a filter.  The asciidoc(1) `--filter` option is used to
+load and manage filer <<X101,plugins>>.
+
+- A backend plugin is used just like the built-in backends.
+- Filter plugins <<X27,take precedence>> over built-in filters with
+  the same name.
+- By default filter plugins are installed in
+  `$HOME/.asciidoc/filters/<filter>` where `<filter>` is the filter
+  name.
+
+
+[[X101]]
+Plugins
+-------
+The AsciiDoc plugin architecture is an extension mechanism that allows
+additional <<X100,backends>>, <<X58,filters>> and <<X99,themes>> to be
+added to AsciiDoc.
+
+- A plugin is a Zip file containing an AsciiDoc backend, filter or
+  theme (configuration files, stylesheets, scripts, images).
+- The asciidoc(1) `--backend`, `--filter` and `--theme` command-line
+  options are used to load and manage plugins. Each of these options
+  responds to the plugin management 'install', 'list', 'remove' and
+  'build' commands.
+- The plugin management command names are reserved and cannot be used
+  for filter, backend or theme names.
+- The plugin Zip file name always begins with the backend, filter or
+  theme name.
+
+Plugin commands and conventions are documented in the asciidoc(1) man
+page.  You can find lists of plugins on the
 {website}filters.html[AsciiDoc website].
 
 
@@ -5025,18 +5082,14 @@ to stdout. The default topic summarizes asciidoc(1) usage:
 
   $ asciidoc --help
 
-To print a list of help topics:
-
-  $ asciidoc --help=topics
-
 To print a help topic specify the topic name as a command argument.
 Help topic names can be shortened so long as they are not ambiguous.
 Examples:
 
-  $ asciidoc --help=manpage
-  $ asciidoc -hm              # Short version of previous example.
-  $ asciidoc --help=syntax
-  $ asciidoc -hs              # Short version of previous example.
+  $ asciidoc --help manpage
+  $ asciidoc -h m              # Short version of previous example.
+  $ asciidoc --help syntax
+  $ asciidoc -h s              # Short version of previous example.
 
 Customizing Help
 ~~~~~~~~~~~~~~~~

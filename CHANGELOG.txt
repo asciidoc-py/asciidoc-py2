@@ -21,6 +21,8 @@ Version 8.6.6 (2011-09-04)
   untrusted input (to disallow code malicious execution).
 
 .All additions and changes
+- 'xhtml11', 'html5': Made verse and quote block text darker to print
+  legibly in Google Chrome browser.
 - Added plugin 'build' command for plugin file creation.
 - Merged `--help plugins` back to `--help manpage` so it matches the
   asciidoc(1) manpage.

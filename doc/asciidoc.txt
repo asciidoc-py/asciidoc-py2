@@ -5014,12 +5014,11 @@ The AsciiDoc distribution includes 'source', 'music', 'latex' and
 |A {website}music-filter.html[music filter] is included in the
 distribution `./filters/` directory. It translates music in
 http://lilypond.org/[LilyPond] or http://abcnotation.org.uk/[ABC]
-notation to standard classical notation
+notation to standard classical notation.
 
 |source
 |A {website}source-highlight-filter.html[source code highlight filter]
 is included in the distribution `./filters/` directory.
-
 
 |latex
 |The {website}latex-filter.html[AsciiDoc LaTeX filter] translates

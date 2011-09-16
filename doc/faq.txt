@@ -2,8 +2,11 @@ AsciiDoc Frequently Asked Questions
 ===================================
 
 
-NOTE: New FAQs are normally added at the top of this document.
+NOTE: New FAQs are appended to the bottom of this document.
 
+/////////////////////////////////////////////////////////////////
+ADD NEW FAQS TO THE BOTTOM OF THIS DOCUMENT TO MAINTAIN NUMBERING
+/////////////////////////////////////////////////////////////////
 
 == How do you handle spaces in included file names?
 Spaces are not allowed in macro targets so this include macro will not

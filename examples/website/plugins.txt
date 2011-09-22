@@ -16,6 +16,12 @@ discussion list] and I'll add it.
 |====
 |Backend name |Author |Home page |Description
 
+|9man
+|Alex Efros
+|http://powerman.name/asciidoc/
+|A backend plugin to generate man pages (troff) compatible with OS
+Inferno and Plan9.
+
 |fossil
 |Stuart Rackham
 |https://github.com/srackham/asciidoc-fossil-backend
@@ -39,6 +45,12 @@ discussion list] and I'll add it.
 |http://code.google.com/p/asciidoc-aafigure-filter/
 |https://launchpad.net/aafigure[Aafigure] ASCII line art filter.
 
+|graphviz-cmap
+|Alex Efros
+|http://powerman.name/asciidoc/
+|A variant of the built-in graphviz filter, which adds support for
+client-side imagemaps.
+
 |ditaa |Henrik Maier
 |http://code.google.com/p/asciidoc-ditaa-filter/
 |http://ditaa.sourceforge.net[ditaa] ASCII line art filter.
@@ -60,7 +72,10 @@ discussion list] and I'll add it.
 |====
 |Theme name |Author |Home page |Description
 
-||||
+|compact
+|Alex Efros
+|http://powerman.name/asciidoc/
+|Similar to default theme but more compact.
 
 |====
 

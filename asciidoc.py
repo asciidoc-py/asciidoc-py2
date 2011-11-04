@@ -22,7 +22,7 @@ DEFAULT_DOCTYPE = 'article'
 # definition subs entry.
 SUBS_OPTIONS = ('specialcharacters','quotes','specialwords',
     'replacements', 'attributes','macros','callouts','normal','verbatim',
-    'none','replacements2')
+    'none','replacements2','replacements3')
 # Default value for unspecified subs and presubs configuration file entries.
 SUBS_NORMAL = ('specialcharacters','quotes','attributes',
     'specialwords','replacements','macros','replacements2')
@@ -133,7 +133,7 @@ class Trace(object):
     """
     SUBS_NAMES = ('specialcharacters','quotes','specialwords',
                   'replacements', 'attributes','macros','callouts',
-                  'replacements2')
+                  'replacements2','replacements3')
     def __init__(self):
         self.name_re = ''        # Regexp pattern to match trace names.
         self.linenos = True
@@ -1343,7 +1343,7 @@ class Lex:
                 result = subs_quotes(result)
             elif o == 'specialwords':
                 result = config.subs_specialwords(result)
-            elif o in ('replacements','replacements2'):
+            elif o in ('replacements','replacements2','replacements3'):
                 result = config.subs_replacements(result,o)
             elif o == 'macros':
                 result = macros.subs(result)
@@ -4448,7 +4448,7 @@ class Config:
     ENTRIES_SECTIONS= ('tags','miscellaneous','attributes','specialcharacters',
             'specialwords','macros','replacements','quotes','titles',
             r'paradef-.+',r'listdef-.+',r'blockdef-.+',r'tabledef-.+',
-            r'tabletags-.+',r'listtags-.+','replacements2',
+            r'tabletags-.+',r'listtags-.+','replacements[23]',
             r'old_tabledef-.+')
     def __init__(self):
         self.sections = OrderedDict()   # Keyed by section name containing
@@ -4472,6 +4472,7 @@ class Config:
         self.replacements = OrderedDict()   # Key is find pattern, value is
                                             #replace pattern.
         self.replacements2 = OrderedDict()
+        self.replacements3 = OrderedDict()
         self.specialsections = {} # Name is special section name pattern, value
                                   # is corresponding section name.
         self.quotes = OrderedDict()    # Values contain corresponding tag name.
@@ -4623,6 +4624,7 @@ class Config:
         self.parse_specialwords()
         self.parse_replacements()
         self.parse_replacements('replacements2')
+        self.parse_replacements('replacements3')
         self.parse_specialsections()
         paragraphs.load(sections)
         lists.load(sections)
@@ -4863,6 +4865,7 @@ class Config:
         dump_section('specialwords',d)
         dump_section('replacements',self.replacements)
         dump_section('replacements2',self.replacements2)
+        dump_section('replacements3',self.replacements3)
         dump_section('specialsections',self.specialsections)
         d = {}
         for k,v in self.tags.items():
@@ -5381,7 +5384,7 @@ class Table_OLD(AbstractBlock):
             # and the output markup is HTML. It's also a bit dubious in that it
             # assumes the user has not modified the shipped line break pattern.
             subs = self.get_subs()[0]
-            if 'replacements' in subs:
+            if 'replacements2' in subs:
                 # Insert line breaks in cell data.
                 d = re.sub(r'(?m)\n',r' +\n',d)
                 d = d.split('\n')    # So writer.newline is written.

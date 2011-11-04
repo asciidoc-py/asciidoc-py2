@@ -3721,7 +3721,7 @@ quotes::
         Definitions for quoted inline character formatting.
 specialwords::
         Lists of words and phrases singled out for special markup.
-replacements, replacements2::
+replacements, replacements2, replacements3::
         Find and replace substitution definitions.
 specialsections::
         Used to single out special section names for specific markup.
@@ -3958,8 +3958,9 @@ ones.
 [[X10]]
 Replacements section
 ~~~~~~~~~~~~~~~~~~~~
-`[replacements]` and `[replacements2]` configuration file entries
-specify find and replace text and are formatted like:
+`[replacements]`, `[replacements2]` and `[replacements3]`
+configuration file entries specify find and replace text and are
+formatted like:
 
   <find_pattern>=<replacement_text>
 
@@ -3972,6 +3973,12 @@ macro name):
 
   NEW!=image:./images/smallnew.png[New!]
   \\NEW!=NEW!
+
+The only difference between the three replacement types is how they
+are applied. By default 'replacements' and 'replacement2' are applied
+in <<X102,normal>> substitution contexts whereas 'replacements3' needs
+to be configured explicitly and should only be used in backend
+configuration files.
 
 .Replacement behavior
 - The built-in replacements can be escaped with a backslash.
@@ -4685,16 +4692,17 @@ subs, presubs, postsubs::
   * Allowed values: 'specialcharacters', 'quotes', 'specialwords',
     'replacements', 'macros', 'attributes', 'callouts'.
 
-  * The following composite values are also allowed:
+  * [[X102]]The following composite values are also allowed:
 
     'none';;
         No substitutions.
     'normal';;
-        The following substitutions:
-        'specialcharacters','quotes','attributes','specialwords',
-        'replacements','macros'.
+        The following substitutions in the following order:
+        'specialcharacters', 'quotes', 'attributes', 'specialwords',
+        'replacements', 'macros', 'replacements2'.
     'verbatim';;
-        'specialcharacters' and 'callouts' substitutions.
+        The following substitutions in the following order:
+        'specialcharacters' and 'callouts'.
 
   * 'normal' and 'verbatim' substitutions can be redefined by with
     `subsnormal` and `subsverbatim` entries in a configuration file
@@ -5741,7 +5749,7 @@ Where:
   'open', 'pass', 'listing', 'literal', 'quote', 'example'.
 - `<subs>` is an inline substitution type:
   'specialcharacters','quotes','specialwords', 'replacements',
-  'attributes','macros','callouts', 'replacements2'.
+  'attributes','macros','callouts', 'replacements2', 'replacements3'.
 
 Command-line examples:
 

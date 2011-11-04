@@ -255,7 +255,7 @@ def safe():
     return document.safe
 
 def is_safe_file(fname, directory=None):
-    # A safe file must reside in directory directory (defaults to the source
+    # A safe file must reside in 'directory' (defaults to the source
     # file directory).
     if directory is None:
         if document.infile == '<stdin>':
@@ -4734,7 +4734,7 @@ class Config:
     def set_theme_attributes(self):
         theme = document.attributes.get('theme')
         if theme and 'themedir' not in document.attributes:
-            themedir = config.find_config_dir('themes', theme)
+            themedir = self.find_config_dir('themes', theme)
             if themedir:
                 document.attributes['themedir'] = themedir
                 iconsdir = os.path.join(themedir, 'icons')

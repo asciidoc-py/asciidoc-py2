@@ -1606,7 +1606,7 @@ class Document(object):
                 self.attributes['manpurpose'] = mo.group('manpurpose').strip()
                 names = [s.strip() for s in self.attributes['manname'].split(',')]
                 if len(names) > 9:
-                    message.warning('to many manpage names')
+                    message.warning('too many manpage names')
                 for i,name in enumerate(names):
                     self.attributes['manname%d' % (i+1)] = name
         if has_header:
@@ -6040,7 +6040,7 @@ def execute(cmd,opts,args):
     """
     config.init(cmd)
     if len(args) > 1:
-        usage('To many arguments')
+        usage('Too many arguments')
         sys.exit(1)
     backend = None
     doctype = None

@@ -1932,7 +1932,7 @@ class AttributeList:
         reo = re.compile(r"^'.*'$")
         for k,v in attrs.items():
             if reo.match(str(v)):
-                attrs[k] = Lex.subs_1(v[1:-1],SUBS_NORMAL)
+                attrs[k] = Lex.subs_1(v[1:-1], config.subsnormal)
     @staticmethod
     def style():
         return AttributeList.attrs.get('style') or AttributeList.attrs.get('1')

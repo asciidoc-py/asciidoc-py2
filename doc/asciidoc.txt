@@ -5659,6 +5659,11 @@ The column widths are determined by the browser, not the AsciiDoc
 'cols' attribute. If there is no 'width' attribute the table width is
 also left up to the browser.
 
+|unbreakable |xhtml11, html5 |block elements|
+'unbreakable' attempts to keep the block element together on a single
+printed page c.f. the 'breakable' and 'unbreakable' docbook (XSL/FO)
+options below.
+
 |breakable, unbreakable |docbook (XSL/FO) |table, example, block image|
 The 'breakable' options allows block elements to break across page
 boundaries; 'unbreakable' attempts to keep the block element together

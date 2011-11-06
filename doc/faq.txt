@@ -1189,3 +1189,66 @@ If quoting were omitted the equals character (separating the
 entry name `x` from the value `y`) would be escaped.
 
 
+== How can I control page breaks when printing HTML outputs?
+Here are some techniques you can use to control page breaks in HTML
+outputs produced by the 'xhtml11' and 'html5' backends:
+
+- You can generate a page break with the '<<<' block macro. The
+  following example prints the 'Rats and Mice' section on a new page:
++
+----------------
+<<<
+== Rats and Mice
+Lorum ipsum ...
+----------------
+
+- You can use the 'unbreakable' option to instruct the browser not to
+  break a block element. The following image and it's caption will be
+  kept together the printed page:
++
+------------------------------------
+[options="unbreakable"]
+.Tiger block image
+image::images/tiger.png[Tiger image]
+------------------------------------
+
+- You can apply the 'unbreakable' option globally to all block
+  elements by defining the 'unbreakable-option' attribute in your
+  document header.
+
+- Finally, the most powerful technique is to create custom CSS
+  containing paged media properties. For example this asciidoc(1)
+  command:
++
+--
+
+  asciidoc --attribute stylesheet=article.css article.txt
+
+Will include the following `article.css` file in the output document:
+
+-------------------------------------------------
+div#toc, div.sect1 { page-break-before: always; }
+-------------------------------------------------
+
+Which will ensure the table of contents and all top level sections
+start on a new printed page.
+--
+
+
+== Is it possible to reposition the Table of Contents in HTML outputs?
+By default the 'xhtml11' and 'html5' backends auto-position the TOC
+after the header. You can manually position the header by setting the
+'toc-placement' attribute value to 'manual' and then inserting the
+`toc::[]` block macro where you want the TOC to appear. For example,
+put this in the document header:
+
+----------------------
+:toc-placement: manual
+----------------------
+
+and this where you want the TOC to appear:
+
+-------
+toc::[]
+-------
+

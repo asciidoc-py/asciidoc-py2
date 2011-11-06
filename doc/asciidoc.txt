@@ -5950,6 +5950,12 @@ article or book document. Use the 'max-width' attribute to change the
 content width. In all other respects behaves the same as the 'toc'
 attribute.
 
+|toc-placement |html5, xhtml11 |
+When set to 'auto' (the default value) asciidoc(1) will display the
+'Table of Contents' in the document header. When set to 'manual' the
+'Table of Contents' position is determined by the position of the
+`toc::[]` block macro.
+
 |toc-title |html5, xhtml11 |
 Sets the table of contents title (defaults to 'Table of Contents').
 

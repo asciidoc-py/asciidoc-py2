@@ -45,12 +45,12 @@ OPTIONS
   document type is 'article' unless the format is 'manpage' (in which
   case it defaults to 'manpage').
 
-*-b, --backend*='BACKEND'
+*-b, --backend*='BACKEND'::
   'BACKEND' is the name of an installed backend plugin. When this
   option is specified 'a2x' attempts load a file name 'a2x-backend.py'
   from the 'BACKEND' plugin directory It then converts the
   'SOURCE_FILE' to a 'BACKEND' formatted output file using a global
-  function defined in 'a2x-backend.py' called 'to_<BACKEND>'.
+  function defined in 'a2x-backend.py' called 'to_BACKEND'.
 
 *-f, --format*='FORMAT'::
   Output formats: 'chunked', 'docbook', 'dvi', 'epub', 'htmlhelp',

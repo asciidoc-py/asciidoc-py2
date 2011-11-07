@@ -12,11 +12,10 @@ source-highlight] to highlight 'html4' and 'xhtml11' outputs. You also
 have the option of using the http://pygments.org/[Pygments] syntax
 highlighter for 'xhtml11' outputs.
 
-To use Pygments you need to define an AsciiDoc attribute named
-'pygments' (either from the command-line or in the global
-`asciidoc.conf` configuration file) and you will also need to have
-Pygments installed and the 'pygmentize' command in your PATH.
-
+- The filter command must reside in the shell search 'PATH'.
+  'pygmentize' command in your 'PATH'.
+- To use Pygments you need to define an AsciiDoc attribute named
+  'pygments'.
 - You can customize Pygments CSS styles by editing
   `./stylesheets/pygments.css`.
 - To make Pygments your default highlighter put the following line
@@ -30,8 +29,50 @@ Pygments installed and the 'pygmentize' command in your PATH.
 
 DocBook Outputs
 ---------------
-DocBook outputs are highlighted by toolchains that have
-`programlisting` element highlight support, for example 'dblatex'.
+AsciiDoc encloses the source code in a DocBook 'programlisting'
+element and leaves source code highlighting to the DocBook toolchain
+(dblatex has a particularly nice programlisting highlighter). The
+DocBook programlisting element is assigned two attributes:
+
+. The 'language' attribute is set to the AsciiDoc 'language'
+  attribute.
+. The 'linenumbering' attribute is set to the AsciiDoc 'src_numbered'
+  attribute ('numbered' or 'unnumbered').
+
+
+Block attributes
+----------------
+The following attributes can be included in source code block
+attribute lists.
+
+- 'style' and 'language' are mandatory.
+- 'style', 'language' and 'src_numbered' are the first three
+  positional attributes in that order.
+- The 'args' attribute allows the inclusion of arbitrary (highlighter
+  dependent) command options.
+
+//
+
+style::
+  Set to 'source'.
+language::
+  The source code language name.
+src_numbered::
+  Set to 'numbered' to include line numbers.
+src_tab::
+  Set tab size (GNU source-highlight only).
+args::
+  Include this attribute value in the highlighter command-line (GNU
+  source-highlight and pygmentize) or in the `programlisting` element
+  (DocBook).
+
+
+Testing
+-------
+Test the filter by converting the test file to HTML with AsciiDoc:
+
+  $ asciidoc -v ./filters/source/source-highlight-filter-test.txt
+  $ firefox ./filters/source/source-highlight-filter-test.html &
 
 
 Examples
@@ -196,33 +237,3 @@ end
 - You may need to place callout markers inside source code comments to
   ensure they are not misinterpreted and mangled by the highlighter.
 =====
-
-
-Installation
-------------
-HTML
-~~~~
-If you want to syntax highlight AsciiDoc HTML outputs (`html4` and
-`xhtml11` backends) you need to install
-http://www.gnu.org/software/src-highlite/[GNU source-highlight] or
-http://pygments.org/[Pygments] (most distributions have these
-packages).
-
-DocBook
-~~~~~~~
-AsciiDoc encloses the source code in a DocBook 'programlisting'
-element and leaves source code highlighting to the DocBook toolchain
-(dblatex has a particularly nice programlisting highlighter). The
-DocBook programlisting element is assigned two attributes:
-
-. The 'language' attribute is set to the AsciiDoc 'language'
-  attribute.
-. The 'linenumbering' attribute is set to the AsciiDoc 'src_numbered'
-  attribute ('numbered' or 'unnumbered').
-
-Testing
-~~~~~~~
-Test the filter by converting the test file to HTML with AsciiDoc:
-
-  $ asciidoc -v ./filters/source/source-highlight-filter-test.txt
-  $ firefox ./filters/source/source-highlight-filter-test.html &

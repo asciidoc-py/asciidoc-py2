@@ -45,6 +45,13 @@ OPTIONS
   document type is 'article' unless the format is 'manpage' (in which
   case it defaults to 'manpage').
 
+*-b, --backend*='BACKEND'
+  'BACKEND' is the name of an installed backend plugin. When this
+  option is specified 'a2x' attempts load a file name 'a2x-backend.py'
+  from the 'BACKEND' plugin directory It then converts the
+  'SOURCE_FILE' to a 'BACKEND' formatted output file using a global
+  function defined in 'a2x-backend.py' called 'to_<BACKEND>'.
+
 *-f, --format*='FORMAT'::
   Output formats: 'chunked', 'docbook', 'dvi', 'epub', 'htmlhelp',
   'manpage', 'pdf' (default), 'ps', 'tex', 'text', 'xhtml'.
@@ -122,6 +129,10 @@ OPTIONS
 
 *--dblatex-opts*='DBLATEX_OPTS'::
   Additional 'dblatex(1)' options.
+  This option may be specified more than once.
+
+*--backend-opts*='BACKEND_OPTS'::
+  Options for the backend plugin specified by the '--backend' option.
   This option may be specified more than once.
 
 Options can also be set in the AsciiDoc source file. If 'SOURCE_FILE'

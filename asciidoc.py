@@ -2302,6 +2302,8 @@ class Section:
                 message.error('empty section is not valid')
 
 class AbstractBlock:
+    names = []  # Global stack of short block names for enter() and exit().
+
     def __init__(self):
         # Configuration parameter names common to all blocks.
         self.CONF_ENTRIES = ('delimiter','options','subs','presubs','postsubs',
@@ -2513,6 +2515,27 @@ class AbstractBlock:
             self.presubs = config.subsnormal
         if reader.cursor:
             self.start = reader.cursor[:]
+    def enter(self):
+        '''
+        On block entry set the 'blockname' attribute to the block short name.
+        Only applies to delimited blocks, lists and tables.
+        '''
+        name = self.short_name()
+        trace('block open', name)
+        self.names.append(name)
+        document.attributes['blockname'] = name
+    def exit(self):
+        '''
+        On block exits restore previous parent 'blockname' or undefine it
+        if we're no longer inside a block.
+        '''
+        assert len(self.names) > 0
+        name = self.names.pop()
+        trace('block exit', name)
+        if len(self.names) == 0:
+            document.attributes['blockname'] = None
+        else:
+            document.attributes['blockname'] = self.names[-1]
     def merge_attributes(self,attrs,params=[]):
         """
         Use the current blocks attribute list (attrs dictionary) to build a
@@ -2876,6 +2899,7 @@ class List(AbstractBlock):
         if missing:
             self.error('missing tag(s): %s' % ','.join(missing), halt=True)
     def translate(self):
+        self.enter()
         AbstractBlock.translate(self)
         if self.short_name() in ('bibliography','glossary','qanda'):
             message.deprecated('old %s list syntax' % self.short_name())
@@ -2932,6 +2956,7 @@ class List(AbstractBlock):
         lists.open.pop()
         if len(lists.open):
             document.attributes['listindex'] = str(lists.open[-1].ordinal)
+        self.exit()
 
 class Lists(AbstractBlocks):
     """List of List objects."""
@@ -2999,6 +3024,7 @@ class DelimitedBlock(AbstractBlock):
     def isnext(self):
         return AbstractBlock.isnext(self)
     def translate(self):
+        self.enter()
         AbstractBlock.translate(self)
         reader.read()   # Discard delimiter.
         attrs = {}
@@ -3040,6 +3066,7 @@ class DelimitedBlock(AbstractBlock):
         else:
             delimiter = reader.read()   # Discard delimiter line.
             assert re.match(self.delimiter,delimiter)
+        self.exit()
 
 class DelimitedBlocks(AbstractBlocks):
     """List of delimited blocks."""
@@ -3555,6 +3582,8 @@ class Table(AbstractBlock):
         if len(text) == 0:
             message.warning('[%s] table is empty' % self.name)
             return
+        self.name = 'table'
+        self.enter()
         cols = attrs.get('cols')
         if not cols:
             # Calculate column count from number of items in first line.
@@ -3602,6 +3631,7 @@ class Table(AbstractBlock):
         if bodyrows:
             table = table.replace('\x07bodyrows\x07', bodyrows, 1)
         writer.write(table,trace='table')
+        self.exit()
 
 class Tables(AbstractBlocks):
     """List of tables."""
@@ -5493,6 +5523,8 @@ class Table_OLD(AbstractBlock):
         if self.check_msg:  # Skip if table definition was marked invalid.
             message.warning('skipping %s table: %s' % (self.name,self.check_msg))
             return
+        self.name = 'table'
+        self.enter()
         # Generate colwidths and colspecs.
         self.build_colspecs()
         # Generate headrows, footrows, bodyrows.
@@ -5530,6 +5562,7 @@ class Table_OLD(AbstractBlock):
             table = table.replace('\x07footrows\x07', footrows, 1)
         table = table.replace('\x07bodyrows\x07', bodyrows, 1)
         writer.write(table,trace='table')
+        self.exit()
 
 class Tables_OLD(AbstractBlocks):
     """List of tables."""

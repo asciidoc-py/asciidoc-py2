@@ -5973,6 +5973,9 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         config.expand_all_templates()
         # Check configuration for consistency.
         config.validate()
+        # Initialize top level block name.
+        if document.attributes.get('blockname'):
+            AbstractBlock.names.append(document.attributes['blockname'])
         paragraphs.initialize()
         lists.initialize()
         if config.dumping:

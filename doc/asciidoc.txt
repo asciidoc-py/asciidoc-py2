@@ -4556,6 +4556,7 @@ predefined intrinsic attributes:
   {backslash}           backslash character
   {basebackend-<base>}  empty string ''
   {basebackend}         html or docbook
+  {blockname}           current block name (note 8).
   {brvbar}              broken vertical bar (|) character
   {docdate}             document last modified date
   {docdir}              document input directory name  (note 5)
@@ -4634,6 +4635,20 @@ predefined intrinsic attributes:
 7. See
    http://en.wikipedia.org/wiki/Non-English_usage_of_quotation_marks[non-English
    usage of quotation marks].
+8. The `{blockname}` attribute identifies the current block. It
+   applies to delimited block, lists and tables. Here is a list of
+   `{blockname}` values:
+
+   delimited blocks:: 'comment', 'sidebar', 'open', 'pass', 'literal',
+   'verse', 'listing', 'quote', 'example', 'note', 'tip', 'important',
+   'caution', 'warning', 'abstract, 'partintro'
+
+   lists:: 'bulleted', 'bulleted1 ... bulleted5', 'numbered1 ...
+   numbered5', 'labeled', 'labeled2 .. labeled4', 'arabic',
+   'loweralpha', 'upperalpha', 'lowerroman', 'upperroman', 'qanda',
+   'horizonatal', 'callout', 'bibliography', 'glossary'
+
+   tables:: 'table'
 
 ======
 
@@ -5743,6 +5758,8 @@ name (man page NAME section)
 paragraph
 preamble close
 preamble open
+push blockname
+pop blockname
 section close
 section open: level <level>
 subs (all inline substitutions)

@@ -378,17 +378,17 @@ if float(sys.version[:3]) < 2.4:
 elif float(sys.version[:3]) < 2.6:
     import compiler
     from compiler.ast import Const, Dict, Expression, Name, Tuple, UnarySub, Keyword
-        
+
     # Code from:
     # http://mail.python.org/pipermail/python-list/2009-September/1219992.html
     # Modified to use compiler.ast.List as this module has a List
     def literal_eval(node_or_string):
-        """ 
+        """
         Safely evaluate an expression node or a string containing a Python
-        expression.  The string or node provided may only consist of the  
-        following Python literal structures: strings, numbers, tuples, 
+        expression.  The string or node provided may only consist of the
+        following Python literal structures: strings, numbers, tuples,
         lists, dicts, booleans, and None.
-        """ 
+        """
         _safe_names = {'None': None, 'True': True, 'False': False}
         if isinstance(node_or_string, basestring):
             node_or_string = compiler.parse(node_or_string, mode='eval')
@@ -2303,14 +2303,14 @@ class Section:
 
 class AbstractBlock:
 
-    blocknames = [] # Global stack of names for block_enter() and block_exit().
+    blocknames = [] # Global stack of names for push_blockname() and pop_blockname().
 
     def __init__(self):
         # Configuration parameter names common to all blocks.
         self.CONF_ENTRIES = ('delimiter','options','subs','presubs','postsubs',
                              'posattrs','style','.*-style','template','filter')
         self.start = None   # File reader cursor at start delimiter.
-        self.name=None      # Configuration file section name.
+        self.defname=None   # Configuration file block definition section name.
         # Configuration parameters.
         self.delimiter=None # Regular expression matching block delimiter.
         self.delimiter_reo=None # Compiled delimiter.
@@ -2335,13 +2335,13 @@ class AbstractBlock:
         self.mo=None
     def short_name(self):
         """ Return the text following the last dash in the section name."""
-        i = self.name.rfind('-')
+        i = self.defname.rfind('-')
         if i == -1:
-            return self.name
+            return self.defname
         else:
-            return self.name[i+1:]
+            return self.defname[i+1:]
     def error(self, msg, cursor=None, halt=False):
-        message.error('[%s] %s' % (self.name,msg), cursor, halt)
+        message.error('[%s] %s' % (self.defname,msg), cursor, halt)
     def is_conf_entry(self,param):
         """Return True if param matches an allowed configuration file entry
         name."""
@@ -2349,9 +2349,9 @@ class AbstractBlock:
             if re.match('^'+s+'$',param):
                 return True
         return False
-    def load(self,name,entries):
+    def load(self,defname,entries):
         """Update block definition from section 'entries' dictionary."""
-        self.name = name
+        self.defname = defname
         self.update_parameters(entries, self, all=True)
     def update_parameters(self, src, dst=None, all=False):
         """
@@ -2360,7 +2360,7 @@ class AbstractBlock:
         If all is True then copy src entries that aren't parameter names.
         """
         dst = dst or self.parameters
-        msg = '[%s] malformed entry %%s: %%s' % self.name
+        msg = '[%s] malformed entry %%s: %%s' % self.defname
         def copy(obj,k,v):
             if isinstance(obj,dict):
                 obj[k] = v
@@ -2439,7 +2439,7 @@ class AbstractBlock:
     def dump(self):
         """Write block definition to stdout."""
         write = lambda s: sys.stdout.write('%s%s' % (s,writer.newline))
-        write('['+self.name+']')
+        write('['+self.defname+']')
         if self.is_conf_entry('delimiter'):
             write('delimiter='+self.delimiter)
         if self.template:
@@ -2467,14 +2467,14 @@ class AbstractBlock:
     def validate(self):
         """Validate block after the complete configuration has been loaded."""
         if self.is_conf_entry('delimiter') and not self.delimiter:
-            raise EAsciiDoc,'[%s] missing delimiter' % self.name
+            raise EAsciiDoc,'[%s] missing delimiter' % self.defname
         if self.style:
             if not is_name(self.style):
                 raise EAsciiDoc, 'illegal style name: %s' % self.style
             if not self.style in self.styles:
                 if not isinstance(self,List):   # Lists don't have templates.
                     message.warning('[%s] \'%s\' style not in %s' % (
-                        self.name,self.style,self.styles.keys()))
+                        self.defname,self.style,self.styles.keys()))
         # Check all styles for missing templates.
         all_styles_have_template = True
         for k,v in self.styles.items():
@@ -2496,7 +2496,7 @@ class AbstractBlock:
                                         % self.template)
             elif not all_styles_have_template:
                 if not isinstance(self,List): # Lists don't have templates.
-                    message.warning('missing styles templates: [%s]' % self.name)
+                    message.warning('missing styles templates: [%s]' % self.defname)
     def isnext(self):
         """Check if this block is next in document reader."""
         result = False
@@ -2516,33 +2516,29 @@ class AbstractBlock:
             self.presubs = config.subsnormal
         if reader.cursor:
             self.start = reader.cursor[:]
-    def block_enter(self, blockname):
+    def push_blockname(self, blockname):
         '''
-        On block entry set the 'blockname' attribute to the block style 'name'
-        attribute. If 'name' is not specified us the block short name.
+        On block entry set the 'blockname' attribute.
         Only applies to delimited blocks, lists and tables.
         '''
-#FIXME
-#        blockname = self.attributes.get('name', self.short_name())
-#        blockname = self.attributes.get('name')
-        trace('block open', blockname)
+        trace('push blockname', blockname)
         self.blocknames.append(blockname)
         document.attributes['blockname'] = blockname
-    def block_exit(self):
+    def pop_blockname(self):
         '''
         On block exits restore previous parent 'blockname' or undefine it
         if we're no longer inside a block.
         '''
         assert len(self.blocknames) > 0
         blockname = self.blocknames.pop()
-        trace('block exit', blockname)
+        trace('pop blockname', blockname)
         if len(self.blocknames) == 0:
             document.attributes['blockname'] = None
         else:
             document.attributes['blockname'] = self.blocknames[-1]
     def merge_attributes(self,attrs,params=[]):
         """
-        Use the current blocks attribute list (attrs dictionary) to build a
+        Use the current block's attribute list (attrs dictionary) to build a
         dictionary of block processing parameters (self.parameters) and tag
         substitution attributes (self.attributes).
 
@@ -2601,7 +2597,7 @@ class AbstractBlock:
                 style = self.style
             # Lists have implicit styles and do their own style checks.
             elif style not in self.styles and not isinstance(self,List):
-                message.warning('missing style: [%s]: %s' % (self.name,style))
+                message.warning('missing style: [%s]: %s' % (self.defname,style))
                 style = self.style
             if style in self.styles:
                 self.attributes['style'] = style
@@ -2639,7 +2635,7 @@ class AbstractBlocks:
                 d = {}
                 parse_entries(sections.get(k,()),d)
                 for b in self.blocks:
-                    if b.name == k:
+                    if b.defname == k:
                         break
                 else:
                     b = self.BLOCK_TYPE()
@@ -2729,7 +2725,7 @@ class Paragraphs(AbstractBlocks):
         AbstractBlocks.validate(self)
         # Check we have a default paragraph definition, put it last in list.
         for b in self.blocks:
-            if b.name == 'paradef-default':
+            if b.defname == 'paradef-default':
                 self.blocks.append(b)
                 self.default = b
                 self.blocks.remove(b)
@@ -2917,7 +2913,7 @@ class List(AbstractBlock):
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
         self.merge_attributes(attrs,['tags'])
-        self.block_enter(self.attributes.get('name', self.short_name()))
+        self.push_blockname(self.attributes.get('name', self.short_name()))
         if self.type in ('numbered','callout'):
             self.number_style = self.attributes.get('style')
             if self.number_style not in self.NUMBER_STYLES:
@@ -2952,7 +2948,7 @@ class List(AbstractBlock):
             elif self.type == 'labeled':
                 self.translate_entry()
             else:
-                raise AssertionError,'illegal [%s] list type' % self.name
+                raise AssertionError,'illegal [%s] list type' % self.defname
         if etag:
             writer.write(etag,trace='list close')
         if self.type == 'callout':
@@ -2961,7 +2957,7 @@ class List(AbstractBlock):
         lists.open.pop()
         if len(lists.open):
             document.attributes['listindex'] = str(lists.open[-1].ordinal)
-        self.block_exit()
+        self.pop_blockname()
 
 class Lists(AbstractBlocks):
     """List of List objects."""
@@ -3009,7 +3005,7 @@ class Lists(AbstractBlocks):
         for b in self.blocks:
             # Check list has valid type.
             if not b.type in Lists.TYPES:
-                raise EAsciiDoc,'[%s] illegal type' % b.name
+                raise EAsciiDoc,'[%s] illegal type' % b.defname
             b.validate()
     def dump(self):
         AbstractBlocks.dump(self)
@@ -3036,14 +3032,14 @@ class DelimitedBlock(AbstractBlock):
             BlockTitle.consume(attrs)
             AttributeList.consume(attrs)
         self.merge_attributes(attrs)
+        self.push_blockname(self.attributes.get('name', self.short_name()))
         options = self.parameters.options
         if 'skip' in options:
             reader.read_until(self.delimiter,same_file=True)
-        elif safe() and self.name == 'blockdef-backend':
+        elif safe() and self.defname == 'blockdef-backend':
             message.unsafe('Backend Block')
             reader.read_until(self.delimiter,same_file=True)
         else:
-            self.block_enter(self.attributes.get('name', self.short_name()))
             template = self.parameters.template
             template = subs_attrs(template,attrs)
             name = self.short_name()+' block'
@@ -3066,12 +3062,12 @@ class DelimitedBlock(AbstractBlock):
                 etag = config.section2tags(template,self.attributes,skipstart=True)[1]
                 writer.write(dovetail_tags(stag,body,etag),trace=name)
             trace(self.short_name()+' block close',etag)
-            self.block_exit()
         if reader.eof():
             self.error('missing closing delimiter',self.start)
         else:
             delimiter = reader.read()   # Discard delimiter line.
             assert re.match(self.delimiter,delimiter)
+        self.pop_blockname()
 
 class DelimitedBlocks(AbstractBlocks):
     """List of delimited blocks."""
@@ -3585,9 +3581,9 @@ class Table(AbstractBlock):
             delimiter = reader.read()   # Discard closing delimiter.
             assert re.match(self.delimiter,delimiter)
         if len(text) == 0:
-            message.warning('[%s] table is empty' % self.name)
+            message.warning('[%s] table is empty' % self.defname)
             return
-        self.block_enter(self.parameters.template)
+        self.push_blockname('table')
         cols = attrs.get('cols')
         if not cols:
             # Calculate column count from number of items in first line.
@@ -3635,7 +3631,7 @@ class Table(AbstractBlock):
         if bodyrows:
             table = table.replace('\x07bodyrows\x07', bodyrows, 1)
         writer.write(table,trace='table')
-        self.block_exit()
+        self.pop_blockname()
 
 class Tables(AbstractBlocks):
     """List of tables."""
@@ -3672,7 +3668,7 @@ class Tables(AbstractBlocks):
         AbstractBlocks.validate(self)
         # Check we have a default table definition,
         for i in range(len(self.blocks)):
-            if self.blocks[i].name == 'tabledef-default':
+            if self.blocks[i].defname == 'tabledef-default':
                 default = self.blocks[i]
                 break
         else:
@@ -5373,7 +5369,7 @@ class Table_OLD(AbstractBlock):
         if i == 0:
             raise EAsciiDoc,'missing table rows'
         if i >= len(rows):
-            raise EAsciiDoc,'closing [%s] underline expected' % self.name
+            raise EAsciiDoc,'closing [%s] underline expected' % self.defname
         return (join_lines_OLD(rows[:i]), rows[i+1:])
     def parse_rows(self, rows, rtag, dtag):
         """Parse rows list using the row and data tags. Returns a substituted
@@ -5499,13 +5495,13 @@ class Table_OLD(AbstractBlock):
         for k,v in attrs.items():
             if k == 'format':
                 if v not in self.FORMATS:
-                    raise EAsciiDoc, 'illegal [%s] %s: %s' % (self.name,k,v)
+                    raise EAsciiDoc, 'illegal [%s] %s: %s' % (self.defname,k,v)
                 self.format = v
             elif k == 'tablewidth':
                 try:
                     self.tablewidth = float(attrs['tablewidth'])
                 except Exception:
-                    raise EAsciiDoc, 'illegal [%s] %s: %s' % (self.name,k,v)
+                    raise EAsciiDoc, 'illegal [%s] %s: %s' % (self.defname,k,v)
         self.merge_attributes(attrs)
         # Parse table ruler.
         ruler = reader.read()
@@ -5520,14 +5516,14 @@ class Table_OLD(AbstractBlock):
                 if line in ('',None):
                     break;
             if line is None:
-                raise EAsciiDoc,'closing [%s] underline expected' % self.name
+                raise EAsciiDoc,'closing [%s] underline expected' % self.defname
             table.append(reader.read())
         # EXPERIMENTAL: The number of lines in the table, requested by Benjamin Klum.
         self.attributes['rows'] = str(len(table))
         if self.check_msg:  # Skip if table definition was marked invalid.
-            message.warning('skipping %s table: %s' % (self.name,self.check_msg))
+            message.warning('skipping [%s] table: %s' % (self.defname,self.check_msg))
             return
-        self.block_enter(self.parameters.template)
+        self.push_blockname('table')
         # Generate colwidths and colspecs.
         self.build_colspecs()
         # Generate headrows, footrows, bodyrows.
@@ -5565,7 +5561,7 @@ class Table_OLD(AbstractBlock):
             table = table.replace('\x07footrows\x07', footrows, 1)
         table = table.replace('\x07bodyrows\x07', bodyrows, 1)
         writer.write(table,trace='table')
-        self.block_exit()
+        self.pop_blockname()
 
 class Tables_OLD(AbstractBlocks):
     """List of tables."""
@@ -5579,7 +5575,7 @@ class Tables_OLD(AbstractBlocks):
         # Does not call AbstractBlocks.validate().
         # Check we have a default table definition,
         for i in range(len(self.blocks)):
-            if self.blocks[i].name == 'old_tabledef-default':
+            if self.blocks[i].defname == 'old_tabledef-default':
                 default = self.blocks[i]
                 break
         else:
@@ -5602,7 +5598,7 @@ class Tables_OLD(AbstractBlocks):
         # Check all tables have valid fill character.
         for b in self.blocks:
             if not b.fillchar or len(b.fillchar) != 1:
-                raise EAsciiDoc,'[%s] missing or illegal fillchar' % b.name
+                raise EAsciiDoc,'[%s] missing or illegal fillchar' % b.defname
         # Build combined tables delimiter patterns and assign defaults.
         delimiters = []
         for b in self.blocks:
@@ -5628,7 +5624,7 @@ class Tables_OLD(AbstractBlocks):
             b.validate()
             if config.verbose:
                 if b.check_msg:
-                    message.warning('[%s] table definition: %s' % (b.name,b.check_msg))
+                    message.warning('[%s] table definition: %s' % (b.defname,b.check_msg))
 
 # End of deprecated old table classes.
 #---------------------------------------------------------------------------

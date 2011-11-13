@@ -2334,8 +2334,8 @@ class AbstractBlock:
         # Leading delimiter match object.
         self.mo=None
     def short_name(self):
-        """ Return the text following the last dash in the section name."""
-        i = self.defname.rfind('-')
+        """ Return the text following the first dash in the section name."""
+        i = self.defname.find('-')
         if i == -1:
             return self.defname
         else:

@@ -2516,18 +2516,20 @@ class AbstractBlock:
             self.presubs = config.subsnormal
         if reader.cursor:
             self.start = reader.cursor[:]
-    def push_blockname(self, blockname):
+    def push_blockname(self, blockname=None):
         '''
         On block entry set the 'blockname' attribute.
         Only applies to delimited blocks, lists and tables.
         '''
+        if blockname is None:
+            blockname = self.attributes.get('style', self.short_name()).lower()
         trace('push blockname', blockname)
         self.blocknames.append(blockname)
         document.attributes['blockname'] = blockname
     def pop_blockname(self):
         '''
-        On block exits restore previous parent 'blockname' or undefine it
-        if we're no longer inside a block.
+        On block exits restore previous (parent) 'blockname' attribute or
+        undefine it if we're no longer inside a block.
         '''
         assert len(self.blocknames) > 0
         blockname = self.blocknames.pop()
@@ -2913,7 +2915,7 @@ class List(AbstractBlock):
         BlockTitle.consume(attrs)
         AttributeList.consume(attrs)
         self.merge_attributes(attrs,['tags'])
-        self.push_blockname(self.attributes.get('name', self.short_name()))
+        self.push_blockname()
         if self.type in ('numbered','callout'):
             self.number_style = self.attributes.get('style')
             if self.number_style not in self.NUMBER_STYLES:
@@ -3032,7 +3034,7 @@ class DelimitedBlock(AbstractBlock):
             BlockTitle.consume(attrs)
             AttributeList.consume(attrs)
         self.merge_attributes(attrs)
-        self.push_blockname(self.attributes.get('name', self.short_name()))
+        self.push_blockname()
         options = self.parameters.options
         if 'skip' in options:
             reader.read_until(self.delimiter,same_file=True)

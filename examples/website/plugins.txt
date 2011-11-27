@@ -45,15 +45,15 @@ Inferno and Plan9.
 |http://code.google.com/p/asciidoc-aafigure-filter/
 |https://launchpad.net/aafigure[Aafigure] ASCII line art filter.
 
+|ditaa |Henrik Maier
+|http://code.google.com/p/asciidoc-ditaa-filter/
+|http://ditaa.sourceforge.net[ditaa] ASCII line art filter.
+
 |graphviz-cmap
 |Alex Efros
 |http://powerman.name/asciidoc/
 |A variant of the built-in graphviz filter, which adds support for
 client-side imagemaps.
-
-|ditaa |Henrik Maier
-|http://code.google.com/p/asciidoc-ditaa-filter/
-|http://ditaa.sourceforge.net[ditaa] ASCII line art filter.
 
 |matplotlib |Leonid Volnitsky
 |http://volnitsky.com/project/mplw/
@@ -62,6 +62,11 @@ client-side imagemaps.
 |mscgen |Henrik Maier
 |http://code.google.com/p/asciidoc-mscgen-filter/
 |Message sequence chart filter.
+
+|qrcode |Jean-Marc Temmos
+|http://code.google.com/p/asciidoc-qrencode-filter/
+|This filter generates
+http://fukuchi.org/works/qrencode/manual/index.html[QRencode] images.
 
 |====
 

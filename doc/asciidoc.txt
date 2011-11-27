@@ -4994,39 +4994,6 @@ highlighter.  If you want a full featured multi-language highlighter
 use the {website}source-highlight-filter.html[source code highlighter
 filter].
 
-[listing]
-.....................................................................
-.Code filter example
-[code,python]
-----------------------------------------------
-''' A multi-line
-    comment.'''
-def sub_word(mo):
-    ''' Single line comment.'''
-    word = mo.group('word')   # Inline comment
-    if word in keywords[language]:
-        return quote + word + quote
-    else:
-        return word
-----------------------------------------------
-.....................................................................
-
-Outputs:
-
-.Code filter example
-[code,python]
-----------------------------------------------
-''' A multi-line
-    comment.'''
-def sub_word(mo):
-    ''' Single line comment.'''
-    word = mo.group('word')   # Inline comment
-    if word in keywords[language]:
-        return quote + word + quote
-    else:
-        return word
-----------------------------------------------
-
 Built-in filters
 ~~~~~~~~~~~~~~~~
 The AsciiDoc distribution includes 'source', 'music', 'latex' and

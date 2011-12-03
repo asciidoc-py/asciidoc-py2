@@ -4560,6 +4560,7 @@ class Config:
                         del sections[section]
                 else:
                     if section.startswith('+'):
+                        section = section[1:]
                         # Append section.
                         if section in sections:
                             sections[section] += contents

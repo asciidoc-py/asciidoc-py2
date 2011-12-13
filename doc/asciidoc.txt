@@ -4827,6 +4827,8 @@ sectionbody::
 
 skip::
     The block is treated as a comment (see <<X26,CommentBlocks>>).
+    Preceding <<X21,attribute lists>> and <<X42,block titles>> are not
+    consumed.
 
 'presubs', 'postsubs' and 'filter' entries are ignored when
 'sectionbody' or 'skip' options are set.

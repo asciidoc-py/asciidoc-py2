@@ -2567,8 +2567,8 @@ class AbstractBlock:
         def check_array_parameter(param):
             # Check the parameter is a sequence type.
             if not is_array(self.parameters[param]):
-                message.error('malformed presubs attribute: %s' %
-                        self.parameters[param])
+                message.error('malformed %s parameter: %s' %
+                        (param, self.parameters[param]))
                 # Revert to default value.
                 self.parameters[param] = getattr(self,param)
 
@@ -3029,11 +3029,12 @@ class DelimitedBlock(AbstractBlock):
     def translate(self):
         AbstractBlock.translate(self)
         reader.read()   # Discard delimiter.
-        attrs = {}
-        if self.short_name() != 'comment':
-            BlockTitle.consume(attrs)
-            AttributeList.consume(attrs)
-        self.merge_attributes(attrs)
+        self.merge_attributes(AttributeList.attrs)
+        if 'skip' in self.parameters.options:
+            self.merge_attributes({})   # Discard processed attributes.
+        else:
+            BlockTitle.consume(self.attributes)
+            AttributeList.consume({})   # Discard attributes list.
         self.push_blockname()
         options = self.parameters.options
         if 'skip' in options:
@@ -3043,7 +3044,7 @@ class DelimitedBlock(AbstractBlock):
             reader.read_until(self.delimiter,same_file=True)
         else:
             template = self.parameters.template
-            template = subs_attrs(template,attrs)
+            template = subs_attrs(template,self.attributes)
             name = self.short_name()+' block'
             if 'sectionbody' in options:
                 # The body is treated like a section body.

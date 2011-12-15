@@ -1937,9 +1937,8 @@ class AttributeList:
     def style():
         return AttributeList.attrs.get('style') or AttributeList.attrs.get('1')
     @staticmethod
-    def consume(d):
-        """Add attribute list to the dictionary 'd' and reset the
-        list."""
+    def consume(d={}):
+        """Add attribute list to the dictionary 'd' and reset the list."""
         if AttributeList.attrs:
             d.update(AttributeList.attrs)
             AttributeList.attrs = {}
@@ -1978,7 +1977,7 @@ class BlockTitle:
             message.warning('blank block title')
         BlockTitle.title = s
     @staticmethod
-    def consume(d):
+    def consume(d={}):
         """If there is a title add it to dictionary 'd' then reset title."""
         if BlockTitle.title:
             d['title'] = BlockTitle.title
@@ -3030,11 +3029,9 @@ class DelimitedBlock(AbstractBlock):
         AbstractBlock.translate(self)
         reader.read()   # Discard delimiter.
         self.merge_attributes(AttributeList.attrs)
-        if 'skip' in self.parameters.options:
-            self.merge_attributes({})   # Discard processed attributes.
-        else:
+        if not 'skip' in self.parameters.options:
             BlockTitle.consume(self.attributes)
-            AttributeList.consume({})   # Discard attributes list.
+            AttributeList.consume()
         self.push_blockname()
         options = self.parameters.options
         if 'skip' in options:

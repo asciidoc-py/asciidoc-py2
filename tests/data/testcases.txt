@@ -762,3 +762,6 @@ endif::[]
 ifeval::[not ({rs458}==2)]
 This will not be processed.
 endif::[]
+
+// Test eval block macro.
+eval::[Section.setlevel(1)]

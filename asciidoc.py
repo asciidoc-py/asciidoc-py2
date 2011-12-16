@@ -4315,10 +4315,8 @@ class Reader(Reader1):
             if mo:
                 action = mo.group('name')
                 cmd = mo.group('attrlist')
-                s = system(action, cmd, is_macro=True)
-                if s is not None:
-                    self.cursor[2] = s  # So we don't re-evaluate.
-                    result = s
+                result = system(action, cmd, is_macro=True)
+                self.cursor[2] = result  # So we don't re-evaluate.
         if result:
             # Unescape escaped system macros.
             if macros.match('+',r'\\eval|\\sys|\\sys2|\\ifdef|\\ifndef|\\endif|\\include|\\include1',result):

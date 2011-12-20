@@ -4673,6 +4673,12 @@ template=listingblock
 presubs=specialcharacters,callouts
 ---------------------------------------------------------------------
 
+Block definition sections are processed incrementally as each
+configuration file is loaded i.e. block definitions can be spread
+across multiple configuration files. This allows block definitions to
+be overriden and extended by later <<X27,loading configuration
+files>>.
+
 AsciiDoc Paragraph, DelimitedBlock, List and Table block elements
 share a common subset of configuration file parameters:
 

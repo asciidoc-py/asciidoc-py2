@@ -765,3 +765,7 @@ endif::[]
 
 // Test eval block macro.
 eval::[Section.setlevel(1)]
+
+// Test template concatenation.
+{template:test-template}
+

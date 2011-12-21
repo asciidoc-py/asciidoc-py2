@@ -3691,7 +3691,7 @@ lines of text between adjacent section headings.
 
 - Section names consist of one or more alphanumeric, underscore or
   dash characters and cannot begin or end with a dash.
-- Lines starting with a hash character "#" are treated as comments and
+- Lines starting with a '#' character are treated as comments and
   ignored.
 - If the section name is prefixed with a '+' character then the
   section contents is appended to the contents of an already existing
@@ -4674,10 +4674,10 @@ presubs=specialcharacters,callouts
 ---------------------------------------------------------------------
 
 Block definition sections are processed incrementally as each
-configuration file is loaded i.e. block definitions can be spread
-across multiple configuration files. This allows block definitions to
-be overriden and extended by later <<X27,loading configuration
-files>>.
+configuration file is loaded. Block definition section entries are
+merged into the block definition (they do not replace the definition),
+this allows block parameters to be overriden and extended by later
+<<X27,loading configuration files>>.
 
 AsciiDoc Paragraph, DelimitedBlock, List and Table block elements
 share a common subset of configuration file parameters:
@@ -4764,15 +4764,22 @@ be set in block attribute lists and style definitions: 'template',
 [[X23]]
 Styles
 ~~~~~~
-A style is a set of block attributes bundled as a single named
-attribute. The following example defines a style named 'verbatim':
+A style is a set of block parameter bundled as a single named
+parameter. The following example defines a style named 'verbatim':
 
   verbatim-style=template="literalblock",subs="verbatim"
+
+If a block's <<X21,attribute list>> contains a 'style' attribute then
+the corresponding style parameters are be merged into the default
+block definition parameters.
 
 - All style parameter names must be suffixed with `-style` and the
   style parameter value is in the form of a list of <<X21,named
   attributes>>.
-- Multi-item style attributes ('subs','presubs','postsubs','posattrs')
+- The 'template' style parameter is mandatory, other parameters can be
+  omitted in which case they inherit their values from the default
+  block definition parameters.
+- Multi-item style parameters ('subs','presubs','postsubs','posattrs')
   must be specified using Python tuple syntax rather than a simple
   list of values as they in separate entries e.g.
   `postsubs=("callouts",)` not `postsubs="callouts"`.

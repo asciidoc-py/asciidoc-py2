@@ -2220,10 +2220,12 @@ class Section:
         """
         # Replace non-alpha numeric characters in title with underscores and
         # convert to lower case.
-        base_id = char_encode(re.sub(r'(?u)\W+', '_',
-                char_decode(title)).strip('_').lower())
+        base_id = re.sub(r'(?u)\W+', '_', char_decode(title)).strip('_').lower()
         if 'ascii-ids' in document.attributes:
-            base_id = re.sub(r'[^a-zA-Z0-9_.-]', '', base_id)
+            # Replace non-ASCII characters with ASCII equivalents.
+            import unicodedata
+            base_id = unicodedata.normalize('NFKD', base_id).encode('ascii','ignore')
+        base_id = char_encode(base_id)
         # Prefix the ID name with idprefix attribute or underscore if not
         # defined. Prefix ensures the ID does not clash with existing IDs.
         idprefix = document.attributes.get('idprefix','_')

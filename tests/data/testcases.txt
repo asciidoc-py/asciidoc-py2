@@ -769,3 +769,12 @@ eval::[Section.setlevel(1)]
 // Test template concatenation.
 {template:test-template}
 
+// Test ascii-ids attribute.
+:ascii-ids:
+== àn îd without accénts
+Lorum ipsum...
+
+:ascii-ids!:
+== àn îd with accénts
+Lorum ipsum...
+

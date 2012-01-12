@@ -194,9 +194,9 @@ image::images/highlighter.png[height=400,caption="",link="images/highlighter.png
   (used by http://projects.gnome.org/gedit/[gedit] and a number of
   other applications). The project is hosted here:
   https://launchpad.net/asciidoc-gtk-highlight
-- Florian Kaufman has written
-  http://code.google.com/p/sensorflo-emacs/source/browse/trunk/adoc-mode.el[adoc-mode.el]
-  -- a major-mode for editing asciidoc files in Emacs.
+- Florian Kaufman has written 'adoc-mode.el' -- a major-mode for
+  editing AsciiDoc files in Emacs, you can find it
+  http://code.google.com/p/sensorflo-emacs/[here].
 - The http://xpt.sourceforge.net/[*Nix Power Tools project] has
   released an http://xpt.sourceforge.net/tools/doc-mode/[AsciiDoc
   syntax highlighter for Emacs].

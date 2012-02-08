@@ -312,6 +312,10 @@ and I'll add them to the list.
 - Lex Trotman has written
   https://github.com/elextr/codiicsa[codiicsa], a program that
   converts DocBook to AsciiDoc.
+- Qingping Hou has written http://houqp.github.com/asciidoc-deckjs/[an
+  AsciiDoc backend for deck.js].
+  http://imakewebthings.github.com/deck.js/[deck.js] is a JavaScript
+  library for building modern HTML presentations (slideshows).
 
 Please let me know if any of these links need updating.
 

@@ -210,9 +210,11 @@ backend <<X101,plugins>>.
 - A backend plugin is used just like the built-in backends.
 - Backend plugins <<X27,take precedence>> over built-in backends with
   the same name.
-- You can use the `{backend-confdir}` <<X60, intrinsic attribute>> to
+- You can use the `{asciidoc-confdir}` <<X60, intrinsic attribute>> to
   refer to the built-in backend configuration file location from
   backend plugin configuration files.
+- You can use the `{backend-confdir}` <<X60, intrinsic attribute>> to
+  refer to the backend plugin configuration file location.
 - By default backends plugins are installed in
   `$HOME/.asciidoc/backends/<backend>` where `<backend>` is the
   backend name.

@@ -440,7 +440,7 @@ class A2X(AttrDict):
         for r in self.resources:
             r = os.path.expanduser(r)
             r = os.path.expandvars(r)
-            if r.endswith(('/','\\')):
+            if r.endswith('/') or r.endswith('\\'):
                 if  os.path.isdir(r):
                     self.resource_dirs.append(r)
                 else:

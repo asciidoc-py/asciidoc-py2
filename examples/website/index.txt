@@ -316,6 +316,9 @@ and I'll add them to the list.
   AsciiDoc backend for deck.js].
   http://imakewebthings.github.com/deck.js/[deck.js] is a JavaScript
   library for building modern HTML presentations (slideshows).
+- The guys from O'Reilly Media have posted an
+  https://github.com/oreillymedia/docbook2asciidoc[XSL Stylesheet to
+github] that converts DocBook to AsciiDoc.
 
 Please let me know if any of these links need updating.
 
@@ -424,6 +427,9 @@ discussion group thread] for details.
   * http://snk.tuxfamily.org/lib/ember/
   * http://snk.tuxfamily.org/lib/inochi/
   * http://snk.tuxfamily.org/lib/rumai/
+
+- The http://cxxtest.com/[CxxTest] project (unit testing for C++
+  language) has written its User Guide using AsciiDoc.
 
 Please let me know if any of these links need updating.
 

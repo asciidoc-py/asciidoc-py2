@@ -22,6 +22,11 @@ discussion list] and I'll add it.
 |A backend plugin to generate man pages (troff) compatible with OS
 Inferno and Plan9.
 
+|deckjs
+|Qingping Hou
+|http://houqp.github.com/asciidoc-deckjs/
+|A 'deck.js' backend for AsciiDoc.
+
 |fossil
 |Stuart Rackham
 |https://github.com/srackham/asciidoc-fossil-backend

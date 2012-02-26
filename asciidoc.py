@@ -4712,25 +4712,26 @@ class Config:
         """
         Load the backend configuration files from dirs list.
         If dirs not specified try all the well known locations.
-        Return True if a backend conf file was found.
+        If a <backend>.conf file was found return it's full path name,
+        if not found return None.
         """
+        result = None
         if dirs is None:
             dirs = self.get_load_dirs()
-        loaded = False
         conf = document.backend + '.conf'
         conf2 = document.backend + '-' + document.doctype + '.conf'
         # First search for filter backends.
         for d in [os.path.join(d, 'backends', document.backend) for d in dirs]:
             if self.load_file(conf,d):
-                loaded = True
+                result = os.path.join(d, conf)
             self.load_file(conf2,d)
-        if not loaded:
+        if not result:
             # Search in the normal locations.
             for d in dirs:
                 if self.load_file(conf,d):
-                    loaded = True
+                    result = os.path.join(d, conf)
                 self.load_file(conf2,d)
-        return loaded
+        return result
 
     def load_filters(self, dirs=None):
         """
@@ -5918,8 +5919,10 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # Load backend configuration files.
         if '-e' not in options:
             f = document.backend + '.conf'
-            if not config.load_backend():
+            conffile = config.load_backend()
+            if not conffile:
                 raise EAsciiDoc,'missing backend conf file: %s' % f
+            document.attributes['backend-confdir'] = os.path.dirname(conffile)
         # backend is now known.
         document.attributes['backend-'+document.backend] = ''
         document.attributes[document.backend+'-'+document.doctype] = ''

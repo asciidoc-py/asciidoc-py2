@@ -11,7 +11,7 @@ import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale, unico
 ### Used by asciidocapi.py ###
 VERSION = '8.6.6'           # See CHANGLOG file for version history.
 
-MIN_PYTHON_VERSION = 2.4    # Require this version of Python or better.
+MIN_PYTHON_VERSION = '2.4'  # Require this version of Python or better.
 
 #---------------------------------------------------------------------------
 # Program constants.
@@ -373,9 +373,37 @@ def dovetail_tags(stag,content,etag):
     include extraneous opening and closing line breaks."""
     return dovetail(dovetail(stag,content), etag)
 
-if float(sys.version[:3]) < 2.4:
-    pass # No compiler
-elif float(sys.version[:3]) < 2.6:
+# The following functions are so we don't have to use the dangerous
+# built-in eval() function.
+if float(sys.version[:3]) >= 2.6 or sys.platform[:4] == 'java':
+    # Use AST module if CPython >= 2.6 or Jython.
+    import ast
+    from ast import literal_eval
+
+    def get_args(val):
+        d = {}
+        args = ast.parse("d(" + val + ")", mode='eval').body.args
+        i = 1
+        for arg in args:
+            if isinstance(arg, ast.Name):
+                d[str(i)] = literal_eval(arg.id)
+            else:
+                d[str(i)] = literal_eval(arg)
+            i += 1
+        return d
+
+    def get_kwargs(val):
+        d = {}
+        args = ast.parse("d(" + val + ")", mode='eval').body.keywords
+        for arg in args:
+            d[arg.arg] = literal_eval(arg.value)
+        return d
+
+    def parse_to_list(val):
+        values = ast.parse("[" + val + "]", mode='eval').body.elts
+        return [literal_eval(v) for v in values]
+
+else:   # Use deprecated CPython compiler module.
     import compiler
     from compiler.ast import Const, Dict, Expression, Name, Tuple, UnarySub, Keyword
 
@@ -439,32 +467,6 @@ elif float(sys.version[:3]) < 2.6:
 
     def parse_to_list(val):
         values = compiler.parse("[" + val + "]", mode='eval').node.asList()
-        return [literal_eval(v) for v in values]
-else:
-    import ast
-    from ast import literal_eval
-
-    def get_args(val):
-        d = {}
-        args = ast.parse("d(" + val + ")", mode='eval').body.args
-        i = 1
-        for arg in args:
-            if isinstance(arg, ast.Name):
-                d[str(i)] = literal_eval(arg.id)
-            else:
-                d[str(i)] = literal_eval(arg)
-            i += 1
-        return d
-
-    def get_kwargs(val):
-        d = {}
-        args = ast.parse("d(" + val + ")", mode='eval').body.keywords
-        for arg in args:
-            d[arg.arg] = literal_eval(arg.value)
-        return d
-
-    def parse_to_list(val):
-        values = ast.parse("[" + val + "]", mode='eval').body.elts
         return [literal_eval(v) for v in values]
 
 def parse_attributes(attrs,dict):
@@ -4522,8 +4524,9 @@ class Config:
         directory.
         cmd is the asciidoc command or asciidoc.py path.
         """
-        if float(sys.version[:3]) < MIN_PYTHON_VERSION:
-            message.stderr('FAILED: Python 2.3 or better required')
+        if float(sys.version[:3]) < float(MIN_PYTHON_VERSION):
+            message.stderr('FAILED: Python %s or better required' %
+                    MIN_PYTHON_VERSION)
             sys.exit(1)
         if not os.path.exists(cmd):
             message.stderr('FAILED: Missing asciidoc command: %s' % cmd)

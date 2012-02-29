@@ -21,7 +21,14 @@ __version__ = '0.1.1'
 __copyright__ = 'Copyright (C) 2009 Stuart Rackham'
 
 
-import os, sys, re, StringIO, difflib
+import os, sys, re, difflib
+
+if sys.platform[:4] == 'java':
+    # Jython cStringIO is more compatible with CPython StringIO.
+    import cStringIO as StringIO
+else:
+    import StringIO
+
 import asciidocapi
 
 

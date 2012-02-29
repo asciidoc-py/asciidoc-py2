@@ -799,14 +799,13 @@ def filter_lines(filter_cmd, lines, attrs={}):
             message.warning('filter not found: %s' % cmd)
     if found:
         filter_cmd = '"' + found + '"' + mo.group('tail')
-    if sys.platform == 'win32':
-        # Windows doesn't like running scripts directly so explicitly
-        # specify interpreter.
-        if found:
-            if cmd.endswith('.py'):
-                filter_cmd = 'python ' + filter_cmd
-            elif cmd.endswith('.rb'):
-                filter_cmd = 'ruby ' + filter_cmd
+    if found:
+        if cmd.endswith('.py'):
+            filter_cmd = '"%s" %s' % (document.attributes['python'],
+                filter_cmd)
+        elif cmd.endswith('.rb'):
+            filter_cmd = 'ruby ' + filter_cmd
+
     message.verbose('filtering: ' + filter_cmd)
     try:
         p = subprocess.Popen(filter_cmd, shell=True,
@@ -885,7 +884,11 @@ def system(name, args, is_macro=False, attrs=None):
                 message.warning('%s: non-zero exit status' % syntax)
             try:
                 if os.path.isfile(tmp):
-                    lines = [s.rstrip() for s in open(tmp)]
+                    f = open(tmp)
+                    try:
+                        lines = [s.rstrip() for s in f]
+                    finally:
+                        f.close()
                 else:
                     lines = []
             except Exception:
@@ -954,7 +957,11 @@ def system(name, args, is_macro=False, attrs=None):
         elif not is_safe_file(args):
             message.unsafe(syntax)
         else:
-            result = [s.rstrip() for s in open(args)]
+            f = open(args)
+            try:
+                result = [s.rstrip() for s in f]
+            finally:
+                f.close()
             if result:
                 result = subs_attrs(result)
                 result = separator.join(result)
@@ -2745,8 +2752,7 @@ class List(AbstractBlock):
         AbstractBlock.__init__(self)
         self.CONF_ENTRIES += ('type','tags')
         self.PARAM_NAMES += ('tags',)
-#ZZZ listdef?
-        # tabledef conf file parameters.
+        # listdef conf file parameters.
         self.type=None
         self.tags=None      # Name of listtags-<tags> conf section.
         # Calculated parameters.
@@ -4157,8 +4163,12 @@ class Reader1:
                                 message.verbose('include1: ' + fname, linenos=False)
                                 # Store the include file in memory for later
                                 # retrieval by the {include1:} system attribute.
-                                config.include1[fname] = [
-                                    s.rstrip() for s in open(fname)]
+                                f = open(fname)
+                                try:
+                                    config.include1[fname] = [
+                                        s.rstrip() for s in f]
+                                finally:
+                                    f.close()
                             return '{include1:%s}' % fname
                         else:
                             # This is a configuration dump, just pass the macro
@@ -5880,6 +5890,7 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
                 else:
                     raise EAsciiDoc,'missing configuration file: %s' % f
     try:
+        document.attributes['python'] = sys.executable
         for f in config.filters:
             if not config.find_config_dir('filters', f):
                 raise EAsciiDoc,'missing filter: %s' % f

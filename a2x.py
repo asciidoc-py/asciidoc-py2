@@ -144,6 +144,20 @@ def find_executable(file_name):
         result = _find_executable(file_name)
     return result
 
+def write_file(filename, data, mode='w'):
+    f = open(filename, mode)
+    try:
+        f.write(data)
+    finally:
+        f.close()
+
+def read_file(filename, mode='r'):
+    f = open(filename, mode)
+    try:
+        return f.read()
+    finally:
+        f.close()
+
 def shell_cd(path):
     verbose('chdir %s' % path)
     if not OPTIONS.dry_run:
@@ -236,19 +250,20 @@ def find_resources(files, tagname, attrname, filter=None):
     if isinstance(files, str):
         files = [files]
     result = []
-    for f in files:
-        verbose('finding resources in: %s' % f)
+    for filename in files:
+        verbose('finding resources in: %s' % filename)
         if OPTIONS.dry_run:
             continue
         parser = FindResources()
         # HTMLParser has problems with non-ASCII strings.
         # See http://bugs.python.org/issue3932
-        mo = re.search(r'^<\?xml.* encoding="(.*?)"', open(f).readline())
+        contents = read_file(filename)
+        mo = re.search(r'\A<\?xml.* encoding="(.*?)"', contents)
         if mo:
             encoding = mo.group(1)
-            parser.feed(open(f).read().decode(encoding))
+            parser.feed(contents.decode(encoding))
         else:
-            parser.feed(open(f).read())
+            parser.feed(contents)
         parser.close()
     result = list(set(result))   # Drop duplicate values.
     result.sort()
@@ -259,12 +274,12 @@ def copy_files(files, src_dir, dst_dir):
     '''
     Copy list of relative file names from src_dir to dst_dir.
     '''
-    for f in files:
-        f = os.path.normpath(f)
-        if os.path.isabs(f):
+    for filename in files:
+        filename = os.path.normpath(filename)
+        if os.path.isabs(filename):
             continue
-        src = os.path.join(src_dir, f)
-        dst = os.path.join(dst_dir, f)
+        src = os.path.join(src_dir, filename)
+        dst = os.path.join(dst_dir, filename)
         if not os.path.exists(dst):
             if not os.path.isfile(src):
                 warning('missing file: %s' % src)
@@ -323,10 +338,14 @@ def get_source_options(asciidoc_file):
     result = []
     if os.path.isfile(asciidoc_file):
         options = ''
-        for line in open(asciidoc_file):
-            mo = re.search(r'^//\s*a2x:', line)
-            if mo:
-                options += ' ' + line[mo.end():].strip()
+        f = open(asciidoc_file)
+        try:
+            for line in f:
+                mo = re.search(r'^//\s*a2x:', line)
+                if mo:
+                    options += ' ' + line[mo.end():].strip()
+        finally:
+            f.close()
         parse_options()
     return result
 
@@ -435,8 +454,12 @@ class A2X(AttrDict):
         if self.resource_manifest:
             if not os.path.isfile(self.resource_manifest):
                 die('missing --resource-manifest: %s' % self.resource_manifest)
-            for r in open(self.resource_manifest):
-                self.resources.append(r.strip())
+            f = open(self.resource_manifest)
+            try:
+                for r in f:
+                    self.resources.append(r.strip())
+            finally:
+                f.close()
         for r in self.resources:
             r = os.path.expanduser(r)
             r = os.path.expandvars(r)
@@ -710,7 +733,7 @@ class A2X(AttrDict):
                     f = os.path.normpath(f)
                     if f not in ['content.opf']:
                         resource_files.append(f)
-        opf = xml.dom.minidom.parseString(open(opf_file).read())
+        opf = xml.dom.minidom.parseString(read_file(opf_file))
         manifest_files = []
         manifest = opf.getElementsByTagName('manifest')[0]
         for el in manifest.getElementsByTagName('item'):
@@ -731,7 +754,7 @@ class A2X(AttrDict):
                 item.setAttribute('media-type', mimetype)
                 manifest.appendChild(item)
         if count > 0:
-            open(opf_file, 'w').write(opf.toxml())
+            write_file(opf_file, opf.toxml())
 
     def to_epub(self):
         self.to_docbook()
@@ -763,7 +786,7 @@ class A2X(AttrDict):
                 try:
                     # Create and add uncompressed mimetype file.
                     verbose('archiving: mimetype')
-                    open('mimetype','w').write('application/epub+zip')
+                    write_file('mimetype', 'application/epub+zip')
                     zip.write('mimetype', compress_type=zipfile.ZIP_STORED)
                     # Compress all remaining files.
                     for (p,dirs,files) in os.walk('.'):

@@ -62,7 +62,7 @@ toolchain.
 
 
 == Sources of information on configuring DocBook toolchains
-As DocBook is a content and structure markup language, therefore
+DocBook is a content and structure markup language, therefore
 AsciiDoc generated DocBook markup is also limited to content and
 structure.  Layout and formatting definition is specific to the
 DocBook toolchain.

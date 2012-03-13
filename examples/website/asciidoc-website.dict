@@ -1,4 +1,4 @@
-personal_ws-1.1 en 225 
+personal_ws-1.1 en 238 
 O'Reilly
 awb
 Blogpost
@@ -69,6 +69,7 @@ Slackware
 CouchDB
 Wesnoth
 matplotlib
+adoc
 stdout
 usr
 txt
@@ -82,7 +83,9 @@ qanda
 GPL
 roff
 README
+Trotman
 xhtml
+Stylesheet
 inline
 weblog
 xmllint
@@ -97,6 +100,7 @@ asciidocapi
 Pommereau
 epub
 Iisaka's
+Hou
 doctests
 backends
 Gingras
@@ -117,6 +121,7 @@ xsl
 iOS
 arabic
 Neuburg
+Ilya
 tablewidth
 testasciidoc
 Volnitsky's
@@ -125,14 +130,17 @@ RPMs
 symlink
 newtables
 cd
+Qingping
 Calixto
 scaledwidth
 xzf
 xmlto
+Lex
 refname
 html
 online
 lim
+el
 mkdir
 Kurapati
 Solaris
@@ -148,7 +156,9 @@ Maier
 DelimitedBlocks
 Berker
 Neo
+js
 AsciiDocGen
+Portnov
 CRAN
 jw
 ln
@@ -183,20 +193,22 @@ SourceForge
 ascii
 Obenhuber's
 CHANGLOG
-docbook
 DocBook
+docbook
 fontlocking
 Rosenkraenzer
 toolchain
 slidy
 ebuild
 syntaxes
+Tomayko
 toclevels
 Eychaner
 OPF
 Yannick
 repo
 showcomments
+github
 plugins
 Xubuntu
 AsciiDoc's
@@ -221,6 +233,7 @@ passthrough
 asc
 sqrt
 TODO
+GPLv
 Cheatsheet
 manpage
 Avsajanishvili

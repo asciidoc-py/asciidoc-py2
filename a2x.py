@@ -23,7 +23,7 @@ import xml.dom.minidom
 import mimetypes
 
 PROG = os.path.basename(os.path.splitext(__file__)[0])
-VERSION = '8.6.6'
+VERSION = '8.6.7'
 
 # AsciiDoc global configuration file directory.
 # NOTE: CONF_DIR is "fixed up" by Makefile -- don't rename or change syntax.
@@ -206,9 +206,10 @@ def shell(cmd, raise_error=True):
             mo = re.match(r'^\s*(?P<arg0>[^ ]+)', cmd)
         if mo.group('arg0').endswith('.py'):
             cmd = 'python ' + cmd
-    # Remove redundant quoting -- this is not just costmetic, quoting seems to
-    # dramatically decrease the allowed command length in Windows XP.
-    cmd = re.sub(r'"([^ ]+?)"', r'\1', cmd)
+        # Remove redundant quoting -- this is not just cosmetic,
+        # quoting seems to dramatically decrease the allowed command
+        # length in Windows XP.
+        cmd = re.sub(r'"([^ ]+?)"', r'\1', cmd)
     verbose('executing: %s' % cmd)
     if OPTIONS.dry_run:
         return

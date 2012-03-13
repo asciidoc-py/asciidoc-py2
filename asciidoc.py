@@ -9,7 +9,7 @@ under the terms of the GNU General Public License (GPL).
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale, unicodedata, copy
 
 ### Used by asciidocapi.py ###
-VERSION = '8.6.6'           # See CHANGLOG file for version history.
+VERSION = '8.6.7'           # See CHANGLOG file for version history.
 
 MIN_PYTHON_VERSION = '2.4'  # Require this version of Python or better.
 
@@ -807,6 +807,11 @@ def filter_lines(filter_cmd, lines, attrs={}):
             filter_cmd = 'ruby ' + filter_cmd
 
     message.verbose('filtering: ' + filter_cmd)
+    if os.name == 'nt':
+        # Remove redundant quoting -- this is not just
+        # cosmetic, unnecessary quoting appears to cause
+        # command line truncation.
+        filter_cmd = re.sub(r'"([^ ]+?)"', r'\1', filter_cmd)
     try:
         p = subprocess.Popen(filter_cmd, shell=True,
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -877,9 +882,15 @@ def system(name, args, is_macro=False, attrs=None):
         os.close(fd)
         try:
             cmd = args
-            cmd = cmd + (' > %s' % tmp)
+            cmd = cmd + (' > "%s"' % tmp)
             if name == 'sys2':
                 cmd = cmd + ' 2>&1'
+            if os.name == 'nt':
+                # Remove redundant quoting -- this is not just
+                # cosmetic, unnecessary quoting appears to cause
+                # command line truncation.
+                cmd = re.sub(r'"([^ ]+?)"', r'\1', cmd)
+            message.verbose('shelling: %s' % cmd)
             if os.system(cmd):
                 message.warning('%s: non-zero exit status' % syntax)
             try:

@@ -6,6 +6,10 @@ AsciiDoc ChangeLog
 
 Version 8.6.7 (2012-03-17)
 --------------------------
+.Release highlights
+No major enhancements but quite a few bug fixes which, among other
+things, fixes Jython compatibility and improves Windows compatibility.
+
 .All additions and changes
 - Vim sytnax highlighter: highlight entity refs in macro arguments.
 - Added files with `.asciidoc` extension to Vim file type detection.

@@ -408,7 +408,7 @@ div.unbreakable { page-break-inside: avoid; }
  * */
 
 tt {
-  font-family: monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: inherit;
   color: navy;
 }
@@ -447,7 +447,7 @@ div.tableblock > table[frame="vsides"] {
  * */
 
 .monospaced {
-  font-family: monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: inherit;
   color: navy;
 }

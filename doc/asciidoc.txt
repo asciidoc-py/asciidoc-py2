@@ -1029,7 +1029,7 @@ color names].  Examples:
   [red]#Obvious# and [big red yellow-background]*very obvious*.
 
   [underline]#Underline text#, [overline]#overline text# and
-  [bold blue line-through]*bold blue and line-through*.
+  [blue line-through]*bold blue and line-through*.
 
 is rendered as:
 
@@ -3528,15 +3528,15 @@ Manpage Documents
 Sooner or later, if you program in a UNIX environment, you're going
 to have to write a man page.
 
-By observing a couple of additional conventions you can compose
-AsciiDoc files that will generate DocBook refentry (man page)
-documents.  The resulting DocBook file can then be translated to the
-native roff man page format (or other formats).
+By observing a couple of additional conventions (detailed below) you
+can write AsciiDoc files that will generate HTML and PDF man pages
+plus the native manpage roff format.  The easiest way to generate roff
+manpages from AsciiDoc source is to use the a2x(1) command. The
+following example generates a roff formatted manpage file called
+`asciidoc.1` (a2x(1) uses asciidoc(1) to convert `asciidoc.1.txt` to
+DocBook which it then converts to roff using DocBook XSL Stylesheets):
 
-For example, the `asciidoc.1.txt` file in the AsciiDoc distribution
-`./doc` directory was used to generate both the
-`asciidoc.1.css-embedded.html` HTML file the `asciidoc.1` roff
-formatted `asciidoc(1)` man page.
+  a2x --doctype manpage --format manpage asciidoc.1.txt
 
 .Viewing and printing manpage files
 **********************************************************************

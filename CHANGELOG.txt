@@ -11,7 +11,7 @@ No major enhancements but quite a few bug fixes which, among other
 things, fixes Jython compatibility and improves Windows compatibility.
 
 .All additions and changes
-- Vim sytnax highlighter: highlight entity refs in macro arguments.
+- Vim syntax highlighter: highlight entity refs in macro arguments.
 - Added files with `.asciidoc` extension to Vim file type detection.
   http://groups.google.com/group/asciidoc/browse_thread/thread/a9762e21ec0cc244/5d3a4ebf20e6847e[Patch]
   submitted by Dag Wiers.
@@ -85,7 +85,7 @@ things, fixes Jython compatibility and improves Windows compatibility.
   interpreter that executes the asciidoc parent (previously filters
   were hardwired to execute the 'python' interpreter). This prevents
   http://groups.google.com/group/asciidoc/browse_thread/thread/14e8fcb289a135b/3af3b4e57b827c78?lnk=gst&q=archlinux#3af3b4e57b827c78[Python
-  mixups].
+  mix-ups].
 - *FIXED*: Microsoft Windows shelled command-line truncation that
   caused shelled commands to fail e.g. the 'data-uri' attribute
   failure.

@@ -5890,7 +5890,7 @@ Link CSS stylesheets and JavaScripts. By default 'linkcss' is
 undefined in which case stylesheets and scripts are automatically
 embedded in the output document.
 
-|max-width |html5, xhtml11 |
+|[[X103]]max-width |html5, xhtml11 |
 Set the document maximum display width (sets the 'body' element CSS
 'max-width' property).
 

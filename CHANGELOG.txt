@@ -23,7 +23,7 @@ things, fixes Jython compatibility and improves Windows compatibility.
   HTML backends to allow the Table of Contents placement to be set
   manually by the author.
 - Added FAQs: 'How can I control page breaks when printing HTML
-  outputs?' and ' 'Is it possible to reposition the Table of Contents
+  outputs?' and 'Is it possible to reposition the Table of Contents
   in HTML outputs?'.
 - Added `--backend` and `--backend-opts` options to the 'a2x' command
   to allow 'a2x' to use backend plugin code extensions.

@@ -1342,11 +1342,16 @@ Paragraphs
 Paragraphs are blocks of text terminated by a blank line, the end of
 file, or the start of a delimited block or a list.  There are three
 paragraph syntaxes: normal, indented (literal) and admonition which
-are rendered, by default, with the corresponding paragraph style. Each
-syntax has a default style, but you can, if you wish,  explicitly
-apply any paragraph style to any paragraph syntax.  The common
-paragraph styles are 'normal', 'literal', 'verse', 'quote', 'listing',
-'TIP', 'NOTE', 'IMPORTANT', 'WARNING' and 'CAUTION'.
+are rendered, by default, with the corresponding paragraph style.
+
+Each syntax has a default style, but you can explicitly apply any
+paragraph style to any paragraph syntax. You can also apply
+<<X104,delimited block>> styles to single paragraphs.
+
+The built-in paragraph styles are: 'normal', 'literal', 'verse',
+'quote', 'listing', 'TIP', 'NOTE', 'IMPORTANT', 'WARNING', 'CAUTION',
+'abstract', 'partintro', 'comment', 'example', 'sidebar', 'source',
+'music', 'latex', 'graphviz'.
 
 normal paragraph syntax
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1497,6 +1502,7 @@ if <<X45,admonition icons>> have been enabled):
 This subsection also applies to <<X22,Admonition Blocks>>.
 
 
+[[X104]]
 Delimited Blocks
 ----------------
 Delimited blocks are blocks of text enveloped by leading and trailing
@@ -1794,11 +1800,35 @@ See also <<X47,Admonition Icons and Captions>>.
 [[X29]]
 Open Blocks
 ~~~~~~~~~~~
-An 'OpenBlock' groups a set of block elements. 'OpenBlock' usage:
+Open blocks are special:
 
-. <<X15,List item continuation>>.
+- The open block delimiter is line containing two hyphen characters
+  (instead of four or more repeated characters).
 
-. Apply the 'abstract' style to generate an abstract, for example:
+- They can be used to group block elements for <<X15,List item
+  continuation>>.
+
+- Appropriately styled they can be used in place of any other
+  delimited block.  The  following built-in styles can be applied to
+  open blocks: 'literal', 'verse', 'quote', 'listing', 'TIP', 'NOTE',
+  'IMPORTANT', 'WARNING', 'CAUTION', 'abstract', 'partintro',
+  'comment', 'example', 'sidebar', 'source', 'music', 'latex',
+  'graphviz'. For example:
+
+  [NOTE]
+  --
+  First paragraph ...
+
+  Second paragraph ...
+  --
+
+- An unstyled open block groups section elements but otherwise does
+  nothing.
+
+Open blocks are used to generate document abstracts and book part
+introductions:
+
+- Apply the 'abstract' style to generate an abstract, for example:
 
   [abstract]
   --
@@ -4821,7 +4851,8 @@ delimiter::
 options::
   The 'listelement' option specifies that paragraphs of this type will
   automatically be considered part of immediately preceding list
-  items.
+  items.  The 'skip' option causes the paragraph to be treated as a
+  comment (see <<X26,CommentBlocks>>).
 
 .Paragraph processing proceeds as follows:
 1. The paragraph text is aligned to the left margin.

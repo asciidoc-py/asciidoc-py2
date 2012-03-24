@@ -21,7 +21,7 @@ syn keyword asciidocToDo TODO FIXME CHECK TEST XXX ZZZ DEPRECATED
 syn match asciidocBackslash /\\/
 syn region asciidocIdMarker start=/^\$Id:\s/ end=/\s\$$/
 syn match asciidocCallout /\\\@<!<\d\{1,2}>/
-syn match asciidocListBlockDelimiter /^--$/
+syn match asciidocOpenBlockDelimiter /^--$/
 syn match asciidocLineBreak /[ \t]+$/
 syn match asciidocRuler /^'\{3,}$/
 syn match asciidocPagebreak /^<\{3,}$/
@@ -62,7 +62,7 @@ syn region asciidocTable_OLD start=/^\([`.']\d*[-~_]*\)\+[-~_]\+\d*$/ end=/^$/
 syn match asciidocBlockTitle /^\.[^. \t].*[^-~_]$/ contains=asciidocQuoted.*,asciidocAttributeRef
 syn match asciidocTitleUnderline /[-=~^+]\{2,}$/ transparent contained contains=NONE
 syn match asciidocOneLineTitle /^=\{1,5}\s\+\S.*$/ contains=asciidocQuoted.*,asciidocMacroAttributes,asciidocAttributeRef,asciidocEntityRef,asciidocEmail,asciidocURL,asciidocBackslash
-syn match asciidocTwoLineTitle /^[^. +/].*[^.]\n[-=~^+]\{2,}$/ contains=asciidocQuoted.*,asciidocMacroAttributes,asciidocAttributeRef,asciidocEntityRef,asciidocEmail,asciidocURL,asciidocBackslash,asciidocTitleUnderline
+syn match asciidocTwoLineTitle /^[^. +/].*[^.]\n[-=~^+]\{3,}$/ contains=asciidocQuoted.*,asciidocMacroAttributes,asciidocAttributeRef,asciidocEntityRef,asciidocEmail,asciidocURL,asciidocBackslash,asciidocTitleUnderline
 
 syn match asciidocAttributeList /^\[[^[ \t].*\]$/
 syn match asciidocQuoteBlockDelimiter /^_\{4,}$/
@@ -127,7 +127,7 @@ highlight link asciidocHLabel Label
 highlight link asciidocIdMarker Special
 highlight link asciidocIndexTerm Macro
 highlight link asciidocLineBreak Special
-highlight link asciidocListBlockDelimiter Label
+highlight link asciidocOpenBlockDelimiter Label
 highlight link asciidocListBullet Label
 highlight link asciidocListContinuation Label
 highlight link asciidocListingBlock Identifier

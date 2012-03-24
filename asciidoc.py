@@ -2711,6 +2711,8 @@ class Paragraph(AbstractBlock):
         self.merge_attributes(attrs)
         reader.read()   # Discard (already parsed item first line).
         body = reader.read_until(paragraphs.terminators)
+        if 'skip' in self.parameters.options:
+            return
         body = [self.text] + list(body)
         presubs = self.parameters.presubs
         postsubs = self.parameters.postsubs

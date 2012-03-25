@@ -1,30 +1,8 @@
 Source Code Highlight Filter
 ============================
 
-The AsciiDoc distribution includes a source code syntax highlight
-filter (`source-highlight-filter.conf`).
-
-
-HTML Outputs
-------------
-The highlighter uses http://www.gnu.org/software/src-highlite/[GNU
-source-highlight] to highlight 'html4' and 'xhtml11' outputs. You also
-have the option of using the http://pygments.org/[Pygments] syntax
-highlighter for 'xhtml11' outputs.
-
-- The filter command must reside in the shell search 'PATH'.
-  'pygmentize' command in your 'PATH'.
-- To use Pygments you need to define an AsciiDoc attribute named
-  'pygments'.
-- You can customize Pygments CSS styles by editing
-  `./stylesheets/pygments.css`.
-- To make Pygments your default highlighter put the following line
-  your `~/.asciidoc/asciidoc.conf` file:
-
-  pygments=
-
-- The AsciiDoc 'encoding' attribute is passed to Pygments as a `-O`
-  command-line option.
+The AsciiDoc distribution includes a 'source' filter for highlighting
+code syntax.
 
 
 DocBook Outputs
@@ -38,6 +16,51 @@ DocBook programlisting element is assigned two attributes:
   attribute.
 . The 'linenumbering' attribute is set to the AsciiDoc 'src_numbered'
   attribute ('numbered' or 'unnumbered').
+
+
+HTML Outputs
+------------
+You have the choice of three HTML source code highlighters, your
+selection is determined by the 'source-highlighter' attribute (defaults
+to 'source-highlight'):
+
+=== GNU Source Highlight
+The default highlighter is the
+http://www.gnu.org/software/src-highlite/[GNU source-highlight] which
+can highlight 'html4', 'html5' and 'xhtml11' outputs.  The GNU
+source-highlight must be installed and the 'source-highlight' command
+must reside in the shell search 'PATH'.
+
+=== Highlight
+You can use
+http://www.andre-simon.de/doku/highlight/en/highlight.html[Highlight]
+syntax highlighter for 'xhtml11', 'html5' and 'html4' outputs (set the
+'source-highlighter' attribute to 'highlighter').
+
+- The 'highlight' command must reside in the shell search 'PATH'.
+- To make Highlighter your default highlighter put the following line
+  your `~/.asciidoc/asciidoc.conf` file:
+
+  source-highlighter=highlighter
+
+- The AsciiDoc 'encoding' attribute is passed to Highlighter using the
+  `--encoding` command-line option.
+
+=== Pygments
+The http://pygments.org/[Pygments] syntax highlighter can be used for
+'xhtml11' and 'html5' outputs (set the 'source-highlighter' attribute
+to 'pygments').
+
+- The 'pygmentize' command must reside in the shell search 'PATH'.
+- You can customize Pygments CSS styles by editing
+  `./stylesheets/pygments.css`.
+- To make Pygments your default highlighter put the following line
+  your `~/.asciidoc/asciidoc.conf` file:
+
+  source-highlighter=pygments
+
+- The AsciiDoc 'encoding' attribute is passed to Pygments using the
+  `-O` command-line option.
 
 
 Block attributes
@@ -57,6 +80,10 @@ style::
   Set to 'source'.
 language::
   The source code language name.
++
+NOTE: The language names vary between highlighters -- consult the
+selected highlighter manual.
+
 src_numbered::
   Set to 'numbered' to include line numbers.
 src_tab::
@@ -171,14 +198,14 @@ This source-highlight filtered block:
 
  end
 
- if $0 == __FILE__                                 \<1>
+ if $0 == __FILE__                                 # \<1>
    # Array#cycle test
    # true => 0
    # false => 1
    # true => 2
    # false => 3
    # true => 4
-   puts 'Array#cycle test'                         \<2>
+   puts 'Array#cycle test'                         # \<2>
    [true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
      puts "#{a.inspect} => #{b.inspect}"
    end
@@ -212,14 +239,14 @@ class Array
 
 end
 
-if $0 == __FILE__                                 <1>
+if $0 == __FILE__                                 # <1>
   # Array#cycle test
   # true => 0
   # false => 1
   # true => 2
   # false => 3
   # true => 4
-  puts 'Array#cycle test'                         <2>
+  puts 'Array#cycle test'                         # <2>
   [true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
     puts "#{a.inspect} => #{b.inspect}"
   end
@@ -234,6 +261,6 @@ end
 - If the source 'language' attribute has been set (using an
   'AttributeEntry' or from the command-line) you don't have to specify
   it in each source code block.
-- You may need to place callout markers inside source code comments to
+- You should place callout markers inside source code comments to
   ensure they are not misinterpreted and mangled by the highlighter.
 =====

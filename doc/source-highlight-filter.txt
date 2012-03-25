@@ -41,7 +41,7 @@ syntax highlighter for 'xhtml11', 'html5' and 'html4' outputs (set the
 - To make Highlighter your default highlighter put the following line
   your `~/.asciidoc/asciidoc.conf` file:
 
-  source-highlighter=highlighter
+  source-highlighter=highlight
 
 - The AsciiDoc 'encoding' attribute is passed to Highlighter using the
   `--encoding` command-line option.
@@ -89,9 +89,8 @@ src_numbered::
 src_tab::
   Set tab size (GNU source-highlight only).
 args::
-  Include this attribute value in the highlighter command-line (GNU
-  source-highlight and pygmentize) or in the `programlisting` element
-  (DocBook).
+  Include this attribute value in the highlighter command-line (HTML
+  outputs) or in the `programlisting` element (DocBook).
 
 
 Testing

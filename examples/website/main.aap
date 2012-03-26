@@ -87,7 +87,7 @@ DOCS =
 ASCIIDOC = python ../../asciidoc.py
 # AsciiDoc options to generate documentation HTML.
 ASCIIDOC_HTML =
-    $ASCIIDOC -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revnumber=$(VERS)@ -a revdate="$(DATE)@" -a max-width=70em
+    $ASCIIDOC -b xhtml11 -f $(LAYOUT).conf -a icons -a badges -a revnumber=$(VERS)@ -a revdate="$(DATE)@" -a max-width=70em -a source-highlighter=highlight
 
 :rule %.html : %.txt $(LAYOUT).conf
     @if target in ('userguide.html','faq.html'):

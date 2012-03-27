@@ -1038,7 +1038,12 @@ is rendered as:
 [underline]#Underline text#, [overline]#overline text# and
 [bold blue line-through]*bold blue and line-through*.
 
-NOTE: Text attributes are not applicable to PDF or HTML 4 outputs.
+NOTE: Color and text decorator attributes are rendered for XHTML and
+HTML 5 outputs using CSS stylesheets.  The mechanism to implement
+color and text decorator attributes is provided for DocBook toolchains
+via the DocBook 'phrase' element 'role' attribute, but the actual
+rendering is toolchain specific and is not part of the AsciiDoc
+distribution.
 
 [[X52]]
 Constrained and Unconstrained Quotes

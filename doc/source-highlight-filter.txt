@@ -24,6 +24,11 @@ You have the choice of three HTML source code highlighters, your
 selection is determined by the 'source-highlighter' attribute (defaults
 to 'source-highlight'):
 
+NOTE: Set the 'source-highlighter' attribute from the asciidoc(1)
+command-line or in the document header (not in the document body,
+because the configuration file conditional macros are processed at
+load time).
+
 === GNU Source Highlight
 The default highlighter is the
 http://www.gnu.org/software/src-highlite/[GNU source-highlight] which

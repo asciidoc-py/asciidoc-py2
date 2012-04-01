@@ -510,8 +510,8 @@ stylesheet and to optionally include additional JavaScript code.
 - The `<theme>.js` file is included in addition to the default
   `asciidoc.js` JavaScript file.
 - If the <<X66,data-uri>> attribute is defined then icons are loaded
-  from the theme's `icons` sub-directory if it exists (i.e.  the
-  'iconsdir' attribute is set to that location).
+  from the theme `icons` sub-directory if it exists (i.e.  the
+  'iconsdir' attribute is set to theme `icons` sub-directory path).
 - Embedded theme files are automatically inserted in the output files
   but you need to manually copy linked CSS and Javascript files to the
   location of the output documents.
@@ -2319,6 +2319,7 @@ DocBook markup -- DocBook conversion programs automatically generate
 an index at the point an 'Index' section appears in source document.
 
 
+[[X105]]
 Callouts
 --------
 Callouts are a mechanism for annotating verbatim text (for example:
@@ -5906,8 +5907,10 @@ images. By default 'icons' is undefined and text is used in place of
 icon images.
 
 |[[X44]]iconsdir |html4, html5, xhtml11, docbook |
-The name of the directory containing linked admonition and navigation
-icons. Defaults to `./images/icons`.
+The name of the directory containing linked admonition icons,
+navigation icons and the `callouts` sub-directory (the `callouts`
+sub-directory contains <<X105,callout>> number images). 'iconsdir'
+defaults to `./images/icons`.
 
 |imagesdir |html4, html5, xhtml11, docbook |
 If this attribute is defined it is prepended to the target image file

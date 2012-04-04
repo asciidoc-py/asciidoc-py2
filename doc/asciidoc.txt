@@ -5997,10 +5997,14 @@ content width. In all other respects behaves the same as the 'toc'
 attribute.
 
 |toc-placement |html5, xhtml11 |
-When set to 'auto' (the default value) asciidoc(1) will display the
-'Table of Contents' in the document header. When set to 'manual' the
-'Table of Contents' position is determined by the position of the
-`toc::[]` block macro.
+When set to 'auto' (the default value) asciidoc(1) will place the
+table of contents in the document header. When 'toc-placement' is set
+to 'manual' the TOC can be postioned anywhere in the document by
+placing the `toc::[]` block macro at the point you want the TOC to
+appear.
+
+NOTE: If you use 'toc-placement' then you also have to define the
+<<X91,toc>> attribute.
 
 |toc-title |html5, xhtml11 |
 Sets the table of contents title (defaults to 'Table of Contents').

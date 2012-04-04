@@ -1272,16 +1272,17 @@ start on a new printed page.
 
 == Is it possible to reposition the Table of Contents in HTML outputs?
 By default the 'xhtml11' and 'html5' backends auto-position the TOC
-after the header. You can manually position the header by setting the
+after the header. You can manually position the TOC by setting the
 'toc-placement' attribute value to 'manual' and then inserting the
 `toc::[]` block macro where you want the TOC to appear. For example,
 put this in the document header:
 
 ----------------------
+:toc:
 :toc-placement: manual
 ----------------------
 
-and this where you want the TOC to appear:
+The put this where you want the TOC to appear:
 
 -------
 toc::[]

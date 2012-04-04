@@ -329,6 +329,11 @@ Documents written using AsciiDoc
 Here are some documents I know of, if you know of more drop me a line
 and I'll add them to the list.
 
+- The book http://practicalunittesting.com/[Practial Unit Testing] by
+  Tomek Kaczanowski was
+  https://groups.google.com/group/asciidoc/browse_frm/thread/4ba13926262efa23[written
+  using Asciidoc].
+
 - The book http://oreilly.com/catalog/9781449397296[Programming iOS 4]
   by Matt Neuburg was written using AsciiDoc. Matt has
   http://www.apeth.net/matt/iosbooktoolchain.html[written an article]

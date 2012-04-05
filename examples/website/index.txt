@@ -329,7 +329,7 @@ Documents written using AsciiDoc
 Here are some documents I know of, if you know of more drop me a line
 and I'll add them to the list.
 
-- The book http://practicalunittesting.com/[Practial Unit Testing] by
+- The book http://practicalunittesting.com/[Practical Unit Testing] by
   Tomek Kaczanowski was
   https://groups.google.com/group/asciidoc/browse_frm/thread/4ba13926262efa23[written
   using Asciidoc].

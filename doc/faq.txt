@@ -1297,3 +1297,49 @@ command-line or with an attribute entry in the document header). For
 example:
 
   asciidoc -a max-width=55em article.txt
+
+
+== Using roles to select fonts for PDF
+
+Some applications require mixing fonts beyond the set of faces
+normally provided by default (normal, monospace, italic etc.) for
+example mixed language text where the font used for the majority of
+text does not contain suitable glyphs in the minority language.
+
+As AsciiDoc can not provide presentation markup since it is not
+provided by Docbook this is achieved by marking text which should use
+a different font with a custom role which can be rendered by the the
+docbook toolchain.
+
+NOTE: For XHTML outputs AsciiDoc translates the role attribute to a
+class which can be selected and styled by CSS as described in the
+AsciiDoc users guide.
+
+The Docbook toolchains will have to be configured to render the text
+that you mark with the custom role.
+
+For FOP a small XSL wrapper is needed, say a file called `my_fo.xsl`
+containing:
+
+---------------------------------------------------------------
+<xsl:stylesheet version="1.0"
+               xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:fo="http://www.w3.org/1999/XSL/Format">
+ <xsl:import href="/etc/asciidoc/docbook-xsl/fo.xsl"/>
+ <xsl:template match="phrase[@role='f2']">
+   <fo:inline font-family="the font for f2">
+     <xsl:apply-templates/>
+   </fo:inline>
+ </xsl:template>
+</xsl:stylesheet>
+---------------------------------------------------------------
+
+This is used with `a2x` by:
+
+ a2x -f pdf --fop --xsl-file=my_fo.xsl input.txt
+
+and the AsciiDoc source marked by:
+
+ normal text [f2]#special font is like this# and back to normal
+
+Thanks to Antonio Borneo for this answer.

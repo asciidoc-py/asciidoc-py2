@@ -1300,7 +1300,6 @@ example:
 
 
 == Using roles to select fonts for PDF
-
 Some applications require mixing fonts beyond the set of faces
 normally provided by default (normal, monospace, italic etc.) for
 example mixed language text where the font used for the majority of
@@ -1336,10 +1335,10 @@ containing:
 
 This is used with `a2x` by:
 
- a2x -f pdf --fop --xsl-file=my_fo.xsl input.txt
+  a2x -f pdf --fop --xsl-file=my_fo.xsl input.txt
 
 and the AsciiDoc source marked by:
 
- normal text [f2]#special font is like this# and back to normal
+  normal text [f2]#special font is like this# and back to normal
 
 Thanks to Antonio Borneo for this answer.

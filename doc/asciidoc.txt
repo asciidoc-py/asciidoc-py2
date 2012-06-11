@@ -4648,6 +4648,7 @@ predefined intrinsic attributes:
   {two-semicolons}      Two semicolon characters
   {user-dir}            the ~/.asciidoc directory (if it exists)
   {verbose}             defined as '' if --verbose command option specified
+  {wj}                  Word-joiner
   {zwsp}                Zero-width space character entity
 
 [NOTE]

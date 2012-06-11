@@ -1350,9 +1350,9 @@ letter (the 'f' in 'footnote' in the following example):
 
   ``Double-quoted text''footnote:[Lorum ipsum...]
 
-A workaround is to put a zero-width space between the trailing quote
+A workaround is to put a word-joiner between the trailing quote
 and the footnote (the `{empty}` attribute would also work), for
 example:
 
-  ``Double-quoted text''{zwsp}footnote:[Lorum ipsum...]
+  ``Double-quoted text''{wj}footnote:[Lorum ipsum...]
 

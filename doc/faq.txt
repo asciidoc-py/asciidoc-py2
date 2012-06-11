@@ -1342,3 +1342,17 @@ and the AsciiDoc source marked by:
   normal text [f2]#special font is like this# and back to normal
 
 Thanks to Antonio Borneo for this answer.
+
+
+== How can I place a footnote immediately following quoted text?
+A closing quote is not recognised if it is immediately followed by a
+letter (the 'f' in 'footnote' in the following example):
+
+  ``Double-quoted text''footnote:[Lorum ipsum...]
+
+A workaround is to put a zero-width space between the trailing quote
+and the footnote (the `{empty}` attribute would also work), for
+example:
+
+  ``Double-quoted text''{zwsp}footnote:[Lorum ipsum...]
+

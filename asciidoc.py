@@ -1871,10 +1871,7 @@ class AttributeEntry:
                 config.load_miscellaneous(config.conf_attrs)
             else:
                 # Markup template section attribute.
-                if attr.name in config.sections:
-                    config.sections[attr.name] = [attr.value]
-                else:
-                    message.warning('missing configuration section: %s' % attr.name)
+                config.sections[attr.name] = [attr.value]
         else:
             # Normal attribute.
             if attr.name[-1] == '!':

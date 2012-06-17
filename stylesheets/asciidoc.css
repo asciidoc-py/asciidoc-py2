@@ -79,7 +79,7 @@ ul, ol, li > p {
 ul > li     { color: #aaa; }
 ul > li > * { color: black; }
 
-.monospaced, code, tt, pre {
+.monospaced, code, pre {
   font-family: "Courier New", Courier, monospace;
   font-size: inherit;
   color: navy;

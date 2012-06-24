@@ -1813,19 +1813,22 @@ Open blocks are special:
 - They can be used to group block elements for <<X15,List item
   continuation>>.
 
-- Appropriately styled they can be used in place of any other
-  delimited block.  The  following built-in styles can be applied to
-  open blocks: 'literal', 'verse', 'quote', 'listing', 'TIP', 'NOTE',
+- Open blocks can be styled to behave like any other type of delimited
+  block.  The  following built-in styles can be applied to open
+  blocks: 'literal', 'verse', 'quote', 'listing', 'TIP', 'NOTE',
   'IMPORTANT', 'WARNING', 'CAUTION', 'abstract', 'partintro',
   'comment', 'example', 'sidebar', 'source', 'music', 'latex',
-  'graphviz'. For example:
+  'graphviz'. For example, the following open block and listing block
+  are functionally identical:
 
-  [NOTE]
+  [listing]
   --
-  First paragraph ...
+  Lorum ipsum ...
+  --
 
-  Second paragraph ...
-  --
+  ---------------
+  Lorum ipsum ...
+  ---------------
 
 - An unstyled open block groups section elements but otherwise does
   nothing.

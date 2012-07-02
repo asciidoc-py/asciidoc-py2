@@ -135,7 +135,7 @@ def music2png(format, infile, outfile, modified):
     os.chdir(outdir)
     try:
         if format == 'abc':
-            run('abc2ly --beams=None -o "%s" "%s"' % (ly,abc))
+            run('abc2ly -o "%s" "%s"' % (ly,abc))
         run('lilypond --png -o "%s" "%s"' % (basefile,ly))
         os.rename(png, outfile)
     finally:

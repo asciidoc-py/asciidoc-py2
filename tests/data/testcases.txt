@@ -697,6 +697,8 @@ Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et
 footnoteref:[F3,A footnote&#44; &#34;with an image&#34;
 image:images/smallnew.png[]].
+footnote:[With [square brackets\]] Qui in magna commodo, est labitur
+dolorum an. Est ne magna primis.
 
 
 Rulers and page breaks
@@ -778,3 +780,7 @@ Lorum ipsum...
 == àn îd with accénts
 Lorum ipsum...
 
+
+== Inline macros
+http://groups.google.com/group/asciidoc/[A URL with [square
+brackets\]].

@@ -2800,10 +2800,10 @@ headers.  Example:
   does not process nested includes). Setting 'depth' to '1' disables
   nesting inside the included file. By default, nesting is limited to
   a depth of ten.
-- If the he 'warnings' attribute is set to 'False' (or any other Python
-  literal that evaluates to boolean false) then no warning message is
-  printed if the included file does not exist. By default 'warnings'
-  are enabled.
+- If the he 'warnings' attribute is set to 'False' (or any other
+  Python literal that evaluates to boolean false) then no warning
+  message is printed if the included file does not exist. By default
+  'warnings' are enabled.
 - Internally the `include1` macro is translated to the `include1`
   system attribute which means it must be evaluated in a region where
   attribute substitution is enabled. To inhibit nested substitution in

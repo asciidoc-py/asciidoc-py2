@@ -4,6 +4,72 @@ AsciiDoc ChangeLog
 :website: http://www.methods.co.nz/asciidoc/
 
 
+Version 8.6.8 (2012-07-17)
+--------------------------
+.Release highlights
+- Added full complement of styles to 'Open Blocks' and 'Normal
+  Paragraphs' (those with a minimalist bent could construct virtually
+  any document using just Title, Normal Paragraph and Open Block
+  syntaxes.
+- Increased default maxiumum include depth from 5 to 10.
+- Emit warning if maximum include depth is exceeded.
+- Suppress repeated console messages.
+- Music filter: removed '--beams=None' option from abc2ly invokation
+  because it is broken on Lilypond 2.14 (Ubuntu 12.04).
+- Replaced obsolete '<tt>' tag with '<code>' in HTML backends.
+- Allow configuration attribute entries to create a new section
+  (previously you could only modify existing sections).  See:
+  https://groups.google.com/group/asciidoc/browse_thread/thread/7be28e9714f249c7[discussion
+  list].
+- Documented {wj} (word-joiner) attribute and updated FAQ.  See:
+  https://groups.google.com/group/asciidoc/browse_thread/thread/961a957ab5872ebf[discussion
+  list].
+- FAQ: Added 'How can I place a footnote immediately following quoted
+  text?' See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/961a957ab5872ebf[discussion
+  list].
+- Added Greek language configuration file. Contributed by Michael
+  Dourmousoglou.  See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/9e79d8494ef8d870[discussion
+  list].
+- FAQ: Added 'Using roles to select fonts for PDF'. Submitted by Lex
+  Trotman and based on solution by Antonio Borneo. See:
+  https://groups.google.com/group/asciidoc/browse_frm/thread/64b071bb21de9cf0[discussion
+  list].
+- Apply same monospaced font size to all monospaced text.
+- Changed '0' number padding to spaces in numbered GNU
+  source-highlight outputs.
+- Allow 'highlight' source highlighter to use 'python' for Python
+  {language} name.  r1142: Update the AsciiDoc 'source' filter to
+  allow the use of the 'highlight' source code highlighter.  See
+  https://groups.google.com/group/asciidoc/browse_frm/thread/e045c9986c71d72a[discussion
+  list].
++
+NOTE: The 'pygments' attribute has been deprecated in favor of the new
+'source-highlighter' attribute.
+- Vim syntax highlighter: Don't confuse trailing open block delimiter
+  with section underline.
+- Added 'skip' option to paragraphs (c.f. Delimited Block 'skip'
+  option).
+
+.Bug fixes
+- *FIXED*: latex, music and graphviz filters: When the filter output
+  image is data-uri encoded write it to the indir (instead of the
+  outdir) so that encoder can find it. See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/f5174f450a61f14b[discussion
+  list].
+- *FIXED*: Escape the ']' character inside inline macros.  See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/db3b734a6931cb74[discussion
+  list].
+- *FIXED*: source highlighter filter: Pass 'role' attribute to HTML
+  backends.
+- *FIXED*: source highlight filter: docbook backend: 'role' attribute
+  was not passed to listings without a title. Patch submitted by Lex
+  Trotman. See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/13c9ee97930342b3[discussion
+  list].
+
+
 Version 8.6.7 (2012-03-17)
 --------------------------
 .Release highlights

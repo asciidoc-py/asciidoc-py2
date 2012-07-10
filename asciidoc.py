@@ -9,7 +9,7 @@ under the terms of the GNU General Public License (GPL).
 import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale, unicodedata, copy
 
 ### Used by asciidocapi.py ###
-VERSION = '8.6.7'           # See CHANGLOG file for version history.
+VERSION = '8.6.8'           # See CHANGLOG file for version history.
 
 MIN_PYTHON_VERSION = '2.4'  # Require this version of Python or better.
 

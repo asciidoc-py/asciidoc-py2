@@ -2799,7 +2799,7 @@ headers.  Example:
   subsequent nested includes (not applicable to `include1` macro which
   does not process nested includes). Setting 'depth' to '1' disables
   nesting inside the included file. By default, nesting is limited to
-  a depth of five.
+  a depth of ten.
 - If the he 'warnings' attribute is set to 'False' (or any other Python
   literal that evaluates to boolean false) then no warning message is
   printed if the included file does not exist. By default 'warnings'

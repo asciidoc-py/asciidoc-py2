@@ -174,14 +174,18 @@ class Message:
         # argument. Has no effect when set to None.
         self.linenos = None
         self.messages = []
+        self.prev_msg = ''
 
     def stdout(self,msg):
         print msg
 
     def stderr(self,msg=''):
+        if msg == self.prev_msg:  # Suppress repeated messages.
+            return
         self.messages.append(msg)
         if __name__ == '__main__':
             sys.stderr.write('%s: %s%s' % (self.PROG, msg, os.linesep))
+        self.prev_msg = msg
 
     def verbose(self, msg,linenos=True):
         if config.verbose:
@@ -4087,7 +4091,7 @@ class Reader1:
         self.parent = None      # Included reader's parent reader.
         self._lineno = 0        # The last line read from file object f.
         self.current_depth = 0  # Current include depth.
-        self.max_depth = 5      # Initial maxiumum allowed include depth.
+        self.max_depth = 10     # Initial maxiumum allowed include depth.
         self.bom = None         # Byte order mark (BOM).
         self.infile = None      # Saved document 'infile' attribute.
         self.indir = None       # Saved document 'indir' attribute.
@@ -4153,6 +4157,7 @@ class Reader1:
                 warnings = attrs.get('warnings', True)
                 # Don't process include macro once the maximum depth is reached.
                 if self.current_depth >= self.max_depth:
+                    message.warning('maximum include depth exceeded')
                     return result
                 # Perform attribute substitution on include macro file name.
                 fname = subs_attrs(mo.group('target'))
@@ -4193,7 +4198,7 @@ class Reader1:
                     try:
                         val = int(attrs['tabsize'])
                         if not val >= 0:
-                            raise ValueError, "not >= 0"
+                            raise ValueError, 'not >= 0'
                         self.tabsize = val
                     except ValueError:
                         raise EAsciiDoc, 'illegal include macro tabsize argument'
@@ -4203,11 +4208,10 @@ class Reader1:
                     try:
                         val = int(attrs['depth'])
                         if not val >= 1:
-                            raise ValueError, "not >= 1"
+                            raise ValueError, 'not >= 1'
                         self.max_depth = self.current_depth + val
                     except ValueError:
-                        raise EAsciiDoc, 'illegal include macro depth argument'
-
+                        raise EAsciiDoc, "include macro: illegal 'depth' argument"
                 # Process included file.
                 message.verbose('include: ' + fname, linenos=False)
                 self.open(fname)

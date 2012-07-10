@@ -141,9 +141,12 @@ def music2png(format, infile, outfile, modified):
     finally:
         os.chdir(saved_pwd)
     # Chop the bottom 75 pixels off to get rid of the page footer.
-    run('convert "%s" -gravity South -crop 1000x10000+0+75 "%s"' % (outfile, outfile))
+    run('convert "%s" -gravity South -chop 0x75 "%s"' % (outfile, outfile))
     # Trim all blank areas from sides, top and bottom.
-    run('convert "%s" -trim "%s"' % (outfile, outfile))
+    # The convert(1) -monochrome +repage options necessary to suppress FOP
+    # error 'FOPException: Raster ByteInterleavedRaster' (FOP 1.0, Imagemagick
+    # 6.6.9-7).
+    run('convert "%s" -trim -monochrome +repage "%s"' % (outfile, outfile))
     for f in temps:
         if os.path.isfile(f):
             print_verbose('deleting: %s' % f)

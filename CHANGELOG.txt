@@ -47,6 +47,7 @@ Version 8.6.8 (2012-07-17)
 +
 NOTE: The 'pygments' attribute has been deprecated in favor of the new
 'source-highlighter' attribute.
+
 - Vim syntax highlighter: Don't confuse trailing open block delimiter
   with section underline.
 - Added 'skip' option to paragraphs (c.f. Delimited Block 'skip'
@@ -68,6 +69,9 @@ NOTE: The 'pygments' attribute has been deprecated in favor of the new
   Trotman. See
   https://groups.google.com/group/asciidoc/browse_thread/thread/13c9ee97930342b3[discussion
   list].
+- *FIXED*: music2png.py: 'FOPException: Raster ByteInterleavedRaster'
+  error (FOP 1.0, Imagemagick 6.6.9-7).
+
 
 
 Version 8.6.7 (2012-03-17)

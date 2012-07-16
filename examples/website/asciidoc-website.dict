@@ -1,4 +1,4 @@
-personal_ws-1.1 en 238 
+personal_ws-1.1 en 240 
 O'Reilly
 awb
 Blogpost
@@ -73,8 +73,8 @@ adoc
 stdout
 usr
 txt
-ebooks
 eBooks
+ebooks
 linenumbering
 ImageMagick
 distros
@@ -123,6 +123,7 @@ arabic
 Neuburg
 Ilya
 tablewidth
+Kaczanowski
 testasciidoc
 Volnitsky's
 backmatter
@@ -151,6 +152,7 @@ hg
 Gouichi
 lang
 conf
+Tomek
 wiki
 Maier
 DelimitedBlocks
@@ -193,8 +195,8 @@ SourceForge
 ascii
 Obenhuber's
 CHANGLOG
-DocBook
 docbook
+DocBook
 fontlocking
 Rosenkraenzer
 toolchain

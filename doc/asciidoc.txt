@@ -519,8 +519,8 @@ stylesheet and to optionally include additional JavaScript code.
   locations as <<X35,other CSS and JavaScript files>>.
 
 For example, the command-line option `--theme foo` (or `--attribute
-theme=foo`) will cause asciidoc(1) to search <<"X27","configuration
-file locations 1, 2 and 3">> for a sub-directory called `themes/foo`
+theme=foo`) will cause asciidoc(1) to search <<X27,configuration
+file locations 1, 2 and 3>> for a sub-directory called `themes/foo`
 containing the stylesheet `foo.css` and optionally a JavaScript file
 name `foo.js`.
 
@@ -4020,7 +4020,7 @@ macro name):
   \\NEW!=NEW!
 
 The only difference between the three replacement types is how they
-are applied. By default 'replacements' and 'replacement2' are applied
+are applied. By default 'replacements' and 'replacements2' are applied
 in <<X102,normal>> substitution contexts whereas 'replacements3' needs
 to be configured explicitly and should only be used in backend
 configuration files.

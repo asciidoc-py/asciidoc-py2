@@ -146,7 +146,7 @@ fixconfpath:
 
 install-vim:
 	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
-		if ! test -d $$d; then continue; fi ; \
+		if test ! -d $$d; then continue; fi ; \
 		echo "installing Vim files in $$d" ; \
 		$(INSTALL) -d $$d/syntax ; \
 		$(INSTALL_DATA) vim/syntax/asciidoc.vim $$d/syntax ; \
@@ -156,7 +156,7 @@ install-vim:
 
 uninstall-vim:
 	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
-		if ! test -d $$d; then continue; fi ; \
+		if test ! -d $$d; then continue; fi ; \
 		echo "uninstalling Vim files in $$d" ; \
 		rm -f $$d/syntax/asciidoc.vim ; \
 		rm -f $$d/ftdetect/asciidoc_filetype.vim ; \

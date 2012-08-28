@@ -1356,3 +1356,12 @@ example:
 
   ``Double-quoted text''{wj}footnote:[Lorum ipsum...]
 
+
+== How can I convert documents from other formats to AsciiDoc?
+You can use http://johnmacfarlane.net/pandoc/[Pandoc] to convert
+documents in http://daringfireball.net/projects/markdown/[markdown],
+http://docutils.sourceforge.net/docs/ref/rst/introduction.html[reStructuredText],
+http://redcloth.org/textile[textile],
+http://www.w3.org/TR/html40/[HTML], http://www.docbook.org/[DocBook],
+or http://www.latex-project.org/[LaTeX] to AsciiDoc.
+

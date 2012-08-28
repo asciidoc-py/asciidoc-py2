@@ -5230,22 +5230,17 @@ Example `~/.vimrc` File
 set background=dark
 
 " Show tabs and trailing characters.
+"set listchars=tab:»·,trail:·,eol:¬
 set listchars=tab:»·,trail:·
 set list
 
-" Don't highlight searched text.
-highlight clear Search
-
-" Don't move to matched text while search pattern is being entered.
-set noincsearch
-
 " Reformat paragraphs and list.
-nnoremap R gq}
+nnoremap <Leader>r gq}
 
 " Delete trailing white space and Dos-returns and to expand tabs to spaces.
-nnoremap S :set et<CR>:retab!<CR>:%s/[\r \t]\+$//<CR>
+nnoremap <Leader>t :set et<CR>:retab!<CR>:%s/[\r \t]\+$//<CR>
 
-autocmd BufRead,BufNewFile *.txt,README,TODO,CHANGELOG,NOTES
+autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
         \ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
         \ textwidth=70 wrap formatoptions=tcqn
         \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*<\\d\\+>\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
@@ -5654,39 +5649,23 @@ Syntax highlighting is incredibly useful, in addition to making
 reading AsciiDoc documents much easier syntax highlighting also helps
 you catch AsciiDoc syntax errors as you write your documents.
 
-The AsciiDoc `./vim/` distribution directory contains Vim syntax
-highlighter and filetype detection scripts for AsciiDoc.  Syntax
-highlighting makes it much easier to spot AsciiDoc syntax errors.
+The AsciiDoc distribution directory contains a Vim syntax highlighter
+for AsciiDoc (`./vim/syntax/asciidoc.vim`), you can find the latest
+version in the online
+https://code.google.com/p/asciidoc/source/browse/[AsciiDoc
+repository].
 
-If Vim is installed on your system the AsciiDoc installer
-(`install.sh`) will automatically install the vim scripts in the Vim
-global configuration directory (`/etc/vim`).
+Install the highlighter by copying `asciidoc.vim` to your
+`$HOME/.vim/syntax` directory (create it if it doesn't already exist).
 
-You can also turn on syntax highlighting by adding the following line
-to the end of you AsciiDoc source files:
+To enable syntax highlighing:
+
+- Put a Vim 'autocmd' in your Vim configuration file (see the
+  <<X61,example vimrc file>>).
+- or execute the Vim command `:set syntax=asciidoc`.
+- or add the following line to the end of you AsciiDoc source files:
 
   // vim: set syntax=asciidoc:
-
-TIP: Bold fonts are often easier to read, use the Vim `:set
-background=dark` command to set bold bright fonts.
-
-NOTE: There are a number of alternative syntax highlighters for
-various editors listed on the {website}[AsciiDoc website].
-
-Limitations
-~~~~~~~~~~~
-The current implementation does a reasonable job but on occasions gets
-things wrong:
-
-- Nested quoted text formatting is highlighted according to the outer
-  format.
-- If a closing Example Block delimiter is sometimes mistaken for a
-  title underline. A workaround is to insert a blank line before the
-  closing delimiter.
-- Lines within a paragraph starting with equals characters may be
-  highlighted as single-line titles.
-- Lines within a paragraph beginning with a period may be highlighted
-  as block titles.
 
 
 [[X74]]

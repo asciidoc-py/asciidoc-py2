@@ -5,8 +5,18 @@
 " URL:          http://www.methods.co.nz/asciidoc/
 " Licence:      GPL (http://www.gnu.org)
 " Remarks:      Vim 6 or greater
-" Limitations:  See 'Appendix E: Vim Syntax Highlighter' in the AsciiDoc 'User
-"               Guide'.
+" Limitations:
+" 
+" - Nested quoted text formatting is highlighted according to the outer
+"   format.
+" - If a closing Example Block delimiter may be mistaken for a title
+"   underline. A workaround is to insert a blank line before the closing
+"   delimiter.
+" - Lines within a paragraph starting with equals characters are
+"   highlighted as single-line titles.
+" - Lines within a paragraph beginning with a period are highlighted as
+"   block titles.
+
 
 if exists("b:current_syntax")
   finish

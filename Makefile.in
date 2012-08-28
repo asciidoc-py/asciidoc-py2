@@ -27,8 +27,6 @@ ASCIIDOCCONF = $(sysconfdir)/asciidoc
 prog = asciidoc.py a2x.py
 progdir = $(bindir)
 
-vimdir = @sysconfdir@/vim
-
 manp = $(patsubst %1.txt,%1,$(wildcard doc/*.1.txt))
 manpdir = $(mandir)/man1
 
@@ -144,31 +142,11 @@ fixconfpath:
 		chmod +x $$f; \
 	done
 
-install-vim:
-	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
-		if test ! -d $$d; then continue; fi ; \
-		echo "installing Vim files in $$d" ; \
-		$(INSTALL) -d $$d/syntax ; \
-		$(INSTALL_DATA) vim/syntax/asciidoc.vim $$d/syntax ; \
-		$(INSTALL) -d $$d/ftdetect ; \
-		$(INSTALL_DATA) vim/ftdetect/asciidoc_filetype.vim $$d/ftdetect ; \
-	done
-
-uninstall-vim:
-	@for d in $(DESTDIR)/$(vimdir) /etc/vim; do \
-		if test ! -d $$d; then continue; fi ; \
-		echo "uninstalling Vim files in $$d" ; \
-		rm -f $$d/syntax/asciidoc.vim ; \
-		rm -f $$d/ftdetect/asciidoc_filetype.vim ; \
-	done
-
-
 build: fixconfpath $(manp)
 
+install: all $(PROGTARGETS) $(DATATARGETS) progsymlink
 
-install: all $(PROGTARGETS) $(DATATARGETS) progsymlink install-vim
-
-uninstall: uninstall-vim
+uninstall:
 	rm -f $(DESTDIR)/$(progdir)/asciidoc
 	rm -f $(DESTDIR)/$(progdir)/asciidoc.py
 	rm -f $(DESTDIR)/$(progdir)/a2x

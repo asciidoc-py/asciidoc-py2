@@ -14,7 +14,7 @@ endif
 
 syn clear
 syn sync fromstart
-syn sync linebreaks=1
+syn sync linebreaks=100
 
 " Run :help syn-priority to review syntax matching priority.
 syn keyword asciidocToDo TODO FIXME CHECK TEST XXX ZZZ DEPRECATED

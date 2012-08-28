@@ -74,7 +74,6 @@ INSTALL.txt
 configure
 configure.ac
 Makefile.in
-install-sh
 javascripts/*.js
 README
 README.txt

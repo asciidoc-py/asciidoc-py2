@@ -3632,6 +3632,8 @@ class Table(AbstractBlock):
         # (the tab character does not appear elsewhere since it is expanded on
         # input) which are replaced after template attribute substitution.
         headrows = footrows = bodyrows = None
+        for option in self.parameters.options:
+            self.attributes[option+'-option'] = ''
         if self.rows and 'header' in self.parameters.options:
             headrows = self.subs_rows(self.rows[0:1],'header')
             self.attributes['headrows'] = '\x07headrows\x07'

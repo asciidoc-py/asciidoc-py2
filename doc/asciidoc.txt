@@ -2385,6 +2385,7 @@ Which renders:
   number (in the latter case list items starting with a single `>`
   character are implicitly numbered starting at one).
 - Callout lists should not be nested.
+- Callout lists cannot be used within tables.
 - Callout lists start list items hard against the left margin.
 - If you want to present a number inside angle brackets you'll need to
   escape it with a backslash to prevent it being interpreted as a

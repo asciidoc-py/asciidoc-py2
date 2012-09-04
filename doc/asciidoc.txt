@@ -5885,6 +5885,13 @@ character set encoding to `ISO-8859-1`.
 
   :encoding: ISO-8859-1
 
+|hr |html4 |
+Defines the 'html4' inter-section horizontal ruler element. By default
+'html4' top level sections are separated by a horizontal ruler
+element, undefine this attribute or set it to an empty string if you
+do not want them. The default 'html4' backend value for the 'hr'
+attribute is `<hr>`.
+
 |[[X45]]icons |xhtml11, html5 |
 Link admonition paragraph and admonition block icon images and badge
 images. By default 'icons' is undefined and text is used in place of

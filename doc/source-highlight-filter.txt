@@ -58,7 +58,12 @@ to 'pygments').
 
 - The 'pygmentize' command must reside in the shell search 'PATH'.
 - You can customize Pygments CSS styles by editing
-  `./stylesheets/pygments.css`.
+  `./stylesheets/pygments.css`. The `pygments.css` CSS file was
+  generated with:
+
+  from pygments.formatters import HtmlFormatter
+  print HtmlFormatter().get_style_defs('.highlight')
+
 - To make Pygments your default highlighter put the following line
   your `~/.asciidoc/asciidoc.conf` file:
 

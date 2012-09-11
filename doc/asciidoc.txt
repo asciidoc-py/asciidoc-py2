@@ -5901,7 +5901,10 @@ icon images.
 The name of the directory containing linked admonition icons,
 navigation icons and the `callouts` sub-directory (the `callouts`
 sub-directory contains <<X105,callout>> number images). 'iconsdir'
-defaults to `./images/icons`.
+defaults to `./images/icons`.  If admonition icons are embedded using
+the <<X66,data-uri>> scheme then the 'iconsdir' attribute defaults to
+the location of the icons installed in the AsciiDoc configuration
+directory.
 
 |imagesdir |html4, html5, xhtml11, docbook |
 If this attribute is defined it is prepended to the target image file

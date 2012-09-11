@@ -6001,6 +6001,10 @@ def asciidoc(backend, doctype, confiles, infile, outfile, options):
         # Document header attributes override conf file attributes.
         document.attributes.update(AttributeEntry.attributes)
         document.update_attributes()
+        # Set the default embedded icons directory.
+        if 'data-uri' in  document.attributes and not os.path.isdir(document.attributes['iconsdir']):
+            document.attributes['iconsdir'] = os.path.join(
+                     document.attributes['asciidoc-confdir'], 'images/icons')
         # Configuration is fully loaded.
         config.expand_all_templates()
         # Check configuration for consistency.

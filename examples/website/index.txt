@@ -180,8 +180,8 @@ AsciiDoc documents processed by `dblatex(1)`.
 Editor Support
 --------------
 - An AsciiDoc syntax highlighter for the Vim text editor is included in the
-  AsciiDoc distribution (see 'Appendix F' of the 'AsciiDoc User Guide' for
-  details).
+  AsciiDoc distribution (see the 'Vim Syntax Highlighter' appendix in
+  the 'AsciiDoc User Guide' for details).
 +
 .Syntax highlighter screenshot
 image::images/highlighter.png[height=400,caption="",link="images/highlighter.png"]

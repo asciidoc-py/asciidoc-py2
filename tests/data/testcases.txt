@@ -556,6 +556,22 @@ endif::basebackend-docbook[]
 
 Index Terms
 -----------
+Test 1 ((test1)).
+
+Test 2 (((test2))).
+
+Test 3 (((test3,secondary))).
+
+Test 4 (((test4,secondary,tertiary))).
+
+Test 5 indexterm2:[test5].
+
+Test 6 indexterm:[test6].
+
+Test 7 indexterm:[test7,secondary].
+
+Test 8 indexterm:[test8,secondary,tertiary].
+
 Multi-passthough substitution (see
 http://groups.google.com/group/asciidoc/browse_frm/thread/1269dc2feb1a482c)
 ((`foo`))

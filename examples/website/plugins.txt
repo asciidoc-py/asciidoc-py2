@@ -22,6 +22,11 @@ discussion list] and I'll add it.
 |A backend plugin to generate man pages (troff) compatible with OS
 Inferno and Plan9.
 
+|blogger
+|Stuart Rackham
+|https://github.com/srackham/asciidoc-blogger-backend
+|Generates Blogger friendly HTML from AsciiDoc source.
+
 |deckjs
 |Qingping Hou
 |http://houqp.github.com/asciidoc-deckjs/
@@ -49,6 +54,10 @@ Inferno and Plan9.
 |aafigure |Henrik Maier
 |http://code.google.com/p/asciidoc-aafigure-filter/
 |https://launchpad.net/aafigure[Aafigure] ASCII line art filter.
+
+|diag |Michael Haberler
+|https://code.google.com/p/asciidoc-diag-filter/
+|http://blockdiag.com/[blockdiag] diagrams filter.
 
 |ditaa |Henrik Maier
 |http://code.google.com/p/asciidoc-ditaa-filter/

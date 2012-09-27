@@ -322,6 +322,10 @@ github] that converts DocBook to AsciiDoc.
 - Lex Trotman has written
   https://github.com/elextr/flexndex[flexndex], an index generator
   tool that be used with AsciiDoc.
+- Michael Haberler has created a
+  https://code.google.com/p/asciidoc-diag-filter/[blockdiag filter for
+  Asciidoc] which embeds http://blockdiag.com/[blockdiag] images in
+  AsciiDoc documents.
 
 Please let me know if any of these links need updating.
 

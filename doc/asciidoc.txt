@@ -2642,8 +2642,8 @@ referring document.
 - The image `scale` attribute sets the DocBook `imagedata` element
   `scale` attribute.
 
-- The optional `align` attribute is used for horizontal image
-  alignment.  Allowed values are `center`, `left` and `right`. For
+- The optional `align` attribute aligns block macro images
+  horizontally.  Allowed values are `center`, `left` and `right`. For
   example:
 
   image::images/tiger.png["Tiger image",align="left"]

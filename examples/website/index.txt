@@ -326,6 +326,11 @@ github] that converts DocBook to AsciiDoc.
   https://code.google.com/p/asciidoc-diag-filter/[blockdiag filter for
   Asciidoc] which embeds http://blockdiag.com/[blockdiag] images in
   AsciiDoc documents.
+- Dan Allen has written a
+  https://github.com/mojavelinux/asciidoc-bootstrap-docs-backend[Bootstrap
+  backend] for AsciiDoc.
+- Steven Boscarine has written
+  https://github.com/StevenBoscarine/JavaAsciidocWrapper[Maven wrapper for AsciiDoc].
 
 Please let me know if any of these links need updating.
 

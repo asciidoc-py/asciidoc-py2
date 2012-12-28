@@ -1288,7 +1288,7 @@ line by itself:
   following block element -- the attributes are made available to the
   block's markup template.
 - Multiple contiguous 'AttributeList' elements are additively combined
-  in the order they appear..
+  in the order they appear.
 - The first positional attribute in the list is often used to specify
   the ensuing element's <<X23,style>>.
 

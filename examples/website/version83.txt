@@ -2,9 +2,9 @@ AsciiDoc Version 8.3
 ====================
 
 This is significant release, it gets rid of unused cruft, simplifies
-the http://www.methods.co.nz/asciidoc/newlists.html[lists] syntax and
+the http://asciidoc.org/newlists.html[lists] syntax and
 introduces a decent
-http://www.methods.co.nz/asciidoc/newtables.html[tables] syntax.
+http://asciidoc.org/newtables.html[tables] syntax.
 There are a few fairly minor backward compatibility issues, please
 read the link:CHANGELOG.html#X1[compatibility issues] section in the
 CHANGLOG before upgrading.

@@ -19,10 +19,10 @@ endif::blogpost[]
 
 It's easy to write and publish books in
 http://en.wikipedia.org/wiki/EPUB[EPUB] and PDF formats using
-http://www.methods.co.nz/asciidoc/[AsciiDoc].
+http://asciidoc.org/[AsciiDoc].
 ifdef::blogpost[]
 This article was originally published on the
-http://www.methods.co.nz/asciidoc/publishing-ebooks-with-asciidoc.html[AsciiDoc
+http://asciidoc.org/publishing-ebooks-with-asciidoc.html[AsciiDoc
 website].
 endif::blogpost[]
 
@@ -108,7 +108,7 @@ or directly using the 'asciidoc' command:
 
 [NOTE]
 ======
-The http://www.methods.co.nz/asciidoc/a2x.1.html[a2x toolchain
+The http://asciidoc.org/a2x.1.html[a2x toolchain
 wrapper] uses the following programs (most will be available
 prepackaged for your Linux distribution):
 
@@ -134,7 +134,7 @@ edited it manually (this took around 15 minutes). To generate the
 
   a2x brothers-karamazov.txt
 
-:examples-url: http://www.methods.co.nz/misc/examples/books/
+:examples-url: http://asciidoc.org/examples/books/
 
 [frame="topbot",options="header",caption=""]
 .Brothers Karamazov source files and eBooks
@@ -197,7 +197,7 @@ Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
 ---------------------------------------------------------------------
 
 - The book, book part and chapter titles have been edited to conform
-  to http://www.methods.co.nz/asciidoc/userguide.html#X17[AsciiDoc
+  to http://asciidoc.org/userguide.html#X17[AsciiDoc
   title conventions].
 
 - Book part titles must be level zero titles:
@@ -221,7 +221,7 @@ Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
   part, chapter and section numbering.
 
 - Setting the AsciiDoc 'plaintext' attribute suppresses most of
-  http://www.methods.co.nz/asciidoc/userguide.html#_text_formatting[AsciiDoc's
+  http://asciidoc.org/userguide.html#_text_formatting[AsciiDoc's
   text formatting] and substitution conventions, this allows large
   amounts of text to be imported with little or no manual editing.
 
@@ -235,7 +235,7 @@ Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
     necessitated editing.
   * You can selectively enable and disable the 'plaintext' attribute
     throughout your document using AsciiDoc
-    http://www.methods.co.nz/asciidoc/userguide.html#X18[attribute
+    http://asciidoc.org/userguide.html#X18[attribute
     entries].
 
 
@@ -279,7 +279,7 @@ Zip file] contains the following files:
   The front cover image.
 
 `adventures-of-sherlock-holmes-docinfo.xml`::
-  A http://www.methods.co.nz/asciidoc/userguide.html#X87[docinfo] file
+  A http://asciidoc.org/userguide.html#X87[docinfo] file
   containing DocBook markup for the front cover image and the Project
   Gutenberg frontmatter.  DocBook XSL Stylesheets identifies the book
   cover image by the `role="cover"` attribute in the DocBook
@@ -332,7 +332,7 @@ To Sherlock Holmes she is always THE woman. I have seldom heard
 
 The manual editing of imported plain text involves formatting the
 title and chapter names as
-http://www.methods.co.nz/asciidoc/userguide.html#X17[AsciiDoc titles]
+http://asciidoc.org/userguide.html#X17[AsciiDoc titles]
 (in this example we've used the 'single line' title format). Sherlock
 Holmes only has two title levels:
 
@@ -370,7 +370,7 @@ http://epubzengarden.com/[ePub Zen Garden].
 
 Including embedded fonts
 ------------------------
-See http://www.methods.co.nz/asciidoc/faq.html#X5[this FAQ].
+See http://asciidoc.org/faq.html#X5[this FAQ].
 
 
 Reading EPUB documents
@@ -393,6 +393,6 @@ Non-fiction Books and Manuals
 AsciiDoc supports a rich set of markup conventions and can generate
 reference works and technical manuals complete with tables,
 illustrations, indexes, bibliographies and appendices. All the
-examples on the http:///www.methods.co.nz/asciidoc/[AsciiDoc web site]
+examples on the http:///asciidoc.org/[AsciiDoc web site]
 can be formatted as EPUB eBooks.
 

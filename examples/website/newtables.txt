@@ -335,10 +335,10 @@ def sub_word(mo):
 .Cell containing lots of example markup elements
 |====================================================================
 |'URLs':
-http://www.methods.co.nz/asciidoc/[The AsciiDoc home page],
-http://www.methods.co.nz/asciidoc/,
-mailto:joe.bloggs@foobar.com[email Joe Bloggs],
-joe.bloggs@foobar.com,
+http://asciidoc.org/[The AsciiDoc home page],
+http://asciidoc.org/,
+mailto:joe.bloggs@example.com[email Joe Bloggs],
+joe.bloggs@example.com,
 callto:joe.bloggs[].
 
 'Link': See <<X1,AsciiDoc source>>.
@@ -358,10 +358,10 @@ double arrow, <= left double arrow.
 ---------------------------------------------------------------------
 |====================================================================
 |'URLs':
-http://www.methods.co.nz/asciidoc/[The AsciiDoc home page],
-http://www.methods.co.nz/asciidoc/,
-mailto:joe.bloggs@foobar.com[email Joe Bloggs],
-joe.bloggs@foobar.com,
+http://asciidoc.org/[The AsciiDoc home page],
+http://asciidoc.org/,
+mailto:joe.bloggs@example.com[email Joe Bloggs],
+joe.bloggs@example.com,
 callto:joe.bloggs[].
 
 'Link': See <<X1,AsciiDoc source>>.

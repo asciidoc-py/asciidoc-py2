@@ -383,14 +383,14 @@ ambiguity.  Here are some non-standard escape examples:
 |AsciiDoc | Renders
 
 2*|
-\srackham@methods.co.nz
-<\srackham@methods.co.nz>
-\mailto:[\srackham@methods.co.nz]
+\joe.bloggs@example.com
+<\joe.bloggs@example.com>
+\mailto:[\joe.bloggs@example.com]
 
 2*|
-\http://www.foo1.co.nz
-\\http://www.foobar.com[]
-\\http://www.foobar.com[Foobar Limited]
+\http://www.example.com
+\\http://www.example.com[]
+\\http://www.example.com[Foobar Limited]
 
 2*|
 A C\++ Library for C++
@@ -699,16 +699,16 @@ adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel
 footnoteref:[F2].
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-footnote:[http://www.methods.co.nz/asciidoc/ Qui in magna commodo,
+footnote:[http://asciidoc.org/ Qui in magna commodo,
 est labitur dolorum an. Est ne magna primis adolescens. Sit munere
 ponderum dignissim et. Minim luptatum et vel
 image:images/smallnew.png[]]
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et vel.
-footnote:[http://www.methods.co.nz/asciidoc/]
+footnote:[http://asciidoc.org/]
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et
-vel footnote:[http://www.methods.co.nz/asciidoc/[AsciiDoc website].].
+vel footnote:[http://asciidoc.org/[AsciiDoc website].].
 Qui in magna commodo, est labitur dolorum an. Est ne magna primis
 adolescens. Sit munere ponderum dignissim et. Minim luptatum et
 footnoteref:[F3,A footnote&#44; &#34;with an image&#34;

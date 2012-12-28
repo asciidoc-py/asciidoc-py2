@@ -30,7 +30,7 @@ installed -- simple, no setuptools to run, no Eggs to install, no
 non-standard library dependencies.
 
 You can find `asciidocapi.py` in the AsciiDoc
-http://www.methods.co.nz/asciidoc/INSTALL.html#X1[distribution
+http://asciidoc.org/INSTALL.html#X1[distribution
 archives] (version 8.4.1 or better).
 
 Once you have `asciidocapi.py` Verify everything is working by running

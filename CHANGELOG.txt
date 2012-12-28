@@ -1,7 +1,7 @@
 AsciiDoc ChangeLog
 ==================
 
-:website: http://www.methods.co.nz/asciidoc/
+:website: http://asciidoc.org/
 
 
 Version 8.6.8 (2012-07-17)
@@ -1561,7 +1561,7 @@ Version 8.2.7 (2008-07-04)
   reflect these changes.
 - Highlighted source code paragraphs have been implemented -- it's a
   much more convenient way to enter short code examples (see
-  http://www.methods.co.nz/asciidoc/source-highlight-filter.html[the
+  http://asciidoc.org/source-highlight-filter.html[the
   online docs]).
 - The source highlighter and music filter syntax has changed -- they
   now used the ListingBlock syntax customized with 'source' and
@@ -1688,7 +1688,7 @@ Version 8.2.3 (2007-09-12)
 .Additions and changes
 - Added VMiklos's 'permalink' patch for auto-generated section IDs
   (enabled by default by the `sectids` attribute).
-- Added http://www.methods.co.nz/asciidoc/faq.html[FAQ] to website.
+- Added http://asciidoc.org/faq.html[FAQ] to website.
 - Changed format of \{localdate} attribute to ISO 8601 (`%Y-%m-%d`).
 - Added `abc2ly --beams=None` option to make `music2png.py` conform to
   ABC's notion of beams.
@@ -1723,7 +1723,7 @@ Version 8.2.2 (2007-07-22)
 - http://www.maths.nottingham.ac.uk/personal/drw/lm.html[LaTeXMathML]
   capability has been added for users who are more familiar with or
   prefer LaTeX math formulas to the
-  http://www.methods.co.nz/asciidoc/asciimathml.html[ASCIIMathML]
+  http://asciidoc.org/asciimathml.html[ASCIIMathML]
   notation (thanks to Arthur Sakellariou for the patch).
 - The 'source highlight' and 'code' filters now process embedded
   callouts.
@@ -1814,7 +1814,7 @@ Version 8.2.0 (2007-04-04)
   `manpage` if `--format=manpage` else defaults to `article`
   (previously `--doctype` always defaulted to `article`).
 - Added an 'External Resources' section to the
-  http://www.methods.co.nz/asciidoc/index.html[AsciiDoc home page].
+  http://asciidoc.org/index.html[AsciiDoc home page].
 
 .Bug fixes
 
@@ -1830,7 +1830,7 @@ Version 8.1.0 (2006-10-22)
   http://tpl.sourceforge.net/userguide.html[tpl User Guide] for a
   fancier layout. Use the `-a toc -a numbered` command-line options to
   produce a number table of contents.
-- A http://www.methods.co.nz/asciidoc/music-filter.html[music filter]
+- A http://asciidoc.org/music-filter.html[music filter]
   is included in the distribution `./filters/` directory.  It
   translates music in http://lilypond.org/[LilyPond] or
   http://abcnotation.org.uk/[ABC] notation to standard classical
@@ -1990,7 +1990,7 @@ Version 7.1.2 (2006-03-07)
   http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
   has been added. See 'Appendix I: ASCIIMathML Support' in the User
   Guide and the examples at
-  http://www.methods.co.nz/asciidoc/asciimath.html.
+  http://asciidoc.org/asciimath.html.
 - You can now prefix quoted text with inline attributes lists.  You
   can use this to set font size and color (XHTML and HTML outputs).
 - Added `##...##` quoting -- it does nothing -- it's purpose is to
@@ -3122,7 +3122,7 @@ Version 1.1 (2002-12-03)
 Version 1.0 (2002-11-25)
 ------------------------
 First AsciiDoc public release along with AsciiDoc web site
-(http://www.methods.co.nz/asciidoc/) and SourceForge.net project registration
+(http://asciidoc.org/) and SourceForge.net project registration
 (https://sourceforge.net/projects/asciidoc/[]).
 
 // vim: set syntax=asciidoc:

@@ -27,7 +27,7 @@ able to reference these numbers.
 
 This can be achieved by using the DocBook toolchain but numbering the
 paragraphs with AsciiDoc using a custom config file containing the
-following (see http://www.methods.co.nz/asciidoc/userguide.html#X27
+following (see http://asciidoc.org/userguide.html#X27
 for ways to include such a file):
 
 ---------------------------------------------------------------------
@@ -485,7 +485,7 @@ icons and the CSS stylesheet:
 AsciiDoc has a built-in trace mechanism which is controlled by the
 'trace' attribute; there is also the `--verbose` command-line option.
 These features are detailed in
-http://www.methods.co.nz/asciidoc/userguide.html#X82[Appendix G of the
+http://asciidoc.org/userguide.html#X82[Appendix G of the
 User Guide].
 
 
@@ -836,14 +836,14 @@ ambiguity.  Here are some non-standard escape examples:
 |AsciiDoc | Renders
 
 2*|
-\srackham@methods.co.nz
-<\srackham@methods.co.nz>
-\mailto:[\srackham@methods.co.nz]
+\joe.bloggs@example.com
+<\joe.bloggs@example.com>
+\mailto:[\joe.bloggs@example.com]
 
 2*|
-\http://www.foo1.co.nz
-\\http://www.foobar.com[]
-\\http://www.foobar.com[Foobar Limited]
+\http://www.example.com
+\\http://www.example.com[]
+\\http://www.example.com[Foobar Limited]
 
 2*|
 A C\++ Library for C++
@@ -1207,11 +1207,11 @@ rendered as separate links. You also need to <<X1,replace spaces with
 
 For example, the following call won't work:
 
-  mailto:jb@foobar.com,jd@acme.co.nz?subject=New foofoo release[New foofoo release]
+  mailto:jb@example.com,jd@example.com?subject=New foofoo release[New foofoo release]
 
 Use this instead:
 
-  mailto:jb%40foobar.com,jd%40acme.co.nz?subject=New%20foofoo%20release[New foofoo release]
+  mailto:jb%40example.com,jd%40example.com?subject=New%20foofoo%20release[New foofoo release]
 
 
 == How can a replacement have a trailing backslash?

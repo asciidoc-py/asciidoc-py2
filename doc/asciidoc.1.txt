@@ -187,7 +187,7 @@ RESOURCES
 ---------
 SourceForge: <http://sourceforge.net/projects/asciidoc/>
 
-Main web site: <http://www.methods.co.nz/asciidoc/>
+Main web site: <http://asciidoc.org/>
 
 
 COPYING

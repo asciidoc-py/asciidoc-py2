@@ -5,7 +5,7 @@ Stuart Rackham <srackham@gmail.com>
 :toc:
 :icons:
 :numbered:
-:website: http://www.methods.co.nz/asciidoc/
+:website: http://asciidoc.org/
 
 AsciiDoc is a text document format for writing notes, documentation,
 articles, books, ebooks, slideshows, web pages, blogs and UNIX man
@@ -4288,7 +4288,7 @@ Attribute entries can be used to make your documents easier to read
 and write, here are some examples:
 
   :1:         http://freshmeat.net/projects/asciidoc/
-  :homepage:  http://methods.co.nz/asciidoc/[AsciiDoc home page]
+  :homepage:  http://asciidoc.org[AsciiDoc home page]
   :new:       image:./images/smallnew.png[]
   :footnote1: footnote:[A meaningless latin term]
 

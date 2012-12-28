@@ -6,7 +6,7 @@ v1.0, June 2006
 == Introduction
 
 
-LaTeX backend is a configuration file for Stuart Rackham's http://www.methods.co.nz/asciidoc/[Asciidoc]. It generates high-level LaTeX markup from Asciidoc documents. LaTeX is a document preparation system for TeX which in turn is a popular typesetting system. It is well known for producing excellently typesetted high quality printouts, especially suited for scientific text.
+LaTeX backend is a configuration file for Stuart Rackham's http://asciidoc.org/[Asciidoc]. It generates high-level LaTeX markup from Asciidoc documents. LaTeX is a document preparation system for TeX which in turn is a popular typesetting system. It is well known for producing excellently typesetted high quality printouts, especially suited for scientific text.
 
 == Tutorial
 Getting a ready-to-print document from an Asciidoc document using the LaTeX backend involves at least two steps:
@@ -130,7 +130,7 @@ Set the input and output document character set encoding. Currently `ISO-8859-1`
 
 The following software is necessary for using the LaTeX backend:
 
-- An up-to-date version of http://www.methods.co.nz/asciidoc/[Asciidoc]
+- An up-to-date version of http://asciidoc.org/[Asciidoc]
 - An up-to-date TeX distribution, e.g.:
   * http://www.miktex.org/[MiKTeX] for Windows
   * http://www.tug.org/tetex/[teTeX] for Linux

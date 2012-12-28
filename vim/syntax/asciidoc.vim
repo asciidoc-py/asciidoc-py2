@@ -2,7 +2,7 @@
 " Language:     AsciiDoc
 " Author:       Stuart Rackham <srackham@gmail.com> (inspired by Felix
 "               Obenhuber's original asciidoc.vim script).
-" URL:          http://www.methods.co.nz/asciidoc/
+" URL:          http://asciidoc.org/
 " Licence:      GPL (http://www.gnu.org)
 " Remarks:      Vim 6 or greater
 " Limitations:

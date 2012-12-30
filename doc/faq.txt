@@ -1365,3 +1365,19 @@ http://redcloth.org/textile[textile],
 http://www.w3.org/TR/html40/[HTML], http://www.docbook.org/[DocBook],
 or http://www.latex-project.org/[LaTeX] to AsciiDoc.
 
+
+== How can I insert raw HTML in a document processed by a2x?
+`a2x` generates HTML via DocBook (DocBook XSL Stylesheets) so if you
+use a passthrough block it must contain DocBook (not HTML).
+Fortunately DocBook XSL Stylesheets has a
+http://www.sagehill.net/docbookxsl/InsertExtHtml.html[dbhtml-include
+processing instruction] which will inlcude a file containing raw HTML
+into the generated HTML output. For example:
+
+---------------------------------------------------------------
+++++ 
+<?dbhtml-include href="snippet.html"?> 
+++++ 
+---------------------------------------------------------------
+
+

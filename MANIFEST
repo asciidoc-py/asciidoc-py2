@@ -17,7 +17,6 @@ lang-*.conf
 latex.conf
 slidy.conf
 text.conf
-wordpress.conf
 xhtml11.conf
 xhtml11-quirks.conf
 COPYING
@@ -74,6 +73,7 @@ INSTALL.txt
 configure
 configure.ac
 Makefile.in
+install-sh
 javascripts/*.js
 README
 README.txt

@@ -32,9 +32,9 @@ else:
 import asciidocapi
 
 
-BACKENDS = ('html4','xhtml11','docbook','wordpress','html5')    # Default backends.
+BACKENDS = ('html4','xhtml11','docbook','html5')    # Default backends.
 BACKEND_EXT = {'html4':'.html', 'xhtml11':'.html', 'docbook':'.xml',
-        'wordpress':'.html','slidy':'.html','html5':'.html'}
+        'slidy':'.html','html5':'.html'}
 
 
 def iif(condition, iftrue, iffalse=None):

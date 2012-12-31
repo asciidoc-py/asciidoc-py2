@@ -4809,18 +4809,17 @@ class Config:
 
     def load_miscellaneous(self,d):
         """Set miscellaneous configuration entries from dictionary 'd'."""
-        def set_if_int_gt_zero(name, d):
+        def set_if_int_ge(name, d, min_value):
             if name in d:
                 try:
                     val = int(d[name])
-                    if not val > 0:
-                        raise ValueError, "not > 0"
-                    if val > 0:
-                        setattr(self, name, val)
+                    if not val >= min_value:
+                        raise ValueError, "not >= " + str(min_value)
+                    setattr(self, name, val)
                 except ValueError:
                     raise EAsciiDoc, 'illegal [miscellaneous] %s entry' % name
-        set_if_int_gt_zero('tabsize', d)
-        set_if_int_gt_zero('textwidth', d) # DEPRECATED: Old tables only.
+        set_if_int_ge('tabsize', d, 0)
+        set_if_int_ge('textwidth', d, 1) # DEPRECATED: Old tables only.
 
         if 'pagewidth' in d:
             try:

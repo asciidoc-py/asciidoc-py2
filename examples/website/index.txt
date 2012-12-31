@@ -331,6 +331,9 @@ github] that converts DocBook to AsciiDoc.
   backend] for AsciiDoc.
 - Steven Boscarine has written
   https://github.com/StevenBoscarine/JavaAsciidocWrapper[Maven wrapper for AsciiDoc].
+- Christian Goltz has written
+  https://github.com/christiangoltz/shaape[Shaape], an Ascii art to
+  image converter for AsciiDoc.
 
 Please let me know if any of these links need updating.
 

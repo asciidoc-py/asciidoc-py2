@@ -32,7 +32,7 @@ syn match asciidocBackslash /\\/
 syn region asciidocIdMarker start=/^\$Id:\s/ end=/\s\$$/
 syn match asciidocCallout /\\\@<!<\d\{1,2}>/
 syn match asciidocOpenBlockDelimiter /^--$/
-syn match asciidocLineBreak /[ \t]+$/
+syn match asciidocLineBreak /[ \t]+$/ containedin=asciidocList
 syn match asciidocRuler /^'\{3,}$/
 syn match asciidocPagebreak /^<\{3,}$/
 syn match asciidocEntityRef /\\\@<!&[#a-zA-Z]\S\{-};/

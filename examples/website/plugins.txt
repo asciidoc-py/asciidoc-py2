@@ -37,6 +37,12 @@ Inferno and Plan9.
 |https://github.com/srackham/asciidoc-fossil-backend
 |Generates Fossil friendly Wiki markup from AsciiDoc source.
 
+|ODF
+|Dag Wieers
+|https://github.com/dagwieers/asciidoc-odf
+|Backends for generating LibreOffice/OpenOffice Writer (`.fodt`) files
+and LibreOffice/OpenOffice Impress (`.fodp`) files.
+
 |slidy2
 |Jean-Michel Inglebert
 |http://code.google.com/p/asciidoc-slidy2-backend-plugin/

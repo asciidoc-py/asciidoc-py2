@@ -4,6 +4,79 @@ AsciiDoc ChangeLog
 :website: http://asciidoc.org/
 
 
+Version 8.6.9 (2013-01-??)
+--------------------------
+.Additions and changes
+- Vim syntax file: highlight line breaks in lists (patch submitted by
+  Alex Efros). See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/5145e4c0b65cde0a).
+- Vim syntax file: fixed highlighting of lines with spaces preceding
+  an indented paragraph.  See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/5145e4c0b65cde0a
+- Vim syntax file: dropped ')' from list of illegal characters
+  following opening quote. See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/1a60eb4507a0555f/264c39c6a89fc7a0
+- Added {plus} intrinsic attribute. See
+  http://code.google.com/p/asciidoc/issues/detail?id=14
+- Allow `tabsize=0 in` configuration file. See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/c88457020288ce1d
+- Removed 'wordpress' backend into the blogpost project (where it
+  belongs) as an AsciiDoc backend plugin.
+- Added HTML5 footer badges.
+- Added favicon to AsciiDoc website.
+- Changed AsciiDoc website domain to 'asciidoc.org'.
+- Vim syntax file: closing quote character cannot be immediately
+  followed by same closing quote character.
+- Documentation updates.
+- If admonition icons are embedded using the Data URI Scheme and the
+  icons directory is undefined or does not exist then the 'iconsdir'
+  attribute is set to the location of the icons installed in the
+  AsciiDoc configuration directory.
+- Updated `./stylesheets/pygments.css` from pygments 1.4.
+- HTML backends: Align inline images to text-bottom.
+- html4 backend: Added 'hr' attribute to make the inter-section
+  horizontal ruler element optional.
+- Documented 'Callout lists cannot be used within tables'. See:
+  https://groups.google.com/group/asciidoc/browse_thread/thread/268f9b46ebc192d3
+- Removed Vim related stuff from the installer makefile. See:
+  https://groups.google.com/group/asciidoc/browse_thread/thread/753a52b2af85fcfc/04c9091b0856fc13
+  and
+  https://groups.google.com/group/asciidoc/browse_thread/thread/cd07629fa7a53fb3
+- Dropped `vim/ftdetect/asciidoc_filetype.vim` from distribution, the
+  file detection  was broken and the default settings satisfied noone.
+- Vim syntax highlighter: increase sync backtracking to catch changes
+  to large block elements.
+- Added Romanian language configuration file. Contributed by Vitalie
+  Lazu.  See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/2fe14a10dbf20d20/27726e7e13f7bfc7?lnk=gst&q=romanian#27726e7e13f7bfc7
+- Added ruler and line-break outputs to HTML Help outputs. Patch
+  submitted by DonM.  See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/b131d0155eccd73e
+- Added Czech language configuration file. Contributed by Petr Klíma.
+- html4 backend: allow embedded images and icons (data-uri
+  attribute).
+- html4 backend: table and example block caption place at bottom for
+  consistency.
+- html4 backend: dropped border around example block.
+- html4 backend: cellpaddings made equal to 4 for consistency.
+- Vim syntax highligher: Highlight closing OpenBlock delimiter when it
+  immediately follows a list.
+- Updated html5 backend (previous commit was xhtml11 only). See:
+  https://groups.google.com/group/asciidoc/browse_thread/thread/dbdfaf838f93e020
+- Embedded data-uri images now figure file mimetype from file contents
+  rather than the file extension. Patch submitted by Lex Trotman. See:
+  https://groups.google.com/group/asciidoc/browse_thread/thread/dbdfaf838f93e020
+
+.Bug fixes
+- `indexterm2:[]` macro syntax now recognized. See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/1b3f1a0f0a21425e
+- Synthesised `*-option` attributes for options set in table conf file
+  style entries. See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/8aa340a3069ef5f1/a727a8a564eea76c
+- Makefile: Fixed sh compatibility issue. See
+  https://groups.google.com/group/asciidoc/browse_thread/thread/753a52b2af85fcfc/04c9091b0856fc13
+
+
 Version 8.6.8 (2012-07-17)
 --------------------------
 .Release highlights

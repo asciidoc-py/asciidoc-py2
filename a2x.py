@@ -376,7 +376,8 @@ class A2X(AttrDict):
             self.to_backend()
         else:
             self.__getattribute__('to_'+self.format)()
-        if not (self.keep_artifacts or self.format == 'docbook' or self.skip_asciidoc):
+        if not (self.keep_artifacts or self.format == 'docbook' or
+                self.dst_path('.xml') == self.asciidoc_file):
             shell_rm(self.dst_path('.xml'))
 
     def load_conf(self):
@@ -443,7 +444,7 @@ class A2X(AttrDict):
         '''
         if not os.path.isfile(self.asciidoc_file):
             die('missing SOURCE_FILE: %s' % self.asciidoc_file)
-        self.asciidoc_file = os.path.abspath(self.asciidoc_file)
+        self.asciidoc_file = os.path.realpath(self.asciidoc_file)
         if not self.destination_dir:
             self.destination_dir = os.path.dirname(self.asciidoc_file)
         else:
@@ -539,7 +540,7 @@ class A2X(AttrDict):
         Return name of file or directory in the destination directory with
         the same name as the asciidoc source file but with extension ext.
         '''
-        return os.path.join(self.destination_dir, self.basename(ext))
+        return os.path.realpath(os.path.join(self.destination_dir, self.basename(ext)))
 
     def basename(self, ext):
         '''
@@ -638,6 +639,8 @@ class A2X(AttrDict):
         '''
         docbook_file = self.dst_path('.xml')
         if self.skip_asciidoc:
+            if docbook_file != self.asciidoc_file:
+                shell_copy(self.asciidoc_file, docbook_file)
             if not os.path.isfile(docbook_file):
                 die('missing docbook file: %s' % docbook_file)
             return

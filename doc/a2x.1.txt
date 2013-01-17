@@ -38,7 +38,9 @@ OPTIONS
   Load configuration file. See <<X2,CONF FILES section>>.
 
 *-D, --destination-dir*='DESTINATION_DIR'::
-  Output directory. Defaults to 'SOURCE_FILE' directory.
+  Output directory. Defaults to 'SOURCE_FILE' directory. This option
+  is only applicable to HTML based output formats ('chunked', 'epub',
+  'htmlhelp', 'xhtml').
 
 *-d, --doctype*='DOCTYPE'::
   DocBook document type: 'article', 'manpage' or 'book'.  Default

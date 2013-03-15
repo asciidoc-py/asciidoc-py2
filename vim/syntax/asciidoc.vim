@@ -117,67 +117,67 @@ syn region asciidocHLabel start=/^\s*/ end=/\(::\|;;\)\(\s\+\|\\$\)/ oneline con
 " Starts with any of the above.
 syn region asciidocList start=/^\s*\(-\|\*\{1,5}\)\s/ start=/^\s*\(\(\d\+\.\)\|\.\{1,5}\|\(\a\.\)\|\([ivxIVX]\+)\)\)\s\+/ start=/.\+\(:\{2,4}\|;;\)$/ end=/\(^[=*]\{4,}$\)\@=/ end=/\(^\(+\|--\)\?\s*$\)\@=/ contains=asciidocList.\+,asciidocQuoted.*,asciidocMacroAttributes,asciidocAttributeRef,asciidocEntityRef,asciidocEmail,asciidocURL,asciidocBackslash,asciidocCommentLine,asciidocAttributeList,asciidocToDo
 
-highlight link asciidocAdmonition Special
-highlight link asciidocAnchorMacro Macro
-highlight link asciidocAttributeEntry Special
-highlight link asciidocAttributeList Special
-highlight link asciidocAttributeMacro Macro
-highlight link asciidocAttributeRef Special
-highlight link asciidocBackslash Special
-highlight link asciidocBlockTitle Title
-highlight link asciidocCallout Label
-highlight link asciidocCommentBlock Comment
-highlight link asciidocCommentLine Comment
-highlight link asciidocDoubleDollarPassthrough Special
-highlight link asciidocEmail Macro
-highlight link asciidocEntityRef Special
-highlight link asciidocExampleBlockDelimiter Type
-highlight link asciidocFilterBlock Type
-highlight link asciidocHLabel Label
-highlight link asciidocIdMarker Special
-highlight link asciidocIndexTerm Macro
-highlight link asciidocLineBreak Special
-highlight link asciidocOpenBlockDelimiter Label
-highlight link asciidocListBullet Label
-highlight link asciidocListContinuation Label
-highlight link asciidocListingBlock Identifier
-highlight link asciidocListLabel Label
-highlight link asciidocListNumber Label
-highlight link asciidocLiteralBlock Identifier
-highlight link asciidocLiteralParagraph Identifier
-highlight link asciidocMacroAttributes Label
-highlight link asciidocMacro Macro
-highlight link asciidocOneLineTitle Title
-highlight link asciidocPagebreak Type
-highlight link asciidocPassthroughBlock Identifier
-highlight link asciidocQuoteBlockDelimiter Type
-highlight link asciidocQuotedAttributeList Special
-highlight link asciidocQuotedBold Special
-highlight link asciidocQuotedDoubleQuoted Label
-highlight link asciidocQuotedEmphasized2 Type
-highlight link asciidocQuotedEmphasized Type
-highlight link asciidocQuotedMonospaced2 Identifier
-highlight link asciidocQuotedMonospaced Identifier
-highlight link asciidocQuotedSingleQuoted Label
-highlight link asciidocQuotedSubscript Type
-highlight link asciidocQuotedSuperscript Type
-highlight link asciidocQuotedUnconstrainedBold Special
-highlight link asciidocQuotedUnconstrainedEmphasized Type
-highlight link asciidocQuotedUnconstrainedMonospaced Identifier
-highlight link asciidocRefMacro Macro
-highlight link asciidocRuler Type
-highlight link asciidocSidebarDelimiter Type
-highlight link asciidocTableBlock2 NONE
-highlight link asciidocTableBlock NONE
-highlight link asciidocTableDelimiter2 Label
-highlight link asciidocTableDelimiter Label
-highlight link asciidocTable_OLD Type
-highlight link asciidocTablePrefix2 Label
-highlight link asciidocTablePrefix Label
-highlight link asciidocToDo Todo
-highlight link asciidocTriplePlusPassthrough Special
-highlight link asciidocTwoLineTitle Title
-highlight link asciidocURL Macro
+hi def link asciidocAdmonition Special
+hi def link asciidocAnchorMacro Macro
+hi def link asciidocAttributeEntry Special
+hi def link asciidocAttributeList Special
+hi def link asciidocAttributeMacro Macro
+hi def link asciidocAttributeRef Special
+hi def link asciidocBackslash Special
+hi def link asciidocBlockTitle Title
+hi def link asciidocCallout Label
+hi def link asciidocCommentBlock Comment
+hi def link asciidocCommentLine Comment
+hi def link asciidocDoubleDollarPassthrough Special
+hi def link asciidocEmail Macro
+hi def link asciidocEntityRef Special
+hi def link asciidocExampleBlockDelimiter Type
+hi def link asciidocFilterBlock Type
+hi def link asciidocHLabel Label
+hi def link asciidocIdMarker Special
+hi def link asciidocIndexTerm Macro
+hi def link asciidocLineBreak Special
+hi def link asciidocOpenBlockDelimiter Label
+hi def link asciidocListBullet Label
+hi def link asciidocListContinuation Label
+hi def link asciidocListingBlock Identifier
+hi def link asciidocListLabel Label
+hi def link asciidocListNumber Label
+hi def link asciidocLiteralBlock Identifier
+hi def link asciidocLiteralParagraph Identifier
+hi def link asciidocMacroAttributes Label
+hi def link asciidocMacro Macro
+hi def link asciidocOneLineTitle Title
+hi def link asciidocPagebreak Type
+hi def link asciidocPassthroughBlock Identifier
+hi def link asciidocQuoteBlockDelimiter Type
+hi def link asciidocQuotedAttributeList Special
+hi def link asciidocQuotedBold Special
+hi def link asciidocQuotedDoubleQuoted Label
+hi def link asciidocQuotedEmphasized2 Type
+hi def link asciidocQuotedEmphasized Type
+hi def link asciidocQuotedMonospaced2 Identifier
+hi def link asciidocQuotedMonospaced Identifier
+hi def link asciidocQuotedSingleQuoted Label
+hi def link asciidocQuotedSubscript Type
+hi def link asciidocQuotedSuperscript Type
+hi def link asciidocQuotedUnconstrainedBold Special
+hi def link asciidocQuotedUnconstrainedEmphasized Type
+hi def link asciidocQuotedUnconstrainedMonospaced Identifier
+hi def link asciidocRefMacro Macro
+hi def link asciidocRuler Type
+hi def link asciidocSidebarDelimiter Type
+hi def link asciidocTableBlock2 NONE
+hi def link asciidocTableBlock NONE
+hi def link asciidocTableDelimiter2 Label
+hi def link asciidocTableDelimiter Label
+hi def link asciidocTable_OLD Type
+hi def link asciidocTablePrefix2 Label
+hi def link asciidocTablePrefix Label
+hi def link asciidocToDo Todo
+hi def link asciidocTriplePlusPassthrough Special
+hi def link asciidocTwoLineTitle Title
+hi def link asciidocURL Macro
 let b:current_syntax = "asciidoc"
 
 " vim: wrap et sw=2 sts=2:

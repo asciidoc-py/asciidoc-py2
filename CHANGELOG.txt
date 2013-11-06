@@ -4,9 +4,12 @@ AsciiDoc ChangeLog
 :website: http://asciidoc.org/
 
 
-Version 8.6.9 (2013-01-??)
+Version 8.6.9 (2013-11-09)
 --------------------------
 .Additions and changes
+- 'html5', 'xhtml11' and 'slidy'  outputs now wrap 'pre' element
+  contents at right margin (see
+https://groups.google.com/group/asciidoc/browse_thread/thread/9877a316b7a47309).
 - Vim syntax file: highlight line breaks in lists (patch submitted by
   Alex Efros). See
   https://groups.google.com/group/asciidoc/browse_thread/thread/5145e4c0b65cde0a).

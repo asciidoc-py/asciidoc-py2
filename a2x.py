@@ -23,7 +23,7 @@ import xml.dom.minidom
 import mimetypes
 
 PROG = os.path.basename(os.path.splitext(__file__)[0])
-VERSION = '8.6.8'
+VERSION = '8.6.9'
 
 # AsciiDoc global configuration file directory.
 # NOTE: CONF_DIR is "fixed up" by Makefile -- don't rename or change syntax.

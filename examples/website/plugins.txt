@@ -48,6 +48,12 @@ and LibreOffice/OpenOffice Impress (`.fodp`) files.
 |http://code.google.com/p/asciidoc-slidy2-backend-plugin/
 |Enhanced slidy backend.
 
+|wordpress
+|Stuart Rackham
+|http://srackham.wordpress.com/blogpost-readme/
+|Generates WordPress friendly markup and is part of the
+http://srackham.wordpress.com/blogpost-readme/[blogpost] project.
+
 |====
 
 

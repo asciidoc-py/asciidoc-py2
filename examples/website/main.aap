@@ -15,7 +15,7 @@ LAYOUT ?= layout2
 # Various document locations.
 PROJ_DIR = ../..
 DOCS_DIR = $PROJ_DIR/doc
-LOCAL_WEB = ~/web/asciidoc # Local web marshalling location.
+LOCAL_WEB = ~/webs/asciidoc # Local web marshalling location.
 
 # List of web pages.
 WEB_ROOT =

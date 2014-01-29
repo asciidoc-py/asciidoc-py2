@@ -128,7 +128,7 @@ def latex2png(infile, outfile, dpi, modified):
     if infile == '-':
         tex = sys.stdin.read()
         if modified:
-            checksum = md5.new(tex).digest()
+            checksum = md5.new(tex + str(dpi)).digest()
             md5_file = os.path.splitext(outfile)[0] + '.md5'
             if os.path.isfile(md5_file) and os.path.isfile(outfile) and \
                     checksum == read_file(md5_file,'rb'):

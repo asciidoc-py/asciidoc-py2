@@ -1,29 +1,31 @@
 #!/usr/bin/env python
 '''
 NAME
-    latex2png - Converts LaTeX source to PNG file
+    latex2img - Converts LaTeX source to PNG or SVG file
 
 SYNOPSIS
-    latex2png [options] INFILE
+    latex2img [options] INFILE
 
 DESCRIPTION
     This filter reads LaTeX source text from the input file
     INFILE (or stdin if INFILE is -) and renders it to PNG image file.
     Typically used to render math equations.
 
-    Requires latex(1), dvipng(1) commands and LaTeX math packages.
+    Requires latex(1), dvipng(1) and/or dvisvgm(1) commands and LaTeX math
+    packages.
 
 OPTIONS
     -D DPI
-        Set the output resolution to DPI dots per inch. Use this option to
-        scale the output image size.
+        Set the output resolution for PNG images to DPI dots per inch. Use
+        this option to scale the output PNG image size.
 
     -o OUTFILE
         The file name of the output file. If not specified the output file is
-        named like INFILE but with a .png file name extension.
+        named like INFILE but with an extension matching the chosen output
+        image format, .png for PNG images and .svg for SVG images.
 
     -m
-        Skip if the PNG output file is newer that than the INFILE.
+        Skip if the output image file is newer than the INFILE.
         Compares timestamps on INFILE and OUTFILE. If
         INFILE is - (stdin) then compares MD5 checksum stored in file
         named like OUTFILE but with a .md5 file name extension.
@@ -40,7 +42,7 @@ OPTIONS
         Print program version number.
 
 SEE ALSO
-    latex(1), dvipng(1)
+    latex(1), dvipng(1), dvisvgm(1)
 
 AUTHOR
     Written by Stuart Rackham, <srackham@gmail.com>
@@ -62,7 +64,7 @@ warnings.simplefilter('ignore',DeprecationWarning)
 
 import os, sys, tempfile, md5
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 
 # Include LaTeX packages and commands here.
 TEX_HEADER = r'''\documentclass{article}
@@ -114,8 +116,10 @@ def run(cmd):
     if os.system(cmd):
         raise EApp, 'failed command: %s' % cmd
 
-def latex2png(infile, outfile, dpi, modified):
-    '''Convert LaTeX input file infile to PNG file named outfile.'''
+def latex2img(infile, outfile, imgfmt, dpi, modified):
+    '''
+    Convert LaTeX input file infile to image file named outfile.
+    '''
     outfile = os.path.abspath(outfile)
     outdir = os.path.dirname(outfile)
     if not os.path.isdir(outdir):
@@ -128,7 +132,7 @@ def latex2png(infile, outfile, dpi, modified):
     if infile == '-':
         tex = sys.stdin.read()
         if modified:
-            checksum = md5.new(tex + str(dpi)).digest()
+            checksum = md5.new(tex + imgfmt + str(dpi)).digest()
             md5_file = os.path.splitext(outfile)[0] + '.md5'
             if os.path.isfile(md5_file) and os.path.isfile(outfile) and \
                     checksum == read_file(md5_file,'rb'):
@@ -151,12 +155,19 @@ def latex2png(infile, outfile, dpi, modified):
     try:
         # Compile LaTeX document to DVI file.
         run('latex %s' % texfile)
-        # Convert DVI file to PNG.
-        cmd = 'dvipng'
-        if dpi:
-            cmd += ' -D %s' % dpi
-        cmd += ' -T tight -x 1000 -z 9 -bg Transparent --truecolor -o "%s" "%s" ' \
-               % (outfile,dvifile)
+        if imgfmt == 'svg':
+            # Convert DVI file to SVG.
+            cmd = 'dvisvgm'
+            cmd += ' --no-fonts'
+            cmd += ' --scale=1.2'
+            cmd += ' -o "%s" "%s"' % (outfile,dvifile)
+        else:
+            # Convert DVI file to PNG.
+            cmd = 'dvipng'
+            if dpi:
+                cmd += ' -D %s' % dpi
+            cmd += ' -T tight -x 1000 -z 9 -bg Transparent --truecolor'
+            cmd += ' -o "%s" "%s" ' % (outfile,dvifile)
         run(cmd)
     finally:
         os.chdir(saved_pwd)
@@ -173,11 +184,12 @@ def usage(msg=''):
         print_stderr(msg)
     print_stderr('\n'
                  'usage:\n'
-                 '    latex2png [options] INFILE\n'
+                 '    latex2img [options] INFILE\n'
                  '\n'
                  'options:\n'
                  '    -D DPI\n'
                  '    -o OUTFILE\n'
+                 '    -f FORMAT\n'
                  '    -m\n'
                  '    -v\n'
                  '    --help\n'
@@ -188,20 +200,22 @@ def main():
     global verbose
     dpi = None
     outfile = None
+    imgfmt = 'png'
     modified = False
     import getopt
-    opts,args = getopt.getopt(sys.argv[1:], 'D:o:mhv', ['help','version'])
+    opts,args = getopt.getopt(sys.argv[1:], 'D:o:mhvf:', ['help','version'])
     for o,v in opts:
         if o in ('--help','-h'):
             print __doc__
             sys.exit(0)
         if o =='--version':
-            print('latex2png version %s' % (VERSION,))
+            print('latex2img version %s' % (VERSION,))
             sys.exit(0)
         if o == '-D': dpi = v
         if o == '-o': outfile = v
         if o == '-m': modified = True
         if o == '-v': verbose = True
+        if o == '-f': imgfmt = v
     if len(args) != 1:
         usage()
         sys.exit(1)
@@ -209,13 +223,16 @@ def main():
     if dpi and not dpi.isdigit():
         usage('invalid DPI')
         sys.exit(1)
+    if not imgfmt in {'png', 'svg'}:
+        usage('Invalid image format. Valid values are "png" or "svg".')
+        sys.exit(1)
     if outfile is None:
         if infile == '-':
             usage('OUTFILE must be specified')
             sys.exit(1)
-        outfile = os.path.splitext(infile)[0] + '.png'
+        outfile = os.path.splitext(infile)[0] + '.' + imgfmt
     # Do the work.
-    latex2png(infile, outfile, dpi, modified)
+    latex2img(infile, outfile, imgfmt, dpi, modified)
     # Print something to suppress asciidoc 'no output from filter' warnings.
     if infile == '-':
         sys.stdout.write(' ')

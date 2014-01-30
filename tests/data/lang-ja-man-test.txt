@@ -1,0 +1,18 @@
+// Test for lang-ja.conf language file.
+:lang: ja
+
+ASCIIDOC(1)
+===========
+:doctype: manpage
+
+== 名前
+asciidoc - AsciiDoc テキストファイルを HTML や DocBook に変換する
+
+== 書式
+*asciidoc* ['OPTIONS'] 'FILE'
+
+== 説明
+asciidoc(1) コマンドは AsciiDoc テキストファイル 'FILE' を DocBook
+や HTML に変換する。 'FILE' が '-' ならば標準入力を使用する。
+
+...

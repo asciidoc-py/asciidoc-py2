@@ -1,0 +1,94 @@
+// Test for lang-ja.conf language file.
+:lang: ja
+
+Languages Test
+==============
+:revnumber: v1.0
+:revdate:   2003-12-21
+
+ifdef::doctype-article[]
+== 概要
+概要セクション
+
+endif::doctype-article[]
+
+
+ifdef::doctype-book[]
+== 献辞
+献辞セクション
+
+
+== 前書
+前書セクション
+
+
+== 奥付
+奥付セクション
+
+endif::doctype-book[]
+
+
+== 第一セクション
+=== 警告
+以下は処理系が翻訳するのでこのソースでは翻訳しない。
+
+NOTE: Lorum ipsum.
+
+TIP: Lorum ipsum.
+
+WARNING: Lorum ipsum.
+
+CAUTION: Lorum ipsum.
+
+IMPORTANT: Lorum ipsum.
+
+.Tiger
+image::../../images/tiger.png[虎の絵]
+
+続いて表の例。
+
+.Table
+[width="60%",options="header"]
+|=================================================
+| オプション      | 説明
+| -a 'USER GROUP' | 'USER' を 'GROUP' に追加する
+| -R 'GROUP'      | 'GROUP' へのアクセスを禁止する
+|=================================================
+
+そしてまったく異なるものの例: ((猿))、ライオン、虎。
+
+
+== 付録 A: 付録の例
+付録セクション
+
+
+== 参考文献
+参考文献セクション
+
+[bibliography]
+- [[[taoup]]] Eric Steven Raymond. 'The Art of Unix
+  Programming'. Addison-Wesley. ISBN 0-13-142901-9.
+- [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.
+  'DocBook - The Definitive Guide'. O'Reilly & Associates. 1999.
+  ISBN 1-56592-580-7.
+
+
+== 用語集
+用語集セクション
+
+[glossary]
+用語::
+  （インデントされた）用語の定義
+
+別の用語::
+  （インデントされた）用語の定義
+
+
+ifdef::basebackend-docbook[]
+== 索引
+////////////////////////////////////////////////////////////////
+索引セクション。
+内容は DocBook ツールチェーンが自動生成するので、
+通常このセクションは空である。
+////////////////////////////////////////////////////////////////
+endif::basebackend-docbook[]

@@ -159,7 +159,8 @@ def latex2img(infile, outfile, imgfmt, dpi, modified):
             # Convert DVI file to SVG.
             cmd = 'dvisvgm'
             cmd += ' --no-fonts'
-            cmd += ' --scale=1.2'
+            cmd += ' --scale=1.4'
+            cmd += ' --exact'
             cmd += ' -o "%s" "%s"' % (outfile,dvifile)
         else:
             # Convert DVI file to PNG.

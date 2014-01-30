@@ -5079,7 +5079,7 @@ is included in the distribution `./filters/` directory.
 
 |latex
 |The {website}latex-filter.html[AsciiDoc LaTeX filter] translates
-LaTeX source to a PNG image that is automatically inserted into the
+LaTeX source to an image that is automatically inserted into the
 AsciiDoc output documents.
 
 |graphviz

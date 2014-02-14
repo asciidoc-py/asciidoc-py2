@@ -1,0 +1,11 @@
+# ignore test products
+tests/data/*.html
+tests/data/*.xml
+tests/data/*.ly
+tests/data/*.abc
+tests/data/*.md5
+tests/*.pyc
+
+# ignore doc products
+doc/*.md5
+doc/*.ly

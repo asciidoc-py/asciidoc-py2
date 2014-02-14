@@ -5965,6 +5965,22 @@ A short summary of changes in this document revision. Must be defined
 prior to the first document section. The document also needs to be
 dated to output this attribute.
 
+|footer-style |html4, html5, xhtml11 |
+Changes the "Last updated" field in the footer of the document or removes this
+field and the revision number (in the footer only). +
+Can take 3 values:
+
+- none : Don't display the "Last updated" and "Revision number" fields in the
+  footer of the document
+- revdate : The "Last updated" field's date in the footer will be the revision
+  date specified in the document (`revdate` attribute)
+- default (or any other value) : The "Last updated" field's date in the footer
+  will be the date of the input file modification
+
+This attribute can be set, for example, using `:footer-style: revdate` in the
+header of the file or using the `--attribute footer-style=revdate` command-line
+option.
+
 |scriptsdir |html5, xhtml11 |
 The name of the directory containing linked JavaScripts.
 See <<X35,HTML stylesheets and JavaScript locations>>.

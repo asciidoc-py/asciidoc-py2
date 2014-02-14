@@ -1,0 +1,21 @@
+// Test for lang-sv.conf language file.
+:lang: sv
+
+ASCIIDOC(1)
+===========
+:doctype: manpage
+
+NAMN
+----
+asciidoc - converts an AsciiDoc text file to HTML or DocBook
+
+ÖVERSIKT
+--------
+*asciidoc* ['OPTIONS'] 'FILE'
+
+BESKRIVNING
+-----------
+The asciidoc(1) command translates the AsciiDoc text file 'FILE' to
+DocBook or HTML.  If 'FILE' is '-' then the standard input is used.
+
+...

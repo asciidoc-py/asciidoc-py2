@@ -169,7 +169,7 @@ link:asciimathml.html[ASCIIMathML] or link:latexmathml.html[LaTeXMathML]
 notation.
 
 The link:latex-filter.html[AsciiDoc LaTeX filter] translates LaTeX
-source to a PNG image that is automatically inserted into the AsciiDoc
+source to an image that is automatically inserted into the AsciiDoc
 output documents.
 
 AsciiDoc also has 'latexmath' macros for DocBook outputs -- they are

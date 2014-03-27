@@ -162,6 +162,25 @@ The plugin commands perform as follows:
   names starting with a period are skipped.
 
 
+EXAMPLES
+--------
+`asciidoc asciidoc_file_name.txt`::
+  Simply generate an html file from the asciidoc_file_name.txt that is in
+  current directory using asciidoc.
+
+`asciidoc -b html5 asciidoc_file_name.txt`::
+  Use the `-b` switch to use one of the proposed backend or another one you
+  installed on your computer.
+
+`asciidoc -a data-uri -a icons -a toc -a max-width=55em article.txt`::
+  Use the `-a` switch to set attributes from command-line. AsciiDoc generated
+  its stand-alone HTML user guide containing embedded CSS, JavaScript and
+  images from the AsciiDoc article template with this command.
+
+`asciidoc -b html5 -d manpage asciidoc.1.txt`::
+  Generating the asciidoc manpage using the html5 backend.
+
+
 EXIT STATUS
 -----------
 *0*::
@@ -188,6 +207,11 @@ RESOURCES
 SourceForge: <http://sourceforge.net/projects/asciidoc/>
 
 Main web site: <http://asciidoc.org/>
+
+
+SEE ALSO
+--------
+a2x(1)
 
 
 COPYING

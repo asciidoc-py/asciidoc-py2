@@ -53,7 +53,7 @@ musicfilterconfdir = $(filtersdir)/music
 sourcefilterconf = filters/source/source-highlight-filter.conf
 sourcefilterconfdir = $(filtersdir)/source
 
-latexfilter = filters/latex/latex2png.py
+latexfilter = filters/latex/latex2img.py
 latexfilterdir = $(filtersdir)/latex
 latexfilterconf = filters/latex/latex-filter.conf
 latexfilterconfdir = $(filtersdir)/latex

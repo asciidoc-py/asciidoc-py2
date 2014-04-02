@@ -52,7 +52,7 @@ filters/code/code-filter.conf
 filters/code/code-filter.py
 filters/code/code-filter-readme.txt
 filters/code/code-filter-test.txt
-filters/latex/latex2png.py
+filters/latex/latex2img.py
 filters/latex/latex-filter.conf
 filters/music/music-filter.conf
 filters/music/music2png.py

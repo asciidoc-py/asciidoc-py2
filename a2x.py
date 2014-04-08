@@ -21,6 +21,7 @@ import urlparse
 import zipfile
 import xml.dom.minidom
 import mimetypes
+import codecs
 
 PROG = os.path.basename(os.path.splitext(__file__)[0])
 VERSION = '8.6.9'
@@ -144,8 +145,8 @@ def find_executable(file_name):
         result = _find_executable(file_name)
     return result
 
-def write_file(filename, data, mode='w'):
-    f = open(filename, mode)
+def write_file(filename, data, mode='w', encoding='utf-8'):
+    f = codecs.open(filename, mode, encoding)
     try:
         f.write(data)
     finally:

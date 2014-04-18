@@ -2168,8 +2168,8 @@ generating DocBook bibliography entries. Example:
 - [[[taoup]]] Eric Steven Raymond. 'The Art of UNIX
   Programming'. Addison-Wesley. ISBN 0-13-142901-9.
 - [[[walsh-muellner]]] Norman Walsh & Leonard Muellner.
-  'DocBook - The Definitive Guide'. O'Reilly & Associates.
-  1999. ISBN 1-56592-580-7.
+  'DocBook - The Definitive Guide'. O'Reilly & Associates. 1999. 
+  ISBN 1-56592-580-7.
 ---------------------------------------------------------------------
 
 The `[[[<reference>]]]` syntax is a bibliography entry anchor, it

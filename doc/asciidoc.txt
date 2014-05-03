@@ -3640,17 +3640,10 @@ source file:
 [[X78]]
 Mathematical Formulas
 ---------------------
-The 'asciimath' and 'latexmath' <<X77,passthrough macros>> along with
-'asciimath' and 'latexmath'  <<X76,passthrough blocks>> provide a
+The 'asciimath' and 'latexmath' <<X76,passthrough blocks>> along with
+the 'asciimath' and 'latexmath' <<X77,passthrough macros>> provide a
 (backend dependent) mechanism for rendering mathematical formulas. You
 can use the following math markups:
-
-NOTE: The 'latexmath' macro used to include 'LaTeX Math' in DocBook
-outputs is not the same as the 'latexmath' macro used to include
-'LaTeX MathML' in XHTML outputs.  'LaTeX Math' applies to DocBook
-outputs that are processed by <<X31,dblatex>> and is normally used to
-generate PDF files.  'LaTeXMathML' is very much a subset of 'LaTeX
-Math' and applies to XHTML documents.
 
 LaTeX Math
 ~~~~~~~~~~
@@ -3663,26 +3656,17 @@ math] can be included in documents that are processed by
 For more examples see the {website}[AsciiDoc website] or the
 distributed `doc/latexmath.txt` file.
 
-ASCIIMathML
-~~~~~~~~~~~
-/////////////////////////////////////////////////////////////////////
-The older ASCIIMathML 1.47 version is used instead of version 2
-because:
-
-1. Version 2 doesn't work when embedded.
-2. Version 2 is much larger.
-/////////////////////////////////////////////////////////////////////
-
-http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
-formulas can be included in XHTML documents generated using the
-'xhtml11' and 'html5' backends. To enable ASCIIMathML support you must
-define the 'asciimath' attribute, for example using the `-a asciimath`
-command-line option.  Example inline formula:
-
-  asciimath:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
-
-For more examples see the {website}[AsciiDoc website] or the
-distributed `doc/asciimathml.txt` file.
+MathJax
+~~~~~~~
+http://www.mathjax.org/[MathJax] allows LaTeX Math style formulas to be included
+in XHTML documents generated via the AsciiDoc 'xhtml11' and 'html5' backends.
+This route overcomes several restrictions of the MathML-based approaches,
+notably, restricted support of MathML by many mainstream browsers. To enable
+'MathJax' support you must define the 'mathjax' attribute, for example using the
+`-a mathjax` command-line option. Equations are specified as explained above
+using the 'latexmath' passthrough blocks. By default, rendering of equations
+with 'MathJax' requires a working internet connection and will thus not work if
+you are offline (but it can be configured differently).
 
 LaTeXMathML
 ~~~~~~~~~~~
@@ -3708,6 +3692,37 @@ formula:
 
 For more examples see the {website}[AsciiDoc website] or the
 distributed `doc/latexmathml.txt` file.
+
+NOTE: The 'latexmath' macro used to include 'LaTeX Math' in DocBook
+outputs is not the same as the 'latexmath' macro used to include
+'LaTeX MathML' in XHTML outputs.  'LaTeX Math' applies to DocBook
+outputs that are processed by <<X31,dblatex>> and is normally used to
+generate PDF files.  'LaTeXMathML' is very much a subset of 'LaTeX
+Math' and applies to XHTML documents. This remark does not
+apply to 'MathJax' which does not use any of the 'latexmath' macros
+(but only requires the 'latexmath' passthrough blocks for identification
+of the equations).
+
+ASCIIMathML
+~~~~~~~~~~~
+/////////////////////////////////////////////////////////////////////
+The older ASCIIMathML 1.47 version is used instead of version 2
+because:
+
+1. Version 2 doesn't work when embedded.
+2. Version 2 is much larger.
+/////////////////////////////////////////////////////////////////////
+
+http://www1.chapman.edu/~jipsen/mathml/asciimath.html[ASCIIMathML]
+formulas can be included in XHTML documents generated using the
+'xhtml11' and 'html5' backends. To enable ASCIIMathML support you must
+define the 'asciimath' attribute, for example using the `-a asciimath`
+command-line option.  Example inline formula:
+
+  asciimath:[`x/x={(1,if x!=0),(text{undefined},if x=0):}`]
+
+For more examples see the {website}[AsciiDoc website] or the
+distributed `doc/asciimathml.txt` file.
 
 MathML
 ~~~~~~

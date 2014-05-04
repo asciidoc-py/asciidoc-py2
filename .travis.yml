@@ -4,8 +4,8 @@ python:
   - 2.7
 install:
   # 12.04 LTS ships an outdated texlive https://launchpad.net/bugs/712521
-  - sudo add-apt-repository ppa:texlive-backports/ppa
-  - sudo apt-get update
+  - sudo add-apt-repository --yes ppa:texlive-backports/ppa
+  - sudo apt-get update -yq2
   - sudo apt-get install -yq2 --no-install-recommends dvipng graphviz imagemagick lilypond source-highlight texlive-latex-base
 script:
   - time python tests/testasciidoc.py update

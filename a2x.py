@@ -819,8 +819,8 @@ class A2X(AttrDict):
             shell('"%s" %s --conf-file "%s" -b html4 -a "a2x-format=%s" -o "%s" "%s"' %
                  (self.asciidoc, self.asciidoc_opts, self.asciidoc_conf_file('text.conf'),
                   self.format, html_file, self.asciidoc_file))
-            shell('"%s" -dump "%s" > "%s"' %
-                 (LYNX, html_file, text_file))
+            cmd = "%s -dump %s > %s" % (LYNX, html_file, text_file)
+            shell(cmd)
         else:
             # Use w3m(1).
             self.to_docbook()
@@ -828,8 +828,8 @@ class A2X(AttrDict):
             opts = '%s --output "%s"' % (self.xsltproc_opts, html_file)
             exec_xsltproc(self.xsl_stylesheet(), docbook_file,
                     self.destination_dir, opts)
-            shell('"%s" -cols 70 -dump -T text/html -no-graph "%s" > "%s"' %
-                 (W3M, html_file, text_file))
+            cmd = "%s -dump -T text/html -no-graph %s > %s" % (W3M, html_file, text_file)
+            shell(cmd)
         if not self.keep_artifacts:
             shell_rm(html_file)
 

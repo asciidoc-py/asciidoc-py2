@@ -49,8 +49,8 @@ OPTIONS
 
 *-b, --backend*='BACKEND'::
   'BACKEND' is the name of an installed backend plugin. When this
-  option is specified 'a2x' attempts load a file name 'a2x-backend.py'
-  from the 'BACKEND' plugin directory It then converts the
+  option is specified 'a2x' attempts to load a file name 'a2x-backend.py'
+  from the 'BACKEND' plugin directory. It then converts the
   'SOURCE_FILE' to a 'BACKEND' formatted output file using a global
   function defined in 'a2x-backend.py' called 'to_BACKEND'.
 
@@ -75,8 +75,10 @@ OPTIONS
   Do not delete temporary build files.
 
 *--lynx*::
-  Use 'lynx(1)' to generate text formatted output. The default
-  behavior is to use 'w3m(1)'.
+  Use 'lynx(1)' (actually: the text-based browser defined by the `LYNX` config
+  variable) when generating text formatted output. The default behavior is to
+  use 'w3m(1)' (actually: the text-based browser defined by the `W3M` config
+  variable).
 
 *-L, --no-xmllint*::
   Do not check asciidoc output with 'xmllint(1)'.
@@ -323,16 +325,27 @@ ASCIIDOC = 'asciidoc'
 XSLTPROC = 'xsltproc'
 DBLATEX = 'dblatex'         # pdf generation.
 FOP = 'fop'                 # pdf generation (--fop option).
-W3M = 'w3m'                 # text generation.
-LYNX = 'lynx'               # text generation (if no w3m).
+W3M = 'w3m'                 # primary text file generator.
+LYNX = 'lynx'               # alternate text file generator.
 XMLLINT = 'xmllint'         # Set to '' to disable.
 EPUBCHECK = 'epubcheck'     # Set to '' to disable.
 # External executable default options.
 ASCIIDOC_OPTS = ''
+BACKEND_OPTS = ''
 DBLATEX_OPTS = ''
 FOP_OPTS = ''
+LYNX_OPTS = '-dump'
+W3M_OPTS = '-dump -cols 70 -T text/html -no-graph'
 XSLTPROC_OPTS = ''
 ---------------------------------------------------------------------
+
+Note, that it is possible to redefine `W3M` and `LYNX` to use different text-based
+browsers, e.g. 'links': http://links.twibright.com/ or
+'elinks': http://elinks.or.cz/. `LYNX_OPTS` and `W3M_OPTS` can be used to pass
+options to the selected browser. If these are defined they override the
+respective defaults listed above (so don't forget to include the '-dump' option
+in your definition: this is mandatory at least with 'w3m', 'lynx', 'links', and
+'elinks' in order to send the formatted text to stdout).
 
 
 BUGS

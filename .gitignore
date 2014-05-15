@@ -1,10 +1,12 @@
+*.pyc
+
 # ignore test products
 tests/data/*.html
 tests/data/*.xml
 tests/data/*.ly
 tests/data/*.abc
 tests/data/*.md5
-tests/*.pyc
+tests/data/*.png
 
 # ignore doc products
 doc/*.md5

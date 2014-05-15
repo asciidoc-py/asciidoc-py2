@@ -1,6 +1,6 @@
 [float]
-AsciiDoc
-========
+AsciiDoc image:https://travis-ci.org/asciidoc/asciidoc.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoc/asciidoc]
+===================================================================================================================================
 
 AsciiDoc is a text document format for writing notes, documentation,
 articles, books, ebooks, slideshows, web pages, man pages and blogs.

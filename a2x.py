@@ -45,16 +45,18 @@ ASCIIDOC = 'asciidoc'
 XSLTPROC = 'xsltproc'
 DBLATEX = 'dblatex'         # pdf generation.
 FOP = 'fop'                 # pdf generation (--fop option).
-W3M = 'w3m'                 # text generation.
-LYNX = 'lynx'               # text generation (if no w3m).
+W3M = 'w3m'                 # primary text file generator.
+LYNX = 'lynx'               # alternate text file generator.
 XMLLINT = 'xmllint'         # Set to '' to disable.
 EPUBCHECK = 'epubcheck'     # Set to '' to disable.
 # External executable default options.
 ASCIIDOC_OPTS = ''
+BACKEND_OPTS = ''
 DBLATEX_OPTS = ''
 FOP_OPTS = ''
+LYNX_OPTS = '-dump'
+W3M_OPTS = '-dump -cols 70 -T text/html -no-graph'
 XSLTPROC_OPTS = ''
-BACKEND_OPTS = ''
 
 ######################################################################
 # End of configuration file parameters.
@@ -819,8 +821,8 @@ class A2X(AttrDict):
             shell('"%s" %s --conf-file "%s" -b html4 -a "a2x-format=%s" -o "%s" "%s"' %
                  (self.asciidoc, self.asciidoc_opts, self.asciidoc_conf_file('text.conf'),
                   self.format, html_file, self.asciidoc_file))
-            shell('"%s" -dump "%s" > "%s"' %
-                 (LYNX, html_file, text_file))
+            cmd = '"%s" %s "%s" > "%s"' % (LYNX, LYNX_OPTS, html_file, text_file)
+            shell(cmd)
         else:
             # Use w3m(1).
             self.to_docbook()
@@ -828,8 +830,8 @@ class A2X(AttrDict):
             opts = '%s --output "%s"' % (self.xsltproc_opts, html_file)
             exec_xsltproc(self.xsl_stylesheet(), docbook_file,
                     self.destination_dir, opts)
-            shell('"%s" -cols 70 -dump -T text/html -no-graph "%s" > "%s"' %
-                 (W3M, html_file, text_file))
+            cmd = '"%s" %s "%s" > "%s"' % (W3M, W3M_OPTS, html_file, text_file)
+            shell(cmd)
         if not self.keep_artifacts:
             shell_rm(html_file)
 

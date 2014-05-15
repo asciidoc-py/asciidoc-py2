@@ -12,4 +12,4 @@ script:
   - python asciidoc.py --doctest
   - python asciidocapi.py
   - time python tests/testasciidoc.py run
-  - git clean -f tests/data
+  - git clean -x -f doc tests/data

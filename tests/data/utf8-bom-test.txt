@@ -4,6 +4,6 @@
 Include file with UTF-8 BOM:
 
 :leveloffset: 1
-include::{docfile}[depth=1]
+include::{docname}.txt[depth=1]
 
 Lorum ipsum...

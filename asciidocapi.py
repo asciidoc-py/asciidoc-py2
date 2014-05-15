@@ -254,4 +254,6 @@ if __name__ == "__main__":
     """
     import doctest
     options = doctest.NORMALIZE_WHITESPACE + doctest.ELLIPSIS
-    doctest.testmod(optionflags=options)
+    test_result = doctest.testmod(optionflags=options)
+    print(test_result)
+    sys.exit(test_result.failed > 0)

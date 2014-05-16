@@ -962,4 +962,4 @@ if __name__ == '__main__':
         a2x.load_conf()
         a2x.execute()
     except KeyboardInterrupt:
-        exit(1)
+        sys.exit(1)

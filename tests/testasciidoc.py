@@ -411,7 +411,7 @@ if __name__ == '__main__':
     if cmd == 'run':
         tests.run(number, backend)
         if tests.failed:
-            exit(1)
+            sys.exit(1)
     elif cmd == 'update':
         tests.update(number, backend, force=force)
     elif cmd == 'list':

@@ -107,7 +107,7 @@ class AsciiDocTest(object):
         self.description = []   # List of lines followoing title.
         self.source = None      # AsciiDoc test source file name.
         self.options = []
-        self.attributes = {}
+        self.attributes = {'asciidoc-version': 'test'}
         self.backends = BACKENDS
         self.datadir = None     # Where output files are stored.
         self.disabled = False
@@ -156,7 +156,7 @@ class AsciiDocTest(object):
                         if isinstance(v, basestring):
                             self.options[i] = (v,None)
                 elif directive == 'attributes':
-                    self.attributes = eval(' '.join(data))
+                    self.attributes.update(eval(' '.join(data)))
                 elif directive == 'backends':
                     self.backends = eval(' '.join(data))
                 elif directive == 'name':

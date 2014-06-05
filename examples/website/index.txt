@@ -249,7 +249,7 @@ and I'll add them to the list.
 - David Hajage has written an AsciiDoc package for the
   http://www.r-project.org/[R Project] (R is a free software
   environment for statistical computing).  'ascii' is available on
-  'CRAN' (just run `install.package("ascii")` from R).  Briefly,
+  'CRAN' (just run `install.packages("ascii")` from R).  Briefly,
   'ascii' replaces R results in AsciiDoc document with AsciiDoc
   markup.  More information and examples here:
   http://eusebe.github.com/ascii/.

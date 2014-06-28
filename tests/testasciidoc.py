@@ -22,6 +22,7 @@ __copyright__ = 'Copyright (C) 2009 Stuart Rackham'
 
 
 import os, sys, re, difflib
+import time
 
 if sys.platform[:4] == 'java':
     # Jython cStringIO is more compatible with CPython StringIO.
@@ -75,6 +76,28 @@ def normalize_data(lines):
     return result
 
 
+def mock_localtime(f, _localtime=time.localtime):
+    """Mock time module to generate stable output."""
+    _frozentime = 0X3DE170D6
+    _frozentz = 'Pacific/Auckland'
+
+    def _frozen_localtime(t=_frozentime + 1):
+        assert t > _frozentime, 'File created before first public release'
+        return _localtime(_frozentime)
+
+    def generate_expected(self, backend):
+        time.localtime = _frozen_localtime
+        os.environ['TZ'] = _frozentz
+        time.tzset()
+        try:
+            return f(self, backend)
+        finally:
+            time.localtime = _localtime
+            del os.environ['TZ']
+            time.tzset()
+    return generate_expected
+
+
 class AsciiDocTest(object):
 
     def __init__(self):
@@ -84,7 +107,7 @@ class AsciiDocTest(object):
         self.description = []   # List of lines followoing title.
         self.source = None      # AsciiDoc test source file name.
         self.options = []
-        self.attributes = {}
+        self.attributes = {'asciidoc-version': 'test'}
         self.backends = BACKENDS
         self.datadir = None     # Where output files are stored.
         self.disabled = False
@@ -133,7 +156,7 @@ class AsciiDocTest(object):
                         if isinstance(v, basestring):
                             self.options[i] = (v,None)
                 elif directive == 'attributes':
-                    self.attributes = eval(' '.join(data))
+                    self.attributes.update(eval(' '.join(data)))
                 elif directive == 'backends':
                     self.backends = eval(' '.join(data))
                 elif directive == 'name':
@@ -172,6 +195,7 @@ class AsciiDocTest(object):
             f.close()
         return result
 
+    @mock_localtime
     def generate_expected(self, backend):
         """
         Generate and return test data output for backend.

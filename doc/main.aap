@@ -42,7 +42,7 @@ OUTFILES = $*(ROOT).html $*(ROOT).css.html $*(ROOT).css-embedded.html \
         article-standalone.html \
         article-html5-toc2.html
 
-TEST_FILES = $*(ROOT).css-embedded.html 
+TEST_FILES = $*(ROOT).css-embedded.html
         article.css-embedded.html book.css-embedded.html \
         article.xml book.xml book-multi.xml asciidoc.xml asciidoc.1.xml \
         asciidoc.1.html a2x.1.xml music-filter.xml \
@@ -53,10 +53,10 @@ TEST_FILES = $*(ROOT).css-embedded.html
 # Filetype build rules.
 #####################################################################
 
-:rule %.epub : %.txt
+:rule %.epub : %.txt ../README.asciidoc
     :sys $A2X -f epub -d book --epubcheck --icons $source
 
-:rule %.text : %.txt
+:rule %.text : %.txt ../README.asciidoc
     # Convert AsciiDoc to HTML then use lynx(1) to convert HTML to text.
     @if not _no.LYNX:
         :print WARNING: lynx(1) unavailable: skipping $target file generation
@@ -69,7 +69,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
         :sys $ASCIIDOC $opt -b html4 -o - $source | \
             lynx -dump -stdin > $target
 
-:rule %.css.html : %.txt
+:rule %.css.html : %.txt ../README.asciidoc
     opt =
     @if source_list[0] == 'asciidoc.1.txt':
         opt += -d manpage
@@ -82,7 +82,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
     @else:
         :print WARNING: xmllint(1) unavailable: skipping validation
 
-:rule %.css-embedded.html : %.txt
+:rule %.css-embedded.html : %.txt ../README.asciidoc
     opt =
     @if source_list[0] == 'asciidoc.1.txt':
         opt += -d manpage
@@ -95,7 +95,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
     @else:
         :print WARNING: xmllint(1) unavailable: skipping validation
 
-:rule %.xml : %.txt
+:rule %.xml : %.txt ../README.asciidoc
     opt =
     @if source_list[0] in ('asciidoc.1.txt','a2x.1.txt'):
         opt += -d manpage
@@ -109,7 +109,7 @@ TEST_FILES = $*(ROOT).css-embedded.html
     @else:
         :print WARNING: xmllint(1) unavailable: skipping validation
 
-:rule %.sgml : %.txt
+:rule %.sgml : %.txt ../README.asciidoc
     opt =
     @if source_list[0] in ('asciidoc.1.txt','a2x.1.txt'):
         opt += -d manpage
@@ -216,7 +216,7 @@ clean:
     :del {f} $OUTFILES $TEST_FILES
     :del {f} *.bak          # Remove aspell backups.
 
-spell: $INFILES ../CHANGELOG.txt ../README.txt ../BUGS.txt ../INSTALL.txt \
+spell: $INFILES ../CHANGELOG.txt ../README.asciidoc ../BUGS.txt ../INSTALL.txt \
         a2x.1.txt faq.txt asciidocapi.txt testasciidoc.txt \
         epub-notes.txt publishing-ebooks-with-asciidoc.txt \
         source-highlight-filter.txt \

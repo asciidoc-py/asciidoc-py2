@@ -3,9 +3,6 @@ Bugs and Known Problems
 
 AsciiDoc
 --------
-- A benign warning 'with will become a reserved keyword
-  in Python 2.6' sometimes occurs when using Python 2.5 -- it's
-  harmless and will disappear with Python 3.
 - Reported line numbers in diagnostic messages are sometimes wrong.
 - Attribute references in macro attribute lists can't be unescaped
   (with the exception of attribute list entry `{0}`).

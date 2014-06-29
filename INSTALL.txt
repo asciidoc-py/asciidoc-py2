@@ -1,7 +1,7 @@
 AsciiDoc Installation
 =====================
 
-NOTE: The current version of AsciiDoc requires *Python 2.4 or newer*
+NOTE: The current version of AsciiDoc requires *Python 2.6 or 2.7*
 to run.  If you don't already have an up-to-date version of Python
 installed it can be downloaded from the official Python website
 http://www.python.org/.

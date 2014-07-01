@@ -76,7 +76,7 @@ Makefile.in
 install-sh
 javascripts/*.js
 README
-README.txt
+README.asciidoc
 stylesheets/*.css
 tests/testasciidoc.py
 tests/testasciidoc.conf

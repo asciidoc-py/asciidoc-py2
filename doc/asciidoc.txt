@@ -2693,6 +2693,9 @@ The syntax is:
 The block `image` macro has the same <<X55,macro attributes>> as it's
 <<X9,inline image macro>> counterpart.
 
+WARNING: Unlike the inline `image` macro, the entire block `image` macro
+must be on a single line.
+
 Block images can be titled by preceding the 'image' macro with a
 'BlockTitle'.  DocBook toolchains normally number titled block images
 and optionally list them in an automatically generated 'List of
@@ -2705,8 +2708,7 @@ This example:
 
 is equivalent to:
 
-  image::images/layout.png["J14P main circuit board",
-                            title="Main circuit board"]
+  image::images/layout.png["J14P main circuit board", title="Main circuit board"]
 
 A title prefix that can be inserted with the `caption` attribute
 (HTML backends). For example:

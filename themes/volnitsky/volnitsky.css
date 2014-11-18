@@ -369,6 +369,9 @@ em {
   letter-spacing:+0.08em ! important;
 }
 
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
 
 /*
  * html5 specific

@@ -341,7 +341,7 @@ AsciiDoc::
   uses <<X13,DocBook XSL Stylesheets>>, <<X40,xsltproc(1)>> and
   `latex(1)`.
 
-[[X14]]http://xml.apache.org/fop/[FOP]::
+[[X14]]http://xmlgraphics.apache.org/fop/[FOP]::
   The Apache Formatting Objects Processor converts XSL-FO (`.fo`)
   files to PDF files.  The XSL-FO files are generated from DocBook
   source files using <<X13,DocBook XSL Stylesheets>> and

@@ -458,7 +458,7 @@ class A2X(AttrDict):
                 die('missing --destination-dir: %s' % self.destination_dir)
             self.destination_dir = os.path.abspath(self.destination_dir)
             if not self.format in ('chunked','epub','htmlhelp','xhtml','manpage'):
-                warning('--destination-dir option is only applicable to HTML based outputs')
+                warning('--destination-dir option is only applicable to HTML and manpage based outputs')
         self.resource_dirs = []
         self.resource_files = []
         if self.resource_manifest:

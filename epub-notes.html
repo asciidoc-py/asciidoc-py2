@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>AsciiDoc EPUB Notes</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="epub-notes.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>AsciiDoc EPUB Notes</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_restrictions">Restrictions</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+If the date format of the DocBook <em>data</em> element is not formatted like
+  <code>YYYY[-MM[-DD]]</code> you will get an error like the following one when
+  validating with <code>epubcheck(1)</code>:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>ERROR: doc/article.epub/OEBPS/content.opf(6): date value 'Dec 2003'
+is not valid, YYYY[-MM[-DD]] expected</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Navigation headers are suppressed by <code>docbook-xsl/epub.xsl</code> (see
+  <a href="#X3">bug report</a>).
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_docbook_xsl_stylesheets_related_limitations_and_bugs">DocBook XSL Stylesheets related limitations and bugs</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_epub_toc_section_depth_parameter_ignored">epub: toc.section.depth parameter ignored</h3>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/?func=detail&amp;aid=3043393&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/?func=detail&amp;aid=3043393&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>epub outputs include every section in the table of contents regardless of the
+toc.section.depth XSL Stylesheets parameter
+(<a href="http://docbook.sourceforge.net/release/xsl/current/doc/html/toc.section.depth.html">http://docbook.sourceforge.net/release/xsl/current/doc/html/toc.section.depth.html</a>).
+This behavior is specific to epub (xhtml and fo outputs honor
+toc.section.depth).</p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 10.04</p></div>
+<div class="paragraph"><p>Also epub/docbook.xsl has written a hard-coded illegal dtb:depth value of -1
+into the toc.ncx navigation control file:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;ncx:meta name="dtb:depth" content="-1"/&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>Shouldn&#8217;t it be a positive integer equal to the depth navPoint nesting in the
+navMap element (see
+<a href="http://www.niso.org/workrooms/daisy/Z39-86-2005.html#NavMeta">http://www.niso.org/workrooms/daisy/Z39-86-2005.html#NavMeta</a>)? Though epubcheck 1.05 doesn&#8217;t flag it as invalid&#8201;&#8212;&#8201;are they both wrong?</p></div>
+</div>
+<div class="sect2">
+<h3 id="X1">epub: untitled DocBook sidebar emits invalid XHTML</h3>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2840768&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2840768&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>I get the same problem, but is confined to EPUB outputs (not XHTML)
+and results in the sidebar and all subsequent text on the page
+displayed in bold text in both Firefox 3.6.8 and Google Chrome
+5.0.375.125 (I haven&#8217;t checked other browsers).</p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 10.04</p></div>
+<div class="paragraph"><p>If a DocBook sidebar element does not have a title then the emitted
+title is (I haven&#8217;t checked other browsers).
+set to &lt;b/&gt; instead of &lt;b&gt;&lt;/b&gt;, for example this DocBook markup:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;sidebar&gt;
+&lt;simpara&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit.&lt;/simpara&gt;
+&lt;/sidebar&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>Generates this EPUB XHTML:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;div class="sidebar"&gt;&lt;p class="title"&gt;&lt;b/&gt;&lt;/p&gt;&lt;p&gt;Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.&lt;/p&gt;&lt;/div&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>This problem is not picked up by either the epubcheck or the W3C
+validators.</p></div>
+<div class="paragraph"><p>The problem does not occur generating XHTML which emits the following
+for the above example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;div class="sidebar"&gt;&lt;p class="title"&gt;&lt;b&gt;&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Lorem ipsum
+dolor sit amet, consectetuer adipiscing elit.&lt;/p&gt;&lt;/div&gt;</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_epub_unreferenced_callout_icons_in_opf">epub: Unreferenced callout icons in OPF</h3>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">A workaround  for this problem was added in <code>a2x(1)</code> version
+8.6.5.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/?func=detail&amp;aid=2854075&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/?func=detail&amp;aid=2854075&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 8.04</p></div>
+<div class="paragraph"><p>When callouts are used in a document and callout graphics are disabled
+(callout.graphics=0) the generated <em>contents.opf</em> still contains
+references to all the callout icons even though none are not
+referenced in the generated XHTML content. This results in 10
+epubcheck validation errors like:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>image file OEBPS/images/icons/callouts/1.png is missing</code></pre>
+</div></div>
+<div class="paragraph"><p>It appears that epub is adding the icons to the OPF without
+first checking the callout.graphics parameter.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_epub_table_grids_not_generated">epub: Table grids not generated</h3>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/?func=detail&amp;aid=2849647&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/?func=detail&amp;aid=2849647&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 8.04</p></div>
+<div class="paragraph"><p>DocBook XSL epub does not appear to process the DocBook table element rowsep
+and colsep attributes&#8201;&#8212;&#8201;table grids are not displayed. The DocBook
+&lt;table rowsep="1" colsep="1"&gt; results in:</p></div>
+<div class="paragraph"><p>epub DocBook XSL generates:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;td style="text-align: left" valign="top"&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>i.e. epub is not generating CSS borders (same for generated th elements).</p></div>
+<div class="paragraph"><p>Compare this with the (correct) xhtml DocBook XSL generates the correct border
+styles:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;td style="border-right: 1px solid ; border-bottom: 1px solid ; " align="left" valign="top"&gt;</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_epub_htmltoc_is_not_generated">epub: htmltoc is not generated</h3>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/?func=detail&amp;aid=2849686&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/?func=detail&amp;aid=2849686&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 8.04</p></div>
+<div class="paragraph"><p>If DocBook XSL TOC generation is specified the generated
+<em>contents.opf</em> contains an <em>htmltoc</em> element but the referenced TOC file
+is not generated by DocBook XSL. For example the contents.opf contains:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;item id="htmltoc" media-type="application/xhtml+xml" href="ar01-toc.html"/&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>but the actual TOC file <code>OEBPS/ar01-toc.html</code> is missing and epubcheck
+generates validation errors like:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>ERROR: doc/article.epub: OPS/XHTML file OEBPS/ar01-toc.html is missing</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_epub_leading_dot_in_directory_name_error">epub: leading dot in directory name error</h3>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/?func=detail&amp;aid=2849683&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/?func=detail&amp;aid=2849683&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 8.04</p></div>
+<div class="paragraph"><p>Specifying paths with a leading dot causes problems, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;xsl:param name="html.stylesheet" select="'./docbook-xsl.css'"/&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>This generates validation errors like:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>ERROR: article.epub/OEBPS/index.html(4):
+'OEBPS/./docbook-xsl.css': referenced resource missing in the package</code></pre>
+</div></div>
+<div class="paragraph"><p>The file is in the archive at the correct location, just doesn&#8217;t
+seem to like <em>./</em> in the path name&#8201;&#8212;&#8201;the path needs to be normalized
+before being written to the contents.opf.</p></div>
+<div class="paragraph"><p>It&#8217;s not just the validator, the file is missing when the EPUB is viewed
+(in bookworm).</p></div>
+<div class="paragraph"><p>This works fine:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;xsl:param name="html.stylesheet" select="'docbook-xsl.css'"/&gt;</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="X2">epub: admonition icon images missing from contents.opf</h3>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">A workaround  for this problem was added in <code>a2x(1)</code> version
+8.6.5.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/?func=detail&amp;aid=2849681&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/?func=detail&amp;aid=2849681&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 8.04</p></div>
+<div class="paragraph"><p>When admonition icons are specified epubcheck generates validation
+errors like:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>ERROR: article.epub/OEBPS/index.html(4):
+'OEBPS/images/icons/note.png': referenced resource exists,
+but not declared in the OPF file</code></pre>
+</div></div>
+<div class="paragraph"><p>i.e. The admonition icon is in the EPUB file but DocBook XSL has not
+been added to the content.opf manifest. Compare this with callout icons
+which are processed correctly.</p></div>
+</div>
+<div class="sect2">
+<h3 id="X3">Table width attribute validation error</h3>
+<div class="paragraph"><p><a href="https://sourceforge.net/tracker/?func=detail&amp;aid=2848734&amp;group_id=21935&amp;atid=373747">https://sourceforge.net/tracker/?func=detail&amp;aid=2848734&amp;group_id=21935&amp;atid=373747</a></p></div>
+<div class="paragraph"><p>Environment: DocBook XSL 1.75.2; Xubuntu 8.04</p></div>
+<div class="paragraph"><p>I get the following validation errors when navigation headers are in
+included in the generated XHTML:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>ERROR: article.epub/OEBPS/ix01.html(3): attribute "width" not allowed
+at this point; ignored</code></pre>
+</div></div>
+<div class="paragraph"><p>This is because DocBook XSL has emitted invalid XHTML 1.1: tables
+using the <em>width</em> element are generated automatically in navigation
+headers.</p></div>
+<div class="paragraph"><p>Though, admittedly, navigation is redundant if you&#8217;re reading with an
+EPUB reader. Suppress by setting the suppress.navigation param to 1.</p></div>
+<div class="paragraph"><p>Is this a DocBook XSL bug?</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_linux_zip_1_command">The Linux zip(1) command</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you use the Linux <code>zip(1)</code> command to update or create EPUB files
+you must use the <code>-X</code>, <code>--no-extra</code> command-line option, if you do not
+the platform dependent extra fields will confuse <code>epubcheck(1)</code> which
+will emit errors like &#8220;extra field length for first filename must be
+0, but was 28&#8221;.</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:47 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

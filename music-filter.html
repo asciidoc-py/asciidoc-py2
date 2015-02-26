@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Music Filter</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="music-filter.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>Music Filter</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>The AsciiDoc distribution includes a Music Block filter that
+translates music in <a href="http://lilypond.org/">LilyPond</a> or
+<a href="http://abcnotation.org.uk/">ABC</a> notation to standard classical
+notation in the form of a trimmed PNG image which is automatically
+inserted into the AsciiDoc output document (see the examples below).</p></div>
+<div class="paragraph"><p>Actually the filter (<code>./filters/music/music2png.py</code>) can be used outside
+AsciiDoc to convert LilyPond or ABC music files to PNG images.
+Execute the following command to see how to use it:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ ./filters/music/music2png.py --help</code></pre>
+</div></div>
+<div class="exampleblock">
+<div class="title">Example 1. Music Block containing ABC notation</div>
+<div class="content">
+<div class="paragraph"><p>This Music Block:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>["music","music1.png",scaledwidth="100%"]
+---------------------------------------------------------------------
+T:The Butterfly
+R:slip jig
+C:Tommy Potts
+H:Fiddle player Tommy Potts made this tune from two older slip jigs,
+H:one of which is called "Skin the Peelers" in Roche's collection.
+H:This version by Peter Cooper.
+D:Bothy Band: 1975.
+M:9/8
+K:Em
+vB2(E G2)(E F3)|B2(E G2)(E F)ED|vB2(E G2)(E F3)|(B2d) d2(uB A)FD:|
+|:(vB2c) (e2f) g3|(uB2d) (g2e) (dBA)|(B2c) (e2f) g2(ua|b2a) (g2e) (dBA):|
+|:~B3 (B2A) G2A|~B3 BA(uB d)BA|~B3 (B2A) G2(A|B2d) (g2e) (dBA):|
+---------------------------------------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>Renders:</p></div>
+<div class="imageblock music">
+<div class="content">
+<img src="music1.png" alt="music1.png" />
+</div>
+</div>
+</div></div>
+<div class="exampleblock">
+<div class="title">Example 2. Music Block containing LilyPond notation</div>
+<div class="content">
+<div class="paragraph"><p>This example contains LilyPond musical markup.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[music]
+---------------------------------------------------------------------
+\version "2.14.2"
+\paper {
+ ragged-right = ##t
+}
+{
+ \time 3/4
+ \clef bass
+ c2 e4 g2. f4 e d c2 r4
+}
+---------------------------------------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>Renders:</p></div>
+<div class="imageblock music">
+<div class="content">
+<img src="music-filter__1.png" alt="music-filter__1.png" />
+</div>
+</div>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">If you get an error processing the above example it may be that
+it is not compatible with your version of LilyPond. Use the LilyPond
+<code>convert-ly(1)</code> utility to update the source to the version that you
+are using.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_the_filter">Using the Filter</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+The Music filter is invoked by setting the Listing block or
+  Paragraph style (the first positional block attribute) to <em>music</em>.
+</p>
+</li>
+<li>
+<p>
+The second positional attribute (named <em>target</em> is optional, it sets
+  the name of the generated PNG image file. If this is not supplied a
+  file name like <code>{docname}__{target-number}.png</code> is synthesised
+  (where <code>{docname}</code> is the document file name and <code>{target-number}</code>
+  is an integer number.
+</p>
+</li>
+<li>
+<p>
+The third positional attribute (<em>format</em>) specifies the music input
+  format: either <em>abc</em> for ABC or <em>ly</em> for LilyPond. If the format is
+  omitted ABC notation is assumed unless the text starts with a
+  backslash character, in which case the format is set to <em>ly</em>.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Because the LaTeX images are rendered using the image block templates
+you can also use the optional named image block attributes (see
+<a href="userguide.html#X55">Image macro attributes</a> in the AsciiDoc User
+Guide).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_limitations">Limitations</h2>
+<div class="sectionbody">
+<div class="ulist"><ul>
+<li>
+<p>
+The <code>asciidoc(1)</code> input and output files cannot both be <code>-</code> (stdin
+  and stdout), either the input or output files (or both) must be a
+  named file.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation">Installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In addition to AsciiDoc you will need to have installed:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://lilypond.org/web/">LilyPond</a> (most Linux distributions include
+  this package).
+</p>
+</li>
+<li>
+<p>
+<a href="http://www.imagemagick.org">ImageMagick</a> (most Linux distributions
+  include this package).
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Test the music filter it by converting the test file to HTML with AsciiDoc:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ asciidoc -v ./filters/music/music-filter-test.txt
+$ firefox ./filters/music/music-filter-test.html &amp;</code></pre>
+</div></div>
+<div class="paragraph"><p>The filter was developed and tested on Xubuntu Linux using LilyPond
+2.10.5 and ImageMagick 6.2.4.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">The filter does not work with LilyPond 2.2.6 because it did not
+generate the requested output file name correctly (2.6.3 does not have
+a problem).</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:53 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

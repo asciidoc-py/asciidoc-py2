@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>LaTeXMathML Formulae</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+<script type="text/javascript" src="./LaTeXMathML.js"></script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="latexmathml.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>LaTeXMathML Formulae</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><a href="http://www.maths.nottingham.ac.uk/personal/drw/lm.html">LaTeXMathML</a>
+capability has been added to AsciiDoc for users who are more familar
+with or prefer LaTeX math formulas to the
+<a href="http://asciidoc.org/asciimathml.html">ASCIIMathML</a>
+notation.</p></div>
+<div class="paragraph"><p><em>LaTeXMathML</em> is a derivative of
+<a href="http://asciidoc.org/asciimathml.html">ASCIIMathML</a>&#8201;&#8212;&#8201;in
+terms of usage the only difference it that you use the <code>latexmath</code>
+attribute instead of the <code>asciimath</code> attribute.</p></div>
+<div class="paragraph"><p><em>LaTeXMathML</em> processes LaTeX math formulas not arbitrary LaTeX (as
+<code>dblatex(1)</code> does). See the
+<a href="http://www.maths.nottingham.ac.uk/personal/drw/lm.html">LaTeXMathML</a>
+website for details.</p></div>
+<div class="paragraph"><p>Here&#8217;s the <a href="latexmathml.txt">AsciiDoc source</a> that generated this
+page.</p></div>
+<div class="paragraph"><p>Some example <em>LaTeXMathML</em> formulas:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+$R_x = 10.0 \times \sin(R_\phi)$
+</p>
+</li>
+<li>
+<p>
+$\sum_{n=1}^\infty \frac{1}{2^n}$
+</p>
+</li>
+<li>
+<p>
+$\lim_{x\to\infty} f(x) = k \choose r + \frac ab
+  \sum_{n=1}^\infty a_n + \displaystyle{ \left\{ \frac{1}{13}
+  \sum_{n=1}^\infty b_n \right\} }$
+</p>
+</li>
+<li>
+<p>
+$\$\alpha + \$\beta = \$(\alpha + \beta)$
+</p>
+</li>
+<li>
+<p>
+$\begin{eqnarray} x &amp; = &amp; \frac{-7 \pm
+  \sqrt{49 - 24}}{6} \\ &amp; = &amp; -2 \textrm{ or } -\frac13.
+  \end{eqnarray}$
+</p>
+</li>
+<li>
+<p>
+$\displaystyle{ V_i = C_0 - C_3
+  \frac{C_1\cos(\theta_i+C_3)}{C_4+C_1\cos(\theta_i+C_2)} }$
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:52 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

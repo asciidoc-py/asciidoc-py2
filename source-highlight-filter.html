@@ -1,0 +1,425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Source Code Highlight Filter</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="source-highlight-filter.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>Source Code Highlight Filter</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>The AsciiDoc distribution includes a <em>source</em> filter for highlighting
+code syntax.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_docbook_outputs">DocBook Outputs</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc encloses the source code in a DocBook <em>programlisting</em>
+element and leaves source code highlighting to the DocBook toolchain
+(dblatex has a particularly nice programlisting highlighter). The
+DocBook programlisting element is assigned two attributes:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+The <em>language</em> attribute is set to the AsciiDoc <em>language</em>
+  attribute.
+</p>
+</li>
+<li>
+<p>
+The <em>linenumbering</em> attribute is set to the AsciiDoc <em>src_numbered</em>
+  attribute (<em>numbered</em> or <em>unnumbered</em>).
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_html_outputs">HTML Outputs</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You have the choice of three HTML source code highlighters, your
+selection is determined by the <em>source-highlighter</em> attribute (defaults
+to <em>source-highlight</em>):</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">Set the <em>source-highlighter</em> attribute from the <code>asciidoc(1)</code>
+command-line or in the document header (not in the document body,
+because the configuration file conditional macros are processed at
+load time).</td>
+</tr></table>
+</div>
+<div class="sect2">
+<h3 id="_gnu_source_highlight">GNU Source Highlight</h3>
+<div class="paragraph"><p>The default highlighter is the
+<a href="http://www.gnu.org/software/src-highlite/">GNU source-highlight</a> which
+can highlight <em>html4</em>, <em>html5</em> and <em>xhtml11</em> outputs.  The GNU
+source-highlight must be installed and the <em>source-highlight</em> command
+must reside in the shell search <em>PATH</em>.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_highlight">Highlight</h3>
+<div class="paragraph"><p>You can use
+<a href="http://www.andre-simon.de/doku/highlight/en/highlight.html">Highlight</a>
+syntax highlighter for <em>xhtml11</em>, <em>html5</em> and <em>html4</em> outputs (set the
+<em>source-highlighter</em> attribute to <em>highlighter</em>).</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The <em>highlight</em> command must reside in the shell search <em>PATH</em>.
+</p>
+</li>
+<li>
+<p>
+To make Highlighter your default highlighter put the following line
+  your <code>~/.asciidoc/asciidoc.conf</code> file:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>source-highlighter=highlight</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+The AsciiDoc <em>encoding</em> attribute is passed to Highlighter using the
+  <code>--encoding</code> command-line option.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_pygments">Pygments</h3>
+<div class="paragraph"><p>The <a href="http://pygments.org/">Pygments</a> syntax highlighter can be used for
+<em>xhtml11</em> and <em>html5</em> outputs (set the <em>source-highlighter</em> attribute
+to <em>pygments</em>).</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The <em>pygmentize</em> command must reside in the shell search <em>PATH</em>.
+</p>
+</li>
+<li>
+<p>
+You can customize Pygments CSS styles by editing
+  <code>./stylesheets/pygments.css</code>. The <code>pygments.css</code> CSS file was
+  generated with:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>from pygments.formatters import HtmlFormatter
+print HtmlFormatter().get_style_defs('.highlight')</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+To make Pygments your default highlighter put the following line
+  your <code>~/.asciidoc/asciidoc.conf</code> file:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>source-highlighter=pygments</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+The AsciiDoc <em>encoding</em> attribute is passed to Pygments using the
+  <code>-O</code> command-line option.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_block_attributes">Block attributes</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The following attributes can be included in source code block
+attribute lists.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<em>style</em> and <em>language</em> are mandatory.
+</p>
+</li>
+<li>
+<p>
+<em>style</em>, <em>language</em> and <em>src_numbered</em> are the first three
+  positional attributes in that order.
+</p>
+</li>
+<li>
+<p>
+The <em>args</em> attribute allows the inclusion of arbitrary (highlighter
+  dependent) command options.
+</p>
+</li>
+</ul></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+style
+</dt>
+<dd>
+<p>
+  Set to <em>source</em>.
+</p>
+</dd>
+<dt class="hdlist1">
+language
+</dt>
+<dd>
+<p>
+  The source code language name.
+</p>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">The language names vary between highlighters&#8201;&#8212;&#8201;consult the
+selected highlighter manual.</td>
+</tr></table>
+</div>
+</dd>
+<dt class="hdlist1">
+src_numbered
+</dt>
+<dd>
+<p>
+  Set to <em>numbered</em> to include line numbers.
+</p>
+</dd>
+<dt class="hdlist1">
+src_tab
+</dt>
+<dd>
+<p>
+  Set tab size (GNU source-highlight only).
+</p>
+</dd>
+<dt class="hdlist1">
+args
+</dt>
+<dd>
+<p>
+  Include this attribute value in the highlighter command-line (HTML
+  outputs) or in the <code>programlisting</code> element (DocBook).
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing">Testing</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Test the filter by converting the test file to HTML with AsciiDoc:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ asciidoc -v ./filters/source/source-highlight-filter-test.txt
+$ firefox ./filters/source/source-highlight-filter-test.html &amp;</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples">Examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_source_code_paragraphs">Source code paragraphs</h3>
+<div class="paragraph"><p>The <code>source</code> paragraph style will highlight a paragraph of source
+code. These three code paragraphs:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[source,python]
+if n &lt; 0: print 'Hello World!'
+
+:language: python
+
+[source]
+if n &lt; 0: print 'Hello World!'
+
+[source,ruby,numbered]
+[true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
+    puts "#{a.inspect} =&gt; #{b.inspect}"</code></pre>
+</div></div>
+<div class="paragraph"><p>Render this highlighted source code:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code></code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code></code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code></code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_unnumbered_source_code_listing">Unnumbered source code listing</h3>
+<div class="paragraph"><p>This source-highlight filtered block:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> [source,python]
+ ---------------------------------------------------------------------
+ ''' A multi-line
+     comment.'''
+ def sub_word(mo):
+     ''' Single line comment.'''
+     word = mo.group('word')   # Inline comment
+     if word in keywords[language]:
+         return quote + word + quote
+     else:
+         return word
+ ---------------------------------------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>Renders this highlighted source code:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code></code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_numbered_source_code_listing_with_callouts">Numbered source code listing with callouts</h3>
+<div class="paragraph"><p>This source-highlight filtered block:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code> [source,ruby,numbered]
+ ---------------------------------------------------------------------
+ #
+ # Useful Ruby base class extensions.
+ #
+
+ class Array
+
+   # Execute a block passing it corresponding items in
+   # +self+ and +other_array+.
+   # If self has less items than other_array it is repeated.
+
+   def cycle(other_array)  # :yields: item, other_item
+     other_array.each_with_index do |item, index|
+       yield(self[index % self.length], item)
+     end
+   end
+
+ end
+
+ if $0 == __FILE__                                 # &lt;1&gt;
+   # Array#cycle test
+   # true =&gt; 0
+   # false =&gt; 1
+   # true =&gt; 2
+   # false =&gt; 3
+   # true =&gt; 4
+   puts 'Array#cycle test'                         # &lt;2&gt;
+   [true, false].cycle([0, 1, 2, 3, 4]) do |a, b|
+     puts "#{a.inspect} =&gt; #{b.inspect}"
+   end
+ end
+ ---------------------------------------------------------------------
+
+ &lt;1&gt; First callout.
+ &lt;2&gt; Second callout.</code></pre>
+</div></div>
+<div class="paragraph"><p>Renders this highlighted source code:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code></code></pre>
+</div></div>
+<div class="colist arabic"><table>
+<tr><td><img src="./images/icons/callouts/1.png" alt="1" /></td><td>
+First callout.
+</td></tr>
+<tr><td><img src="./images/icons/callouts/2.png" alt="2" /></td><td>
+Second callout.
+</td></tr>
+</table></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/tip.png" alt="Tip" />
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+If the source <em>language</em> attribute has been set (using an
+  <em>AttributeEntry</em> or from the command-line) you don&#8217;t have to specify
+  it in each source code block.
+</p>
+</li>
+<li>
+<p>
+You should place callout markers inside source code comments to
+  ensure they are not misinterpreted and mangled by the highlighter.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:55 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

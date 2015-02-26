@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>AsciiDoc API</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(1);
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="asciidocapi.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>AsciiDoc API</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><em>asciidocapi</em>&#8201;&#8212;&#8201;a Python API module for <em>AsciiDoc</em>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <em>asciidocapi</em> module implements a Python API for AsciiDoc. It
+allows you to set <code>asciidoc(1)</code> program options, compile an AsciiDoc
+source file and then interrogate the results.  The <code>asciidocapi.py</code>
+module file contains the <code>AsciiDocAPI</code> wrapper class for
+<code>asciidoc.py</code>.</p></div>
+<div class="ulist"><div class="title">Benefits</div><ul>
+<li>
+<p>
+Stable API Shields the user from the undocumented and possibly
+  volatile <code>asciidoc.py</code> internals.
+</p>
+</li>
+<li>
+<p>
+Easier to use and more flexible than the alternative of running
+  <code>asciidoc(1)</code> as a separate process.
+</p>
+</li>
+<li>
+<p>
+Executes inside your application (better performance than running
+  separate <code>asciidoc(1)</code> command processes).
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_asciidocapi">Using asciidocapi</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>To use the API just drop the <code>asciidocapi.py</code> file into your
+application directory, import it and use the <code>AsciiDocAPI</code> class.  The
+only requirement is that a compatible version of <em>AsciiDoc</em> is already
+installed&#8201;&#8212;&#8201;simple, no setuptools to run, no Eggs to install, no
+non-standard library dependencies.</p></div>
+<div class="paragraph"><p>You can find <code>asciidocapi.py</code> in the AsciiDoc
+<a href="http://asciidoc.org/INSTALL.html#X1">distribution
+archives</a> (version 8.4.1 or better).</p></div>
+<div class="paragraph"><p>Once you have <code>asciidocapi.py</code> Verify everything is working by running
+the module doctests:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>python asciidocapi.py</code></pre>
+</div></div>
+<div class="paragraph"><p>If there are no messages then all is well.</p></div>
+<div class="paragraph"><p>The following minimal example compiles <code>mydoc.txt</code> to <code>mydoc.html</code>:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code></code></pre>
+</div></div>
+<div class="paragraph"><p>The next interactive example uses file-like objects for input and output:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ python
+Python 2.5.2 (r252:60911, Jul 31 2008, 17:28:52)
+[GCC 4.2.3 (Ubuntu 4.2.3-2ubuntu7)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; from asciidocapi import AsciiDocAPI
+&gt;&gt;&gt; import StringIO
+&gt;&gt;&gt; infile = StringIO.StringIO('Hello *{author}*')
+&gt;&gt;&gt; outfile = StringIO.StringIO()
+&gt;&gt;&gt; asciidoc = AsciiDocAPI()
+&gt;&gt;&gt; asciidoc.options('--no-header-footer')
+&gt;&gt;&gt; asciidoc.attributes['author'] = 'Joe Bloggs'
+&gt;&gt;&gt; asciidoc.execute(infile, outfile, backend='html4')
+&gt;&gt;&gt; print outfile.getvalue()
+&lt;p&gt;Hello &lt;strong&gt;Joe Bloggs&lt;/strong&gt;&lt;/p&gt;
+
+&gt;&gt;&gt;</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementation_rationale">Implementation Rationale</h2>
+<div class="sectionbody">
+<div class="paragraph"><div class="title">Leverage existing knowledge</div><p>The API maps directly onto the <code>asciidoc(1)</code> command&#8201;&#8212;&#8201;this is
+deliberate&#8201;&#8212;&#8201;if you know the <code>asciidoc(1)</code> command learning the API
+will be trivial. A nice side effect of this goal is that API and
+command-line modes share the same code&#8201;&#8212;&#8201;virtually no <code>asciidoc(1)</code>
+code is specific to API usage.</p></div>
+<div class="paragraph"><div class="title">Simplicity</div><p>Implemented with a single Python module file (<code>asciidocapi.py</code>)
+containing the <em>AsciiDocAPI</em> API class. <em>AsciiDocAPI</em>  contains just
+one method plus a few attributes for processing options and result
+messages.  No external setup tools and no non-standard library
+dependencies are used or required.</p></div>
+<div class="paragraph"><div class="title">Loose coupling</div><p>The dependency between <code>asciidocapi.py</code> and <code>asciidoc.py</code> is minimal&#8201;&#8212;&#8201;the current <code>asciidocapi.py</code> module uses only two attributes and
+one function from the <code>asciidoc.py</code> module.</p></div>
+<div class="olist arabic"><div class="title">Why isn&#8217;t the API baked right into the asciidoc.py command script?</div><ol class="arabic">
+<li>
+<p>
+You can&#8217;t just drop <code>asciidoc.py</code> into your application because it
+   requires all the related config files and filters&#8201;&#8212;&#8201;complex and
+   unnecessary since all this was already done when you installed
+   AsciiDoc.
+</p>
+</li>
+<li>
+<p>
+This scheme separates the API from the AsciiDoc application&#8201;&#8212;&#8201;the
+   API implementation can be extended or replaced independently of
+   AsciiDoc.
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_api_reference">API reference</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="X2">Class <code>AsciiDocAPI(object)</code></h3>
+<div class="paragraph"><p>This is the <em>AsciiDoc</em> API class.</p></div>
+<div class="sect3">
+<h4 id="_instance_attributes">Instance attributes</h4>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>asciidoc</code>
+</dt>
+<dd>
+<p>
+The imported <code>asciidoc.py</code> module.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>attributes</code>
+</dt>
+<dd>
+<p>
+A dictionary of AsciiDoc attribute values passed to AsciiDoc.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Setting an attribute value to <code>None</code> (<code>name: None</code>) will undefine
+  (delete) the attribute (this in addition to the <code>name!</code> attribute
+  name format that the <code>asciidoc(1)</code> command uses).
+</p>
+</li>
+<li>
+<p>
+To simply define an attribute set the attribute value to a blank
+  string (<code>name: ''</code>)
+</p>
+</li>
+</ul></div>
+</dd>
+<dt class="hdlist1">
+<code>cmd</code>
+</dt>
+<dd>
+<p>
+The file path of the <code>asciidoc.py</code> script. Set by the <code>__init__</code>
+method.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>messages</code>
+</dt>
+<dd>
+<p>
+A chronologically ordered list of message strings generated during
+AsciiDoc execution (last message at the end of the list).
+</p>
+</dd>
+<dt class="hdlist1">
+<code>options</code>
+</dt>
+<dd>
+<p>
+An instance of the <a href="#X1">Options class</a>. Contains a list of command
+options passed to AsciiDoc.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_instance_methods">Instance methods</h4>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>__init__(self, asciidoc_py=None)</code>
+</dt>
+<dd>
+<p>
+Locate and import <code>asciidoc.py</code> module and verify API compatibility.
+Initialize instance attributes. A search for the <code>asciidoc</code> module is
+made in the following order:
+</p>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Use the <code>ASCIIDOC_PY</code> environment variable if it is set.
+</p>
+</li>
+<li>
+<p>
+Use the <code>asciidoc_py</code> argument if it is set.
+</p>
+</li>
+<li>
+<p>
+Search the environment <em>PATH</em> for <code>asciidoc.py</code>, <code>asciidoc.pyc</code> and
+  <code>asciidoc</code> (in that order).
+</p>
+</li>
+<li>
+<p>
+Finally repeat the previous search in the current working directory.
+</p>
+</li>
+</ol></div>
+</dd>
+<dt class="hdlist1">
+<code>execute(self, infile, outfile=None, backend=None)</code>
+</dt>
+<dd>
+<p>
+Compile <code>infile</code> to <code>outfile</code> using <code>backend</code> format.  <code>infile</code> and
+<code>outfile</code> can be file path strings or file-like objects. <code>backend</code> is
+name of <em>AsciiDoc</em> backend (takes same values as <code>asciidoc(1)</code> command
+<code>--backend</code> option). If <code>outfile</code> or <code>backend</code> are <code>None</code> then their
+respective <code>asciidoc(1)</code> defaults are used.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="X1">Class <code>Options(object)</code></h3>
+<div class="paragraph"><p>Stores <code>asciidoc(1)</code> command options. You can use any <code>asciidoc(1)</code>
+options with the exception of the <code>--doctest</code> and <code>--filter</code> options.</p></div>
+<div class="sect3">
+<h4 id="_instance_attributes_2">Instance attributes</h4>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>values</code>
+</dt>
+<dd>
+<p>
+The list of <code>(name,value)</code> command option tuples.
+</p>
+</dd>
+</dl></div>
+</div>
+<div class="sect3">
+<h4 id="_instance_methods_2">Instance methods</h4>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>__call__(self, name, value=None)</code>
+</dt>
+<dd>
+<p>
+A shortcut for the <code>append</code> method. Example:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>opts = Options()
+opts('--verbose')</code></pre>
+</div></div>
+</dd>
+<dt class="hdlist1">
+<code>append(self, name, value=None)</code>
+</dt>
+<dd>
+<p>
+Append <code>(name,value)</code> to the options list. Example:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>opts = Options()
+opts.append('--conf-file', 'blog.conf')</code></pre>
+</div></div>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_class_code_asciidocerror_exception_code">Class <code>AsciiDocError(Exception)</code></h3>
+<div class="paragraph"><p>Thrown by the <a href="#X2">AsciiDocAPI class</a> when an <em>AsciiDoc</em> execution
+error occurs.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:43 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>AsciiDoc New Lists</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="newlists.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>AsciiDoc New Lists</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><strong>New in version 8.3.0</strong></p></div>
+<div class="paragraph"><p>Lists can now be styled like other block elements, this allows the
+normal bulleted and labeled list syntax to be used for <em>glossary</em>,
+<em>qanda</em> (Question and Answer) and <em>bibliography</em> lists instead of
+having to remember a different syntax for each one. In the same vein
+there is only one labeled list syntax, horizontal labeled lists are
+rendered by applying the <em>horizontal</em> style. Examples:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[glossary]
+A glossary term::
+    The corresponding definition.
+A second glossary term::
+    The corresponding definition.
+
+[horizontal]
+Lorem:: Fusce euismod commodo velit.
+Ipsum:: Vivamus fringilla mi eu lacus.</code></pre>
+</div></div>
+<div class="paragraph"><p>The list related stuff in the configuration files has been
+rationalized with separate <em>listtags-*</em> sections (c.f. table
+<em>tabletags-*</em> sections). The old list tags are no longer supported so
+you&#8217;ll need to update your custom configuration file list definitions.</p></div>
+<div class="paragraph"><p>These changes necessitated the following backward incompatibilities:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+You have to explicitly precede horizontal labeled lists with the
+  <code>[horizontal]</code> style attribute&#8201;&#8212;&#8201;if you do nothing the existing
+  horizontal labeled lists will be rendered vertically.
+</p>
+</li>
+<li>
+<p>
+The old <em>compact</em> list style is now implemented as a list option, to
+  update replace <code>[compact]</code> with <code>[options="compact"]</code>. You can now
+  apply the <em>compact</em> option globally by setting the <code>compact-option</code>
+  document attribute.
+</p>
+</li>
+<li>
+<p>
+You&#8217;ll need to update any customized configuration file list
+  definitions that have been made.
+</p>
+</li>
+</ol></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:51:17 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

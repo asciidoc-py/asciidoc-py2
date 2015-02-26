@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>ASCIIMathML Formulae</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+<script type="text/javascript" src="./ASCIIMathML.js"></script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="asciimathml.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>ASCIIMathML Formulae</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p><a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a> is
+a clever JavaScript written by Peter Jipsen that dynamically
+transforms mathematical formulae written in a wiki-like plain text
+markup to <a href="http://www.w3.org/Math/">MathML</a> markup which is displayed as
+standard mathematical notation by the Web Browser.  See <em>Appendix E</em>
+in the AsciiDoc User Guide for more details.</p></div>
+<div class="paragraph"><p>The AsciiDoc <code>xhtml11</code> backend supports ASCIIMathML&#8201;&#8212;&#8201;it links the
+ASCIIMathML script and escapes ASCIIMathML delimiters and special
+characters to yield valid XHTML. To use ASCIIMathML:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Include the <code>-a asciimath</code> command-line option when you run
+   <code>asciidoc(1)</code>.
+</p>
+</li>
+<li>
+<p>
+Enclose ASCIIMathML formulas inside math or double-dollar
+   passthroughs or in math passthrough blocks.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Here&#8217;s the <a href="asciimathml.txt">AsciiDoc source</a> that generated this
+page.</p></div>
+<div class="ulist"><div class="title">NOTE</div><ul>
+<li>
+<p>
+When you use the <code>asciimath:[]</code> inline macro you need to escape <code>]</code>
+  characters in the formulas with a backslash, escaping is unnecessary
+  if you use the double-dollar macro (for examples see the second
+  formula below).
+</p>
+</li>
+<li>
+<p>
+See the
+  <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a>
+  website for ASCIIMathML documentation and the latest version.
+</p>
+</li>
+<li>
+<p>
+If the formulas don&#8217;t appear to be correct you probably need to
+  install the correct math fonts (see the
+  <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html">ASCIIMathML</a>
+  website for details).
+</p>
+</li>
+<li>
+<p>
+See the <a href="latexmathml.html">LaTeXMathML page</a> if you prefer to use
+  LaTeX math formulas.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>A list of example formulas:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+`[[a,b],[c,d]]((n),(k))`
+</p>
+</li>
+<li>
+<p>
+`x/x={(1,if x!=0),(text{undefined},if x=0):}`
+</p>
+</li>
+<li>
+<p>
+`d/dxf(x)=lim_(h-&gt;0)(f(x+h)-f(x))/h`
+</p>
+</li>
+<li>
+<p>
+`sum_(i=1)\^n i=(n(n+1))/2`$ and <strong>bold
+  `int_0\^(pi/2) sinx\ dx=1`</strong>
+</p>
+</li>
+<li>
+<p>
+`(a,b]={x in RR : a &lt; x &lt;= b}`
+</p>
+</li>
+<li>
+<p>
+`x^2+y_1+z_12^34`
+</p>
+</li>
+</ul></div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph"><p>The first three terms factor to give
+`(x+b/(2a))^2=(b^2)/(4a^2)-c/a`.</p></div>
+<div class="paragraph"><p>`x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)`.</p></div>
+<div class="paragraph"><p>Now we take square roots on both sides and get
+`x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)`.
+Finally we move the `b/(2a)` to the right and simplify to
+get the two solutions:
+<strong>`x_(1,2)=(-b+-sqrt(b^2-4ac))/(2a)`</strong>.</p></div>
+</div></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:43 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

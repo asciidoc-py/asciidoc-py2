@@ -1,0 +1,1830 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>AsciiDoc Frequently Asked Questions</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="faq.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>AsciiDoc Frequently Asked Questions</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">New FAQs are appended to the bottom of this document.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_do_you_handle_spaces_in_included_file_names">1. How do you handle spaces in included file names?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Spaces are not allowed in macro targets so this include macro will not
+be processed:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>include::my document.txt[]</code></pre>
+</div></div>
+<div class="paragraph"><p>The work-around is to replace the spaces with the <code>{sp}</code> (space
+character) attribute, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>include::my{sp}document.txt[]</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_do_i_number_all_paragraphs">2. How do I number all paragraphs?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Some documents such as specifications and legalese require all
+paragraphs to be sequentially numbered through the document, and to be
+able to reference these numbers.</p></div>
+<div class="paragraph"><p>This can be achieved by using the DocBook toolchain but numbering the
+paragraphs with AsciiDoc using a custom config file containing the
+following (see <a href="http://asciidoc.org/userguide.html#X27">http://asciidoc.org/userguide.html#X27</a>
+for ways to include such a file):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[paragraph]
+&lt;formalpara{id? id="{id}"}{role? role="{role}"}{id? xreflabel="{paracounter}"}&gt;&lt;title&gt;{title}&lt;/title&gt;&lt;para&gt;
+{title%}&lt;simpara{id? id="{id}"}{role? role="{role}"}{id? xreflabel="{paracounter}"}&gt;
+{paracounter} |
+{title%}&lt;/simpara&gt;
+{title#}&lt;/para&gt;&lt;/formalpara&gt;
+{counter2:paracounter}
+{empty}</code></pre>
+</div></div>
+<div class="paragraph"><p>References to the paragraphs operate in the normal way, you label the
+paragraph:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[[some_label_you_understand]]
+paragraph contents</code></pre>
+</div></div>
+<div class="paragraph"><p>and reference it in the normal manner:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>&lt;&lt;some_label_you_understand&gt;&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>The text of the reference will be the paragraph number.</p></div>
+<div class="paragraph"><p>For this to work for HTML you have to generate it via the DocBook
+toolchain.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sources_of_information_on_configuring_docbook_toolchains">3. Sources of information on configuring DocBook toolchains</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>DocBook is a content and structure markup language, therefore
+AsciiDoc generated DocBook markup is also limited to content and
+structure.  Layout and formatting definition is specific to the
+DocBook toolchain.</p></div>
+<div class="paragraph"><p>The dblatex toolchain can be configured by setting parameters defined
+at <a href="http://dblatex.sourceforge.net/doc/manual/sec-params.html">http://dblatex.sourceforge.net/doc/manual/sec-params.html</a> or for
+more complex styling by custom Latex stylesheets described at
+<a href="http://dblatex.sourceforge.net/doc/manual/sec-custom-latex.html">http://dblatex.sourceforge.net/doc/manual/sec-custom-latex.html</a>.</p></div>
+<div class="paragraph"><p>Similarly FOP can be configured by parameters described at
+<a href="http://sagehill.net/docbookxsl/OptionsPart.html">http://sagehill.net/docbookxsl/OptionsPart.html</a> and with custom xsl
+stylesheets generating formatting objects as described at
+<a href="http://sagehill.net/docbookxsl/CustomizingPart.html">http://sagehill.net/docbookxsl/CustomizingPart.html</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X5">4. How can I include embedded fonts in an EPUB document?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This is a two step process:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Declare the font files and their use in your document&#8217;s CSS
+   stylesheet. For example:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>@font-face {
+  font-family : LiberationSerif-Regular;
+  font-weight : normal;
+  font-style: normal;
+  src : url(LiberationSerif-Regular.ttf);
+}
+
+body {
+  font-family: LiberationSerif-Regular, serif;
+}</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Declare the font file as resource when you use <code>a2x(1)</code> to
+   compile the EPUB. For example:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -f epub -d book --epubcheck --stylesheet epubtest.css --resource .ttf=application/x-font-ttf --resource LiberationSerif-Regular.ttf epubtest.txt</code></pre>
+</div></div>
+</li>
+</ol></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+Requires AsciiDoc 8.6.5 or better.
+</p>
+</li>
+<li>
+<p>
+The True Type Font mimetype had to be declared explicitly with the
+  <code>--resource .ttf=application/x-font-ttf</code> option because it wasn&#8217;t
+  registered on my Linux system.
+</p>
+</li>
+<li>
+<p>
+In the above example the font file is in the same directory as the
+  AsciiDoc source file and is installed to the same relative location
+  in the EPUB archive OEBPS directory&#8201;&#8212;&#8201;if your font file resides in
+  a different location you&#8217;ll need to adjust the <code>--resource</code> option
+  accordingly (see the <em>RESOURCES</em> section in the <code>a2x(1)</code> man page
+  for details).
+</p>
+</li>
+<li>
+<p>
+The URL value of the CSS <em>src</em> property is set to the destination
+  font file relative to the CSS file.
+</p>
+</li>
+<li>
+<p>
+The <code>--resource</code> option allows you to inject any file (not just font
+  files) into the EPUB output document.
+</p>
+</li>
+<li>
+<p>
+Using the CSS <em>@font-face</em> rule is a complex subject and is outside
+  the scope of this FAQ.
+</p>
+</li>
+<li>
+<p>
+Many EPUB readers do not process embedded fonts.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_8217_s_the_difference_between_quoted_text_and_quoted_monospaced_text">5. What&#8217;s the difference between + quoted text and ` quoted monospaced text?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code>+</code> (plus) quoted text is implemented as an AsciiDoc <em>quotes</em> whereas
+<code>`</code> (grave accent or backtick) quoted text is implemented as an
+AsciiDoc <em>inline literal</em> passthrough macro. The semantics are
+different:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Inline passthrough macros are processed before any other inline
+   substitutions e.g. all of the following line will be processed as a
+   single inline passthrough and rendered as monospaced text (which is
+   not the intended result):
+</p>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><code>`single quoted text' and `monospaced quoted text`</code></pre>
+</div></div>
+<div class="paragraph"><p>This line works as expected:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>`single quoted text' and +monospaced quoted text+</code></pre>
+</div></div>
+</div></div>
+</li>
+<li>
+<p>
+Backtick quoted text is rendered literally i.e. no substitutions
+   are performed on the enclosed text.  Here are some examples that
+   would have to be escaped if plus quoting were used (<a href="#X4">see    also</a>):
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>The `++i` and `++j` auto-increments.
+Paths `~/.vim` and `~/docs`.
+The `__init__` method.
+The `{id}` attribute.</code></pre>
+</div></div>
+</li>
+</ol></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_is_the_generated_html_title_element_text_invalid">6. Why is the generated HTML title element text invalid?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Probably because your document title contains formatting that has
+generated HTML title markup. You can resolve this by explicitly
+defining the <em>title</em> attribute in your document&#8217;s header.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_asciidoc_sometimes_generates_invalid_output_markup_why">7. AsciiDoc sometimes generates invalid output markup, why?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc is backend agnostic, the <em>asciidoc</em> command has no knowledge
+of the syntax or structure of the backend format that it generates.
+Output document validation (syntactic and structural) should be
+performed separately by external validation tools. For example,
+AsciiDoc&#8217;s <em>a2x</em> toolchain command automatically performs validation
+checks using <em>xmllint</em>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_asciidoc_toclevels_attribute_does_not_work_with_docbook_outputs_why">8. The AsciiDoc toclevels attribute does not work with DocBook outputs, why?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>DocBook has no provision for specifying table of contents levels but
+you can set the TOC level further down the toolchain by passing the
+DocBook XSL Stylesheets
+<a href="http://docbook.sourceforge.net/release/xsl/current/doc/html/toc.section.depth.html">toc.section.depth</a>
+parameter to <em>dblatex</em> (using the <code>--param</code> option) or <em>xsltproc</em>
+(using the <code>--stringparam</code> option).  For example to show only chapter
+titles in the TOC of a <em>book</em> document set <em>toc.section.depth</em> to <em>0</em>.
+Increment the <em>toc.section.depth</em> value to show more sub-section
+titles. If you are using <em>a2x</em> you can set the options in the source
+file, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>// a2x: --xsltproc-opts "--stringparam toc.section.depth 0"
+// a2x: --dblatex-opts "--param toc.section.depth=0"</code></pre>
+</div></div>
+<div class="paragraph"><p>If the document is of type <em>article</em> use the value <em>1</em> to show only
+top level section titles in the TOC, use the value <em>2</em> for two levels
+etc.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_include_chapter_and_section_tables_of_contents">9. How can I include chapter and section tables of contents?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>DocBook outputs processed by DocBook XSL Stylesheets (either manually
+or via <em>a2x</em>) can generate additional separate section and chapter
+tables of contents using combinations of the
+<a href="http://www.sagehill.net/docbookxsl/TOCcontrol.html">TOC parameters</a>.
+Here are some examples using combinations of the
+<code>generate.section.toc.level</code> and <code>toc.section.depth</code> DocBook XSL
+Stylesheets parameters:</p></div>
+<div class="tableblock">
+<table rules="all"
+width="90%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<col width="16%" />
+<col width="16%" />
+<col width="66%" />
+<thead>
+<tr>
+<th align="left" valign="top">generate.section.toc.level </th>
+<th align="left" valign="top">toc.section.depth </th>
+<th align="left" valign="top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><div class="literal"><pre><code>1 </code></pre></div></td>
+<td align="left" valign="top"><div class="literal"><pre><code></code></pre></div></td>
+<td align="left" valign="top"><p class="table">Single level book chapter TOCs or article section TOCs</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><div class="literal"><pre><code>1 </code></pre></div></td>
+<td align="left" valign="top"><div class="literal"><pre><code> 3</code></pre></div></td>
+<td align="left" valign="top"><p class="table">Article section TOCs with two levels</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><div class="literal"><pre><code>1 </code></pre></div></td>
+<td align="left" valign="top"><div class="literal"><pre><code> 2</code></pre></div></td>
+<td align="left" valign="top"><p class="table">Book chapter TOCs with two levels</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_customize_the_appearance_of_xhtml_and_epub_documents_generated_by_a2x">10. How can I customize the appearance of XHTML and EPUB documents generated by a2x?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can customize the appearance of an EPUB document with CSS.  See
+the <a href="publishing-ebooks-with-asciidoc.html">Sherlock Holmes eBook
+example</a> on the AsciiDoc website.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_docbook_has_many_elements_for_document_meta_data_8201_8212_8201_how_can_i_use_them_from_asciidoc">11. DocBook has many elements for document meta-data&#8201;&#8212;&#8201;how can I use them from AsciiDoc?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <em>docinfo</em>, <em>docinfo1</em> and <em>docinfo2</em> attributes allow you include
+<a href="userguide.html#X97">document information files</a> containing DocBook
+XML into the header of the output file.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_do_element_titles_automatically_generate_link_captions">12. Do element titles automatically generate link captions?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you go the DocBook route then yes&#8201;&#8212;&#8201;just omit the caption from the
+AsciiDoc <em>xref</em> (<code>&lt;&lt;...&gt;&gt;</code>) macro. Both dblatex and DocBook XSL will
+use the target element&#8217;s title text. Examples:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[[X1]]
+Section One
+-----------
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
+ultrices justo porttitor augue. Vestibulum pretium. Donec porta
+
+See also &lt;&lt;X3&gt;&gt; (this link displays the text 'A titled paragraph').
+
+[id="X2",reftext="2nd section"]
+Section Two
+-----------
+See also &lt;&lt;X1&gt;&gt; (this link displays the text 'Section One').
+
+[[X3]]
+.A titled paragraph
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+
+See also &lt;&lt;X2&gt;&gt; (this link displays the text '2nd section').</code></pre>
+</div></div>
+<div class="paragraph"><p>The AsciiDoc <em>reftext</em> attribute has been used to explicitly set the
+link text to <em>2nd section</em> for <em>Section Two</em>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_can_i_define_my_own_table_styles">13. Can I define my own table styles?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In addition to the built-in styles you can define your own. This
+(simplified) example for HTML backends defines a table style called
+<em>red</em> which sets the background cell color to red. First put the
+definition in a configuration file:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[tabledef-default]
+red-style=tags="red"
+
+[tabletags-red]
+bodydata=&lt;td style="background-color:red;"&gt;|&lt;/td&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>Now you can use the style name to style cells or columns (in this
+example we use an unambiguous shortened abbreviation <em>r</em>):</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>|==================================
+|Normal cell      r|Red cell
+|==================================</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_add_highlighted_editorial_comments_to_an_asciidoc_document">14. How can I add highlighted editorial comments to an AsciiDoc document?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Both block and inline <a href="userguide.html#X25">comment lines</a> are
+displayed on the output if the <em>showcomments</em> attribute is defined.
+Example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:showcomments:
+// A block comment line.
+
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+// An inline comment line.
+adolescens.</code></pre>
+</div></div>
+<div class="paragraph"><p>Is rendered as:</p></div>
+<p><span class="comment"> A block comment line.</span></p>
+<div class="paragraph"><p>Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+<br /><span class="comment"> An inline comment line.</span><br />
+adolescens.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content"><a href="userguide.html#X26">Comment blocks</a> are never displayed.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_is_the_preferred_file_name_extension_for_asciidoc_files">15. What is the preferred file name extension for AsciiDoc files?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <code>.txt</code> <a href="http://en.wikipedia.org/wiki/Text_file">text file</a> extension
+is preferred, but it&#8217;s just a convention and it&#8217;s not enforced by the
+software.</p></div>
+<div class="paragraph"><p>AsciiDoc source files are human readable
+<a href="http://en.wikipedia.org/wiki/Plain_text">plain text</a> files which is
+what the <code>.txt</code> extension is for. All text editors recognize and open
+files with a <code>.txt</code> extension. The <code>.txt</code> extension is universally
+recognized and unambiguous&#8201;&#8212;&#8201;you are not left asking questions like
+&#8220;What on earth is this file with the funny extension?&#8221;, &#8220;How do I
+open it?&#8221; and &#8220;Is it safe to open?&#8221;.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_generate_numbered_bibliographic_entries">16. How can I generate numbered bibliographic entries?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If your outputs are DocBook generated then adding the following inline
+macro to a custom configuration file will result in auto-incrementing
+bibliography entry numbers (instead of displaying the bibliographic
+identifiers):</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>[anchor3-inlinemacro]
+&lt;anchor id="{1}" xreflabel="[{counter:bibliography1}]"/&gt;[{counter:bibliography2}]</code></pre>
+</div></div>
+<div class="paragraph"><p>This FAQ submitted by Bela Hausmann.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_include_lines_of_dashes_inside_a_listing_block">17. How can I include lines of dashes inside a listing block?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A line of four or more dashes will be mistaken for the ListingBlock
+terminator, one way round this problem is to use a LiteralBlock styled
+as a listing block. For example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>[listing]
+...........................
+Lorum ipsum
+-----------
+...........................</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_customize_pdf_files_generated_by_dblatex">18. How can I customize PDF files generated by dblatex?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are a number of dblatex XSL parameters that can be used to
+customize PDF output. You can set them globally in the AsciiDoc
+<code>./dblatex/asciidoc-dblatex.xsl</code> configuration file or you can also
+pass them on the <code>a2x(1)</code> command-line. Here are some examples:</p></div>
+<div class="paragraph"><p>The
+<a href="http://dblatex.sourceforge.net/doc/manual/latex.output.revhistory.html">latex.output.revhistory</a>
+parameter is used to suppress the revision history:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -f pdf --dblatex-opts "-P latex.output.revhistory=0" doc/article.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>The
+<a href="http://dblatex.sourceforge.net/doc/manual/doc.layout.html">doc.layout</a>
+parameter is used to include the cover page and document body (i.e. excludes
+table of contents and index), the
+<a href="http://dblatex.sourceforge.net/doc/manual/doc.publisher.show.html">doc.publisher.show</a>
+parameter is used to exclude the cover page logo:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -f pdf --dblatex-opts " -P doc.layout=\"coverpage mainmatter\" -P doc.publisher.show=0" doc/article.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>See also the
+<a href="http://dblatex.sourceforge.net/doc/manual/sec-params.html">dblatex XSL
+parameter reference</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_add_lists_of_figures_and_tables_to_pdfs_created_by_dblatex">19. How can I add lists of figures and tables to PDFs created by dblatex?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Set the
+<a href="http://dblatex.sourceforge.net/doc/sec-custom.html">doc.lot.show XSL
+parameter</a>&#8201;&#8212;&#8201;you can set it using the dblatex <code>--param</code> command-line
+option, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x --dblatex-opts="--param=doc.lot.show=figure,table" doc/article.txt</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_stop_the_document_title_being_displayed">20. How can I stop the document title being displayed?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You could simply omit the document title, but this will result in a
+blank <em>title</em> element in HTML outputs. If you want the HTML <em>title</em>
+element to contain the document title then define the <em>notitle</em>
+attribute (this will just suppress displaying the title), for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>My document title
+=================
+:no title:</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_am_i_having_trouble_getting_nested_macros_to_work">21. Why am I having trouble getting nested macros to work?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The following example expands the <em>image</em> inline macro, but the
+expansion contains double-quote characters which confuses the ensuing
+<em>footnoteref</em> macro expansion:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>footnoteref:["F1","A footnote, with an image image:smallnew.png[]"]</code></pre>
+</div></div>
+<div class="paragraph"><p>The solution is to use unquoted attribute values, replacing embedded
+commas with the comma character entity (<code>&amp;#44;</code>):</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>footnoteref:[F1,A footnote&amp;#44; with an image image:smallnew.png[]]</code></pre>
+</div></div>
+<div class="paragraph"><p>Similarly, you can embed double-quote characters in unquoted attribute
+values using the <code>&amp;#34;</code> character entity.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_am_i_getting_docbook_validation_errors">22. Why am I getting DocBook validation errors?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Not all valid AsciiDoc source generates valid DocBook, for example
+<em>special sections</em> (abstract, preface, colophon, dedication,
+bibliography, glossary, appendix, index, synopsis) have different
+DocBook schema&#8217;s to normal document sections. For example, a paragraph
+is illegal in a bibliography.</p></div>
+<div class="paragraph"><p>Don&#8217;t forget if your document is a book you need to specify the
+asciidoc <code>-d book</code> command option, if you don&#8217;t an article DocBook
+document will be generated, possibly containing book specific
+sections, resulting in validation errors.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_disable_special_section_titles">23. How can I disable special section titles?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>For example, you want to use <em>References</em> as a normal section name but
+AsciiDoc is auto-magically generating a DocBook <em>bibliography</em>
+section. All you need to do is explicitly specify the section template
+name, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>[sect1]
+References
+----------</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_insert_xml_processing_instructions_into_output_documents">24. How can I insert XML processing instructions into output documents?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Use an inline or block passthrough macros. This example inserts
+<code>&lt;?dblatex bgcolor="#cceeff"?&gt;</code> into the DocBook output generated by
+AsciiDoc:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>pass::[&lt;?dblatex bgcolor="#cceeff"?&gt;]</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">XML processing instructions are specific to the application that
+processes the XML (the previous <code>dblatex</code> processing instruction is
+recognized by <code>dblatex(1)</code> when it processes the DocBook XML generated
+by Asciidoc).</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X4">25. How do I prevent double-quoted text being mistaken for an inline literal?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Mixing doubled-quoted text with inline literal passthroughs can
+produce undesired results, for example, all of the following line is
+interpreted as an inline literal passthrough:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>``XXX'' `YYY`</code></pre>
+</div></div>
+<div class="paragraph"><p>In this case the solution is to use monospace quoting instead of the
+inline literal:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>``XXX'' +YYY+</code></pre>
+</div></div>
+<div class="paragraph"><p>Use the <code>pass:[]</code> macro if it&#8217;s necessary to suppress
+substitutions in the monospaced text, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>``XXX'' +pass:[don't `quote` me]+</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_generate_a_single_html_document_file_containing_images_and_css_styles">26. How can I generate a single HTML document file containing images and CSS styles?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>With the advent of Internet Explorer 8 all major web browsers now
+support the
+<a href="http://en.wikipedia.org/wiki/Data:_URI_scheme">data URI scheme</a> for
+embedded images. The AsciiDoc <em>xhtml11</em> and <em>html5</em> backends supports
+the data URI scheme for embedded images and by default it embeds the
+CSS stylesheet. For example the following command will generate a
+single <code>article.html</code> file containing embedded images, admonition
+icons and the CSS stylesheet:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>asciidoc -a data-uri -a icons article.txt</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_are_there_any_tools_to_help_me_understand_what_8217_s_going_on_inside_asciidoc">27. Are there any tools to help me understand what&#8217;s going on inside AsciiDoc?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc has a built-in trace mechanism which is controlled by the
+<em>trace</em> attribute; there is also the <code>--verbose</code> command-line option.
+These features are detailed in
+<a href="http://asciidoc.org/userguide.html#X82">Appendix G of the
+User Guide</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_one_liner_ifdef_s_are_disproportionately_verbose_can_they_shortened">28. One-liner ifdef::[]'s are disproportionately verbose can they shortened?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This is the response to a question posted on the AsciiDoc discussion
+list, it illustrates a number of useful techniques. The question arose
+because the source highlight filter language identifier for the C++
+language is <code>c++</code> when generating PDFs via dblatex (LaTeX listings
+package) or <code>cpp</code> when generating HTML (GNU source-highlight).</p></div>
+<div class="paragraph"><p>Using straight <code>ifdef::[]</code> block macros we have:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>ifdef::basebackend-docbook[]
+[source,c++]
+endif::basebackend-docbook[]
+ifdef::basebackend-html[]
+[source,cpp]
+endif::basebackend-html[]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>This can be shortened using the short form of the <code>ifdef::[]</code> macro:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>ifdef::basebackend-docbook[[source,c++]]
+ifdef::basebackend-html[[source,cpp]]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>Using a conditional attribute instead of the <code>ifdef::[]</code> macro is even
+shorter:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[source,{basebackend@docbook:c++:cpp}]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>If you have a number of listings it makes sense to factor the
+conditional attribute to a normal attribute:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:cpp: {basebackend@docbook:c++:cpp}
+
+[source,{cpp}]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>Even shorter, set the default source highlight filter <code>language</code>
+attribute so you don&#8217;t have to specify it every time:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:language: {basebackend@docbook:c++:cpp}
+
+[source]
+-----------------------------------------
+class FooParser {
+public:
+        virtual void startDocument() = 0;
+        virtual void endDocument() = 0;
+};
+-----------------------------------------</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_some_of_my_inline_passthroughs_are_not_passed_through_why">29. Some of my inline passthroughs are not passed through, why?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Most likely the passthrough encloses another passthrough with a higher
+precedence. For example trying to render this <code>pass:[]</code> with this
+<code>`pass:[]`</code> results in a blank string because the <code>pass:[]</code>
+passthrough evaluates first, instead use monospaced quoting  and escape
+the passthrough i.e. <code> +\pass:[]+ </code></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_place_an_anchor_link_target_on_a_list_item">30. How can I place an anchor (link target) on a list item?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can&#8217;t use a <em>BlockId</em> block element inside a list but you can use
+the syntactically identical <em>anchor</em> inline macro. For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>one:: Item one.
+[[X2]]two:: Item two.
+three:: Item three.</code></pre>
+</div></div>
+<div class="paragraph"><p>This <strong>will not</strong> work:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>one:: Item one.
+[[X2]]
+two:: Item two.
+three:: Item three.</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_stop_lists_from_nesting">31. How can I stop lists from nesting?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If you place two lists with different syntax hard up against each
+other then the second list will be nested in the first. If you don&#8217;t
+want the second list to be nested separate them with a comment line
+block macro. For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>1. List 1.
+2. List 1.
+
+//
+a. List 2.
+b. List 2.</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_is_it_possible_to_include_charts_in_asciidoc_documents">32. Is it possible to include charts in AsciiDoc documents?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are a number of programs available that generate presentation
+charts from textual specification, for example
+<a href="http://home.gna.org/pychart/">Pychart</a> is a library for writing chart
+scripts in Python. Here&#8217;s an example from the <em>Pychart</em> documentation:</p></div>
+<div class="listingblock">
+<div class="title">barchart.py</div>
+<div class="content">
+<pre><code>#
+# Example bar chart (from Pychart documentation http://home.gna.org/pychart/).
+#
+from pychart import *
+theme.get_options()
+
+data = [(10, 20, 30, 5), (20, 65, 33, 5), (30, 55, 30, 5), (40, 45, 51, 7),
+        (50, 25, 27, 3), (60, 75, 30, 5), (70, 80, 42, 5), (80, 62, 32, 5),
+        (90, 42, 39, 5), (100, 32, 39, 4)]
+
+# The attribute y_coord=... tells that the Y axis values
+# should be taken from samples.
+# In this example, Y values will be [40,50,60,70,80].
+ar = area.T(y_coord = category_coord.T(data[3:8], 0),
+            x_grid_style=line_style.gray50_dash1,
+            x_grid_interval=20, x_range = (0,100),
+            x_axis=axis.X(label="X label"),
+            y_axis=axis.Y(label="Y label"),
+            bg_style = fill_style.gray90,
+            border_line_style = line_style.default,
+            legend = legend.T(loc=(80,10)))
+
+# Below call sets the default attributes for all bar plots.
+chart_object.set_defaults(bar_plot.T, direction="horizontal", data=data)
+
+# Attribute cluster=(0,3) tells that you are going to draw three bar
+# plots side by side.  The plot labeled "foo" will the leftmost (i.e.,
+# 0th out of 3).  Attribute hcol tells the column from which to
+# retrive sample values from.  It defaults to one.
+ar.add_plot(bar_plot.T(label="foo", cluster=(0,3)))
+ar.add_plot(bar_plot.T(label="bar", hcol=2, cluster=(1,3)))
+ar.add_plot(bar_plot.T(label="baz", hcol=3, cluster=(2,3)))
+ar.draw()</code></pre>
+</div></div>
+<div class="paragraph"><p>To execute the script and include the generated chart image in your
+document add the following lines to the AsciiDoc source:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>// Generate chart image file.
+sys2::[python "{indir}/barchart.py" --format=png --output="{outdir}/barchart.png" --scale=2]
+
+// Display chart image file.
+image::barchart.png[]</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+The <code>barchart.py</code> script is located in the same directory as the
+  AsciiDoc source file (<code>{indir}</code>).
+</p>
+</li>
+<li>
+<p>
+The generated chart image file (<code>barchart.png</code>) is written to the
+  same directory as the output file (<code>{outdir}</code>).
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_render_indented_paragraphs">33. How can I render indented paragraphs?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Styling is backend dependent:</p></div>
+<h4 id="_create_an_indented_paragraph_style_xhtml11_and_html5_backends" class="float">Create an indented paragraph style (xhtml11 and html5 backends)</h4>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Define an <em>indented</em> paragraph style, for example, by putting this
+  in a custom configuration file:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>[paradef-default]
+indented-style=template="indentedparagraph"
+
+[indentedparagraph]
+&lt;div class="paragraph"{id? id="{id}"} style="text-indent:3em;"&gt;{title?&lt;div class="title"&gt;{title}&lt;/div&gt;}&lt;p&gt;
+|
+&lt;/p&gt;&lt;/div&gt;</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Now apply the <em>indented</em> style to normal paragraphs, for example:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>[indented]
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
+ultrices justo porttitor augue. Vestibulum pretium. Donec porta
+vestibulum mi. Aliquam pede. Aenean lobortis lorem et lacus. Sed
+lacinia. Vivamus at lectus.</code></pre>
+</div></div>
+</li>
+</ol></div>
+<h4 id="_use_the_role_attribute_xhtml11_and_html5_backends" class="float">Use the role attribute (xhtml11 and html5 backends)</h4>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Add the following line to custom stylesheet:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>div.paragraph.indented p {text-indent: 3em;}</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Apply the <em>role</em> attribute to indented paragraphs, for example:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>[role="indented"]
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
+ultrices justo porttitor augue. Vestibulum pretium. Donec porta
+vestibulum mi. Aliquam pede. Aenean lobortis lorem et lacus. Sed
+lacinia. Vivamus at lectus.</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Include the custom stylesheet by setting the <em>stylesheet</em> attribute
+  (either from the command-line or with an attribute entry in the
+  document header).
+</p>
+</li>
+</ol></div>
+<h4 id="_use_the_role_attribute_docbook_backend" class="float">Use the role attribute (docbook backend)</h4>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Add the following line to the distributed <code>docbook-xsl.css</code>
+  stylesheet or include it in a custom stylesheet:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>p.indented {text-indent: 3em;}</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Apply the <em>role</em> attribute to indented paragraphs, for example:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>[role="indented"]
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas
+ultrices justo porttitor augue. Vestibulum pretium. Donec porta
+vestibulum mi. Aliquam pede. Aenean lobortis lorem et lacus. Sed
+lacinia. Vivamus at lectus.</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+If you have included the custom CSS in a separate stylesheet you
+  will need to specify the stylesheet file name (along with the
+  default <code>docbook-xsl.css</code> stylesheet file name) with the
+  <code>html.stylesheet</code> XSL parameter. If you are using <em><code>a2x(1)</code></em> use the
+  <code>--stylesheet</code> option (it sets the <code>html.stylesheet</code> XSL parameter),
+  for example: <code>--stylesheet "docbook-xsl.css mycss.css"</code>.
+</p>
+</li>
+</ol></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">This applies to HTML outputs not PDF. To achieve the same
+results with PDF outputs you will need to customize the DocBook XSL
+Stylesheets to render indented paragraphs from DocBook <code>simpara</code>
+elements containing the the <code>role="indented"</code> attribute.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_is_there_a_way_to_set_default_table_grid_and_frame_attributes">34. Is there a way to set default table grid and frame attributes?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can set the <em>grid</em> and <em>frame</em> attributes globally in your
+document header with Attribute Entries or from the command-line using
+the <code>--attribute</code> option. In the following example tables that don&#8217;t
+explicitly set the <em>grid</em> and <em>frame</em> values will default to <em>all</em> and
+<em>topbot</em> respectively:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:grid: all
+:frame: topbot</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/tip.png" alt="Tip" />
+</td>
+<td class="content">This technique can be applied to any block element attribute
+(just beware of possible ambiguity, for example, table and image
+blocks both have a <em>width</em> attribute).</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_place_a_backslash_character_in_front_of_an_attribute_reference_without_escaping_the_reference">35. How can I place a backslash character in front of an attribute reference without escaping the reference?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Use the predefined <code>{backslash}</code> attribute reference instead of an
+actual backslash, for example if the <code>{projectname}</code> attribute has
+the value <code>foobar</code> then:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>d:\data{backslash}{projectname}</code></pre>
+</div></div>
+<div class="paragraph"><p>would be rendered as:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>d:\data\foobar</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_escape_asciidoc_markup">36. How can I escape AsciiDoc markup?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Most AsciiDoc inline elements can be suppressed by preceding them with
+a backslash character. These elements include:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Attribute references.
+</p>
+</li>
+<li>
+<p>
+Text formatting.
+</p>
+</li>
+<li>
+<p>
+Quoting,
+</p>
+</li>
+<li>
+<p>
+Macros.
+</p>
+</li>
+<li>
+<p>
+Replacements.
+</p>
+</li>
+<li>
+<p>
+Special words.
+</p>
+</li>
+<li>
+<p>
+Table cell separators.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>But there are exceptions&#8201;&#8212;&#8201;see the next question.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_some_elements_can_8217_t_be_escaped_with_a_single_backslash">37. Some elements can&#8217;t be escaped with a single backslash</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are a number of  exceptions to the usual single backslash rule&#8201;&#8212;&#8201;mostly relating to URL macros that  have two syntaxes or quoting
+ambiguity.  Here are some non-standard escape examples:</p></div>
+<div class="tableblock">
+<table rules="all"
+width="40%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">AsciiDoc </th>
+<th align="left" valign="top"> Renders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><div class="literal"><pre><code>\joe.bloggs@example.com
+&lt;\joe.bloggs@example.com&gt;
+\mailto:[\joe.bloggs@example.com]</code></pre></div></td>
+<td align="left" valign="top"><div class="verse">joe.bloggs@example.com
+&lt;joe.bloggs@example.com&gt;
+mailto:[joe.bloggs@example.com]</div></td>
+</tr>
+<tr>
+<td align="left" valign="top"><div class="literal"><pre><code>\http://www.example.com
+\\http://www.example.com[]
+\\http://www.example.com[Foobar Limited]</code></pre></div></td>
+<td align="left" valign="top"><div class="verse">http://www.example.com
+http://www.example.com[]
+http://www.example.com[Foobar Limited]</div></td>
+</tr>
+<tr>
+<td align="left" valign="top"><div class="literal"><pre><code>A C\++ Library for C++
+\\``double-quotes''
+\*\*F**ile Open\...</code></pre></div></td>
+<td align="left" valign="top"><div class="verse">A C++ Library for C++
+``double-quotes''
+**F**ile Open...</div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>The source of this problem is ambiguity across substitution types&#8201;&#8212;&#8201;the first match unescapes allowing the second to substitute. A
+work-around for difficult cases is to side-step the problem using the
+<code>pass:[]</code> passthrough inline macro.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">Escaping is unnecessary inside <em>inline literal passthroughs</em>
+(backtick quoted text).</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_escape_a_list">38. How can I escape a list?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Here&#8217;s how to handle situations where the first line of a paragraph is
+mistaken for a list item.</p></div>
+<h4 id="_numbered_and_bulleted_lists" class="float">Numbered and bulleted lists</h4>
+<div class="paragraph"><p>Precede the bullet or index of the first list item with an <code>{empty}</code>
+attribute, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>{empty}- Qui in magna commodo est labitur dolorum an.  Est ne magna
+primis adolescens.</code></pre>
+</div></div>
+<div class="paragraph"><p>The predefined <code>{empty}</code> attribute is replaced by an empty string and
+ensures the first line is not mistaken for a bulleted list item.</p></div>
+<h4 id="_labeled_lists" class="float">Labeled lists</h4>
+<div class="paragraph"><p>Two colons or semicolons in a paragraph may be confused with a labeled
+list entry. Use the predefined <code>{two-colons}</code> and <code>{two-semicolons}</code>
+attributes to suppress this behavior, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>Qui in magna commodo{two-colons} est labitur dolorum an. Est ne
+magna primis adolescens.</code></pre>
+</div></div>
+<div class="paragraph"><p>Will be rendered as:</p></div>
+<div class="paragraph"><p>Qui in magna commodo:: est labitur dolorum an. Est ne
+magna primis adolescens.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_set_default_list_and_tables_styles">39. How can I set default list and tables styles?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can set the element&#8217;s <em>style</em> entry in a global or custom
+configuration file.</p></div>
+<div class="paragraph"><p>This example this will horizontally style all labeled lists that don&#8217;t
+have an explicit style attribute:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[listdef-labeled]
+style=horizontal
+
+[listdef-labeled2]
+style=horizontal</code></pre>
+</div></div>
+<div class="paragraph"><p>This example will put a top and bottom border on all tables that don&#8217;t
+already have an explicit style attribute:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[tabledef-default]
+style=topbot
+topbot-style=frame="topbot"</code></pre>
+</div></div>
+<div class="paragraph"><p>Alternatively you can set the configuration entries from inside your
+document, the above examples are equivalent to:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:listdef-labeled.style: horizontal
+:listdef-labeled2.style: horizontal
+
+:tabledef-default.topbot-style: frame="topbot"
+:tabledef-default.style: topbot</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_do_i_get_a_filter_non_zero_exit_code_error">40. Why do I get a filter non-zero exit code error?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>An error was returned when AsciiDoc tried to execute an external
+filter command. The most common reason for this is that the filter
+command could not be found by the command shell. To figure out what
+the problem is run AsciiDoc with the <code>--verbose</code> option to determine
+the command that is failing and then try to run the command manually
+from the command-line.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_are_there_any_docbook_viewers">41. Are there any DocBook viewers?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><a href="http://live.gnome.org/Yelp">Yelp</a>, the GNOME help viewer, does a
+creditable job of displaying DocBook XML files directly.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_can_you_create_odf_and_pdf_files_using_libreoffice">42. Can you create ODF and PDF files using LibreOffice?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><a href="https://www.libreoffice.org/">LibreOffice</a> can convert HTML produced by
+AsciiDoc to ODF text format and PDF format (I used LibreOffice 3.5 at
+the time of writing, the fidelity is very good but it&#8217;s not perfect):</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Create the HTML file using AsciiDoc, for example:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>asciidoc -a icons -a numbered -a disable-javascript article.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>JavaScript is disabled because LibreOffice does not execute
+JavaScript, this means that AsciiDoc table of contents and footnotes
+will not be rendered into ODF (if you want the table of contents and
+footnotes you could manually cut and paste them from a Web browser).</p></div>
+</li>
+<li>
+<p>
+Convert the HTML file to an ODF text file using LibreOffice:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>lowriter --invisible --convert-to odt article.html</code></pre>
+</div></div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph"><p>The images imported from an HTML file will be linked, if your document
+contains images you should convert them to embedded images:</p></div>
+<div class="olist lowerroman"><ol class="lowerroman">
+<li>
+<p>
+Open the document in LibreOffice Writer.
+</p>
+</li>
+<li>
+<p>
+Run the <em>Edit&#8594;Links&#8230;</em> menu command.
+</p>
+</li>
+<li>
+<p>
+Select all links and press the <em>Break Link</em> button.
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Some images may also have been resized. To restore an image to its
+original size:</p></div>
+<div class="olist lowerroman"><ol class="lowerroman">
+<li>
+<p>
+Right-click on the image and select the <em>Picture&#8230;</em> menu item.
+</p>
+</li>
+<li>
+<p>
+Click on the <em>Crop</em> tab.
+</p>
+</li>
+<li>
+<p>
+Press the <em>Original Size</em> button.
+</p>
+</li>
+</ol></div>
+</div></div>
+</li>
+<li>
+<p>
+Convert the ODF file to an PDF text file using LibreOffice:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>lowriter --invisible --convert-to pdf article.odt</code></pre>
+</div></div>
+<div class="paragraph"><p>A PDF index is automatically created using the section headings.</p></div>
+</li>
+</ol></div>
+<div class="paragraph"><p>Alternatively you could manually copy-and-paste the entire document
+from a Web browser into a blank ODF document in LibreOffice&#8201;&#8212;&#8201;this
+technique will bring through the table of contents and footnotes.</p></div>
+<div class="paragraph"><p>This tip was originally contributed by Bernard Amade.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_suppress_cell_separators_in_included_table_data_files">43. How can I suppress cell separators in included table data files?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Use the <code>{include:}</code> system attribute instead of the <code>include::[]</code>
+macro (the former is not expanded until after the table data has been
+parsed into cells, whereas the latter is included before the table is
+processed.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_preserve_paragraph_line_boundaries">44. How can I preserve paragraph line boundaries?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Apply the The <em>verse</em> paragraph style, the rendered text preserves
+line boundaries and is useful for lyrics and poems.  For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[verse]
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.</code></pre>
+</div></div>
+<div class="paragraph"><p>Alternatively, if you are generating PDF files, you can use line
+breaks. For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>Consul *necessitatibus* per id, +
+consetetur, eu pro everti postulant +
+homero verear ea mea, qui.</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_include_non_breaking_space_characters">45. How can I include non-breaking space characters?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Use the non-breaking space character entity reference <code>&amp;#160;</code> (see
+the next question). You could also use the predefined <code>{nbsp}</code>
+attribute reference.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_can_i_include_html_and_xml_character_entity_references_in_my_document">46. Can I include HTML and XML character entity references in my document?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Yes, just enter the reference in your document. For example <code>&amp;#946;</code>
+will print a Greek small beta character &#946;</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X1">47. How do I include spaces in URLs?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>URL inline macro targets (addresses) cannot contain white space
+characters. If you need spaces encode them as <code>%20</code>. For example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>image:large%20image.png[]
+http://www.foo.bar.com/an%20example%20document.html</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_get_asciidoc_to_assign_the_correct_docbook_language_attribute">48. How can I get AsciiDoc to assign the correct DocBook language attribute?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Set the AsciiDoc <em>lang</em> attribute to the appropriate language code.
+For example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -a lang=es doc/article.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>This will ensure that downstream DocBook processing will generate the
+correct language specific document headings (things like table of
+contents, revision history, figure and table captions, admonition
+captions).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_turn_off_table_and_image_title_numbering">49. How can I turn off table and image title numbering?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>For HTML outputs set the <em>caption</em> attribute to an empty string,
+either globally:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:caption:</code></pre>
+</div></div>
+<div class="paragraph"><p>or on an element by element basis, for example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>.Tiger
+[caption=""]
+image::images/tiger.png[]</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_assign_multiple_author_names">50. How can I assign multiple author names?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A quick way to do this is put both authors in a single first name, for
+example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>My Document
+===========
+:Author: Bill_and_Ben_the_Flowerpot_Men
+:Author Initials: BB &amp; BC</code></pre>
+</div></div>
+<div class="paragraph"><p><code>asciidoc(1)</code> replaces the underscores with spaces.</p></div>
+<div class="paragraph"><p>If you are generating DocBook then a  more flexible approach is to
+create a <em>docinfo</em> file containing a DocBook <em>authorgroup</em> element
+(search the <em>User Guide</em> for <em>docinfo</em> for more details).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_selectively_disable_a_quoted_text_substitution">51. How can I selectively disable a quoted text substitution?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Omitting the tag name will disable quoting. For example, if you don&#8217;t
+want superscripts or subscripts then put the following in a custom
+configuration file or edit the global <code>asciidoc.conf</code> configuration
+file:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[quotes]
+^=
+~=</code></pre>
+</div></div>
+<div class="paragraph"><p>Alternatively you can set the configuration entries from within your
+document, the above examples are equivalent to:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:quotes.^:
+:quotes.~:</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_customize_the_localdate_format">52. How can I customize the {localdate} format?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The default format for the <code>{localdate}</code> attribute is the ISO 8601
+<code>yyyy-mm-dd</code> format. You can change this format by explicitly setting
+the <code>{localdate}</code> attribute. For example by setting it using the
+<code>asciidoc(1)</code> <code>-a</code> command-line option:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>asciidoc -a localdate=`date +%d-%m-%Y` mydoc.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>You could also set it by adding an Attribute Entry to your source
+document, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>:localdate: {sys: date +%Y-%m-%d}</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_where_can_i_find_examples_of_commands_used_to_build_output_documents">53. Where can I find examples of commands used to build output documents?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The User Guide has some. You could also look at <code>./doc/main.aap</code> and
+<code>./examples/website/main.aap</code> in the AsciiDoc distribution, they have
+all the commands used to build the AsciiDoc documentation and the
+AsciiDoc website (even if you don&#8217;t use A-A-P you&#8217;ll still find it
+useful).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_have_you_used_the_docbook_lt_simpara_gt_element_instead_of_lt_para_gt">54. Why have you used the DocBook &lt;simpara&gt; element instead of &lt;para&gt;?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code>&lt;simpara&gt;</code> is really the same as <code>&lt;para&gt;</code> except it can&#8217;t contain
+block elements&#8201;&#8212;&#8201;this matches, more closely, the AsciiDoc paragraph
+semantics.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_format_text_inside_a_listing_block">55. How can I format text inside a listing block?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>By default only <em>specialcharacters</em> and <em>callouts</em> are substituted in
+listing blocks; you can add quotes substitutions by explicitly setting
+the block <em>subs</em> attribute, for example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>[subs="quotes"]
+------------------------------------------
+$ ls *-al*
+------------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>The <code>-al</code> will rendered bold. Note that:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+You would need to explicitly escape text you didn&#8217;t want quoted.
+</p>
+</li>
+<li>
+<p>
+Don&#8217;t do this in source code listing blocks because it modifies the
+  source code which confuses the syntax highlighter.
+</p>
+</li>
+<li>
+<p>
+This only works if your DocBook processor recognizes DocBook
+  <code>&lt;emphasis&gt;</code> elements inside <code>&lt;screen&gt;</code> elements.
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Alternative, if the lines are contiguous, you could use the <em>literal</em>
+paragraph style:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>["literal",subs="quotes"]
+$ ls *-al*</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_doesn_8217_t_the_include1_macro_work">56. Why doesn&#8217;t the include1::[] macro work?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Internally the <code>include1</code> macro is translated to the <code>include1</code> system
+attribute which means it must be evaluated in a region where attribute
+substitution is enabled. <code>include1</code> won&#8217;t work, for example, in a
+ListingBlock (unless attribute substitution is enabled).  <code>include1</code>
+is intended for use in configuration files, use the <code>include</code> macro
+and set the attribute <code>depth=1</code> instead, for example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>------------------------------------------------
+include::blogpost_media_processing.txt[depth=1]
+------------------------------------------------</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_make_the_mailto_macro_work_with_multiple_email_addresses">57. How can I make the mailto macro work with multiple email addresses?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>For the AsciiDoc <em>mailto</em> macro to work with multiple email addresses
+(as per RFC2368) you need to URL encode the <em>@</em> characters (replace
+them with <em>%40</em>), if you don&#8217;t the individual addresses will be
+rendered as separate links. You also need to <a href="#X1">replace spaces with <em>%20</em></a>.</p></div>
+<div class="paragraph"><p>For example, the following call won&#8217;t work:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>mailto:jb@example.com,jd@example.com?subject=New foofoo release[New foofoo release]</code></pre>
+</div></div>
+<div class="paragraph"><p>Use this instead:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>mailto:jb%40example.com,jd%40example.com?subject=New%20foofoo%20release[New foofoo release]</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_a_replacement_have_a_trailing_backslash">58. How can a replacement have a trailing backslash?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Quote the entry name&#8201;&#8212;&#8201;this nonsensical example replaces <code>x\</code> with
+<code>y</code>:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>"x\\"=y</code></pre>
+</div></div>
+<div class="paragraph"><p>If quoting were omitted the equals character (separating the
+entry name <code>x</code> from the value <code>y</code>) would be escaped.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_control_page_breaks_when_printing_html_outputs">59. How can I control page breaks when printing HTML outputs?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Here are some techniques you can use to control page breaks in HTML
+outputs produced by the <em>xhtml11</em> and <em>html5</em> backends:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+You can generate a page break with the <em>&lt;&lt;&lt;</em> block macro. The
+  following example prints the <em>Rats and Mice</em> section on a new page:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>&lt;&lt;&lt;
+== Rats and Mice
+Lorum ipsum ...</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+You can use the <em>unbreakable</em> option to instruct the browser not to
+  break a block element. The following image and it&#8217;s caption will be
+  kept together the printed page:
+</p>
+<div class="listingblock">
+<div class="content">
+<pre><code>[options="unbreakable"]
+.Tiger block image
+image::images/tiger.png[Tiger image]</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+You can apply the <em>unbreakable</em> option globally to all block
+  elements by defining the <em>unbreakable-option</em> attribute in your
+  document header.
+</p>
+</li>
+<li>
+<p>
+Finally, the most powerful technique is to create custom CSS
+  containing paged media properties. For example this <code>asciidoc(1)</code>
+  command:
+</p>
+<div class="openblock">
+<div class="content">
+<div class="literalblock">
+<div class="content">
+<pre><code>asciidoc --attribute stylesheet=article.css article.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>Will include the following <code>article.css</code> file in the output document:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>div#toc, div.sect1 { page-break-before: always; }</code></pre>
+</div></div>
+<div class="paragraph"><p>Which will ensure the table of contents and all top level sections
+start on a new printed page.</p></div>
+</div></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_is_it_possible_to_reposition_the_table_of_contents_in_html_outputs">60. Is it possible to reposition the Table of Contents in HTML outputs?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>By default the <em>xhtml11</em> and <em>html5</em> backends auto-position the TOC
+after the header. You can manually position the TOC by setting the
+<em>toc-placement</em> attribute value to <em>manual</em> and then inserting the
+<code>toc::[]</code> block macro where you want the TOC to appear. For example,
+put this in the document header:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>:toc:
+:toc-placement: manual</code></pre>
+</div></div>
+<div class="paragraph"><p>The put this where you want the TOC to appear:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>toc::[]</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_html_generated_by_asciidoc_fills_the_width_of_the_browser_how_can_i_limit_it_to_a_more_readable_book_width">61. HTML generated by AsciiDoc fills the width of the browser, how can I limit it to a more readable book width?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can set the maximum with for outputs generated by <em>html5</em>,
+<em>xhtml11</em> and <em>slidy</em> backends by assigning the
+<a href="userguide.html#X103">max-width</a> attribute (either from the
+command-line or with an attribute entry in the document header). For
+example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>asciidoc -a max-width=55em article.txt</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_using_roles_to_select_fonts_for_pdf">62. Using roles to select fonts for PDF</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Some applications require mixing fonts beyond the set of faces
+normally provided by default (normal, monospace, italic etc.) for
+example mixed language text where the font used for the majority of
+text does not contain suitable glyphs in the minority language.</p></div>
+<div class="paragraph"><p>As AsciiDoc can not provide presentation markup since it is not
+provided by Docbook this is achieved by marking text which should use
+a different font with a custom role which can be rendered by the the
+docbook toolchain.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">For XHTML outputs AsciiDoc translates the role attribute to a
+class which can be selected and styled by CSS as described in the
+AsciiDoc users guide.</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>The Docbook toolchains will have to be configured to render the text
+that you mark with the custom role.</p></div>
+<div class="paragraph"><p>For FOP a small XSL wrapper is needed, say a file called <code>my_fo.xsl</code>
+containing:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>&lt;xsl:stylesheet version="1.0"
+               xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+               xmlns:fo="http://www.w3.org/1999/XSL/Format"&gt;
+ &lt;xsl:import href="/etc/asciidoc/docbook-xsl/fo.xsl"/&gt;
+ &lt;xsl:template match="phrase[@role='f2']"&gt;
+   &lt;fo:inline font-family="the font for f2"&gt;
+     &lt;xsl:apply-templates/&gt;
+   &lt;/fo:inline&gt;
+ &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>This is used with <code>a2x</code> by:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -f pdf --fop --xsl-file=my_fo.xsl input.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>and the AsciiDoc source marked by:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>normal text [f2]#special font is like this# and back to normal</code></pre>
+</div></div>
+<div class="paragraph"><p>Thanks to Antonio Borneo for this answer.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_place_a_footnote_immediately_following_quoted_text">63. How can I place a footnote immediately following quoted text?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>A closing quote is not recognised if it is immediately followed by a
+letter (the <em>f</em> in <em>footnote</em> in the following example):</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>``Double-quoted text''footnote:[Lorum ipsum...]</code></pre>
+</div></div>
+<div class="paragraph"><p>A workaround is to put a word-joiner between the trailing quote
+and the footnote (the <code>{empty}</code> attribute would also work), for
+example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>``Double-quoted text''{wj}footnote:[Lorum ipsum...]</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_convert_documents_from_other_formats_to_asciidoc">64. How can I convert documents from other formats to AsciiDoc?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can use <a href="http://johnmacfarlane.net/pandoc/">Pandoc</a> to convert
+documents in <a href="http://daringfireball.net/projects/markdown/">markdown</a>,
+<a href="http://docutils.sourceforge.net/docs/ref/rst/introduction.html">reStructuredText</a>,
+<a href="http://redcloth.org/textile">textile</a>,
+<a href="http://www.w3.org/TR/html40/">HTML</a>, <a href="http://www.docbook.org/">DocBook</a>,
+or <a href="http://www.latex-project.org/">LaTeX</a> to AsciiDoc.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_can_i_insert_raw_html_in_a_document_processed_by_a2x">65. How can I insert raw HTML in a document processed by a2x?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code>a2x</code> generates HTML via DocBook (DocBook XSL Stylesheets) so if you
+use a passthrough block it must contain DocBook (not HTML).
+Fortunately DocBook XSL Stylesheets has a
+<a href="http://www.sagehill.net/docbookxsl/InsertExtHtml.html">dbhtml-include
+processing instruction</a> which will inlcude a file containing raw HTML
+into the generated HTML output. For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>++++
+&lt;?dbhtml-include href="snippet.html"?&gt;
+++++</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_why_is_there_a_period_after_the_block_title_in_the_pdf_output">66. Why is there a period after the block title in the PDF output?</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>If your document has blocks that have block titles, you may notice in
+the PDF output (generated by <code>a2x(1)</code> using the <code>--fop</code> flag) that a
+period gets added to the end of the block title.</p></div>
+<div class="paragraph"><p>You will not see the period in the intermediary DocBook XML that’s
+generated when creating a PDF&#8201;&#8212;&#8201;it’s added by the DocBook XSL
+templates when the DocBook XML is converted to FO XML.</p></div>
+<div class="paragraph"><p>The DocBook XSL attribute that controls what character is added after
+a block title is
+<a href="http://docbook.sourceforge.net/release/xsl/1.78.1/doc/html/runinhead.default.title.end.punct.html">
+runinhead.default.title.end.punct</a>.  You can override it and eliminate
+the default period value by adding the following line to the
+<code>./docbook-xsl/common.xsl</code> file that ships with AsciiDoc:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>&lt;xsl:param name="runinhead.default.title.end.punct"/&gt;</code></pre>
+</div></div>
+<div class="paragraph"><p>This FAQ was
+<a href="https://groups.google.com/group/asciidoc/browse_thread/thread/19dda8807fa7c3f2">contributed
+by Dan Allen</a>.</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:48 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

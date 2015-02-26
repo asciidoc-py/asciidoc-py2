@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>AsciiDoc Plugins</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="plugins.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>AsciiDoc Plugins</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>A list of backend, filter and theme <a href="userguide.html#X101">AsciiDoc
+plugins</a>.</p></div>
+<div class="paragraph"><p>If you have implemented a plugin and it&#8217;s not in the list please post
+a message to the <a href="http://groups.google.com/group/asciidoc">asciidoc
+discussion list</a> and I&#8217;ll add it.</p></div>
+<div class="tableblock" id="X1">
+<table rules="all"
+width="100%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 1. Backend Plugins</caption>
+<col width="12%" />
+<col width="12%" />
+<col width="37%" />
+<col width="37%" />
+<thead>
+<tr>
+<th align="left" valign="top">Backend name </th>
+<th align="left" valign="top">Author </th>
+<th align="left" valign="top">Home page </th>
+<th align="left" valign="top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><em>9man</em></p></td>
+<td align="left" valign="top"><p class="table">Alex Efros</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://powerman.name/asciidoc/">http://powerman.name/asciidoc/</a></p></td>
+<td align="left" valign="top"><p class="table">A backend plugin to generate man pages (troff) compatible with OS
+Inferno and Plan9.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>blogger</em></p></td>
+<td align="left" valign="top"><p class="table">Stuart Rackham</p></td>
+<td align="left" valign="top"><p class="table"><a href="https://github.com/srackham/asciidoc-blogger-backend">https://github.com/srackham/asciidoc-blogger-backend</a></p></td>
+<td align="left" valign="top"><p class="table">Generates Blogger friendly HTML from AsciiDoc source.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>deckjs</em></p></td>
+<td align="left" valign="top"><p class="table">Qingping Hou</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://houqp.github.com/asciidoc-deckjs/">http://houqp.github.com/asciidoc-deckjs/</a></p></td>
+<td align="left" valign="top"><p class="table">A <em>deck.js</em> backend for AsciiDoc.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>fossil</em></p></td>
+<td align="left" valign="top"><p class="table">Stuart Rackham</p></td>
+<td align="left" valign="top"><p class="table"><a href="https://github.com/srackham/asciidoc-fossil-backend">https://github.com/srackham/asciidoc-fossil-backend</a></p></td>
+<td align="left" valign="top"><p class="table">Generates Fossil friendly Wiki markup from AsciiDoc source.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>ODF</em></p></td>
+<td align="left" valign="top"><p class="table">Dag Wieers</p></td>
+<td align="left" valign="top"><p class="table"><a href="https://github.com/dagwieers/asciidoc-odf">https://github.com/dagwieers/asciidoc-odf</a></p></td>
+<td align="left" valign="top"><p class="table">Backends for generating LibreOffice/OpenOffice Writer (<code>.fodt</code>) files
+and LibreOffice/OpenOffice Impress (<code>.fodp</code>) files.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>slidy2</em></p></td>
+<td align="left" valign="top"><p class="table">Jean-Michel Inglebert</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://code.google.com/p/asciidoc-slidy2-backend-plugin/">http://code.google.com/p/asciidoc-slidy2-backend-plugin/</a></p></td>
+<td align="left" valign="top"><p class="table">Enhanced slidy backend.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>wordpress</em></p></td>
+<td align="left" valign="top"><p class="table">Stuart Rackham</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://srackham.wordpress.com/blogpost-readme/">http://srackham.wordpress.com/blogpost-readme/</a></p></td>
+<td align="left" valign="top"><p class="table">Generates WordPress friendly markup and is part of the
+<a href="http://srackham.wordpress.com/blogpost-readme/">blogpost</a> project.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="X2">
+<table rules="all"
+width="100%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 2. Filter Plugins</caption>
+<col width="12%" />
+<col width="12%" />
+<col width="37%" />
+<col width="37%" />
+<thead>
+<tr>
+<th align="left" valign="top">Filter name </th>
+<th align="left" valign="top">Author </th>
+<th align="left" valign="top">Home page </th>
+<th align="left" valign="top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><em>aafigure</em></p></td>
+<td align="left" valign="top"><p class="table">Henrik Maier</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://code.google.com/p/asciidoc-aafigure-filter/">http://code.google.com/p/asciidoc-aafigure-filter/</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="https://launchpad.net/aafigure">Aafigure</a> ASCII line art filter.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>diag</em></p></td>
+<td align="left" valign="top"><p class="table">Michael Haberler</p></td>
+<td align="left" valign="top"><p class="table"><a href="https://code.google.com/p/asciidoc-diag-filter/">https://code.google.com/p/asciidoc-diag-filter/</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://blockdiag.com/">blockdiag</a> diagrams filter.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>ditaa</em></p></td>
+<td align="left" valign="top"><p class="table">Henrik Maier</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://code.google.com/p/asciidoc-ditaa-filter/">http://code.google.com/p/asciidoc-ditaa-filter/</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://ditaa.sourceforge.net">ditaa</a> ASCII line art filter.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>graphviz-cmap</em></p></td>
+<td align="left" valign="top"><p class="table">Alex Efros</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://powerman.name/asciidoc/">http://powerman.name/asciidoc/</a></p></td>
+<td align="left" valign="top"><p class="table">A variant of the built-in graphviz filter, which adds support for
+client-side imagemaps.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>matplotlib</em></p></td>
+<td align="left" valign="top"><p class="table">Leonid Volnitsky</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://volnitsky.com/project/mplw/">http://volnitsky.com/project/mplw/</a></p></td>
+<td align="left" valign="top"><p class="table">Using this filter you can generate charts from inline matplotlib scripts.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>mscgen</em></p></td>
+<td align="left" valign="top"><p class="table">Henrik Maier</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://code.google.com/p/asciidoc-mscgen-filter/">http://code.google.com/p/asciidoc-mscgen-filter/</a></p></td>
+<td align="left" valign="top"><p class="table">Message sequence chart filter.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table"><em>qrcode</em></p></td>
+<td align="left" valign="top"><p class="table">Jean-Marc Temmos</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://code.google.com/p/asciidoc-qrencode-filter/">http://code.google.com/p/asciidoc-qrencode-filter/</a></p></td>
+<td align="left" valign="top"><p class="table">This filter generates
+<a href="http://fukuchi.org/works/qrencode/manual/index.html">QRencode</a> images.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tableblock" id="X3">
+<table rules="all"
+width="100%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 3. Theme Plugins</caption>
+<col width="12%" />
+<col width="12%" />
+<col width="37%" />
+<col width="37%" />
+<thead>
+<tr>
+<th align="left" valign="top">Theme name </th>
+<th align="left" valign="top">Author </th>
+<th align="left" valign="top">Home page </th>
+<th align="left" valign="top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><em>compact</em></p></td>
+<td align="left" valign="top"><p class="table">Alex Efros</p></td>
+<td align="left" valign="top"><p class="table"><a href="http://powerman.name/asciidoc/">http://powerman.name/asciidoc/</a></p></td>
+<td align="left" valign="top"><p class="table">Similar to default theme but more compact.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:51:19 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

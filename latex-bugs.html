@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Bugs in asciidoc latex backend</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="latex-bugs.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>Bugs in asciidoc latex backend</h1>
+<span id="author">Geoff Eddy</span><br />
+<span id="revision">version 8.6.9,</span>
+9 November 2013
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Benjamin Klum was unable to maintain the LaTeX backend beyond version
+8.2.7, and as a consequence the <code>latex.conf</code> file ceased to work with
+<code>asciidoc</code> sometime after this. For version 8.4.3 I made some changes
+to the file to get it working again. This document summarises the
+remaining issues which I have found with generating LaTeX and thence
+PDF output with <code>asciidoc</code>, which is done as follows:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<code>asciidoc --backend=latex --unsafe FILE.txt</code>
+</p>
+</li>
+<li>
+<p>
+<code>latex FILE.tex</code>
+</p>
+</li>
+<li>
+<p>
+<code>kpdf FILE.pdf</code>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>Many of these were found by processing the <code>asciidoc.txt</code> file and
+comparing the HTML output with the PDF.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_footnotes">Footnotes</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Priority
+</dt>
+<dd>
+<p>
+Low.
+</p>
+</dd>
+<dt class="hdlist1">
+Problem
+</dt>
+<dd>
+<p>
+References to footnotes, and a sensible value for the
+<code>[footnoteref-inlinemacro]</code> section, don&#8217;t seem to be possible.
+</p>
+</dd>
+<dt class="hdlist1">
+Cause
+</dt>
+<dd>
+<p>
+LaTeX doesn&#8217;t support footnoting much beyond creating a
+footnote at a certain point in text and displaying the footnote
+itself.
+</p>
+</dd>
+<dt class="hdlist1">
+Solution
+</dt>
+<dd>
+<p>
+Unclear. How important or necessary is this, anyway?
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spurious_text_at_starts_of_paragraphs">Spurious text at starts of paragraphs</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Priority
+</dt>
+<dd>
+<p>
+Medium
+</p>
+</dd>
+<dt class="hdlist1">
+Problem
+</dt>
+<dd>
+<p>
+It is necessary to insert spurious text in paragraphs.
+</p>
+</dd>
+<dt class="hdlist1">
+Cause
+</dt>
+<dd>
+<p>
+This <code>asciidoc</code> input:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>-------------------------------------------------------------------
+Text
+-------------------------------------------------------------------</code></pre>
+</div></div>
+<div class="paragraph"><p>generates this LaTeX code:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>\begin{lstlisting}
+SPURIOUS TEXTText\end{lstlisting}</code></pre>
+</div></div>
+<div class="paragraph"><p>which should be:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>\begin{lstlisting}[]
+Text\end{lstlisting}</code></pre>
+</div></div>
+</dd>
+<dt class="hdlist1">
+Solution
+</dt>
+<dd>
+<p>
+Find out a way to generate the correct LaTeX output as
+above. The obvious solution, as explained in <code>latet.conf</code>, doesn&#8217;t
+work.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tables">Tables</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Priority
+</dt>
+<dd>
+<p>
+Rather high.
+</p>
+</dd>
+<dt class="hdlist1">
+Problem
+</dt>
+<dd>
+<p>
+Not all of the table configuration options can be passed
+through to the LaTeX backend. In particular, I&#8217;ve had to assume that
+all tables will be fifteen or fewer left-justified columns wide.
+</p>
+</dd>
+<dt class="hdlist1">
+Cause
+</dt>
+<dd>
+<p>
+The table models in LaTeX and HTML are too dissimilar for one
+<code>asciidoc</code> specification to generate valid output in both formats by
+simple regexp replacement. Related to this is the unfortunate fact
+that <code>&lt;COLGROUP&gt;</code> and related tags aren&#8217;t a required part of HTML4,
+and some broswers (at least Firefox and Konqueror) don&#8217;t implement
+them.
+</p>
+</dd>
+<dt class="hdlist1">
+Solution
+</dt>
+<dd>
+<p>
+Perhaps table processing could be handled by a Python
+plugin, which would read in a table spec and generate the appropriate
+text?
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_unicode_escaping">Unicode escaping</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Priority
+</dt>
+<dd>
+<p>
+Rather high, to me at least.
+</p>
+</dd>
+<dt class="hdlist1">
+Problem
+</dt>
+<dd>
+<p>
+The commented-out section in <code>latex.conf</code>, if uncommented,
+converts <code>&amp;#960;</code> to <code>\unichar{960}</code>, which then causes LaTeX to
+complain that the resulting command is unavailable in encoding T1. The
+more common non-ASCII characters, such as those in <code>félicité</code> and
+<code>świeca</code>, are handled properly, but some - such as the IPA characters
+in the <code>tipa</code> package - are not.
+</p>
+</dd>
+<dt class="hdlist1">
+Cause
+</dt>
+<dd>
+<p>
+The encodings in the LaTeX output are wrong.
+</p>
+</dd>
+<dt class="hdlist1">
+Solution
+</dt>
+<dd>
+<p>
+Correct the encodings.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_text_colours">Text colours</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Priority
+</dt>
+<dd>
+<p>
+Probably low
+</p>
+</dd>
+<dt class="hdlist1">
+Problem
+</dt>
+<dd>
+<p>
+The text colour options are not processed by LaTeX; for
+example <code>[#ff0000]#Red text#</code> is not rendered in red.
+</p>
+</dd>
+<dt class="hdlist1">
+Cause
+</dt>
+<dd>
+<p>
+LaTeX and HTML represent RGB triads differently: HTML is happy
+with <code>#ff8000</code>, but LaTeX needs <code>[rgb]{1,0.5,0}</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+Solution
+</dt>
+<dd>
+<p>
+Provide some sort of internal RGB conversion mechanism
+which can convert RGB triads to different representations.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_text_sizes">Text sizes</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Priority
+</dt>
+<dd>
+<p>
+Probably low
+</p>
+</dd>
+<dt class="hdlist1">
+Problem
+</dt>
+<dd>
+<p>
+The text size options are not processed by LaTeX:
+<code>[,,1]#text#</code> is rendered in the same size as normal text.
+</p>
+</dd>
+<dt class="hdlist1">
+Cause
+</dt>
+<dd>
+<p>
+HTML size tags - <code>h1</code> through <code>h7</code> - are directly derivable
+from the size number, whereas LaTeX has a series of descriptive words
+(<code>HUGE</code> through <code>normalsize</code> to <code>scriptsize</code>).
+</p>
+</dd>
+<dt class="hdlist1">
+Solution
+</dt>
+<dd>
+<p>
+Provide a way to treat the number as an index into an
+array.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_background_colour_in_paragraphs">Background colour in paragraphs</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+Priority
+</dt>
+<dd>
+<p>
+Medium
+</p>
+</dd>
+<dt class="hdlist1">
+Problem
+</dt>
+<dd>
+<p>
+If the <code>backgroundcolor</code> attribute is specified in the
+<code>lstset</code> command, all paragraphs are displayed as black rectangles by
+<code>kpdf</code>, <code>xpdf</code>, and <code>evince</code>, although <code>kdvi</code> has no problems. I&#8217;ve
+had to remove the attribute, and so paragraphs all appear on white
+backgrounds. The PDF viewers also complain:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>Error (NNNN): Unknown operator 'rgb'</code></pre>
+</div></div>
+</dd>
+<dt class="hdlist1">
+Cause
+</dt>
+<dd>
+<p>
+Apparently a known bug in the output of <code>pdflatex</code>. Not a bug
+in <code>asciidoc</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+Solution
+</dt>
+<dd>
+<p>
+Wait until this bug is fixed?
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:51 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

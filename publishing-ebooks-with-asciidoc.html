@@ -1,0 +1,579 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<meta name="description" content="How to create EPUB and PDF ebooks using AsciiDoc." />
+<meta name="keywords" content="AsciiDoc, EPUB tools, EPUB, PDF, ebooks" />
+<title>Publishing eBooks with AsciiDoc</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(1);
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="publishing-ebooks-with-asciidoc.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>Publishing eBooks with AsciiDoc</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>It&#8217;s easy to write and publish books in
+<a href="http://en.wikipedia.org/wiki/EPUB">EPUB</a> and PDF formats using
+<a href="http://asciidoc.org/">AsciiDoc</a>.</p></div>
+<div class="paragraph"><p>Here are three examples: The first is a <a href="#X1">minimal example</a>
+introducing the AsciiDoc format, the second <a href="#X2">The Brothers Karamazov</a> is a rather long multi-part book and the third <a href="#X3">The Adventures of Sherlock Holmes</a> includes a front cover image and
+customized page styling.</p></div>
+<div class="paragraph"><p>The examples presented below were created on a PC running Xubuntu
+Linux 10.04 but should be applicable to any UNIX-based operating
+system.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">A number of <em>asciidoc</em> and <em>a2x</em> features used in this article
+require newer versions of AsciiDoc&#8201;&#8212;&#8201;version 8.6.5 or better is
+recommended. The version of
+<a href="http://wiki.docbook.org/topic/DocBookXslStylesheets">DocBook XSL
+Stylesheets</a> used was 1.76.1.</td>
+</tr></table>
+</div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/tip.png" alt="Tip" />
+</td>
+<td class="content">If you are experiencing <em>xsltproc</em> errors when you run <em>a2x</em> take
+a look at Francis Shanahan&#8217;s
+<a href="http://francisshanahan.com/index.php/2011/fixing-epub-problem-docbook-xsl-asciidoc-a2x/">Fixing
+the ePub problem with Docbook-XSL/A2X/Asciidoc</a> blog post.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X1">Minimal Book</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This didactic example contains a title and two chapters.  The AsciiDoc
+source is a plain text file named <code>minimal-book.txt</code>:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>= The Book Title
+
+== The first chapter
+Nec vitae mus fringilla eu vel pede sed pellentesque. Nascetur fugiat
+nobis. Eu felis id mauris sollicitudin ut. Sem volutpat feugiat.
+Ornare convallis urna vitae.
+
+Nec mauris sed aliquam nam mauris dolor lorem imperdiet.
+
+== The second chapter
+Ut suspendisse nulla. Auctor felis facilisis. Rutrum vivamus nec
+lectus porttitor dui dapibus eu ridiculus tempor sodales et. Sit a
+cras. Id tellus cubilia erat.
+
+Quisque nullam et. Blandit dui tempor. Posuere in elit diam egestas
+sem vivamus vel ac.</code></pre>
+</div></div>
+<div class="paragraph"><p>To generate the EPUB formatted book file <code>minimal-book.epub</code> run
+AsciiDoc&#8217;s <em>a2x</em> toolchain wrapper command from the command-line:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -fepub -dbook minimal-book.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>The <code>-f</code> option specifies the output format, the <code>-d</code> option specifies
+the document type (book, article or manpage).  The optional
+<code>--epubcheck</code> option tells <em>a2x</em> to validate the EPUB file using
+<a href="http://code.google.com/p/epubcheck/">epubcheck</a>. To generate a PDF
+version (<code>minimal-book.pdf</code>) with <em>dblatex</em> run:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -fpdf -dbook minimal-book.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>The distributed example PDFs were built using FOP&#8201;&#8212;&#8201;if you prefer
+<a href="http://xmlgraphics.apache.org/fop/">FOP</a> over
+<a href="http://dblatex.sourceforge.net/">dblatex</a> use:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -fpdf -dbook --fop minimal-book.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>You can also generate an HTML formatted book, either using DocBook XSL
+Stylesheets:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x -fxhtml -dbook minimal-book.txt</code></pre>
+</div></div>
+<div class="paragraph"><p>or directly using the <em>asciidoc</em> command:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>asciidoc -dbook minimal-book.txt</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">
+<div class="paragraph"><p>The <a href="http://asciidoc.org/a2x.1.html">a2x toolchain
+wrapper</a> uses the following programs (most will be available
+prepackaged for your Linux distribution):</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="http://xmlsoft.org/XSLT/">xsltproc</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://docbook.sourceforge.net/projects/xsl/">DocBook XSL
+  Stylesheets</a>
+</p>
+</li>
+<li>
+<p>
+<a href="http://dblatex.sourceforge.net/">dblatex</a> (PDF file generator)
+</p>
+</li>
+<li>
+<p>
+<a href="http://xmlgraphics.apache.org/fop/">FOP</a> (alternative PDF file
+  generator)
+</p>
+</li>
+<li>
+<p>
+<a href="http://code.google.com/p/epubcheck/">epubcheck</a> (optional EPUB file
+  validator)
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X2">The Brothers Karamazov</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><em>The Brothers Karamazov</em> is an example of a multi-part book. To
+generate the AsciiDoc source I downloaded the
+<a href="http://www.gutenberg.org">Project Gutenberg</a> plain text source and
+edited it manually (this took around 15 minutes). To generate the
+<code>brothers-karamazov.epub</code> EPUB file run this command:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x brothers-karamazov.txt</code></pre>
+</div></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Brothers Karamazov source files and eBooks</caption>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr>
+<th align="left" valign="top">EPUB </th>
+<th align="left" valign="top">PDF </th>
+<th align="left" valign="top">AsciiDoc source </th>
+<th align="left" valign="top">Project Gutenburg text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="http://asciidoc.org/examples/books/brothers-karamazov.epub">brothers-karamazov.epub</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://asciidoc.org/examples/books/brothers-karamazov.pdf">brothers-karamazov.pdf</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://asciidoc.org/examples/books/brothers-karamazov.zip">brothers-karamazov.zip</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://www.gutenberg.org/etext/28054">http://www.gutenberg.org/etext/28054</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>Here&#8217;s the start of the AsciiDoc source file showing the AsciiDoc
+specific meta-data:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>//
+// Text from Project Gutenburg http://www.gutenberg.org/etext/28054
+//
+// Formatted for AsciiDoc by Stuart Rackham.
+//
+// a2x default options.
+//    a2x: -f epub -d book --epubcheck
+// Suppress revision history in dblatex outputs.
+//    a2x: --dblatex-opts "-P latex.output.revhistory=0"
+// Suppress book part, chapter and section numbering in DocBook XSL outputs.
+//    a2x: --xsltproc-opts
+//    a2x: "--stringparam part.autolabel 0
+//    a2x: --stringparam chapter.autolabel 0
+//    a2x: --stringparam section.autolabel.max.depth 0"
+//
+
+= The Brothers Karamazov
+:author: Fyodor Dostoyevsky
+:encoding: iso-8859-1
+:plaintext:
+
+..........................................................................
+Translated from the Russian of Fyodor Dostoyevsky by Constance Garnett
+The Lowell Press New York
+
+ :
+ :
+
+***START OF THE PROJECT GUTENBERG EBOOK THE BROTHERS KARAMAZOV***
+..........................................................................
+
+
+= PART I
+
+== The History Of A Family
+
+=== Fyodor Pavlovitch Karamazov
+
+Alexey Fyodorovitch Karamazov was the third son of Fyodor Pavlovitch
+...</code></pre>
+</div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+The book, book part and chapter titles have been edited to conform
+  to <a href="http://asciidoc.org/userguide.html#X17">AsciiDoc
+  title conventions</a>.
+</p>
+</li>
+<li>
+<p>
+Book part titles must be level zero titles:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>= Book title (level 0)
+= Part one title (level 0)
+== Chapter 1 title (level 1)
+  :</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Sub-chapter levels can be accommodated with <code>===</code>, <code>====</code> and
+  <code>=====</code> title prefixes.
+</p>
+</li>
+<li>
+<p>
+In this example the <em>Project Gutenberg</em> front matter was put in the
+  untitled preface inside an AsciiDoc literal block.
+</p>
+</li>
+<li>
+<p>
+The comment lines starting with <code>// a2x:</code> contain <em>a2x</em> command
+  options for this document (it&#8217;s easier to put them in the document
+  once than type them every time on the command-line).
+</p>
+</li>
+<li>
+<p>
+A number of <em>xsltproc</em> options are passed to <em>a2x</em> to suppress book
+  part, chapter and section numbering.
+</p>
+</li>
+<li>
+<p>
+Setting the AsciiDoc <em>plaintext</em> attribute suppresses most of
+  <a href="http://asciidoc.org/userguide.html#_text_formatting">AsciiDoc&#8217;s
+  text formatting</a> and substitution conventions, this allows large
+  amounts of text to be imported with little or no manual editing.
+</p>
+<div class="ulist"><ul>
+<li>
+<p>
+Once you have defined the AsciiDoc <em>plaintext</em> attribute the only
+    requisite manual editing will be to format the titles and rectify
+    the odd paragraph being interpreted as some other AsciiDoc block
+    element.
+</p>
+</li>
+<li>
+<p>
+In the combined 49 thousand lines of imported <em>Sherlock Holmes</em>
+    and <em>Brothers Karamazov</em> text I only encountered two
+    misinterpreted list items, neither affected the rendered output or
+    necessitated editing.
+</p>
+</li>
+<li>
+<p>
+You can selectively enable and disable the <em>plaintext</em> attribute
+    throughout your document using AsciiDoc
+    <a href="http://asciidoc.org/userguide.html#X18">attribute
+    entries</a>.
+</p>
+</li>
+</ul></div>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X3">The Adventures of Sherlock Holmes</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This book includes a front cover image and a customized page design.
+To generate the <code>adventures-of-sherlock-holmes.epub</code> EPUB file run
+this command:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>a2x adventures-of-sherlock-holmes.txt</code></pre>
+</div></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="hsides"
+cellspacing="0" cellpadding="4">
+<caption class="title">Sherlock Holmes source files and eBooks</caption>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<thead>
+<tr>
+<th align="left" valign="top">EPUB </th>
+<th align="left" valign="top">PDF </th>
+<th align="left" valign="top">AsciiDoc source </th>
+<th align="left" valign="top">Project Gutenburg text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table"><a href="http://asciidoc.org/examples/books/adventures-of-sherlock-holmes.epub">adventures-of-sherlock-holmes.epub</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://asciidoc.org/examples/books/adventures-of-sherlock-holmes.pdf">adventures-of-sherlock-holmes.pdf</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://asciidoc.org/examples/books/adventures-of-sherlock-holmes.zip">adventures-of-sherlock-holmes.zip</a></p></td>
+<td align="left" valign="top"><p class="table"><a href="http://www.gutenberg.org/etext/1661">http://www.gutenberg.org/etext/1661</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph"><p>Here&#8217;s a screenshot of the first page of the first chapter (rendered
+by the <a href="http://www.epubread.com/en/">Firefox EPUBReader addon</a>):</p></div>
+<div class="imageblock">
+<div class="content">
+<img src="images/epub.png" alt="images/epub.png" />
+</div>
+</div>
+<div class="paragraph"><p>The <a href="http://asciidoc.org/examples/books/adventures-of-sherlock-holmes.zip">AsciiDoc source
+Zip file</a> contains the following files:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>adventures-of-sherlock-holmes.txt</code>
+</dt>
+<dd>
+<p>
+  The AsciiDoc source (derived from the
+  <a href="http://www.gutenberg.org/etext/1661">Project Gutenberg plain text
+  source</a>).
+</p>
+</dd>
+<dt class="hdlist1">
+<code>adventures-of-sherlock-holmes.jpg</code>
+</dt>
+<dd>
+<p>
+  The front cover image.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>adventures-of-sherlock-holmes-docinfo.xml</code>
+</dt>
+<dd>
+<p>
+  A <a href="http://asciidoc.org/userguide.html#X87">docinfo</a> file
+  containing DocBook markup for the front cover image and the Project
+  Gutenberg frontmatter.  DocBook XSL Stylesheets identifies the book
+  cover image by the <code>role="cover"</code> attribute in the DocBook
+  <code>mediaobject</code> element.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>adventures-of-sherlock-holmes.css</code>
+</dt>
+<dd>
+<p>
+  CSS rules for styling the page layout. The design is based on the
+  <a href="http://epubzengarden.com">ePub Zen Garden</a> <em>Gbs</em> style. Because this
+  file is not named <code>docbook-xsl.css</code> the name must be specified
+  explicitly using the <em>a2x</em> <code>--stylesheet</code> option.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>underline.png</code>
+</dt>
+<dd>
+<p>
+  A title underline image that is used by the CSS stylesheet. This
+  resource has to be explicitly passed to <em>a2x</em> because <em>a2x</em> only
+  searches HTML files for resources.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>Here&#8217;s the start of the AsciiDoc source file showing the AsciiDoc
+specific meta-data:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>//
+// Text from Project Gutenburg http://www.gutenberg.org/etext/1661
+//
+// Formatted for AsciiDoc by Stuart Rackham.
+//
+// a2x default options.
+//    a2x: -f epub -d book -a docinfo --epubcheck
+//    a2x: --stylesheet adventures-of-sherlock-holmes.css
+// Suppress revision history in dblatex outputs.
+//    a2x: --dblatex-opts "-P latex.output.revhistory=0"
+// Suppress book part, chapter and section numbering in DocBook XSL outputs.
+//    a2x: --xsltproc-opts
+//    a2x: "--stringparam part.autolabel 0
+//    a2x: --stringparam chapter.autolabel 0
+//    a2x: --stringparam section.autolabel.max.depth 0"
+// Additional resources.
+//    a2x: --resource underline.png
+//
+
+= The Adventures of Sherlock Holmes
+:author: Sir Arthur Conan Doyle
+:encoding: iso-8859-1
+:plaintext:
+
+== A Scandal in Bohemia
+
+To Sherlock Holmes she is always THE woman. I have seldom heard
+...</code></pre>
+</div></div>
+<div class="paragraph"><p>The manual editing of imported plain text involves formatting the
+title and chapter names as
+<a href="http://asciidoc.org/userguide.html#X17">AsciiDoc titles</a>
+(in this example we&#8217;ve used the <em>single line</em> title format). Sherlock
+Holmes only has two title levels:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>= The Adventures of Sherlock Holmes
+== A Scandal in Bohemia
+== The Red-Headed League
+== A Case of Identity
+== The Boscombe Valley Mystery
+== The Five Orange Pips
+== The Man with the Twisted Lip
+== The Adventure of the Blue Carbuncle
+== The Adventure of the Speckled Band
+== The Adventure of the Engineer's Thumb
+== The Adventure of the Noble Bachelor
+== The Adventure of the Beryl Coronet
+== The Adventure of the Copper Beeches
+== Colophon</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_styling_your_books">Styling your books</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can customize the appearance of a document with CSS.  CSS file.
+Either create your own or copy and edit the existing default
+<code>docbook-xsl.css</code> file (located in the AsciiDoc <code>stylesheets</code>
+configuration directory) then place it in the same directory as your
+AsciiDoc source file. Use the <em>a2x</em> <code>--stylesheet</code> option if you want
+to use a different stylesheet file.  Take a look at the
+<code>adventures-of-sherlock-holmes.css</code> CSS file.</p></div>
+<div class="paragraph"><p>There are some great examples of EPUB book styles at
+<a href="http://epubzengarden.com/">ePub Zen Garden</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_including_embedded_fonts">Including embedded fonts</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>See <a href="http://asciidoc.org/faq.html#X5">this FAQ</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reading_epub_documents">Reading EPUB documents</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>My current favorite software epub reader is the
+<a href="http://www.epubread.com/en/">Firefox EPUBReader addon</a>. EPUBReader
+honors the book&#8217;s CSS styling rules and renders the page as the author
+intended (many EPUB readers only process a sub-set of CSS styling
+rules).</p></div>
+<div class="paragraph"><p>Browsers are a natural fit for EPUB (EPUB is just a bunch of zipped
+XHTML files)&#8201;&#8212;&#8201;I&#8217;d love to see browsers support EPUB natively.</p></div>
+<div class="paragraph"><p>As of writing this article most eBook readers (with the notable
+exception of Amazon&#8217;s Kindle) support the EPUB format.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_non_fiction_books_and_manuals">Non-fiction Books and Manuals</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc supports a rich set of markup conventions and can generate
+reference works and technical manuals complete with tables,
+illustrations, indexes, bibliographies and appendices. All the
+examples on the <a href="http:///asciidoc.org/">AsciiDoc web site</a>
+can be formatted as EPUB eBooks.</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:54 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

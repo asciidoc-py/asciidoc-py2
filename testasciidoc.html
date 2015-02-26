@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>AsciiDoc Tests</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(1);
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="testasciidoc.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>AsciiDoc Tests</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc includes <em>testasciidoc</em>, a Python script runs a set of
+AsciiDoc conformance tests. <em>testasciidoc</em> runs through a list of
+AsciiDoc source files, generates backend outputs and then compares
+them to expected result files. The whole process is driven by a
+configuration file containing a list of user configurable test
+specifications.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rationale">Rationale</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>When modifying AsciiDoc configuration files or source code it&#8217;s very
+easy to introduce regression errors. <em>testasciidoc</em> is a tool for
+writing many and varied test cases that can be run after changes have
+been made in order to verify that existing behavior has not been
+broken.</p></div>
+<div class="paragraph"><p>The <em>testasciidoc</em> <em>update</em> command automates the (re)generation of
+expected test result data.  Result data regeneration has to be
+performed after changes to test case source files or after legitimate
+changes to the AsciiDoc output formats&#8201;&#8212;&#8201;doing this manually is
+prohibitively tedious.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_running_testasciidoc">Running testasciidoc</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <code>testasciidoc.py</code> script and the default <code>testasciidoc.conf</code>
+configuration file are located in the AsciiDoc distribution <code>tests</code>
+directory.</p></div>
+<div class="paragraph"><p>To view the command usage run:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ python tests/testasciidoc.py
+Usage: testasciidoc.py [OPTIONS] COMMAND
+
+Run AsciiDoc conformance tests specified in configuration FILE.
+
+Commands:
+  list                          List tests
+  run [NUMBER] [BACKEND]        Execute tests
+  update [NUMBER] [BACKEND]     Regenerate and update test data
+
+Options:
+  -f, --conf-file=CONF_FILE
+        Use configuration file CONF_FILE (default configuration file is
+        testasciidoc.conf in testasciidoc.py directory)
+  --force
+        Update all test data overwriting existing data</code></pre>
+</div></div>
+<div class="paragraph"><p>To view the list of tests in the default <code>testasciidoc.conf</code>
+configuration file run the <em>list</em> command:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ python tests/testasciidoc.py list
+1: Test cases
+2: Tables
+3: Source highlighter
+4: Example article
+5: Example book
+6: Example multi-part book
+7: !User Guide</code></pre>
+</div></div>
+<div class="paragraph"><p>The <em>!</em> prefix signals that a test is currently disabled.</p></div>
+<div class="paragraph"><p>Before running the tests you will need to regenerate the expected
+outputs by running the <em>update</em> command:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ python tests/testasciidoc.py update
+WRITING: tests/data/testcases-html4.html
+WRITING: tests/data/testcases-xhtml11.html
+WRITING: tests/data/testcases-docbook.xml
+ :
+WRITING: tests/data/book-multi-docbook.xml</code></pre>
+</div></div>
+<div class="paragraph"><p>Now you can run the tests:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ python tests/testasciidoc.py run
+1: Test cases
+SOURCE: asciidoc: tests/data/testcases.txt
+PASSED: html4: tests/data/testcases-html4.html
+PASSED: xhtml11: tests/data/testcases-xhtml11.html
+PASSED: docbook: tests/data/testcases-docbook.xml
+ :
+6: Example multi-part book
+SOURCE: asciidoc: doc/book-multi.txt
+PASSED: html4: tests/data/book-multi-html4.html
+PASSED: xhtml11: tests/data/book-multi-xhtml11.html
+PASSED: docbook: tests/data/book-multi-docbook.xml
+
+TOTAL PASSED:  18</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">
+<div class="ulist"><ul>
+<li>
+<p>
+<em>testasciidoc</em> requires AsciiDoc is located in your environment
+  search path, if not you&#8217;ll need to set the <code>ASCIIDOC_PY</code> environment
+  variable to point to <code>asciidoc.py</code>.
+</p>
+</li>
+<li>
+<p>
+If you don&#8217;t have GNU source-highlight installed you should disable
+  the <em>Tables</em> and <em>Source highlighter</em> tests in the
+  <code>tests/testasciidoc.conf</code> configuration file.
+</p>
+</li>
+</ul></div>
+</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testasciidoc_commands">testasciidoc commands</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<em>list</em>
+</dt>
+<dd>
+<p>
+  List test numbers and titles.  A <em>!</em> title prefix signals that a
+  test is currently disabled.
+</p>
+</dd>
+<dt class="hdlist1">
+<em>run</em>
+</dt>
+<dd>
+<p>
+  Read and execute tests from the test configuration file. A test
+  specifies AsciiDoc test case source file and command options.  The
+  test compares generated outputs to expected outputs and any
+  differences displayed as a diff.  You can run selected tests by
+  specifying the test number and/or backend after the <code>run</code> command.
+  Examples:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>python tests/testasciidoc.py run
+python tests/testasciidoc.py run 3
+python tests/testasciidoc.py run html4
+python tests/testasciidoc.py run 3 html4</code></pre>
+</div></div>
+</dd>
+<dt class="hdlist1">
+<em>update</em>
+</dt>
+<dd>
+<p>
+  Generates and updates missing and out of date test output data
+  files, this eliminates one of the most time consuming aspect of test
+  management.  Use the <code>--force</code> option to force updates.
+  Examples:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>python tests/testasciidoc.py update
+python tests/testasciidoc.py --force update 4</code></pre>
+</div></div>
+</dd>
+</dl></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">You can run or update disabled tests by explicitly specifying
+the test number.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_configuration_file">Test configuration file</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The tests configuration file format consists of one or more test specs
+separated by a line of one or more percent characters. Each test spec
+consists of an optional test title and description followed by one or
+more optional directives (a directive starts with a percent
+character).  A <em>directive</em> consists begins with a line containing a <em>%</em>
+character followed by a directive name followed by zero or more lines
+of directive data.</p></div>
+<div class="sect2">
+<h3 id="_test_spec_format">Test spec format</h3>
+<div class="listingblock">
+<div class="content">
+<pre><code>Optional test title
+Optional test description...
+
+% name
+Optional base output file name. Defaults to base source file name.
+
+% source
+AsciiDoc source file name.
+
+% backends
+Optional list of backends to be tested(default is all backends).
+% options
+Optional list of command-line option tuples.
+
+% attributes
+Optional dictionary of attribute values.</code></pre>
+</div></div>
+<div class="paragraph"><p>Example test spec:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>Example book
+
+% options
+['--section-numbers',('--doctype','book')]
+
+% attributes
+# Exclude date from document footer.
+{'docdate':None}
+
+% source
+../doc/book.txt</code></pre>
+</div></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/tip.png" alt="Tip" />
+</td>
+<td class="content">Take a look at the default <code>tests/testasciidoc.conf</code>
+configuration file that comes with AsciiDoc.</td>
+</tr></table>
+</div>
+<div class="ulist"><ul>
+<li>
+<p>
+Tests can be disabled by prefixing the test title with an
+  exclamation <em>!</em> character.
+</p>
+</li>
+<li>
+<p>
+All relative file names are relative to the configuration file
+  directory.
+</p>
+</li>
+<li>
+<p>
+Multiple tests must by separated by a <code>%</code> separator line (one or
+  more percent characters).
+</p>
+</li>
+<li>
+<p>
+Lines starting with a percent character specify a test <em>directive</em>
+  and may be followed by zero or more lines of directive data.
+</p>
+</li>
+<li>
+<p>
+Directive data lines cannot start with a percent character.
+</p>
+</li>
+<li>
+<p>
+Lines starting with a <code>#</code> hash character are ignored.
+</p>
+</li>
+<li>
+<p>
+The <em>source</em> directive data is a single line containing the
+  AsciiDoc source file name.
+</p>
+</li>
+<li>
+<p>
+The <em>options</em> directive data is a Python list of <code>(name,value)</code>
+  tuples specifying AsciiDoc command-line options. A string item is
+  equivalent to a <code>(name,None)</code> tuple.
+</p>
+</li>
+<li>
+<p>
+The <em>attributes</em> directive data specifies a Python dictionary
+  containing AsciiDoc attributes to be passed to AsciiDoc.
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_globals_directive">globals directive</h3>
+<div class="paragraph"><p>An optional <em>globals</em> directive can precede all test specs, the
+globals directive data is a Python dictionary containing global
+values.  Currently the only global is <em>datadir</em>, the directory
+containing expected output files (defaults to configuration file
+directory). For example:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>% globals
+{'datadir': 'data'}</code></pre>
+</div></div>
+<div class="paragraph"><p>Expected output test data files are stored in the <em>datadir</em> and are
+named after the corresponding AsciiDoc input source file.  For example
+if the AsciiDoc file name is <code>article.txt</code> then the corresponding
+backend output files will be <code>article-html4.html</code>,
+<code>article-xhtml11.html</code>, <code>article-docbook.xml</code> (stored in the <em>datadir</em>
+directory).</p></div>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:56 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

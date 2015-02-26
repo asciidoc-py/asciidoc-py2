@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>ASCIIDOC(1)</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./asciidoc-manpage.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="manpage.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>
+ASCIIDOC(1) Manual Page
+</h1>
+<h2>NAME</h2>
+<div class="sectionbody">
+<p>asciidoc -
+   converts an AsciiDoc text file to HTML or DocBook
+</p>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_synopsis">SYNOPSIS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><strong>asciidoc</strong> [<em>OPTIONS</em>] <em>FILE</em></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_description">DESCRIPTION</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <code>asciidoc(1)</code> command translates the AsciiDoc text file <em>FILE</em> to
+DocBook or HTML.  If <em>FILE</em> is <em>-</em> then the standard input is used.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_options">OPTIONS</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>-a, --attribute</strong>=<em>ATTRIBUTE</em>
+</dt>
+<dd>
+<p>
+    Define or delete document attribute. <em>ATTRIBUTE</em> is formatted like
+    <em>NAME=VALUE</em>. Command-line attributes take precedence over
+    document and configuration file attributes.  Alternate acceptable
+    forms are <em>NAME</em> (the <em>VALUE</em> defaults to an empty string);
+    <em>NAME!</em> (delete the <em>NAME</em> attribute); <em>NAME=VALUE@</em> (do not override
+    document or configuration file attributes).  Values containing
+    spaces should be enclosed in double-quote characters. This option
+    may be specified more than once.  A special attribute named
+    <em>trace</em> controls the output of diagnostic information.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-b, --backend</strong>=<em>BACKEND</em>
+</dt>
+<dd>
+<p>
+    Backend output file format: <em>docbook45</em>, <em>xhtml11</em>, <em>html4</em>,
+    <em>html5</em>, <em>slidy</em>, <em>wordpress</em> or <em>latex</em> (the <em>latex</em> backend is
+    experimental).  You can also use the backend alias names <em>html</em>
+    (aliased to <em>xhtml11</em>) or <em>docbook</em> (aliased to <em>docbook45</em>).
+    Defaults to <em>html</em>.  The <strong>--backend</strong> option is also used to manage
+    backend plugins (see <a href="#X1"><strong>PLUGIN COMMANDS</strong></a>).
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-f, --conf-file</strong>=<em>CONF_FILE</em>
+</dt>
+<dd>
+<p>
+    Use configuration file <em>CONF_FILE</em>.Configuration files processed
+    in command-line order (after implicit configuration files).  This
+    option may be specified more than once.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>--doctest</strong>
+</dt>
+<dd>
+<p>
+    Run Python doctests in <em>asciidoc</em> module.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-d, --doctype</strong>=<em>DOCTYPE</em>
+</dt>
+<dd>
+<p>
+    Document type: <em>article</em>, <em>manpage</em> or <em>book</em>. The <em>book</em> document
+    type is only supported by the <em>docbook</em> backend.  Default document
+    type is <em>article</em>.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-c, --dump-conf</strong>
+</dt>
+<dd>
+<p>
+    Dump configuration to stdout.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>--filter</strong>=<em>FILTER</em>
+</dt>
+<dd>
+<p>
+    Specify the name of a filter to be loaded (used to load filters
+    that are not auto-loaded).  This option may be specified more than
+    once. The <strong>--filter</strong> option is also used to manage filter plugins
+    (see <a href="#X1"><strong>PLUGIN COMMANDS</strong></a>).
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-h, --help</strong> [<em>TOPIC</em>]
+</dt>
+<dd>
+<p>
+    Print help TOPIC. <strong>--help</strong> <em>topics</em> will print a list of help
+    topics, <strong>--help</strong> <em>syntax</em> summarizes AsciiDoc syntax,
+    <strong>--help</strong> <em>manpage</em> prints the AsciiDoc manpage.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-e, --no-conf</strong>
+</dt>
+<dd>
+<p>
+    Exclude implicitly loaded configuration files except for those
+    named like the input file (<em>infile.conf</em> and
+    <em>infile-backend.conf</em>).
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-s, --no-header-footer</strong>
+</dt>
+<dd>
+<p>
+    Suppress document header and footer output.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-o, --out-file</strong>=<em>OUT_FILE</em>
+</dt>
+<dd>
+<p>
+    Write output to file <em>OUT_FILE</em>. Defaults to the base name of
+    input file with <em>backend</em> extension. If the input is stdin then
+    the outfile defaults to stdout. If <em>OUT_FILE</em> is <em>-</em> then the
+    standard output is used.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-n, --section-numbers</strong>
+</dt>
+<dd>
+<p>
+    Auto-number HTML article section titles.  Synonym for
+    <strong>--attribute numbered</strong>.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>--safe</strong>
+</dt>
+<dd>
+<p>
+    Enable safe mode. Safe mode is disabled by default.  AsciiDoc
+    <em>safe mode</em> skips potentially dangerous scripted sections in
+    AsciiDoc source files.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>--theme</strong>=<em>THEME</em>
+</dt>
+<dd>
+<p>
+    Specify a theme name.  Synonym for <strong>--attribute theme</strong>=<em>THEME</em>.
+    The <strong>--theme</strong> option is also used to manage theme plugins (see
+    <a href="#X1"><strong>PLUGIN COMMANDS</strong></a>).
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>-v, --verbose</strong>
+</dt>
+<dd>
+<p>
+    Verbosely print processing information and configuration file
+    checks to stderr.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>--version</strong>
+</dt>
+<dd>
+<p>
+    Print program version number.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X1">PLUGIN COMMANDS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The <code>asciidoc(1)</code> <strong>--filter</strong>, <strong>--backend</strong> and <strong>--theme</strong> options are used
+to install, remove and list AsciiDoc filter, backend and theme
+plugins. Syntax:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>asciidoc OPTION install ZIP_FILE [PLUGINS_DIR]
+asciidoc OPTION remove PLUGIN_NAME [PLUGINS_DIR]
+asciidoc OPTION list
+asciidoc OPTION build ZIP_FILE PLUGIN_SOURCE</code></pre>
+</div></div>
+<div class="paragraph"><p>Where:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>OPTION</strong>
+</dt>
+<dd>
+<p>
+  <code>asciidoc(1)</code> <strong>--filter</strong>, <strong>--backend</strong> or <strong>--theme</strong> option specifying
+  the type of plugin.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>PLUGIN_NAME</strong>
+</dt>
+<dd>
+<p>
+  A unique plugin name containing only alphanumeric or underscore
+  characters.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>ZIP_FILE</strong>
+</dt>
+<dd>
+<p>
+  A Zip file containing plugin resources, the name must start with the
+  plugin name e.g.  <code>my_filter-1.0.zip</code> packages filter <code>my_filter</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>PLUGINS_DIR</strong>
+</dt>
+<dd>
+<p>
+  The directory containing installed plugins. Each plugin is contained
+  in its own separate subdirectory which has the same name as the
+  plugin.
+  <strong>PLUGINS_DIR</strong> defaults to the <code>$HOME/.asciidoc/filters</code> (for
+  filter plugins) or <code>$HOME/.asciidoc/backends</code> (for backend plugins) or
+  <code>$HOME/.asciidoc/themes</code> (for theme plugins).
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>PLUGIN_SOURCE</strong>
+</dt>
+<dd>
+<p>
+  The name of a directory containing the plugin source files or the
+  name of a single source file.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>The plugin commands perform as follows:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>install</strong>
+</dt>
+<dd>
+<p>
+  Create a subdirectory in <strong>PLUGINS_DIR</strong> with the same name as the
+  plugin then extract the <strong>ZIP_FILE</strong> into it.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>remove</strong>
+</dt>
+<dd>
+<p>
+  Delete the <strong>PLUGIN_NAME</strong> plugin subdirectory and all its contents
+  from the <strong>PLUGINS_DIR</strong>.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>list</strong>
+</dt>
+<dd>
+<p>
+  List the names and locations of all installed filter or theme
+  plugins (including standard plugins installed in the global
+  configuration directory).
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>build</strong>
+</dt>
+<dd>
+<p>
+  Create a plugin file named <strong>ZIP_FILE</strong> containing the files and
+  subdirectories specified by <strong>PLUGIN_SOURCE</strong>. File and directory
+  names starting with a period are skipped.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples">EXAMPLES</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>asciidoc asciidoc_file_name.txt</code>
+</dt>
+<dd>
+<p>
+  Simply generate an html file from the asciidoc_file_name.txt that is in
+  current directory using asciidoc.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>asciidoc -b html5 asciidoc_file_name.txt</code>
+</dt>
+<dd>
+<p>
+  Use the <code>-b</code> switch to use one of the proposed backend or another one you
+  installed on your computer.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>asciidoc -a data-uri -a icons -a toc -a max-width=55em article.txt</code>
+</dt>
+<dd>
+<p>
+  Use the <code>-a</code> switch to set attributes from command-line. AsciiDoc generated
+  its stand-alone HTML user guide containing embedded CSS, JavaScript and
+  images from the AsciiDoc article template with this command.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>asciidoc -b html5 -d manpage asciidoc.1.txt</code>
+</dt>
+<dd>
+<p>
+  Generating the asciidoc manpage using the html5 backend.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exit_status">EXIT STATUS</h2>
+<div class="sectionbody">
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>0</strong>
+</dt>
+<dd>
+<p>
+    Success
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>1</strong>
+</dt>
+<dd>
+<p>
+    Failure (syntax or usage error; configuration error; document
+    processing failure; unexpected error).
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bugs">BUGS</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>See the AsciiDoc distribution BUGS file.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_author">AUTHOR</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc was originally written by Stuart Rackham. Many people have
+contributed to it.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_resources">RESOURCES</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>SourceForge: <a href="http://sourceforge.net/projects/asciidoc/">http://sourceforge.net/projects/asciidoc/</a></p></div>
+<div class="paragraph"><p>Main web site: <a href="http://asciidoc.org/">http://asciidoc.org/</a></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_see_also">SEE ALSO</h2>
+<div class="sectionbody">
+<div class="paragraph"><p><code>a2x(1)</code></p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_copying">COPYING</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Copyright (C) 2002-2011 Stuart Rackham. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:52 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

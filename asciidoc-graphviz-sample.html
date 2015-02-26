@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Graphviz filter for AsciiDoc</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install();
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="asciidoc-graphviz-sample.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>Graphviz filter for AsciiDoc</h1>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>Author: Gouichi Iisaka</p></div>
+<div class="paragraph"><p>Version: 1.1.3</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The Graphviz(<a href="http://www.graphviz.org">http://www.graphviz.org</a>) is a way of representing structural information
+as diagrams of abstract graphs and networks.</p></div>
+<div class="paragraph"><p>Automatic graph drawing has many important applications
+in software engineering, database and web design, networking,
+and in visual interfaces for many other domains.</p></div>
+<div class="paragraph"><p>Graphviz take descriptions of graphs in a simple text language,
+And has many useful features for concrete diagrams,
+such as options for colors, fonts, tabular node layouts,
+line styles, hyperlinks, and custom shapes.</p></div>
+<div class="paragraph"><p>AsciiDoc can external shell commands used to process Paragraph and
+DelimitedBlock content by Filter.</p></div>
+<div class="paragraph"><p>So now, AsciiDoc can draw graphs via graphviz filter.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples">Examples</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_simple">Simple</h3>
+<div class="literalblock">
+<div class="content">
+<pre><code>[graphviz]
+---------------------------------------------------------------------
+digraph G { rankdir=LR; Graphviz-&gt;AsciiDoc-&gt;HTML}
+---------------------------------------------------------------------</code></pre>
+</div></div>
+<div class="imageblock graphviz">
+<div class="content">
+<img src="asciidoc-graphviz-sample__1.png" alt="asciidoc-graphviz-sample__1.png" />
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_options">Using options</h3>
+<div class="literalblock">
+<div class="content">
+<pre><code>["graphviz", "sample2.png"]
+---------------------------------------------------------------------
+digraph automata_0 {
+  size ="8.5, 11";
+  node [shape = circle];
+  0 [ style = filled, color=lightgrey ];
+  2 [ shape = doublecircle ];
+  0 -&gt; 2 [ label = "a " ];
+  0 -&gt; 1 [ label = "other " ];
+  1 -&gt; 2 [ label = "a " ];
+  1 -&gt; 1 [ label = "other " ];
+  2 -&gt; 2 [ label = "a " ];
+  2 -&gt; 1 [ label = "other " ];
+  "Machine: a" [ shape = plaintext ];
+}
+---------------------------------------------------------------------</code></pre>
+</div></div>
+<div class="imageblock graphviz">
+<div class="content">
+<img src="sample2.png" alt="sample2.png" />
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_using_layout">Using Layout</h3>
+<div class="literalblock">
+<div class="content">
+<pre><code>["graphviz", "sample3.png", "dot"]
+---------------------------------------------------------------------
+digraph finite_state_machine {
+  rankdir=LR;
+  size="8,5"
+  node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8;
+  node [shape = circle];
+  LR_0 -&gt; LR_2 [ label = "SS(B)" ];
+  LR_0 -&gt; LR_1 [ label = "SS(S)" ];
+  LR_1 -&gt; LR_3 [ label = "S($end)" ];
+  LR_2 -&gt; LR_6 [ label = "SS(b)" ];
+  LR_2 -&gt; LR_5 [ label = "SS(a)" ];
+  LR_2 -&gt; LR_4 [ label = "S(A)" ];
+  LR_5 -&gt; LR_7 [ label = "S(b)" ];
+  LR_5 -&gt; LR_5 [ label = "S(a)" ];
+  LR_6 -&gt; LR_6 [ label = "S(b)" ];
+  LR_6 -&gt; LR_5 [ label = "S(a)" ];
+  LR_7 -&gt; LR_8 [ label = "S(b)" ];
+  LR_7 -&gt; LR_5 [ label = "S(a)" ];
+  LR_8 -&gt; LR_6 [ label = "S(b)" ];
+  LR_8 -&gt; LR_5 [ label = "S(a)" ];
+}
+---------------------------------------------------------------------</code></pre>
+</div></div>
+<div class="imageblock graphviz">
+<div class="content">
+<img src="sample3.png" alt="sample3.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_layout">Layout</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Layout for graphviz as follows.  The default is &#8216;dot&#8217;.</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+*dot
+</dt>
+<dd>
+<p>
+    <em>dot</em> draws directed graphs.
+    It works well on DAGs and other graphs that can be drawn as hierarchies.
+    It  reads attributed graph files and writes drawings.
+</p>
+</dd>
+<dt class="hdlist1">
+*neato
+</dt>
+<dd>
+<p>
+    <em>neato</em> draws  undirected graphs using ‘‘spring'' models (see Kamada and
+    Kawai, Information Processing Letters 31:1, April 1989).
+    Input  files must be formatted in the dot attributed graph language.
+</p>
+</dd>
+<dt class="hdlist1">
+*twopi
+</dt>
+<dd>
+<p>
+    <em>twopi</em>  draws  graphs  using a radial layout (see G. Wills, Symposium on
+    Graph Drawing GD&#8217;97, September, 1997).
+    Basically, one node  is  chosen as the center and put at the origin.
+    The remaining nodes are placed on a sequence of concentric circles
+    centered about the origin, each a fixed radial distance from
+    the previous circle.
+</p>
+</dd>
+<dt class="hdlist1">
+*circro
+</dt>
+<dd>
+<p>
+    <em>circo</em> draws graphs using a circular layout (see Six and Tollis, GD  '99
+    and  ALENEX  '99, and Kaufmann and Wiese, GD '02.)
+    The tool identifies biconnected components and draws the nodes
+    of the component on  a  circle.
+    The block‐cutpoint tree is then laid out using a recursive radial
+    algorithm.
+    Edge crossings within a circle are minimized by  placing  as
+    many  edges  on  the circle&#8217;s perimeter as possible.
+    In particular, if the component is outerplanar,
+    the component will have a planar  layout.
+</p>
+</dd>
+<dt class="hdlist1">
+*fdp
+</dt>
+<dd>
+<p>
+     <em>fdp</em>  draws undirected graphs using a ‘‘spring'' model.
+     It relies on a force‐directed approach in the spirit of Fruchterman
+     and Reingold
+     (cf.  Software‐Practice &amp; Experience 21(11), 1991, pp. 1129‐1164).
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:42 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

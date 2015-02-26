@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>AsciiDoc Installation</title>
+<link rel="stylesheet" href="./asciidoc.css" type="text/css" />
+<link rel="stylesheet" href="./layout2.css" type="text/css" />
+<script type="text/javascript" src="./asciidoc.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+asciidoc.install(1);
+/*]]>*/
+</script>
+</head>
+<body style="max-width:70em">
+<div id="layout-menu-box">
+<div id="layout-menu">
+  <div>&#187;<a href="index.html">Home</a></div>
+  <div>&#187;<a href="userguide.html">User&nbsp;Guide</a></div>
+  <div>&#187;<a href="INSTALL.html">Installation</a></div>
+  <div>&#187;<a href="faq.html">FAQ</a></div>
+  <div>&#187;<a href="manpage.html">asciidoc(1)</a></div>
+  <div>&#187;<a href="a2x.1.html">a2x(1)</a></div>
+  <div>&#187;<a href="asciidocapi.html">API</a></div>
+  <div>&#187;<a href="plugins.html">Plugins</a></div>
+  <div>&#187;<a href="http://powerman.name/doc/asciidoc">Cheatsheet</a></div>
+  <div>&#187;<a href="testasciidoc.html">Tests</a></div>
+  <div>&#187;<a href="CHANGELOG.html">ChangeLog</a></div>
+  <div>&#187;<a href="support.html">Support</a></div>
+  <div id="page-source">&#187;<a href="INSTALL.txt">Page&nbsp;Source</a></div>
+</div>
+</div>
+<div id="layout-content-box">
+<div id="layout-banner">
+  <div id="layout-title">AsciiDoc</div>
+  <div id="layout-description">Text based document generation</div>
+</div>
+<div id="layout-content">
+<div id="header">
+<h1>AsciiDoc Installation</h1>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">The current version of AsciiDoc requires <strong>Python 2.4 or newer</strong>
+to run.  If you don&#8217;t already have an up-to-date version of Python
+installed it can be downloaded from the official Python website
+<a href="http://www.python.org/">http://www.python.org/</a>.</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites">Prerequisites</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>See the <a href="README.html">README</a> page.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installing_from_the_mercurial_repository">Installing from the Mercurial repository</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The AsciiDoc <a href="http://www.selenic.com/mercurial/">Mercurial</a> repository
+is hosted by <a href="http://code.google.com/">Google Code</a>.
+To browse the repository go to
+<a href="http://code.google.com/p/asciidoc/source/browse/">http://code.google.com/p/asciidoc/source/browse/</a>.
+You can install AsciiDoc from the repository if you don&#8217;t have an up to
+date packaged version or want to get the latest version from the trunk:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Make sure you have <a href="http://www.selenic.com/mercurial/">Mercurial</a>
+  installed, you can check with:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ hg --version</code></pre>
+</div></div>
+</li>
+<li>
+<p>
+Go to the directory you want to install AsciiDoc into and download
+  the repository.  This example gets the 8.6.9 tagged release:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ cd ~/bin
+$ hg clone -r 8.6.9 https://asciidoc.googlecode.com/hg/ asciidoc-8.6.9</code></pre>
+</div></div>
+</li>
+</ul></div>
+<div class="paragraph"><p>You now have two choices: you can run asciidoc locally from your
+repository or you can use <em>autoconf(1)</em> and <em>make(1)</em> to perform a
+system-wide install.</p></div>
+<div class="sect2">
+<h3 id="_running_asciidoc_from_your_local_copy">Running asciidoc from your local copy</h3>
+<div class="paragraph"><p>Create a symlink to the AsciiDoc script in a search <code>PATH</code> directory
+so it&#8217;s easy to execute <code>asciidoc</code> from the command-line, for example:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ ln -s ~/bin/asciidoc-8.6.9/asciidoc.py ~/bin/asciidoc
+$ ln -s ~/bin/asciidoc-8.6.9/a2x.py ~/bin/a2x</code></pre>
+</div></div>
+<div class="paragraph"><p>Use the Mercurial <code>pull</code> command to update your local AsciiDoc repository.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_installing_asciidoc_for_all_users">Installing asciidoc for all users</h3>
+<div class="paragraph"><p>Create <code>configure</code> using <em>autoconf(1)</em>; use <code>configure</code> to create the
+<code>Makefile</code>; run <em>make(1)</em>; build the man pages; install:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ autoconf
+$ ./configure
+$ make
+$ sudo make install</code></pre>
+</div></div>
+<div class="paragraph"><p>To uninstall:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>$ sudo make uninstall</code></pre>
+</div></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X1">Distribution tarball installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The distribution source tarballs can be downloaded from the
+SourceForge <a href="http://sourceforge.net/projects/asciidoc/">http://sourceforge.net/projects/asciidoc/</a>.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note" />
+</td>
+<td class="content">Unless you are <a href="#X3">installing on Microsoft Windows</a> you should
+use the tarball and not the zip file to install the the distribution
+(the tarball contains symlinks).</td>
+</tr></table>
+</div>
+<div class="paragraph"><p>If your flavor or UNIX or Linux does not have a packaged AsciiDoc
+distribution or if you prefer to install the latest AsciiDoc version
+from source use the <code>configure</code> shell script in the tarball root
+directory.</p></div>
+<div class="paragraph"><p>The <code>autoconf(1)</code> generated <code>configure</code> script creates a make file
+that is tailored for your system. To install:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ tar -xzf asciidoc-8.6.9.tar.gz
+$ cd asciidoc-8.6.9
+$ ./configure
+$ sudo make install</code></pre>
+</div></div>
+<div class="paragraph"><p>To install the documentation:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ sudo make docs</code></pre>
+</div></div>
+<div class="paragraph"><p>To uninstall AsciiDoc:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ sudo make uninstall</code></pre>
+</div></div>
+<div class="paragraph"><p>If Vim is installed on your system the AsciiDoc Vim syntax highlighter
+and filetype detection scripts will be install in the global Vim
+configuration file directory (<code>asciidoc.vim</code> in the <code>syntax</code> directory
+and <code>asciidoc_filetype.vim</code> in the <code>ftdetect</code> directory).</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X3">Microsoft Windows installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc is developed and tested on Linux but there seem to be quite a
+few people using it on Windows.  To install AsciiDoc on Windows unzip
+the distribution Zip file contents:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ unzip asciidoc-8.6.9.zip</code></pre>
+</div></div>
+<div class="paragraph"><p>This will create the folder <code>asciidoc-8.6.9</code> containing the
+<code>asciidoc.py</code> and <code>a2x.py</code> executables along with configuration files
+and documentation.</p></div>
+<div class="paragraph"><p>To generate DocBook based outputs (e.g. PDFs) you will also need a
+working DocBook toolchain. Installing and configuring a DocBook
+toolchain on Windows can be a challenge&#8201;&#8212;&#8201;this blog post explains
+<a href="http://blog.rainwebs.net/2010/02/25/how-to-create-handsome-pdf-documents-without-frustration/">How
+to Create Handsome PDF Documents Without Frustration</a> using
+<a href="http://www.cygwin.com/">Cygwin</a>,
+<a href="http://dblatex.sourceforge.net/">dblatex</a> and AsciiDoc.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_testing_your_installation">Testing your installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Test out asciidoc by changing to the AsciiDoc application directory
+and convert the User Guide document (<code>./doc/asciidoc.txt</code>) to XHTML
+(<code>./doc/asciidoc.html</code>):</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ python asciidoc.py doc/asciidoc.txt</code></pre>
+</div></div>
+<div class="paragraph"><p><a href="testasciidoc.html">testasciidoc</a> offers a more extensive set of
+conformance tests, though you do need to create the test data before
+running the tests (this in itself is a good post-install test):</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ python ./tests/testasciidoc.py update</code></pre>
+</div></div>
+<div class="paragraph"><p>Now you can run the tests by executing this command:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ python ./tests/testasciidoc.py run</code></pre>
+</div></div>
+<div class="paragraph"><p>A full battery of tests can be run from the <code>main.aap</code> script in the
+distribution root directory:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ aap test</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_building_the_distribution">Building the distribution</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The AsciiDoc distribution is built using <a href="http://www.a-a-p.org/">A-A-P</a>
+(a software build system written by Bram Moolenaar). The AsciiDoc
+A-A-P scripts are:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<code>./main.aap</code>
+</dt>
+<dd>
+<p>
+Builds the distribution tarball and zip files,
+documentation and example website.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>./doc/main.aap</code>
+</dt>
+<dd>
+<p>
+Builds distribution documentation.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>./examples/website/main.aap</code>
+</dt>
+<dd>
+<p>
+Builds AsciiDoc website.
+</p>
+</dd>
+<dt class="hdlist1">
+<code>./common.aap</code>
+</dt>
+<dd>
+<p>
+Included in all scripts.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>To build the distribution tarball and zip files, documentation and
+example website run A-A-P from the distribution root directory:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ aap</code></pre>
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="X2">Prepackaged AsciiDoc installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The following platform specific AsciiDoc packages are available:</p></div>
+<div class="dlist"><dl>
+<dt class="hdlist1">
+<strong>Debian GNU/Linux</strong>
+</dt>
+<dd>
+<p>
+  If you use Debian or a Debian based distribution there&#8217;s an
+  <a href="http://packages.debian.org/asciidoc">AsciiDoc Debian package</a>
+  available.  Thanks to <a href="mailto:stone@debian.org">Fredrik Steen</a> who
+  built and maintains the Debian AsciiDoc package.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>Gentoo Linux</strong>
+</dt>
+<dd>
+<p>
+  If you use Gentoo Linux there&#8217;s a
+  <a href="http://packages.gentoo.org/package/app-text/asciidoc">Gentoo AsciiDoc
+  package</a> available. Thanks to <a href="mailto:brandon@ifup.org">Brandon
+  Philips</a> for writing the ebuild.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>Fedora Linux</strong>
+</dt>
+<dd>
+<p>
+  With help from Terje Røsten, Chris Wright added asciidoc to Fedora
+  Extras which is available in the default installation. To install
+  asciidoc execute the following command:
+</p>
+<div class="literalblock">
+<div class="content">
+<pre><code>$ yum install asciidoc</code></pre>
+</div></div>
+</dd>
+<dt class="hdlist1">
+<strong>Slackware Linux</strong>
+</dt>
+<dd>
+<p>
+  John Calixto has created a Slackware package for AsciiDoc which can
+  be downloaded from <a href="http://linuxpackages.net/">http://linuxpackages.net/</a>.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>Ark Linux</strong>
+</dt>
+<dd>
+<p>
+  <a href="mailto:bero@arklinux.org">Bernhard Rosenkraenzer</a> added AsciiDoc to
+  Ark Linux&#8201;&#8212;&#8201;the package is available from the Ark Linux repository
+  at <a href="http://arklinux.osuosl.org/dockyard-devel/">http://arklinux.osuosl.org/dockyard-devel/</a>, so Ark Linux users
+  should just run <code>apt-get install asciidoc</code>.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>T2 Linux</strong>
+</dt>
+<dd>
+<p>
+  <a href="mailto:cw@ixplanet.de">Christian Wiese</a> added AsciiDoc to the
+  <a href="http://www.t2-project.org/">T2 Linux</a> repository at
+  <a href="http://svn.exactcode.de/t2/trunk/package/textproc/asciidoc/">http://svn.exactcode.de/t2/trunk/package/textproc/asciidoc/</a>. To
+  build and install the package on a T2 system, run
+  <code>./scripts/Emerge-Pkg asciidoc</code> from within your T2 source directory
+  (default: <code>/usr/src/t2-src</code>).
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>Red Hat Enterprise Linux, Fedora and CentOS packages</strong>
+</dt>
+<dd>
+<p>
+  Dag Wieers has built AsciiDoc RPMs for a number of Red Hat based
+  distributions, they can be downloaded from
+  <a href="http://dag.wieers.com/rpm/packages/asciidoc/">http://dag.wieers.com/rpm/packages/asciidoc/</a>.
+</p>
+</dd>
+<dt class="hdlist1">
+<strong>CSW Package for Sun Solaris</strong>
+</dt>
+<dd>
+<p>
+  Ben Walton has created a CSW package for AsciiDoc, you can find it
+  here: <a href="http://opencsw.org/packages/asciidoc">http://opencsw.org/packages/asciidoc</a>.
+</p>
+</dd>
+</dl></div>
+<div class="paragraph"><p>See also <a href="userguide.html#X38">Packager Notes</a> in the <em>AsciiDoc User
+Guide</em>.</p></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2015-02-26 06:50:50 CET
+</div>
+<div id="footer-badges">
+<a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px"
+    src="http://www.w3.org/Icons/valid-xhtml11-blue"
+    alt="Valid XHTML 1.1" height="31" width="88" />
+</a>
+<a href="http://jigsaw.w3.org/css-validator/">
+  <img style="border:0;width:88px;height:31px"
+    src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+    alt="Valid CSS!" />
+</a>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

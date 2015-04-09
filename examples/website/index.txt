@@ -204,9 +204,8 @@ image::images/highlighter.png[height=400,caption="",link="images/highlighter.png
 
 Try AsciiDoc on the Web
 -----------------------
-Andrew Koster has written a Web based application to interactively
-convert and display AsciiDoc source:
-http://andrewk.webfactional.com/asciidoc.php
+Thaddée Tyl has written an online live editor to try AsciiDoc in your browser:
+http://espadrine.github.io/AsciiDocBox/
 
 
 [[X2]]

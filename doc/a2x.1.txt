@@ -39,8 +39,8 @@ OPTIONS
 
 *-D, --destination-dir*='DESTINATION_DIR'::
   Output directory. Defaults to 'SOURCE_FILE' directory. This option
-  is only applicable to HTML based output formats ('chunked', 'epub',
-  'htmlhelp', 'xhtml').
+  is only applicable to HTML and manpage based output formats ('chunked', 'epub',
+  'htmlhelp', 'xhtml', 'manpage').
 
 *-d, --doctype*='DOCTYPE'::
   DocBook document type: 'article', 'manpage' or 'book'.  Default

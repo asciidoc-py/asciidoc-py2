@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 34. Plugins</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch33.html" title="Chapter 33. Filters" /><link rel="next" href="ch35.html" title="Chapter 35. Help Commands" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch33.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch35.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 34. Plugins"><div class="titlepage"><div><div><h2 class="title"><a id="X101"></a>Chapter 34. Plugins</h2></div></div></div><p>The AsciiDoc plugin architecture is an extension mechanism that allows
+additional <a class="link" href="ch04.html#X100" title="4.2. Backend Plugins">backends</a>, <a class="link" href="ch33.html#X58" title="33.5. Filter plugins">filters</a> and <a class="link" href="ch07.html#X99" title="7.1. Themes">themes</a> to be
+added to AsciiDoc.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+A plugin is a Zip file containing an AsciiDoc backend, filter or
+  theme (configuration files, stylesheets, scripts, images).
+</li><li class="listitem">
+The <code class="literal">asciidoc(1)</code> <code class="literal">--backend</code>, <code class="literal">--filter</code> and <code class="literal">--theme</code> command-line
+  options are used to load and manage plugins. Each of these options
+  responds to the plugin management <span class="emphasis"><em>install</em></span>, <span class="emphasis"><em>list</em></span>, <span class="emphasis"><em>remove</em></span> and
+  <span class="emphasis"><em>build</em></span> commands.
+</li><li class="listitem">
+The plugin management command names are reserved and cannot be used
+  for filter, backend or theme names.
+</li><li class="listitem">
+The plugin Zip file name always begins with the backend, filter or
+  theme name.
+</li></ul></div><p>Plugin commands and conventions are documented in the <code class="literal">asciidoc(1)</code> man
+page.  You can find lists of plugins on the
+<a class="ulink" href="http://asciidoc.org/plugins.html" target="_top">AsciiDoc website</a>.</p></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch33.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch35.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

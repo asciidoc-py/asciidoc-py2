@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 33. Filters</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch32.html" title="Chapter 32. Block Element Definitions" /><link rel="next" href="ch34.html" title="Chapter 34. Plugins" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch32.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch34.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 33. Filters"><div class="titlepage"><div><div><h2 class="title"><a id="X59"></a>Chapter 33. Filters</h2></div></div></div><p>AsciiDoc filters allow external commands to process AsciiDoc
+<span class="emphasis"><em>Paragraphs</em></span>, <span class="emphasis"><em>DelimitedBlocks</em></span> and <span class="emphasis"><em>Table</em></span> content. Filters are
+primarily an extension mechanism for generating specialized outputs.
+Filters are implemented using external commands which are specified in
+configuration file definitions.</p><p>There’s nothing special about the filters, they’re just standard UNIX
+filters: they read text from the standard input, process it, and write
+to the standard output.</p><p>The <code class="literal">asciidoc(1)</code> command <code class="literal">--filter</code> option can be used to install and
+remove filters. The same option is used to unconditionally load a
+filter.</p><p>Attribute substitution is performed on the filter command prior to
+execution — attributes can be used to pass parameters from the
+AsciiDoc source document to the filter.</p><div class="warning" title="Warning" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/icons/warning.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Filters sometimes included executable code. Before installing
+a filter you should verify that it is from a trusted source.</p></td></tr></table></div><div class="section" title="33.1. Filter Search Paths"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_filter_search_paths"></a>33.1. Filter Search Paths</h2></div></div></div><p>If the filter command does not specify a directory path then
+<code class="literal">asciidoc(1)</code> recursively searches for the executable filter command:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+First it looks in the user’s <code class="literal">$HOME/.asciidoc/filters</code> directory.
+</li><li class="listitem">
+Next the global filters directory (usually <code class="literal">/etc/asciidoc/filters</code>
+  or <code class="literal">/usr/local/etc/asciidoc</code>) directory is searched.
+</li><li class="listitem">
+Then it looks in the <code class="literal">asciidoc(1)</code> <code class="literal">./filters</code> directory.
+</li><li class="listitem">
+Finally it relies on the executing shell to search the environment
+  search path (<code class="literal">$PATH</code>).
+</li></ul></div><p>Standard practice is to install each filter in it’s own sub-directory
+with the same name as the filter’s style definition. For example the
+music filter’s style name is <span class="emphasis"><em>music</em></span> so it’s configuration and filter
+files are stored in the <code class="literal">filters/music</code> directory.</p></div><div class="section" title="33.2. Filter Configuration Files"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_filter_configuration_files"></a>33.2. Filter Configuration Files</h2></div></div></div><p>Filters are normally accompanied by a configuration file containing a
+Paragraph or DelimitedBlock definition along with corresponding markup
+templates.</p><p>While it is possible to create new <span class="emphasis"><em>Paragraph</em></span> or <span class="emphasis"><em>DelimitedBlock</em></span>
+definitions the preferred way to implement a filter is to add a
+<a class="link" href="ch32.html#X23" title="32.1. Styles">style</a> to the existing Paragraph and ListingBlock definitions
+(all filters shipped with AsciiDoc use this technique). The filter is
+applied to the paragraph or delimited block by preceding it with an
+attribute list: the first positional attribute is the style name,
+remaining attributes are normally filter specific parameters.</p><p><code class="literal">asciidoc(1)</code> auto-loads all <code class="literal">.conf</code> files found in the filter search
+paths unless the container directory also contains a file named
+<code class="literal">__noautoload__</code> (see previous section). The <code class="literal">__noautoload__</code> feature
+is used for filters that will be loaded manually using the <code class="literal">--filter</code>
+option.</p></div><div class="section" title="33.3. Example Filter"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X56"></a>33.3. Example Filter</h2></div></div></div><p>AsciiDoc comes with a toy filter for highlighting source code keywords
+and comments.  See also the <code class="literal">./filters/code/code-filter-readme.txt</code>
+file.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The purpose of this toy filter is to demonstrate how to write a
+filter — it’s much to simplistic to be passed off as a code syntax
+highlighter.  If you want a full featured multi-language highlighter
+use the <a class="ulink" href="http://asciidoc.org/source-highlight-filter.html" target="_top">source code highlighter
+filter</a>.</p></td></tr></table></div></div><div class="section" title="33.4. Built-in filters"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_built_in_filters"></a>33.4. Built-in filters</h2></div></div></div><p>The AsciiDoc distribution includes <span class="emphasis"><em>source</em></span>, <span class="emphasis"><em>music</em></span>, <span class="emphasis"><em>latex</em></span> and
+<span class="emphasis"><em>graphviz</em></span> filters, details are on the
+<a class="ulink" href="http://asciidoc.org/index.html#_filters" target="_top">AsciiDoc website</a>.</p><div class="table"><a id="idp20327112"></a><p class="title"><strong>Table 33.1. Built-in filters list</strong></p><div class="table-contents"><table summary="Built-in filters list" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /></colgroup><thead><tr><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top">Filter name </th><th style="border-bottom: 1px solid #527bbd; " align="left" valign="top">Description</th></tr></thead><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>music</em></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>A <a class="ulink" href="http://asciidoc.org/music-filter.html" target="_top">music filter</a> is included in the
+distribution <code class="literal">./filters/</code> directory. It translates music in
+<a class="ulink" href="http://lilypond.org/" target="_top">LilyPond</a> or <a class="ulink" href="http://abcnotation.org.uk/" target="_top">ABC</a>
+notation to standard classical notation.</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>source</em></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>A <a class="ulink" href="http://asciidoc.org/source-highlight-filter.html" target="_top">source code highlight filter</a>
+is included in the distribution <code class="literal">./filters/</code> directory.</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>latex</em></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>The <a class="ulink" href="http://asciidoc.org/latex-filter.html" target="_top">AsciiDoc LaTeX filter</a> translates
+LaTeX source to a PNG image that is automatically inserted into the
+AsciiDoc output documents.</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>graphviz</em></span></p></td><td style="" align="left" valign="top"><p>Gouichi Iisaka has written a <a class="ulink" href="http://www.graphviz.org/" target="_top">Graphviz</a>
+filter for AsciiDoc.  Graphviz generates diagrams from a textual
+specification. Gouichi Iisaka’s Graphviz filter is included in the
+AsciiDoc distribution. Here are some
+<a class="ulink" href="http://asciidoc.org/asciidoc-graphviz-sample.html" target="_top">AsciiDoc Graphviz examples</a>.</p></td></tr></tbody></table></div></div><br class="table-break" /></div><div class="section" title="33.5. Filter plugins"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X58"></a>33.5. Filter plugins</h2></div></div></div><p>Filter <a class="link" href="ch34.html" title="Chapter 34. Plugins">plugins</a> are a mechanism for distributing AsciiDoc
+filters.  A filter plugin is a Zip file containing the files that
+constitute a filter.  The <code class="literal">asciidoc(1)</code> <code class="literal">--filter</code> option is used to
+load and manage filer <a class="link" href="ch34.html" title="Chapter 34. Plugins">plugins</a>.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Filter plugins <a class="link" href="ch26.html#X27" title="26.11. Configuration file names, precedence and locations">take precedence</a> over built-in filters with
+  the same name.
+</li><li class="listitem">
+By default filter plugins are installed in
+  <code class="literal">$HOME/.asciidoc/filters/&lt;filter&gt;</code> where <code class="literal">&lt;filter&gt;</code> is the filter
+  name.
+</li></ul></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch32.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch34.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

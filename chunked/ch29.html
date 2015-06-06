@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 29. Attribute Lists</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch28.html" title="Chapter 28. Attribute Entries" /><link rel="next" href="ch30.html" title="Chapter 30. Attribute References" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch28.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch30.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 29. Attribute Lists"><div class="titlepage"><div><div><h2 class="title"><a id="X21"></a>Chapter 29. Attribute Lists</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+An attribute list is a comma separated list of attribute values.
+</li><li class="listitem">
+The entire list is enclosed in square brackets.
+</li><li class="listitem">
+Attribute lists are used to pass parameters to macros, blocks (using
+  the <a class="link" href="ch14.html" title="Chapter 14. AttributeList Element">AttributeList element</a>) and inline quotes.
+</li></ul></div><p>The list consists of zero or more positional attribute values followed
+by zero or more named attribute values.  Here are three examples: a
+single unquoted positional attribute; three unquoted positional
+attribute values; one positional attribute followed by two named
+attributes; the unquoted attribute value in the final example contains
+comma (<code class="literal">&amp;#44;</code>) and double-quote (<code class="literal">&amp;#34;</code>) character entities:</p><pre class="literallayout">[Hello]
+[quote, Bertrand Russell, The World of Mathematics (1956)]
+["22 times", backcolor="#0e0e0e", options="noborders,wide"]
+[A footnote&amp;#44; &amp;#34;with an image&amp;#34; image:smallnew.png[]]</pre><div class="itemizedlist" title="Attribute list behavior"><p class="title"><strong>Attribute list behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+If one or more attribute values contains a comma the all string
+  values must be quoted (enclosed in double quotation mark
+  characters).
+</li><li class="listitem">
+If the list contains any named or quoted attributes then all string
+  attribute values must be quoted.
+</li><li class="listitem">
+To include a double quotation mark (") character in a quoted
+  attribute value the the quotation mark must be escaped with a
+  backslash.
+</li><li class="listitem">
+List attributes take precedence over existing attributes.
+</li><li class="listitem">
+List attributes can only be referenced in configuration file markup
+  templates and tags, they are not available elsewhere in the
+  document.
+</li><li class="listitem">
+Setting a named attribute to <code class="literal">None</code> undefines the attribute.
+</li><li class="listitem">
+Positional attributes are referred to as <code class="literal">{1}</code>,<code class="literal">{2}</code>,<code class="literal">{3}</code>,…
+</li><li class="listitem">
+Attribute <code class="literal">{0}</code> refers to the entire list (excluding the enclosing
+  square brackets).
+</li><li class="listitem">
+Named attribute names cannot contain dash characters.
+</li></ul></div><div class="section" title="29.1. Options attribute"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X75"></a>29.1. Options attribute</h2></div></div></div><p>If the attribute list contains an attribute named <code class="literal">options</code> it is
+processed as a comma separated list of option names:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Each name generates an attribute named like <code class="literal">&lt;option&gt;-option</code> (where
+  <code class="literal">&lt;option&gt;</code> is the option name) with an empty string value.  For
+  example <code class="literal">[options="opt1,opt2,opt3"]</code> is equivalent to setting the
+  following three attributes
+  <code class="literal">[opt1-option="",opt2-option="",opt2-option=""]</code>.
+</li><li class="listitem">
+If you define a an option attribute globally (for example with an
+  <a class="link" href="ch28.html" title="Chapter 28. Attribute Entries">attribute entry</a>) then it will apply to all elements in the
+  document.
+</li><li class="listitem">
+AsciiDoc implements a number of predefined options which are listed
+  in the <a class="link" href="apf.html" title="Appendix F. Attribute Options">Attribute Options appendix</a>.
+</li></ul></div></div><div class="section" title="29.2. Macro Attribute lists"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_macro_attribute_lists"></a>29.2. Macro Attribute lists</h2></div></div></div><p>Macros calls are suffixed with an attribute list. The list may be
+empty but it cannot be omitted. List entries are used to pass
+attribute values to macro markup templates.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch28.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch30.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

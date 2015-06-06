@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 11. Titles</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch10.html" title="Chapter 10. Text Formatting" /><link rel="next" href="ch12.html" title="Chapter 12. Block Titles" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch10.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch12.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 11. Titles"><div class="titlepage"><div><div><h2 class="title"><a id="X17"></a>Chapter 11. Titles</h2></div></div></div><p>Document and section titles can be in either of two formats:</p><div class="section" title="11.1. Two line titles"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_two_line_titles"></a>11.1. Two line titles</h2></div></div></div><p>A two line title consists of a title line, starting hard against the
+left margin, and an underline. Section underlines consist a repeated
+character pairs spanning the width of the preceding title (give or
+take up to two characters):</p><p>The default title underlines for each of the document levels are:</p><pre class="literallayout">Level 0 (top level):     ======================
+Level 1:                 ----------------------
+Level 2:                 ~~~~~~~~~~~~~~~~~~~~~~
+Level 3:                 ^^^^^^^^^^^^^^^^^^^^^^
+Level 4 (bottom level):  ++++++++++++++++++++++</pre><p>Examples:</p><pre class="literallayout">Level One Section Title
+-----------------------</pre><pre class="literallayout">Level 2 Subsection Title
+~~~~~~~~~~~~~~~~~~~~~~~~</pre></div><div class="section" title="11.2. One line titles"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X46"></a>11.2. One line titles</h2></div></div></div><p>One line titles consist of a single line delimited on either side by
+one or more equals characters (the number of equals characters
+corresponds to the section level minus one).  Here are some examples:</p><pre class="literallayout">= Document Title (level 0) =
+== Section title (level 1) ==
+=== Section title (level 2) ===
+==== Section title (level 3) ====
+===== Section title (level 4) =====</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+One or more spaces must fall between the title and the delimiters.
+</li><li class="listitem">
+The trailing title delimiter is optional.
+</li><li class="listitem">
+The one-line title syntax can be changed by editing the
+  configuration file <code class="literal">[titles]</code> section <code class="literal">sect0</code>…<code class="literal">sect4</code> entries.
+</li></ul></div></td></tr></table></div></div><div class="section" title="11.3. Floating titles"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_floating_titles"></a>11.3. Floating titles</h2></div></div></div><p>Setting the title’s first positional attribute or <span class="emphasis"><em>style</em></span> attribute to
+<span class="emphasis"><em>float</em></span> generates a free-floating title. A free-floating title is
+rendered just like a normal section title but is not formally
+associated with a text body and is not part of the regular section
+hierarchy so the normal ordering rules do not apply. Floating titles
+can also be used in contexts where section titles are illegal: for
+example sidebar and admonition blocks.  Example:</p><pre class="literallayout">[float]
+The second day
+~~~~~~~~~~~~~~</pre><p>Floating titles do not appear in a document’s table of contents.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch10.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch12.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

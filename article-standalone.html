@@ -1,0 +1,1085 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>The Article Title</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article" style="max-width:55em">
+<div id="header">
+<h1>The Article Title</h1>
+<span id="author">Author's Name</span><br />
+<span id="email"><code>&lt;<a href="mailto:authors@email.address">authors@email.address</a>&gt;</code></span><br />
+<span id="revnumber">version 8.6.9,</span>
+<span id="revdate">9 November 2013</span>
+<div id="toc">
+  <div id="toctitle">Table of Contents</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>This is the optional preamble (an untitled section body). Useful for
+writing simple sectionless documents consisting only of a preamble.</p></div>
+<div class="admonitionblock">
+<table><tr>
+<td class="icon">
+<img alt="Note" src="data:image/png;base64,
+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" />
+</td>
+<td class="content">The abstract, preface, appendix, bibliography, glossary and
+index section titles are significant (<em>specialsections</em>).</td>
+</tr></table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_abstract">Example Abstract</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The optional abstract (one or more paragraphs) goes here.</p></div>
+<div class="paragraph"><p>This document is an AsciiDoc article skeleton containing briefly
+annotated element placeholders plus a couple of example index entries
+and footnotes.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_first_section">1. The First Section</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Article sections start at level 1 and can be nested up to four levels
+deep.
+<span class="footnote"><br />[An example footnote.]<br /></span></p></div>
+<div class="paragraph"><p>And now for something completely different: monkeys, lions and
+tigers (Bengal and Siberian) using the alternative syntax index
+entries.
+
+
+
+Note that multi-entry terms generate separate index entries.</p></div>
+<div class="paragraph"><p>Here are a couple of image examples: an <span class="image">
+<img alt="images/smallnew.png"
+src="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAABsAAAARCAYAAAAsT9czAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A
+/wD/oL2nkwAAAAlwSFlzAAAOwgAADsIBFShKgAAAAAd0SU1FB9kEGQU1DxUxRF4AAACkSURBVDjL
+3VXbCoAgDD2Wwf7/awcR9mRM23QSWDQQ5i5tZxcLKSXMogUT6bvBjmNLLV1LDwBB61nttK570GSt
+BKQ+81ewXlZPKAdbagEAEJXG+U5UHs3WkgFAtMpFBDDfHTSZB1VzQJjtrEfkJrK6b1pADZm0kbxE
+5Rr9XtmynrnkteSjZ4csFJ7+vTb60buosv4jS999QeqPao6yPF6f8NtfzAno2HZ/Qe1mTQAAAABJ
+RU5ErkJggg==" />
+</span>
+example inline image followed by an example block image:</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="Tiger image"
+src="data:image/png;base64,
+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
+m2i9J54AAAAASUVORK5CYII=" />
+</div>
+<div class="title">Figure 1. Tiger block image</div>
+</div>
+<div class="paragraph"><p>Followed by an example table:</p></div>
+<div class="tableblock">
+<table rules="all"
+width="60%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Table 1. An example table</caption>
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top"> Option          </th>
+<th align="left" valign="top"> Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">-a <em>USER GROUP</em></p></td>
+<td align="left" valign="top"><p class="table">Add <em>USER</em> to <em>GROUP</em>.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">-R <em>GROUP</em></p></td>
+<td align="left" valign="top"><p class="table">Disables access to <em>GROUP</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. An example example</div>
+<div class="content">
+<div class="paragraph"><p>Lorum ipum&#8230;</p></div>
+</div></div>
+<div class="sect2">
+<h3 id="X1">1.1. Sub-section with Anchor</h3>
+<div class="paragraph"><p>Sub-section at level 2.</p></div>
+<div class="sect3">
+<h4 id="_a_nested_sub_section">1.1.1. A Nested Sub-section</h4>
+<div class="paragraph"><p>Sub-section at level 3.</p></div>
+<div class="sect4">
+<h5 id="_yet_another_nested_sub_section">Yet another nested Sub-section</h5>
+<div class="paragraph"><p>Sub-section at level 4.</p></div>
+<div class="paragraph"><p>This is the maximum sub-section depth supported by the distributed
+AsciiDoc configuration.
+<span class="footnote"><br />[A second example footnote.]<br /></span></p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_second_section">2. The Second Section</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Article sections are at level 1 and can contain sub-sections nested up
+to four deep.</p></div>
+<div class="paragraph"><p>An example link to anchor at start of the <a href="#X1">first sub-section</a>.</p></div>
+<div class="paragraph"><p>An example link to a bibliography entry <a href="#taoup">[taoup]</a>.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_appendix">Appendix A: Example Appendix</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>AsciiDoc article appendices are just just article sections with
+<em>specialsection</em> titles.</p></div>
+<div class="sect2">
+<h3 id="_appendix_sub_section">Appendix Sub-section</h3>
+<div class="paragraph"><p>Appendix sub-section at level 2.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_bibliography">Example Bibliography</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The bibliography list is a style of AsciiDoc bulleted list.</p></div>
+<div class="ulist bibliography"><ul>
+<li>
+<p>
+<a id="taoup"></a>[taoup] Eric Steven Raymond. <em>The Art of Unix
+  Programming</em>. Addison-Wesley. ISBN 0-13-142901-9.
+</p>
+</li>
+<li>
+<p>
+<a id="walsh-muellner"></a>[walsh-muellner] Norman Walsh &amp; Leonard Muellner.
+  <em>DocBook - The Definitive Guide</em>. O&#8217;Reilly &amp; Associates. 1999.
+  ISBN 1-56592-580-7.
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_glossary">Example Glossary</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Glossaries are optional. Glossaries entries are an example of a style
+of AsciiDoc labeled lists.</p></div>
+<div class="dlist glossary"><dl>
+<dt>
+A glossary term
+</dt>
+<dd>
+<p>
+  The corresponding (indented) definition.
+</p>
+</dd>
+<dt>
+A second glossary term
+</dt>
+<dd>
+<p>
+  The corresponding (indented) definition.
+</p>
+</dd>
+</dl></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Version 8.6.9<br />
+Last updated 2012-09-28 11:34:03 NZST
+</div>
+</div>
+</body>
+</html>

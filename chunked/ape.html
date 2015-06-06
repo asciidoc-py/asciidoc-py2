@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Appendix E. Vim Syntax Highlighter</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="apd.html" title="Appendix D. Using AsciiDoc with non-English Languages" /><link rel="next" href="apf.html" title="Appendix F. Attribute Options" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="apd.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="apf.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="appendix" title="Appendix E. Vim Syntax Highlighter"><div class="titlepage"><div><div><h2 class="title"><a id="_vim_syntax_highlighter"></a>Appendix E. Vim Syntax Highlighter</h2></div></div></div><p>Syntax highlighting is incredibly useful, in addition to making
+reading AsciiDoc documents much easier syntax highlighting also helps
+you catch AsciiDoc syntax errors as you write your documents.</p><p>The AsciiDoc distribution directory contains a Vim syntax highlighter
+for AsciiDoc (<code class="literal">./vim/syntax/asciidoc.vim</code>), you can find the latest
+version in the online
+<a class="ulink" href="https://code.google.com/p/asciidoc/source/browse/" target="_top">AsciiDoc
+repository</a>.</p><p>Install the highlighter by copying <code class="literal">asciidoc.vim</code> to your
+<code class="literal">$HOME/.vim/syntax</code> directory (create it if it doesn’t already exist).</p><p>To enable syntax highlighing:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Put a Vim <span class="emphasis"><em>autocmd</em></span> in your Vim configuration file (see the
+  <a class="link" href="ch36.html#X61" title="36.2.4. Example ~/.vimrc File">example vimrc file</a>).
+</li><li class="listitem">
+or execute the Vim command <code class="literal">:set syntax=asciidoc</code>.
+</li><li class="listitem"><p class="simpara">
+or add the following line to the end of you AsciiDoc source files:
+</p><pre class="literallayout">// vim: set syntax=asciidoc:</pre></li></ul></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apd.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="apf.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

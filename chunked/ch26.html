@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 26. Configuration Files</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch25.html" title="Chapter 25. Mathematical Formulas" /><link rel="next" href="ch27.html" title="Chapter 27. Document Attributes" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch25.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch27.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 26. Configuration Files"><div class="titlepage"><div><div><h2 class="title"><a id="X7"></a>Chapter 26. Configuration Files</h2></div></div></div><p>AsciiDoc source file syntax and output file markup is largely
+controlled by a set of cascading, text based, configuration files.  At
+runtime The AsciiDoc default configuration files are combined with
+optional user and document specific configuration files.</p><div class="section" title="26.1. Configuration File Format"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_configuration_file_format"></a>26.1. Configuration File Format</h2></div></div></div><p>Configuration files contain named sections. Each section begins with a
+section name in square brackets []. The section body consists of the
+lines of text between adjacent section headings.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Section names consist of one or more alphanumeric, underscore or
+  dash characters and cannot begin or end with a dash.
+</li><li class="listitem">
+Lines starting with a <span class="emphasis"><em>#</em></span> character are treated as comments and
+  ignored.
+</li><li class="listitem">
+If the section name is prefixed with a <span class="emphasis"><em>+</em></span> character then the
+  section contents is appended to the contents of an already existing
+  same-named section.
+</li><li class="listitem">
+Otherwise same-named sections and section entries override
+  previously loaded sections and section entries (this is sometimes
+  referred to as <span class="emphasis"><em>cascading</em></span>).  Consequently, downstream configuration
+  files need only contain those sections and section entries that need
+  to be overridden.
+</li></ul></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>When creating custom configuration files you only need to include
+the sections and entries that differ from the default configuration.</p></td></tr></table></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The best way to learn about configuration files is to read the
+default configuration files in the AsciiDoc distribution in
+conjunction with <code class="literal">asciidoc(1)</code> output files. You can view configuration
+file load sequence by turning on the <code class="literal">asciidoc(1)</code> <code class="literal">-v</code> (<code class="literal">--verbose</code>)
+command-line option.</p></td></tr></table></div><p>AsciiDoc reserves the following section names for specific purposes:</p><div class="variablelist"><dl><dt><span class="term">
+miscellaneous
+</span></dt><dd>
+        Configuration options that don’t belong anywhere else.
+</dd><dt><span class="term">
+attributes
+</span></dt><dd>
+        Attribute name/value entries.
+</dd><dt><span class="term">
+specialcharacters
+</span></dt><dd>
+        Special characters reserved by the backend markup.
+</dd><dt><span class="term">
+tags
+</span></dt><dd>
+        Backend markup tags.
+</dd><dt><span class="term">
+quotes
+</span></dt><dd>
+        Definitions for quoted inline character formatting.
+</dd><dt><span class="term">
+specialwords
+</span></dt><dd>
+        Lists of words and phrases singled out for special markup.
+</dd><dt><span class="term">
+replacements, replacements2, replacements3
+</span></dt><dd>
+        Find and replace substitution definitions.
+</dd><dt><span class="term">
+specialsections
+</span></dt><dd>
+        Used to single out special section names for specific markup.
+</dd><dt><span class="term">
+macros
+</span></dt><dd>
+        Macro syntax definitions.
+</dd><dt><span class="term">
+titles
+</span></dt><dd>
+        Heading, section and block title definitions.
+</dd><dt><span class="term">
+paradef-*
+</span></dt><dd>
+        Paragraph element definitions.
+</dd><dt><span class="term">
+blockdef-*
+</span></dt><dd>
+        DelimitedBlock element definitions.
+</dd><dt><span class="term">
+listdef-*
+</span></dt><dd>
+        List element definitions.
+</dd><dt><span class="term">
+listtags-*
+</span></dt><dd>
+        List element tag definitions.
+</dd><dt><span class="term">
+tabledef-*
+</span></dt><dd>
+        Table element definitions.
+</dd><dt><span class="term">
+tabletags-*
+</span></dt><dd>
+        Table element tag definitions.
+</dd></dl></div><p>Each line of text in these sections is a <span class="emphasis"><em>section entry</em></span>. Section
+entries share the following syntax:</p><div class="variablelist"><dl><dt><span class="term">
+name=value
+</span></dt><dd>
+        The entry value is set to value.
+</dd><dt><span class="term">
+name=
+</span></dt><dd>
+        The entry value is set to a zero length string.
+</dd><dt><span class="term">
+name!
+</span></dt><dd>
+        The entry is undefined (deleted from the configuration). This
+        syntax only applies to <span class="emphasis"><em>attributes</em></span> and <span class="emphasis"><em>miscellaneous</em></span>
+        sections.
+</dd></dl></div><div class="itemizedlist" title="Section entry behavior"><p class="title"><strong>Section entry behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+All equals characters inside the <code class="literal">name</code> must be escaped with a
+  backslash character.
+</li><li class="listitem">
+<code class="literal">name</code> and <code class="literal">value</code> are stripped of leading and trailing white space.
+</li><li class="listitem">
+Attribute names, tag entry names and markup template section names
+  consist of one or more alphanumeric, underscore or dash characters.
+  Names should not begin or end with a dash.
+</li><li class="listitem">
+A blank configuration file section (one without any entries) deletes
+  any preceding section with the same name (applies to non-markup
+  template sections).
+</li></ul></div></div><div class="section" title="26.2. Miscellaneous section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_miscellaneous_section"></a>26.2. Miscellaneous section</h2></div></div></div><p>The optional <code class="literal">[miscellaneous]</code> section specifies the following
+<code class="literal">name=value</code> options:</p><div class="variablelist"><dl><dt><span class="term">
+newline
+</span></dt><dd><p class="simpara">
+        Output file line termination characters. Can include any
+        valid Python string escape sequences. The default value is
+        <code class="literal">\r\n</code> (carriage return, line feed). Should not be quoted or
+        contain explicit spaces (use <code class="literal">\x20</code> instead). For example:
+</p><pre class="literallayout">$ asciidoc -a 'newline=\n' -b docbook mydoc.txt</pre></dd><dt><span class="term">
+outfilesuffix
+</span></dt><dd>
+        The default extension for the output file, for example
+        <code class="literal">outfilesuffix=.html</code>. Defaults to backend name.
+</dd><dt><span class="term">
+tabsize
+</span></dt><dd>
+        The number of spaces to expand tab characters, for example
+        <code class="literal">tabsize=4</code>. Defaults to 8. A <span class="emphasis"><em>tabsize</em></span> of zero suppresses tab
+        expansion (useful when piping included files through block
+        filters). Included files can override this option using the
+        <span class="emphasis"><em>tabsize</em></span> attribute.
+</dd><dt><span class="term">
+pagewidth, pageunits
+</span></dt><dd>
+        These global table related options are documented in the
+        <a class="link" href="ch32.html#X4">Table Configuration File Definitions</a> sub-section.
+</dd></dl></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">[miscellaneous]</code> configuration file entries can be set using
+the <code class="literal">asciidoc(1)</code> <code class="literal">-a</code> (<code class="literal">--attribute</code>) command-line option.</p></td></tr></table></div></div><div class="section" title="26.3. Titles section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_titles_section"></a>26.3. Titles section</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+sectiontitle
+</span></dt><dd>
+        Two line section title pattern. The entry value is a Python
+        regular expression containing the named group <span class="emphasis"><em>title</em></span>.
+</dd><dt><span class="term">
+underlines
+</span></dt><dd><p class="simpara">
+        A comma separated list of document and section title underline
+        character pairs starting with the section level 0 and ending
+        with section level 4 underline. The default setting is:
+</p><pre class="literallayout">underlines="==","--","~~","^^","++"</pre></dd><dt><span class="term">
+sect0…sect4
+</span></dt><dd>
+        One line section title patterns. The entry value is a Python
+        regular expression containing the named group <span class="emphasis"><em>title</em></span>.
+</dd><dt><span class="term">
+blocktitle
+</span></dt><dd>
+        <a class="link" href="ch12.html" title="Chapter 12. Block Titles">BlockTitle element</a> pattern.  The entry value is a
+        Python regular expression containing the named group <span class="emphasis"><em>title</em></span>.
+</dd><dt><span class="term">
+subs
+</span></dt><dd>
+        A comma separated list of substitutions that are performed on
+        the document header and section titles. Defaults to <span class="emphasis"><em>normal</em></span>
+        substitution.
+</dd></dl></div></div><div class="section" title="26.4. Tags section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_tags_section"></a>26.4. Tags section</h2></div></div></div><p>The <code class="literal">[tags]</code> section contains backend tag definitions (one per
+line). Tags are used to translate AsciiDoc elements to backend
+markup.</p><p>An AsciiDoc tag definition is formatted like
+<code class="literal">&lt;tagname&gt;=&lt;starttag&gt;|&lt;endtag&gt;</code>. For example:</p><pre class="literallayout">emphasis=&lt;em&gt;|&lt;/em&gt;</pre><p>In this example <code class="literal">asciidoc(1)</code> replaces the | character with the
+emphasized text from the AsciiDoc input file and writes the result to
+the output file.</p><p>Use the <code class="literal">{brvbar}</code> attribute reference if you need to include a | pipe
+character inside tag text.</p></div><div class="section" title="26.5. Attributes section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_attributes_section"></a>26.5. Attributes section</h2></div></div></div><p>The optional <code class="literal">[attributes]</code> section contains predefined attributes.</p><p>If the attribute value requires leading or trailing spaces then the
+text text should be enclosed in quotation mark (") characters.</p><p>To delete a attribute insert a <code class="literal">name!</code> entry in a downstream
+configuration file or use the <code class="literal">asciidoc(1)</code> <code class="literal">--attribute name!</code>
+command-line option (an attribute name suffixed with a <code class="literal">!</code> character
+deletes the attribute)</p></div><div class="section" title="26.6. Special Characters section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_special_characters_section"></a>26.6. Special Characters section</h2></div></div></div><p>The <code class="literal">[specialcharacters]</code> section specifies how to escape characters
+reserved by the backend markup. Each translation is specified on a
+single line formatted like:</p><pre class="literallayout">&lt;special_character&gt;=&lt;translated_characters&gt;</pre><p>Special characters are normally confined to those that resolve
+markup ambiguity (in the case of HTML and XML markups the ampersand,
+less than and greater than characters).  The following example causes
+all occurrences of the <code class="literal">&lt;</code> character to be replaced by <code class="literal">&amp;lt;</code>.</p><pre class="literallayout">&lt;=&amp;lt;</pre></div><div class="section" title="26.7. Quoted Text section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_quoted_text_section"></a>26.7. Quoted Text section</h2></div></div></div><p>Quoting is used primarily for text formatting.  The <code class="literal">[quotes]</code> section
+defines AsciiDoc quoting characters and their corresponding backend
+markup tags.  Each section entry value is the name of a of a <code class="literal">[tags]</code>
+section entry. The entry name is the character (or characters) that
+quote the text.  The following examples are taken from AsciiDoc
+configuration files:</p><pre class="literallayout">[quotes]
+_=emphasis</pre><pre class="literallayout">[tags]
+emphasis=&lt;em&gt;|&lt;/em&gt;</pre><p>You can specify the left and right quote strings separately by
+separating them with a | character, for example:</p><pre class="literallayout">``|''=quoted</pre><p>Omitting the tag will disable quoting, for example, if you don’t want
+superscripts or subscripts put the following in a custom configuration
+file or edit the global <code class="literal">asciidoc.conf</code> configuration file:</p><pre class="literallayout">[quotes]
+^=
+~=</pre><p><a class="link" href="ch10.html#X52" title="10.1.2. Constrained and Unconstrained Quotes">Unconstrained quotes</a> are differentiated from constrained
+quotes by prefixing the tag name with a hash character, for example:</p><pre class="literallayout">__=#emphasis</pre><div class="itemizedlist" title="Quoted text behavior"><p class="title"><strong>Quoted text behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+Quote characters must be non-alphanumeric.
+</li><li class="listitem">
+To minimize quoting ambiguity try not to use the same quote
+  characters in different quote types.
+</li></ul></div></div><div class="section" title="26.8. Special Words section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_special_words_section"></a>26.8. Special Words section</h2></div></div></div><p>The <code class="literal">[specialwords]</code> section is used to single out words and phrases
+that you want to consistently format in some way throughout your
+document without having to repeatedly specify the markup. The name of
+each entry corresponds to a markup template section and the entry
+value consists of a list of words and phrases to be marked up. For
+example:</p><pre class="literallayout">[specialwords]
+strongwords=NOTE IMPORTANT</pre><pre class="literallayout">[strongwords]
+&lt;strong&gt;{words}&lt;/strong&gt;</pre><p>The examples specifies that any occurrence of <code class="literal">NOTE</code> or <code class="literal">IMPORTANT</code>
+should appear in a bold font.</p><p>Words and word phrases are treated as Python regular expressions: for
+example, the word <code class="literal">^NOTE</code> would only match <code class="literal">NOTE</code> if appeared at
+the start of a line.</p><p>AsciiDoc comes with three built-in Special Word types:
+<span class="emphasis"><em>emphasizedwords</em></span>, <span class="emphasis"><em>monospacedwords</em></span> and <span class="emphasis"><em>strongwords</em></span>, each has a
+corresponding (backend specific) markup template section. Edit the
+configuration files to customize existing Special Words and to add new
+ones.</p><div class="itemizedlist" title="Special word behavior"><p class="title"><strong>Special word behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+Word list entries must be separated by space characters.
+</li><li class="listitem">
+Word list entries with embedded spaces should be enclosed in quotation (")
+  characters.
+</li><li class="listitem">
+A <code class="literal">[specialwords]</code> section entry of the form
+  <code class="literal">name=word1 [word2…]</code> adds words to existing <code class="literal">name</code> entries.
+</li><li class="listitem">
+A <code class="literal">[specialwords]</code> section entry of the form <code class="literal">name</code> undefines
+  (deletes) all existing <code class="literal">name</code> words.
+</li><li class="listitem">
+Since word list entries are processed as Python regular expressions
+  you need to be careful to escape regular expression special
+  characters.
+</li><li class="listitem">
+By default Special Words are substituted before Inline Macros, this
+  may lead to undesirable consequences. For example the special word
+  <code class="literal">foobar</code> would be expanded inside the macro call
+  <code class="literal">http://www.foobar.com[]</code>.  A possible solution is to emphasize
+  whole words only by defining the word using regular expression
+  characters, for example <code class="literal">\bfoobar\b</code>.
+</li><li class="listitem">
+If the first matched character of a special word is a backslash then
+  the remaining characters are output without markup i.e. the
+  backslash can be used to escape special word markup.  For example
+  the special word <code class="literal">\\?\b[Tt]en\b</code> will mark up the words <code class="literal">Ten</code> and
+  <code class="literal">ten</code> only if they are not preceded by a backslash.
+</li></ul></div></div><div class="section" title="26.9. Replacements section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X10"></a>26.9. Replacements section</h2></div></div></div><p><code class="literal">[replacements]</code>, <code class="literal">[replacements2]</code> and <code class="literal">[replacements3]</code>
+configuration file entries specify find and replace text and are
+formatted like:</p><pre class="literallayout">&lt;find_pattern&gt;=&lt;replacement_text&gt;</pre><p>The find text can be a Python regular expression; the replace text can
+contain Python regular expression group references.</p><p>Use Replacement shortcuts for often used macro references, for
+example (the second replacement allows us to backslash escape the
+macro name):</p><pre class="literallayout">NEW!=image:./images/smallnew.png[New!]
+\\NEW!=NEW!</pre><p>The only difference between the three replacement types is how they
+are applied. By default <span class="emphasis"><em>replacements</em></span> and <span class="emphasis"><em>replacements2</em></span> are applied
+in <a class="link" href="ch32.html#X102">normal</a> substitution contexts whereas <span class="emphasis"><em>replacements3</em></span> needs
+to be configured explicitly and should only be used in backend
+configuration files.</p><div class="itemizedlist" title="Replacement behavior"><p class="title"><strong>Replacement behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+The built-in replacements can be escaped with a backslash.
+</li><li class="listitem">
+If the find or replace text has leading or trailing spaces then the
+  text should be enclosed in quotation (") characters.
+</li><li class="listitem">
+Since the find text is processed as a regular expression you need to
+  be careful to escape regular expression special characters.
+</li><li class="listitem">
+Replacements are performed in the same order they appear in the
+  configuration file replacements section.
+</li></ul></div></div><div class="section" title="26.10. Markup Template Sections"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_markup_template_sections"></a>26.10. Markup Template Sections</h2></div></div></div><p>Markup template sections supply backend markup for translating
+AsciiDoc elements.  Since the text is normally backend dependent
+you’ll find these sections in the backend specific configuration
+files. Template sections differ from other sections in that they
+contain a single block of text instead of per line <span class="emphasis"><em>name=value</em></span>
+entries. A markup template section body can contain:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Attribute references
+</li><li class="listitem">
+System macro calls.
+</li><li class="listitem">
+A document content placeholder
+</li></ul></div><p>The document content placeholder is a single | character and is
+replaced by text from the source element.  Use the <code class="literal">{brvbar}</code>
+attribute reference if you need a literal | character in the template.</p></div><div class="section" title="26.11. Configuration file names, precedence and locations"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X27"></a>26.11. Configuration file names, precedence and locations</h2></div></div></div><p>Configuration files have a <code class="literal">.conf</code> file name extension; they are
+loaded from the following locations:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+The directory containing the asciidoc executable.
+</li><li class="listitem">
+If there is no <code class="literal">asciidoc.conf</code> file in the directory containing the
+   asciidoc executable then load from the global configuration
+   directory (normally <code class="literal">/etc/asciidoc</code> or <code class="literal">/usr/local/etc/asciidoc</code>)
+   i.e. the global configuration files directory is skipped if
+   AsciiDoc configuration files are installed in the same directory as
+   the asciidoc executable. This allows both a system wide copy and
+   multiple local copies of AsciiDoc to coexist on the same host PC.
+</li><li class="listitem">
+The user’s <code class="literal">$HOME/.asciidoc</code> directory (if it exists).
+</li><li class="listitem">
+The directory containing the AsciiDoc source file.
+</li><li class="listitem"><p class="simpara">
+Explicit configuration files specified using:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+The <code class="literal">conf-files</code> attribute (one or more file names separated by a
+     <code class="literal">|</code> character). These files are loaded in the order they are
+     specified and prior to files specified using the <code class="literal">--conf-file</code>
+     command-line option.
+</li><li class="listitem">
+The <code class="literal">asciidoc(1)</code> <code class="literal">--conf-file</code>) command-line option.  The
+     <code class="literal">--conf-file</code> option can be specified multiple times, in which
+     case configuration files will be processed in the same order they
+     appear on the command-line.
+</li></ul></div></li><li class="listitem">
+<a class="link" href="ch04.html#X100" title="4.2. Backend Plugins">Backend plugin</a> configuration files are loaded from
+   subdirectories named like <code class="literal">backends/&lt;backend&gt;</code> in locations 1, 2
+   and 3.
+</li><li class="listitem">
+<a class="link" href="ch33.html" title="Chapter 33. Filters">Filter</a> configuration files are loaded from subdirectories
+   named like <code class="literal">filters/&lt;filter&gt;</code> in locations 1, 2 and 3.
+</li></ol></div><p>Configuration files from the above locations are loaded in the
+following order:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+The <code class="literal">[attributes]</code> section only from:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">asciidoc.conf</code> in location 3
+</li><li class="listitem"><p class="simpara">
+Files from location 5.
+</p><p class="simpara">This first pass makes locally set attributes available in the global
+<code class="literal">asciidoc.conf</code> file.</p></li></ul></div></li><li class="listitem">
+<code class="literal">asciidoc.conf</code> from locations 1, 2, 3.
+</li><li class="listitem">
+<span class="emphasis"><em>attributes</em></span>, <span class="emphasis"><em>titles</em></span> and <span class="emphasis"><em>specialcharacters</em></span> sections from the
+  <code class="literal">asciidoc.conf</code> in location 4.
+</li><li class="listitem">
+The document header is parsed at this point and we can assume the
+  <span class="emphasis"><em>backend</em></span> and <span class="emphasis"><em>doctype</em></span> have now been defined.
+</li><li class="listitem">
+Backend plugin <code class="literal">&lt;backend&gt;.conf</code> and <code class="literal">&lt;backend&gt;-&lt;doctype&gt;.conf</code> files
+  from locations 6.  If a backend plugin is not found then try
+  locations 1, 2 and 3 for <code class="literal">&lt;backend&gt;.conf</code> and
+  <code class="literal">&lt;backend&gt;-&lt;doctype&gt;.conf</code> backend configuration files.
+</li><li class="listitem">
+Filter conf files from locations 7.
+</li><li class="listitem">
+<code class="literal">lang-&lt;lang&gt;.conf</code> from locations 1, 2, 3.
+</li><li class="listitem">
+<code class="literal">asciidoc.conf</code> from location 4.
+</li><li class="listitem">
+<code class="literal">&lt;backend&gt;.conf</code> and <code class="literal">&lt;backend&gt;-&lt;doctype&gt;.conf</code> from location 4.
+</li><li class="listitem">
+Filter conf files from location 4.
+</li><li class="listitem">
+<code class="literal">&lt;docfile&gt;.conf</code> and <code class="literal">&lt;docfile&gt;-&lt;backend&gt;.conf</code> from location 4.
+</li><li class="listitem">
+Configuration files from location 5.
+</li></ul></div><p>Where:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">&lt;backend&gt;</code> and <code class="literal">&lt;doctype&gt;</code> are values specified by the <code class="literal">asciidoc(1)</code>
+  <code class="literal">-b</code> (<code class="literal">--backend</code>) and <code class="literal">-d</code> (<code class="literal">--doctype</code>) command-line options.
+</li><li class="listitem">
+<code class="literal">&lt;infile&gt;</code> is the path name of the AsciiDoc input file without the
+  file name extension.
+</li><li class="listitem">
+<code class="literal">&lt;lang&gt;</code> is a two letter country code set by the the AsciiDoc <span class="emphasis"><em>lang</em></span>
+  attribute.
+</li></ul></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The backend and language global configuration files are loaded <span class="strong"><strong>after</strong></span>
+the header has been parsed.  This means that you can set most
+attributes in the document header. Here’s an example header:</p><pre class="literallayout">Life's Mysteries
+================
+:author: Hu Nose
+:doctype: book
+:toc:
+:icons:
+:data-uri:
+:lang: en
+:encoding: iso-8859-1</pre><p>Attributes set in the document header take precedence over
+configuration file attributes.</p></td></tr></table></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Use the <code class="literal">asciidoc(1)</code> <code class="literal">-v</code> (<code class="literal">--verbose</code>) command-line option to see
+which configuration files are loaded and the order in which they are
+loaded.</p></td></tr></table></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch25.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch27.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

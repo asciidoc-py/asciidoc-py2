@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 19. Indexes</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch18.html" title="Chapter 18. Footnotes" /><link rel="next" href="ch20.html" title="Chapter 20. Callouts" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch18.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch20.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 19. Indexes"><div class="titlepage"><div><div><h2 class="title"><a id="_indexes"></a>Chapter 19. Indexes</h2></div></div></div><p>The shipped AsciiDoc configuration includes the inline macros for
+generating DocBook index entries.</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">indexterm:[&lt;primary&gt;,&lt;secondary&gt;,&lt;tertiary&gt;]</code>
+, </span><span class="term">
+<code class="literal">(((&lt;primary&gt;,&lt;secondary&gt;,&lt;tertiary&gt;)))</code>
+</span></dt><dd>
+    This inline macro generates an index term (the <code class="literal">&lt;secondary&gt;</code> and
+    <code class="literal">&lt;tertiary&gt;</code> positional attributes are optional). Example:
+    <code class="literal">indexterm:[Tigers,Big cats]</code> (or, using the alternative syntax
+    <code class="literal">(((Tigers,Big cats)))</code>.  Index terms that have secondary and
+    tertiary entries also generate separate index terms for the
+    secondary and tertiary entries. The index terms appear in the
+    index, not the primary text flow.
+</dd><dt><span class="term">
+<code class="literal">indexterm2:[&lt;primary&gt;]</code>
+, </span><span class="term">
+<code class="literal">((&lt;primary&gt;))</code>
+</span></dt><dd>
+    This inline macro generates an index term that appears in both the
+    index and the primary text flow.  The <code class="literal">&lt;primary&gt;</code> should not be
+    padded to the left or right with white space characters.
+</dd></dl></div><p>For working examples see the <code class="literal">article.txt</code> and <code class="literal">book.txt</code> documents in
+the AsciiDoc <code class="literal">./doc</code> distribution directory.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Index entries only really make sense if you are generating
+DocBook markup — DocBook conversion programs automatically generate
+an index at the point an <span class="emphasis"><em>Index</em></span> section appears in source document.</p></td></tr></table></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch18.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch20.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

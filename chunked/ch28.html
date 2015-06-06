@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 28. Attribute Entries</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch27.html" title="Chapter 27. Document Attributes" /><link rel="next" href="ch29.html" title="Chapter 29. Attribute Lists" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch27.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch29.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 28. Attribute Entries"><div class="titlepage"><div><div><h2 class="title"><a id="X18"></a>Chapter 28. Attribute Entries</h2></div></div></div><p>The <code class="literal">AttributeEntry</code> block element allows document attributes to be
+assigned within an AsciiDoc document. Attribute entries are added to
+the global document attributes dictionary. The attribute name/value
+syntax is a single line like:</p><pre class="literallayout">:&lt;name&gt;: &lt;value&gt;</pre><p>For example:</p><pre class="literallayout">:Author Initials: JB</pre><p>This will set an attribute reference <code class="literal">{authorinitials}</code> to the value
+<span class="emphasis"><em>JB</em></span> in the current document.</p><p>To delete (undefine) an attribute use the following syntax:</p><pre class="literallayout">:&lt;name&gt;!:</pre><div class="itemizedlist" title="AttributeEntry behavior"><p class="title"><strong>AttributeEntry behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+The attribute entry line begins with colon — no white space allowed
+  in left margin.
+</li><li class="listitem">
+AsciiDoc converts the <code class="literal">&lt;name&gt;</code> to a legal attribute name (lower
+  case, alphanumeric, dash and underscore characters only — all other
+  characters deleted). This allows more human friendly text to be
+  used.
+</li><li class="listitem">
+Leading and trailing white space is stripped from the <code class="literal">&lt;value&gt;</code>.
+</li><li class="listitem"><p class="simpara">
+Lines ending in a space followed by a plus character are continued
+  to the next line, for example:
+</p><pre class="literallayout">:description: AsciiDoc is a text document format for writing notes, +
+              documentation, articles, books, slideshows, web pages +
+              and man pages.</pre></li><li class="listitem">
+If the <code class="literal">&lt;value&gt;</code> is blank then the corresponding attribute value is
+  set to an empty string.
+</li><li class="listitem">
+Attribute references contained in the entry <code class="literal">&lt;value&gt;</code> will be
+  expanded.
+</li><li class="listitem">
+By default AttributeEntry values are substituted for
+  <code class="literal">specialcharacters</code> and <code class="literal">attributes</code> (see above), if you want to
+  change or disable AttributeEntry substitution use the <a class="link" href="ch21.html#X77" title="21.4. Passthrough macros">   inline macro</a> syntax.
+</li><li class="listitem">
+Attribute entries in the document Header are available for header
+  markup template substitution.
+</li><li class="listitem">
+Attribute elements override configuration file and intrinsic
+  attributes but do not override command-line attributes.
+</li></ul></div><p>Here are some more attribute entry examples:</p><pre class="screen">AsciiDoc User Manual
+====================
+:author:    Stuart Rackham
+:email:     srackham@gmail.com
+:revdate:   April 23, 2004
+:revnumber: 5.1.1</pre><p>Which creates these attributes:</p><pre class="literallayout">{author}, {firstname}, {lastname}, {authorinitials}, {email},
+{revdate}, {revnumber}</pre><p>The previous example is equivalent to this <a class="link" href="ch08.html#X95" title="8.2. Header">document header</a>:</p><pre class="screen">AsciiDoc User Manual
+====================
+Stuart Rackham &lt;srackham@gmail.com&gt;
+5.1.1, April 23, 2004</pre><div class="section" title="28.1. Setting configuration entries"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_setting_configuration_entries"></a>28.1. Setting configuration entries</h2></div></div></div><p>A variant of the Attribute Entry syntax allows configuration file
+section entries and markup template sections to be set from within an
+AsciiDoc document:</p><pre class="literallayout">:&lt;section_name&gt;.[&lt;entry_name&gt;]: &lt;entry_value&gt;</pre><p>Where <code class="literal">&lt;section_name&gt;</code> is the configuration section name,
+<code class="literal">&lt;entry_name&gt;</code> is the name of the entry and <code class="literal">&lt;entry_value&gt;</code> is the
+optional entry value. This example sets the default labeled list
+style to <span class="emphasis"><em>horizontal</em></span>:</p><pre class="literallayout">:listdef-labeled.style: horizontal</pre><p>It is exactly equivalent to a configuration file containing:</p><pre class="literallayout">[listdef-labeled]
+style=horizontal</pre><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+If the <code class="literal">&lt;entry_name&gt;</code> is omitted then the entire section is
+  substituted with the <code class="literal">&lt;entry_value&gt;</code>. This feature should only be
+  used to set markup template sections. The following example sets the
+  <span class="emphasis"><em>xref2</em></span> inline macro markup template:
+</p><pre class="literallayout">:xref2-inlinemacro.: &lt;a href="#{1}"&gt;{2?{2}}&lt;/a&gt;</pre></li><li class="listitem">
+No substitution is performed on configuration file attribute entries
+  and they cannot be undefined.
+</li><li class="listitem">
+This feature can only be used in attribute entries — configuration
+  attributes cannot be set using the <code class="literal">asciidoc(1)</code> command <code class="literal">--attribute</code>
+  option.
+</li></ul></div><div class="sidebar" title="Attribute entries promote clarity and eliminate repetition"><a id="X62"></a><div class="titlepage"><div><div><p class="title"><strong>Attribute entries promote clarity and eliminate repetition</strong></p></div></div></div><p>URLs and file names in AsciiDoc macros are often quite long — they
+break paragraph flow and readability suffers.  The problem is
+compounded by redundancy if the same name is used repeatedly.
+Attribute entries can be used to make your documents easier to read
+and write, here are some examples:</p><pre class="literallayout">:1:         http://freshmeat.net/projects/asciidoc/
+:homepage:  http://asciidoc.org[AsciiDoc home page]
+:new:       image:./images/smallnew.png[]
+:footnote1: footnote:[A meaningless latin term]</pre><pre class="literallayout">Using previously defined attributes: See the {1}[Freshmeat summary]
+or the {homepage} for something new {new}. Lorem ispum {footnote1}.</pre><div class="itemizedlist" title="Note"><p class="title"><strong>Note</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+The attribute entry definition must precede it’s usage.
+</li><li class="listitem">
+You are not limited to URLs or file names, entire macro calls or
+  arbitrary lines of text can be abbreviated.
+</li><li class="listitem">
+Shared attributes entries could be grouped into a separate file and
+  <a class="link" href="ch21.html#X63" title="21.3.1. Include Macros">included</a> in multiple documents.
+</li></ul></div></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch27.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch29.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

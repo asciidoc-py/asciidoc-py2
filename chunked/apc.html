@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Appendix C. AsciiDoc Safe Mode</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="apb.html" title="Appendix B. Packager Notes" /><link rel="next" href="apd.html" title="Appendix D. Using AsciiDoc with non-English Languages" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="apb.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="apd.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="appendix" title="Appendix C. AsciiDoc Safe Mode"><div class="titlepage"><div><div><h2 class="title"><a id="X39"></a>Appendix C. AsciiDoc Safe Mode</h2></div></div></div><p>AsciiDoc <span class="emphasis"><em>safe mode</em></span> skips potentially dangerous scripted sections in
+AsciiDoc source files by inhibiting the execution of arbitrary code or
+the inclusion of arbitrary files.</p><p>The safe mode is disabled by default, it can be enabled with the
+<code class="literal">asciidoc(1)</code> <code class="literal">--safe</code> command-line option.</p><div class="itemizedlist" title="Safe mode constraints"><p class="title"><strong>Safe mode constraints</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">eval</code>, <code class="literal">sys</code> and <code class="literal">sys2</code> executable attributes and block macros are
+  not executed.
+</li><li class="listitem">
+<code class="literal">include::&lt;filename&gt;[]</code> and <code class="literal">include1::&lt;filename&gt;[]</code> block macro
+  files must reside inside the parent file’s directory.
+</li><li class="listitem">
+<code class="literal">{include:&lt;filename&gt;}</code> executable attribute files must reside
+  inside the source document directory.
+</li><li class="listitem">
+Passthrough Blocks are dropped.
+</li></ul></div><div class="warning" title="Warning" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="images/icons/warning.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The safe mode is not designed to protect against unsafe AsciiDoc
+configuration files. Be especially careful when:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Implementing filters.
+</li><li class="listitem">
+Implementing elements that don’t escape special characters.
+</li><li class="listitem">
+Accepting configuration files from untrusted sources.
+</li></ol></div></td></tr></table></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apb.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="apd.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

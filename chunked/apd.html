@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Appendix D. Using AsciiDoc with non-English Languages</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="apc.html" title="Appendix C. AsciiDoc Safe Mode" /><link rel="next" href="ape.html" title="Appendix E. Vim Syntax Highlighter" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="apc.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ape.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="appendix" title="Appendix D. Using AsciiDoc with non-English Languages"><div class="titlepage"><div><div><h2 class="title"><a id="_using_asciidoc_with_non_english_languages"></a>Appendix D. Using AsciiDoc with non-English Languages</h2></div></div></div><p>AsciiDoc can process UTF-8 character sets but there are some things
+you need to be aware of:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+If you are generating output documents using a DocBook toolchain
+  then you should set the AsciiDoc <code class="literal">lang</code> attribute to the appropriate
+  language (it defaults to <code class="literal">en</code> (English)). This will ensure things
+  like table of contents, figure and table captions and admonition
+  captions are output in the specified language.  For example:
+</p><pre class="literallayout">$ a2x -a lang=es doc/article.txt</pre></li><li class="listitem"><p class="simpara">
+If you are outputting HTML directly from <code class="literal">asciidoc(1)</code> you’ll
+  need to set the various <code class="literal">*_caption</code> attributes to match your target
+  language (see the list of captions and titles in the <code class="literal">[attributes]</code>
+  section of the distribution <code class="literal">lang-*.conf</code> files). The easiest way is
+  to create a language <code class="literal">.conf</code> file (see the AsciiDoc’s <code class="literal">lang-en.conf</code>
+  file).
+</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>You still use the <span class="emphasis"><em>NOTE</em></span>, <span class="emphasis"><em>CAUTION</em></span>, <span class="emphasis"><em>TIP</em></span>, <span class="emphasis"><em>WARNING</em></span>,
+<span class="emphasis"><em>IMPORTANT</em></span> captions in the AsciiDoc source, they get translated in
+the HTML output file.</p></td></tr></table></div></li><li class="listitem">
+<code class="literal">asciidoc(1)</code> automatically loads configuration files named like
+  <code class="literal">lang-&lt;lang&gt;.conf</code> where <code class="literal">&lt;lang&gt;</code> is a two letter language code that
+  matches the current AsciiDoc <code class="literal">lang</code> attribute. See also
+  <a class="link" href="ch26.html#X27" title="26.11. Configuration file names, precedence and locations">Configuration File Names and Locations</a>.
+</li></ul></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apc.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ape.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

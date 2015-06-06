@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="generator" content="AsciiDoc 8.6.9">
+<title>ASCIIDOC(1)</title>
+</head>
+<body>
+<hr>
+<h1>
+    ASCIIDOC(1) Manual Page
+</h1>
+<hr>
+<h2>NAME</h2>
+<p>asciidoc -
+   converts an AsciiDoc text file to HTML or DocBook
+</p>
+<h2><a name="_synopsis"></a>SYNOPSIS</h2>
+<p><strong>asciidoc</strong> [<b>OPTIONS</b>] <b>FILE</b></p>
+<h2><a name="_description"></a>DESCRIPTION</h2>
+<p>The asciidoc(1) command translates the AsciiDoc text file <b>FILE</b> to
+DocBook or HTML.  If <b>FILE</b> is <b>-</b> then the standard input is used.</p>
+<h2><a name="_options"></a>OPTIONS</h2>
+<dl>
+<dt>
+<strong>-a, --attribute</strong>=<b>ATTRIBUTE</b>
+</dt>
+<dd>
+<p>
+    Define or delete document attribute. <b>ATTRIBUTE</b> is formatted like
+    <b>NAME=VALUE</b>. Command-line attributes take precedence over
+    document and configuration file attributes.  Alternate acceptable
+    forms are <b>NAME</b> (the <b>VALUE</b> defaults to an empty string);
+    <b>NAME!</b> (delete the <b>NAME</b> attribute); <b>NAME=VALUE@</b> (do not override
+    document or configuration file attributes).  Values containing
+    spaces should be enclosed in double-quote characters. This option
+    may be specified more than once.  A special attribute named
+    <b>trace</b> controls the output of diagnostic information.
+</p>
+</dd>
+<dt>
+<strong>-b, --backend</strong>=<b>BACKEND</b>
+</dt>
+<dd>
+<p>
+    Backend output file format: <b>docbook45</b>, <b>xhtml11</b>, <b>html4</b>,
+    <b>html5</b>, <b>slidy</b>, <b>wordpress</b> or <b>latex</b> (the <b>latex</b> backend is
+    experimental).  You can also use the backend alias names <b>html</b>
+    (aliased to <b>xhtml11</b>) or <b>docbook</b> (aliased to <b>docbook45</b>).
+    Defaults to <b>html</b>.  The <strong>--backend</strong> option is also used to manage
+    backend plugins (see <a href="#X1"><strong>PLUGIN COMMANDS</strong></a>).
+</p>
+</dd>
+<dt>
+<strong>-f, --conf-file</strong>=<b>CONF_FILE</b>
+</dt>
+<dd>
+<p>
+    Use configuration file <b>CONF_FILE</b>.Configuration files processed
+    in command-line order (after implicit configuration files).  This
+    option may be specified more than once.
+</p>
+</dd>
+<dt>
+<strong>--doctest</strong>
+</dt>
+<dd>
+<p>
+    Run Python doctests in <b>asciidoc</b> module.
+</p>
+</dd>
+<dt>
+<strong>-d, --doctype</strong>=<b>DOCTYPE</b>
+</dt>
+<dd>
+<p>
+    Document type: <b>article</b>, <b>manpage</b> or <b>book</b>. The <b>book</b> document
+    type is only supported by the <b>docbook</b> backend.  Default document
+    type is <b>article</b>.
+</p>
+</dd>
+<dt>
+<strong>-c, --dump-conf</strong>
+</dt>
+<dd>
+<p>
+    Dump configuration to stdout.
+</p>
+</dd>
+<dt>
+<strong>--filter</strong>=<b>FILTER</b>
+</dt>
+<dd>
+<p>
+    Specify the name of a filter to be loaded (used to load filters
+    that are not auto-loaded).  This option may be specified more than
+    once. The <strong>--filter</strong> option is also used to manage filter plugins
+    (see <a href="#X1"><strong>PLUGIN COMMANDS</strong></a>).
+</p>
+</dd>
+<dt>
+<strong>-h, --help</strong> [<b>TOPIC</b>]
+</dt>
+<dd>
+<p>
+    Print help TOPIC. <strong>--help</strong> <b>topics</b> will print a list of help
+    topics, <strong>--help</strong> <b>syntax</b> summarizes AsciiDoc syntax,
+    <strong>--help</strong> <b>manpage</b> prints the AsciiDoc manpage.
+</p>
+</dd>
+<dt>
+<strong>-e, --no-conf</strong>
+</dt>
+<dd>
+<p>
+    Exclude implicitly loaded configuration files except for those
+    named like the input file (<b>infile.conf</b> and
+    <b>infile-backend.conf</b>).
+</p>
+</dd>
+<dt>
+<strong>-s, --no-header-footer</strong>
+</dt>
+<dd>
+<p>
+    Suppress document header and footer output.
+</p>
+</dd>
+<dt>
+<strong>-o, --out-file</strong>=<b>OUT_FILE</b>
+</dt>
+<dd>
+<p>
+    Write output to file <b>OUT_FILE</b>. Defaults to the base name of
+    input file with <b>backend</b> extension. If the input is stdin then
+    the outfile defaults to stdout. If <b>OUT_FILE</b> is <b>-</b> then the
+    standard output is used.
+</p>
+</dd>
+<dt>
+<strong>-n, --section-numbers</strong>
+</dt>
+<dd>
+<p>
+    Auto-number HTML article section titles.  Synonym for
+    <strong>--attribute numbered</strong>.
+</p>
+</dd>
+<dt>
+<strong>--safe</strong>
+</dt>
+<dd>
+<p>
+    Enable safe mode. Safe mode is disabled by default.  AsciiDoc
+    <b>safe mode</b> skips potentially dangerous scripted sections in
+    AsciiDoc source files.
+</p>
+</dd>
+<dt>
+<strong>--theme</strong>=<b>THEME</b>
+</dt>
+<dd>
+<p>
+    Specify a theme name.  Synonym for <strong>--attribute theme</strong>=<b>THEME</b>.
+    The <strong>--theme</strong> option is also used to manage theme plugins (see
+    <a href="#X1"><strong>PLUGIN COMMANDS</strong></a>).
+</p>
+</dd>
+<dt>
+<strong>-v, --verbose</strong>
+</dt>
+<dd>
+<p>
+    Verbosely print processing information and configuration file
+    checks to stderr.
+</p>
+</dd>
+<dt>
+<strong>--version</strong>
+</dt>
+<dd>
+<p>
+    Print program version number.
+</p>
+</dd>
+</dl>
+<h2><a name="X1"></a>PLUGIN COMMANDS</h2>
+<p>The asciidoc(1) <strong>--filter</strong>, <strong>--backend</strong> and <strong>--theme</strong> options are used
+to install, remove and list AsciiDoc filter, backend and theme
+plugins. Syntax:</p>
+<pre><code>asciidoc OPTION install ZIP_FILE [PLUGINS_DIR]
+asciidoc OPTION remove PLUGIN_NAME [PLUGINS_DIR]
+asciidoc OPTION list
+asciidoc OPTION build ZIP_FILE PLUGIN_SOURCE</code></pre>
+<p>Where:</p>
+<dl>
+<dt>
+<strong>OPTION</strong>
+</dt>
+<dd>
+<p>
+  asciidoc(1) <strong>--filter</strong>, <strong>--backend</strong> or <strong>--theme</strong> option specifying
+  the type of plugin.
+</p>
+</dd>
+<dt>
+<strong>PLUGIN_NAME</strong>
+</dt>
+<dd>
+<p>
+  A unique plugin name containing only alphanumeric or underscore
+  characters.
+</p>
+</dd>
+<dt>
+<strong>ZIP_FILE</strong>
+</dt>
+<dd>
+<p>
+  A Zip file containing plugin resources, the name must start with the
+  plugin name e.g.  <code>my_filter-1.0.zip</code> packages filter <code>my_filter</code>.
+</p>
+</dd>
+<dt>
+<strong>PLUGINS_DIR</strong>
+</dt>
+<dd>
+<p>
+  The directory containing installed plugins. Each plugin is contained
+  in its own separate subdirectory which has the same name as the
+  plugin.
+  <strong>PLUGINS_DIR</strong> defaults to the <code>$HOME/.asciidoc/filters</code> (for
+  filter plugins) or <code>$HOME/.asciidoc/backends</code> (for backend plugins) or
+  <code>$HOME/.asciidoc/themes</code> (for theme plugins).
+</p>
+</dd>
+<dt>
+<strong>PLUGIN_SOURCE</strong>
+</dt>
+<dd>
+<p>
+  The name of a directory containing the plugin source files or the
+  name of a single source file.
+</p>
+</dd>
+</dl>
+<p>The plugin commands perform as follows:</p>
+<dl>
+<dt>
+<strong>install</strong>
+</dt>
+<dd>
+<p>
+  Create a subdirectory in <strong>PLUGINS_DIR</strong> with the same name as the
+  plugin then extract the <strong>ZIP_FILE</strong> into it.
+</p>
+</dd>
+<dt>
+<strong>remove</strong>
+</dt>
+<dd>
+<p>
+  Delete the <strong>PLUGIN_NAME</strong> plugin subdirectory and all its contents
+  from the <strong>PLUGINS_DIR</strong>.
+</p>
+</dd>
+<dt>
+<strong>list</strong>
+</dt>
+<dd>
+<p>
+  List the names and locations of all installed filter or theme
+  plugins (including standard plugins installed in the global
+  configuration directory).
+</p>
+</dd>
+<dt>
+<strong>build</strong>
+</dt>
+<dd>
+<p>
+  Create a plugin file named <strong>ZIP_FILE</strong> containing the files and
+  subdirectories specified by <strong>PLUGIN_SOURCE</strong>. File and directory
+  names starting with a period are skipped.
+</p>
+</dd>
+</dl>
+<h2><a name="_exit_status"></a>EXIT STATUS</h2>
+<dl>
+<dt>
+<strong>0</strong>
+</dt>
+<dd>
+<p>
+    Success
+</p>
+</dd>
+<dt>
+<strong>1</strong>
+</dt>
+<dd>
+<p>
+    Failure (syntax or usage error; configuration error; document
+    processing failure; unexpected error).
+</p>
+</dd>
+</dl>
+<h2><a name="_bugs"></a>BUGS</h2>
+<p>See the AsciiDoc distribution BUGS file.</p>
+<h2><a name="_author"></a>AUTHOR</h2>
+<p>AsciiDoc was originally written by Stuart Rackham. Many people have
+contributed to it.</p>
+<h2><a name="_resources"></a>RESOURCES</h2>
+<p>SourceForge: <a href="http://sourceforge.net/projects/asciidoc/">http://sourceforge.net/projects/asciidoc/</a></p>
+<p>Main web site: <a href="http://asciidoc.org/">http://asciidoc.org/</a></p>
+<h2><a name="_copying"></a>COPYING</h2>
+<p>Copyright (C) 2002-2011 Stuart Rackham. Free use of this software is
+granted under the terms of the GNU General Public License (GPL).</p>
+<p></p>
+<p></p>
+<hr><p><small>
+Version 8.6.9<br>
+Last updated 2012-12-29 09:05:07 NZDT
+</small></p>
+</body>
+</html>

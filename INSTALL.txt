@@ -12,26 +12,25 @@ Prerequisites
 See the link:README.html[README] page.
 
 
-Installing from the Mercurial repository
-----------------------------------------
-The AsciiDoc http://www.selenic.com/mercurial/[Mercurial] repository
-is hosted by http://code.google.com/[Google Code].
-To browse the repository go to
-http://code.google.com/p/asciidoc/source/browse/.
+Installing from the Github repository
+-------------------------------------
+The AsciiDoc repository is hosted by https://github.com[Github].
+To browse the repository go to https://github.com/asciidoc/asciidoc.
 You can install AsciiDoc from the repository if you don't have an up to
-date packaged version or want to get the latest version from the trunk:
+date packaged version or want to get the latest version from the master branch:
 
-- Make sure you have http://www.selenic.com/mercurial/[Mercurial]
+- Make sure you have https://git-scm.com/[Git]
   installed, you can check with:
 
-  $ hg --version
+  $ git --version
 
 - Go to the directory you want to install AsciiDoc into and download
   the repository.  This example gets the {revnumber} tagged release:
 
 [subs="attributes"]
   $ cd ~/bin
-  $ hg clone -r {revnumber} https://asciidoc.googlecode.com/hg/ asciidoc-{revnumber}
+  $ git clone https://github.com/asciidoc/asciidoc asciidoc-{revnumber}
+  $ git checkout {revnumber}
 
 You now have two choices: you can run asciidoc locally from your
 repository or you can use 'autoconf(1)' and 'make(1)' to perform a
@@ -46,7 +45,7 @@ so it's easy to execute `asciidoc` from the command-line, for example:
   $ ln -s ~/bin/asciidoc-{revnumber}/asciidoc.py ~/bin/asciidoc
   $ ln -s ~/bin/asciidoc-{revnumber}/a2x.py ~/bin/a2x
 
-Use the Mercurial `pull` command to update your local AsciiDoc repository.
+Use the git `pull` command to update your local AsciiDoc repository.
 
 Installing asciidoc for all users
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

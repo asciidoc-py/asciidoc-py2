@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Appendix G. Diagnostics</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="apf.html" title="Appendix F. Attribute Options" /><link rel="next" href="aph.html" title="Appendix H. Backend Attributes" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="apf.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="aph.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="appendix" title="Appendix G. Diagnostics"><div class="titlepage"><div><div><h2 class="title"><a id="X82"></a>Appendix G. Diagnostics</h2></div></div></div><p>The <code class="literal">asciidoc(1)</code> <code class="literal">--verbose</code> command-line option prints additional
+information to stderr: files processed, filters processed, warnings,
+system attribute evaluation.</p><p>A special attribute named <span class="emphasis"><em>trace</em></span> enables the output of
+element-by-element diagnostic messages detailing output markup
+generation to stderr.  The <span class="emphasis"><em>trace</em></span> attribute can be set on the
+command-line or from within the document using <a class="link" href="ch28.html" title="Chapter 28. Attribute Entries">Attribute Entries</a> (the latter allows tracing to be confined to specific
+portions of the document).</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Trace messages print the source file name and line number and the
+  trace name followed by related markup.
+</li><li class="listitem">
+<span class="emphasis"><em>trace names</em></span> are normally the names of AsciiDoc elements (see the
+  list below).
+</li><li class="listitem">
+The trace message is only printed if the <span class="emphasis"><em>trace</em></span> attribute value
+  matches the start of a <span class="emphasis"><em>trace name</em></span>. The <span class="emphasis"><em>trace</em></span> attribute value can
+  be any Python regular expression.  If a trace value is not specified
+  all trace messages will be printed (this can result in large amounts
+  of output if applied to the whole document).
+</li><li class="listitem"><p class="simpara">
+In the case of inline substitutions:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+The text before and after the substitution is printed; the before
+    text is preceded by a line containing <code class="literal">&lt;&lt;&lt;</code> and the after text by
+    a line containing <code class="literal">&gt;&gt;&gt;</code>.
+</li><li class="listitem">
+The <span class="emphasis"><em>subs</em></span> trace value is an alias for all inline substitutions.
+</li></ul></div></li></ul></div><p title="Trace names"><strong>Trace names. </strong>
+</p><pre class="literallayout">&lt;blockname&gt; block close
+&lt;blockname&gt; block open
+&lt;subs&gt;
+dropped line (a line containing an undefined attribute reference).
+floating title
+footer
+header
+list close
+list entry close
+list entry open
+list item close
+list item open
+list label close
+list label open
+list open
+macro block (a block macro)
+name (man page NAME section)
+paragraph
+preamble close
+preamble open
+push blockname
+pop blockname
+section close
+section open: level &lt;level&gt;
+subs (all inline substitutions)
+table</pre><p title="Trace names">
+</p><p>Where:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">&lt;level&gt;</code> is section level number <span class="emphasis"><em>0…4</em></span>.
+</li><li class="listitem">
+<code class="literal">&lt;blockname&gt;</code> is a delimited block name: <span class="emphasis"><em>comment</em></span>, <span class="emphasis"><em>sidebar</em></span>,
+  <span class="emphasis"><em>open</em></span>, <span class="emphasis"><em>pass</em></span>, <span class="emphasis"><em>listing</em></span>, <span class="emphasis"><em>literal</em></span>, <span class="emphasis"><em>quote</em></span>, <span class="emphasis"><em>example</em></span>.
+</li><li class="listitem">
+<code class="literal">&lt;subs&gt;</code> is an inline substitution type:
+  <span class="emphasis"><em>specialcharacters</em></span>,<span class="emphasis"><em>quotes</em></span>,<span class="emphasis"><em>specialwords</em></span>, <span class="emphasis"><em>replacements</em></span>,
+  <span class="emphasis"><em>attributes</em></span>,<span class="emphasis"><em>macros</em></span>,<span class="emphasis"><em>callouts</em></span>, <span class="emphasis"><em>replacements2</em></span>, <span class="emphasis"><em>replacements3</em></span>.
+</li></ul></div><p>Command-line examples:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+Trace the entire document.
+</p><pre class="literallayout">$ asciidoc -a trace mydoc.txt</pre></li><li class="listitem"><p class="simpara">
+Trace messages whose names start with <code class="literal">quotes</code> or <code class="literal">macros</code>:
+</p><pre class="literallayout">$ asciidoc -a 'trace=quotes|macros'  mydoc.txt</pre></li><li class="listitem"><p class="simpara">
+Print the first line of each trace message:
+</p><pre class="literallayout">$ asciidoc -a trace mydoc.txt 2&gt;&amp;1 | grep ^TRACE:</pre></li></ol></div><p>Attribute Entry examples:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+Begin printing all trace messages:
+</p><pre class="literallayout">:trace:</pre></li><li class="listitem"><p class="simpara">
+Print only matched trace messages:
+</p><pre class="literallayout">:trace: quotes|macros</pre></li><li class="listitem"><p class="simpara">
+Turn trace messages off:
+</p><pre class="literallayout">:trace!:</pre></li></ol></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="apf.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="aph.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

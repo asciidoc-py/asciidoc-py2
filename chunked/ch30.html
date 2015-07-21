@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 30. Attribute References</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch29.html" title="Chapter 29. Attribute Lists" /><link rel="next" href="ch31.html" title="Chapter 31. Intrinsic Attributes" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch29.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch31.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 30. Attribute References"><div class="titlepage"><div><div><h2 class="title"><a id="_attribute_references"></a>Chapter 30. Attribute References</h2></div></div></div><p>An attribute reference is an attribute name (possibly followed by an
+additional parameters) enclosed in curly braces.  When an attribute
+reference is encountered it is evaluated and replaced by its
+corresponding text value.  If the attribute is undefined the line
+containing the attribute is dropped.</p><p>There are three types of attribute reference: <span class="emphasis"><em>Simple</em></span>, <span class="emphasis"><em>Conditional</em></span>
+and <span class="emphasis"><em>System</em></span>.</p><div class="itemizedlist" title="Attribute reference evaluation"><p class="title"><strong>Attribute reference evaluation</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+You can suppress attribute reference expansion by placing a
+  backslash character immediately in front of the opening brace
+  character.
+</li><li class="listitem">
+By default attribute references are not expanded in
+  <span class="emphasis"><em>LiteralParagraphs</em></span>, <span class="emphasis"><em>ListingBlocks</em></span> or <span class="emphasis"><em>LiteralBlocks</em></span>.
+</li><li class="listitem">
+Attribute substitution proceeds line by line in reverse line order.
+</li><li class="listitem">
+Attribute reference evaluation is performed in the following order:
+  <span class="emphasis"><em>Simple</em></span> then <span class="emphasis"><em>Conditional</em></span> and finally <span class="emphasis"><em>System</em></span>.
+</li></ul></div><div class="section" title="30.1. Simple Attributes References"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_simple_attributes_references"></a>30.1. Simple Attributes References</h2></div></div></div><p>Simple attribute references take the form <code class="literal">{&lt;name&gt;}</code>. If the
+attribute name is defined its text value is substituted otherwise the
+line containing the reference is dropped from the output.</p></div><div class="section" title="30.2. Conditional Attribute References"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_conditional_attribute_references"></a>30.2. Conditional Attribute References</h2></div></div></div><p>Additional parameters are used in conjunction with attribute names to
+calculate a substitution value. Conditional attribute references take
+the following forms:</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">{&lt;names&gt;=&lt;value&gt;}</code>
+</span></dt><dd>
+        <code class="literal">&lt;value&gt;</code> is substituted if the attribute <code class="literal">&lt;names&gt;</code> is
+        undefined otherwise its value is substituted. <code class="literal">&lt;value&gt;</code> can
+        contain simple attribute references.
+</dd><dt><span class="term">
+<code class="literal">{&lt;names&gt;?&lt;value&gt;}</code>
+</span></dt><dd>
+        <code class="literal">&lt;value&gt;</code> is substituted if the attribute <code class="literal">&lt;names&gt;</code> is defined
+        otherwise an empty string is substituted.  <code class="literal">&lt;value&gt;</code> can
+        contain simple attribute references.
+</dd><dt><span class="term">
+<code class="literal">{&lt;names&gt;!&lt;value&gt;}</code>
+</span></dt><dd>
+        <code class="literal">&lt;value&gt;</code> is substituted if the attribute <code class="literal">&lt;names&gt;</code> is
+        undefined otherwise an empty string is substituted.  <code class="literal">&lt;value&gt;</code>
+        can contain simple attribute references.
+</dd><dt><span class="term">
+<code class="literal">{&lt;names&gt;#&lt;value&gt;}</code>
+</span></dt><dd>
+        <code class="literal">&lt;value&gt;</code> is substituted if the attribute <code class="literal">&lt;names&gt;</code> is defined
+        otherwise the undefined attribute entry causes the containing
+        line to be dropped.  <code class="literal">&lt;value&gt;</code> can contain simple attribute
+        references.
+</dd><dt><span class="term">
+<code class="literal">{&lt;names&gt;%&lt;value&gt;}</code>
+</span></dt><dd>
+        <code class="literal">&lt;value&gt;</code> is substituted if the attribute <code class="literal">&lt;names&gt;</code> is not
+        defined otherwise the containing line is dropped.  <code class="literal">&lt;value&gt;</code>
+        can contain simple attribute references.
+</dd><dt><span class="term">
+<code class="literal">{&lt;names&gt;@&lt;regexp&gt;:&lt;value1&gt;[:&lt;value2&gt;]}</code>
+</span></dt><dd>
+        <code class="literal">&lt;value1&gt;</code> is substituted if the value of attribute <code class="literal">&lt;names&gt;</code>
+        matches the regular expression <code class="literal">&lt;regexp&gt;</code> otherwise <code class="literal">&lt;value2&gt;</code>
+        is substituted. If attribute <code class="literal">&lt;names&gt;</code> is not defined the
+        containing line is dropped. If <code class="literal">&lt;value2&gt;</code> is omitted an empty
+        string is assumed. The values and the regular expression can
+        contain simple attribute references.  To embed colons in the
+        values or the regular expression escape them with backslashes.
+</dd><dt><span class="term">
+<code class="literal">{&lt;names&gt;$&lt;regexp&gt;:&lt;value1&gt;[:&lt;value2&gt;]}</code>
+</span></dt><dd><p class="simpara">
+        Same behavior as the previous ternary attribute except for
+        the following cases:
+</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">{&lt;names&gt;$&lt;regexp&gt;:&lt;value&gt;}</code>
+</span></dt><dd>
+                Substitutes <code class="literal">&lt;value&gt;</code> if <code class="literal">&lt;names&gt;</code> matches <code class="literal">&lt;regexp&gt;</code>
+                otherwise the result is undefined and the containing
+                line is dropped.
+</dd><dt><span class="term">
+<code class="literal">{&lt;names&gt;$&lt;regexp&gt;::&lt;value&gt;}</code>
+</span></dt><dd>
+                Substitutes <code class="literal">&lt;value&gt;</code> if <code class="literal">&lt;names&gt;</code> does not match
+                <code class="literal">&lt;regexp&gt;</code> otherwise the result is undefined and the
+                containing line is dropped.
+</dd></dl></div></dd></dl></div><p>The attribute <code class="literal">&lt;names&gt;</code> parameter normally consists of a single
+attribute name but it can be any one of the following:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+A single attribute name which evaluates to the attributes value.
+</li><li class="listitem">
+Multiple <span class="emphasis"><em>,</em></span> separated attribute names which evaluates to an empty
+  string if one or more of the attributes is defined, otherwise it’s
+  value is undefined.
+</li><li class="listitem">
+Multiple <span class="emphasis"><em>+</em></span> separated attribute names which evaluates to an empty
+  string if all of the attributes are defined, otherwise it’s value is
+  undefined.
+</li></ul></div><p>Conditional attributes with single attribute names are evaluated first
+so they can be used inside the multi-attribute conditional <code class="literal">&lt;value&gt;</code>.</p><div class="section" title="30.2.1. Conditional attribute examples"><div class="titlepage"><div><div><h3 class="title"><a id="_conditional_attribute_examples"></a>30.2.1. Conditional attribute examples</h3></div></div></div><p>Conditional attributes are mainly used in AsciiDoc configuration
+files — see the distribution <code class="literal">.conf</code> files for examples.</p><div class="variablelist"><dl><dt><span class="term">
+Attribute equality test
+</span></dt><dd><p class="simpara">
+  If <code class="literal">{backend}</code> is <span class="emphasis"><em>docbook45</em></span> or <span class="emphasis"><em>xhtml11</em></span> the example evaluates to
+  “DocBook 4.5 or XHTML 1.1 backend” otherwise it evaluates to
+  “some other backend”:
+</p><pre class="literallayout">{backend@docbook45|xhtml11:DocBook 4.5 or XHTML 1.1 backend:some other backend}</pre></dd><dt><span class="term">
+Attribute value map
+</span></dt><dd><p class="simpara">
+  This example maps the <code class="literal">frame</code> attribute values [<code class="literal">topbot</code>, <code class="literal">all</code>,
+  <code class="literal">none</code>, <code class="literal">sides</code>] to [<code class="literal">hsides</code>, <code class="literal">border</code>, <code class="literal">void</code>, <code class="literal">vsides</code>]:
+</p><pre class="literallayout">{frame@topbot:hsides}{frame@all:border}{frame@none:void}{frame@sides:vsides}</pre></dd></dl></div></div></div><div class="section" title="30.3. System Attribute References"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X24"></a>30.3. System Attribute References</h2></div></div></div><p>System attribute references generate the attribute text value by
+executing a predefined action that is parametrized by one or more
+arguments. The syntax is <code class="literal">{&lt;action&gt;:&lt;arguments&gt;}</code>.</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">{counter:&lt;attrname&gt;[:&lt;seed&gt;]}</code>
+</span></dt><dd><p class="simpara">
+        Increments the document attribute (if the attribute is
+        undefined it is set to <code class="literal">1</code>). Returns the new attribute value.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Counters generate global (document wide) attributes.
+</li><li class="listitem">
+The optional <code class="literal">&lt;seed&gt;</code> specifies the counter’s initial value;
+          it can be a number or a single letter; defaults to <span class="emphasis"><em>1</em></span>.
+</li><li class="listitem">
+<code class="literal">&lt;seed&gt;</code> can contain simple and conditional attribute
+          references.
+</li><li class="listitem">
+The <span class="emphasis"><em>counter</em></span> system attribute will not be executed if the
+          containing line is dropped by the prior evaluation of an
+          undefined attribute.
+</li></ul></div></dd><dt><span class="term">
+<code class="literal">{counter2:&lt;attrname&gt;[:&lt;seed&gt;]}</code>
+</span></dt><dd>
+        Same as <code class="literal">counter</code> except the it always returns a blank string.
+</dd><dt><span class="term">
+<code class="literal">{eval:&lt;expression&gt;}</code>
+</span></dt><dd><p class="simpara">
+        Substitutes the result of the Python <code class="literal">&lt;expression&gt;</code>.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+If <code class="literal">&lt;expression&gt;</code> evaluates to <code class="literal">None</code> or <code class="literal">False</code> the
+          reference is deemed undefined and the line containing the
+          reference is dropped from the output.
+</li><li class="listitem">
+If the expression evaluates to <code class="literal">True</code> the attribute
+          evaluates to an empty string.
+</li><li class="listitem">
+<code class="literal">&lt;expression&gt;</code> can contain simple and conditional attribute
+          references.
+</li><li class="listitem">
+The <span class="emphasis"><em>eval</em></span> system attribute can be nested inside other
+          system attributes.
+</li></ul></div></dd><dt><span class="term">
+<code class="literal">{eval3:&lt;command&gt;}</code>
+</span></dt><dd>
+        Passthrough version of <code class="literal">{eval:&lt;expression&gt;}</code> — the generated
+        output is written directly to the output without any further
+        substitutions.
+</dd><dt><span class="term">
+<code class="literal">{include:&lt;filename&gt;}</code>
+</span></dt><dd><p class="simpara">
+        Substitutes contents of the file named <code class="literal">&lt;filename&gt;</code>.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+The included file is read at the time of attribute
+          substitution.
+</li><li class="listitem">
+If the file does not exist a warning is emitted and the line
+          containing the reference is dropped from the output file.
+</li><li class="listitem">
+Tabs are expanded based on the current <span class="emphasis"><em>tabsize</em></span> attribute
+          value.
+</li></ul></div></dd><dt><span class="term">
+<code class="literal">{set:&lt;attrname&gt;[!][:&lt;value&gt;]}</code>
+</span></dt><dd><p class="simpara">
+        Sets or unsets document attribute. Normally only used in
+        configuration file markup templates (use
+        <a class="link" href="ch28.html" title="Chapter 28. Attribute Entries">AttributeEntries</a> in AsciiDoc documents).
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+If the attribute name is followed by an exclamation mark
+          the attribute becomes undefined.
+</li><li class="listitem">
+If <code class="literal">&lt;value&gt;</code> is omitted the attribute is set to a blank
+          string.
+</li><li class="listitem">
+<code class="literal">&lt;value&gt;</code> can contain simple and conditional attribute
+          references.
+</li><li class="listitem">
+Returns a blank string unless the attribute is undefined in
+          which case the return value is undefined and the enclosing
+          line will be dropped.
+</li></ul></div></dd><dt><span class="term">
+<code class="literal">{set2:&lt;attrname&gt;[!][:&lt;value&gt;]}</code>
+</span></dt><dd>
+        Same as <code class="literal">set</code> except that the attribute scope is local to the
+        template.
+</dd><dt><span class="term">
+<code class="literal">{sys:&lt;command&gt;}</code>
+</span></dt><dd>
+        Substitutes the stdout generated by the execution of the shell
+        <code class="literal">&lt;command&gt;</code>.
+</dd><dt><span class="term">
+<code class="literal">{sys2:&lt;command&gt;}</code>
+</span></dt><dd>
+        Substitutes the stdout and stderr generated by the execution
+        of the shell <code class="literal">&lt;command&gt;</code>.
+</dd><dt><span class="term">
+<code class="literal">{sys3:&lt;command&gt;}</code>
+</span></dt><dd>
+        Passthrough version of <code class="literal">{sys:&lt;command&gt;}</code> — the generated
+        output is written directly to the output without any further
+        substitutions.
+</dd><dt><span class="term">
+<code class="literal">{template:&lt;template&gt;}</code>
+</span></dt><dd>
+        Substitutes the contents of the configuration file section
+        named <code class="literal">&lt;template&gt;</code>. Attribute references contained in the
+        template are substituted.
+</dd></dl></div><div class="itemizedlist" title="System reference behavior"><p class="title"><strong>System reference behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+System attribute arguments can contain non-system attribute
+  references.
+</li><li class="listitem">
+Closing brace characters inside system attribute arguments must be
+  escaped with a backslash.
+</li></ul></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch29.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch31.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

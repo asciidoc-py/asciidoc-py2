@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 23. Tables</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch22.html" title="Chapter 22. HTML 5 audio and video block macros" /><link rel="next" href="ch24.html" title="Chapter 24. Manpage Documents" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch22.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch24.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 23. Tables"><div class="titlepage"><div><div><h2 class="title"><a id="_tables"></a>Chapter 23. Tables</h2></div></div></div><p>The AsciiDoc table syntax looks and behaves like other delimited block
+types and supports standard <a class="link" href="ch32.html" title="Chapter 32. Block Element Definitions">block configuration entries</a>.
+Formatting is easy to read and, just as importantly, easy to enter.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Cells and columns can be formatted using built-in customizable styles.
+</li><li class="listitem">
+Horizontal and vertical cell alignment can be set on columns and
+  cell.
+</li><li class="listitem">
+Horizontal and vertical cell spanning is supported.
+</li></ul></div><div class="sidebar" title="Use tables sparingly"><div class="titlepage"><div><div><p class="title"><strong>Use tables sparingly</strong></p></div></div></div><p>When technical users first start creating documents, tables (complete
+with column spanning and table nesting) are often considered very
+important. The reality is that tables are seldom used, even in
+technical documentation.</p><p>Try this exercise: thumb through your library of technical books,
+you’ll be surprised just how seldom tables are actually used, even
+less seldom are tables containing block elements (such as paragraphs
+or lists) or spanned cells. This is no accident, like figures, tables
+are outside the normal document flow — tables are for consulting not
+for reading.</p><p>Tables are designed for, and should normally only be used for,
+displaying column oriented tabular data.</p></div><div class="section" title="23.1. Example tables"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_example_tables"></a>23.1. Example tables</h2></div></div></div><div class="table"><a id="idp19722048"></a><p class="title"><strong>Table 23.1. Simple table</strong></p><div class="table-contents"><table summary="Simple table" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; " width="15%"><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>1</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>2</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>A</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>3</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>4</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>B</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>5</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>6</p></td><td style="" align="left" valign="top"><p>C</p></td></tr></tbody></table></div></div><br class="table-break" /><p title="AsciiDoc source"><strong>AsciiDoc source. </strong>
+</p><pre class="screen">[width="15%"]
+|=======
+|1 |2 |A
+|3 |4 |B
+|5 |6 |C
+|=======</pre><p title="AsciiDoc source">
+</p><div class="table"><a id="idp19730760"></a><p class="title"><strong>Table 23.2. Columns formatted with strong, monospaced and emphasis styles</strong></p><div class="table-contents"><table summary="Columns formatted with strong, monospaced and emphasis styles" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; " width="50%"><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /></colgroup><thead><tr><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="right" valign="top">      </th><th style="border-bottom: 1px solid #527bbd; " colspan="2" align="center" valign="top">Columns 2 and 3</th></tr></thead><tfoot><tr><th style="border-right: 1px solid #527bbd; " align="right" valign="top"><p><span class="strong"><strong>footer 1</strong></span></p></th><th style="border-right: 1px solid #527bbd; " align="center" valign="top"><p><code class="literal">footer 2</code></p></th><th style="" align="left" valign="top"><p><span class="emphasis"><em>footer 3</em></span></p></th></tr></tfoot><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="right" valign="top"><p><span class="strong"><strong>1</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p><code class="literal">Item 1</code></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>Item 1</em></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="right" valign="top"><p><span class="strong"><strong>2</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p><code class="literal">Item 2</code></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>Item 2</em></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="right" valign="top"><p><span class="strong"><strong>3</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p><code class="literal">Item 3</code></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>Item 3</em></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="right" valign="top"><p><span class="strong"><strong>4</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p><code class="literal">Item 4</code></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>Item 4</em></span></p></td></tr></tbody></table></div></div><br class="table-break" /><p title="AsciiDoc source"><strong>AsciiDoc source. </strong>
+</p><pre class="screen">.An example table
+[width="50%",cols="&gt;s,^m,e",frame="topbot",options="header,footer"]
+|==========================
+|      2+|Columns 2 and 3
+|1       |Item 1  |Item 1
+|2       |Item 2  |Item 2
+|3       |Item 3  |Item 3
+|4       |Item 4  |Item 4
+|footer 1|footer 2|footer 3
+|==========================</pre><p title="AsciiDoc source">
+</p><div class="table"><a id="idp19747176"></a><p class="title"><strong>Table 23.3. Horizontal and vertical source data</strong></p><div class="table-contents"><table summary="Horizontal and vertical source data" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; " width="80%"><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /><col class="col_4" /></colgroup><thead><tr><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top">Date </th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">Duration </th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">Avg HR </th><th style="border-bottom: 1px solid #527bbd; " align="left" valign="top">Notes</th></tr></thead><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>22-Aug-08</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>10:24</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>157</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Worked out MSHR (max sustainable heart rate) by going hard
+for this interval.</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>22-Aug-08</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>23:03</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>152</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Back-to-back with previous interval.</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>24-Aug-08</p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>40:00</p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>145</p></td><td style="" align="left" valign="top"><p>Moderately hard interspersed with 3x 3min intervals (2min
+hard + 1min really hard taking the HR up to 160).</p></td></tr></tbody></table></div></div><br class="table-break" /><p>Short cells can be entered horizontally, longer cells vertically.  The
+default behavior is to strip leading and trailing blank lines within a
+cell. These characteristics aid readability and data entry.</p><p title="AsciiDoc source"><strong>AsciiDoc source. </strong>
+</p><pre class="screen">.Windtrainer workouts
+[width="80%",cols="3,^2,^2,10",options="header"]
+|=========================================================
+|Date |Duration |Avg HR |Notes
+
+|22-Aug-08 |10:24 | 157 |
+Worked out MSHR (max sustainable heart rate) by going hard
+for this interval.
+
+|22-Aug-08 |23:03 | 152 |
+Back-to-back with previous interval.
+
+|24-Aug-08 |40:00 | 145 |
+Moderately hard interspersed with 3x 3min intervals (2min
+hard + 1min really hard taking the HR up to 160).
+
+|=========================================================</pre><p title="AsciiDoc source">
+</p><div class="table"><a id="idp19761944"></a><p class="title"><strong>Table 23.4. A table with externally sourced CSV data</strong></p><div class="table-contents"><table summary="A table with externally sourced CSV data" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /><col class="col_4" /><col class="col_5" /></colgroup><thead><tr><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">ID</th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top">Customer Name</th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top">Contact Name</th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top">Customer Address</th><th style="border-bottom: 1px solid #527bbd; " align="left" valign="top">Phone</th></tr></thead><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>AROUT</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Around the Horn</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Thomas Hardy</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>120 Hanover Sq.
+London</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>(171) 555-7788</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>BERGS</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Berglunds snabbkop</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Christina Berglund</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Berguvsvagen  8
+Lulea</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>0921-12 34 65</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>BLAUS</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Blauer See Delikatessen</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Hanna Moos</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Forsterstr. 57
+Mannheim</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>0621-08460</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>BLONP</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Blondel pere et fils</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Frederique Citeaux</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>24, place Kleber
+Strasbourg</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>88.60.15.31</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>BOLID</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Bolido Comidas preparadas</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Martin Sommer</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>C/ Araquil, 67
+Madrid</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>(91) 555 22 82</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>BONAP</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Bon app'</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Laurence Lebihan</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>12, rue des Bouchers
+Marseille</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>91.24.45.40</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>BOTTM</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Bottom-Dollar Markets</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Elizabeth Lincoln</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>23 Tsawassen Blvd.
+Tsawassen</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>(604) 555-4729</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>BSBEV</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>B’s Beverages</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Victoria Ashworth</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Fauntleroy Circus
+London</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>(171) 555-1212</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>CACTU</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>Cactus Comidas para llevar</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>Patricio Simpson</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>Cerrito 333
+Buenos Aires</p></td><td style="" align="left" valign="top"><p>(1) 135-5555</p></td></tr></tbody></table></div></div><br class="table-break" /><p title="AsciiDoc source"><strong>AsciiDoc source. </strong>
+</p><pre class="screen">[format="csv",cols="^1,4*2",options="header"]
+|===================================================
+ID,Customer Name,Contact Name,Customer Address,Phone
+include::customers.csv[]
+|===================================================</pre><p title="AsciiDoc source">
+</p><div class="table"><a id="idp19793448"></a><p class="title"><strong>Table 23.5. Cell spans, alignments and styles</strong></p><div class="table-contents"><table summary="Cell spans, alignments and styles" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; " width="25%"><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /><col class="col_4" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>1</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="right" valign="top"><p><span class="strong"><strong>2</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>3</p></td><td style="border-bottom: 1px solid #527bbd; " align="right" valign="top"><p><span class="strong"><strong>4</strong></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p><span class="emphasis"><em>5</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " rowspan="2" colspan="2" align="center" valign="middle"><p><code class="literal">6</code></p></td><td style="" rowspan="3" align="left" valign="bottom"><p><code class="literal">7</code></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p><span class="emphasis"><em>8</em></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>9</em></span></p></td><td style="border-right: 1px solid #527bbd; " colspan="2" align="right" valign="top"><p><code class="literal">10</code></p></td></tr></tbody></table></div></div><br class="table-break" /><p title="AsciiDoc source"><strong>AsciiDoc source. </strong>
+</p><pre class="screen">[cols="e,m,^,&gt;s",width="25%"]
+|============================
+|1 &gt;s|2 |3 |4
+^|5 2.2+^.^|6 .3+&lt;.&gt;m|7
+^|8
+|9 2+&gt;|10
+|============================</pre><p title="AsciiDoc source">
+</p></div><div class="section" title="23.2. Table input data formats"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X68"></a>23.2. Table input data formats</h2></div></div></div><p>AsciiDoc table data can be <span class="emphasis"><em>psv</em></span>, <span class="emphasis"><em>dsv</em></span> or <span class="emphasis"><em>csv</em></span> formatted.  The
+default table format is <span class="emphasis"><em>psv</em></span>.</p><p>AsciiDoc <span class="emphasis"><em>psv</em></span> (<span class="emphasis"><em>Prefix Separated Values</em></span>) and <span class="emphasis"><em>dsv</em></span> (<span class="emphasis"><em>Delimiter
+Separated Values</em></span>) formats are cell oriented — the table is treated
+as a sequence of cells — there are no explicit row separators.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>psv</em></span> prefixes each cell with a separator whereas <span class="emphasis"><em>dsv</em></span> delimits
+  cells with a separator.
+</li><li class="listitem">
+<span class="emphasis"><em>psv</em></span> and <span class="emphasis"><em>dsv</em></span> separators are Python regular expressions.
+</li><li class="listitem">
+The default <span class="emphasis"><em>psv</em></span> separator contains <a class="link" href="ch23.html#X84" title="23.5. Cell Specifiers">cell specifier</a> related
+  named regular expression groups.
+</li><li class="listitem">
+The default <span class="emphasis"><em>dsv</em></span> separator is <code class="literal">:|\n</code> (a colon or a new line
+  character).
+</li><li class="listitem">
+<span class="emphasis"><em>psv</em></span> and <span class="emphasis"><em>dsv</em></span> cell separators can be escaped by preceding them
+  with a backslash character.
+</li></ul></div><p>Here are four <span class="emphasis"><em>psv</em></span> cells (the second item spans two columns; the
+last contains an escaped separator):</p><pre class="literallayout">|One 2+|Two and three |A \| separator character</pre><p><span class="emphasis"><em>csv</em></span>  is the quasi-standard row oriented <span class="emphasis"><em>Comma Separated Values
+(CSV)</em></span> format commonly used to import and export spreadsheet and
+database data.</p></div><div class="section" title="23.3. Table attributes"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X69"></a>23.3. Table attributes</h2></div></div></div><p>Tables can be customized by the following attributes:</p><div class="variablelist"><dl><dt><span class="term">
+format
+</span></dt><dd>
+<span class="emphasis"><em>psv</em></span> (default), <span class="emphasis"><em>dsv</em></span> or <span class="emphasis"><em>csv</em></span> (See <a class="link" href="ch23.html#X68" title="23.2. Table input data formats">Table Data Formats</a>).
+</dd><dt><span class="term">
+separator
+</span></dt><dd>
+The cell separator. A Python regular expression (<span class="emphasis"><em>psv</em></span> and <span class="emphasis"><em>dsv</em></span>
+formats) or a single character (<span class="emphasis"><em>csv</em></span> format).
+</dd><dt><span class="term">
+frame
+</span></dt><dd>
+Defines the table border and can take the following values: <span class="emphasis"><em>topbot</em></span>
+(top and bottom), <span class="emphasis"><em>all</em></span> (all sides), <span class="emphasis"><em>none</em></span> and <span class="emphasis"><em>sides</em></span> (left and
+right sides). The default value is <span class="emphasis"><em>all</em></span>.
+</dd><dt><span class="term">
+grid
+</span></dt><dd>
+Defines which ruler lines are drawn between table rows and columns.
+The <span class="emphasis"><em>grid</em></span> attribute value can be any of the following values: <span class="emphasis"><em>none</em></span>,
+<span class="emphasis"><em>cols</em></span>, <span class="emphasis"><em>rows</em></span> and <span class="emphasis"><em>all</em></span>. The default value is <span class="emphasis"><em>all</em></span>.
+</dd><dt><span class="term">
+align
+</span></dt><dd>
+Use the <span class="emphasis"><em>align</em></span> attribute to horizontally align the table on the
+page (works with HTML outputs only, has no effect on DocBook outputs).
+The following values are valid: <span class="emphasis"><em>left</em></span>, <span class="emphasis"><em>right</em></span>, and <span class="emphasis"><em>center</em></span>.
+</dd><dt><span class="term">
+float
+</span></dt><dd>
+Use the <span class="emphasis"><em>float</em></span> attribute to float the table <span class="emphasis"><em>left</em></span> or <span class="emphasis"><em>right</em></span> on the
+page (works with HTML outputs only, has no effect on DocBook outputs).
+Floating only makes sense in conjunction with a table <span class="emphasis"><em>width</em></span>
+attribute value of less than 100% (otherwise the table will take up
+all the available space).  <span class="emphasis"><em>float</em></span> and <span class="emphasis"><em>align</em></span> attributes are mutually
+exclusive.  Use the <code class="literal">unfloat::[]</code> block macro to stop floating.
+</dd><dt><span class="term">
+halign
+</span></dt><dd>
+Use the <span class="emphasis"><em>halign</em></span> attribute to horizontally align all cells in a table.
+The following values are valid: <span class="emphasis"><em>left</em></span>, <span class="emphasis"><em>right</em></span>, and <span class="emphasis"><em>center</em></span>
+(defaults to <span class="emphasis"><em>left</em></span>). Overridden by <a class="link" href="ch23.html#X70" title="23.4. Column Specifiers">Column specifiers</a>  and
+<a class="link" href="ch23.html#X84" title="23.5. Cell Specifiers">Cell specifiers</a>.
+</dd><dt><span class="term">
+valign
+</span></dt><dd>
+Use the <span class="emphasis"><em>valign</em></span> attribute to vertically align all cells in a table.
+The following values are valid: <span class="emphasis"><em>top</em></span>, <span class="emphasis"><em>bottom</em></span>, and <span class="emphasis"><em>middle</em></span>
+(defaults to <span class="emphasis"><em>top</em></span>). Overridden by <a class="link" href="ch23.html#X70" title="23.4. Column Specifiers">Column specifiers</a>  and
+<a class="link" href="ch23.html#X84" title="23.5. Cell Specifiers">Cell specifiers</a>.
+</dd><dt><span class="term">
+options
+</span></dt><dd>
+The <span class="emphasis"><em>options</em></span> attribute can contain comma separated values, for
+example: <span class="emphasis"><em>header</em></span>, <span class="emphasis"><em>footer</em></span>. By default header and footer rows are
+omitted.  See <a class="link" href="apf.html" title="Appendix F. Attribute Options">attribute options</a> for a complete list of
+available table options.
+</dd><dt><span class="term">
+cols
+</span></dt><dd><p class="simpara">
+The <span class="emphasis"><em>cols</em></span> attribute is a comma separated list of <a class="link" href="ch23.html#X70" title="23.4. Column Specifiers">column specifiers</a>. For example <code class="literal">cols="2&lt;p,2*,4p,&gt;"</code>.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+If <span class="emphasis"><em>cols</em></span> is present it must specify all columns.
+</li><li class="listitem">
+If the <span class="emphasis"><em>cols</em></span> attribute is not specified the number of columns is
+  calculated as the number of data items in the <span class="strong"><strong>first line</strong></span> of the
+  table.
+</li><li class="listitem">
+The degenerate form for the <span class="emphasis"><em>cols</em></span> attribute is an integer
+  specifying the number of columns e.g. <code class="literal">cols=4</code>.
+</li></ul></div></dd><dt><span class="term">
+width
+</span></dt><dd>
+The <span class="emphasis"><em>width</em></span> attribute is expressed as a percentage value
+(<span class="emphasis"><em>"1%"</em></span>…<span class="emphasis"><em>"99%"</em></span>). The width specifies the table width relative to
+the available width. HTML backends use this value to set the table
+width attribute. It’s a bit more complicated with DocBook, see the
+<a class="link" href="ch23.html#X89" title="DocBook table widths">DocBook table widths</a> sidebar.
+</dd><dt><span class="term">
+filter
+</span></dt><dd>
+The <span class="emphasis"><em>filter</em></span> attribute defines an external shell command that is
+invoked for each cell. The built-in <span class="emphasis"><em>asciidoc</em></span> table style is
+implemented using a filter.
+</dd></dl></div><div class="sidebar" title="DocBook table widths"><a id="X89"></a><div class="titlepage"><div><div><p class="title"><strong>DocBook table widths</strong></p></div></div></div><p>The AsciiDoc docbook backend generates CALS tables. CALS tables do not
+support a table width attribute — table width can only be controlled
+by specifying absolute column widths.</p><p>Specifying absolute column widths is not media independent because
+different presentation media have different physical dimensions. To
+get round this limitation both
+<a class="ulink" href="http://www.sagehill.net/docbookxsl/Tables.html#TableWidth" target="_top">DocBook XSL
+Stylesheets</a> and
+<a class="ulink" href="http://dblatex.sourceforge.net/doc/manual/ch03s05.html#sec-table-width" target="_top">dblatex</a>
+have implemented table width processing instructions for setting the
+table width as a percentage of the available width. AsciiDoc emits
+these processing instructions if the <span class="emphasis"><em>width</em></span> attribute is set along
+with proportional column widths (the AsciiDoc docbook backend
+<span class="emphasis"><em>pageunits</em></span> attribute defaults to <span class="emphasis"><em>*</em></span>).</p><p>To generate DocBook tables with absolute column widths set the
+<span class="emphasis"><em>pageunits</em></span> attribute to a CALS absolute unit such as <span class="emphasis"><em>pt</em></span> and set the
+<span class="emphasis"><em>pagewidth</em></span> attribute to match the width of the presentation media.</p></div></div><div class="section" title="23.4. Column Specifiers"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X70"></a>23.4. Column Specifiers</h2></div></div></div><p>Column specifiers define how columns are rendered and appear in the
+table <a class="link" href="ch23.html#X69" title="23.3. Table attributes">cols attribute</a>.  A column specifier consists of an
+optional column multiplier followed by optional alignment, width and
+style values and is formatted like:</p><pre class="literallayout">[&lt;multiplier&gt;*][&lt;align&gt;][&lt;width&gt;][&lt;style&gt;]</pre><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+All components are optional. The multiplier must be first and the
+  style last. The order of <code class="literal">&lt;align&gt;</code> or <code class="literal">&lt;width&gt;</code> is not important.
+</li><li class="listitem">
+Column <code class="literal">&lt;width&gt;</code> can be either an integer proportional value (1…)
+  or a percentage (1%…100%). The default value is 1. To ensure
+  portability across different backends, there is no provision for
+  absolute column widths (not to be confused with output column width
+  <a class="link" href="ch23.html#X72" title="23.7. Markup attributes">markup attributes</a> which are available in both percentage and
+  absolute units).
+</li><li class="listitem"><p class="simpara">
+The <span class="emphasis"><em>&lt;align&gt;</em></span> column alignment specifier is formatted like:
+</p><pre class="literallayout">[&lt;horizontal&gt;][.&lt;vertical&gt;]</pre><p class="simpara">Where <code class="literal">&lt;horizontal&gt;</code> and <code class="literal">&lt;vertical&gt;</code> are one of the following
+characters: <code class="literal">&lt;</code>, <code class="literal">^</code> or <code class="literal">&gt;</code> which represent <span class="emphasis"><em>left</em></span>, <span class="emphasis"><em>center</em></span> and
+<span class="emphasis"><em>right</em></span> horizontal alignment or <span class="emphasis"><em>top</em></span>, <span class="emphasis"><em>middle</em></span> and <span class="emphasis"><em>bottom</em></span> vertical
+alignment respectively.</p></li><li class="listitem">
+A <code class="literal">&lt;multiplier&gt;</code> can be used to specify repeated columns e.g.
+  <code class="literal">cols="4*&lt;"</code> specifies four left-justified columns. The default
+  multiplier value is 1.
+</li><li class="listitem">
+The <code class="literal">&lt;style&gt;</code> name specifies a <a class="link" href="ch23.html#X71" title="23.6. Table styles">table style</a> to used to markup
+  column cells (you can use the full style names if you wish but the
+  first letter is normally sufficient).
+</li><li class="listitem">
+Column specific styles are not applied to header rows.
+</li></ul></div></div><div class="section" title="23.5. Cell Specifiers"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X84"></a>23.5. Cell Specifiers</h2></div></div></div><p>Cell specifiers allow individual cells in <span class="emphasis"><em>psv</em></span> formatted tables to be
+spanned, multiplied, aligned and styled.  Cell specifiers prefix <span class="emphasis"><em>psv</em></span>
+<code class="literal">|</code> delimiters and are formatted like:</p><pre class="literallayout">[&lt;span&gt;*|+][&lt;align&gt;][&lt;style&gt;]</pre><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+<span class="emphasis"><em>&lt;span&gt;</em></span> specifies horizontal and vertical cell spans (<span class="emphasis"><em>+</em></span> operator) or
+  the number of times the cell is replicated (<span class="emphasis"><em>*</em></span> operator). <span class="emphasis"><em>&lt;span&gt;</em></span>
+  is formatted like:
+</p><pre class="literallayout">[&lt;colspan&gt;][.&lt;rowspan&gt;]</pre><p class="simpara">Where <code class="literal">&lt;colspan&gt;</code> and <code class="literal">&lt;rowspan&gt;</code> are integers specifying the number of
+columns and rows to span.</p></li><li class="listitem">
+<code class="literal">&lt;align&gt;</code> specifies horizontal and vertical cell alignment an is the
+  same as in <a class="link" href="ch23.html#X70" title="23.4. Column Specifiers">column specifiers</a>.
+</li><li class="listitem">
+A <code class="literal">&lt;style&gt;</code> value is the first letter of <a class="link" href="ch23.html#X71" title="23.6. Table styles">table style</a> name.
+</li></ul></div><p>For example, the following <span class="emphasis"><em>psv</em></span> formatted cell will span two columns
+and the text will be centered and emphasized:</p><pre class="literallayout">`2+^e| Cell text`</pre></div><div class="section" title="23.6. Table styles"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X71"></a>23.6. Table styles</h2></div></div></div><p>Table styles can be applied to the entire table (by setting the
+<span class="emphasis"><em>style</em></span> attribute in the table’s attribute list) or on a per column
+basis (by specifying the style in the table’s <a class="link" href="ch23.html#X69" title="23.3. Table attributes">cols attribute</a>).
+Table data can be formatted using the following predefined styles:</p><div class="variablelist"><dl><dt><span class="term">
+default
+</span></dt><dd>
+The default style: AsciiDoc inline text formatting; blank lines are
+treated as paragraph breaks.
+</dd><dt><span class="term">
+emphasis
+</span></dt><dd>
+Like default but all text is emphasised.
+</dd><dt><span class="term">
+monospaced
+</span></dt><dd>
+Like default but all text is in a monospaced font.
+</dd><dt><span class="term">
+strong
+</span></dt><dd>
+Like default but all text is bold.
+</dd><dt><span class="term">
+header
+</span></dt><dd>
+Apply the same style as the table header. Normally used to create a
+vertical header in the first column.
+</dd><dt><span class="term">
+asciidoc
+</span></dt><dd>
+With this style table cells can contain any of the AsciiDoc elements
+that are allowed inside document sections. This style runs <code class="literal">asciidoc(1)</code>
+as a filter to process cell contents. See also <a class="link" href="ch23.html#X83" title="23.9. DocBook table limitations">Docbook table limitations</a>.
+</dd><dt><span class="term">
+literal
+</span></dt><dd>
+No text formatting; monospaced font; all line breaks are retained
+(the same as the AsciiDoc <a class="link" href="ch16.html#X65" title="16.3. Literal Blocks">LiteralBlock</a> element).
+</dd><dt><span class="term">
+verse
+</span></dt><dd>
+All line breaks are retained (just like the AsciiDoc <a class="link" href="ch15.html#X94" title="15.3. quote and verse paragraph styles">verse paragraph style</a>).
+</dd></dl></div></div><div class="section" title="23.7. Markup attributes"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X72"></a>23.7. Markup attributes</h2></div></div></div><p>AsciiDoc makes a number of attributes available to table markup
+templates and tags. Column specific attributes are available when
+substituting the <span class="emphasis"><em>colspec</em></span> cell data tags.</p><div class="variablelist"><dl><dt><span class="term">
+pageunits
+</span></dt><dd>
+DocBook backend only. Specifies table column absolute width units.
+Defaults to <span class="emphasis"><em>*</em></span>.
+</dd><dt><span class="term">
+pagewidth
+</span></dt><dd>
+DocBook backend only. The nominal output page width in <span class="emphasis"><em>pageunit</em></span>
+units. Used to calculate CALS tables absolute column and table
+widths. Defaults to <span class="emphasis"><em>425</em></span>.
+</dd><dt><span class="term">
+tableabswidth
+</span></dt><dd>
+Integer value calculated from <span class="emphasis"><em>width</em></span> and <span class="emphasis"><em>pagewidth</em></span> attributes.
+In <span class="emphasis"><em>pageunit</em></span> units.
+</dd><dt><span class="term">
+tablepcwidth
+</span></dt><dd>
+Table width expressed as a percentage of the available width. Integer
+value (0..100).
+</dd><dt><span class="term">
+colabswidth
+</span></dt><dd>
+Integer value calculated from <span class="emphasis"><em>cols</em></span> column width, <span class="emphasis"><em>width</em></span> and
+<span class="emphasis"><em>pagewidth</em></span> attributes.  In <span class="emphasis"><em>pageunit</em></span> units.
+</dd><dt><span class="term">
+colpcwidth
+</span></dt><dd>
+Column width expressed as a percentage of the table width. Integer
+value (0..100).
+</dd><dt><span class="term">
+colcount
+</span></dt><dd>
+Total number of table columns.
+</dd><dt><span class="term">
+rowcount
+</span></dt><dd>
+Total number of table rows.
+</dd><dt><span class="term">
+halign
+</span></dt><dd>
+Horizontal cell content alignment: <span class="emphasis"><em>left</em></span>, <span class="emphasis"><em>right</em></span> or <span class="emphasis"><em>center</em></span>.
+</dd><dt><span class="term">
+valign
+</span></dt><dd>
+Vertical cell content alignment: <span class="emphasis"><em>top</em></span>, <span class="emphasis"><em>bottom</em></span> or <span class="emphasis"><em>middle</em></span>.
+</dd><dt><span class="term">
+colnumber, colstart
+</span></dt><dd>
+The number of the leftmost column occupied by the cell (1…).
+</dd><dt><span class="term">
+colend
+</span></dt><dd>
+The number of the rightmost column occupied by the cell (1…).
+</dd><dt><span class="term">
+colspan
+</span></dt><dd>
+Number of columns the cell should span.
+</dd><dt><span class="term">
+rowspan
+</span></dt><dd>
+Number of rows the cell should span (1…).
+</dd><dt><span class="term">
+morerows
+</span></dt><dd>
+Number of additional rows the cell should span (0…).
+</dd></dl></div></div><div class="section" title="23.8. Nested tables"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_nested_tables"></a>23.8. Nested tables</h2></div></div></div><p>An alternative <span class="emphasis"><em>psv</em></span> separator character <span class="emphasis"><em>!</em></span> can be used (instead of
+<span class="emphasis"><em>|</em></span>) in nested tables. This allows a single level of table nesting.
+Columns containing nested tables must use the <span class="emphasis"><em>asciidoc</em></span> style. An
+example can be found in <code class="literal">./examples/website/newtables.txt</code>.</p></div><div class="section" title="23.9. DocBook table limitations"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X83"></a>23.9. DocBook table limitations</h2></div></div></div><p>Fully implementing tables is not trivial, some DocBook toolchains do
+better than others.  AsciiDoc HTML table outputs are rendered
+correctly in all the popular browsers — if your DocBook generated
+tables don’t look right compare them with the output generated by the
+AsciiDoc <span class="emphasis"><em>xhtml11</em></span> backend or try a different DocBook toolchain.  Here
+is a list of things to be aware of:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Although nested tables are not legal in DocBook 4 the FOP and
+  dblatex toolchains will process them correctly.  If you use <code class="literal">a2x(1)</code>
+  you will need to include the <code class="literal">--no-xmllint</code> option to suppress
+  DocBook validation errors.
+</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>In theory you can nest DocBook 4 tables one level using the
+<span class="emphasis"><em>entrytbl</em></span> element, but not all toolchains process <span class="emphasis"><em>entrytbl</em></span>.</p></td></tr></table></div></li><li class="listitem">
+DocBook only allows a subset of block elements inside table cells so
+  not all AsciiDoc elements produce valid DocBook inside table cells.
+  If you get validation errors running <code class="literal">a2x(1)</code> try the <code class="literal">--no-xmllint</code>
+  option, toolchains will often process nested block elements such as
+  sidebar blocks and floating titles correctly even though, strictly
+  speaking, they are not legal.
+</li><li class="listitem">
+Text formatting in cells using the <span class="emphasis"><em>monospaced</em></span> table style will
+  raise validation errors because the DocBook <span class="emphasis"><em>literal</em></span> element was
+  not designed to support formatted text (using the <span class="emphasis"><em>literal</em></span> element
+  is a kludge on the part of AsciiDoc as there is no easy way to set
+  the font style in DocBook.
+</li><li class="listitem">
+Cell alignments are ignored for <span class="emphasis"><em>verse</em></span>, <span class="emphasis"><em>literal</em></span> or <span class="emphasis"><em>asciidoc</em></span>
+  table styles.
+</li></ul></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch22.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch24.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

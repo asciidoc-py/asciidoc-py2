@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 21. Macros</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch20.html" title="Chapter 20. Callouts" /><link rel="next" href="ch22.html" title="Chapter 22. HTML 5 audio and video block macros" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch20.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch22.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 21. Macros"><div class="titlepage"><div><div><h2 class="title"><a id="_macros"></a>Chapter 21. Macros</h2></div></div></div><p>Macros are a mechanism for substituting parametrized text into output
+documents.</p><p>Macros have a <span class="emphasis"><em>name</em></span>, a single <span class="emphasis"><em>target</em></span> argument and an <span class="emphasis"><em>attribute
+list</em></span>.  The usual syntax is <code class="literal">&lt;name&gt;:&lt;target&gt;[&lt;attrlist&gt;]</code> (for
+inline macros) and <code class="literal">&lt;name&gt;::&lt;target&gt;[&lt;attrlist&gt;]</code> (for block
+macros).  Here are some examples:</p><pre class="literallayout">http://www.docbook.org/[DocBook.org]
+include::chapt1.txt[tabsize=2]
+mailto:srackham@gmail.com[]</pre><div class="itemizedlist" title="Macro behavior"><p class="title"><strong>Macro behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">&lt;name&gt;</code> is the macro name. It can only contain letters, digits or
+  dash characters and cannot start with a dash.
+</li><li class="listitem">
+The optional <code class="literal">&lt;target&gt;</code> cannot contain white space characters.
+</li><li class="listitem">
+<code class="literal">&lt;attrlist&gt;</code> is a <a class="link" href="ch29.html" title="Chapter 29. Attribute Lists">list of attributes</a> enclosed in square
+  brackets.
+</li><li class="listitem">
+<code class="literal">]</code> characters inside attribute lists must be escaped with a
+  backslash.
+</li><li class="listitem">
+Expansion of macro references can normally be escaped by prefixing a
+  backslash character (see the AsciiDoc <span class="emphasis"><em>FAQ</em></span> for examples of
+  exceptions to this rule).
+</li><li class="listitem">
+Attribute references in block macros are expanded.
+</li><li class="listitem">
+The substitutions performed prior to Inline macro macro expansion
+  are determined by the inline context.
+</li><li class="listitem">
+Macros are processed in the order they appear in the configuration
+  file(s).
+</li><li class="listitem">
+Calls to inline macros can be nested inside different inline macros
+  (an inline macro call cannot contain a nested call to itself).
+</li><li class="listitem">
+In addition to <code class="literal">&lt;name&gt;</code>, <code class="literal">&lt;target&gt;</code> and <code class="literal">&lt;attrlist&gt;</code> the
+  <code class="literal">&lt;passtext&gt;</code> and <code class="literal">&lt;subslist&gt;</code> named groups are available to
+  <a class="link" href="ch21.html#X77" title="21.4. Passthrough macros">passthrough macros</a>. A macro is a passthrough macro if the
+  definition includes a <code class="literal">&lt;passtext&gt;</code> named group.
+</li></ul></div><div class="section" title="21.1. Inline Macros"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_inline_macros"></a>21.1. Inline Macros</h2></div></div></div><p>Inline Macros occur in an inline element context. Predefined Inline
+macros include <span class="emphasis"><em>URLs</em></span>, <span class="emphasis"><em>image</em></span> and <span class="emphasis"><em>link</em></span> macros.</p><div class="section" title="21.1.1. URLs"><div class="titlepage"><div><div><h3 class="title"><a id="_urls"></a>21.1.1. URLs</h3></div></div></div><p><span class="emphasis"><em>http</em></span>, <span class="emphasis"><em>https</em></span>, <span class="emphasis"><em>ftp</em></span>, <span class="emphasis"><em>file</em></span>, <span class="emphasis"><em>mailto</em></span> and <span class="emphasis"><em>callto</em></span> URLs are
+rendered using predefined inline macros.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+If you don’t need a custom link caption you can enter the <span class="emphasis"><em>http</em></span>,
+  <span class="emphasis"><em>https</em></span>, <span class="emphasis"><em>ftp</em></span>, <span class="emphasis"><em>file</em></span> URLs and email addresses without any special
+  macro syntax.
+</li><li class="listitem">
+If the <code class="literal">&lt;attrlist&gt;</code> is empty the URL is displayed.
+</li></ul></div><p>Here are some examples:</p><pre class="literallayout">http://www.docbook.org/[DocBook.org]
+http://www.docbook.org/
+mailto:joe.bloggs@foobar.com[email Joe Bloggs]
+joe.bloggs@foobar.com</pre><p>Which are rendered:</p><p><a class="ulink" href="http://www.docbook.org/" target="_top">DocBook.org</a></p><p><a class="ulink" href="http://www.docbook.org/" target="_top">http://www.docbook.org/</a></p><p><a class="ulink" href="mailto:joe.bloggs@foobar.com" target="_top">email Joe Bloggs</a></p><p><a class="ulink" href="mailto:joe.bloggs@foobar.com" target="_top">joe.bloggs@foobar.com</a></p><p>If the <code class="literal">&lt;target&gt;</code> necessitates space characters use <code class="literal">%20</code>, for example
+<code class="literal">large%20image.png</code>.</p></div><div class="section" title="21.1.2. Internal Cross References"><div class="titlepage"><div><div><h3 class="title"><a id="_internal_cross_references"></a>21.1.2. Internal Cross References</h3></div></div></div><p>Two AsciiDoc inline macros are provided for creating hypertext links
+within an AsciiDoc document. You can use either the standard macro
+syntax or the (preferred) alternative.</p><div class="section" title="anchor"><div class="titlepage"><div><div><h4 class="title"><a id="X30"></a>anchor</h4></div></div></div><p>Used to specify hypertext link targets:</p><pre class="literallayout">[[&lt;id&gt;,&lt;xreflabel&gt;]]
+anchor:&lt;id&gt;[&lt;xreflabel&gt;]</pre><p>The <code class="literal">&lt;id&gt;</code> is a unique string that conforms to the output markup’s
+anchor syntax. The optional <code class="literal">&lt;xreflabel&gt;</code> is the text to be displayed
+by captionless <span class="emphasis"><em>xref</em></span> macros that refer to this anchor. The optional
+<code class="literal">&lt;xreflabel&gt;</code> is only really useful when generating DocBook output.
+Example anchor:</p><pre class="literallayout">[[X1]]</pre><p>You may have noticed that the syntax of this inline element is the
+same as that of the <a class="link" href="ch13.html" title="Chapter 13. BlockId Element">BlockId block element</a>, this is no
+coincidence since they are functionally equivalent.</p></div><div class="section" title="xref"><div class="titlepage"><div><div><h4 class="title"><a id="_xref"></a>xref</h4></div></div></div><p>Creates a hypertext link to a document anchor.</p><pre class="literallayout">&lt;&lt;&lt;id&gt;,&lt;caption&gt;&gt;&gt;
+xref:&lt;id&gt;[&lt;caption&gt;]</pre><p>The <code class="literal">&lt;id&gt;</code> refers to an anchor ID. The optional <code class="literal">&lt;caption&gt;</code> is the
+link’s displayed text. Example:</p><pre class="literallayout">&lt;&lt;X21,attribute lists&gt;&gt;</pre><p>If <code class="literal">&lt;caption&gt;</code> is not specified then the displayed text is
+auto-generated:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+The AsciiDoc <span class="emphasis"><em>xhtml11</em></span> and <span class="emphasis"><em>html5</em></span> backends display the <code class="literal">&lt;id&gt;</code>
+  enclosed in square brackets.
+</li><li class="listitem">
+If DocBook is produced the DocBook toolchain is responsible for the
+  displayed text which will normally be the referenced figure, table
+  or section title number followed by the element’s title text.
+</li></ul></div><p>Here is an example:</p><pre class="screen">[[tiger_image]]
+.Tyger tyger
+image::tiger.png[]
+
+This can be seen in &lt;&lt;tiger_image&gt;&gt;.</pre></div></div><div class="section" title="21.1.3. Linking to Local Documents"><div class="titlepage"><div><div><h3 class="title"><a id="_linking_to_local_documents"></a>21.1.3. Linking to Local Documents</h3></div></div></div><p>Hypertext links to files on the local file system are specified using
+the <span class="emphasis"><em>link</em></span> inline macro.</p><pre class="literallayout">link:&lt;target&gt;[&lt;caption&gt;]</pre><p>The <span class="emphasis"><em>link</em></span> macro generates relative URLs. The link macro <code class="literal">&lt;target&gt;</code> is
+the target file name (relative to the file system location of the
+referring document). The optional <code class="literal">&lt;caption&gt;</code> is the link’s displayed
+text. If <code class="literal">&lt;caption&gt;</code> is not specified then <code class="literal">&lt;target&gt;</code> is displayed.
+Example:</p><pre class="literallayout">link:downloads/foo.zip[download foo.zip]</pre><p>You can use the <code class="literal">&lt;filename&gt;#&lt;id&gt;</code> syntax to refer to an anchor within
+a target document but this usually only makes sense when targeting
+HTML documents.</p></div><div class="section" title="21.1.4. Images"><div class="titlepage"><div><div><h3 class="title"><a id="X9"></a>21.1.4. Images</h3></div></div></div><p>Inline images are inserted into the output document using the <span class="emphasis"><em>image</em></span>
+macro. The inline syntax is:</p><pre class="literallayout">image:&lt;target&gt;[&lt;attributes&gt;]</pre><p>The contents of the image file <code class="literal">&lt;target&gt;</code> is displayed. To display the
+image its file format must be supported by the target backend
+application. HTML and DocBook applications normally support PNG or JPG
+files.</p><p><code class="literal">&lt;target&gt;</code> file name paths are relative to the location of the
+referring document.</p><div class="itemizedlist" title="Image macro attributes"><a id="X55"></a><p class="title"><strong>Image macro attributes</strong></p><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+The optional <span class="emphasis"><em>alt</em></span> attribute is also the first positional attribute,
+  it specifies alternative text which is displayed if the output
+  application is unable to display the image file (see also
+  <a class="ulink" href="http://htmlhelp.com/feature/art3.htm" target="_top">Use of ALT texts in IMGs</a>). For
+  example:
+</p><pre class="literallayout">image:images/logo.png[Company Logo]</pre></li><li class="listitem">
+The optional <span class="emphasis"><em>title</em></span> attribute provides a title for the image. The
+  <a class="link" href="ch21.html#X49" title="21.2.2. Images">block image macro</a> renders the title alongside the image.
+  The inline image macro displays the title as a popup “tooltip” in
+  visual browsers (AsciiDoc HTML outputs only).
+</li><li class="listitem"><p class="simpara">
+The optional <code class="literal">width</code> and <code class="literal">height</code> attributes scale the image size
+  and can be used in any combination. The units are pixels.  The
+  following example scales the previous example to a height of 32
+  pixels:
+</p><pre class="literallayout">image:images/logo.png["Company Logo",height=32]</pre></li><li class="listitem"><p class="simpara">
+The optional <code class="literal">link</code> attribute is used to link the image to an
+  external document. The following example links a screenshot
+  thumbnail to a full size version:
+</p><pre class="literallayout">image:screen-thumbnail.png[height=32,link="screen.png"]</pre></li><li class="listitem"><p class="simpara">
+The optional <code class="literal">scaledwidth</code> attribute is only used in DocBook block
+  images (specifically for PDF documents). The following example
+  scales the images to 75% of the available print width:
+</p><pre class="literallayout">image::images/logo.png[scaledwidth="75%",alt="Company Logo"]</pre></li><li class="listitem">
+The image <code class="literal">scale</code> attribute sets the DocBook <code class="literal">imagedata</code> element
+  <code class="literal">scale</code> attribute.
+</li><li class="listitem"><p class="simpara">
+The optional <code class="literal">align</code> attribute aligns block macro images
+  horizontally.  Allowed values are <code class="literal">center</code>, <code class="literal">left</code> and <code class="literal">right</code>. For
+  example:
+</p><pre class="literallayout">image::images/tiger.png["Tiger image",align="left"]</pre></li><li class="listitem">
+The optional <code class="literal">float</code> attribute floats the image <code class="literal">left</code> or <code class="literal">right</code> on
+  the page (works with HTML outputs only, has no effect on DocBook
+  outputs). <code class="literal">float</code> and <code class="literal">align</code> attributes are mutually exclusive.
+  Use the <code class="literal">unfloat::[]</code> block macro to stop floating.
+</li></ul></div></div><div class="section" title="21.1.5. Comment Lines"><div class="titlepage"><div><div><h3 class="title"><a id="_comment_lines"></a>21.1.5. Comment Lines</h3></div></div></div><p>See <a class="link" href="ch21.html#X25" title="21.2.3. Comment Lines">comment block macro</a>.</p></div></div><div class="section" title="21.2. Block Macros"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_block_macros"></a>21.2. Block Macros</h2></div></div></div><p>A Block macro reference must be contained in a single line separated
+either side by a blank line or a block delimiter.</p><p>Block macros behave just like Inline macros, with the following
+differences:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+They occur in a block context.
+</li><li class="listitem">
+The default syntax is <code class="literal">&lt;name&gt;::&lt;target&gt;[&lt;attrlist&gt;]</code> (two
+  colons, not one).
+</li><li class="listitem">
+Markup template section names end in <code class="literal">-blockmacro</code> instead of
+  <code class="literal">-inlinemacro</code>.
+</li></ul></div><div class="section" title="21.2.1. Block Identifier"><div class="titlepage"><div><div><h3 class="title"><a id="_block_identifier"></a>21.2.1. Block Identifier</h3></div></div></div><p>The Block Identifier macro sets the <code class="literal">id</code> attribute and has the same
+syntax as the <a class="link" href="ch21.html#X30" title="anchor">anchor inline macro</a> since it performs
+essentially the same function — block templates use the <code class="literal">id</code>
+attribute as a block element ID. For example:</p><pre class="literallayout">[[X30]]</pre><p>This is equivalent to the <code class="literal">[id="X30"]</code> <a class="link" href="ch14.html" title="Chapter 14. AttributeList Element">AttributeList element</a>).</p></div><div class="section" title="21.2.2. Images"><div class="titlepage"><div><div><h3 class="title"><a id="X49"></a>21.2.2. Images</h3></div></div></div><p>The <span class="emphasis"><em>image</em></span> block macro is used to display images in a block context.
+The syntax is:</p><pre class="literallayout">image::&lt;target&gt;[&lt;attributes&gt;]</pre><p>The block <code class="literal">image</code> macro has the same <a class="link" href="ch21.html#X55" title="Image macro attributes">macro attributes</a> as it’s
+<a class="link" href="ch21.html#X9" title="21.1.4. Images">inline image macro</a> counterpart.</p><p>Block images can be titled by preceding the <span class="emphasis"><em>image</em></span> macro with a
+<span class="emphasis"><em>BlockTitle</em></span>.  DocBook toolchains normally number titled block images
+and optionally list them in an automatically generated <span class="emphasis"><em>List of
+Figures</em></span> backmatter section.</p><p>This example:</p><pre class="literallayout">.Main circuit board
+image::images/layout.png[J14P main circuit board]</pre><p>is equivalent to:</p><pre class="literallayout">image::images/layout.png["J14P main circuit board",
+                          title="Main circuit board"]</pre><p>A title prefix that can be inserted with the <code class="literal">caption</code> attribute
+(HTML backends). For example:</p><pre class="literallayout">.Main circuit board
+[caption="Figure 2: "]
+image::images/layout.png[J14P main circuit board]</pre><div class="sidebar" title="Embedding images in XHTML documents"><a id="X66"></a><div class="titlepage"><div><div><p class="title"><strong>Embedding images in XHTML documents</strong></p></div></div></div><p>If you define the <code class="literal">data-uri</code> attribute then images will be embedded in
+XHTML outputs using the
+<a class="ulink" href="http://en.wikipedia.org/wiki/Data:_URI_scheme" target="_top">data URI scheme</a>.  You
+can use the <span class="emphasis"><em>data-uri</em></span> attribute with the <span class="emphasis"><em>xhtml11</em></span> and <span class="emphasis"><em>html5</em></span>
+backends to produce single-file XHTML documents with embedded images
+and CSS, for example:</p><pre class="literallayout">$ asciidoc -a data-uri mydocument.txt</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+All current popular browsers support data URIs, although versions
+  of Internet Explorer prior to version 8 do not.
+</li><li class="listitem">
+Some browsers limit the size of data URIs.
+</li></ul></div></td></tr></table></div></div></div><div class="section" title="21.2.3. Comment Lines"><div class="titlepage"><div><div><h3 class="title"><a id="X25"></a>21.2.3. Comment Lines</h3></div></div></div><p>Single lines starting with two forward slashes hard up against the
+left margin are treated as comments. Comment lines do not appear in
+the output unless the <span class="emphasis"><em>showcomments</em></span> attribute is defined.  Comment
+lines have been implemented as both block and inline macros so a
+comment line can appear as a stand-alone block or within block elements
+that support inline macro expansion. Example comment line:</p><pre class="literallayout">// This is a comment.</pre><p>If the <span class="emphasis"><em>showcomments</em></span> attribute is defined comment lines are written
+to the output:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+In DocBook the comment lines are enclosed by the <span class="emphasis"><em>remark</em></span> element
+  (which may or may not be rendered by your toolchain).
+</li><li class="listitem">
+The <span class="emphasis"><em>showcomments</em></span> attribute does not expose <a class="link" href="ch16.html#X26" title="16.5. Comment Blocks">Comment Blocks</a>.
+  Comment Blocks are never passed to the output.
+</li></ul></div></div></div><div class="section" title="21.3. System Macros"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_system_macros"></a>21.3. System Macros</h2></div></div></div><p>System macros are block macros that perform a predefined task and are
+hardwired into the <code class="literal">asciidoc(1)</code> program.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+You can escape system macros with a leading backslash character
+  (as you can with other macros).
+</li><li class="listitem">
+The syntax and tasks performed by system macros is built into
+  <code class="literal">asciidoc(1)</code> so they don’t appear in configuration files.  You can
+  however customize the syntax by adding entries to a configuration
+  file <code class="literal">[macros]</code> section.
+</li></ul></div><div class="section" title="21.3.1. Include Macros"><div class="titlepage"><div><div><h3 class="title"><a id="X63"></a>21.3.1. Include Macros</h3></div></div></div><p>The <code class="literal">include</code> and <code class="literal">include1</code>  system macros to include the contents of
+a named file into the source document.</p><p>The <code class="literal">include</code> macro includes a file as if it were part of the parent
+document — tabs are expanded and system macros processed. The
+contents of <code class="literal">include1</code> files are not subject to tab expansion or
+system macro processing nor are attribute or lower priority
+substitutions performed. The <code class="literal">include1</code> macro’s intended use is to
+include verbatim embedded CSS or scripts into configuration file
+headers.  Example:</p><pre class="screen">include::chapter1.txt[tabsize=4]</pre><div class="itemizedlist" title="Include macro behavior"><p class="title"><strong>Include macro behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+If the included file name is specified with a relative path then the
+  path is relative to the location of the referring document.
+</li><li class="listitem">
+Include macros can appear inside configuration files.
+</li><li class="listitem">
+Files included from within <span class="emphasis"><em>DelimitedBlocks</em></span> are read to completion
+  to avoid false end-of-block underline termination.
+</li><li class="listitem">
+Attribute references are expanded inside the include <span class="emphasis"><em>target</em></span>; if an
+  attribute is undefined then the included file is silently skipped.
+</li><li class="listitem">
+The <span class="emphasis"><em>tabsize</em></span> macro attribute sets the number of space characters to
+  be used for tab expansion in the included file (not applicable to
+  <code class="literal">include1</code> macro).
+</li><li class="listitem">
+The <span class="emphasis"><em>depth</em></span> macro attribute sets the maximum permitted number of
+  subsequent nested includes (not applicable to <code class="literal">include1</code> macro which
+  does not process nested includes). Setting <span class="emphasis"><em>depth</em></span> to <span class="emphasis"><em>1</em></span> disables
+  nesting inside the included file. By default, nesting is limited to
+  a depth of ten.
+</li><li class="listitem">
+If the he <span class="emphasis"><em>warnings</em></span> attribute is set to <span class="emphasis"><em>False</em></span> (or any other
+  Python literal that evaluates to boolean false) then no warning
+  message is printed if the included file does not exist. By default
+  <span class="emphasis"><em>warnings</em></span> are enabled.
+</li><li class="listitem">
+Internally the <code class="literal">include1</code> macro is translated to the <code class="literal">include1</code>
+  system attribute which means it must be evaluated in a region where
+  attribute substitution is enabled. To inhibit nested substitution in
+  included files it is preferable to use the <code class="literal">include</code> macro and set
+  the attribute <code class="literal">depth=1</code>.
+</li></ul></div></div><div class="section" title="21.3.2. Conditional Inclusion Macros"><div class="titlepage"><div><div><h3 class="title"><a id="_conditional_inclusion_macros"></a>21.3.2. Conditional Inclusion Macros</h3></div></div></div><p>Lines of text in the source document can be selectively included or
+excluded from processing based on the existence (or not) of a document
+attribute.</p><p>Document text between the <code class="literal">ifdef</code> and <code class="literal">endif</code> macros is included if a
+document attribute is defined:</p><pre class="literallayout">ifdef::&lt;attribute&gt;[]
+:
+endif::&lt;attribute&gt;[]</pre><p>Document text between the <code class="literal">ifndef</code> and <code class="literal">endif</code> macros is not included
+if a document attribute is defined:</p><pre class="literallayout">ifndef::&lt;attribute&gt;[]
+:
+endif::&lt;attribute&gt;[]</pre><p><code class="literal">&lt;attribute&gt;</code> is an attribute name which is optional in the trailing
+<code class="literal">endif</code> macro.</p><p>If you only want to process a single line of text then the text can be
+put inside the square brackets and the <code class="literal">endif</code> macro omitted, for
+example:</p><pre class="literallayout">ifdef::revnumber[Version number 42]</pre><p>Is equivalent to:</p><pre class="literallayout">ifdef::revnumber[]
+Version number 42
+endif::revnumber[]</pre><p><span class="emphasis"><em>ifdef</em></span> and <span class="emphasis"><em>ifndef</em></span> macros also accept multiple attribute names:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Multiple <span class="emphasis"><em>,</em></span> separated attribute names evaluate to defined if one
+  or more of the attributes is defined, otherwise it’s value is
+  undefined.
+</li><li class="listitem">
+Multiple <span class="emphasis"><em>+</em></span> separated attribute names evaluate to defined if all
+  of the attributes is defined, otherwise it’s value is undefined.
+</li></ul></div><p>Document text between the <code class="literal">ifeval</code> and <code class="literal">endif</code> macros is included if
+the Python expression inside the square brackets is true. Example:</p><pre class="literallayout">ifeval::[{rs458}==2]
+:
+endif::[]</pre><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Document attribute references are expanded before the expression is
+  evaluated.
+</li><li class="listitem">
+If an attribute reference is undefined then the expression is
+  considered false.
+</li></ul></div><p>Take a look at the <code class="literal">*.conf</code> configuration files in the AsciiDoc
+distribution for examples of conditional inclusion macro usage.</p></div><div class="section" title="21.3.3. Executable system macros"><div class="titlepage"><div><div><h3 class="title"><a id="_executable_system_macros"></a>21.3.3. Executable system macros</h3></div></div></div><p>The <span class="emphasis"><em>eval</em></span>, <span class="emphasis"><em>sys</em></span> and <span class="emphasis"><em>sys2</em></span> block macros exhibit the same behavior as
+their same named <a class="link" href="ch30.html#X24" title="30.3. System Attribute References">system attribute references</a>. The difference
+is that system macros occur in a block macro context whereas system
+attributes are confined to inline contexts where attribute
+substitution is enabled.</p><p>The following example displays a long directory listing inside a
+literal block:</p><pre class="literallayout">------------------
+sys::[ls -l *.txt]
+------------------</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>There are no block macro versions of the <span class="emphasis"><em>eval3</em></span> and <span class="emphasis"><em>sys3</em></span>
+system attributes.</p></td></tr></table></div></div><div class="section" title="21.3.4. Template System Macro"><div class="titlepage"><div><div><h3 class="title"><a id="_template_system_macro"></a>21.3.4. Template System Macro</h3></div></div></div><p>The <code class="literal">template</code> block macro allows the inclusion of one configuration
+file template section within another.  The following example includes
+the <code class="literal">[admonitionblock]</code> section in the <code class="literal">[admonitionparagraph]</code>
+section:</p><pre class="literallayout">[admonitionparagraph]
+template::[admonitionblock]</pre><div class="itemizedlist" title="Template macro behavior"><p class="title"><strong>Template macro behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+The <code class="literal">template::[]</code> macro is useful for factoring configuration file
+  markup.
+</li><li class="listitem">
+<code class="literal">template::[]</code> macros cannot be nested.
+</li><li class="listitem">
+<code class="literal">template::[]</code> macro expansion is applied after all configuration
+  files have been read.
+</li></ul></div></div></div><div class="section" title="21.4. Passthrough macros"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X77"></a>21.4. Passthrough macros</h2></div></div></div><p>Passthrough macros are analogous to <a class="link" href="ch16.html#X76" title="16.6. Passthrough Blocks">passthrough blocks</a> and are
+used to pass text directly to the output. The substitution performed
+on the text is determined by the macro definition but can be overridden
+by the <code class="literal">&lt;subslist&gt;</code>.  The usual syntax is
+<code class="literal">&lt;name&gt;:&lt;subslist&gt;[&lt;passtext&gt;]</code> (for inline macros) and
+<code class="literal">&lt;name&gt;::&lt;subslist&gt;[&lt;passtext&gt;]</code> (for block macros). Passthroughs, by
+definition, take precedence over all other text substitutions.</p><div class="variablelist"><dl><dt><span class="term">
+pass
+</span></dt><dd><p class="simpara">
+  Inline and block. Passes text unmodified (apart from explicitly
+  specified substitutions). Examples:
+</p><pre class="literallayout">pass:[&lt;q&gt;To be or not to be&lt;/q&gt;]
+pass:attributes,quotes[&lt;u&gt;the '{author}'&lt;/u&gt;]</pre></dd><dt><span class="term">
+asciimath, latexmath
+</span></dt><dd>
+  Inline and block. Passes text unmodified.  Used for
+  <a class="link" href="ch25.html" title="Chapter 25. Mathematical Formulas">mathematical formulas</a>.
+</dd><dt><span class="term">
++++
+</span></dt><dd><p class="simpara">
+  Inline and block. The triple-plus passthrough is functionally
+  identical to the <span class="emphasis"><em>pass</em></span> macro but you don’t have to escape <code class="literal">]</code>
+  characters and you can prefix with quoted attributes in the inline
+  version. Example:
+</p><pre class="literallayout">Red [red]+++`sum_(i=1)\^n i=(n(n+1))/2`$+++ AsciiMathML formula</pre></dd><dt><span class="term">
+$$
+</span></dt><dd><p class="simpara">
+  Inline and block. The double-dollar passthrough is functionally
+  identical to the triple-plus passthrough with one exception: special
+  characters are escaped. Example:
+</p><pre class="literallayout">$$`[[a,b],[c,d]]((n),(k))`$$</pre></dd><dt><span class="term">
+<a id="X80"></a>`
+</span></dt><dd>
+  Text quoted with single backtick characters constitutes an <span class="emphasis"><em>inline
+  literal</em></span> passthrough. The enclosed text is rendered in a monospaced
+  font and is only subject to special character substitution.  This
+  makes sense since monospace text is usually intended to be rendered
+  literally and often contains characters that would otherwise have to
+  be escaped. If you need monospaced text containing inline
+  substitutions use a <a class="link" href="ch10.html#X81">plus character instead of a backtick</a>.
+</dd></dl></div></div><div class="section" title="21.5. Macro Definitions"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_macro_definitions"></a>21.5. Macro Definitions</h2></div></div></div><p>Each entry in the configuration <code class="literal">[macros]</code> section is a macro
+definition which can take one of the following forms:</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">&lt;pattern&gt;=&lt;name&gt;[&lt;subslist]</code>
+</span></dt><dd>
+Inline macro definition.
+</dd><dt><span class="term">
+<code class="literal">&lt;pattern&gt;=#&lt;name&gt;[&lt;subslist]</code>
+</span></dt><dd>
+Block macro definition.
+</dd><dt><span class="term">
+<code class="literal">&lt;pattern&gt;=+&lt;name&gt;[&lt;subslist]</code>
+</span></dt><dd>
+System macro definition.
+</dd><dt><span class="term">
+<code class="literal">&lt;pattern&gt;</code>
+</span></dt><dd>
+Delete the existing macro with this <code class="literal">&lt;pattern&gt;</code>.
+</dd></dl></div><p><code class="literal">&lt;pattern&gt;</code> is a Python regular expression and <code class="literal">&lt;name&gt;</code> is the name of
+a markup template. If <code class="literal">&lt;name&gt;</code> is omitted then it is the value of the
+regular expression match group named <span class="emphasis"><em>name</em></span>.  The optional
+<code class="literal">[&lt;subslist]</code> is a comma-separated list of substitution names enclosed
+in <code class="literal">[]</code> brackets, it sets the default substitutions for passthrough
+text, if omitted then no passthrough substitutions are performed.</p><p title="Pattern named groups"><strong>Pattern named groups. </strong>The following named groups can be used in macro <code class="literal">&lt;pattern&gt;</code> regular
+expressions and are available as markup template attributes:</p><div class="variablelist"><dl><dt><span class="term">
+name
+</span></dt><dd>
+  The macro name.
+</dd><dt><span class="term">
+target
+</span></dt><dd>
+  The macro target.
+</dd><dt><span class="term">
+attrlist
+</span></dt><dd>
+  The macro attribute list.
+</dd><dt><span class="term">
+passtext
+</span></dt><dd>
+  Contents of this group are passed unmodified to the output subject
+  only to <span class="emphasis"><em>subslist</em></span> substitutions.
+</dd><dt><span class="term">
+subslist
+</span></dt><dd>
+  Processed as a comma-separated list of substitution names for
+  <span class="emphasis"><em>passtext</em></span> substitution, overrides the the macro definition
+  <span class="emphasis"><em>subslist</em></span>.
+</dd></dl></div><div class="itemizedlist" title="Here’s what happens during macro substitution"><p class="title"><strong>Here’s what happens during macro substitution</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+Each contextually relevant macro <span class="emphasis"><em>pattern</em></span> from the <code class="literal">[macros]</code>
+  section is matched against the input source line.
+</li><li class="listitem">
+If a match is found the text to be substituted is loaded from a
+  configuration markup template section named like
+  <code class="literal">&lt;name&gt;-inlinemacro</code> or <code class="literal">&lt;name&gt;-blockmacro</code> (depending on the macro
+  type).
+</li><li class="listitem">
+Global and macro attribute list attributes are substituted in the
+  macro’s markup template.
+</li><li class="listitem">
+The substituted template replaces the macro reference in the output
+  document.
+</li></ul></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch20.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch22.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

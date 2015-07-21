@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 35. Help Commands</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch34.html" title="Chapter 34. Plugins" /><link rel="next" href="ch36.html" title="Chapter 36. Tips and Tricks" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch34.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch36.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 35. Help Commands"><div class="titlepage"><div><div><h2 class="title"><a id="X36"></a>Chapter 35. Help Commands</h2></div></div></div><p>The <code class="literal">asciidoc(1)</code> command has a <code class="literal">--help</code> option which prints help topics
+to stdout. The default topic summarizes <code class="literal">asciidoc(1)</code> usage:</p><pre class="literallayout">$ asciidoc --help</pre><p>To print a help topic specify the topic name as a command argument.
+Help topic names can be shortened so long as they are not ambiguous.
+Examples:</p><pre class="literallayout">$ asciidoc --help manpage
+$ asciidoc -h m              # Short version of previous example.
+$ asciidoc --help syntax
+$ asciidoc -h s              # Short version of previous example.</pre><div class="section" title="35.1. Customizing Help"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_customizing_help"></a>35.1. Customizing Help</h2></div></div></div><p>To change, delete or add your own help topics edit a help
+configuration file.  The help file name <code class="literal">help-&lt;lang&gt;.conf</code> is based on
+the setting of the <code class="literal">lang</code> attribute, it defaults to <code class="literal">help.conf</code>
+(English).  The <a class="link" href="ch26.html#X27" title="26.11. Configuration file names, precedence and locations">help file location</a> will depend on whether you
+want the topics to apply to all users or just the current user.</p><p>The help topic files have the same named section format as other
+<a class="link" href="ch26.html" title="Chapter 26. Configuration Files">configuration files</a>. The <code class="literal">help.conf</code> files are stored in the
+same locations and loaded in the same order as other configuration
+files.</p><p>When the <code class="literal">--help</code> command-line option is specified AsciiDoc loads the
+appropriate help files and then prints the contents of the section
+whose name matches the help topic name.  If a topic name is not
+specified <code class="literal">default</code> is used. You don’t need to specify the whole help
+topic name on the command-line, just enough letters to ensure it’s not
+ambiguous. If a matching help file section is not found a list of
+available topics is printed.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch34.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch36.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

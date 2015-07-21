@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 20. Callouts</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch19.html" title="Chapter 19. Indexes" /><link rel="next" href="ch21.html" title="Chapter 21. Macros" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch19.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch21.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 20. Callouts"><div class="titlepage"><div><div><h2 class="title"><a id="X105"></a>Chapter 20. Callouts</h2></div></div></div><p>Callouts are a mechanism for annotating verbatim text (for example:
+source code, computer output and user input). Callout markers are
+placed inside the annotated text while the actual annotations are
+presented in a callout list after the annotated text. Here’s an
+example:</p><pre class="screen"> .MS-DOS directory listing
+ -----------------------------------------------------
+ 10/17/97   9:04         &lt;DIR&gt;    bin
+ 10/16/97  14:11         &lt;DIR&gt;    DOS            &lt;1&gt;
+ 10/16/97  14:40         &lt;DIR&gt;    Program Files
+ 10/16/97  14:46         &lt;DIR&gt;    TEMP
+ 10/17/97   9:04         &lt;DIR&gt;    tmp
+ 10/16/97  14:37         &lt;DIR&gt;    WINNT
+ 10/16/97  14:25             119  AUTOEXEC.BAT   &lt;2&gt;
+  2/13/94   6:21          54,619  COMMAND.COM    &lt;2&gt;
+ 10/16/97  14:25             115  CONFIG.SYS     &lt;2&gt;
+ 11/16/97  17:17      61,865,984  pagefile.sys
+  2/13/94   6:21           9,349  WINA20.386     &lt;3&gt;
+ -----------------------------------------------------
+
+ &lt;1&gt; This directory holds MS-DOS.
+ &lt;2&gt; System startup code for DOS.
+ &lt;3&gt; Some sort of Windows 3.1 hack.</pre><p>Which renders:</p><p title="MS-DOS directory listing"><strong>MS-DOS directory listing. </strong>
+</p><pre class="screen">10/17/97   9:04         &lt;DIR&gt;    bin
+10/16/97  14:11         &lt;DIR&gt;    DOS            <a id="CO1-1"></a><img src="images/icons/callouts/1.png" alt="1" border="0" />
+10/16/97  14:40         &lt;DIR&gt;    Program Files
+10/16/97  14:46         &lt;DIR&gt;    TEMP
+10/17/97   9:04         &lt;DIR&gt;    tmp
+10/16/97  14:37         &lt;DIR&gt;    WINNT
+10/16/97  14:25             119  AUTOEXEC.BAT   <a id="CO1-2"></a><img src="images/icons/callouts/2.png" alt="2" border="0" />
+ 2/13/94   6:21          54,619  COMMAND.COM    <a id="CO1-3"></a><img src="images/icons/callouts/3.png" alt="3" border="0" />
+10/16/97  14:25             115  CONFIG.SYS     <a id="CO1-4"></a><img src="images/icons/callouts/4.png" alt="4" border="0" />
+11/16/97  17:17      61,865,984  pagefile.sys
+ 2/13/94   6:21           9,349  WINA20.386     <a id="CO1-5"></a><img src="images/icons/callouts/5.png" alt="5" border="0" /></pre><p title="MS-DOS directory listing">
+</p><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-1"><img src="images/icons/callouts/1.png" alt="1" border="0" /></a> </p></td><td valign="top" align="left"><p>
+This directory holds MS-DOS.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-2"><img src="images/icons/callouts/2.png" alt="2" border="0" /></a> <a href="#CO1-3"><img src="images/icons/callouts/3.png" alt="3" border="0" /></a> <a href="#CO1-4"><img src="images/icons/callouts/4.png" alt="4" border="0" /></a> </p></td><td valign="top" align="left"><p>
+System startup code for DOS.
+</p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-5"><img src="images/icons/callouts/5.png" alt="5" border="0" /></a> </p></td><td valign="top" align="left"><p>
+Some sort of Windows 3.1 hack.
+</p></td></tr></table></div><div class="itemizedlist" title="Explanation"><p class="title"><strong>Explanation</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+The callout marks are whole numbers enclosed in angle brackets —   they refer to the correspondingly numbered item in the following
+  callout list.
+</li><li class="listitem">
+By default callout marks are confined to <span class="emphasis"><em>LiteralParagraphs</em></span>,
+  <span class="emphasis"><em>LiteralBlocks</em></span> and <span class="emphasis"><em>ListingBlocks</em></span> (although this is a
+  configuration file option and can be changed).
+</li><li class="listitem">
+Callout list item numbering is fairly relaxed — list items can
+  start with <code class="literal">&lt;n&gt;</code>, <code class="literal">n&gt;</code> or <code class="literal">&gt;</code> where <code class="literal">n</code> is the optional list item
+  number (in the latter case list items starting with a single <code class="literal">&gt;</code>
+  character are implicitly numbered starting at one).
+</li><li class="listitem">
+Callout lists should not be nested.
+</li><li class="listitem">
+Callout lists cannot be used within tables.
+</li><li class="listitem">
+Callout lists start list items hard against the left margin.
+</li><li class="listitem">
+If you want to present a number inside angle brackets you’ll need to
+  escape it with a backslash to prevent it being interpreted as a
+  callout mark.
+</li></ul></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Define the AsciiDoc <span class="emphasis"><em>icons</em></span> attribute (for example using the <code class="literal">-a
+icons</code> command-line option) to display callout icons.</p></td></tr></table></div><div class="section" title="20.1. Implementation Notes"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_implementation_notes"></a>20.1. Implementation Notes</h2></div></div></div><p>Callout marks are generated by the <span class="emphasis"><em>callout</em></span> inline macro while
+callout lists are generated using the <span class="emphasis"><em>callout</em></span> list definition. The
+<span class="emphasis"><em>callout</em></span> macro and <span class="emphasis"><em>callout</em></span> list are special in that they work
+together. The <span class="emphasis"><em>callout</em></span> inline macro is not enabled by the normal
+<span class="emphasis"><em>macros</em></span> substitutions option, instead it has its own <span class="emphasis"><em>callouts</em></span>
+substitution option.</p><p>The following attributes are available during inline callout macro
+substitution:</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">{index}</code>
+</span></dt><dd>
+    The callout list item index inside the angle brackets.
+</dd><dt><span class="term">
+<code class="literal">{coid}</code>
+</span></dt><dd>
+    An identifier formatted like <code class="literal">CO&lt;listnumber&gt;-&lt;index&gt;</code> that
+    uniquely identifies the callout mark. For example <code class="literal">CO2-4</code>
+    identifies the fourth callout mark in the second set of callout
+    marks.
+</dd></dl></div><p>The <code class="literal">{coids}</code> attribute can be used during callout list item
+substitution — it is a space delimited list of callout IDs that refer
+to the explanatory list item.</p></div><div class="section" title="20.2. Including callouts in included code"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_including_callouts_in_included_code"></a>20.2. Including callouts in included code</h2></div></div></div><p>You can annotate working code examples with callouts — just remember
+to put the callouts inside source code comments. This example displays
+the <code class="literal">test.py</code> source file (containing a single callout) using the
+<span class="emphasis"><em>source</em></span> (code highlighter) filter:</p><p title="AsciiDoc source"><strong>AsciiDoc source. </strong>
+</p><pre class="screen"> [source,python]
+ -------------------------------------------
+ \include::test.py[]
+ -------------------------------------------
+
+ &lt;1&gt; Print statement.</pre><p title="AsciiDoc source">
+</p><p title="Included test.py source"><strong>Included <code class="literal">test.py</code> source. </strong>
+</p><pre class="screen">print 'Hello World!'   # &lt;1&gt;</pre><p title="Included test.py source">
+</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch19.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch21.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

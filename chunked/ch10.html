@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 10. Text Formatting</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch09.html" title="Chapter 9. Document Processing" /><link rel="next" href="ch11.html" title="Chapter 11. Titles" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch09.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch11.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 10. Text Formatting"><div class="titlepage"><div><div><h2 class="title"><a id="_text_formatting"></a>Chapter 10. Text Formatting</h2></div></div></div><div class="section" title="10.1. Quoted Text"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X51"></a>10.1. Quoted Text</h2></div></div></div><p>Words and phrases can be formatted by enclosing inline text with
+quote characters:</p><div class="variablelist"><dl><dt><span class="term">
+<span class="emphasis"><em>Emphasized text</em></span>
+</span></dt><dd>
+        Word phrases 'enclosed in single quote characters' (acute
+        accents) or _underline characters_ are emphasized.
+</dd><dt><span class="term">
+<span class="strong"><strong>Strong text</strong></span>
+</span></dt><dd>
+        Word phrases *enclosed in asterisk characters* are rendered
+        in a strong font (usually bold).
+</dd><dt><span class="term">
+<a id="X81"></a><code class="literal">Monospaced text</code>
+</span></dt><dd>
+        Word phrases +enclosed in plus characters+ are rendered in a
+        monospaced font. Word phrases `enclosed in backtick
+        characters` (grave accents) are also rendered in a monospaced
+        font but in this case the enclosed text is rendered literally
+        and is not subject to further expansion (see <a class="link" href="ch21.html#X80">inline         literal passthrough</a>).
+</dd><dt><span class="term">
+‘Single quoted text’
+</span></dt><dd>
+        Phrases enclosed with a `single grave accent to the left and
+        a single acute accent to the right' are rendered in single
+        quotation marks.
+</dd><dt><span class="term">
+“Double quoted text”
+</span></dt><dd>
+        Phrases enclosed with ``two grave accents to the left and
+        two acute accents to the right'' are rendered in quotation
+        marks.
+</dd><dt><span class="term">
+Unquoted text
+</span></dt><dd>
+        Placing #hashes around text# does nothing, it is a mechanism
+        to allow inline attributes to be applied to otherwise
+        unformatted text.
+</dd></dl></div><p>New quote types can be defined by editing <code class="literal">asciidoc(1)</code> configuration
+files. See the <a class="link" href="ch26.html" title="Chapter 26. Configuration Files">Configuration Files</a> section for details.</p><div class="itemizedlist" title="Quoted text behavior"><p class="title"><strong>Quoted text behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+Quoting cannot be overlapped.
+</li><li class="listitem">
+Different quoting types can be nested.
+</li><li class="listitem">
+To suppress quoted text formatting place a backslash character
+  immediately in front of the leading quote character(s). In the case
+  of ambiguity between escaped and non-escaped text you will need to
+  escape both leading and trailing quotes, in the case of
+  multi-character quotes you may even need to escape individual
+  characters.
+</li></ul></div><div class="section" title="10.1.1. Quoted text attributes"><div class="titlepage"><div><div><h3 class="title"><a id="X96"></a>10.1.1. Quoted text attributes</h3></div></div></div><p>Quoted text can be prefixed with an <a class="link" href="ch29.html" title="Chapter 29. Attribute Lists">attribute list</a>.  The first
+positional attribute (<span class="emphasis"><em>role</em></span> attribute) is translated by AsciiDoc to
+an HTML <span class="emphasis"><em>span</em></span> element <span class="emphasis"><em>class</em></span> attribute or a DocBook <span class="emphasis"><em>phrase</em></span> element
+<span class="emphasis"><em>role</em></span> attribute.</p><p>DocBook XSL Stylesheets translate DocBook <span class="emphasis"><em>phrase</em></span> elements with
+<span class="emphasis"><em>role</em></span> attributes to corresponding HTML <span class="emphasis"><em>span</em></span> elements with the same
+<span class="emphasis"><em>class</em></span> attributes; CSS can then be used
+<a class="ulink" href="http://www.sagehill.net/docbookxsl/UsingCSS.html" target="_top">to style the
+generated HTML</a>.  Thus CSS styling can be applied to both DocBook and
+AsciiDoc generated HTML outputs.  You can also specify multiple class
+names separated by spaces.</p><p>CSS rules for text color, text background color, text size and text
+decorators are included in the distributed AsciiDoc CSS files and are
+used in conjunction with AsciiDoc <span class="emphasis"><em>xhtml11</em></span>, <span class="emphasis"><em>html5</em></span> and <span class="emphasis"><em>docbook</em></span>
+outputs. The CSS class names are:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>&lt;color&gt;</em></span> (text foreground color).
+</li><li class="listitem">
+<span class="emphasis"><em>&lt;color&gt;-background</em></span> (text background color).
+</li><li class="listitem">
+<span class="emphasis"><em>big</em></span> and <span class="emphasis"><em>small</em></span> (text size).
+</li><li class="listitem">
+<span class="emphasis"><em>underline</em></span>, <span class="emphasis"><em>overline</em></span> and <span class="emphasis"><em>line-through</em></span> (strike through) text
+  decorators.
+</li></ul></div><p>Where <span class="emphasis"><em>&lt;color&gt;</em></span> can be any of the
+<a class="ulink" href="http://en.wikipedia.org/wiki/Web_colors#HTML_color_names" target="_top">sixteen HTML
+color names</a>.  Examples:</p><pre class="literallayout">[red]#Obvious# and [big red yellow-background]*very obvious*.</pre><pre class="literallayout">[underline]#Underline text#, [overline]#overline text# and
+[blue line-through]*bold blue and line-through*.</pre><p>is rendered as:</p><p><span class="red">Obvious</span> and <span class="strong"><strong><span class="big red yellow-background">very obvious</span></strong></span>.</p><p><span class="underline">Underline text</span>, <span class="overline">overline text</span> and
+<span class="strong"><strong><span class="bold blue line-through">bold blue and line-through</span></strong></span>.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Color and text decorator attributes are rendered for XHTML and
+HTML 5 outputs using CSS stylesheets.  The mechanism to implement
+color and text decorator attributes is provided for DocBook toolchains
+via the DocBook <span class="emphasis"><em>phrase</em></span> element <span class="emphasis"><em>role</em></span> attribute, but the actual
+rendering is toolchain specific and is not part of the AsciiDoc
+distribution.</p></td></tr></table></div></div><div class="section" title="10.1.2. Constrained and Unconstrained Quotes"><div class="titlepage"><div><div><h3 class="title"><a id="X52"></a>10.1.2. Constrained and Unconstrained Quotes</h3></div></div></div><p>There are actually two types of quotes:</p><div class="section" title="Constrained quotes"><div class="titlepage"><div><div><h4 class="title"><a id="_constrained_quotes"></a>Constrained quotes</h4></div></div></div><p>Quoted must be bounded by white space or commonly adjoining
+punctuation characters. These are the most commonly used type of
+quote.</p></div><div class="section" title="Unconstrained quotes"><div class="titlepage"><div><div><h4 class="title"><a id="_unconstrained_quotes"></a>Unconstrained quotes</h4></div></div></div><p>Unconstrained quotes have no boundary constraints and can be placed
+anywhere within inline text. For consistency and to make them easier
+to remember unconstrained quotes are double-ups of the <code class="literal">_</code>, <code class="literal">*</code>, <code class="literal">+</code>
+and <code class="literal">#</code> constrained quotes:</p><pre class="literallayout">__unconstrained emphasized text__
+**unconstrained strong text**
+++unconstrained monospaced text++
+##unconstrained unquoted text##</pre><p>The following example emboldens the letter F:</p><pre class="literallayout">**F**ile Open...</pre></div></div></div><div class="section" title="10.2. Superscripts and Subscripts"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_superscripts_and_subscripts"></a>10.2. Superscripts and Subscripts</h2></div></div></div><p>Put ^carets on either^ side of the text to be superscripted, put
+~tildes on either side~ of text to be subscripted.  For example, the
+following line:</p><pre class="literallayout">e^&amp;#960;i^+1 = 0. H~2~O and x^10^. Some ^super text^
+and ~some sub text~</pre><p>Is rendered like:</p><p>e<sup>πi</sup>+1 = 0. H<sub>2</sub>O and x<sup>10</sup>. Some <sup>super text</sup>
+and <sub>some sub text</sub></p><p>Superscripts and subscripts are implemented as <a class="link" href="ch10.html#X52" title="10.1.2. Constrained and Unconstrained Quotes">unconstrained quotes</a> and they can be escaped with a leading backslash and prefixed
+with with an attribute list.</p></div><div class="section" title="10.3. Line Breaks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_line_breaks"></a>10.3. Line Breaks</h2></div></div></div><p>A plus character preceded by at least one space character at the end
+of a non-blank line forces a line break. It generates a line break
+(<code class="literal">br</code>) tag for HTML outputs and a custom XML <code class="literal">asciidoc-br</code> processing
+instruction for DocBook outputs. The <code class="literal">asciidoc-br</code> processing
+instruction is handled by <a class="link" href="ch05.html#X43" title="5.2. a2x Toolchain Wrapper"><code class="literal">a2x(1)</code></a>.</p></div><div class="section" title="10.4. Page Breaks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_page_breaks"></a>10.4. Page Breaks</h2></div></div></div><p>A line of three or more less-than (<code class="literal">&lt;&lt;&lt;</code>) characters will generate a
+hard page break in DocBook and printed HTML outputs.  It uses the CSS
+<code class="literal">page-break-after</code> property for HTML outputs and a custom XML
+<code class="literal">asciidoc-pagebreak</code> processing instruction for DocBook outputs. The
+<code class="literal">asciidoc-pagebreak</code> processing instruction is handled by
+<a class="link" href="ch05.html#X43" title="5.2. a2x Toolchain Wrapper"><code class="literal">a2x(1)</code></a>. Hard page breaks are sometimes handy but as a general
+rule you should let your page processor generate page breaks for you.</p></div><div class="section" title="10.5. Rulers"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_rulers"></a>10.5. Rulers</h2></div></div></div><p>A line of three or more apostrophe characters will generate a ruler
+line.  It generates a ruler (<code class="literal">hr</code>) tag for HTML outputs and a custom
+XML <code class="literal">asciidoc-hr</code> processing instruction for DocBook outputs. The
+<code class="literal">asciidoc-hr</code> processing instruction is handled by <a class="link" href="ch05.html#X43" title="5.2. a2x Toolchain Wrapper"><code class="literal">a2x(1)</code></a>.</p></div><div class="section" title="10.6. Tabs"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_tabs"></a>10.6. Tabs</h2></div></div></div><p>By default tab characters input files will translated to 8 spaces. Tab
+expansion is set with the <span class="emphasis"><em>tabsize</em></span> entry in the configuration file
+<code class="literal">[miscellaneous]</code> section and can be overridden in included files by
+setting a <span class="emphasis"><em>tabsize</em></span> attribute in the <code class="literal">include</code> macro’s attribute list.
+For example:</p><pre class="literallayout">include::addendum.txt[tabsize=2]</pre><p>The tab size can also be set using the attribute command-line option,
+for example <code class="literal">--attribute tabsize=4</code></p></div><div class="section" title="10.7. Replacements"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_replacements"></a>10.7. Replacements</h2></div></div></div><p>The following replacements are defined in the default AsciiDoc
+configuration:</p><pre class="literallayout">(C) copyright, (TM) trademark, (R) registered trademark,
+-- em dash, ... ellipsis, -&gt; right arrow, &lt;- left arrow, =&gt; right
+double arrow, &lt;= left double arrow.</pre><p>Which are rendered as:</p><p>© copyright, ™ trademark, ® registered trademark, — em dash, … ellipsis, → right arrow, ← left arrow, ⇒ right
+double arrow, ⇐ left double arrow.</p><p>You can also include arbitrary entity references in the AsciiDoc
+source. Examples:</p><pre class="literallayout">&amp;#x278a; &amp;#182;</pre><p>renders:</p><p>➊ ¶</p><p>To render a replacement literally escape it with a leading back-slash.</p><p>The <a class="link" href="ch26.html" title="Chapter 26. Configuration Files">Configuration Files</a> section explains how to configure your
+own replacements.</p></div><div class="section" title="10.8. Special Words"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_special_words"></a>10.8. Special Words</h2></div></div></div><p>Words defined in <code class="literal">[specialwords]</code> configuration file sections are
+automatically marked up without having to be explicitly notated.</p><p>The <a class="link" href="ch26.html" title="Chapter 26. Configuration Files">Configuration Files</a> section explains how to add and replace
+special words.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch09.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch11.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 32. Block Element Definitions</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch31.html" title="Chapter 31. Intrinsic Attributes" /><link rel="next" href="ch33.html" title="Chapter 33. Filters" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch31.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch33.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 32. Block Element Definitions"><div class="titlepage"><div><div><h2 class="title"><a id="X73"></a>Chapter 32. Block Element Definitions</h2></div></div></div><p>The syntax and behavior of Paragraph, DelimitedBlock, List and Table
+block elements is determined by block definitions contained in
+<a class="link" href="ch26.html" title="Chapter 26. Configuration Files">AsciiDoc configuration file</a> sections.</p><p>Each definition consists of a section title followed by one or more
+section entries. Each entry defines a block parameter controlling some
+aspect of the block’s behavior. Here’s an example:</p><pre class="screen">[blockdef-listing]
+delimiter=^-{4,}$
+template=listingblock
+presubs=specialcharacters,callouts</pre><p>Configuration file block definition sections are processed
+incrementally after each configuration file is loaded. Block
+definition section entries are merged into the block definition, this
+allows block parameters to be overridden and extended by later
+<a class="link" href="ch26.html#X27" title="26.11. Configuration file names, precedence and locations">loading configuration files</a>.</p><p>AsciiDoc Paragraph, DelimitedBlock, List and Table block elements
+share a common subset of configuration file parameters:</p><div class="variablelist"><dl><dt><span class="term">
+delimiter
+</span></dt><dd>
+  A Python regular expression that matches the first line of a block
+  element — in the case of DelimitedBlocks and Tables it also matches
+  the last line.
+</dd><dt><span class="term">
+template
+</span></dt><dd>
+  The name of the configuration file markup template section that will
+  envelope the block contents. The pipe (<span class="emphasis"><em>|</em></span>) character is substituted
+  for the block contents. List elements use a set of (list specific)
+  tag parameters instead of a single template. The template name can
+  contain attribute references allowing dynamic template selection a
+  the time of template substitution.
+</dd><dt><span class="term">
+options
+</span></dt><dd>
+  A comma delimited list of element specific option names. In addition
+  to being used internally, options are available during markup tag
+  and template substitution as attributes with an empty string value
+  named like <code class="literal">&lt;option&gt;-option</code> (where <code class="literal">&lt;option&gt;</code> is the option name).
+  See <a class="link" href="apf.html" title="Appendix F. Attribute Options">attribute options</a> for a complete list of available
+  options.
+</dd><dt><span class="term">
+subs, presubs, postsubs
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>presubs</em></span> and <span class="emphasis"><em>postsubs</em></span> are lists of comma separated substitutions that are
+    performed on the block contents. <span class="emphasis"><em>presubs</em></span> is applied first,
+    <span class="emphasis"><em>postsubs</em></span> (if specified) second.
+</li><li class="listitem">
+<span class="emphasis"><em>subs</em></span> is an alias for <span class="emphasis"><em>presubs</em></span>.
+</li><li class="listitem">
+If a <span class="emphasis"><em>filter</em></span> is allowed (Paragraphs, DelimitedBlocks and Tables)
+    and has been specified then <span class="emphasis"><em>presubs</em></span> and <span class="emphasis"><em>postsubs</em></span> substitutions
+    are performed before and after the filter is run respectively.
+</li><li class="listitem">
+Allowed values: <span class="emphasis"><em>specialcharacters</em></span>, <span class="emphasis"><em>quotes</em></span>, <span class="emphasis"><em>specialwords</em></span>,
+    <span class="emphasis"><em>replacements</em></span>, <span class="emphasis"><em>macros</em></span>, <span class="emphasis"><em>attributes</em></span>, <span class="emphasis"><em>callouts</em></span>.
+</li><li class="listitem"><p class="simpara">
+<a id="X102"></a>The following composite values are also allowed:
+</p><div class="variablelist"><dl><dt><span class="term">
+<span class="emphasis"><em>none</em></span>
+</span></dt><dd>
+        No substitutions.
+</dd><dt><span class="term">
+<span class="emphasis"><em>normal</em></span>
+</span></dt><dd>
+        The following substitutions in the following order:
+        <span class="emphasis"><em>specialcharacters</em></span>, <span class="emphasis"><em>quotes</em></span>, <span class="emphasis"><em>attributes</em></span>, <span class="emphasis"><em>specialwords</em></span>,
+        <span class="emphasis"><em>replacements</em></span>, <span class="emphasis"><em>macros</em></span>, <span class="emphasis"><em>replacements2</em></span>.
+</dd><dt><span class="term">
+<span class="emphasis"><em>verbatim</em></span>
+</span></dt><dd>
+        The following substitutions in the following order:
+        <span class="emphasis"><em>specialcharacters</em></span> and <span class="emphasis"><em>callouts</em></span>.
+</dd></dl></div></li><li class="listitem">
+<span class="emphasis"><em>normal</em></span> and <span class="emphasis"><em>verbatim</em></span> substitutions can be redefined by with
+    <code class="literal">subsnormal</code> and <code class="literal">subsverbatim</code> entries in a configuration file
+    <code class="literal">[miscellaneous]</code> section.
+</li><li class="listitem">
+The substitutions are processed in the order in which they are
+    listed and can appear more than once.
+</li></ul></div></dd><dt><span class="term">
+filter
+</span></dt><dd>
+  This optional entry specifies an executable shell command for
+  processing block content (Paragraphs, DelimitedBlocks and Tables).
+  The filter command can contain attribute references.
+</dd><dt><span class="term">
+posattrs
+</span></dt><dd><p class="simpara">
+  Optional comma separated list of positional attribute names. This
+  list maps positional attributes (in the block’s <a class="link" href="ch29.html" title="Chapter 29. Attribute Lists">attribute   list</a>) to named block attributes. The following example, from the
+  QuoteBlock definition, maps the first and section positional
+  attributes:
+</p><pre class="literallayout">posattrs=attribution,citetitle</pre></dd><dt><span class="term">
+style
+</span></dt><dd>
+  This optional parameter specifies the default style name.
+</dd><dt><span class="term">
+&lt;stylename&gt;-style
+</span></dt><dd>
+  Optional style definition (see <a class="link" href="ch32.html#X23" title="32.1. Styles">Styles</a> below).
+</dd></dl></div><p>The following block parameters behave like document attributes and can
+be set in block attribute lists and style definitions: <span class="emphasis"><em>template</em></span>,
+<span class="emphasis"><em>options</em></span>, <span class="emphasis"><em>subs</em></span>, <span class="emphasis"><em>presubs</em></span>, <span class="emphasis"><em>postsubs</em></span>, <span class="emphasis"><em>filter</em></span>.</p><div class="section" title="32.1. Styles"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X23"></a>32.1. Styles</h2></div></div></div><p>A style is a set of block parameter bundled as a single named
+parameter. The following example defines a style named <span class="emphasis"><em>verbatim</em></span>:</p><pre class="literallayout">verbatim-style=template="literalblock",subs="verbatim"</pre><p>If a block’s <a class="link" href="ch29.html" title="Chapter 29. Attribute Lists">attribute list</a> contains a <span class="emphasis"><em>style</em></span> attribute then
+the corresponding style parameters are be merged into the default
+block definition parameters.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+All style parameter names must be suffixed with <code class="literal">-style</code> and the
+  style parameter value is in the form of a list of <a class="link" href="ch29.html" title="Chapter 29. Attribute Lists">named   attributes</a>.
+</li><li class="listitem">
+The <span class="emphasis"><em>template</em></span> style parameter is mandatory, other parameters can be
+  omitted in which case they inherit their values from the default
+  block definition parameters.
+</li><li class="listitem">
+Multi-item style parameters (<span class="emphasis"><em>subs</em></span>,<span class="emphasis"><em>presubs</em></span>,<span class="emphasis"><em>postsubs</em></span>,<span class="emphasis"><em>posattrs</em></span>)
+  must be specified using Python tuple syntax (rather than a simple
+  list of values as they in separate entries) e.g.
+  <code class="literal">postsubs=("callouts",)</code> not <code class="literal">postsubs="callouts"</code>.
+</li></ul></div></div><div class="section" title="32.2. Paragraphs"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_paragraphs_2"></a>32.2. Paragraphs</h2></div></div></div><p>Paragraph translation is controlled by <code class="literal">[paradef-*]</code> configuration
+file section entries. Users can define new types of paragraphs and
+modify the behavior of existing types by editing AsciiDoc
+configuration files.</p><p>Here is the shipped Default paragraph definition:</p><pre class="screen">[paradef-default]
+delimiter=(?P&lt;text&gt;\S.*)
+template=paragraph</pre><p>The normal paragraph definition has a couple of special properties:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+It must exist and be defined in a configuration file section named
+   <code class="literal">[paradef-default]</code>.
+</li><li class="listitem">
+Irrespective of its position in the configuration files default
+   paragraph document matches are attempted only after trying all
+   other paragraph types.
+</li></ol></div><p>Paragraph specific block parameter notes:</p><div class="variablelist"><dl><dt><span class="term">
+delimiter
+</span></dt><dd>
+  This regular expression must contain the named group <span class="emphasis"><em>text</em></span> which
+  matches the text on the first line.  Paragraphs are terminated by a
+  blank line, the end of file, or the start of a DelimitedBlock.
+</dd><dt><span class="term">
+options
+</span></dt><dd>
+  The <span class="emphasis"><em>listelement</em></span> option specifies that paragraphs of this type will
+  automatically be considered part of immediately preceding list
+  items.  The <span class="emphasis"><em>skip</em></span> option causes the paragraph to be treated as a
+  comment (see <a class="link" href="ch16.html#X26" title="16.5. Comment Blocks">CommentBlocks</a>).
+</dd></dl></div><div class="orderedlist" title="Paragraph processing proceeds as follows:"><p class="title"><strong>Paragraph processing proceeds as follows:</strong></p><ol class="orderedlist" type="1"><li class="listitem">
+The paragraph text is aligned to the left margin.
+</li><li class="listitem">
+Optional <span class="emphasis"><em>presubs</em></span> inline substitutions are performed on the
+   paragraph text.
+</li><li class="listitem">
+If a filter command is specified it is executed and the paragraph
+   text piped to its standard input; the filter output replaces the
+   paragraph text.
+</li><li class="listitem">
+Optional <span class="emphasis"><em>postsubs</em></span> inline substitutions are performed on the
+   paragraph text.
+</li><li class="listitem">
+The paragraph text is enveloped by the paragraph’s markup template
+   and written to the output file.
+</li></ol></div></div><div class="section" title="32.3. Delimited Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_delimited_blocks"></a>32.3. Delimited Blocks</h2></div></div></div><p>DelimitedBlock <span class="emphasis"><em>options</em></span> values are:</p><div class="variablelist"><dl><dt><span class="term">
+sectionbody
+</span></dt><dd>
+    The block contents are processed as a SectionBody.
+</dd><dt><span class="term">
+skip
+</span></dt><dd>
+    The block is treated as a comment (see <a class="link" href="ch16.html#X26" title="16.5. Comment Blocks">CommentBlocks</a>).
+    Preceding <a class="link" href="ch29.html" title="Chapter 29. Attribute Lists">attribute lists</a> and <a class="link" href="ch12.html" title="Chapter 12. Block Titles">block titles</a> are not
+    consumed.
+</dd></dl></div><p><span class="emphasis"><em>presubs</em></span>, <span class="emphasis"><em>postsubs</em></span> and <span class="emphasis"><em>filter</em></span> entries are ignored when
+<span class="emphasis"><em>sectionbody</em></span> or <span class="emphasis"><em>skip</em></span> options are set.</p><p>DelimitedBlock processing proceeds as follows:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Optional <span class="emphasis"><em>presubs</em></span> substitutions are performed on the block
+   contents.
+</li><li class="listitem">
+If a filter is specified it is executed and the block’s contents
+   piped to its standard input. The filter output replaces the block
+   contents.
+</li><li class="listitem">
+Optional <span class="emphasis"><em>postsubs</em></span> substitutions are performed on the block
+   contents.
+</li><li class="listitem">
+The block contents is enveloped by the block’s markup template and
+   written to the output file.
+</li></ol></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Attribute expansion is performed on the block filter command
+before it is executed, this is useful for passing arguments to the
+filter.</p></td></tr></table></div></div><div class="section" title="32.4. Lists"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_lists"></a>32.4. Lists</h2></div></div></div><p>List behavior and syntax is determined by <code class="literal">[listdef-*]</code> configuration
+file sections. The user can change existing list behavior and add new
+list types by editing configuration files.</p><p>List specific block definition notes:</p><div class="variablelist"><dl><dt><span class="term">
+type
+</span></dt><dd>
+  This is either <span class="emphasis"><em>bulleted</em></span>,<span class="emphasis"><em>numbered</em></span>,<span class="emphasis"><em>labeled</em></span> or <span class="emphasis"><em>callout</em></span>.
+</dd><dt><span class="term">
+delimiter
+</span></dt><dd>
+  A Python regular expression that matches the first line of a
+  list element entry. This expression can contain the named groups
+  <span class="emphasis"><em>text</em></span> (bulleted groups), <span class="emphasis"><em>index</em></span> and <span class="emphasis"><em>text</em></span> (numbered lists),
+  <span class="emphasis"><em>label</em></span> and <span class="emphasis"><em>text</em></span> (labeled lists).
+</dd><dt><span class="term">
+tags
+</span></dt><dd>
+  The <code class="literal">&lt;name&gt;</code> of the <code class="literal">[listtags-&lt;name&gt;]</code> configuration file section
+  containing list markup tag definitions.  The tag entries (<span class="emphasis"><em>list</em></span>,
+  <span class="emphasis"><em>entry</em></span>, <span class="emphasis"><em>label</em></span>, <span class="emphasis"><em>term</em></span>, <span class="emphasis"><em>text</em></span>) map the AsciiDoc list structure to
+  backend markup; see the <span class="emphasis"><em>listtags</em></span> sections in the AsciiDoc
+  distributed backend <code class="literal">.conf</code> configuration files for examples.
+</dd></dl></div></div><div class="section" title="32.5. Tables"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_tables_2"></a>32.5. Tables</h2></div></div></div><p>Table behavior and syntax is determined by <code class="literal">[tabledef-*]</code> and
+<code class="literal">[tabletags-*]</code> configuration file sections. The user can change
+existing table behavior and add new table types by editing
+configuration files.  The following <code class="literal">[tabledef-*]</code> section entries
+generate table output markup elements:</p><div class="variablelist"><dl><dt><span class="term">
+colspec
+</span></dt><dd>
+  The table <span class="emphasis"><em>colspec</em></span> tag definition.
+</dd><dt><span class="term">
+headrow, footrow, bodyrow
+</span></dt><dd>
+  Table header, footer and body row tag definitions. <span class="emphasis"><em>headrow</em></span> and
+  <span class="emphasis"><em>footrow</em></span> table definition entries default to <span class="emphasis"><em>bodyrow</em></span> if
+  they are undefined.
+</dd><dt><span class="term">
+headdata, footdata, bodydata
+</span></dt><dd>
+  Table header, footer and body data tag definitions. <span class="emphasis"><em>headdata</em></span> and
+  <span class="emphasis"><em>footdata</em></span> table definition entries default to <span class="emphasis"><em>bodydata</em></span> if they
+  are undefined.
+</dd><dt><span class="term">
+paragraph
+</span></dt><dd>
+  If the <span class="emphasis"><em>paragraph</em></span> tag is specified then blank lines in the cell
+  data are treated as paragraph delimiters and marked up using this
+  tag.
+</dd></dl></div><p><a id="X4"></a>Table behavior is also influenced by the following <code class="literal">[miscellaneous]</code>
+configuration file entries:</p><div class="variablelist"><dl><dt><span class="term">
+pagewidth
+</span></dt><dd>
+  This integer value is the printable width of the output media. See
+  <a class="link" href="ch23.html#X69" title="23.3. Table attributes">table attributes</a>.
+</dd><dt><span class="term">
+pageunits
+</span></dt><dd>
+  The units of width in output markup width attribute values.
+</dd></dl></div><div class="itemizedlist" title="Table definition behavior"><p class="title"><strong>Table definition behavior</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+The output markup generation is specifically designed to work with
+  the HTML and CALS (DocBook) table models, but should be adaptable to
+  most XML table schema.
+</li><li class="listitem">
+Table definitions can be “mixed in” from multiple cascading
+  configuration files.
+</li><li class="listitem">
+New table definitions inherit the default table and table tags
+  definitions (<code class="literal">[tabledef-default]</code> and <code class="literal">[tabletags-default]</code>) so you
+  only need to override those conf file entries that require
+  modification.
+</li></ul></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch31.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch33.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

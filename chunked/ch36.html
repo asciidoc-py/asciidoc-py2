@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 36. Tips and Tricks</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch35.html" title="Chapter 35. Help Commands" /><link rel="next" href="go01.html" title="Glossary" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch35.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="go01.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 36. Tips and Tricks"><div class="titlepage"><div><div><h2 class="title"><a id="_tips_and_tricks"></a>Chapter 36. Tips and Tricks</h2></div></div></div><div class="section" title="36.1. Know Your Editor"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_know_your_editor"></a>36.1. Know Your Editor</h2></div></div></div><p>Writing AsciiDoc documents will be a whole lot more pleasant if you
+know your favorite text editor. Learn how to indent and reformat text
+blocks, paragraphs, lists and sentences. <a class="link" href="ch36.html#X20" title="36.2. Vim Commands for Formatting AsciiDoc">Tips for <span class="emphasis"><em>vim</em></span> users</a>
+follow.</p></div><div class="section" title="36.2. Vim Commands for Formatting AsciiDoc"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X20"></a>36.2. Vim Commands for Formatting AsciiDoc</h2></div></div></div><div class="section" title="36.2.1. Text Wrap Paragraphs"><div class="titlepage"><div><div><h3 class="title"><a id="_text_wrap_paragraphs"></a>36.2.1. Text Wrap Paragraphs</h3></div></div></div><p>Use the vim <code class="literal">:gq</code> command to reformat paragraphs. Setting the
+<span class="emphasis"><em>textwidth</em></span> sets the right text wrap margin; for example:</p><pre class="literallayout">:set textwidth=70</pre><p>To reformat a paragraph:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Position the cursor at the start of the paragraph.
+</li><li class="listitem">
+Type <code class="literal">gq}</code>.
+</li></ol></div><p>Execute <code class="literal">:help gq</code> command to read about the vim gq command.</p><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Assign the <code class="literal">gq}</code> command to the Q key with the <code class="literal">nnoremap Q gq}</code>
+  command or put it in your <code class="literal">~/.vimrc</code> file to so it’s always
+  available (see the <a class="link" href="ch36.html#X61" title="36.2.4. Example ~/.vimrc File">Example <code class="literal">~/.vimrc</code> file</a>).
+</li><li class="listitem">
+Put <code class="literal">set</code> commands in your <code class="literal">~/.vimrc</code> file so you don’t have to
+  enter them manually.
+</li><li class="listitem">
+The Vim website (<a class="ulink" href="http://www.vim.org" target="_top">http://www.vim.org</a>) has a wealth of resources,
+  including scripts for automated spell checking and ASCII Art
+  drawing.
+</li></ul></div></td></tr></table></div></div><div class="section" title="36.2.2. Format Lists"><div class="titlepage"><div><div><h3 class="title"><a id="_format_lists"></a>36.2.2. Format Lists</h3></div></div></div><p>The <code class="literal">gq</code> command can also be used to format bulleted, numbered and
+callout lists. First you need to set the <code class="literal">comments</code>, <code class="literal">formatoptions</code>
+and <code class="literal">formatlistpat</code> (see the <a class="link" href="ch36.html#X61" title="36.2.4. Example ~/.vimrc File">Example <code class="literal">~/.vimrc</code> file</a>).</p><p>Now you can format simple lists that use dash, asterisk, period and
+plus bullets along with numbered ordered lists:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Position the cursor at the start of the list.
+</li><li class="listitem">
+Type <code class="literal">gq}</code>.
+</li></ol></div></div><div class="section" title="36.2.3. Indent Paragraphs"><div class="titlepage"><div><div><h3 class="title"><a id="_indent_paragraphs"></a>36.2.3. Indent Paragraphs</h3></div></div></div><p>Indent whole paragraphs by indenting the fist line with the desired
+indent and then executing the <code class="literal">gq}</code> command.</p></div><div class="section" title="36.2.4. Example ~/.vimrc File"><div class="titlepage"><div><div><h3 class="title"><a id="X61"></a>36.2.4. Example <code class="literal">~/.vimrc</code> File</h3></div></div></div><pre class="screen">" Use bold bright fonts.
+set background=dark
+
+" Show tabs and trailing characters.
+"set listchars=tab:»·,trail:·,eol:¬
+set listchars=tab:»·,trail:·
+set list
+
+" Reformat paragraphs and list.
+nnoremap &lt;Leader&gt;r gq}
+
+" Delete trailing white space and Dos-returns and to expand tabs to spaces.
+nnoremap &lt;Leader&gt;t :set et&lt;CR&gt;:retab!&lt;CR&gt;:%s/[\r \t]\+$//&lt;CR&gt;
+
+autocmd BufRead,BufNewFile *.txt,*.asciidoc,README,TODO,CHANGELOG,NOTES,ABOUT
+        \ setlocal autoindent expandtab tabstop=8 softtabstop=2 shiftwidth=2 filetype=asciidoc
+        \ textwidth=70 wrap formatoptions=tcqn
+        \ formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\\|^\\s*&lt;\\d\\+&gt;\\s\\+\\\\|^\\s*[a-zA-Z.]\\.\\s\\+\\\\|^\\s*[ivxIVX]\\+\\.\\s\\+
+        \ comments=s1:/*,ex:*/,://,b:#,:%,:XCOMM,fb:-,fb:*,fb:+,fb:.,fb:&gt;</pre></div></div><div class="section" title="36.3. Troubleshooting"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_troubleshooting"></a>36.3. Troubleshooting</h2></div></div></div><p>AsciiDoc diagnostic features are detailed in the <a class="link" href="apg.html" title="Appendix G. Diagnostics">Diagnostics appendix</a>.</p></div><div class="section" title="36.4. Gotchas"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_gotchas"></a>36.4. Gotchas</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+Incorrect character encoding
+</span></dt><dd>
+    If you get an error message like <code class="literal">'UTF-8' codec can't decode ...</code>
+    then you source file contains invalid UTF-8 characters — set the
+    AsciiDoc <a class="link" href="aph.html#X54">encoding attribute</a> for the correct character set
+    (typically ISO-8859-1 (Latin-1) for European languages).
+</dd><dt><span class="term">
+Invalid output
+</span></dt><dd><p class="simpara">
+    AsciiDoc attempts to validate the input AsciiDoc source but makes
+    no attempt to validate the output markup, it leaves that to
+    external tools such as <code class="literal">xmllint(1)</code> (integrated into <code class="literal">a2x(1)</code>).
+    Backend validation cannot be hardcoded into AsciiDoc because
+    backends are dynamically configured. The following example
+    generates valid HTML but invalid DocBook (the DocBook <code class="literal">literal</code>
+    element cannot contain an <code class="literal">emphasis</code> element):
+</p><pre class="literallayout">+monospaced text with an _emphasized_ word+</pre></dd><dt><span class="term">
+Misinterpreted text formatting
+</span></dt><dd><p class="simpara">
+    You can suppress markup expansion by placing a backslash character
+    immediately in front of the element. The following example
+    suppresses inline monospaced formatting:
+</p><pre class="literallayout">\+1 for C++.</pre></dd><dt><span class="term">
+Overlapping text formatting
+</span></dt><dd><p class="simpara">
+    Overlapping text formatting will generate illegal overlapping
+    markup tags which will result in downstream XML parsing errors.
+    Here’s an example:
+</p><pre class="literallayout">Some *strong markup _that overlaps* emphasized markup_.</pre></dd><dt><span class="term">
+Ambiguous underlines
+</span></dt><dd>
+    A DelimitedBlock can immediately follow a paragraph without an
+    intervening blank line, but be careful, a single line paragraph
+    underline may be misinterpreted as a section title underline
+    resulting in a “closing block delimiter expected” error.
+</dd><dt><span class="term">
+Ambiguous ordered list items
+</span></dt><dd><p class="simpara">
+    Lines beginning with numbers at the end of sentences will be
+    interpreted as ordered list items.  The following example
+    (incorrectly) begins a new list with item number 1999:
+</p><pre class="literallayout">He was last sighted in
+1999. Since then things have moved on.</pre><p class="simpara">The <span class="emphasis"><em>list item out of sequence</em></span> warning makes it unlikely that this
+problem will go unnoticed.</p></dd><dt><span class="term">
+Special characters in attribute values
+</span></dt><dd><p class="simpara">
+    Special character substitution precedes attribute substitution so
+    if attribute values contain special characters you may, depending
+    on the substitution context, need to escape the special characters
+    yourself. For example:
+</p><pre class="literallayout">$ asciidoc -a 'orgname=Bill &amp;amp; Ben Inc.' mydoc.txt</pre></dd><dt><span class="term">
+Attribute lists
+</span></dt><dd><p class="simpara">
+    If any named attribute entries are present then all string
+    attribute values must be quoted.  For example:
+</p><pre class="literallayout">["Desktop screenshot",width=32]</pre></dd></dl></div></div><div class="section" title="36.5. Combining separate documents"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X90"></a>36.5. Combining separate documents</h2></div></div></div><p>You have a number of stand-alone AsciiDoc documents that you want to
+process as a single document. Simply processing them with a series of
+<code class="literal">include</code> macros won’t work because the documents contain (level 0)
+document titles.  The solution is to create a top level wrapper
+document and use the <code class="literal">leveloffset</code> attribute to push them all down one
+level. For example:</p><pre class="screen">Combined Document Title
+=======================
+
+// Push titles down one level.
+:leveloffset: 1
+
+include::document1.txt[]
+
+// Return to normal title levels.
+:leveloffset: 0
+
+A Top Level Section
+-------------------
+Lorum ipsum.
+
+// Push titles down one level.
+:leveloffset: 1
+
+include::document2.txt[]
+
+include::document3.txt[]</pre><p>The document titles in the included documents will now be processed as
+level 1 section titles, level 1 sections as level 2 sections and so
+on.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Put a blank line between the <code class="literal">include</code> macro lines to ensure the
+  title of the included document is not seen as part of the last
+  paragraph of the previous document.
+</li><li class="listitem">
+You won’t want non-title document header lines (for example, Author
+  and Revision lines) in the included files — conditionally exclude
+  them if they are necessary for stand-alone processing.
+</li></ul></div></div><div class="section" title="36.6. Processing document sections separately"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_processing_document_sections_separately"></a>36.6. Processing document sections separately</h2></div></div></div><p>You have divided your AsciiDoc document into separate files (one per
+top level section) which are combined and processed with the following
+top level document:</p><pre class="screen">Combined Document Title
+=======================
+Joe Bloggs
+v1.0, 12-Aug-03
+
+include::section1.txt[]
+
+include::section2.txt[]
+
+include::section3.txt[]</pre><p>You also want to process the section files as separate documents.
+This is easy because <code class="literal">asciidoc(1)</code> will quite happily process
+<code class="literal">section1.txt</code>, <code class="literal">section2.txt</code> and <code class="literal">section3.txt</code> separately — the
+resulting output documents contain the section but have no document
+title.</p></div><div class="section" title="36.7. Processing document snippets"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_processing_document_snippets"></a>36.7. Processing document snippets</h2></div></div></div><p>Use the <code class="literal">-s</code> (<code class="literal">--no-header-footer</code>) command-line option to suppress
+header and footer output, this is useful if the processed output is to
+be included in another file. For example:</p><pre class="literallayout">$ asciidoc -sb docbook section1.txt</pre><p><code class="literal">asciidoc(1)</code> can be used as a filter, so you can pipe chunks of text
+through it. For example:</p><pre class="literallayout">$ echo 'Hello *World!*' | asciidoc -s -
+&lt;div class="paragraph"&gt;&lt;p&gt;Hello &lt;strong&gt;World!&lt;/strong&gt;&lt;/p&gt;&lt;/div&gt;</pre></div><div class="section" title="36.8. Badges in HTML page footers"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_badges_in_html_page_footers"></a>36.8. Badges in HTML page footers</h2></div></div></div><p>See the <code class="literal">[footer]</code> section in the AsciiDoc distribution <code class="literal">xhtml11.conf</code>
+configuration file.</p></div><div class="section" title="36.9. Pretty printing AsciiDoc output"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_pretty_printing_asciidoc_output"></a>36.9. Pretty printing AsciiDoc output</h2></div></div></div><p>If the indentation and layout of the <code class="literal">asciidoc(1)</code> output is not to your
+liking you can:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Change the indentation and layout of configuration file markup
+   template sections. The <code class="literal">{empty}</code> attribute is useful for outputting
+   trailing blank lines in markup templates.
+</li><li class="listitem"><p class="simpara">
+Use Dave Raggett’s <a class="ulink" href="http://tidy.sourceforge.net/" target="_top">HTML Tidy</a> program
+   to tidy <code class="literal">asciidoc(1)</code> output. Example:
+</p><pre class="literallayout">$ asciidoc -b docbook -o - mydoc.txt | tidy -indent -xml &gt;mydoc.xml</pre></li><li class="listitem"><p class="simpara">
+Use the <code class="literal">xmllint(1)</code> format option. Example:
+</p><pre class="literallayout">$ xmllint --format mydoc.xml</pre></li></ol></div></div><div class="section" title="36.10. Supporting minor DocBook DTD variations"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_supporting_minor_docbook_dtd_variations"></a>36.10. Supporting minor DocBook DTD variations</h2></div></div></div><p>The conditional inclusion of DocBook SGML markup at the end of the
+distribution <code class="literal">docbook45.conf</code> file illustrates how to support minor
+DTD variations. The included sections override corresponding entries
+from preceding sections.</p></div><div class="section" title="36.11. Creating stand-alone HTML documents"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_creating_stand_alone_html_documents"></a>36.11. Creating stand-alone HTML documents</h2></div></div></div><p>If you’ve ever tried to send someone an HTML document that includes
+stylesheets and images you’ll know that it’s not as straight-forward
+as exchanging a single file.  AsciiDoc has options to create
+stand-alone documents containing embedded images, stylesheets and
+scripts.  The following AsciiDoc command creates a single file
+containing <a class="link" href="ch21.html#X66" title="Embedding images in XHTML documents">embedded images</a>, CSS stylesheets, and JavaScript
+(for table of contents and footnotes):</p><pre class="literallayout">$ asciidoc -a data-uri -a icons -a toc -a max-width=55em article.txt</pre><p>You can view the HTML file here: <a class="ulink" href="http://asciidoc.org/article-standalone.html" target="_top">http://asciidoc.org/article-standalone.html</a></p></div><div class="section" title="36.12. Shipping stand-alone AsciiDoc source"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_shipping_stand_alone_asciidoc_source"></a>36.12. Shipping stand-alone AsciiDoc source</h2></div></div></div><p>Reproducing presentation documents from someone else’s source has one
+major problem: unless your configuration files are the same as the
+creator’s you won’t get the same output.</p><p>The solution is to create a single backend specific configuration file
+using the <code class="literal">asciidoc(1)</code> <code class="literal">-c</code> (<code class="literal">--dump-conf</code>) command-line option. You
+then ship this file along with the AsciiDoc source document plus the
+<code class="literal">asciidoc.py</code> script. The only end user requirement is that they have
+Python installed (and that they consider you a trusted source). This
+example creates a composite HTML configuration file for <code class="literal">mydoc.txt</code>:</p><pre class="literallayout">$ asciidoc -cb xhtml11 mydoc.txt &gt; mydoc-xhtml11.conf</pre><p>Ship <code class="literal">mydoc.txt</code>, <code class="literal">mydoc-html.conf</code>, and <code class="literal">asciidoc.py</code>. With
+these three files (and a Python interpreter) the recipient can
+regenerate the HMTL output:</p><pre class="literallayout">$ ./asciidoc.py -eb xhtml11 mydoc.txt</pre><p>The <code class="literal">-e</code> (<code class="literal">--no-conf</code>) option excludes the use of implicit
+configuration files, ensuring that only entries from the
+<code class="literal">mydoc-html.conf</code> configuration are used.</p></div><div class="section" title="36.13. Inserting blank space"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_inserting_blank_space"></a>36.13. Inserting blank space</h2></div></div></div><p>Adjust your style sheets to add the correct separation between block
+elements. Inserting blank paragraphs containing a single non-breaking
+space character <code class="literal">{nbsp}</code> works but is an ad hoc solution compared
+to using style sheets.</p></div><div class="section" title="36.14. Closing open sections"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_closing_open_sections"></a>36.14. Closing open sections</h2></div></div></div><p>You can close off section tags up to level <code class="literal">N</code> by calling the
+<code class="literal">eval::[Section.setlevel(N)]</code> system macro. This is useful if you
+want to include a section composed of raw markup. The following
+example includes a DocBook glossary division at the top section level
+(level 0):</p><pre class="screen">ifdef::basebackend-docbook[]
+
+eval::[Section.setlevel(0)]
+
++++++++++++++++++++++++++++++++
+&lt;glossary&gt;
+  &lt;title&gt;Glossary&lt;/title&gt;
+  &lt;glossdiv&gt;
+  ...
+  &lt;/glossdiv&gt;
+&lt;/glossary&gt;
++++++++++++++++++++++++++++++++
+endif::basebackend-docbook[]</pre></div><div class="section" title="36.15. Validating output files"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_validating_output_files"></a>36.15. Validating output files</h2></div></div></div><p>Use <code class="literal">xmllint(1)</code> to check the AsciiDoc generated markup is both well
+formed and valid. Here are some examples:</p><pre class="literallayout">$ xmllint --nonet --noout --valid docbook-file.xml
+$ xmllint --nonet --noout --valid xhtml11-file.html
+$ xmllint --nonet --noout --valid --html html4-file.html</pre><p>The <code class="literal">--valid</code> option checks the file is valid against the document
+type’s DTD, if the DTD is not installed in your system’s catalog then
+it will be fetched from its Internet location. If you omit the
+<code class="literal">--valid</code> option the document will only be checked that it is well
+formed.</p><p>The online <a class="ulink" href="http://validator.w3.org/#validate_by_uri+with_options" target="_top">W3C
+Markup Validation Service</a> is the defacto standard when it comes to
+validating HTML (it validates all HTML standards including HTML5).</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch35.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="go01.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

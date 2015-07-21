@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 5. DocBook</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch04.html" title="Chapter 4. AsciiDoc Backends" /><link rel="next" href="ch06.html" title="Chapter 6. Generating Plain Text Files" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch04.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch06.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 5. DocBook"><div class="titlepage"><div><div><h2 class="title"><a id="_docbook"></a>Chapter 5. DocBook</h2></div></div></div><p>AsciiDoc generates <span class="emphasis"><em>article</em></span>, <span class="emphasis"><em>book</em></span> and <span class="emphasis"><em>refentry</em></span>
+<a class="ulink" href="http://www.docbook.org/" target="_top">DocBook</a> documents (corresponding to the
+AsciiDoc <span class="emphasis"><em>article</em></span>, <span class="emphasis"><em>book</em></span> and <span class="emphasis"><em>manpage</em></span> document types).</p><p>Most Linux distributions come with conversion tools (collectively
+called a toolchain) for <a class="link" href="ch05.html#X12" title="5.1. Converting DocBook to other file formats">converting DocBook files</a> to
+presentation formats such as Postscript, HTML, PDF, EPUB, DVI,
+PostScript, LaTeX, roff (the native man page format), HTMLHelp,
+JavaHelp and text.  There are also programs that allow you to view
+DocBook files directly, for example <a class="ulink" href="http://live.gnome.org/Yelp" target="_top">Yelp</a>
+(the GNOME help viewer).</p><div class="section" title="5.1. Converting DocBook to other file formats"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X12"></a>5.1. Converting DocBook to other file formats</h2></div></div></div><p>DocBook files are validated, parsed and translated various
+presentation file formats using a combination of applications
+collectively called a DocBook <span class="emphasis"><em>tool chain</em></span>. The function of a tool
+chain is to read the DocBook markup (produced by AsciiDoc) and
+transform it to a presentation format (for example HTML, PDF, HTML
+Help, EPUB, DVI, PostScript, LaTeX).</p><p>A wide range of user output format requirements coupled with a choice
+of available tools and stylesheets results in many valid tool chain
+combinations.</p></div><div class="section" title="5.2. a2x Toolchain Wrapper"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X43"></a>5.2. a2x Toolchain Wrapper</h2></div></div></div><p>One of the biggest hurdles for new users is installing, configuring
+and using a DocBook XML toolchain. <code class="literal">a2x(1)</code> can help — it’s a
+toolchain wrapper command that will generate XHTML (chunked and
+unchunked), PDF, EPUB, DVI, PS, LaTeX, man page, HTML Help and text
+file outputs from an AsciiDoc text file.  <code class="literal">a2x(1)</code> does all the grunt
+work associated with generating and sequencing the toolchain commands
+and managing intermediate and output files.  <code class="literal">a2x(1)</code> also optionally
+deploys admonition and navigation icons and a CSS stylesheet. See the
+<code class="literal">a2x(1)</code> man page for more details. In addition to <code class="literal">asciidoc(1)</code> you
+also need <a class="link" href="ch05.html#X40">xsltproc(1)</a>, <a class="link" href="ch05.html#X13">DocBook XSL Stylesheets</a> and
+optionally: <a class="link" href="ch05.html#X31">dblatex</a> or <a class="link" href="ch05.html#X14">FOP</a> (to generate PDF);
+<code class="literal">w3m(1)</code> or <code class="literal">lynx(1)</code> (to generate text).</p><p>The following examples generate <code class="literal">doc/source-highlight-filter.pdf</code> from
+the AsciiDoc <code class="literal">doc/source-highlight-filter.txt</code> source file. The first
+example uses <code class="literal">dblatex(1)</code> (the default PDF generator) the second
+example forces FOP to be used:</p><pre class="literallayout">$ a2x -f pdf doc/source-highlight-filter.txt
+$ a2x -f pdf --fop doc/source-highlight-filter.txt</pre><p>See the <code class="literal">a2x(1)</code> man page for details.</p><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Use the <code class="literal">--verbose</code> command-line option to view executed
+toolchain commands.</p></td></tr></table></div></div><div class="section" title="5.3. HTML generation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_html_generation"></a>5.3. HTML generation</h2></div></div></div><p>AsciiDoc produces nicely styled HTML directly without requiring a
+DocBook toolchain but there are also advantages in going the DocBook
+route:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+HTML from DocBook can optionally include automatically generated
+  indexes, tables of contents, footnotes, lists of figures and tables.
+</li><li class="listitem">
+DocBook toolchains can also (optionally) generate separate (chunked)
+  linked HTML pages for each document section.
+</li><li class="listitem">
+Toolchain processing performs link and document validity checks.
+</li><li class="listitem">
+If the DocBook <span class="emphasis"><em>lang</em></span> attribute is set then things like table of
+  contents, figure and table captions and admonition captions will be
+  output in the specified language (setting the AsciiDoc <span class="emphasis"><em>lang</em></span>
+  attribute sets the DocBook <span class="emphasis"><em>lang</em></span> attribute).
+</li></ul></div><p>On the other hand, HTML output directly from AsciiDoc is much faster,
+is easily customized and can be used in situations where there is no
+suitable DocBook toolchain (for example, see the <a class="ulink" href="http://asciidoc.org/" target="_top">AsciiDoc
+website</a>).</p></div><div class="section" title="5.4. PDF generation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_pdf_generation"></a>5.4. PDF generation</h2></div></div></div><p>There are two commonly used tools to generate PDFs from DocBook,
+<a class="link" href="ch05.html#X31">dblatex</a> and <a class="link" href="ch05.html#X14">FOP</a>.</p><div class="itemizedlist" title="dblatex or FOP?"><p class="title"><strong>dblatex or FOP?</strong></p><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>dblatex</em></span> is easier to install, there’s zero configuration
+  required and no Java VM to install — it just works out of the box.
+</li><li class="listitem">
+<span class="emphasis"><em>dblatex</em></span> source code highlighting and numbering is superb.
+</li><li class="listitem">
+<span class="emphasis"><em>dblatex</em></span> is easier to use as it converts DocBook directly to PDF
+  whereas before using <span class="emphasis"><em>FOP</em></span> you have to convert DocBook to XML-FO
+  using <a class="link" href="ch05.html#X13">DocBook XSL Stylesheets</a>.
+</li><li class="listitem">
+<span class="emphasis"><em>FOP</em></span> is more feature complete (for example, callouts are processed
+  inside literal layouts) and arguably produces nicer looking output.
+</li></ul></div></div><div class="section" title="5.5. HTML Help generation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_html_help_generation"></a>5.5. HTML Help generation</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Convert DocBook XML documents to HTML Help compiler source files
+  using <a class="link" href="ch05.html#X13">DocBook XSL Stylesheets</a> and <a class="link" href="ch05.html#X40">xsltproc(1)</a>.
+</li><li class="listitem">
+Convert the HTML Help source (<code class="literal">.hhp</code> and <code class="literal">.html</code>) files to HTML Help
+  (<code class="literal">.chm</code>) files using the <a class="link" href="ch05.html#X67">Microsoft HTML Help Compiler</a>.
+</li></ol></div></div><div class="section" title="5.6. Toolchain components summary"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_toolchain_components_summary"></a>5.6. Toolchain components summary</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+AsciiDoc
+</span></dt><dd>
+    Converts AsciiDoc (<code class="literal">.txt</code>) files to DocBook XML (<code class="literal">.xml</code>) files.
+</dd><dt><span class="term">
+<a id="X13"></a><a class="ulink" href="http://docbook.sourceforge.net/projects/xsl/" target="_top">DocBook XSL Stylesheets</a>
+</span></dt><dd>
+  These are a set of XSL stylesheets containing rules for converting
+  DocBook XML documents to HTML, XSL-FO, manpage and HTML Help files.
+  The stylesheets are used in conjunction with an XML parser such as
+  <a class="link" href="ch05.html#X40">xsltproc(1)</a>.
+</dd><dt><span class="term">
+<a id="X40"></a><a class="ulink" href="http://www.xmlsoft.org" target="_top">xsltproc</a>
+</span></dt><dd>
+  An XML parser for applying XSLT stylesheets (in our case the
+  <a class="link" href="ch05.html#X13">DocBook XSL Stylesheets</a>) to XML documents.
+</dd><dt><span class="term">
+<a id="X31"></a><a class="ulink" href="http://dblatex.sourceforge.net/" target="_top">dblatex</a>
+</span></dt><dd>
+  Generates PDF, DVI, PostScript and LaTeX formats directly from
+  DocBook source via the intermediate LaTeX typesetting language —   uses <a class="link" href="ch05.html#X13">DocBook XSL Stylesheets</a>, <a class="link" href="ch05.html#X40">xsltproc(1)</a> and
+  <code class="literal">latex(1)</code>.
+</dd><dt><span class="term">
+<a id="X14"></a><a class="ulink" href="http://xml.apache.org/fop/" target="_top">FOP</a>
+</span></dt><dd>
+  The Apache Formatting Objects Processor converts XSL-FO (<code class="literal">.fo</code>)
+  files to PDF files.  The XSL-FO files are generated from DocBook
+  source files using <a class="link" href="ch05.html#X13">DocBook XSL Stylesheets</a> and
+  <a class="link" href="ch05.html#X40">xsltproc(1)</a>.
+</dd><dt><span class="term">
+<a id="X67"></a>Microsoft Help Compiler
+</span></dt><dd>
+  The Microsoft HTML Help Compiler (<code class="literal">hhc.exe</code>) is a command-line tool
+  that converts HTML Help source files to a single HTML Help (<code class="literal">.chm</code>)
+  file. It runs on MS Windows platforms and can be downloaded from
+  <a class="ulink" href="http://www.microsoft.com" target="_top">http://www.microsoft.com</a>.
+</dd></dl></div></div><div class="section" title="5.7. AsciiDoc dblatex configuration files"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_asciidoc_dblatex_configuration_files"></a>5.7. AsciiDoc dblatex configuration files</h2></div></div></div><p>The AsciiDoc distribution <code class="literal">./dblatex</code> directory contains
+<code class="literal">asciidoc-dblatex.xsl</code> (customized XSL parameter settings) and
+<code class="literal">asciidoc-dblatex.sty</code> (customized LaTeX settings). These are examples
+of optional <a class="link" href="ch05.html#X31">dblatex</a> output customization and are used by
+<a class="link" href="ch05.html#X43" title="5.2. a2x Toolchain Wrapper"><code class="literal">a2x(1)</code></a>.</p></div><div class="section" title="5.8. AsciiDoc DocBook XSL Stylesheets drivers"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_asciidoc_docbook_xsl_stylesheets_drivers"></a>5.8. AsciiDoc DocBook XSL Stylesheets drivers</h2></div></div></div><p>You will have noticed that the distributed HTML and HTML Help
+documentation files (for example <code class="literal">./doc/asciidoc.html</code>) are not the
+plain outputs produced using the default <span class="emphasis"><em>DocBook XSL Stylesheets</em></span>
+configuration.  This is because they have been processed using
+customized DocBook XSL Stylesheets along with (in the case of HTML
+outputs) the custom <code class="literal">./stylesheets/docbook-xsl.css</code> CSS stylesheet.</p><p>You’ll find the customized DocBook XSL drivers along with additional
+documentation in the distribution <code class="literal">./docbook-xsl</code> directory. The
+examples that follow are executed from the distribution documentation
+(<code class="literal">./doc</code>) directory. These drivers are also used by <a class="link" href="ch05.html#X43" title="5.2. a2x Toolchain Wrapper"><code class="literal">a2x(1)</code></a>.</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">common.xsl</code>
+</span></dt><dd>
+    Shared driver parameters.  This file is not used directly but is
+    included in all the following drivers.
+</dd><dt><span class="term">
+<code class="literal">chunked.xsl</code>
+</span></dt><dd><p class="simpara">
+    Generate chunked XHTML (separate HTML pages for each document
+    section) in the <code class="literal">./doc/chunked</code> directory. For example:
+</p><pre class="literallayout">$ python ../asciidoc.py -b docbook asciidoc.txt
+$ xsltproc --nonet ../docbook-xsl/chunked.xsl asciidoc.xml</pre></dd><dt><span class="term">
+<code class="literal">epub.xsl</code>
+</span></dt><dd>
+    Used by <a class="link" href="ch05.html#X43" title="5.2. a2x Toolchain Wrapper"><code class="literal">a2x(1)</code></a> to generate EPUB formatted documents.
+</dd><dt><span class="term">
+<code class="literal">fo.xsl</code>
+</span></dt><dd><p class="simpara">
+    Generate XSL Formatting Object (<code class="literal">.fo</code>) files for subsequent PDF
+    file generation using FOP. For example:
+</p><pre class="literallayout">$ python ../asciidoc.py -b docbook article.txt
+$ xsltproc --nonet ../docbook-xsl/fo.xsl article.xml &gt; article.fo
+$ fop article.fo article.pdf</pre></dd><dt><span class="term">
+<code class="literal">htmlhelp.xsl</code>
+</span></dt><dd><p class="simpara">
+    Generate Microsoft HTML Help source files for the MS HTML Help
+    Compiler in the <code class="literal">./doc/htmlhelp</code> directory. This example is run on
+    MS Windows from a Cygwin shell prompt:
+</p><pre class="literallayout">$ python ../asciidoc.py -b docbook asciidoc.txt
+$ xsltproc --nonet ../docbook-xsl/htmlhelp.xsl asciidoc.xml
+$ c:/Program\ Files/HTML\ Help\ Workshop/hhc.exe htmlhelp.hhp</pre></dd><dt><span class="term">
+<code class="literal">manpage.xsl</code>
+</span></dt><dd><p class="simpara">
+    Generate a <code class="literal">roff(1)</code> format UNIX man page from a DocBook XML
+    <span class="emphasis"><em>refentry</em></span> document. This example generates an <code class="literal">asciidoc.1</code> man
+    page file:
+</p><pre class="literallayout">$ python ../asciidoc.py -d manpage -b docbook asciidoc.1.txt
+$ xsltproc --nonet ../docbook-xsl/manpage.xsl asciidoc.1.xml</pre></dd><dt><span class="term">
+<code class="literal">xhtml.xsl</code>
+</span></dt><dd><p class="simpara">
+    Convert a DocBook XML file to a single XHTML file. For example:
+</p><pre class="literallayout">$ python ../asciidoc.py -b docbook asciidoc.txt
+$ xsltproc --nonet ../docbook-xsl/xhtml.xsl asciidoc.xml &gt; asciidoc.html</pre></dd></dl></div><p>If you want to see how the complete documentation set is processed
+take a look at the A-A-P script <code class="literal">./doc/main.aap</code>.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch04.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch06.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

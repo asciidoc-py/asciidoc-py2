@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 3. AsciiDoc Document Types</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch02.html" title="Chapter 2. Getting Started" /><link rel="next" href="ch04.html" title="Chapter 4. AsciiDoc Backends" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch02.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch04.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 3. AsciiDoc Document Types"><div class="titlepage"><div><div><h2 class="title"><a id="_asciidoc_document_types"></a>Chapter 3. AsciiDoc Document Types</h2></div></div></div><p>There are three types of AsciiDoc documents: article, book and
+manpage. All document types share the same AsciiDoc format with some
+minor variations. If you are familiar with DocBook you will have
+noticed that AsciiDoc document types correspond to the same-named
+DocBook document types.</p><p>Use the <code class="literal">asciidoc(1)</code> <code class="literal">-d</code> (<code class="literal">--doctype</code>) option to specify the AsciiDoc
+document type — the default document type is <span class="emphasis"><em>article</em></span>.</p><p>By convention the <code class="literal">.txt</code> file extension is used for AsciiDoc document
+source files.</p><div class="section" title="3.1. article"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_article"></a>3.1. article</h2></div></div></div><p>Used for short documents, articles and general documentation.  See the
+AsciiDoc distribution <code class="literal">./doc/article.txt</code> example.</p><p>AsciiDoc defines standard DocBook article frontmatter and backmatter
+<a class="link" href="ch08.html#X93" title="8.4.1. Section markup templates">section markup templates</a> (appendix, abstract, bibliography,
+glossary, index).</p></div><div class="section" title="3.2. book"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_book"></a>3.2. book</h2></div></div></div><p>Books share the same format as articles, with the following
+differences:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+The part titles in multi-part books are <a class="link" href="ch11.html" title="Chapter 11. Titles">top level titles</a>
+  (same level as book title).
+</li><li class="listitem">
+Some sections are book specific e.g. preface and colophon.
+</li></ul></div><p>Book documents will normally be used to produce DocBook output since
+DocBook processors can automatically generate footnotes, table of
+contents, list of tables, list of figures, list of examples and
+indexes.</p><p>AsciiDoc defines standard DocBook book frontmatter and backmatter
+<a class="link" href="ch08.html#X93" title="8.4.1. Section markup templates">section markup templates</a> (appendix, dedication, preface,
+bibliography, glossary, index, colophon).</p><div class="variablelist" title="Example book documents"><p class="title"><strong>Example book documents</strong></p><dl><dt><span class="term">
+Book
+</span></dt><dd>
+  The <code class="literal">./doc/book.txt</code> file in the AsciiDoc distribution.
+</dd><dt><span class="term">
+Multi-part book
+</span></dt><dd>
+  The <code class="literal">./doc/book-multi.txt</code> file in the AsciiDoc distribution.
+</dd></dl></div></div><div class="section" title="3.3. manpage"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_manpage"></a>3.3. manpage</h2></div></div></div><p>Used to generate roff format UNIX manual pages.  AsciiDoc manpage
+documents observe special header title and section naming conventions — see the <a class="link" href="ch24.html" title="Chapter 24. Manpage Documents">Manpage Documents</a> section for details.</p><p>AsciiDoc defines the <span class="emphasis"><em>synopsis</em></span> <a class="link" href="ch08.html#X93" title="8.4.1. Section markup templates">section markup template</a> to
+generate the DocBook <code class="literal">refsynopsisdiv</code> section.</p><p>See also the <code class="literal">asciidoc(1)</code> man page source (<code class="literal">./doc/asciidoc.1.txt</code>) from
+the AsciiDoc distribution.</p></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch02.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch04.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

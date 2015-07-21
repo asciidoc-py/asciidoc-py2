@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Chapter 16. Delimited Blocks</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /><link rel="home" href="index.html" title="AsciiDoc User Guide" /><link rel="up" href="index.html" title="AsciiDoc User Guide" /><link rel="prev" href="ch15.html" title="Chapter 15. Paragraphs" /><link rel="next" href="ch17.html" title="Chapter 17. Lists" /></head><body><div class="navheader"><table width="100%" summary="Navigation header"><tr><td width="20%" align="left"><a accesskey="p" href="ch15.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="ch17.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr></table><hr /></div><div class="chapter" title="Chapter 16. Delimited Blocks"><div class="titlepage"><div><div><h2 class="title"><a id="X104"></a>Chapter 16. Delimited Blocks</h2></div></div></div><p>Delimited blocks are blocks of text enveloped by leading and trailing
+delimiter lines (normally a series of four or more repeated
+characters). The behavior of Delimited Blocks is specified by entries
+in configuration file <code class="literal">[blockdef-*]</code> sections.</p><div class="section" title="16.1. Predefined Delimited Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_predefined_delimited_blocks"></a>16.1. Predefined Delimited Blocks</h2></div></div></div><p>AsciiDoc ships with a number of predefined DelimitedBlocks (see the
+<code class="literal">asciidoc.conf</code> configuration file in the <code class="literal">asciidoc(1)</code> program
+directory):</p><p>Predefined delimited block underlines:</p><pre class="literallayout">CommentBlock:     //////////////////////////
+PassthroughBlock: ++++++++++++++++++++++++++
+ListingBlock:     --------------------------
+LiteralBlock:     ..........................
+SidebarBlock:     **************************
+QuoteBlock:       __________________________
+ExampleBlock:     ==========================
+OpenBlock:        --</pre><div class="table"><a id="idp19324480"></a><p class="title"><strong>Table 16.1. Default DelimitedBlock substitutions</strong></p><div class="table-contents"><table summary="Default DelimitedBlock substitutions" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /><col class="col_4" /><col class="col_5" /><col class="col_6" /><col class="col_7" /><col class="col_8" /></colgroup><thead><tr><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"> </th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">Attributes </th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">Callouts </th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">Macros </th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"> Quotes </th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">Replacements</th><th style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top">Special chars </th><th style="border-bottom: 1px solid #527bbd; " align="center" valign="top">Special words</th></tr></thead><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>PassthroughBlock</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>ListingBlock</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>LiteralBlock</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>SidebarBlock</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>QuoteBlock</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>ExampleBlock</em></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-bottom: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p><span class="emphasis"><em>OpenBlock</em></span></p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>No</p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="border-right: 1px solid #527bbd; " align="center" valign="top"><p>Yes</p></td><td style="" align="center" valign="top"><p>Yes</p></td></tr></tbody></table></div></div><br class="table-break" /></div><div class="section" title="16.2. Listing Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_listing_blocks"></a>16.2. Listing Blocks</h2></div></div></div><p><span class="emphasis"><em>ListingBlocks</em></span> are rendered verbatim in a monospaced font, they
+retain line and whitespace formatting and are often distinguished by a
+background or border. There is no text formatting or substitutions
+within Listing blocks apart from Special Characters and Callouts.
+Listing blocks are often used for computer output and file listings.</p><p>Here’s an example:</p><pre class="screen">--------------------------------------
+#include &lt;stdio.h&gt;
+
+int main() {
+   printf("Hello World!\n");
+   exit(0);
+}
+--------------------------------------</pre><p>Which will be rendered like:</p><pre class="screen">#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Hello World!\n");
+    exit(0);
+}</pre><p>By convention <a class="link" href="ch33.html" title="Chapter 33. Filters">filter blocks</a> use the listing block syntax and
+are implemented as distinct listing block styles.</p></div><div class="section" title="16.3. Literal Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X65"></a>16.3. Literal Blocks</h2></div></div></div><p><span class="emphasis"><em>LiteralBlocks</em></span> are rendered just like <a class="link" href="ch15.html#X85" title="15.2. literal paragraph syntax">literal paragraphs</a>.
+Example:</p><pre class="screen">...................................
+Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.
+...................................</pre><p>Renders:</p><pre class="literallayout">Consul *necessitatibus* per id,
+consetetur, eu pro everti postulant
+homero verear ea mea, qui.</pre><p>If the <span class="emphasis"><em>listing</em></span> style is applied to a LiteralBlock it will be
+rendered as a ListingBlock (this is handy if you have a listing
+containing a ListingBlock).</p></div><div class="section" title="16.4. Sidebar Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_sidebar_blocks"></a>16.4. Sidebar Blocks</h2></div></div></div><p>A sidebar is a short piece of text presented outside the narrative
+flow of the main text. The sidebar is normally presented inside a
+bordered box to set it apart from the main text.</p><p>The sidebar body is treated like a normal section body.</p><p>Here’s an example:</p><pre class="screen">.An Example Sidebar
+************************************************
+Any AsciiDoc SectionBody element (apart from
+SidebarBlocks) can be placed inside a sidebar.
+************************************************</pre><p>Which will be rendered like:</p><div class="sidebar" title="An Example Sidebar"><div class="titlepage"><div><div><p class="title"><strong>An Example Sidebar</strong></p></div></div></div><p>Any AsciiDoc SectionBody element (apart from
+SidebarBlocks) can be placed inside a sidebar.</p></div></div><div class="section" title="16.5. Comment Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X26"></a>16.5. Comment Blocks</h2></div></div></div><p>The contents of <span class="emphasis"><em>CommentBlocks</em></span> are not processed; they are useful for
+annotations and for excluding new or outdated content that you don’t
+want displayed. CommentBlocks are never written to output files.
+Example:</p><pre class="screen">//////////////////////////////////////////
+CommentBlock contents are not processed by
+asciidoc(1).
+//////////////////////////////////////////</pre><p>See also <a class="link" href="ch21.html#X25" title="21.2.3. Comment Lines">Comment Lines</a>.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>System macros are executed inside comment blocks.</p></td></tr></table></div></div><div class="section" title="16.6. Passthrough Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X76"></a>16.6. Passthrough Blocks</h2></div></div></div><p>By default the block contents is subject only to <span class="emphasis"><em>attributes</em></span> and
+<span class="emphasis"><em>macros</em></span> substitutions (use an explicit <span class="emphasis"><em>subs</em></span> attribute to apply
+different substitutions).  PassthroughBlock content will often be
+backend specific. Here’s an example:</p><pre class="screen">[subs="quotes"]
+++++++++++++++++++++++++++++++++++++++
+&lt;table border="1"&gt;&lt;tr&gt;
+  &lt;td&gt;*Cell 1*&lt;/td&gt;
+  &lt;td&gt;*Cell 2*&lt;/td&gt;
+&lt;/tr&gt;&lt;/table&gt;
+++++++++++++++++++++++++++++++++++++++</pre><p>The following styles can be applied to passthrough blocks:</p><div class="variablelist"><dl><dt><span class="term">
+pass
+</span></dt><dd>
+  No substitutions are performed. This is equivalent to <code class="literal">subs="none"</code>.
+</dd><dt><span class="term">
+asciimath, latexmath
+</span></dt><dd>
+  By default no substitutions are performed, the contents are rendered
+  as <a class="link" href="ch25.html" title="Chapter 25. Mathematical Formulas">mathematical formulas</a>.
+</dd></dl></div></div><div class="section" title="16.7. Quote Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_quote_blocks"></a>16.7. Quote Blocks</h2></div></div></div><p><span class="emphasis"><em>QuoteBlocks</em></span> are used for quoted passages of text. There are two
+styles: <span class="emphasis"><em>quote</em></span> and <span class="emphasis"><em>verse</em></span>. The style behavior is identical to
+<a class="link" href="ch15.html#X94" title="15.3. quote and verse paragraph styles">quote and verse paragraphs</a> except that blocks can contain
+multiple paragraphs and, in the case of the <span class="emphasis"><em>quote</em></span> style, other
+section elements.  The first positional attribute sets the style, if
+no attributes are specified the <span class="emphasis"><em>quote</em></span> style is used.  The optional
+<span class="emphasis"><em>attribution</em></span> and <span class="emphasis"><em>citetitle</em></span> attributes (positional attributes 2 and
+3) specify the quote’s author and source. For example:</p><pre class="screen">[quote, Sir Arthur Conan Doyle, The Adventures of Sherlock Holmes]
+____________________________________________________________________
+As he spoke there was the sharp sound of horses' hoofs and
+grating wheels against the curb, followed by a sharp pull at the
+bell. Holmes whistled.
+
+"A pair, by the sound," said he. "Yes," he continued, glancing
+out of the window. "A nice little brougham and a pair of
+beauties. A hundred and fifty guineas apiece. There's money in
+this case, Watson, if there is nothing else."
+____________________________________________________________________</pre><p>Which is rendered as:</p><div class="blockquote"><table border="0" width="100%" cellspacing="0" cellpadding="0" class="blockquote" summary="Block quote"><tr><td width="10%" valign="top"> </td><td width="80%" valign="top"><p>As he spoke there was the sharp sound of horses' hoofs and
+grating wheels against the curb, followed by a sharp pull at the
+bell. Holmes whistled.</p><p>"A pair, by the sound," said he. "Yes," he continued, glancing
+out of the window. "A nice little brougham and a pair of
+beauties. A hundred and fifty guineas apiece. There’s money in
+this case, Watson, if there is nothing else."</p></td><td width="10%" valign="top"> </td></tr><tr><td width="10%" valign="top"> </td><td colspan="2" align="right" valign="top">--<span class="attribution">
+Sir Arthur Conan Doyle
+<em class="citetitle">The Adventures of Sherlock Holmes</em>
+</span></td></tr></table></div></div><div class="section" title="16.8. Example Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X48"></a>16.8. Example Blocks</h2></div></div></div><p><span class="emphasis"><em>ExampleBlocks</em></span> encapsulate the DocBook Example element and are used
+for, well, examples.  Example blocks can be titled by preceding them
+with a <span class="emphasis"><em>BlockTitle</em></span>.  DocBook toolchains will normally automatically
+number examples and generate a <span class="emphasis"><em>List of Examples</em></span> backmatter section.</p><p>Example blocks are delimited by lines of equals characters and can
+contain any block elements apart from Titles, BlockTitles and
+Sidebars) inside an example block. For example:</p><pre class="screen">.An example
+=====================================================================
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens.
+=====================================================================</pre><p>Renders:</p><div class="example"><a id="idp19388400"></a><p class="title"><strong>Example 16.1. An example</strong></p><div class="example-contents"><p>Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens.</p></div></div><br class="example-break" /><p>A title prefix that can be inserted with the <code class="literal">caption</code> attribute
+(HTML backends). For example:</p><pre class="screen">[caption="Example 1: "]
+.An example with a custom caption
+=====================================================================
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens.
+=====================================================================</pre></div><div class="section" title="16.9. Admonition Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X22"></a>16.9. Admonition Blocks</h2></div></div></div><p>The <span class="emphasis"><em>ExampleBlock</em></span> definition includes a set of admonition
+<a class="link" href="ch32.html#X23" title="32.1. Styles">styles</a> (<span class="emphasis"><em>NOTE</em></span>, <span class="emphasis"><em>TIP</em></span>, <span class="emphasis"><em>IMPORTANT</em></span>, <span class="emphasis"><em>WARNING</em></span>, <span class="emphasis"><em>CAUTION</em></span>) for
+generating admonition blocks (admonitions containing more than a
+<a class="link" href="ch15.html#X28" title="15.4. Admonition Paragraphs">single paragraph</a>).  Just precede the <span class="emphasis"><em>ExampleBlock</em></span> with an
+attribute list specifying the admonition style name. For example:</p><pre class="screen">[NOTE]
+.A NOTE admonition block
+=====================================================================
+Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens.
+
+. Fusce euismod commodo velit.
+. Vivamus fringilla mi eu lacus.
+  .. Fusce euismod commodo velit.
+  .. Vivamus fringilla mi eu lacus.
+. Donec eget arcu bibendum
+  nunc consequat lobortis.
+=====================================================================</pre><p>Renders:</p><div class="note" title="A NOTE admonition block" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note: A NOTE admonition block"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left">A NOTE admonition block</th></tr><tr><td align="left" valign="top"><p>Qui in magna commodo, est labitur dolorum an. Est ne magna primis
+adolescens.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Fusce euismod commodo velit.
+</li><li class="listitem"><p class="simpara">
+Vivamus fringilla mi eu lacus.
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+Fusce euismod commodo velit.
+</li><li class="listitem">
+Vivamus fringilla mi eu lacus.
+</li></ol></div></li><li class="listitem">
+Donec eget arcu bibendum
+  nunc consequat lobortis.
+</li></ol></div></td></tr></table></div><p>See also <a class="link" href="ch15.html#X47" title="15.4.1. Admonition Icons and Captions">Admonition Icons and Captions</a>.</p></div><div class="section" title="16.10. Open Blocks"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="X29"></a>16.10. Open Blocks</h2></div></div></div><p>Open blocks are special:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+The open block delimiter is line containing two hyphen characters
+  (instead of four or more repeated characters).
+</li><li class="listitem">
+They can be used to group block elements for <a class="link" href="ch17.html#X15" title="17.7. List Item Continuation">List item   continuation</a>.
+</li><li class="listitem"><p class="simpara">
+Open blocks can be styled to behave like any other type of delimited
+  block.  The  following built-in styles can be applied to open
+  blocks: <span class="emphasis"><em>literal</em></span>, <span class="emphasis"><em>verse</em></span>, <span class="emphasis"><em>quote</em></span>, <span class="emphasis"><em>listing</em></span>, <span class="emphasis"><em>TIP</em></span>, <span class="emphasis"><em>NOTE</em></span>,
+  <span class="emphasis"><em>IMPORTANT</em></span>, <span class="emphasis"><em>WARNING</em></span>, <span class="emphasis"><em>CAUTION</em></span>, <span class="emphasis"><em>abstract</em></span>, <span class="emphasis"><em>partintro</em></span>,
+  <span class="emphasis"><em>comment</em></span>, <span class="emphasis"><em>example</em></span>, <span class="emphasis"><em>sidebar</em></span>, <span class="emphasis"><em>source</em></span>, <span class="emphasis"><em>music</em></span>, <span class="emphasis"><em>latex</em></span>,
+  <span class="emphasis"><em>graphviz</em></span>. For example, the following open block and listing block
+  are functionally identical:
+</p><pre class="literallayout">[listing]
+--
+Lorum ipsum ...
+--</pre><pre class="literallayout">---------------
+Lorum ipsum ...
+---------------</pre></li><li class="listitem">
+An unstyled open block groups section elements but otherwise does
+  nothing.
+</li></ul></div><p>Open blocks are used to generate document abstracts and book part
+introductions:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Apply the <span class="emphasis"><em>abstract</em></span> style to generate an abstract, for example:
+</p><pre class="literallayout">[abstract]
+--
+In this paper we will ...
+--</pre><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+Apply the <span class="emphasis"><em>partintro</em></span> style to generate a book part introduction for
+  a multi-part book, for example:
+</p><pre class="literallayout">[partintro]
+.Optional part introduction title
+--
+Optional part introduction goes here.
+--</pre></li></ol></div></li></ul></div></div></div><div class="navfooter"><hr /><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="ch15.html"><img src="images/icons/prev.png" alt="Prev" /></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="ch17.html"><img src="images/icons/next.png" alt="Next" /></a></td></tr><tr><td width="40%" align="left" valign="top"> </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/icons/home.png" alt="Home" /></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

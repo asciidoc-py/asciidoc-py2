@@ -1270,10 +1270,16 @@ def char_encode(s):
 
 def date_time_str(t):
     """Convert seconds since the Epoch to formatted local date and time strings."""
-    t = time.localtime(t)
+    source_date_epoch = os.environ.get('SOURCE_DATE_EPOCH')
+    if source_date_epoch is not None:
+        t = time.gmtime(min(t, int(source_date_epoch)))
+    else:
+        t = time.localtime(t)
     date_str = time.strftime('%Y-%m-%d',t)
     time_str = time.strftime('%H:%M:%S',t)
-    if time.daylight and t.tm_isdst == 1:
+    if source_date_epoch is not None:
+        time_str += ' UTC'
+    elif time.daylight and t.tm_isdst == 1:
         time_str += ' ' + time.tzname[1]
     else:
         time_str += ' ' + time.tzname[0]

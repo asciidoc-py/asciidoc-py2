@@ -162,6 +162,18 @@ The plugin commands perform as follows:
   names starting with a period are skipped.
 
 
+ENVIRONMENT VARIABLES
+---------------------
+
+*`SOURCE_DATE_EPOCH`*::
+  If the `SOURCE_DATE_EPOCH` environment variable is set to a UNIX
+  timestamp, then the `{docdate}`, `{doctime}`, `{localdate}`, and
+  `{localtime}` attributes are computed in the UTC time zone, with any
+  timestamps newer than `SOURCE_DATE_EPOCH` replaced by
+  `SOURCE_DATE_EPOCH`. (This helps software using AsciiDoc to build
+  reproducibly.)
+
+
 EXAMPLES
 --------
 `asciidoc asciidoc_file_name.txt`::

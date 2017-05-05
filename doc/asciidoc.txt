@@ -4620,11 +4620,11 @@ predefined intrinsic attributes:
   {basebackend}         html or docbook
   {blockname}           current block name (note 8).
   {brvbar}              broken vertical bar (|) character
-  {docdate}             document last modified date
+  {docdate}             document last modified date (note 9)
   {docdir}              document input directory name  (note 5)
   {docfile}             document file name  (note 5)
   {docname}             document file name without extension (note 6)
-  {doctime}             document last modified time
+  {doctime}             document last modified time (note 9)
   {doctitle}            document title (from document header)
   {doctype-<doctype>}   empty string ''
   {doctype}             document type specified by `-d` option
@@ -4642,8 +4642,8 @@ predefined intrinsic attributes:
   {ldquo}               Left double quote character (note 7)
   {level}               title level 1..4 (in section titles)
   {listindex}           the list index (1..) of the most recent list item
-  {localdate}           the current date
-  {localtime}           the current time
+  {localdate}           the current date (note 9)
+  {localtime}           the current time (note 9)
   {lsquo}               Left single quote character (note 7)
   {lt}                  less than (<) character entity
   {manname}             manpage name (defined in NAME section)
@@ -4714,6 +4714,13 @@ predefined intrinsic attributes:
    glossary
 
    tables:: table
+9. If the `SOURCE_DATE_EPOCH` environment variable is set to a UNIX
+   timestamp, then the `{docdate}`, `{doctime}`, `{localdate}`, and
+   `{localtime}` attributes are computed in the UTC time zone, with any
+   timestamps newer than `SOURCE_DATE_EPOCH` replaced by
+   `SOURCE_DATE_EPOCH`. (This helps software using AsciiDoc to build
+   reproducibly.)
+
 
 ======
 

@@ -1268,25 +1268,27 @@ def char_encode(s):
     else:
         return s
 
-def time_str(t):
-    """Convert seconds since the Epoch to formatted local time string."""
-    t = time.localtime(t)
-    s = time.strftime('%H:%M:%S',t)
-    if time.daylight and t.tm_isdst == 1:
-        result = s + ' ' + time.tzname[1]
+def date_time_str(t):
+    """Convert seconds since the Epoch to formatted local date and time strings."""
+    source_date_epoch = os.environ.get('SOURCE_DATE_EPOCH')
+    if source_date_epoch is not None:
+        t = time.gmtime(min(t, int(source_date_epoch)))
     else:
-        result = s + ' ' + time.tzname[0]
+        t = time.localtime(t)
+    date_str = time.strftime('%Y-%m-%d',t)
+    time_str = time.strftime('%H:%M:%S',t)
+    if source_date_epoch is not None:
+        time_str += ' UTC'
+    elif time.daylight and t.tm_isdst == 1:
+        time_str += ' ' + time.tzname[1]
+    else:
+        time_str += ' ' + time.tzname[0]
     # Attempt to convert the localtime to the output encoding.
     try:
-        result = char_encode(result.decode(locale.getdefaultlocale()[1]))
+        time_str = char_encode(time_str.decode(locale.getdefaultlocale()[1]))
     except Exception:
         pass
-    return result
-
-def date_str(t):
-    """Convert seconds since the Epoch to formatted local date string."""
-    t = time.localtime(t)
-    return time.strftime('%Y-%m-%d',t)
+    return date_str, time_str
 
 
 class Lex:
@@ -1453,8 +1455,7 @@ class Document(object):
         Set implicit attributes and attributes in 'attrs'.
         """
         t = time.time()
-        self.attributes['localtime'] = time_str(t)
-        self.attributes['localdate'] = date_str(t)
+        self.attributes['localdate'], self.attributes['localtime'] = date_time_str(t)
         self.attributes['asciidoc-version'] = VERSION
         self.attributes['asciidoc-file'] = APP_FILE
         self.attributes['asciidoc-dir'] = APP_DIR
@@ -1484,8 +1485,7 @@ class Document(object):
             else:
                 t = None
             if t:
-                self.attributes['doctime'] = time_str(t)
-                self.attributes['docdate'] = date_str(t)
+                self.attributes['docdate'], self.attributes['doctime'] = date_time_str(t)
             if self.infile != '<stdin>':
                 self.attributes['infile'] = self.infile
                 self.attributes['indir'] = os.path.dirname(self.infile)

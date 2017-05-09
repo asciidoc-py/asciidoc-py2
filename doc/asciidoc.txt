@@ -4230,7 +4230,7 @@ To delete (undefine) an attribute use the following syntax:
   expanded.
 - By default AttributeEntry values are substituted for
   `specialcharacters` and `attributes` (see above), if you want to
-  change or disable AttributeEntry substitution use the <<X77,pass:[]
+  change or disable AttributeEntry substitution use the <<X77,\pass:[]
   inline macro>> syntax.
 - Attribute entries in the document Header are available for header
   markup template substitution.

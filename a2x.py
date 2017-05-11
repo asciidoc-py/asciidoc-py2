@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 a2x - A toolchain manager for AsciiDoc (converts Asciidoc text files to other
       file formats)

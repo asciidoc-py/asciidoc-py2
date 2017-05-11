@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 asciidoc - converts an AsciiDoc text file to HTML or DocBook
 

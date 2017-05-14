@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 '''
 NAME
     code-filter - AsciiDoc filter to highlight language keywords

@@ -68,23 +68,21 @@ installed it can be downloaded from the official Python website
 </div>
 </div>
 <div class="sect1">
-<h2 id="_installing_from_the_mercurial_repository">Installing from the Mercurial repository</h2>
+<h2 id="_installing_from_the_github_repository">Installing from the Github repository</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>The AsciiDoc <a href="http://www.selenic.com/mercurial/">Mercurial</a> repository
-is hosted by <a href="http://code.google.com/">Google Code</a>.
-To browse the repository go to
-<a href="http://code.google.com/p/asciidoc/source/browse/">http://code.google.com/p/asciidoc/source/browse/</a>.
+<div class="paragraph"><p>The AsciiDoc repository is hosted by <a href="https://github.com">Github</a>.
+To browse the repository go to <a href="https://github.com/asciidoc/asciidoc">https://github.com/asciidoc/asciidoc</a>.
 You can install AsciiDoc from the repository if you don&#8217;t have an up to
-date packaged version or want to get the latest version from the trunk:</p></div>
+date packaged version or want to get the latest version from the master branch:</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
-Make sure you have <a href="http://www.selenic.com/mercurial/">Mercurial</a>
+Make sure you have <a href="https://git-scm.com/">Git</a>
   installed, you can check with:
 </p>
 <div class="literalblock">
 <div class="content">
-<pre><code>$ hg --version</code></pre>
+<pre><code>$ git --version</code></pre>
 </div></div>
 </li>
 <li>
@@ -95,7 +93,8 @@ Go to the directory you want to install AsciiDoc into and download
 <div class="literalblock">
 <div class="content">
 <pre><code>$ cd ~/bin
-$ hg clone -r 8.6.9 https://asciidoc.googlecode.com/hg/ asciidoc-8.6.9</code></pre>
+$ git clone https://github.com/asciidoc/asciidoc asciidoc-8.6.9
+$ git checkout 8.6.9</code></pre>
 </div></div>
 </li>
 </ul></div>
@@ -111,7 +110,7 @@ so it&#8217;s easy to execute <code>asciidoc</code> from the command-line, for e
 <pre><code>$ ln -s ~/bin/asciidoc-8.6.9/asciidoc.py ~/bin/asciidoc
 $ ln -s ~/bin/asciidoc-8.6.9/a2x.py ~/bin/a2x</code></pre>
 </div></div>
-<div class="paragraph"><p>Use the Mercurial <code>pull</code> command to update your local AsciiDoc repository.</p></div>
+<div class="paragraph"><p>Use the git <code>pull</code> command to update your local AsciiDoc repository.</p></div>
 </div>
 <div class="sect2">
 <h3 id="_installing_asciidoc_for_all_users">Installing asciidoc for all users</h3>
@@ -380,7 +379,7 @@ Guide</em>.</p></div>
 <div id="footer">
 <div id="footer-text">
 Version 8.6.9<br />
-Last updated 2015-02-26 06:50:50 CET
+Last updated 2017-09-03 16:20:13 MDT
 </div>
 <div id="footer-badges">
 <a href="http://validator.w3.org/check?uri=referer">

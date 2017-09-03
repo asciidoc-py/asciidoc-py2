@@ -204,9 +204,13 @@ image::images/highlighter.png[height=400,caption="",link="images/highlighter.png
 
 Try AsciiDoc on the Web
 -----------------------
-Thaddée Tyl has written an online live editor to try AsciiDoc in your browser:
-http://espadrine.github.io/AsciiDocBox/
+Thaddée Tyl has written an online live editor named
+http://espadrine.github.io/AsciiDocBox/[AsciiDocBox] to try AsciiDoc in
+your browser.
 
+You can use http://gist.asciidoctor.org/[DocGist] to preview AsciiDoc
+files hosted on GitHub, Dropbox, and other services. DocGist also
+features a real-time collaboration mode.
 
 [[X2]]
 External Resources and Applications
@@ -216,9 +220,17 @@ and I'll add them to the list.
 
 - Check the link:INSTALL.html#X2[installation page] for packaged versions
   of AsciiDoc.
+- http://asciidoctor.org[Asciidoctor] provides a modern, compliant, and
+  substantially faster implementation of the AsciiDoc processor written
+  in Ruby. This implementation can also be run on the JVM (with
+  AsciidoctorJ) or using JavaScript (with Asciidoctor.js). The
+  Asciidoctor project now maintains the official definition of the
+  AsciiDoc syntax.
 - Alex Efros has written an HTML formatted
-  http://powerman.name/doc/asciidoc[AsciiDoc Cheatsheet] using
-  Asciidoc.
+  http://powerman.name/doc/asciidoc[AsciiDoc Cheatsheet] using AsciiDoc.
+  The Asciidoctor project also provides a comprehensive
+  http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/[AsciiDoc
+  syntax quick reference].
 - Thomas Berker has written an
   http://liksom.info/blog/?q=node/114[AsciiDoc Cheatsheet] in Open
   Document and PDF formats.

@@ -24,7 +24,7 @@ import mimetypes
 import codecs
 
 PROG = os.path.basename(os.path.splitext(__file__)[0])
-VERSION = '8.6.9'
+VERSION = '8.6.10'
 
 # AsciiDoc global configuration file directory.
 # NOTE: CONF_DIR is "fixed up" by Makefile -- don't rename or change syntax.

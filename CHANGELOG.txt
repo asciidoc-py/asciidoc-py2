@@ -4,6 +4,15 @@ AsciiDoc ChangeLog
 :website: http://asciidoc.org/
 
 
+Version 8.6.10 (2017-09-22)
+---------------------------
+.Additions and changes
+- Improve reproducibility of builds (e.g. support SOURCE_DATE_EPOCH)
+- Add SVG output support
+- Improve documentation
+- Update translations
+- Full list of changes is at https://github.com/asciidoc/asciidoc/compare/asciidoc:8.6.9...asciidoc:8.6.10
+
 Version 8.6.9 (2013-11-09)
 --------------------------
 .Additions and changes

@@ -14,7 +14,7 @@ SGML/XML markup) can be customized and extended by the user.
 Prerequisites
 -------------
 AsciiDoc is written in Python so you need a Python interpreter
-(version 2.4 or later) to execute asciidoc(1). Python is installed by
+(version 2.6 or 2.7) to execute asciidoc(1). Python is installed by
 default in most Linux distributions.  You can download Python from the
 official Python website http://www.python.org.
 

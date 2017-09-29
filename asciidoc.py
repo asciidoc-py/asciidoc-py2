@@ -11,7 +11,7 @@ import sys, os, re, time, traceback, tempfile, subprocess, codecs, locale, unico
 ### Used by asciidocapi.py ###
 VERSION = '8.6.9'           # See CHANGLOG file for version history.
 
-MIN_PYTHON_VERSION = '2.4'  # Require this version of Python or better.
+MIN_PYTHON_VERSION = '2.6'  # Require this version of Python or better.
 
 #---------------------------------------------------------------------------
 # Program constants.

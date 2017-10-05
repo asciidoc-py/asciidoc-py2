@@ -14,7 +14,7 @@ mathematical formulae (see the examples below).  The filter implements the
 
 Two image formats are supported; PNG and SVG. PNG is the default since that
 was the first format that this filter supported. However, SVG is a better
-format since it's scalable. Using SVG make formulas look good in both PDF:s
+format since it's scalable. Using SVG make formulas look good in both PDFs
 and on web pages. SVG will also scale well when zooming in on a web page for
 example. It is recommended to always use the SVG format. This can be done by
 setting the 'imgfmt' parameter to 'svg', as is done below. An even better way

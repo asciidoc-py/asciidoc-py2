@@ -107,7 +107,7 @@ $(DATATARGETS): % : %dir
 	$(INSTALL_DATA) $($@) $(DESTDIR)/$($<)/
 
 $(manp): %.1 : %.1.txt
-	python a2x.py -f manpage $<
+	python2 a2x.py -f manpage $<
 
 docs:
 	$(INSTALL) -d $(DESTDIR)/$(docdir)

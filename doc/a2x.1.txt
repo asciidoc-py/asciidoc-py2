@@ -123,7 +123,7 @@ OPTIONS
 
 *--fop*::
   Use FOP to generate PDFs. The default behavior is to use
-  'dblatex(1)'.  The '--fop' option is implicit if this option is
+  'dblatex(1)'.  The '--fop' option is implicit if the '--fop-opts' option is
   used.
 
 *--fop-opts*='FOP_OPTS'::

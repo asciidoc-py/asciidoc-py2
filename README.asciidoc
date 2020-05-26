@@ -1,3 +1,10 @@
+[NOTE]
+====
+This repository (asciidoc-py2) is no longer supported as python 2 has entered end-of-life.
+Please see https://github.com/asciidoc/asciidoc-py3[asciidoc-py3] for the current supported
+version.
+====
+
 [float]
 AsciiDoc image:https://travis-ci.org/asciidoc/asciidoc.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoc/asciidoc]
 ===================================================================================================================================
